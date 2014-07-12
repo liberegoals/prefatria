@@ -150,6 +150,8 @@ DB.resetRest = function(callback) {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
 
 eval('DB.nodedb = {' + Server.readFileSync('../misc/.mistiko/nodedb') + '};');
+DB.nodedb.database = 'prefatria';
+DB.nodedb.user = 'prefadoros';
 DB.nodedb.password = Server.readFileSync('../misc/.mistiko/bekadb').replace(/[^a-zA-Z0-9]/g, '');
 
 // Ακολουθεί η κλάση "DBSindesi" που παριστά συνδέσεις με την database. Πρόκειται
