@@ -149,6 +149,27 @@ DB.resetRest = function(callback) {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
 
+// Για να συνδεθούμε με την database πρέπει να δώσουμε τις κατάλληλες παραμέτρους
+// στην "createConnection" μέθοδο του MySQL node module. Οι παράμετροι αυτές είναι:
+//
+//	database	Το όνομα της database, π.χ. "prefatria"
+//
+//	user		Το όνομα του database user μέσω του οποίου προσπελαύνουμε
+//			την database, π.χ. "prefadoros".
+//
+//	password	Το password του database user που αναφέραμε παραπάνω.
+//
+//	host		Το hostname του database server. Συνήθως είναι το "localhost".
+//			Αν η σύνδεσή μας στην database γίνεται με UNIX socket και όχι
+//			μέσω TCP/IP, τότε η παράμετρος αυτή δεν είναι απαραίτητη.
+//
+//	socketPath	Το sokcet pathname του UNIX socket μέσω του οποίου συνδεόμαστε
+//			με την database. ΑΝ η σύνδεση γίνεται μέσω TCP/IP, τότε αυτή η
+//			παράμετρος δεν είναι απαραίτητη.
+//
+// Για να υπάρχει ευελιξία κάποιες από τις παραπάνω παραμέτρους δίνονται σε εξωτερικά
+// files στο directory "misc/.mistiko", κάτω από το βασικό directory της εφαρμογής.
+
 eval('DB.nodedb = {' + Server.readFileSync('../misc/.mistiko/nodedb') + '};');
 DB.nodedb.database = 'prefatria';
 DB.nodedb.user = 'prefadoros';
