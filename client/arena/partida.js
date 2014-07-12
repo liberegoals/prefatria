@@ -264,8 +264,10 @@ Arena.partida.ipolipoRefreshDOM = function(dom) {
 	dom.addClass('sinefo').attr('title', 'Τρέχον υπόλοιπο κάσας').text(ipolipo / 10);
 	if (ipolipo <= 900) {
 		dom.addClass('tsoxaIpolipoMion');
-		Arena.partida.tsoxaDOM.append($('<img>').addClass('tsoxaTelosIcon').
-		attr('src', 'ikona/endixi/telos.png'));
+		Arena.partida.tsoxaDOM.append($('<img>').addClass('tsoxaTelosIcon').attr({
+			src: 'ikona/endixi/telos.png',
+			title: 'Η κάσα έχει τελειώσει',
+		}));
 	}
 	else {
 		if (ipolipo < 300) dom.addClass('tsoxaIpolipoLigo');

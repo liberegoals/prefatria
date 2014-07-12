@@ -308,7 +308,6 @@ background-color: rgba(0, 128, 128, 0.2);
 	top: 12px;
 	left: -50px;
 	height: 13px;
-	z-index: 2;
 	opacity: 0.6;
 
 	transform:rotate(-45deg);
@@ -1267,7 +1266,6 @@ background-color: teal;
 	top: 28px;
 	left: -120px;
 	height: 31px;
-	z-index: 2;
 	opacity: 0.6;
 
 	transform:rotate(-45deg);

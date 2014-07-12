@@ -830,7 +830,10 @@ Trapezi.prototype.trapeziDataRefreshDOM = function() {
 
 	this.DOM.find('.trapeziTelosIcon').remove();
 	if (ipolipo <= 1000)
-	this.tsoxaDOM.append($('<img>').addClass('trapeziTelosIcon').attr('src', 'ikona/endixi/telos.png'));
+	this.tsoxaDOM.append($('<img>').addClass('trapeziTelosIcon').attr({
+		src: 'ikona/endixi/telos.png',
+		title: 'Η κάσα έχει τελειώσει',
+	}));
 
 	return this;
 };
