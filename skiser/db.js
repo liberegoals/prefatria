@@ -149,11 +149,12 @@ DB.resetRest = function(callback) {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
 
+eval('DB.nodedb = {' + Server.readFileSync('../misc/.mistiko/nodedb') + '};');
+DB.nodedb.password = Server.readFileSync('../misc/.mistiko/bekadb').replace(/[^a-zA-Z0-9]/g, '');
+
 // Ακολουθεί η κλάση "DBSindesi" που παριστά συνδέσεις με την database. Πρόκειται
 // για ενισχυμένα αντικείμενα συνδέσεων, δηλαδή συνδέσεις που εμπλουτίζονται με
 // επιπλέλον properties και μεθόδους.
-
-DB.bekadb = Server.readFileSync('../misc/.mistiko/bekadb').replace(/[^a-zA-Z0-9]/g, '');
 
 DBSindesi = function() {
 	// Το property "active" δείχνει αν το connection είναι ενεργό, δηλαδή
@@ -174,12 +175,7 @@ DBSindesi = function() {
 	// Το property "connection" είναι η καρδιά του connection. Πρόκειται
 	// για το connection αυτό καθεαυτό.
 
-	this.connection = MYSQL.createConnection({
-		host: 'localhost',
-		database: 'prefatria',
-		user: 'prefadoros',
-		password: DB.bekadb,
-	});
+	this.connection = MYSQL.createConnection(DB.nodedb);
 
 	// Αμέσως μετά τη δημιουργία νέας σύνδεσης με την database, τοποθετούμε
 	// τη νέα σύνδεση στο connection pool και κρατάμε τη θέση στo property
