@@ -930,6 +930,13 @@ background-color: rgb(211, 211, 108);
 	width: 60px;
 }
 
+.tsoxaEnimerosiBasiki {
+	padding: 10px;
+	text-shadow: -2px -2px 10px #8AA886, 2px 2px 10px #8AA886,
+		-4px -4px 4px #8AA886, 4px 4px 4px #8AA886,
+		-6px -6px 6px #8AA886, 6px 6px 6px #8AA886;
+}
+
 /********************************************************************************************************************/
 
 .tsoxa_button {
