@@ -1,0 +1,723 @@
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// Στο παρόν περιγράφουμε μεθόδους που αφορούν μόνο στον server σκηνικού (skiser).
+// Τέτοιες μέθοδοι είναι, π.χ. το κλείδωμα ενός τραπεζιού, το μοίρασμα μιας νέας
+// διανομής κλπ.
+//
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// Ακολουθεί μέθοδος με την οποία στήνεται ένα σκηνικό, ή καλύτερα ΤΟ σκηνικό στον
+// skiser. Η μέθοδος αποτελεί ουσιαστικά το σημείο εκκίνησης της διαδικασίας, καθώς
+// υπάρχει πληθώρα επιμέρους διαδικασιών που καλούνται αλυσιδωτά προκειμένου να
+// στηθεί το σκηνικό. Περιττό να πούμε ότι το στήσιμο του σκηνικού στον skiser
+// γίνεται με βάση τα στοιχεία που υπάρχουν κρατημένα στην database.  
+
+Skiniko.prototype.stisimo = function() {
+	Log.fasi.nea('Στήσιμο σκηνικού');
+	Log.print('Τραπέζια');
+	this.stisimoTrapezi(DB.connection());
+	return this;
+};
+
+// Διαβάζουμε τα ενεργά τραπέζια από την database και τα εντάσσουμε στο σκηνικό.
+
+Skiniko.prototype.stisimoTrapezi = function(conn) {
+	var skiniko = this, query;
+
+	this.izepart = {};	// λίστα τραπεζιών
+	this.sitkep = {};	// λίστα συμμετεχόντων παικτών
+
+	this.trapezi = {};
+	query = 'SELECT ' + Trapezi.projection + ' FROM `trapezi` WHERE `arxio` IS NULL ORDER BY `kodikos`';
+	conn.query(query, function(conn, rows) {
+		Globals.awalk(rows, function(i, trapezi) {
+			trapezi = new Trapezi(trapezi).trapeziPollSet();
+			skiniko.skinikoTrapeziSet(trapezi);
+
+			// Κρατάμε τα ενεργά τραπέζια στη λίστα "izepart".
+
+			skiniko.izepart[trapezi.kodikos] = trapezi;
+
+			// Κρατάμε όλους τους εμπλεκόμενους παίκτες στη λίστα "sitkep".
+			// Ενδεχομένως να κρατήσουμε και κενή εγγραφή, αλλά αργότερα
+			// θα διαγράψουμε τις κενές εγγραφές.
+
+			trapezi.trapeziThesiWalk(function(thesi) {
+				skiniko.sitkep[this.trapeziPektisGet(thesi)] = true;
+			});
+		});
+
+		Log.print('Παράμετροι τραπεζιών');
+		skiniko.izepart2 = {};		// δευτερεύουσα λίστα τραπεζιών
+		skiniko.stisimoTrparam(conn);
+	});
+
+	return this;
+};
+
+// Διαβάζουμε τις παραμέτρους των ενεργών τραπεζιών και τις εντάσσουμε στο σκηνικό.
+
+Skiniko.prototype.stisimoTrparam = function(conn) {
+	var skiniko = this, kodikos, trapezi, query;
+
+	for (kodikos in this.izepart) {
+		trapezi = this.izepart[kodikos];
+		delete this.izepart[kodikos];
+		this.izepart2[kodikos] = trapezi;
+
+		query = 'SELECT ' + Trparam.projection + ' FROM `trparam` WHERE `trapezi` = ' + kodikos;
+		conn.query(query, function(conn, rows) {
+			Globals.awalk(rows, function(i, trparam) {
+				trapezi.trapeziTrparamSet(new Trparam(trparam));
+			});
+
+			// Συνεχίζουμε με τα υπόλοιπα στοιχεία της λίστας τραπεζιών.
+
+			skiniko.stisimoTrparam(conn);
+		});
+
+		// Διακόπτουμε τη διαδικασία στο πρώτο τραπέζι εφόσον λειτουργούμε
+		// αναδρομή.
+
+		return this;
+	}
+
+	// Έχει εξαντληθεί η λίστα τραπεζιών, οπότε προχωρούμε στην επόμενη φάση
+	// που αφορά στις συμμετοχές.
+
+	Log.print('Μητρώο συμμετοχών');
+	this.stisimoSimetoxi(conn);
+	return this;
+};
+
+// Διαβάζουμε τον πίνακα συμμετοχών που δείχνει τη θέση που κάθησε κάθε παίκτης
+// που συμμετείχε σε κάποιο τραπέζι, είτε ως παίκτης είτε ως θεατής.
+
+// TODO
+// Πρέπει να φροντίσουμε ώστε κατά την αρχειοθέτηση του τραπεζιού να διαγράφονται
+// οι εγγραφές συμμετοχής και τελευταίου παίκτη (ακολουθεί).
+
+Skiniko.prototype.stisimoSimetoxi = function(conn) {
+	var skiniko = this, kodikos, trapezi, query;
+
+	for (kodikos in this.izepart2) {
+		trapezi = this.izepart2[kodikos];
+		delete this.izepart2[kodikos];
+		this.izepart[kodikos] = trapezi;
+
+		query = 'SELECT ' + Simetoxi.projection + ' FROM `simetoxi` WHERE `trapezi` = ' + kodikos;
+		conn.query(query, function(conn, rows) {
+			Globals.awalk(rows, function(i, simetoxi) {
+				trapezi.trapeziSimetoxiSet(new Simetoxi(simetoxi));
+			});
+
+			skiniko.stisimoSimetoxi(conn);
+		});
+
+		return this;
+	}
+
+	Log.print('Μητρώο παικτών');
+	this.stisimoTelefteos(conn);
+	return this;
+};
+
+// Διαβάζουμε τον πίνακα πρώην συμμετοχών που δείχνει ποιος παίκτης κάθησε τελευταίος
+// στις θέσεις των ενεργών τραπεζιών.
+
+Skiniko.prototype.stisimoTelefteos = function(conn) {
+	var skiniko = this, kodikos, trapezi, query;
+
+	for (kodikos in this.izepart) {
+		trapezi = this.izepart[kodikos];
+		delete this.izepart[kodikos];
+		this.izepart2[kodikos] = true;
+
+		query = 'SELECT ' + Telefteos.projection + ' FROM `telefteos` WHERE `trapezi` = ' + kodikos;
+		conn.query(query, function(conn, rows) {
+			Globals.awalk(rows, function(i, telefteos) {
+				trapezi.trapeziTelefteosSet(new Telefteos(telefteos));
+			});
+
+			skiniko.stisimoTelefteos(conn);
+		});
+
+		return this;
+	}
+
+	Log.print('Διανομές');
+	this.stisimoDianomi(conn);
+	return this;
+};
+
+// Διαβάζουμε τις διανομές των ενεργών τραπεζιών και τις εντάσσουμε στο σκηνικό.
+
+Skiniko.prototype.stisimoDianomi = function(conn) {
+	var skiniko = this, kodikos, trapezi, query;
+
+	for (kodikos in this.izepart2) {
+		trapezi = this.izepart2[kodikos];
+		delete this.izepart2[kodikos];
+
+		query = 'SELECT ' + Dianomi.projection + ' FROM `dianomi` WHERE `trapezi` = ' +
+			kodikos + ' ORDER BY `kodikos`';
+		conn.query(query, function(conn, rows) {
+			Globals.awalk(rows, function(i, dianomi) {
+				trapezi.trapeziDianomiSet(dianomi = new Dianomi(dianomi));
+				trapezi.dianomiArray.push(dianomi);
+				skiniko.izepart[trapezi] = dianomi;
+			});
+
+			skiniko.stisimoDianomi(conn);
+		});
+
+		return this;
+	}
+
+	delete this.izepart2;
+	Log.print('Ενέργειες');
+	this.stisimoEnergia(conn);
+	return this;
+};
+
+// Διαβάζουμε τις ενέργειες των τελευταίων διανομών των ενεργών τραπεζιών και
+// τις εντάσσουμε στο σκηνικό.
+
+Skiniko.prototype.stisimoEnergia = function(conn) {
+	var skiniko = this, kodikos, trapezi, dianomi, query;
+
+	for (trapezi in this.izepart) {
+		dianomi = this.izepart[trapezi];
+		delete this.izepart[trapezi];
+
+		query = 'SELECT ' + Energia.projection + ' FROM `energia` WHERE `dianomi` = ' +
+			kodikos + ' ORDER BY `kodikos`';
+		conn.query(query, function(conn, rows) {
+			Globals.awalk(rows, function(i, energia) {
+				dianomi.dianomiEnergiaSet(energia = new Energia(energia));
+				dianomi.energiaArray.push(energia);
+			});
+
+			skiniko.stisimoEnergia(conn);
+		});
+
+		return this;
+	}
+
+	delete this.izepart;
+	Log.print('Συζήτηση');
+	this.stisimoSizitisi(conn);
+	return this;
+};
+
+// Διαβάζουμε όλες τις συζητήσεις που εξελίσσονται τόσο στα διάφορα τραπέζια όσο
+// και στο καφενείο.
+
+Skiniko.prototype.stisimoSizitisi = function(conn) {
+	var skiniko = this, query;
+
+	this.sizitisi = {};
+	query = 'SELECT ' + Sizitisi.projection + ' FROM `sizitisi` ORDER BY `kodikos`';
+	conn.query(query, function(conn, rows) {
+		Globals.awalk(rows, function(i, sizitisi) {
+			var trapezi;
+
+			// Στα πεδία του row συζήτησης υπάρχει και πεδίο τραπεζιού ως
+			// αναφορά στον κωδικό τραπεζιού, ή null εφόσον πρόκειται για
+			// τη συζήτηση του καφενείου. Κρατάμε την τιμή του πεδίου και
+			// και το διαγράφουμε.
+
+			trapezi = sizitisi.trapezi;
+			delete sizitisi.trapezi;
+
+			sizitisi = new Sizitisi(sizitisi);
+
+			// Αν το πεδίο του τραπεζιού ήταν κενό, τότε πρόκειται για
+			// τη συζήτηση του καφενείου.
+
+			if (!trapezi) return skiniko.skinikoSizitisiSet(sizitisi);
+
+			// Αλλιώς πρόκειται για τη συζήτηση του συγκεκριμένου τραπεζιού,
+			// του οποίου όμως ελέγχουμε την ύπαρξη.
+
+			trapezi = skiniko.skinikoTrapeziGet(trapezi);
+			if (!trapezi) return console.error(sizitisi.sizitisiKodikosGet() + ': ορφανή συζήτηση');
+
+			trapezi.trapeziSizitisiSet(sizitisi);
+		});
+
+		Log.print('Προσκλήσεις');
+		skiniko.stisimoProsklisi(conn);
+	});
+
+	return this;
+};
+
+// Διαβάζουμε όλες τις προσκλήσεις και τις εντάσσουμε στο σκηνικό.
+
+Skiniko.prototype.stisimoProsklisi = function(conn) {
+	var skiniko = this, query;
+
+	this.prosklisi = {};
+	query = 'SELECT ' + Prosklisi.projection + ' FROM `prosklisi` ORDER BY `kodikos`';
+	conn.query(query, function(conn, rows) {
+		Globals.awalk(rows, function(i, prosklisi) {
+			var trapezi;
+
+			prosklisi = new Prosklisi(prosklisi);
+			trapezi = skiniko.skinikoTrapeziGet(prosklisi.prosklisiTrapeziGet());
+			if (!trapezi) return console.error(prosklisi.prosklisiKodikosGet() + ': ορφανή πρόσκληση');
+			skiniko.skinikoProsklisiSet(prosklisi);
+		});
+
+		Log.print('Συνεδρίες');
+		skiniko.stisimoSinedria(conn);
+	});
+
+	return this;
+};
+
+Skiniko.prototype.stisimoSinedria = function(conn) {
+	var skiniko = this, query;
+
+	this.sinedria = {};
+	query = 'SELECT ' + Sinedria.projection + ' FROM `sinedria` ORDER BY `isodos`';
+	conn.query(query, function(conn, rows) {
+		Globals.awalk(rows, function(i, sinedria) {
+			var trapezi, thesi;
+
+			sinedria = new Sinedria(sinedria);
+			sinedria.
+			sinedriaPollSet().
+			feredataPollSet().
+			feredataResetSet();
+
+			// Ελέγχουμε και διορθώνουμε τα στοιχεία θέσης της συνεδρίας.
+
+			trapezi = skiniko.skinikoTrapeziGet(sinedria.sinedriaTrapeziGet());
+			if (trapezi) {
+				thesi = trapezi.trapeziThesiPekti(sinedria.sinedriaPektisGet());
+				if (thesi) {
+					sinedria.thesi = thesi;
+					sinedria.simetoxi = 'ΠΑΙΚΤΗΣ';
+				}
+				else {
+					if (Prefadoros.oxiThesi(sinedria.thesi)) sinedria.thesi = 1;
+					sinedria.simetoxi = 'ΘΕΑΤΗΣ';
+				}
+			}
+			else {
+				delete sinedria.trapezi;
+				delete sinedria.thesi;
+				delete sinedria.simetoxi;
+			}
+
+			// Εντάσσουμε τη συνεδρία στο σκηνικό.
+
+			skiniko.skinikoSinedriaSet(sinedria);
+
+			// Κρατάμε τον παίκτη στη λίστα "sitkep".
+
+			skiniko.sitkep[sinedria.sinedriaPektisGet()] = true;
+		});
+
+		Log.print('Παίκτες');
+		delete skiniko.sitkep[null];
+		skiniko.sitkep2 = {};		// δευτερεύουσα λίστα παικτών
+		skiniko.pektis = {};
+		skiniko.stisimoPektis(conn);
+	});
+
+	return this;
+};
+
+Skiniko.prototype.stisimoPektis = function(conn) {
+	var skiniko = this, login, query;
+
+	for (login in this.sitkep) {
+		delete this.sitkep[login];
+		this.sitkep2[login] = true;
+		query = 'SELECT ' + Pektis.projection + ' FROM `pektis` WHERE `login` = ' + login.json();
+		conn.query(query, function(conn, rows) {
+			Globals.awalk(rows, function(i, pektis) {
+				pektis.poll = Globals.tora();
+				skiniko.skinikoPektisSet(new Pektis(pektis));
+			});
+
+			skiniko.stisimoPektis(conn);
+		});
+
+		return this;
+	}
+
+	Log.print('Παράμετροι παικτών');
+	this.stisimoPeparam(conn);
+	return this;
+};
+
+Skiniko.prototype.stisimoPeparam = function(conn) {
+	var skiniko = this, login, pektis, query;
+
+	for (login in this.sitkep2) {
+		delete skiniko.sitkep2[login];
+		skiniko.sitkep[login] = true;
+
+		pektis = this.skinikoPektisGet(login);
+		query = 'SELECT ' + Peparam.projection + ' FROM `peparam` WHERE `pektis` = ' + login.json();
+		conn.query(query, function(conn, rows) {
+			Globals.awalk(rows, function(i, peparam) {
+				pektis.pektisPeparamSet(new Peparam(peparam));
+			});
+
+			skiniko.stisimoPeparam(conn);
+		});
+
+		return this;
+	}
+
+	delete this.sitkep2;
+	Log.print('Σχέσεις');
+	this.stisimoSxesi(conn);
+	return this;
+};
+
+Skiniko.prototype.stisimoSxesi = function(conn) {
+	var skiniko = this, login, pektis, query;
+
+	for (login in this.sitkep) {
+		delete skiniko.sitkep[login];
+
+		pektis = this.skinikoPektisGet(login);
+		query = 'SELECT ' + Sxesi.projection + ' FROM `sxesi` WHERE `pektis` = ' + login.json();
+		conn.query(query, function(conn, rows) {
+			Globals.awalk(rows, function(i, sxesi) {
+				pektis.pektisSxesiSet(sxesi['sxetizomenos'], sxesi['sxesi']);
+			});
+
+			skiniko.stisimoSxesi(conn);
+		});
+
+		return this;
+	}
+
+	delete this.sitkep;
+	this.stisimoTelos(conn);
+	return this;
+};
+
+// Ακολουθεί η τελευταία μέθοδος που καλείται κατά το στήσιμο του σκηνικού.
+
+Skiniko.prototype.stisimoTelos = function(conn) {
+	// Δεν χρειαζόμαστε πλέον τη σύνδεσή μας με την database.
+
+	conn.free();
+
+	// Κάνουμε replay όλες τις παρτίδες με βάση τα στοιχεία που έχουμε
+	// ήδη φορτώσει.
+
+	Log.print('Replay παρτίδων');
+	this.skinikoTrapeziWalk(function() {
+		this.partidaReplay();
+	});
+
+	// Ετοιμάζουμε το transaction log, ήτοι ένα array κινήσεων μέσω των
+	// οποίων γίνονται αλλαγές στο σκηνικό.
+
+	this.kinisi = [];
+
+	// Δρομολογούμε διάφορες περιοδικές εργασίες.
+
+	Peripolos.setup();
+
+	// Εκκινούμε τον skiser. Από εδώ και πέρα ο skiser «ακούει» στην
+	// προκαθορισμένη πόρτα και οι παίκτες μπορούν να παραλάβουν δεδομένα
+	// και να κάνουν διάφορους χειρισμούς.
+
+	Server.ekinisi(this);
+
+	Log.fasi.nea('Node server is up and running');
+	return this;
+};
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// Η μέθοδος "trapeziKlidoma" θέτει ένα κλείδωμα στο τραπέζι και όσο το κλείδωμα
+// είναι σε ισχύ κάθε άλλη απόπειρα κλειδώματος αποτυγχάνει. Η μέθοδος επιστρέφει
+// τη χρονική στιγμή του κλειδώματος εφόσον το κλείδωμα είναι επιτυχημένο, αλλιώς
+// επιστρέφει false.
+
+Trapezi.prototype.trapeziKlidoma = function() {
+	if (this.klidoma) return false;
+
+	this.klidoma = Globals.torams();
+	return this.klidoma;
+};
+
+// Κρατάμε κάπου (globally) τον μέγιστο χρόνο ξεκλειδώματος ο οποίος πρέπει να
+// κυμαίνεται σε διαστήματα κλασμάτων του δευτερολέπτου. Αν παρουσιαστούν μεγάλα
+// διαστήματα σημαίνει ότι κάπου έχουμε ξεχάσει να ξεκλειδώσουμε και θα πρέπει να
+// διορθώσουμε το πρόγραμμα.
+
+Trapezi.xeklidomaMax = 0;
+
+Trapezi.prototype.trapeziXeklidoma = function() {
+	var dt;
+
+	if (this.trapeziXeklidoto()) return this;
+
+	dt = Globals.torams() - this.klidoma;
+	delete this.klidoma;
+
+	if (dt <= Trapezi.xeklidomaMax) return this;
+
+	Trapezi.xeklidomaMax = dt;
+	console.log('Trapezi.xeklidomaMax = ', dt + 'ms');
+	return this;
+};
+
+Trapezi.prototype.trapeziKlidomaGet = function() {
+	return this.klidoma;
+};
+
+Trapezi.prototype.trapeziKlidomeno = function() {
+	return this.klidoma;
+};
+
+Trapezi.prototype.trapeziXeklidoto = function() {
+	return !this.trapeziKlidomeno();
+};
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// Η μέθοδος "trapeziNeaDianomi" δημιουργεί νέα διανομή για το ανά χείρας τραπέζι.
+// Ως παραμέτρους δέχεται μια database connection στα πλαίσια της οποίας θα γίνει
+// η διανομή και άλλες σχετικές κινήσεις στην database, μια callback function που
+// θα κληθεί σε περίπτωση επιτυχίας και μια callback function που θα κληθεί στην
+// περίπτωση που τα πράγματα δεν εξελιχθούν ομαλά. Οι callback functions καλούνται
+// ως μέθοδοι του τραπεζιού με τις εξής παραμέτρους:
+//
+// Επιτυχία: database connection, κίνηση διανομής, ενέργεια διανομής
+//
+// Αποτυχία: database connection
+
+Trapezi.prototype.trapeziNeaDianomi = function(conn, success, fail) {
+	var trapezi = this, trapeziKodikos, telefteaDianomi, dealer, query;
+
+	// Αν δεν καθοριστεί callback function αποτυχίας, ακυρώνουμε την
+	// database transaction και ξεκλειδώνουμε το τραπέζι.
+
+	if (!fail) fail = function(conn) {
+		conn.rollback();
+		this.trapeziXeklidoma();
+	};
+
+	trapeziKodikos = this.trapeziKodikosGet();
+	telefteaDianomi = this.trapeziTelefteaDianomi();
+	dealer = telefteaDianomi ? telefteaDianomi.dianomiDealerGet().epomeniThesi() : 1;
+	query = 'INSERT INTO `dianomi` (`trapezi`, `dealer`) VALUES (' + trapeziKodikos + ', ' + dealer + ')';
+	conn.connection.query(query, function(err, res) {
+		if (err || (res.affectedRows != 1)) {
+			console.error('αποτυχία εισαγωγής διανομής στην database');
+			return fail.call(trapezi, conn);
+		}
+
+		trapezi.trapeziNeaDianomi2(conn, new Dianomi({
+			kodikos: res.insertId,
+			dealer: dealer,
+		}), success, fail);
+	});
+
+	return this;
+};
+
+Trapezi.prototype.trapeziNeaDianomi2 = function(conn, dianomi, success, fail) {
+	var trapezi = this, dianomiKodikos, idos, data, query;
+
+	dianomiKodikos = dianomi.dianomiKodikosGet();
+	idos = 'ΔΙΑΝΟΜΗ';
+	data = (new Trapoula()).trapoulaAnakatema().trapoulaXartosiaGet().xartosia2string();
+
+	query = "INSERT INTO `energia` (`dianomi`, `pektis`, `idos`, `data`) VALUES (" +
+		dianomiKodikos + ", " + dianomi.dianomiDealerGet() + ", " +
+		idos.json() + ", " + data.json() + ")";
+	conn.connection.query(query, function(err, res) {
+		if (err || (res.affectedRows != 1)) {
+			console.error('αποτυχία εισαγωγής ενέργειας διανομής στην database');
+			return fail.call(trapezi, conn);
+		}
+
+		trapezi.trapeziNeaDianomi3(conn, dianomi, new Energia({
+			kodikos: res.insertId,
+			dianomi: dianomiKodikos,
+			idos: idos,
+			data: data,
+		}), success);
+	});
+
+	return this;
+};
+
+Trapezi.prototype.trapeziNeaDianomi3 = function(conn, dianomi, energia, callback) {
+	var trapeziKodikos, dianomiKodikos, dealer, fila, kinisiDianomi, kinisiEnergia;
+
+	trapeziKodikos = this.trapeziKodikosGet();
+	dianomiKodikos = dianomi.dianomiKodikosGet();
+	dealer = dianomi.dianomiDealerGet();
+	fila = energia.energiaDataGet();
+
+	kinisiDianomi = new Kinisi({
+		idos: 'DN',
+		data: {
+			kodikos: dianomiKodikos,
+			trapezi: trapeziKodikos,
+			dealer: dealer,
+		},
+	});
+
+	kinisiEnergia = new Kinisi({
+		idos: 'EG',
+		data: {
+			kodikos: energia.energiaKodikosGet(),
+			trapezi: trapeziKodikos,
+			dianomi: dianomiKodikos,
+			pektis: dealer,
+			idos: energia.energiaIdosGet(),
+			data: energia.energiaDataGet(),
+		},
+	});
+
+	callback.call(this, conn, kinisiDianomi, kinisiEnergia);
+	return this;
+};
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// Η μέθοδος "trapeziFilaSaveSet" κρατά τα φύλλα της τρέχουσας διανομής στη
+// λίστα "filaSave" δεικοτοδοτημένα με τη θέση του παίκτη. Αν δεν καθοριστεί
+// θέση καλείται αναδρομικά για όλες τις θέσεις. Τα φύλλα κρατούνται όχι ως
+// χαρτωσιές, αλλά ως strings διότι αλλιώς κρατούνται by reference και στην
+// πορεία αλλάζουν.
+
+Trapezi.prototype.trapeziFilaSaveSet = function(thesi) {
+	var trapezi = this, fila;
+
+	if (thesi === undefined) {
+		this.filaSave = {};
+		this.trapeziThesiWalk(function(thesi) {
+			trapezi.trapeziFilaSaveSet(thesi);
+		});
+
+		return this;
+	}
+
+	fila = this.partidaFilaGet(thesi);
+	if (fila) this.filaSave[thesi] = fila.xartosia2string();
+
+	return this;
+};
+
+// Η μέθοδος "trapeziFilaPrevSet" αντιγράφει τα κρατημένα φύλλα της διανομής
+// από τη λίστα "filaSave" στη λίστα "filaPrev". Αν δεν καθοριστεί θέση καλείται
+// αναδρομικά για όλες τις θέσεις.
+
+Trapezi.prototype.trapeziFilaPrevSet = function(thesi) {
+	var trapezi = this, fila;
+
+	if (thesi === undefined) {
+		this.filaPrev = {};
+		this.trapeziThesiWalk(function(thesi) {
+			trapezi.trapeziFilaPrevSet(thesi);
+		});
+
+		return this;
+	}
+
+	if (!this.hasOwnProperty('filaSave')) return this;
+	fila = this.filaSave[thesi];
+	if (fila) this.filaPrev[thesi] = fila;
+
+	return this;
+};
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// Ακολουθούν projection lists των πεδίων των πινάκων που διαβάζουμε από την
+// database για την επανακατασκευή του σκηνικού.
+
+Trapezi.projection =
+	'`kodikos`, ' +
+	'UNIX_TIMESTAMP(`stisimo`) AS `stisimo`, ' +
+	'`pektis1`, `apodoxi1`, ' +
+	'`pektis2`, `apodoxi2`, ' +
+	'`pektis3`, `apodoxi3`, ' +
+	'UNIX_TIMESTAMP(`poll`) AS `poll`';
+
+Trparam.projection =
+	'`param`, ' +
+	'`timi`';
+
+Simetoxi.projection =
+	'`trapezi`, ' +
+	'`pektis`, ' +
+	'`thesi`';
+
+Telefteos.projection =
+	'`trapezi`, ' +
+	'`thesi`, ' +
+	'`pektis`';
+
+Dianomi.projection =
+	'`kodikos`, ' +
+	'`trapezi`, ' +
+	'UNIX_TIMESTAMP(`enarxi`) AS `enarxi`, ' +
+	'`dealer`, ' +
+	'`kasa1`, `metrita1`, ' +
+	'`kasa2`, `metrita2`, ' +
+	'`kasa3`, `metrita3`, ' +
+	'UNIX_TIMESTAMP(`telos`) AS `telos`';
+
+Energia.projection =
+	'`kodikos`, ' +
+	'`dianomi`, ' +
+	'`pektis`, ' +
+	'`idos`, ' +
+	'`data`, ' +
+	'UNIX_TIMESTAMP(`pote`) AS `pote`';
+
+Sizitisi.projection =
+	'`kodikos`, ' +
+	'`trapezi`, ' +
+	'`pektis`, ' +
+	'`sxolio`, ' +
+	'UNIX_TIMESTAMP(`pote`) AS `pote`';
+
+Sinedria.projection =
+	'`pektis`, ' +
+	'`klidi`, ' +
+	'`ip`, ' +
+	'UNIX_TIMESTAMP(`isodos`) AS `isodos`, ' +
+	'`trapezi`, `thesi`, `simetoxi`';
+
+Pektis.projection =
+	'`login`, ' +
+	'UNIX_TIMESTAMP(`egrafi`) AS `egrafi`, ' +
+	'`onoma`, ' +
+	'`email`, ' +
+	'UNIX_TIMESTAMP(`poll`) AS `poll`';
+
+Peparam.projection =
+	'`param`, ' +
+	'`timi`';
+
+Sxesi.projection =
+	'`sxetizomenos`, ' +
+	'`sxesi`';
+
+Prosklisi.projection =
+	'`kodikos`, ' +
+	'`trapezi`, ' +
+	'`apo`, ' +
+	'`pros`, ' +
+	'UNIX_TIMESTAMP(`epidosi`) AS `epidosi`';
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -1,0 +1,14 @@
+.account_kodikos {
+	opacity: 0.3;
+}
+
+.account_sokidok {
+	visibility: hidden;
+}
+
+iframe[name="action"] {
+	display: none;
+	width: 800px;
+	height: 200px;
+	background-color: #FFFFCC;
+}
