@@ -109,7 +109,6 @@ return true;
 }));
 
 Arena.cpanel.bpanelButtonPush(new PButton({
-	id: 'kasaAlagi',
 	omada: 1,
 	img: 'kasa.png',
 	title: 'Κάσα 50/30',
@@ -259,6 +258,54 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 	title: 'Έξοδος από το τραπέζι',
 	click: function(e) {
 		Client.skiserService('exodosTrapezi').
+		fail(function(err) {
+			Client.skiserFail(err);
+		});
+	},
+}));
+
+Arena.cpanel.bpanelButtonPush(new PButton({
+	omada: 2,
+	img: 'kasaPano.png',
+	title: 'Αύξηση κάσας',
+	check: function() {
+		if (Arena.ego.oxiTrapezi()) return false;
+		if (Arena.ego.oxiPektis()) return false;
+return true;
+		return Arena.ego.trapezi.trapeziIsDianomi();
+	},
+	click: function(e) {
+		var kasa;
+
+		if (Arena.ego.oxiTrapezi()) return;
+		kasa = Arena.ego.trapezi.trapeziKasaGet() + 10;
+		Client.skiserService('trparamSet', 'param=ΚΑΣΑ', 'timi=' + kasa, 'apodoxi=1').
+		done(function(rsp) {
+		}).
+		fail(function(err) {
+			Client.skiserFail(err);
+		});
+	},
+}));
+
+Arena.cpanel.bpanelButtonPush(new PButton({
+	omada: 2,
+	img: 'kasaKato.png',
+	title: 'Μείωση κάσας',
+	check: function() {
+		if (Arena.ego.oxiTrapezi()) return false;
+		if (Arena.ego.oxiPektis()) return false;
+return true;
+		return Arena.ego.trapezi.trapeziIsDianomi();
+	},
+	click: function(e) {
+		var kasa;
+
+		if (Arena.ego.oxiTrapezi()) return;
+		kasa = Arena.ego.trapezi.trapeziKasaGet() - 10;
+		Client.skiserService('trparamSet', 'param=ΚΑΣΑ', 'timi=' + kasa, 'apodoxi=1').
+		done(function(rsp) {
+		}).
 		fail(function(err) {
 			Client.skiserFail(err);
 		});

@@ -131,11 +131,15 @@ Arena.partida.theatisRefreshDOM = function() {
 	Arena.skiniko.skinikoSinedriaWalk(function() {
 		if (this.sinedriaOxiTheatis()) return;
 		if (this.sinedriaOxiTrapezi(Arena.ego.trapeziKodikos)) return;
-		Arena.partida.theatisDOM.
-		prepend(this.tsoxaTheatisDOM);
+		Arena.partida.theatisPushDOM(this);
 	}, 1);
 	return Arena.partida;
 };
+
+Arena.partida.theatisPushDOM = function(sinedria) {
+	Arena.partida.theatisDOM.prepend(sinedria.tsoxaTheatisDOM);
+	return Arena.partida;
+}
 
 Arena.partida.sizitisiRefreshDOM = function() {
 	Arena.sizitisi.trapeziDOM.empty();
