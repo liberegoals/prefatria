@@ -15,17 +15,17 @@ Arena.sizitisi.oxiPagomeni = function() {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
 
 Arena.sizitisi.setup = function() {
-	Arena.sizitisi.panelDOM = $('<div>').appendTo(Arena.pssDOM).css('position', 'relative');
-	Arena.sizitisi.tabelaDOM = $('<div>').attr('id', 'sizitisiTabela').appendTo(Arena.sizitisi.panelDOM);
-	Arena.sizitisi.areaDOM = $('<div>').addClass('pss').appendTo(Arena.pssDOM);
+	Arena.sizitisi.panelDOM = $('<div>').appendTo(Arena.pssDOM);
+	Arena.sizitisi.areaDOM = $('<div>').addClass('pss').appendTo(Arena.pssDOM).css('position', 'relative');
 
+	Arena.sizitisi.tabelaDOM = $('<div>').attr('id', 'sizitisiTabela').appendTo(Arena.sizitisi.areaDOM);
 	Arena.sizitisi.kafenioDOM = $('<div>').addClass('sizitisiArea').appendTo(Arena.sizitisi.areaDOM);
 	Arena.sizitisi.trapeziDOM = $('<div>').addClass('sizitisiArea').appendTo(Arena.sizitisi.areaDOM);
 	Arena.sizitisi.proepiskopisiDOM = $('<div>').attr('id', 'sizitisiProepiskopisi').appendTo(Arena.sizitisi.areaDOM);
 
 	Arena.sizitisi.panel.bpanelRefresh();
 	Arena.sizitisi.panelDOM.
-	append(Arena.sizitisi.panelDOM = Arena.sizitisi.panel.bpanelHorizontal().bpanelSiromeno().bpanelGetDOM());
+	append(Arena.sizitisi.panel.bpanelHorizontal().bpanelSiromeno().bpanelGetDOM());
 	Arena.sizitisi.panelSetup();
 
 	Arena.sizitisi.panel.nottub['metakinisi'].pbuttonGetDOM().
