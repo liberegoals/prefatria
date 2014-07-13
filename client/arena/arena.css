@@ -162,6 +162,9 @@ background-color: teal;
 	position: absolute;
 	top: 170px;
 	left: 10px;
+	max-height: 138px;	/* 6 X 23px */
+	overflow-y: auto;
+	overflow-x: hidden;
 }
 
 /***********************************************************************************************************************/
