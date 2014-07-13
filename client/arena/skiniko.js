@@ -803,10 +803,15 @@ Trapezi.prototype.trapeziCreateDOM = function() {
 	return this;
 };
 
+Trapezi.prototype.trapeziRefreshDOM = function() {
+	this.trapeziCreateDOM();
+	return this;
+};
+
 Trapezi.prototype.trapeziSimetoxiRefreshDOM = function() {
 	this.tsoxaDOM.removeClass('trapeziTsoxaTheatis');
 	if (Arena.ego.oxiTrapezi(this)) return this;
-	if (Arena.ego.oxiTheatis(this)) return this;
+	if (Arena.ego.oxiTheatis()) return this;
 	this.tsoxaDOM.addClass('trapeziTsoxaTheatis');
 	return this;
 };
@@ -1253,8 +1258,6 @@ Skiniko.prototype.pektisEntopismosDOM = function(pektis) {
 	// τις θέσεις του συγκεκριμένου παίκτη.
 
 	this.skinikoThesiWalk(function(thesi) {
-		var thesiDOM;
-
 		if (this.trapeziPektisGet(thesi) !== pektis) return;
 		this.trapeziThesiRefreshDOM(thesi);
 
