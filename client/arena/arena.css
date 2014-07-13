@@ -1436,6 +1436,7 @@ background-color: teal;
 	left: 0px;
 	width: 100%;
 	text-align: center;
+	white-space: nowrap;
 
 	font-family: "Impact", "Charcoal", sans-serif;
 	font-size: 40px;

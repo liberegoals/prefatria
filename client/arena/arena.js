@@ -263,13 +263,16 @@ Arena.setupMode = function() {
 // σε τραπέζι και το αντίστροφο. 
 
 Arena.modeRefresh = function() {
+	var tabela;
+
 	if (Arena.partidaMode()) {
 		Arena.modeTabDOM.text('Καφενείο');
 		$('#stiliKafenio').addClass('stiliIpotoniki');
 		$('#stiliPartida').removeClass('stiliIpotoniki');
 		Arena.sizitisi.kafenioDOM.css('display', 'none');
 		Arena.sizitisi.trapeziDOM.css('display', 'block');
-		Arena.sizitisi.tabelaDOM.text('ΤΡΑΠΕΖΙ');
+		tabela = 'ΤΡΑΠΕΖΙ';
+		if (Arena.ego.trapeziKodikos) tabela += ' ' + Arena.ego.trapeziKodikos;
 	}
 	else {
 		Arena.modeTabDOM.text('Παρτίδα');
@@ -277,9 +280,10 @@ Arena.modeRefresh = function() {
 		$('#stiliKafenio').removeClass('stiliIpotoniki');
 		Arena.sizitisi.trapeziDOM.css('display', 'none');
 		Arena.sizitisi.kafenioDOM.css('display', 'block');
-		Arena.sizitisi.tabelaDOM.text('ΚΑΦΕΝΕΙΟ');
+		tabela = 'ΚΑΦΕΝΕΙΟ';
 	}
 
+	Arena.sizitisi.tabelaDOM.text(tabela);
 	Arena.sizitisi.areaDOM.scrollKato();
 	Arena.viewRefresh();
 
