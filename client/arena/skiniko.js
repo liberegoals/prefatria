@@ -680,7 +680,7 @@ Sinedria.prototype.sinedriaCreateDOM = function() {
 	trapezi = skiniko.skinikoTrapeziGet(trapezi);
 	if (!trapezi) return this;
 
-	trapezi.theatisDOM.prepend(this.theatisDOM);
+	trapezi.trapeziTheatisPushDOM(this);
 	return this;
 };
 
@@ -808,6 +808,9 @@ Trapezi.prototype.trapeziRefreshDOM = function() {
 	return this;
 };
 
+// Η μέθοδος "trapeziSimetoxiRefreshDOM" ενημερώνει το χρώμα της τσόχας του τραπεζιού
+// στο καφενείο, ανάλογα με το αν ο χρήστης είναι θεατής ή όχι στο ανά χείρας τραπέζι.
+
 Trapezi.prototype.trapeziSimetoxiRefreshDOM = function() {
 	this.tsoxaDOM.removeClass('trapeziTsoxaTheatis');
 	if (Arena.ego.oxiTrapezi(this)) return this;
@@ -894,140 +897,8 @@ Trapezi.prototype.trapeziThesiRefreshDOM = function(thesi) {
 	return this;
 };
 
-Trapezi.prototype.trapeziTheatisRefreshDOM = function() {
-	var trapezi = this, skiniko, kodikos;
-
-	this.theatesDOM.empty();
-
-	skiniko = this.trapeziSkinikoGet();
-	if (!skiniko) return this;
-
-	kodikos = this.trapeziKodikosGet();
-	skiniko.skinikoSinedriaWalk(function() {
-		if (this.sinedriaTrapeziGet() !== kodikos) return;
-		if (this.sinedriaOxiTheatis()) return;
-		trapezi.trapeziTheatisAddDOM(this.sinedriaPektisGet(), this.sinedriaThesiGet());
-	}, true, function(s1, s2) {
-		var
-		f1 = Arena.ego.isFilos(s1.sinedriaPektisGet()),
-		f2 = Arena.ego.isFilos(s2.sinedriaPektisGet());
-
-		if (f1 && (!f2)) return 1;
-		if ((!f1) && f2) return -1;
-		if (s1.isodos < s2.isodos) return -1;
-		if (s1.isodos > s2.isodos) return 1;
-		return 0;
-	});
-
-	return this;
-};
-
-Trapezi.prototype.trapeziTheatisAddDOM = function(login, thesi) {
-	var dom, img;
-
-	dom = this.trapeziTheatisGetDOM(login);
-	if (dom) dom.remove();
-
-	if (login.isEgo()) img = 'theatisEgo.png';
-	else if (Arena.ego.isFilos(login)) img = 'theatisFilos.png';
-	else img = 'theatis.png';
-
-	dom = $('<img>').addClass('trapeziTheatis').attr({
-		src: Client.server + 'ikona/kafenio/' + img,
-		title: login,
-	});
-
-	this.theatisDOM[login] = dom;
-	this.theatesDOM.prepend(dom);
-
-	return this;
-};
-
-Trapezi.prototype.trapeziTheatisGetDOM = function(login) {
-	if (!this.hasOwnProperty('theatisDOM')) return undefined;
-	return this.theatisDOM[login];
-};
-
-Trapezi.prototype.trapeziTheatisDeleteDOM = function(login) {
-	var dom;
-
-	dom = this.trapeziTheatisGetDOM(login);
-	if (!dom) return this;
-
-	dom.remove();
-	delete this.theatisDOM[login];
-
-	return this;
-};
-
-Trapezi.prototype.thesiCreateDOM = function(thesi) {
-	var
-	skiniko = this.trapeziSkinikoGet(),
-	dom,
-	pektis,
-	sinedria,
-	trapeziPekti,
-	trapezi,
-	klasi = 'trapeziPektisBox',
-	dom;
-
-	dom = this.trapeziThesiGetDOM(thesi);
-	if (dom) dom.remove();
-
- 	pektis = this.trapeziPektisGet(thesi);
-	sinedria = skiniko.skinikoSinedriaGet(pektis);
-
-	if (pektis) {
-		if (pektis.isEgo()) klasi += ' ego';
-		else klasi += ' pektis';
-	}
-
-	if (sinedria) {
-		trapeziPekti = sinedria.sinedriaTrapeziGet();
-		if (trapeziPekti !== this.trapeziKodikosGet()) klasi += ' alitis';
-		if (!trapeziPekti) klasi += ' rebelos';
-		trapezi = skiniko.skinikoTrapeziGet(trapeziPekti);
-		if (trapezi && (!trapezi.trapeziThesiPekti(pektis))) klasi += ' theatis';
-	}
-	else if (pektis) klasi += ' offline';
-
-	if (!pektis) {
-		klasi += ' fevgatos';
-		pektis = this.trapeziIxotemisGet(thesi);
-		if (pektis) klasi += ' fantasma';
-	}
-	else if (this.trapeziOxiApodoxi(thesi)) klasi += ' xapodoxi';
-	dom = Pektis.pektisLoginDOM(pektis, klasi);
-
-	return(this.thesiDOM[thesi] = dom);
-};
-
-// Υπάρχει περίπτωση να μην έχει δημιουργηθεί ακόμη η λίστα "thesiDOM", οπότε
-// πρέπει να μεριμνήσουμε ώστε να μην «χτυπήσει» το πρόγραμμα.
-
-Trapezi.prototype.trapeziThesiGetDOM = function(thesi) {
-	try {
-		return this.thesiDOM[thesi];
-	} catch (e) {
-		return undefined;
-	}
-};
-
-Trapezi.prototype.trapeziEkremotitaDOM = function(nai) {
-	var dom;
-
-	dom = this.trapeziGetDOM();
-	if (!dom) return this;
-
-	if (nai === undefined) nai = true;
-	if (nai) dom.addClass('trapeziEkremotita').css('cursor', 'wait');
-	else {
-		dom.removeClass('trapeziEkremotita');
-		setTimeout(function() {
-			dom.css('cursor', '');
-		}, 500);
-	}
-
+Trapezi.prototype.trapeziTheatisPushDOM = function(sinedria) {
+	this.theatisDOM.prepend(sinedria.theatisDOM);
 	return this;
 };
 
