@@ -361,6 +361,10 @@ Skiniko.prototype.processKinisiPostAL = function(data) {
 
 	Arena.partidaModeSet();
 	Arena.panelRefresh();
+	if (Arena.ego.oxiTrapezi(trapezi))
+	return this;
+
+	Arena.partida.refreshDOM();
 	return this;
 };
 
@@ -387,12 +391,17 @@ Skiniko.prototype.processKinisiPostPT = function(data) {
 	if (!trapezi) return this;
 
 	sinedria.
-	sinedriaDetachNiofertosDOM().
 	sinedriaDetachRebelosDOM().
 	sinedriaDetachTheatisDOM();
-	trapezi.trapeziThesiRefreshDOM(data.thesi);
+	trapezi.
+	trapeziThesiRefreshDOM().
+	trapeziSimetoxiRefreshDOM();
 	trapezi.theatisDOM.prepend(sinedria.theatisDOM);
 	Arena.panelRefresh();
+	if (Arena.ego.oxiTrapezi(trapezi))
+	return this;
+
+	Arena.partida.refreshDOM();
 	return this;
 };
 
@@ -454,9 +463,7 @@ Skiniko.prototype.processKinisiPostDX = function(data) {
 	Arena.panelRefresh();
 	if (Arena.ego.oxiTrapezi(data.trapezi)) return this;
 
-	Arena.partida.
-	trapeziRefreshDOM();
-
+	Arena.partida.trapeziRefreshDOM();
 	Client.sound.tic();
 	return this;
 };
@@ -485,9 +492,7 @@ Skiniko.prototype.processKinisiPostRL = function(data) {
 	Arena.panelRefresh();
 	if (Arena.ego.oxiTrapezi(data.trapezi)) return this;
 
-	Arena.partida.
-	trapeziRefreshDOM();
-
+	Arena.partida.trapeziRefreshDOM();
 	Client.sound.tic();
 	return this;
 };
@@ -505,8 +510,6 @@ Skiniko.prototype.processKinisiPostTT = function(data) {
 	if (Arena.ego.oxiTrapezi()) return this;
 	if (data.pektis.oxiEgo()) return this;
 
-	Arena.partida.
-	trapeziRefreshDOM();
-
+	Arena.partida.trapeziRefreshDOM();
 	return this;
 };
