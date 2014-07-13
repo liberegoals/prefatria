@@ -391,6 +391,15 @@ Skiniko.prototype.processAlagesPartida = function(data, trapeziPrin) {
 	// στο σκηνικό και αυτό που έχουμε να κάνουμε τώρα είναι, ενδεχομένως, κάποιο
 	// animation που θα καταλήξει στο νέο DOM.
 
+	if (data.partida.sizitisi.length) {
+		Globals.awalk(data.partida.sizitisi, function(i, sizitisi) {
+			if (sizitisi.sizitisiPektisGet().isEgo()) Arena.sizitisi.proepiskopisiDOM.empty();
+			sizitisi.sizitisiCreateDOM();
+		});
+
+		if (Arena.sizitisi.oxiPagomeni()) Arena.sizitisi.areaDOM.scrollKato();
+	}
+
 	return this;
 };
 
@@ -1040,7 +1049,7 @@ Sizitisi.prototype.sizitisiCreateDOM = function(pro) {
 		}
 	}
 
-	dom = pro ? Arena.sizitisi.sizitisiProepiskopisiDOM.empty() : this.DOM = $('<div>');
+	dom = pro ? Arena.sizitisi.proepiskopisiDOM.empty() : this.DOM = $('<div>');
 
 	dom.addClass('sizitisi').
 	append($('<div>').addClass(klasi).css('color', xroma).text(pektis)).

@@ -373,7 +373,7 @@ Arena.partida.pektisRefreshDOM = function(thesi) {
 	// Αλλαγή θέσης θέασης
 
 	dom.off('click').on('click', function(e) {
-		e.stopPropagation();
+		Arena.inputRefocus(e);
 		if (Arena.ego.thesiGet() === thesi) return;
 
 		Client.fyi.pano('Αλλαγή θέσης θέασης. Παρακαλώ περιμένετε…');

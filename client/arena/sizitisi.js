@@ -60,10 +60,15 @@ Arena.sizitisi.panel.bpanelButtonPush(new PButton({
 }));
 
 Arena.sizitisi.panel.bpanelGetDOM().
-append(Arena.inputTrexon = $('<input>').addClass('panelInput').on('click', function(e) {
+append(Arena.sizitisi.inputDOM = $('<input>').addClass('panelInput').
+on('click', function(e) {
 	Arena.inputTrexon = $(this);
 	Arena.inputRefocus();
+}).
+on('keyup', function(e) {
+	Arena.sizitisi.keyup(e);
 }));
+Arena.inputTrexon = Arena.sizitisi.inputDOM;
 
 Arena.sizitisi.panel.bpanelButtonPush(new PButton({
 	id: 'apostoli',
@@ -232,4 +237,64 @@ Arena.sizitisi.panelSetup = function() {
 	});
 
 	return Arena;
-}
+};
+
+Arena.sizitisi.keyup = function(e) {
+	var sxolio;
+
+	if (e) {
+		e.stopPropagation();
+		switch (e.which) {
+		case 13:
+			Arena.sizitisi.apostoli();
+			return Arena;
+		case 27:
+			Arena.sizitisi.katharismos();
+			return Arena;
+		}
+	}
+
+	sxolio = Arena.sizitisi.inputDOM.val().trim();
+	if (sxolio === '') {
+		Arena.sizitisi.katharismos();
+		return Arena;
+	}
+
+	new Sizitisi({
+		pektis: Client.session.pektis,
+		sxolio: sxolio,
+		pote: Globals.toraServer(),
+	}).sizitisiCreateDOM(true);
+	return Arena;
+};
+
+Arena.sizitisi.apostoli = function() {
+	var sxolio;
+
+	sxolio = Arena.sizitisi.inputDOM.val().trim();
+	if (sxolio === '') {
+		Arena.sizitisi.katharismos();
+		return Arena;
+	}
+
+	Client.skiserService((Arena.partidaMode() && Arena.ego.trapezi) ?
+		'sizitisiPartida' : 'sizitisiKafenio', 'sxolio=' + sxolio.uri()).
+	done(function(rsp) {
+		Arena.sizitisi.inputDOM.val('');
+	}).
+	fail(function(err) {
+		Client.skiserFail(err);
+	});
+
+	return Arena;
+};
+
+Arena.sizitisi.katharismos = function() {
+	Arena.sizitisi.inputDOM.val('');
+	Arena.sizitisi.proepiskopisiClearDOM();
+	return Arena;
+};
+
+Arena.sizitisi.proepiskopisiClearDOM = function() {
+	Arena.sizitisi.proepiskopisiDOM.empty();
+};

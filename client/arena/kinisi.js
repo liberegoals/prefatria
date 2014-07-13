@@ -513,3 +513,36 @@ Skiniko.prototype.processKinisiPostTT = function(data) {
 	Arena.partida.trapeziRefreshDOM();
 	return this;
 };
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// SZ -- Σχόλιο συζήτησης
+//
+// Δεδομένα
+//
+//	kodikos		Κωδικός αριθμός σχολίου.
+//	pektis		Login name παίκτη που κάνει το σχόλιο.
+//	trapezi		Κωδικός τραπεζιού συζήτησης.
+//	sxolio		Το σχόλιο αυτό καθαυτό.
+
+Skiniko.prototype.processKinisiPostSZ = function(data) {
+	var tsoxa, trapezi, sizitisi, xoros;
+
+	// Τα σχόλια συζήτησης που αφορούν στο τραπέζι μεταφέρονται με τα
+	// δεδομένα παρτίδας και όχι μέσω κινήσεων.
+
+	if (data.hasOwnProperty('trapezi')) {
+		console.error('παρουσιάστηκαν μεταβολές τύπου "SZ" που αφορούν στην παρτίδα');
+		return this;
+	}
+
+	sizitisi = this.skinikoSizitisiGet(data.kodikos);
+	if (!sizitisi) return this;
+
+	if (sizitisi.sizitisiPektisGet().isEgo())
+	Arena.sizitisi.proepiskopisiClearDOM();
+
+	sizitisi.sizitisiCreateDOM();
+	if (Arena.sizitisi.oxiPagomeni()) Arena.sizitisi.areaDOM.scrollKato();
+	return this;
+};
