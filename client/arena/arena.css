@@ -72,7 +72,6 @@ background-color: teal;
 }
 
 #stiliPartida {
-	position: relative;
 	display: none;
 	width: 580px;
 	min-width: 580px;
@@ -97,6 +96,7 @@ background-color: teal;
 }
 
 .stiliPeriexomeno {
+	position: relative;
 	overflow: hidden;
 }
 

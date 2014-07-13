@@ -456,8 +456,12 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 	},
 	click: function(e) {
 		Arena.partidaDOM.css({
-			position: '',
-			cursor: 'auto',
+			position: 'relative',
+			top: 0,
+			left: 0,
+			bottom: '',
+			right: '',
+			cursor: '',
 		});
 		Client.fyi.kato('Η τσόχα επανατοθετήθηκε σε σταθερή θέση!');
 		Arena.partida.flags.amolimeni = 0;

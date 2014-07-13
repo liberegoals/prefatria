@@ -75,6 +75,7 @@ Arena.sizitisi.panel.bpanelButtonPush(new PButton({
 	img: 'talk.png',
 	title: 'Υποβολή σχολίου',
 	click: function(e) {
+		Arena.sizitisi.apostoli();
 	},
 }));
 
@@ -83,6 +84,7 @@ Arena.sizitisi.panel.bpanelButtonPush(new PButton({
 	img: 'clear.png',
 	title: 'Καθαρισμός πεδίου εισαγωγής σχολίου',
 	click: function(e) {
+		Arena.sizitisi.katharismos();
 	},
 }));
 

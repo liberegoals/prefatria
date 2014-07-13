@@ -1087,7 +1087,7 @@ Sizitisi.prototype.sizitisiSxolioCreateDOM = function(dom) {
 
 	for (i = 0; i < tmima.length; i++) {
 		if (tmima[i].match(/^E[0-9]+:[0-9]+$/)) {
-			Sizitisi.emoticonAppend(dom, tmima[i], xoros);
+			Sizitisi.emoticonAppend(dom, tmima[i]);
 			continue;
 		}
 
@@ -1103,7 +1103,7 @@ Sizitisi.prototype.sizitisiSxolioCreateDOM = function(dom) {
 	return this;
 };
 
-Sizitisi.emoticonAppend = function(dom, s, xoros) {
+Sizitisi.emoticonAppend = function(dom, s) {
 	var tmima, omada, ikona;
 
 	tmima = s.split(':');
@@ -1112,7 +1112,7 @@ Sizitisi.emoticonAppend = function(dom, s, xoros) {
 	omada = parseInt(tmima[0].replace(/^E/, ''));
 	ikona = parseInt(tmima[1]);
 	dom.append($('<img>').addClass('sizitisiEmoticon').
-	attr('src', Client.server + 'ikona/emoticon/set' + omada + '/' + xoros.epanel.lefkoma[omada][ikona]));
+	attr('src', 'ikona/emoticon/set' + omada + '/' + Arena.epanel.lefkoma[omada - 1][ikona - 1]));
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@

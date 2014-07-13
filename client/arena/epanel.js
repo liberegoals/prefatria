@@ -129,27 +129,20 @@ Arena.epanel.setup = function() {
 		var omada, dir;
 
 		omada = i + 1;
-		dir = 'ikona/emoticon/set' + (i + 1) + '/';
+		dir = 'ikona/emoticon/set' + omada + '/';
 		Globals.awalk(setaki, function(i, emoticon) {
-			Arena.epanel.bpanelButtonPush(new PButton({
+			Arena.epanel.bpanelButtonPush(button = new PButton({
 				img: dir + emoticon,
 				omada: omada,
+				emoticon: i + 1,
+				click: function(e) {
+					Arena.sizitisi.inputDOM.val(Arena.sizitisi.inputDOM.val() +
+						'^E' + this.omada + ':' + this.emoticon + '^');
+					Arena.sizitisi.keyup();
+				},
 			}));
 		});
 	});
 
 	return Arena.epanel;
 };
-
-/*
-Kafenio.epanel.iconDOM = function(omada, img, xoros) {
-	if (xoros === undefined) xoros = Kafenio;
-	return $('<img>').data('omada', omada).
-	attr('src', Client.server + 'ikona/emoticon/set' + omada + '/' + xoros.epanel.lefkoma[omada][img]).
-	on('click', function(e) {
-		xoros.sizitisiInputDOM.val(xoros.sizitisiInputDOM.val() + '^E' + omada + ':' + img + '^');
-		xoros.inputRefocus(e);
-		Kafenio.sizitisiKeyup(null, xoros);
-	});
-};
-*/
