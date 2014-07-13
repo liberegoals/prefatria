@@ -68,13 +68,22 @@ Arena.partida.setup = function() {
 	return Arena;
 };
 
-Arena.partida.refreshDOM = function() {
-	var trapezi;
+// Η function "refreshDOM" επαναδιαμορφώνει τα βασικά DOM elements της παρτίδας,
+// ήτοι την τσόχα και τους θεατές. Αν επιθυμούμε επναδιαμόρφσωη και της συζήτησης
+// της συγκεκριμένης παρτίδας, τότε περνάμε σχετική παράμετρο.
+
+Arena.partida.refreshDOM = function(opts) {
+	if (opts === undefined) opts = {};
+	else if (opts === true) opts = {
+		sizitisi: true,
+	};
 
 	Arena.partida.
 	trapeziRefreshDOM().
-	theatisRefreshDOM().
-	sizitisiRefreshDOM();
+	theatisRefreshDOM();
+
+	if (opts.sizitisi)
+	Arena.partida.sizitisiRefreshDOM();
 
 	return Arena.partida;
 };

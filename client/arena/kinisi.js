@@ -131,7 +131,7 @@ Skiniko.prototype.processKinisiPostET = function(data) {
 	trapezi.theatisDOM.prepend(sinedria.theatisDOM);
 
 	if (Arena.ego.isTrapezi(trapezi))
-	Arena.partida.refreshDOM();
+	Arena.partida.refreshDOM(true);
 
 	Arena.partidaModeSet();
 	Arena.panelRefresh();
@@ -364,7 +364,7 @@ Skiniko.prototype.processKinisiPostAL = function(data) {
 	if (Arena.ego.oxiTrapezi(trapezi))
 	return this;
 
-	Arena.partida.refreshDOM();
+	Arena.partida.refreshDOM(trapeziPrin != Arena.ego.trapezi);
 	return this;
 };
 

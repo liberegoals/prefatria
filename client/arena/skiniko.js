@@ -376,14 +376,14 @@ Skiniko.prototype.processAlagesPartida = function(data, trapeziPrin) {
 
 	trapeziMeta = Arena.ego.sinedria.sinedriaTrapeziGet();
 	if (!trapeziMeta) {
-		if (trapeziPrin) Arena.partida.refreshDOM();
+		if (trapeziPrin) Arena.partida.refreshDOM(true);
 		return this;
 	}
 
 	this.processPartidaData(data);
 
 	if (trapeziMeta != trapeziPrin) {
-		Arena.partida.refreshDOM();
+		Arena.partida.refreshDOM(true);
 		return this;
 	}
 
@@ -478,7 +478,7 @@ Skiniko.prototype.skinikoCreateDOM = function(data) {
 
 	// Ενημερώνουμε τα τμήματα του DOM που αφορούν στην παρτίδα του παίκτη.
 
-	Arena.partida.refreshDOM();
+	Arena.partida.refreshDOM(true);
 
 	// Η συζήτηση του καφενείου και το τραπεζιού εμφανίζεται στον ίδιο χώρο.
 	// Έχουν ήδη προστεθεί τα σχετικά DOM elements και κανονίζουμε τώρα την
@@ -1091,6 +1091,11 @@ Sizitisi.prototype.sizitisiSxolioCreateDOM = function(dom) {
 			continue;
 		}
 
+		if (tmima[i].match(/^http:\/\/youtu\.be\//)) {
+			Sizitisi.youtubeAppend(dom, tmima[i]);
+			continue;
+		}
+
 		if (tmima[i] === '~') {
 			dom.append($('<br />'));
 			continue;
@@ -1113,6 +1118,11 @@ Sizitisi.emoticonAppend = function(dom, s) {
 	ikona = parseInt(tmima[1]);
 	dom.append($('<img>').addClass('sizitisiEmoticon').
 	attr('src', 'ikona/emoticon/set' + omada + '/' + Arena.epanel.lefkoma[omada - 1][ikona - 1]));
+};
+
+Sizitisi.youtubeAppend = function(dom, s) {
+	dom.append(s.replace(/^http:\/\/youtu\.be/,'<iframe width="420" height="315" src="//www.youtube.com/embed') +
+		'?rel=0" frameborder="0" allowfullscreen></iframe>');
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
