@@ -25,7 +25,7 @@ Arena.sizitisi.setup = function() {
 
 	Arena.sizitisi.panel.bpanelRefresh();
 	Arena.sizitisi.panelDOM.
-	append(Arena.sizitisi.panel.bpanelHorizontal().bpanelSiromeno().bpanelGetDOM());
+	append(Arena.sizitisi.panelDOM = Arena.sizitisi.panel.bpanelHorizontal().bpanelSiromeno().bpanelGetDOM());
 	Arena.sizitisi.panelSetup();
 
 	Arena.sizitisi.panel.nottub['metakinisi'].pbuttonGetDOM().
@@ -225,7 +225,7 @@ Arena.sizitisi.panelSetup = function() {
 		}).
 		on('mouseup', function(e) {
 			e.stopPropagation();
-			Arena.anazitisi.panelDOM.css('cursor', '');
+			Arena.sizitisi.panelDOM.css('cursor', '');
 			Arena.sizitisi.panel.bpanelGetButton('metakinisi').
 			pbuttonGetDOM().removeClass('panelButtonCandi');
 			$(document).off('mousemove mouseoff');
