@@ -1121,8 +1121,30 @@ Sizitisi.emoticonAppend = function(dom, s) {
 };
 
 Sizitisi.youtubeAppend = function(dom, s) {
-	dom.append(s.replace(/^http:\/\/youtu\.be/,'<iframe width="420" height="315" src="//www.youtube.com/embed') +
-		'?rel=0" frameborder="0" allowfullscreen></iframe>');
+	var iframe;
+
+	dom.
+	prepend(iframe = $('<div>').addClass('sizitisiIframe')).
+	prepend($('<img>').addClass('sizitisiYoutube').attr({
+		src: 'ikona/external/youtube.jpg',
+		title: 'Κλικ για βίντεο',
+	}).
+	data('video', s.replace(/^http:\/\/youtu\.be/, '')).
+	on('click', function(e) {
+		$('.sizitisiIframe').empty();
+		if ($(this).data('klikarismeno'))
+		return $(this).removeData('klikarismeno');
+
+		$(this).data('klikarismeno', true);
+		video = $(this).data('video');
+		Arena.inputRefocus(e);
+		iframe.html($('<iframe>').attr({
+			width: 420,
+			height: 315,
+			frameborder: 0,
+			src: '//www.youtube.com/embed' + $(this).data('video') + '?rel=0',
+		}));
+	}));
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@

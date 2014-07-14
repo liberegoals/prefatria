@@ -1497,6 +1497,17 @@ background-color: teal;
 	width: 30px;
 }
 
+.sizitisiYoutube {
+	position: relative;
+	display: inline-block;
+	width: 80px;
+	cursor: pointer;
+}
+
+.sizitisiIframe {
+	display: inline-block;
+}
+
 /***********************************************************************************************************************/
 
 .rebelos {
