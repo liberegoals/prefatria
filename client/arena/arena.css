@@ -160,11 +160,12 @@ background-color: teal;
 
 #theatis {
 	position: absolute;
-	top: 170px;
+	top: 165px;
 	left: 10px;
-	max-height: 138px;	/* 6 X 23px */
+	max-height: 230px;	/* 10 X 23px */
 	overflow-y: auto;
 	overflow-x: hidden;
+	direction: rtl;
 }
 
 /***********************************************************************************************************************/

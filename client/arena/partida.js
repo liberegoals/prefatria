@@ -147,6 +147,7 @@ Arena.partida.theatisRefreshDOM = function() {
 
 Arena.partida.theatisPushDOM = function(sinedria) {
 	Arena.partida.theatisDOM.prepend(sinedria.tsoxaTheatisDOM);
+	Arena.partida.theatisDOM.prepend($('<div>').addClass('pektis tsoxaTheatis').text('test'));
 	return Arena.partida;
 }
 
@@ -157,6 +158,10 @@ Arena.partida.sizitisiRefreshDOM = function() {
 	Arena.ego.trapezi.trapeziSizitisiWalk(function() {
 		this.sizitisiCreateDOM();
 	}, 1);
+
+	if (Arena.sizitisi.oxiPagomeni())
+	Arena.sizitisi.areaDOM.scrollKato();
+
 	return Arena.partida;
 };
 
