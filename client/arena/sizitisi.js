@@ -307,3 +307,176 @@ Arena.sizitisi.katharismos = function() {
 Arena.sizitisi.proepiskopisiClearDOM = function() {
 	Arena.sizitisi.proepiskopisiDOM.empty();
 };
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
+
+Sizitisi.zebraPaleta = [
+	'#B45F04',
+	'#B4045F',
+	'#006600',
+	'#8A0808',
+	'#084B8A',
+	'#CD5C5C',
+	'#663300',
+	'#D52A00',
+	'#666699',
+];
+
+Sizitisi.zebraIndex = Sizitisi.zebraPaleta.length;
+
+Sizitisi.zebraXroma = {};
+
+Sizitisi.prototype.sizitisiGetDOM = function() {
+	return this.DOM;
+};
+
+Sizitisi.prototype.sizitisiCreateDOM = function(pro) {
+	var pektis, klasi, xroma, dom, sxolioDOM;
+
+	pektis = this.sizitisiPektisGet();
+	klasi = 'sizitisiPektis';
+	if (pektis.isEgo()) {
+		klasi += ' sizitisiPektisEgo';
+		xroma = '#144C88';
+	}
+	else {
+		xroma = Sizitisi.zebraXroma[pektis];
+		if (!xroma) {
+			xroma = Sizitisi.zebraPaleta[Sizitisi.zebraIndex++ % Sizitisi.zebraPaleta.length];
+			Sizitisi.zebraXroma[pektis] = xroma;
+		}
+	}
+
+	dom = pro ? Arena.sizitisi.proepiskopisiDOM.empty() : this.DOM = $('<div>');
+
+	dom.addClass('sizitisi').
+	append($('<div>').addClass(klasi).css('color', xroma).text(pektis)).
+	append(sxolioDOM = $('<div>').addClass('sizitisiSxolio'));
+
+	this.sizitisiSxolioCreateDOM(sxolioDOM);
+
+	if (pro) {
+		if (Arena.sizitisi.oxiPagomeni()) Arena.sizitisi.areaDOM.scrollKato();
+		return this;
+	}
+
+	this.DOM.appendTo(this.sizitisiTrapeziGet() ? Arena.sizitisi.trapeziDOM : Arena.sizitisi.kafenioDOM);
+	return this;
+};
+
+Sizitisi.prototype.sizitisiSxolioCreateDOM = function(dom) {
+	var sxolio, tmima, dom, html, i;
+
+	sxolio = this.sizitisiSxolioGet();
+	tmima = sxolio.split('^');
+
+	dom.empty();
+
+	switch (tmima[0]) {
+	
+	// Αν το πρώτο πεδίο του σχολίου είναι "FP" τότε πρόκειται για τα φύλλα της
+	// προηγούμενης διανομής του παίκτη.
+
+	case 'FP':
+		sxolio = tmima[1].string2xartosia().xartosiaTaxinomisi().xartosiaDOM();
+		dom.append(sxolio);
+		return this;
+	}
+
+	for (i = 0; i < tmima.length; i++) {
+		if (tmima[i].match(/^E[0-9]+:[0-9]+$/)) {
+			Sizitisi.emoticonAppend(dom, tmima[i]);
+			continue;
+		}
+
+		if (tmima[i].match(/^http:\/\/youtu\.be\//)) {
+			Sizitisi.youtubeAppend(dom, tmima[i]);
+			continue;
+		}
+
+		if (tmima[i].match(/^https?:\/\/.*\.(png|jpg|gif)[-+]*$/i)) {
+			Sizitisi.ikonaAppend(dom, tmima[i]);
+			continue;
+		}
+
+		if (tmima[i] === '~') {
+			dom.append($('<br />'));
+			continue;
+		}
+
+		sxolio = tmima[i].replace(/</g, '&lt;');
+		dom.append(sxolio);
+	}
+
+	return this;
+};
+
+Sizitisi.emoticonAppend = function(dom, s) {
+	var tmima, omada, ikona;
+
+	tmima = s.split(':');
+	if (tmima.length != 2) return;
+
+	omada = parseInt(tmima[0].replace(/^E/, ''));
+	ikona = parseInt(tmima[1]);
+	dom.append($('<img>').addClass('sizitisiEmoticon').
+	attr('src', 'ikona/emoticon/set' + omada + '/' + Arena.epanel.lefkoma[omada - 1][ikona - 1]));
+};
+
+Sizitisi.youtubeAppend = function(dom, s) {
+	var iframe;
+
+	dom.
+	append($('<img>').addClass('sizitisiYoutube').attr({
+		src: 'ikona/external/youtube.jpg',
+		title: 'Κλικ για βίντεο',
+	}).
+	data('video', s.replace(/^http:\/\/youtu\.be/, '')).
+	on('click', function(e) {
+		Arena.inputRefocus(e);
+		$('.sizitisiIframe').empty();
+		if ($(this).data('klikarismeno'))
+		return $(this).removeData('klikarismeno').attr('title', 'Κλικ για επανεμφάνιση του βίντεο');
+
+		$('.sizitisiYoutube').removeData('klikarismeno');
+		$(this).data('klikarismeno', true).attr('title', 'Κλικ για απόκρυψη του βίντεο');
+		iframe.html($('<iframe>').attr({
+			width: 420,
+			height: 315,
+			frameborder: 0,
+			src: '//www.youtube.com/embed' + $(this).data('video') + '?rel=0',
+		}));
+	})).
+	append(iframe = $('<div>').addClass('sizitisiIframe'));
+};
+
+Sizitisi.ikonaAppend = function(dom, s) {
+	var sinPlin, img, width;
+
+	sinPlin = [];
+	for (i = 0; i < s.length; i++) {
+		switch (s.substr(i, 1)) {
+		case '+':
+			sinPlin.push(2);
+			break;
+		case '-':
+			sinPlin.push(0.5);
+			break;
+		default:
+			sinPlin = [];
+			break;
+		}
+	}
+
+	dom.
+	append(img = $('<img>').attr({
+		src: s.replace(/[-+]*$/, ''),
+	}));
+
+	if (!sinPlin.length) return;
+	width = 20;
+	for (i = 0; i < sinPlin.length; i++) {
+		width *= sinPlin[i];
+	}
+	img.css('width', width + '%');
+};
