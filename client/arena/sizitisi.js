@@ -225,7 +225,10 @@ Arena.sizitisi.panelSetup = function() {
 
 			Arena.prosklisi.areaDOM.css('height', pH + 'px');
 			Arena.anazitisi.areaDOM.css('height', aH + 'px');
-			Arena.sizitisi.areaDOM.css('height', sH + 'px');
+			Arena.sizitisi.areaDOM.css({
+				display: sH > 1 ? 'block' : 'none',
+				height: sH + 'px',
+			});
 		}).
 		on('mouseup', function(e) {
 			e.stopPropagation();

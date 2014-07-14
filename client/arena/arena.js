@@ -88,9 +88,16 @@ $(document).ready(function() {
 	skiserService('salute').
 	done(function(rsp) {
 		Arena.skiniko.stisimo(function() {
-			if (Arena.ego.isTrapezi()) Arena.partidaModeSet();
 			Client.fyi.pano('Καλώς ήλθατε στον «Πρεφαδόρο»');
 			Client.fyi.kato('Καλή διασκέδαση και καλές σολαρίες!');
+			if (Arena.ego.oxiTrapezi()) return;
+
+			// Αν ο παίκτης βρίσκεται σε κάποιο τραπέζι, τον περνάμε αυτόματα
+			// σε mode παρτίδας, αλλά κάνουμε εμφανές το tab που τον επαναφέρει
+			// στο καφενείο.
+
+			Arena.partidaModeSet();
+			Arena.modeTabDOM.kounima(20);
 		});
 	}).
 	fail(function(rsp) {
