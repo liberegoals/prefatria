@@ -1434,8 +1434,8 @@ background-color: teal;
 #sizitisiTabela {
 	position: absolute;
 	top: 0px;
-	left: 0px;
-	width: 100%;
+	left: 20px;
+	width: 90%;
 	text-align: center;
 	white-space: nowrap;
 

@@ -15,10 +15,14 @@ Arena.sizitisi.oxiPagomeni = function() {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
 
 Arena.sizitisi.setup = function() {
-	Arena.sizitisi.panelDOM = $('<div>').appendTo(Arena.pssDOM);
-	Arena.sizitisi.areaDOM = $('<div>').addClass('pss').appendTo(Arena.pssDOM).css('position', 'relative');
+	var dom;
 
-	Arena.sizitisi.tabelaDOM = $('<div>').attr('id', 'sizitisiTabela').appendTo(Arena.sizitisi.areaDOM);
+	Arena.sizitisi.panelDOM = $('<div>').appendTo(Arena.pssDOM);
+	dom = $('<div>').appendTo(Arena.pssDOM).css('position', 'relative');
+
+	Arena.sizitisi.tabelaDOM = $('<div>').attr('id', 'sizitisiTabela').appendTo(dom);
+	Arena.sizitisi.areaDOM = $('<div>').addClass('pss').appendTo(dom);
+
 	Arena.sizitisi.kafenioDOM = $('<div>').addClass('sizitisiArea').appendTo(Arena.sizitisi.areaDOM);
 	Arena.sizitisi.trapeziDOM = $('<div>').addClass('sizitisiArea').appendTo(Arena.sizitisi.areaDOM);
 	Arena.sizitisi.proepiskopisiDOM = $('<div>').attr('id', 'sizitisiProepiskopisi').appendTo(Arena.sizitisi.areaDOM);
