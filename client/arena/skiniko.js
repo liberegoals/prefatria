@@ -1124,27 +1124,27 @@ Sizitisi.youtubeAppend = function(dom, s) {
 	var iframe;
 
 	dom.
-	prepend(iframe = $('<div>').addClass('sizitisiIframe')).
-	prepend($('<img>').addClass('sizitisiYoutube').attr({
+	append($('<img>').addClass('sizitisiYoutube').attr({
 		src: 'ikona/external/youtube.jpg',
 		title: 'Κλικ για βίντεο',
 	}).
 	data('video', s.replace(/^http:\/\/youtu\.be/, '')).
 	on('click', function(e) {
+		Arena.inputRefocus(e);
 		$('.sizitisiIframe').empty();
 		if ($(this).data('klikarismeno'))
-		return $(this).removeData('klikarismeno');
+		return $(this).removeData('klikarismeno').attr('title', 'Κλικ για επανεμφάνιση του βίντεο');
 
-		$(this).data('klikarismeno', true);
-		video = $(this).data('video');
-		Arena.inputRefocus(e);
+		$('.sizitisiYoutube').removeData('klikarismeno');
+		$(this).data('klikarismeno', true).attr('title', 'Κλικ για απόκρυψη του βίντεο');
 		iframe.html($('<iframe>').attr({
 			width: 420,
 			height: 315,
 			frameborder: 0,
 			src: '//www.youtube.com/embed' + $(this).data('video') + '?rel=0',
 		}));
-	}));
+	})).
+	append(iframe = $('<div>').addClass('sizitisiIframe'));
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
