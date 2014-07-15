@@ -212,6 +212,48 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 }));
 
 Arena.cpanel.bpanelButtonPush(new PButton({
+	omada: 1,
+	check: function() {
+		var trapezi;
+
+		if (Arena.ego.oxiTrapezi()) return false;
+		if (Arena.ego.oxiPektis()) return false;
+		if (Debug.flagGet('apodoxiPanta')) return true;
+		return Arena.ego.trapezi.trapeziOxiDianomi();
+	},
+	refresh: function(img) {
+		var dom, img, thesi;
+
+		dom = this.pbuttonGetDOM();
+		img = dom.children('.panelIcon');
+
+		if (Arena.ego.oxiTrapezi()) return;
+		thesi = Arena.ego.trapezi.trapeziThesiPekti(Client.session.pektis);
+
+		if (Arena.ego.trapezi.trapeziIsApodoxi(thesi)) img.attr({
+			src: 'ikona/panel/ixodopa.png',
+			title: 'Επαναδιαπραγμάτευση όρων παιχνιδιού',
+		});
+		else if (Arena.ego.trapezi.trapeziApodoxiCount() === (Prefadoros.thesiMax - 1)) img.attr({
+			src: 'ikona/panel/go.jpg',
+			title: 'Αποδοχή όρων και εκκίνηση της παρτίδας',
+		});
+		else img.attr({
+			src: 'ikona/panel/apodoxi.png',
+			title: 'Αποδοχή όρων παιχνιδιού',
+		});
+	},
+	click: function(e) {
+		Client.skiserService('apodoxi').
+		done(function(rsp) {
+		}).
+		fail(function(err) {
+			Client.skiserFail(err);
+		});
+	},
+}));
+
+Arena.cpanel.bpanelButtonPush(new PButton({
 	id: 'ananeosi',
 	omada: 1,
 	img: 'bugFix.png',

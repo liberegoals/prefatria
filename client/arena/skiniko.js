@@ -914,7 +914,7 @@ Trapezi.prototype.trapeziTheatisPushDOM = function(sinedria) {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 Prosklisi.prototype.prosklisiCreateDOM = function() {
-	var prosklisi = this, kodikos, del, klikdel = false, kliapodoxi = false;
+	var prosklisi = this, kodikos, del, klikdel = false;
 
 	this.prosklisiDeleteDOM();
 
