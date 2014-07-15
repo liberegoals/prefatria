@@ -421,9 +421,7 @@ Skiniko.prototype.processKinisiPostTS = function(data) {
 	trapezi = this.skinikoTrapeziGet(data.trapezi);
 	if (!trapezi) return this;
 
-	trapezi.
-	trapeziDataRefreshDOM().
-	trapeziOptsRefreshDOM();
+	trapezi.trapeziRefreshDOM();
 	Arena.panelRefresh();
 	if (Arena.ego.oxiTrapezi(data.trapezi)) return this;
 
@@ -563,7 +561,7 @@ Skiniko.prototype.processKinisiPostAX = function(data) {
 	trapezi = this.skinikoTrapeziGet(data.trapezi);
 	if (!trapezi) return this;
 
-	trapezi.trapeziCreateDOM();
+	trapezi.trapeziThesiRefreshDOM();
 	Arena.panelRefresh();
 	if (Arena.ego.oxiTrapezi(data.trapezi)) return this;
 

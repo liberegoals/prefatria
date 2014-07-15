@@ -881,7 +881,9 @@ Trapezi.prototype.trapeziThesiRefreshDOM = function(thesi) {
 	if (!skiniko) return this;
 
 	dom = this.thesiDOM[thesi];
-	dom.removeClass('offline fantasma filos apoklismenos ego');
+	dom.removeClass('offline fantasma filos apoklismenos ego apodoxi xapodoxi');
+
+	dom.addClass(this.trapeziIsApodoxi(thesi) ? 'apodoxi' : 'xapodoxi');
 
 	login = this.trapeziPektisGet(thesi);
 	if (login) {
