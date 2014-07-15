@@ -28,6 +28,10 @@ BPanel.prototype.bpanelGetDOM = function() {
 	return this.DOM;
 };
 
+BPanel.prototype.bpanelIconGetDOM = function() {
+	return this.bpanelGetDOM().children('.panelIcon');
+};
+
 BPanel.prototype.bpanelVertical = function() {
 	this.bpanelGetDOM().addClass('panelV').
 	find('.panelButton').addClass('panelButtonV').

@@ -295,7 +295,7 @@ Service.trapezi.apodoxi = function(nodereq) {
 		return;
 	}
 
-	if ((!Debug.flagGet('apodoxiPanta')) && trapezi.trapeziIsDianomi()) {
+	if ((!Debug.flagGet('rithmisiPanta')) && trapezi.trapeziIsDianomi()) {
 		trapezi.trapeziXeklidoma();
 		nodereq.error('Υπάρχει διανομή');
 		return;

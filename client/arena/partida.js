@@ -415,10 +415,10 @@ Arena.partida.pektisDataRefreshDOM = function(thesi, iseht, domMain, domOnoma) {
 	if (domMain === undefined) domMain = Arena.partida['pektisMain' + iseht + 'DOM'];
 	if (domOnoma === undefined) domOnoma = Arena.partida['pektisOnoma' + iseht + 'DOM'];
 
-	domMain.removeClass('xapodoxi offline fevgatos');
+	domMain.removeClass('apodoxi xapodoxi offline fevgatos');
 	domOnoma.removeClass('fantasma tsoxaSxesiFilos tsoxaSxesiApoklismenos');
 
-	if (Arena.ego.trapezi.trapeziOxiApodoxi(thesi)) domMain.addClass('xapodoxi');
+	domMain.addClass(Arena.ego.trapezi.trapeziIsApodoxi(thesi) ? 'apodoxi' : 'xapodoxi');
 
 	login = Arena.ego.trapezi.trapeziPektisGet(thesi);
 	if (!login) {
