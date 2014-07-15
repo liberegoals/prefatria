@@ -92,12 +92,6 @@ Arena.partida.clearDOM = function() {
 	Arena.partida.theatisDOM.children().detach();
 	Arena.partida.tsoxaDOM.find('.tsoxaTelosIcon').remove();
 	Arena.partida.dataPanoDOM.empty();
-	Arena.partida.pektis3DOM.empty();
-	Arena.partida.fila3DOM.empty();
-	Arena.partida.pektis2DOM.empty();
-	Arena.partida.fila2DOM.empty();
-	Arena.partida.pektis1DOM.empty();
-	Arena.partida.fila1DOM.empty();
 	Arena.partida.dataKatoDOM.empty();
 	Arena.partida.tzogosDOM.empty();
 	Arena.partida.azabDOM.empty();
@@ -305,7 +299,8 @@ Arena.partida.pektisClearDOM = function(thesi) {
 		Arena.partida.pektisClearDOM(thesi);
 	});
 
-	Arena.partida['pektis' + Arena.ego.thesiMap(thesi) + 'DOM'].empty();
+	Arena.partida['pektis' + thesi + 'DOM'].empty();
+	//Arena.partida['fila' + thesi + 'DOM'].empty();
 	return Arena.partida;
 };
 
@@ -316,10 +311,10 @@ Arena.partida.pektisRefreshDOM = function(thesi) {
 		Arena.partida.pektisRefreshDOM(thesi);
 	});
 
-	Arena.partida.pektisClearDOM(thesi);
+	iseht = Arena.ego.thesiMap(thesi);
+	Arena.partida.pektisClearDOM(iseht);
 	if (Arena.ego.oxiTrapezi()) return Arena.partida;
 
-	iseht = Arena.ego.thesiMap(thesi);
 	dom = Arena.partida['pektis' + iseht + 'DOM'].
 	append(domMain = $('<div>').attr('id', 'tsoxaPektisMain' + iseht).addClass('tsoxaPektisMain').
 	append(domOnoma = $('<div>').addClass('tsoxaPektisOnoma')).
