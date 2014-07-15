@@ -139,9 +139,13 @@ Arena.partida.theatisRefreshDOM = function() {
 	return Arena.partida;
 };
 
+// Για λόγους που δεν γνωρίζω, η σκίαση των θεατών στην τσόχα «ακυρώνεται» δεξιά
+// λόγω του scroll overflow. Για να το παρακάμψω χρησιμοποιώ φαρδύτερο κέλυφος.
+
 Arena.partida.theatisPushDOM = function(sinedria) {
-	Arena.partida.theatisDOM.prepend(sinedria.tsoxaTheatisDOM);
-	Arena.partida.theatisDOM.prepend($('<div>').addClass('pektis tsoxaTheatis').text('test'));
+	Arena.partida.theatisDOM.prepend($('<div>').addClass('tsoxaTheatisKelifos').append(sinedria.tsoxaTheatisDOM));
+	Arena.partida.theatisDOM.prepend($('<div>').addClass('tsoxaTheatisKelifos').
+		append($('<div>').addClass('pektis tsoxaTheatis').text('test')));
 	return Arena.partida;
 }
 
