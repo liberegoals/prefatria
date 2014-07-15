@@ -546,3 +546,28 @@ Skiniko.prototype.processKinisiPostSZ = function(data) {
 	if (Arena.sizitisi.oxiPagomeni()) Arena.sizitisi.areaDOM.scrollKato();
 	return this;
 };
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// AX -- Αποδοχή/Επαναδιαπραγμάτευση όρων
+//
+// Δεδομένα
+//
+//	trapezi		Κωδικός τραπεζιού.
+//	thesi		Θέση παίκτη που εκτελεί την ενέργεια.
+//	apodoxi		ΝΑΙ = Αποδοχή, ΟΧΙ = Επαναδιαπραγμάτευση.
+
+Skiniko.prototype.processKinisiPostAX = function(data) {
+	var trapezi;
+
+	trapezi = this.skinikoTrapeziGet(data.trapezi);
+	if (!trapezi) return this;
+
+	trapezi.trapeziCreateDOM();
+	Arena.panelRefresh();
+	if (Arena.ego.oxiTrapezi(data.trapezi)) return this;
+
+	Arena.partida.refreshDOM();
+	Client.sound.tic();
+	return this;
+};
