@@ -370,13 +370,6 @@ background-color: rgba(0, 128, 128, 0.2);
 	margin-right: 4px;
 }
 
-#tsoxaDianomi:after {
-	content: ',';
-	color: #303030;
-	font-weight: normal;
-	font-style: italic;
-}
-
 #tsoxaKasa {
 	display: inline-block;
 	font-weight: bold;
@@ -743,8 +736,8 @@ background-color: rgb(211, 211, 108);
 	width: 226px;
 	text-align: center;
 	white-space: nowrap;
-/*
 	background-color: rgba(185, 114, 36, 0.35);
+/*
 */
 }
 
@@ -778,7 +771,7 @@ background-color: rgb(211, 211, 108);
 */
 
 #tsoxaFila1 {
-	bottom: 36px;
+	bottom: 30px;
 	right: 0;
 	height: 120px;
 	width: 310px;
