@@ -469,7 +469,6 @@ Sinedria.prototype.tsoxaNeotera = function() {
 	trapeziKodikos = trapezi.trapeziKodikosGet();
 	this.tsoxaCheck(trapeziKodikos);
 	tsoxa = this.tsoxa[trapeziKodikos];
-console.log('TSOXA', trapeziKodikos, tsoxa);
 
 	this.
 	tsoxaNeoteraSizitisi(nodereq, trapezi, tsoxa).

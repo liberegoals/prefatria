@@ -165,7 +165,7 @@ Skiniko.prototype.stisimoDianomi = function(conn) {
 			Globals.awalk(rows, function(i, dianomi) {
 				trapezi.trapeziDianomiSet(dianomi = new Dianomi(dianomi));
 				trapezi.dianomiArray.push(dianomi);
-				skiniko.izepart[trapezi] = dianomi;
+				skiniko.izepart[kodikos] = dianomi;
 			});
 
 			skiniko.stisimoDianomi(conn);
