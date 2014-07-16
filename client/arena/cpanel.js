@@ -351,6 +351,30 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 }));
 
 Arena.cpanel.bpanelButtonPush(new PButton({
+	omada: 2,
+	img: 'frog.png',
+	title: 'Εμφάνιση/απόκρυψη φύλλων Ανατολής και Δύσης',
+	check: function() {
+		if (Debug.flagGet('striptiz')) return true;
+		if (Arena.ego.isPektis()) return false;
+		return true;
+		//return Kafenio.egoPektis.pektisIsVip();
+	},
+	click: function(e) {
+		if (Arena.partida.flags.fanera23) {
+			delete Arena.partida.flags.fanera23;
+			Arena.partida.fila3DOM.css('display', 'none');
+			Arena.partida.fila2DOM.css('display', 'none');
+		}
+		else {
+			Arena.partida.flags.fanera23 = true;
+			Arena.partida.fila3DOM.css('display', 'block');
+			Arena.partida.fila2DOM.css('display', 'block');
+		}
+	},
+}));
+
+Arena.cpanel.bpanelButtonPush(new PButton({
 	id: 'exodos',
 	omada: 2,
 	check: function() {

@@ -427,10 +427,10 @@ background-color: rgba(0, 128, 128, 0.2);
 
 .tsoxaPektis {
 	position: absolute;
-/*
 	width: 230px;
 	height: 90px;
 	text-align: center;
+/*
 	overflow: hidden;
 
 	border-style: solid;
@@ -657,17 +657,17 @@ background-color: rgb(211, 211, 108);
 
 #tsoxaPektisDilosi3 {
 	top: 90px;
-	left: 10px;
+	left: 0px;
 }
 
 #tsoxaPektisDilosi2 {
 	top: 90px;
-	right: 10px;
+	right: 0px;
 }
 
 #tsoxaPektisDilosi1 {
 	bottom: 90px;
-	left: 10px;
+	left: 0px;
 }
 
 /********************************************************************************************************************/
@@ -737,6 +737,7 @@ background-color: rgb(211, 211, 108);
 	text-align: center;
 	white-space: nowrap;
 	background-color: rgba(185, 114, 36, 0.35);
+	z-index: 1;
 /*
 */
 }
@@ -779,53 +780,53 @@ background-color: rgb(211, 211, 108);
 
 /********************************************************************************************************************/
 
-.tsoxa_xartosiaContainer {
+.tsoxaXartosiaContainer {
 	display: inline-block;
 }
 
-.tsoxa_xartosiaFilo {
+.tsoxaXartosiaFilo {
 	position: relative;
 	width: 60px;
 	box-shadow: -1px 1px 1px #888;
 }
 
-.tsoxa_xartosiaFilo3 {
+.tsoxaXartosiaFilo3 {
 	bottom: 28px;
 	margin-left: -46px;
 }
 
-.tsoxa_xartosiaFilo2 {
+.tsoxaXartosiaFilo2 {
 	bottom: 28px;
 	margin-left: -46px;
 }
 
-.tsoxa_xartosiaFilo1 {
+.tsoxaXartosiaFilo1 {
 	margin-left: -42px;
 }
 
-.tsoxa_xartosiaFiloNotos {
+.tsoxaXartosiaFiloNotos {
 	bottom: -10px;
 	margin-left: -55px;
 	width: 80px;
 }
 
-.tsoxa_xartosiaFiloSteno3 {
+.tsoxaXartosiaFiloSteno3 {
 	margin-left: -47px;
 }
 
-.tsoxa_xartosiaFiloSteno2 {
+.tsoxaXartosiaFiloSteno2 {
 	margin-left: -47px;
 }
 
-.tsoxa_xartosiaFiloSteno1 {
+.tsoxaXartosiaFiloSteno1 {
 	margin-left: -59.55px;
 }
 
-.tsoxa_xartosiaFiloOmioxromo {
-	box-shadow: -3px 0px 1px rgb(82, 255, 0);
+.tsoxaXartosiaFiloOmioxromo {
+	box-shadow: -3px 0px 1px #6976D5;
 }
 
-.tsoxa_xartosiaFiloPrev {
+.tsoxaXartosiaFiloPrev {
 	position: relative;
 	width: 70px;
 	margin-left: -48px;

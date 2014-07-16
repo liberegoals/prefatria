@@ -164,84 +164,88 @@ Skiniko.prototype.egoDataSet = function(data) {
 	return this;
 };
 
-// Η μέθοδος "processPartidaData" δέχεται μια αναφορά στα παραληφθέντα δεδομένα και τα διορθώνει
-// όσον αφορά στα δεδομένα παρτίδας. Πιο συγκεκριμένα, διασφαλίζει την ύπαρξη των δεδομένων
-// παρτίδας δηλαδή την ύπαρξη array συζήτησης και array ενεργειών, εφόσον, βεβαίως, υπάρχει
-// τρέχουσα παρτίδα για τον χρήστη που τρέχει το πρόγραμμα.
-//
-// Κατά δεύτερον μετατρέπει τα arrays αυτά σε arrays αντικειμένων συζήτησης και ενεργειών
-// αντίστοιχα.
-//
-// Τέλος, ταξινομεί τα arrays ως προς τον κωδικό οπότε τα στοιχεία θα  προσπελαστούν με
-// χρονική σειρά.
+///////////////////////////////////////////////////////////////////////////////////////////////////////////@
 
-Skiniko.prototype.processPartidaData = function(data) {
-	var trapeziKodikos, trapezi, dianomi, dianomiKodikos;
-
-	// Αν δεν υπάρχει τραπέζι για τον παίκτη δεν υπάρχει λόγος να ασχοληθούμε
-	// με τυχόν δεδομένα παρτίδας.
-
-	trapeziKodikos = Arena.ego.sinedria.sinedriaTrapeziGet();
-	if (!trapeziKodikos) return this;
-
-	trapezi = this.skinikoTrapeziGet(trapeziKodikos);
-	if (!trapezi) return this;
-
-	// Διασφαλίσαμε την ύπαρξη τρέχοντος τραπεζιού για τον παίκτη και προχωρούμε στον
-	// έλεγχο των στοιχείων παρτίδας. Ως γνωστόν τα στοιχεία παρτίδας αποτελούνται
-	// από δύο λίστες:
-	//
-	//	partida.sizitisi	Πρόκειται για τα σχόλια της συζήτησης του τραπεζιού
-	//				που δεν έχουμε παραλάβει ακόμη.
-	//
-	//	partida.energia		Πρόκειται για τις ενέργειες της τελευταίας διανομής
-	//				του τραπεζιού που δεν έχουμε παραλάβει ακόμη.
-
+Skiniko.prototype.processPartidaData = function(data, online) {
 	if (!data.partida) data.partida = {};
-
-	// Ελέγχουμε, διορθώνουμε, ταξινομούμε και εντάσσουμε τα δεδομένα που αφορούν
-	// στη συζήτηση της παρτίδας.
-
 	if (!data.partida.sizitisi) data.partida.sizitisi = [];
-	else if (data.partida.sizitisi.length > 0) {
-		data.partida.sizitisi.sort(function(s1, s2) {
-			if (s1.kodikos < s2.kodikos) return -1;
-			if (s1.kodikos > s2.kodikos ) return 1;
-			return 0;
-		});
+	if (!data.partida.energia) data.partida.energia = [];
 
-		Globals.awalk(data.partida.sizitisi, function(i, sizitisi) {
-			sizitisi.trapezi = trapeziKodikos;
-			data.partida.sizitisi[i] = new Sizitisi(sizitisi);
-			trapezi.trapeziSizitisiSet(data.partida.sizitisi[i]);
-		});
+	if (!Arena.ego.trapezi) return this;
+	if (!data.partida) return this;
 
+	this.processPartidaSizitisiData(data.partida.sizitisi, online);
+	this.processPartidaEnergiaData(data.partida.energia, online);
+	return this;
+};
+
+Skiniko.prototype.processPartidaSizitisiData = function(sizitisiData, online) {
+	var trapeziKodikos;
+
+	if (!sizitisiData) return this;
+	if (!sizitisiData.length) return this;
+
+	sizitisiData.sort(function(s1, s2) {
+		if (s1.kodikos < s2.kodikos) return -1;
+		if (s1.kodikos > s2.kodikos ) return 1;
+		return 0;
+	});
+
+	trapeziKodikos = Arena.ego.trapezi.trapeziKodikosGet();
+	Globals.awalk(sizitisiData, function(i, sizitisi) {
+		sizitisi.trapezi = trapeziKodikos;
+		sizitisiData[i] = new Sizitisi(sizitisi);
+		Arena.ego.trapezi.trapeziSizitisiSet(sizitisiData[i]);
+	});
+
+	return this;
+};
+
+Skiniko.prototype.processPartidaEnergiaData = function(energiaData, online) {
+	var trapeziKodikos, dianomi, dianomiKodikos, allOnline, procOnline;
+
+	if (!energiaData) return this;
+	if (!energiaData.length) return this;
+
+	dianomi = Arena.ego.trapezi.trapeziTelefteaDianomi();
+	if (!dianomi) return this;
+
+	energiaData.sort(function(s1, s2) {
+		if (s1.kodikos < s2.kodikos) return -1;
+		if (s1.kodikos > s2.kodikos ) return 1;
+		return 0;
+	});
+
+	trapeziKodikos = Arena.ego.trapezi.trapeziKodikosGet();
+	dianomiKodikos = dianomi.dianomiKodikosGet();
+	allOnline = online;
+	Globals.awalk(energiaData, function(i, energia) {
+		if (energia.dianomi != dianomiKodikos) return;
+		energia = new Energia(energia);
+		energiaData[i] = energia;
+		dianomi.dianomiEnergiaSet(energia);
+		dianomi.energiaArray.push(energia);
+
+		if (!online) return;
+		if (!allOnline) return;
+
+		procOnline = 'processEnergiaOnline' + energia.energiaIdosGet();
+		if (typeof trapezi[procOnline] !== 'function') allOnline = false;
+	});
+
+	Arena.ego.trapezi.partidaReplay();
+	if (!allOnline) {
+		Arena.partida.trapeziRefreshDOM();
+		Arena.panelRefresh();
+		return this;
 	}
 
-	// Ελέγχουμε, διορθώνουμε, ταξινομούμε και εντάσσουμε τα δεδομένα που αφορούν
-	// στις ενέργειες της τρέχουσας διανομής της παρτίδας.
-
-	dianomi = trapezi.trapeziTelefteaDianomi();
-	if (!dianomi) data.partida.energia = [];
-	else if (!data.partida.energia) data.partida.energia = [];
-	else if (data.partida.energia.length > 0) {
-		data.partida.energia.sort(function(s1, s2) {
-			if (s1.kodikos < s2.kodikos) return -1;
-			if (s1.kodikos > s2.kodikos ) return 1;
-			return 0;
-		});
-
-		dianomiKodikos = dianomi.dianomiKodikosGet();
-		Globals.awalk(data.partida.energia, function(i, energia) {
-// TODO
-			if (energia.dianomi != dianomiKodikos) return;
-			energia = new Energia(energia);
-			data.partida.energia[i] = energia;
-			dianomi.dianomiEnergiaSet(energia);
-			dianomi.energiaArray.push(energia);
-		});
-
-	}
+	Globals.awalk(energiaData, function(i, energia) {
+		if (energia.dianomi != dianomiKodikos) return;
+		procOnline = 'processEnergiaOnline' + energia.energiaIdosGet();
+		if (typeof trapezi[procOnline] !== 'function') return;
+		trapezi[procOnline](energia);
+	});
 
 	return this;
 };
@@ -380,7 +384,7 @@ Skiniko.prototype.processAlagesPartida = function(data, trapeziPrin) {
 		return this;
 	}
 
-	this.processPartidaData(data);
+	this.processPartidaData(data, true);
 
 	if (trapeziMeta != trapeziPrin) {
 		Arena.partida.refreshDOM(true);

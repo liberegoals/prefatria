@@ -22,6 +22,8 @@ Arena.partida.flags = {
 	// προσκλήσεων.
 
 	niofertosView: true,
+
+	fanera23: true,
 };
 
 Arena.partida.niofertosView = function() {
@@ -57,10 +59,26 @@ Arena.partida.setup = function() {
 	append(Arena.partida.dialogosDOM = $('<div>').attr('id', 'tsoxaDialogos').addClass('dialogos'));
 
 	Arena.partida.thesiWalk(function(thesi) {
-		Arena.partida['pektis' + thesi + 'DOM'] = $('<div>').attr('id', 'tsoxaPektis' + thesi).
+		var pektisDOM, filaDOM;
+
+		pektisDOM = Arena.partida['pektis' + thesi + 'DOM'] = $('<div>').attr('id', 'tsoxaPektis' + thesi).
 		addClass('tsoxaPektis').appendTo(Arena.partida.tsoxaDOM);
-		Arena.partida['fila' + thesi + 'DOM'] = $('<div>').attr('id', 'tsoxaFila' + thesi).
+
+		filaDOM = Arena.partida['fila' + thesi + 'DOM'] = $('<div>').attr('id', 'tsoxaFila' + thesi).
 		addClass('tsoxaFila').appendTo(Arena.partida.tsoxaDOM);
+
+		if (thesi === 1) return;
+
+		pektisDOM.on('mouseleave', function(e) {
+			e.stopPropagation();
+			filaDOM.css('visibility', 'visible');
+		});
+
+		filaDOM.on('mouseenter', function(e) {
+			e.stopPropagation();
+			if (Debug.flagGet('striptiz')) return;
+			filaDOM.css('visibility', 'hidden');
+		});
 	});
 
 	Arena.partida.theatisDOM = $('<div>').attr('id', 'theatis').appendTo(Arena.partida.tsoxaDOM);
@@ -69,7 +87,7 @@ Arena.partida.setup = function() {
 };
 
 // Η function "refreshDOM" επαναδιαμορφώνει τα βασικά DOM elements της παρτίδας,
-// ήτοι την τσόχα και τους θεατές. Αν επιθυμούμε επναδιαμόρφσωη και της συζήτησης
+// ήτοι την τσόχα και τους θεατές. Αν επιθυμούμε επαναδιαμόρφωση και της συζήτησης
 // της συγκεκριμένης παρτίδας, τότε περνάμε σχετική παράμετρο.
 
 Arena.partida.refreshDOM = function(opts) {
@@ -100,14 +118,29 @@ Arena.partida.clearDOM = function() {
 	Arena.partida.dilosiPanelDOM.empty();
 	Arena.partida.agoraPanelDOM.empty();
 	Arena.partida.dialogosDOM.empty();
-	Arena.partida.pektisClearDOM();
+	Arena.partida.pektisClearDOM().
+	Arena.partida.filaClearDOM();
 	Arena.sizitisi.trapeziDOM.empty();
 	return Arena.partida;
 };
 
 Arena.partida.trapeziRefreshDOM = function() {
+	Arena.partida.
+	peximoTheasiRefreshDOM().
+	dataPanoRefreshDOM().
+	dataKatoRefreshDOM().
+	enimerosiRefreshDOM().
+	pektisRefreshDOM().
+	dixeKripseFila(3).
+	dixeKripseFila(2).
+	filaRefreshDOM();
+	return Arena.partida;
+};
+
+Arena.partida.peximoTheasiRefreshDOM = function() {
 	Arena.partida.tsoxaDOM.
 	removeClass('tsoxaPeximo tsoxaTheasi');
+
 	if (Arena.ego.isTheatis()) {
 		Arena.partida.tsoxaDOM.addClass('tsoxaTheasi').
 		children('#tsoxaPektis3,#tsoxaPektis2').
@@ -122,10 +155,16 @@ Arena.partida.trapeziRefreshDOM = function() {
 		css('cursor', 'auto');
 	}
 
-	Arena.partida.
-	dataPanoRefreshDOM().
-	enimerosiRefreshDOM().
-	pektisRefreshDOM();
+	return Arena.partida;
+};
+
+Arena.partida.dixeKripseFila = function(iseht) {
+	if (!Arena.partida.flags.fanera23)
+	return Arena.partida;
+
+	Arena.partida['fila' + iseht + 'DOM'].
+	css('display', 'block');
+
 	return Arena.partida;
 };
 
@@ -231,6 +270,17 @@ Arena.partida.dataPanoRefreshDOM = function() {
 	return Arena.partida;
 };
 
+Arena.partida.dataKatoClearDOM = function() {
+	Arena.partida.dataKatoDOM.empty();
+	return Arena.partida;
+};
+
+Arena.partida.dataKatoRefreshDOM = function() {
+	Arena.partida.dataKatoClearDOM();
+	if (Arena.ego.oxiTrapezi()) return Arena.partida;
+	return Arena.partida;
+};
+
 Arena.partida.dianomiRefreshDOM = function(dom) {
 	var dianomi;
 
@@ -303,8 +353,8 @@ Arena.partida.pektisClearDOM = function(thesi) {
 		Arena.partida.pektisClearDOM(thesi);
 	});
 
-	Arena.partida['pektis' + thesi + 'DOM'].empty();
-	//Arena.partida['fila' + thesi + 'DOM'].empty();
+	iseht = Arena.ego.thesiMap(thesi);
+	Arena.partida['pektis' + iseht + 'DOM'].empty();
 	return Arena.partida;
 };
 
@@ -315,8 +365,8 @@ Arena.partida.pektisRefreshDOM = function(thesi) {
 		Arena.partida.pektisRefreshDOM(thesi);
 	});
 
+	Arena.partida.pektisClearDOM(thesi);
 	iseht = Arena.ego.thesiMap(thesi);
-	Arena.partida.pektisClearDOM(iseht);
 	if (Arena.ego.oxiTrapezi()) return Arena.partida;
 
 	dom = Arena.partida['pektis' + iseht + 'DOM'].
@@ -652,16 +702,34 @@ Arena.partida.pektisAnamoniRefreshDOM = function(thesi, iseht, domMain) {
 
 Arena.partida.pektisAnamoniIkona = function(thesi, img) {
 	if (img === undefined) img = 'working/rologaki.gif';
-	return '../ikona/' + ((Arena.ego.isPektis() && (thesi == Arena.ego.thesiGet())) ? 'endixi/rollStar.gif' : img);
+	return 'ikona/' + ((Arena.ego.isPektis() && (thesi == Arena.ego.thesiGet())) ? 'endixi/rollStar.gif' : img);
+};
+
+Arena.partida.filaClearDOM = function(thesi) {
+	if (thesi === undefined) return Arena.partida.thesiWalk(function(thesi) {
+		Arena.partida.filaClearDOM(thesi);
+	});
+
+	iseht = Arena.ego.thesiMap(thesi);
+	Arena.partida['fila' + iseht + 'DOM'].empty();
+	return Arena.partida;
 };
 
 Arena.partida.filaRefreshDOM = function(thesi) {
-	var dom, fila, iseht = Arena.ego.thesiMap(thesi);
+	var fila, iseht, dom;
 
-	dom = Arena.partida['fila' + iseht + 'DOM'].empty();
+	if (thesi === undefined) return Arena.partida.thesiWalk(function(thesi) {
+		Arena.partida.filaRefreshDOM(thesi);
+	});
+
+	Arena.partida.filaClearDOM(thesi);
+	if (Arena.ego.oxiTrapezi()) return Arena.partida;
+
 	fila = Arena.ego.trapezi.partidaFilaGet(thesi);
 	if (!fila) return Arena.partida;
 
+	iseht = Arena.ego.thesiMap(thesi);
+	dom = Arena.partida['fila' + iseht + 'DOM'];
 	dom.append(fila.xartosiaTaxinomisi().xartosiaDOM(iseht));
 	return Arena.partida;
 };
@@ -711,6 +779,98 @@ Arena.partida.isProtos = function(thesi) {
 };
 
 Arena.partida.isEpomenos = function(thesi) {
-	if (!Arena.ego.oxiTrapezi()) return false;
+	if (Arena.ego.oxiTrapezi()) return false;
 	return(Arena.ego.trapezi.partidaEpomenosGet() === thesi);
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
+
+Filo.prototype.filoDOM = function() {
+	return $('<img>').data('filo', this).attr({
+		src: Client.server + 'ikona/trapoula/' + this.filoXromaGet() + this.filoAxiaGet() + '.png',
+	});
+};
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// Η μέθοδος "xartosiaDOM" δημιουργεί DOM element με τα φύλλα της χαρτωσιάς.
+// Ως παράμετρο δίνουμε τη θέση του παίκτη, εκτός από την περίπτωση που πρόκειται
+// για προηγούμενη χαρτωσιά που εμφανίζεται στη συζήτηση, όπου δεν καθορίζουμε θέση.
+
+Xartosia.prototype.xartosiaDOM = function(iseht) {
+	var dom, xromaPrev = null, rbPrev = null, cnt = this.xartosiaMikos(), klasi;
+
+	klasi = iseht ? 'tsoxaXartosiaFilo tsoxaXartosiaFilo' + iseht : 'tsoxaXartosiaFiloPrev';
+	dom = $('<div>').addClass('tsoxaXartosiaContainer');
+	Globals.awalk(this.xartosiaFilaGet(), function(i, filo) {
+		var filoDOM, xroma, rb;
+
+		filoDOM = filo.filoDOM().addClass(klasi);
+
+		// Το πρώτο φύλλο εμφανίζεται κανονικά στη σειρά του, τα υπόλοιπα
+		// απανωτίζουν το προηγούμενο φύλλο.
+
+		if (i === 0) filoDOM.css('marginLeft', 0);
+
+		// Κατά τη διάρκεια της αλλαγής τα φύλλα του τζογαδόρου είναι 12,
+		// επομένως απανωτίζουμε λίγο παραπάνω.
+
+		else if (cnt > 10) filoDOM.addClass('tsoxaXartosiaFiloSteno' + iseht);
+
+		// Τα φύλλα του Νότου φαίνονται μεγαλύτερα, καθώς ο διαθέσιμος χώρος
+		// είναι πολύ περισσότερος.
+
+		if (iseht === 1) filoDOM.addClass('tsoxaXartosiaFiloNotos');
+
+		dom.append(filoDOM);
+
+		// Μένει να ελέγξουμε αν υπάρχουν διαδοχικές ομοιόχρωμες φυλές, π.χ.
+		// μετά τα μπαστούνια να ακολουθούν σπαθιά, ή μετά τα καρά να ακολουθούν
+		// κούπες.
+
+		xroma = filo.filoXromaGet();
+		if (xroma === xromaPrev) return;
+
+		// Μόλις αλλάξαμε φυλή και πρέπει να ελέγξουμε αν η νέα φυλή είναι
+		// ομοιόχρωμη με την προηγούμενη (κόκκινα/μαύρα).
+
+		xromaPrev = xroma;
+		rb = Prefadoros.xromaXroma[xroma];
+		if (rb === rbPrev) filoDOM.addClass('tsoxaXartosiaFiloOmioxromo');
+		else rbPrev = rb;
+	});
+
+	return dom;
+};
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+Dilosi.prototype.dilosiDOM = function(idos) {
+	var dom;
+
+	if (idos === undefined) idos = 'Dilosi';
+	dom = $('<div>').addClass('tsoxa' + idos);
+
+	if (this.dilosiIsPaso()) {
+		dom.text('ΠΑΣΟ');
+		return dom;
+	}
+
+	if (this.dilosiIsTagrafo()) {
+		dom.text('Άμα μείνουν');
+		return dom;
+	}
+	
+	if (this.dilosiIsExo()) dom.append($('<div>').addClass('tsoxa' + idos + 'Exo').text('Έχω'));
+	dom.append($('<div>').addClass('tsoxa' + idos + 'Bazes').text(this.dilosiBazesGet()));
+	dom.append($('<img>').addClass('tsoxa' + idos + 'Xroma').attr({
+		src: Client.server + 'ikona/trapoula/xroma' + this.dilosiXromaGet() + '.png',
+	}));
+
+	if (this.dilosiIsAsoi())
+	dom.
+	append($('<div>').addClass('tsoxaDilosiAsoi').
+	append($('<img>').addClass('tsoxaDilosiAsoiIcon').attr('src', 'ikona/panel/pexnidi/asoiOn.png')));
+
+	return dom;
 };
