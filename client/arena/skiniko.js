@@ -235,8 +235,8 @@ Skiniko.prototype.processPartidaData = function(data) {
 		Globals.awalk(data.partida.energia, function(i, energia) {
 // TODO
 			if (energia.dianomi != dianomiKodikos) return;
-			data.partida.energia[i] = new Energia(energia);
-
+			energia = new Energia(energia);
+			data.partida.energia[i] = energia;
 			dianomi.dianomiEnergiaSet(energia);
 			dianomi.energiaArray.push(energia);
 		});

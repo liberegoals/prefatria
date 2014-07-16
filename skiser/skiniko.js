@@ -131,7 +131,7 @@ Skiniko.prototype.stisimoTelefteos = function(conn) {
 	for (kodikos in this.izepart) {
 		trapezi = this.izepart[kodikos];
 		delete this.izepart[kodikos];
-		this.izepart2[kodikos] = true;
+		this.izepart2[kodikos] = trapezi;
 
 		query = 'SELECT ' + Telefteos.projection + ' FROM `telefteos` WHERE `trapezi` = ' + kodikos;
 		conn.query(query, function(conn, rows) {
@@ -184,14 +184,14 @@ Skiniko.prototype.stisimoDianomi = function(conn) {
 // τις εντάσσουμε στο σκηνικό.
 
 Skiniko.prototype.stisimoEnergia = function(conn) {
-	var skiniko = this, kodikos, trapezi, dianomi, query;
+	var skiniko = this, trapezi, dianomi, query;
 
 	for (trapezi in this.izepart) {
 		dianomi = this.izepart[trapezi];
 		delete this.izepart[trapezi];
 
 		query = 'SELECT ' + Energia.projection + ' FROM `energia` WHERE `dianomi` = ' +
-			kodikos + ' ORDER BY `kodikos`';
+			dianomi.dianomiKodikosGet() + ' ORDER BY `kodikos`';
 		conn.query(query, function(conn, rows) {
 			Globals.awalk(rows, function(i, energia) {
 				dianomi.dianomiEnergiaSet(energia = new Energia(energia));
