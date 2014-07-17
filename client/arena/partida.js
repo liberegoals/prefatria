@@ -23,11 +23,21 @@ Arena.partida.flags = {
 
 	niofertosView: true,
 
-	fanera23: true,
+	// Η flag "fanera23" δείχνει αν τα φύλλα Ανατολής και Δύσης είναι ανοικτά.
+	// Τα φύλλα Ανατολής και Δύσης μπορούν δεν μπορούν να είναι ανοικτά όταν
+	// συμμετέχουμε ως παίκτες σε κάποια παρτίδα, αλλά οι θεατές έχουν αυτή
+	// τη δυνατότητα. Η αλλαγή της τιμής της flag γίνεται με πλήκτρο (βατραχάκι)
+	// στο control panel.
+
+	fanera23: false,
 };
 
 Arena.partida.niofertosView = function() {
 	return Arena.partida.flags.niofertosView;
+};
+
+Arena.partida.isFanera23 = function() {
+	return Arena.partida.flags.fanera23;
 };
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
@@ -131,8 +141,7 @@ Arena.partida.trapeziRefreshDOM = function() {
 	dataKatoRefreshDOM().
 	enimerosiRefreshDOM().
 	pektisRefreshDOM().
-	dixeKripseFila(3).
-	dixeKripseFila(2).
+	dixeKripseFila().
 	filaRefreshDOM();
 	return Arena.partida;
 };
@@ -158,13 +167,13 @@ Arena.partida.peximoTheasiRefreshDOM = function() {
 	return Arena.partida;
 };
 
+// Η function "dixeKripseFila" εμφανίζει η αποκρύπτει τα φύλλα Ανατολής και Δύσης
+// ανάλογα με την τιμή της σχετικής flag.
+
 Arena.partida.dixeKripseFila = function(iseht) {
-	if (!Arena.partida.flags.fanera23)
-	return Arena.partida;
-
-	Arena.partida['fila' + iseht + 'DOM'].
-	css('display', 'block');
-
+	var display = Arena.partida.isFanera23() ? 'block' : 'none';
+	Arena.partida['fila3DOM'].css('display', display);
+	Arena.partida['fila2DOM'].css('display', display);
 	return Arena.partida;
 };
 
