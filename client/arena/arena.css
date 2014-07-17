@@ -327,8 +327,8 @@ background-color: rgba(0, 128, 128, 0.2);
 	width: 100%;
 	height: 30px;
 	padding: 2px 4px;
+	background-color: rgba(64, 162, 187, 0.52);
 /*
-	background-color: rgba(0, 46, 128, 0.25);
 */
 }
 
@@ -428,7 +428,7 @@ background-color: rgba(0, 128, 128, 0.2);
 .tsoxaPektis {
 	position: absolute;
 	width: 230px;
-	height: 90px;
+	height: 122px;
 	text-align: center;
 /*
 	overflow: hidden;
@@ -441,7 +441,7 @@ background-color: rgba(0, 128, 128, 0.2);
 	box-shadow: 2px 2px 6px #353535;
 	cursor: pointer;
 */
-	background-color: #8692A8;
+	background-color: rgb(245, 255, 0);
 }
 
 .tsoxaTheatis {
@@ -462,17 +462,17 @@ background-color: rgba(0, 128, 128, 0.2);
 }
 
 #tsoxaPektis3 {
-	top: 30px;
+	top: 36px;
 	left: 10px;
 }
 
 #tsoxaPektis2 {
-	top: 30px;
+	top: 36px;
 	right: 10px;
 }
 
 #tsoxaPektis1 {
-	bottom: 30px;
+	bottom: 36px;
 	left: 10px;
 }
 
@@ -732,11 +732,11 @@ background-color: rgb(211, 211, 108);
 
 .tsoxaFila {
 	position: absolute;
-	height: 84px;
+	height: 20px;
 	width: 226px;
 	text-align: center;
 	white-space: nowrap;
-	background-color: rgba(185, 114, 36, 0.35);
+	background-color: red;
 	z-index: 1;
 /*
 */
@@ -746,41 +746,26 @@ background-color: rgb(211, 211, 108);
 */
 #tsoxaFila3 {
 	display: none;
-	top: 36px;
+	top: 40px;
 	left: 0;
 }
 
 #tsoxaFila2 {
 	display: none;
-	top: 36px;
+	top: 40px;
 	right: 0;
 }
-
-/* Ακολουθούν στοιχεία θέσης Ανατολής και Δύσης κατάλληλα για δοκιμές. */
-/*
-#tsoxaFila3 {
-	display: none;
-	top: 270px;
-	left: 320px;
-}
-
-#tsoxaFila2 {
-	display: none;
-	top: 180px;
-	left: 320px;
-}
-*/
 
 #tsoxaFila1 {
-	bottom: 30px;
+	top: 436px;
 	right: 0;
-	height: 120px;
-	width: 310px;
+	width: 314px;
 }
 
 /********************************************************************************************************************/
 
 .tsoxaXartosiaContainer {
+	position: relative;
 	display: inline-block;
 }
 
@@ -791,22 +776,21 @@ background-color: rgb(211, 211, 108);
 }
 
 .tsoxaXartosiaFilo3 {
-	bottom: 28px;
+	bottom: 20px;
 	margin-left: -46px;
 }
 
 .tsoxaXartosiaFilo2 {
-	bottom: 28px;
+	bottom: 20px;
 	margin-left: -46px;
 }
 
 .tsoxaXartosiaFilo1 {
-	margin-left: -42px;
+	bottom: 20px;
+	margin-left: -55px;
 }
 
 .tsoxaXartosiaFiloNotos {
-	bottom: -10px;
-	margin-left: -55px;
 	width: 80px;
 }
 
