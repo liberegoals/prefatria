@@ -103,14 +103,14 @@ background-color: teal;
 /***********************************************************************************************************************/
 
 #rebelos {
-	margin: 0 0 8px 8px;
+	margin: 0 0 0px 8px;
 /*
 	background-color: rgba(237, 164, 61, 0.31);
 */
 }
 
 #trapezi {
-	margin: 0 0 0 8px;
+	margin: 8px 0 0 8px;
 /*
 	background-color: rgba(200, 224, 71, 0.38);
 */
@@ -1483,7 +1483,7 @@ background-color: teal;
 /***********************************************************************************************************************/
 
 .rebelos {
-	margin: 4px 18px 6px 0;
+	margin: 4px 18px 2px 0;
 }
 
 .theatis {
