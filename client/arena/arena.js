@@ -198,7 +198,7 @@ Arena.epanadiataxiPss = function() {
 	Arena.sizitisi.areaDOM.css('height', h + 'px');
 
 	Arena.flags.epanadiataxiPss = false;
-	Arena.prosklisi.panel.bpanelGetButton('epanadiataxiPss').pbuttonDisplay();
+	Arena.prosklisi.panel.bpanelButtonGet('epanadiataxiPss').pbuttonDisplay();
 
 	return Arena;
 };
@@ -243,7 +243,7 @@ Arena.viewRefresh = function() {
 	}
 
 	Arena.viewTabDOM.text(Arena.viewBoth() ? 'Οικονομική' : 'Πανοραμική');
-	Arena.cpanel.bpanelGetButton('view').pbuttonRefresh();
+	Arena.cpanel.bpanelButtonGet('view').pbuttonRefresh();
 
 	return Arena;
 };

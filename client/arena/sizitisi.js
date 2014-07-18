@@ -37,7 +37,7 @@ Arena.sizitisi.setup = function() {
 		$(this).css('cursor', 'move');
 	});
 
-	Arena.sizitisi.panel.bpanelGetButton('kouskous').pbuttonDexia();
+	Arena.sizitisi.panel.bpanelButtonGet('kouskous').pbuttonDexia();
 	return Arena;
 };
 
@@ -179,9 +179,9 @@ Arena.sizitisi.panelSetup = function() {
 		e.stopPropagation();
 
 		Arena.flags.epanadiataxiPss = true;
-		Arena.prosklisi.panel.bpanelGetButton('epanadiataxiPss').pbuttonDisplay();
+		Arena.prosklisi.panel.bpanelButtonGet('epanadiataxiPss').pbuttonDisplay();
 		Arena.sizitisi.panelDOM.css('cursor', 'move');
-		Arena.sizitisi.panel.bpanelGetButton('metakinisi').
+		Arena.sizitisi.panel.bpanelButtonGet('metakinisi').
 		pbuttonGetDOM().addClass('panelButtonCandi');
 		$(document).off('mousemove mouseup').
 		on('mousemove', function(e) {
@@ -233,7 +233,7 @@ Arena.sizitisi.panelSetup = function() {
 		on('mouseup', function(e) {
 			e.stopPropagation();
 			Arena.sizitisi.panelDOM.css('cursor', '');
-			Arena.sizitisi.panel.bpanelGetButton('metakinisi').
+			Arena.sizitisi.panel.bpanelButtonGet('metakinisi').
 			pbuttonGetDOM().removeClass('panelButtonCandi');
 			$(document).off('mousemove mouseoff');
 		});

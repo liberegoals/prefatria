@@ -303,6 +303,39 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 }));
 
 Arena.cpanel.bpanelButtonPush(new PButton({
+	id: 'claim',
+	omada: 1,
+	img: 'claim.png',
+	title: 'Δεν χάνω άλλη μπάζα!',
+	check: function() {
+		if (Arena.ego.oxiTrapezi()) return false;
+		if (Arena.ego.oxiPektis()) return false;
+		if (Debug.flagGet('epomenosCheck') &&
+		(Arena.ego.thesiGet() != Arena.ego.trapezi.partidaTzogadorosGet())) return false;
+
+		switch (Arena.ego.trapezi.partidaFasiGet()) {
+		case 'ΠΑΙΧΝΙΔΙ':
+			return true;
+		}
+
+		return false;
+	},
+	click: function(e) {
+		if (Arena.cpanel.claimButtonDOM.data('akiro')) return;
+		if (Arena.ego.oxiTrapezi()) return;
+
+		Client.skiserService('claimProtasi').
+		done(function(rsp) {
+			Client.fyi.epano(rsp);
+		}).
+		fail(function(err) {
+			Client.skiserFail(err);
+		});
+	},
+}));
+Arena.cpanel.claimButtonDOM = Arena.cpanel.bpanelButtonGet('claim').pbuttonGetDOM();
+
+Arena.cpanel.bpanelButtonPush(new PButton({
 	id: 'ananeosi',
 	omada: 1,
 	img: 'bugFix.png',
@@ -565,7 +598,7 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 			Arena.partida.refreshDOM();
 			Arena.partida.peristrofiDOM();
 			if (Arena.kafenioMode()) Arena.modeTabDOM.trigger('click');
-			if (Arena.viewBoth()) Arena.cpanel.bpanelGetButton('view').click();
+			if (Arena.viewBoth()) Arena.cpanel.bpanelButtonGet('view').click();
 			Client.fyi.kato('Τώρα μπορείτε να σύρετε την τσόχα σε βολικότερο μέρος&hellip;');
 			Arena.partida.flags.amolimeni = 1;
 			break;

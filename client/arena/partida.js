@@ -48,25 +48,7 @@ Arena.partida.setup = function() {
 		title: 'Περιοχή νεοφερμένων',
 	}).appendTo(Arena.partidaDOM);
 
-	Arena.partida.tsoxaDOM = $('<div>').attr('id', 'tsoxa').appendTo(Arena.partidaDOM).
-	append(Arena.partida.dataPanoDOM = $('<div>').attr('id', 'tsoxaDataPano').addClass('tsoxaData')).
-	append(Arena.partida.dataKatoDOM = $('<div>').attr('id', 'tsoxaDataKato').addClass('tsoxaData')).
-	append(Arena.partida.tzogosDOM = $('<div>').attr({
-		id: 'tsoxaTzogos',
-		title: 'Τζόγος',
-	})).
-	append(Arena.partida.azabDOM = $('<div>').attr({
-		id: 'tsoxaAzab',
-		title: 'Τελευταία μπάζα',
-	})).
-	append(Arena.partida.filaPrevDOM = $('<div>').attr({
-		id: 'tsoxaFilaPrev',
-		title: 'Προηγούμενη χαρτωσιά',
-	})).
-	append(Arena.partida.enimerosiDOM = $('<div>').attr('id', 'tsoxaEnimerosi')).
-	append(Arena.partida.dilosiPanelDOM = $('<div>').attr('id', 'tsoxaDilosiPanel')).
-	append(Arena.partida.agoraPanelDOM = $('<div>').attr('id', 'tsoxaAgoraPanel')).
-	append(Arena.partida.dialogosDOM = $('<div>').attr('id', 'tsoxaDialogos').addClass('dialogos'));
+	Arena.partida.tsoxaDOM = $('<div>').attr('id', 'tsoxa').appendTo(Arena.partidaDOM);
 
 	Arena.partida.thesiWalk(function(thesi) {
 		var pektisDOM, filaDOM;
@@ -90,6 +72,26 @@ Arena.partida.setup = function() {
 			filaDOM.css('visibility', 'hidden');
 		});
 	});
+
+	Arena.partida.tsoxaDOM.
+	append(Arena.partida.dataPanoDOM = $('<div>').attr('id', 'tsoxaDataPano').addClass('tsoxaData')).
+	append(Arena.partida.dataKatoDOM = $('<div>').attr('id', 'tsoxaDataKato').addClass('tsoxaData')).
+	append(Arena.partida.tzogosDOM = $('<div>').attr({
+		id: 'tsoxaTzogos',
+		title: 'Τζόγος',
+	})).
+	append(Arena.partida.azabDOM = $('<div>').attr({
+		id: 'tsoxaAzab',
+		title: 'Τελευταία μπάζα',
+	})).
+	append(Arena.partida.filaPrevDOM = $('<div>').attr({
+		id: 'tsoxaFilaPrev',
+		title: 'Προηγούμενη χαρτωσιά',
+	})).
+	append(Arena.partida.enimerosiDOM = $('<div>').attr('id', 'tsoxaEnimerosi')).
+	append(Arena.partida.dilosiPanelDOM = $('<div>').attr('id', 'tsoxaDilosiPanel')).
+	append(Arena.partida.agoraPanelDOM = $('<div>').attr('id', 'tsoxaAgoraPanel')).
+	append(Arena.partida.dialogosDOM = $('<div>').attr('id', 'tsoxaDialogos').addClass('dialogos'));
 
 	Arena.partida.theatisDOM = $('<div>').attr('id', 'theatis').appendTo(Arena.partida.tsoxaDOM);
 	Arena.partida.optionsDOM = $('<div>').attr('id', 'tsoxaOptions').appendTo(Arena.partidaDOM);
@@ -142,7 +144,8 @@ Arena.partida.trapeziRefreshDOM = function() {
 	enimerosiRefreshDOM().
 	pektisRefreshDOM().
 	dixeKripseFila().
-	filaRefreshDOM();
+	filaRefreshDOM().
+	efoplismos();
 	return Arena.partida;
 };
 
@@ -564,7 +567,7 @@ Arena.partida.pektisAgoraRefreshDOM = function(thesi, iseht, dom) {
 		dom.addClass('tsoxaPektisAgoraTzogadoros').
 		append($('<img>').addClass('tsoxaPektisIcon').attr({
 			id: 'tsoxaPektisAgoraTzogos',
-			src: '../ikona/endixi/tzogos.png',
+			src: 'ikona/endixi/tzogos.png',
 			title: 'Αλλαγή φύλλων',
 		}));
 		break;
@@ -650,9 +653,9 @@ Arena.partida.pektisBazesRefreshDOM = function(thesi, iseht, dom) {
 
 		dom.css('display', 'block');
 		do {
-			plati = (Math.floor((bazes - 1) / 3) % 2) ? Arena.partida.plati : Arena.partida.italp;
+			plati = (Math.floor((bazes - 1) / 3) % 2) ? Arena.ego.plati : Arena.ego.italp;
 			dom.prepend($('<img>').addClass('tsoxaPektisBazesBaza').
-			attr('src', '../ikona/trapoula/' + plati + 'L.png'));
+			attr('src', 'ikona/trapoula/' + plati + 'L.png'));
 		} while (--bazes > 0);
 		break;
 	}
@@ -775,6 +778,11 @@ Arena.partida.peristrofiDOM = function(rotationCount) {
 	return Arena.partida;
 };
 
+Arena.partida.akirosiKiniseon = function() {
+	if (Arena.ego.oxiTrapezi()) return false;
+	return Arena.ego.trapezi.trapeziAkirosiGet();
+};
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
 
 Arena.partida.isDealer = function(thesi) {
@@ -882,4 +890,87 @@ Dilosi.prototype.dilosiDOM = function(idos) {
 	append($('<img>').addClass('tsoxaDilosiAsoiIcon').attr('src', 'ikona/panel/pexnidi/asoiOn.png')));
 
 	return dom;
+};
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// Η function "efoplismos" αρματώνει την τσόχα με event listeners και χειρισμούς
+// που μπορούν να κάνουν οι παίκτες σε κάθε ιδιαίτερη τη φάση του παιχνιδιού.
+// Εκτός, όμως, από το αρμάτωμα κάνουμε και άλλες εξειδικευμένες εργασίες που
+// αφορούν στην εμφάνιση ή μη κάποιων στοιχείων της τσόχας κλπ.
+
+Arena.partida.efoplismos = function() {
+	var thesi, efoplismos;
+
+	if (Arena.ego.oxiTrapezi()) return Arena.partida;
+	if (Arena.ego.oxiPektis()) return Arena.partida;
+
+	// Εκκινούμε τη διαδικασία ακυρώνοντας τυχόν υπάρχοντα οπλισμό της τσόχας.
+
+	Arena.partida.afoplismos();
+
+	// Το «αρμάτωμα» της τσόχας με χειρισμούς και event listeners δεν
+	// το επιχειρούμε με το χέρι, αλλά με ιδιαίτερες functions που
+	// αφορούν στην τρέχουσα φάση του παιχνδιού.
+
+	efoplismos = 'efoplismos' + Arena.ego.trapezi.partidaFasiGet();
+	if (typeof Arena.ego.trapezi[efoplismos] === 'function') Arena.ego.trapezi[efoplismos]();
+
+	return Arena.ego.trapezi;
+};
+
+// Η function "afoplismos" ακυρώνει event listeners της τσόχας η οποία με
+// αυτόν τον τρόπο καθίσταται ακίνδυνη και ανενεργή.
+
+Arena.partida.afoplismos = function() {
+	Arena.partida.dilosiPanelDOM.css('display', 'none');
+	Arena.partida.agoraPanelDOM.css('display', 'none');
+	Arena.partida.xipnitiriAfoplismos();
+
+	return Arena.partida;
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
+
+Arena.partida.xipnitiriStadioList = [
+	{ t: 10000, s: 'kanarini.ogg' },
+	{ t: 10000, s: 'clocktickslow.ogg' },
+	{ t: 10000, s: 'treno.ogg' },
+	{ t: 10000, s: 'kabanaki.ogg' },
+	{ t: 10000, s: 'sfirixtra.ogg' },
+	{ t: 10000, s: 'korna.ogg' },
+	{ t: 10000, s: 'dalika.ogg' },
+];
+
+delete Arena.partida.xipnitiriTimer;
+
+Arena.partida.xipnitiriOplismos = function() {
+	if (Debug.flagGet('xipnitiriOff'))
+	return Arena.partida;
+
+	Arena.partida.
+	xipnitiriAfoplismos().
+	xipnitiriTimerSet(0);
+};
+
+Arena.partida.xipnitiriTimerSet = function(stadio) {
+	if (stadio >= Arena.partida.xipnitiriStadioList.length) {
+		delete Arena.partida.xipnitiriTimer;
+		return Arena.partida;
+	}
+
+	Arena.partida.xipnitiriTimer = setTimeout(function() {
+		Client.sound.play(Arena.partida.xipnitiriStadioList[stadio].s);
+		Arena.partida.xipnitiriTimerSet(stadio + 1);
+	}, Arena.partida.xipnitiriStadioList[stadio].t);
+	return Arena.partida;
+};
+
+Arena.partida.xipnitiriAfoplismos = function() {
+	if (!Arena.partida.xipnitiriTimer)
+	return Arena.partida;
+
+	clearTimeout(Arena.partida.xipnitiriTimer);
+	delete Arena.partida.xipnitiriTimer;
+	return Arena.partida;
 };
