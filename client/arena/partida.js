@@ -214,6 +214,8 @@ Arena.partida.sizitisiRefreshDOM = function() {
 	return Arena.partida;
 };
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 Arena.partida.enimerosiClearDOM = function() {
 	Arena.partida.enimerosiDOM.css({
 		top: '',
@@ -223,25 +225,188 @@ Arena.partida.enimerosiClearDOM = function() {
 };
 
 Arena.partida.enimerosiRefreshDOM = function() {
+	var proc;
+
 	Arena.partida.enimerosiClearDOM();
 	if (Arena.ego.oxiTrapezi()) {
-		Arena.partida.enimerosiDOM.css({
-			top: '10px',
-			display: 'block',
-		}).
-		append($('<div>').text("Βρίσκεστε στη βασική σελίδα του «Πρεφαδόρου». Πρόκειται για ιστότοπο " +
-			"που επιχειρεί να προσομοιάσει ένα διαδικτυακό καφενείο της πρέφας.")).
-		append($('<div>').text("Μπορείτε να δημιουργήσετε ένα τραπέζι και να καλέσετε τους φίλους σας " +
-			"για να παίξετε μια παρτίδα πρέφα, ή να αποδεχτείτε κάποια πρόσκληση προκειμένου " +
-			"να παίξετε σε κάποιο άλλο τραπέζι.")).
-		append($('<div>').text("Μπορείτε, ακόμη, να παρακολουθήσετε τις παρτίδες που εξελίσσονται " +
-			"σε άλλα τραπέζια του καφενείου, κάνοντας κλικ στον κωδικό οποιουδήποτε τραπεζιού " +
-			"από το χώρο του καφενείου."));
-		Arena.partida.enimerosiDOM.children().addClass('tsoxaEnimerosiBasiki');
+		Arena.partida.enimerosi();
+		return Arena.partida;
 	}
+
+	proc = 'enimerosi' + Arena.ego.trapezi.partidaFasiGet();
+	Arena.partida.enimerosiDOM.css('display', 'none').css('width', '').empty();
+	if (typeof Arena.partida[proc] === 'function') Arena.partida[proc]();
+	return Arena.partida;
+};
+
+Arena.partida.enimerosi = function() {
+	Arena.partida.enimerosiDOM.css({
+		top: '10px',
+		display: 'block',
+	}).
+	append($('<div>').text("Βρίσκεστε στη βασική σελίδα του «Πρεφαδόρου». Πρόκειται για ιστότοπο " +
+		"που επιχειρεί να προσομοιάσει ένα διαδικτυακό καφενείο της πρέφας.")).
+	append($('<div>').text("Μπορείτε να δημιουργήσετε ένα τραπέζι και να καλέσετε τους φίλους σας " +
+		"για να παίξετε μια παρτίδα πρέφα, ή να αποδεχτείτε κάποια πρόσκληση προκειμένου " +
+		"να παίξετε σε κάποιο άλλο τραπέζι.")).
+	append($('<div>').text("Μπορείτε, ακόμη, να παρακολουθήσετε τις παρτίδες που εξελίσσονται " +
+		"σε άλλα τραπέζια του καφενείου, κάνοντας κλικ στον κωδικό οποιουδήποτε τραπεζιού " +
+		"από το χώρο του καφενείου."));
+	Arena.partida.enimerosiDOM.children().addClass('tsoxaEnimerosiBasiki');
+	return Arena.partida;
+};
+
+Arena.partida.enimerosiΔΙΑΝΟΜΗ = function() {
+	var thesi, kimeno;
+
+	thesi = Arena.ego.thesiMap(Arena.ego.trapezi.partidaDealerGet());
+	if (thesi == 1) {
+		kimeno = Arena.ego.isPektis() ?
+			'Μοιράζετε φύλλα.'
+		:
+			'Ο παίκτης που παρακολουθείτε μοιράζει φύλλα.';
+	}
+	else {
+		kimeno = 'Ο παίκτης ';
+		switch (thesi) {
+		case 2:
+			kimeno += 'δεξιά';
+			break;
+		default:
+			kimeno += 'αριστερά';
+			break;
+		}
+
+		kimeno += ' ';
+		kimeno += Arena.ego.isPektis() ?  'σας' : 'από τον παίκτη που παρακολουθείτε';
+		kimeno += ' μοιράζει φύλλα.';
+	}
+
+	kimeno += ' Παρακαλώ περιμένετε…';
+	Arena.partida.enimerosiDOM.css('width', '190px').
+	append($('<img>').attr('src', '../ikona/working/bares.gif').
+	addClass('tsoxaEnimerosiIcon').css('width', '70px')).
+	append($('<div>').text(kimeno)).css('display', 'block');
 
 	return Arena.partida;
 };
+
+Arena.partida.enimerosiΔΗΛΩΣΗ = function() {
+	var thesi, kimeno, ikona = 'working/venetia.gif', ikonaWidth = '70px';
+
+	thesi = Arena.ego.thesiMap(Arena.ego.trapezi.partidaEpomenosGet());
+	switch (thesi) {
+	case 1:
+		if (Arena.ego.isPektis()) {
+			ikona = 'endixi/nevrikos.gif';
+			ikonaWidth = '46px';
+			kimeno = 'Πλειοδοτήστε προκειμένου να κερδίσετε την αγορά, αλλιώς πείτε πάσο. ' +
+				'Οι συμπαίκτες σας περιμένουν…'
+		}
+		else {
+			kimeno = 'Ο παίκτης που παρακολουθείτε σκέφτεται αν θα πλειοδοτήσει ' +
+				'στην αγορά. Παρακαλώ περιμένετε…';
+		}
+		break;
+	default:
+		kimeno = 'Ο παίκτης ' + (thesi == 2 ? 'δεξιά' : 'αριστερά') + ' ' +
+			(Arena.ego.isPektis() ?  'σας' : 'από τον παίκτη που παρακολουθείτε') +
+			' σκέφτεται αν θα πλειοδοτήσει στην αγορά. Παρακαλώ περιμένετε…';
+		break;
+	}
+
+	Arena.partida.enimerosiDOM.css({
+		width: '190px',
+		left: '150px',
+	}).
+	append($('<img>').attr('src', 'ikona/' + ikona).addClass('tsoxaEnimerosiIcon').css('width', ikonaWidth)).
+	append($('<div>').text(kimeno)).css('display', 'block');
+
+	return Arena.partida;
+};
+
+Arena.partida.enimerosiΑΛΛΑΓΗ = function() {
+	var thesi, kimeno, img = 'working/koutakia.gif', width = '', iconWidth = '';
+
+	thesi = Arena.ego.thesiMap(Arena.ego.trapezi.partidaEpomenosGet());
+	if (thesi == 1) {
+		if (Arena.ego.isPektis()) {
+			Arena.partida.enimerosiDOM.css('top', '194px');
+			kimeno = 'Αλλάξτε φύλλα και δηλώστε την αγορά σας. Οι συμπαίκτες σας περιμένουν…';
+			img = 'endixi/nevrikos.gif';
+			iconWidth = '46px';
+			width = '190px';
+		}
+		else {
+			kimeno = 'Ο παίκτης που παρακολουθείτε αλλάζει φύλλα. Παρακαλώ περιμένετε την αγορά του…';
+		}
+	}
+	else {
+		kimeno = 'Ο παίκτης ';
+		switch (thesi) {
+		case 2:
+			kimeno += 'δεξιά';
+			break;
+		default:
+			kimeno += 'αριστερά';
+			break;
+		}
+
+		kimeno += ' ';
+		kimeno += Arena.ego.isPektis() ?  'σας' : 'από τον παίκτη που παρακολουθείτε';
+		kimeno += ' αλλάζει φύλλα. Παρακαλώ περιμένετε την αγορά του…';
+	}
+
+	Arena.partida.enimerosiDOM.css('width', width).
+	append($('<img>').attr('src', 'ikona/' + img).addClass('tsoxaEnimerosiIcon').css('width', iconWidth)).
+	append($('<div>').text(kimeno)).css('display', 'block');
+
+	return Arena.partida;
+};
+
+Arena.partida.enimerosiΣΥΜΜΕΤΟΧΗ = function() {
+	var thesi, kimeno, ikona = 'working/atom.gif', ikonaWidth = '30px';
+
+	thesi = Arena.ego.thesiMap(Arena.ego.trapezi.partidaEpomenosGet());
+	switch (thesi) {
+	case 1:
+		if (Arena.ego.isPektis()) {
+			Arena.partida.enimerosiDOM.css('width', 300);
+			ikona = 'endixi/nevrikos.gif';
+			ikonaWidth = '46px';
+			kimeno = 'Αποφασίστε αν θα διεκδικήσετε τις μπάζες που σας αναλογούν. ' +
+				'Οι συμπαίκτες σας περιμένουν…'
+		}
+		else {
+			kimeno = 'Ο παίκτης που παρακολουθείτε σκέφτεται αν θα διεκδικήσει ' +
+				'τις μπάζες που του αναλογούν. Παρακαλώ περιμένετε…';
+		}
+		break;
+	default:
+		kimeno = 'Ο παίκτης ' + (thesi == 2 ? 'δεξιά' : 'αριστερά') + ' ' +
+			(Arena.ego.isPektis() ?  'σας' : 'από τον παίκτη που παρακολουθείτε') +
+			' σκέφτεται αν θα διεκδικήσει τις μπάζες που του αναλογούν. Παρακαλώ περιμένετε…';
+		break;
+	}
+
+	Arena.partida.enimerosiDOM.
+	append($('<img>').attr('src', 'ikona/' + ikona).addClass('tsoxaEnimerosiIcon').css('width', ikonaWidth)).
+	append($('<div>').text(kimeno)).css('display', 'block');
+
+	return Arena.partida;
+};
+
+Arena.partida.enimerosiΠΛΗΡΩΜΗ = function() {
+	Arena.partida.enimerosiDOM.
+	append($('<img>').attr('src', 'ikona/endixi/pliromi.gif').addClass('tsoxaEnimerosiIcon')).
+	append($('<div>').text('Γίνεται πληρωμή. Παρακαλώ περιμένετε…')).css({
+		display: 'block',
+		width: '190px',
+	});
+	return Arena.partida;
+};
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
 
 Arena.partida.dataPanoClearDOM = function() {
 	Arena.partida.ipolipoClearDOM();
@@ -288,8 +453,23 @@ Arena.partida.dataKatoClearDOM = function() {
 };
 
 Arena.partida.dataKatoRefreshDOM = function() {
+	var akirosi;
+
 	Arena.partida.dataKatoClearDOM();
 	if (Arena.ego.oxiTrapezi()) return Arena.partida;
+
+	Arena.partida.dataKatoDOM.
+	append($('<div>').addClass('tsoxaPartidaInfo').
+	append($('<div>').addClass('tsoxaPartidaInfoFasi').attr({
+		title: 'Φάση παρτίδας',
+	}).text(Arena.ego.trapezi.partidaFasiGet())));
+
+	akirosi = Arena.ego.trapezi.trapeziAkirosiGet();
+	if (!akirosi) return Arena.partida;
+
+	Arena.partida.dataKatoDOM.append($('<div>').addClass('tsoxaPartidaInfoAkirosi').
+		html('Ο παίκτης <div class="tsoxaPartidaInfoAkirosiLogin">' +
+			akirosi + '</div> ακυρώνει κινήσεις&hellip;'));
 	return Arena.partida;
 };
 
@@ -972,5 +1152,44 @@ Arena.partida.xipnitiriAfoplismos = function() {
 
 	clearTimeout(Arena.partida.xipnitiriTimer);
 	delete Arena.partida.xipnitiriTimer;
+	return Arena.partida;
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
+
+Arena.partida.kinisiFilo = function(pektis, filo, callback, delay) {
+	var css = {width: '80px'}, tsoxaPos, filoPos, olif;
+
+	switch (Arena.ego.thesiMap(pektis)) {
+	case 3:
+		css.top = 190;
+		css.left = 200;
+		break;
+	case 2:
+		css.top = 170;
+		css.left = 260;
+		break;
+	default:
+		css.top = 210;
+		css.left = 230;
+		break;
+	}
+
+	tsoxaPos = Arena.partida.tsoxaDOM.offset();
+	filoPos = filo.offset();
+
+	olif = filo.clone().appendTo(Arena.partida.tsoxaDOM).css({
+		position: 'absolute',
+		top: (filoPos.top - tsoxaPos.top - 3) + 'px',
+		left: (filoPos.left - tsoxaPos.left - 3) + 'px',
+		marginLeft: 0,
+	});
+
+	css.top = css.top + 'px';
+	css.left = css.left + 'px';
+	
+	filo.css('visibility', 'hidden');
+	if (delay === undefined) delay = 350;
+	olif.removeClass('tsoxaXartosiaFiloOmioxromo').animate(css, delay, callback);
 	return Arena.partida;
 };

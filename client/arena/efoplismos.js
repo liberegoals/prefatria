@@ -52,7 +52,7 @@ Trapezi.prototype.efoplismosΔΗΛΩΣΗ = function() {
 			'thesi=' + thesi,
 			'dilosi=' + $(this).data('dilosi').dilosi2string()).
 		fail(function(err) {
-			Kafenio.tsoxa.Client.skiserFail(err);
+			Client.skiserFail(err);
 			Arena.partida.enimerosiDOM.css('display', 'block');
 			klikDilosi = false;
 		});
@@ -335,7 +335,7 @@ Trapezi.efoplismosAlagiXartosia = function(trapezi) {
 	var tzogadoros, iseht, panelDom = Arena.partida.agoraPanelDOM, panoCount = 0;
 
 	tzogadoros = trapezi.partidaTzogadorosGet();
-	$('.tsoxa_xartosiaFilo').removeData('skarto');
+	$('.tsoxaXartosiaFilo').removeData('skarto');
 /*
 	trapezi.fila[tzogadoros].xartosiaWalk(function(i, filo) {
 		delete filo.skarto;
@@ -344,8 +344,8 @@ Trapezi.efoplismosAlagiXartosia = function(trapezi) {
 
 	iseht = Arena.ego.thesiMap(tzogadoros);
 	if (iseht == 1) {
-		pano = '6px';
-		kato = '-10px';
+		pano = '26px';
+		kato = '20px';
 	}
 	else {
 		pano = '22px';
@@ -353,22 +353,22 @@ Trapezi.efoplismosAlagiXartosia = function(trapezi) {
 	}
 
 	Arena.partida['fila' + iseht + 'DOM'].
-	find('.tsoxa_xartosiaFilo').css('cursor', 'pointer').
+	find('.tsoxaXartosiaFilo').css('cursor', 'pointer').
 	off('mouseenter').on('mouseenter', function(e) {
-		var filoDom = Kafenio.tsoxa.$(this);
+		var filoDom = $(this);
 		e.stopPropagation();
 		if (panelDom.data('dialogos')) return;
 
-		filoDom.addClass('tsoxa_filoEpilogi');
+		filoDom.addClass('tsoxaFiloEpilogi');
 		if (filoDom.data('skarto')) return;
 		filoDom.finish().animate({bottom: pano}, 'fast');
 	}).
 	off('mouseleave').on('mouseleave', function(e) {
-		var filoDom = Kafenio.tsoxa.$(this);
+		var filoDom = $(this);
 		e.stopPropagation();
 		if (panelDom.data('dialogos')) return;
 
-		filoDom.removeClass('tsoxa_filoEpilogi');
+		filoDom.removeClass('tsoxaFiloEpilogi');
 		if (filoDom.data('skarto')) return;
 		if (filoDom.data('kato')) filoDom.removeData('kato');
 		else filoDom.finish().animate({bottom: kato}, 'fast');
@@ -377,7 +377,7 @@ Trapezi.efoplismosAlagiXartosia = function(trapezi) {
 		Arena.inputRefocus(e);
 	}).
 	off('click').on('click', function(e) {
-		var filoDom = Kafenio.tsoxa.$(this);
+		var filoDom = $(this);
 
 		Arena.inputRefocus(e);
 		if (Arena.partida.akirosiKiniseon()) return;
@@ -407,14 +407,14 @@ Trapezi.prototype.efoplismosΣΥΜΜΕΤΟΧΗ = function() {
 	var basi, pektis, simpektis, silosi, klikDilosi = false;
 
 	pektis = this.partidaEpomenosGet();
-	if (Debug.flagGet('epomenosCheck') && (Kafenio.egoThesiGet() !== pektis)) return Tsoxa;
+	if (Debug.flagGet('epomenosCheck') && (Kafenio.egoThesiGet() !== pektis)) return this;
 
 	simpektis = pektis.epomeniThesi();
 	if (simpektis == this.partidaTzogadorosGet()) simpektis = simpektis.epomeniThesi();
 
 	dilosi = this.sdilosi;
 
-	Tsoxa.dilosiPanelDOM.empty().
+	Arena.partida.dilosiPanelDOM.empty().
 	append(basi = $('<div>').attr('id', 'tsoxaDilosiPanelBasi'));
 
 	if (!dilosi[simpektis]) basi.
@@ -444,8 +444,8 @@ Trapezi.prototype.efoplismosΣΥΜΜΕΤΟΧΗ = function() {
 		$(this).append($(this).data('dilosi'));
 	});
 
-	Tsoxa.xipnitiriOplismos();
-	Tsoxa.dilosiPanelDOM.find('.tsoxaButton').addClass('tsoxaDilosiButton').
+	Arena.partida.xipnitiriOplismos();
+	Arena.partida.dilosiPanelDOM.find('.tsoxaButton').addClass('tsoxaDilosiButton').
 	off('mouseenter').on('mouseenter', function(e) {
 		e.stopPropagation();
 		if (klikDilosi) return;
@@ -463,23 +463,23 @@ Trapezi.prototype.efoplismosΣΥΜΜΕΤΟΧΗ = function() {
 	}).
 	off('click').on('click', function(e) {
 		Arena.inputRefocus(e);
-		Tsoxa.xipnitiriAfoplismos();
+		Arena.partida.xipnitiriAfoplismos();
 		if (Arena.partida.akirosiKiniseon()) return;
 		if (klikDilosi) return;
 
 		klikDilosi = true;
-		Tsoxa.enimerosiDOM.css('display', 'none');
+		Arena.partida.enimerosiDOM.css('display', 'none');
 		Client.skiserService('simetoxi',
 			'thesi=' + pektis,
 			'dilosi=' + $(this).data('dilosi')).
 		fail(function(err) {
-			Kafenio.tsoxa.Client.skiserFail(err);
-			Tsoxa.enimerosiDOM.css('display', 'block');
+			Client.skiserFail(err);
+			Arena.partida.enimerosiDOM.css('display', 'block');
 			klikDilosi = false;
 		});
 	});
 
-	Tsoxa.dilosiPanelDOM.css('display', 'block');
+	Arena.partida.dilosiPanelDOM.css('display', 'block');
 	return this;
 };
 
@@ -511,14 +511,14 @@ Trapezi.prototype.efoplismosΠΑΙΧΝΙΔΙ = function() {
 	this.efoplismosPexnidiFila(iseht, over).each(function() {
 		var filoDom, delay = 100;
 
-		filoDom = Kafenio.tsoxa.$(this);
+		filoDom = $(this);
 		if (!filoDom.data('ok')) return;
 
 		filoDom.
 		off('mouseenter').on('mouseenter', function(e) {
 			e.stopPropagation();
 			e.preventDefault();
-			if (Tsoxa.klikFilo) return;
+			if (Arena.partida.klikFilo) return;
 			filoDom.finish().css('cursor', 'pointer');
 			if (trapezi.partidaBazaCountGet() > 8) return;
 			filoDom.animate({bottom: pano}, delay);
@@ -526,7 +526,7 @@ Trapezi.prototype.efoplismosΠΑΙΧΝΙΔΙ = function() {
 		off('mouseleave').on('mouseleave', function(e) {
 			e.stopPropagation();
 			e.preventDefault();
-			if (Tsoxa.klikFilo) return;
+			if (Arena.partida.klikFilo) return;
 			filoDom.finish().css('cursor', 'auto');
 			if (trapezi.partidaBazaCountGet() > 8) return;
 			filoDom.animate({bottom: filoDom.data('bottom')}, delay);
@@ -535,23 +535,23 @@ Trapezi.prototype.efoplismosΠΑΙΧΝΙΔΙ = function() {
 			var olif, filo = $(this);
 
 			Arena.inputRefocus(e);
-			Tsoxa.xipnitiriAfoplismos();
+			Arena.partida.xipnitiriAfoplismos();
 			if (Arena.partida.akirosiKiniseon()) return;
-			if (Tsoxa.klikFilo) return;
+			if (Arena.partida.klikFilo) return;
 
 			// Κάνοντας κλικ το φύλλο μαρκάρω με 1, εκκινώ κίνηση φύλλου και
 			// κοινοποιώ το κλικ στον σέρβερ.
 
-			Tsoxa.klikFilo = 1;
-			Tsoxa.kinisiFilo(pektis, filoDom, function() {
+			Arena.partida.klikFilo = 1;
+			Arena.partida.kinisiFilo(pektis, filoDom, function() {
 				// Η κίνηση του φύλλο προς το κέντρο έχει περατωθεί.
 
 				// Αν έχω παραμείνει σε κατάσταση 1 σημαίνει ότι δεν έχει παραληφθεί
 				// ακόμη η κοινοποίηση της ενέργειας από τον σέρβερ, οπότε μαρκάρω 2
 				// που σημαίνει ακριβώς αυτό.
 
-				if (Tsoxa.klikFilo == 1) {
-					Tsoxa.klikFilo = 2;
+				if (Arena.partida.klikFilo == 1) {
+					Arena.partida.klikFilo = 2;
 					return;
 				}
 
@@ -559,10 +559,10 @@ Trapezi.prototype.efoplismosΠΑΙΧΝΙΔΙ = function() {
 				// αφού καθαρίσω την κατάσταση εμφανίζω την τρέχουσα κατάσταση και
 				// στέλνω την μπάζα εκεί που ανήκει, εφόσον έχει κλείσει μπάζα.
 
-				if (Tsoxa.klikFilo == 3) {
-					delete Tsoxa.klikFilo;
-					Tsoxa.trapeziRefreshDOM();
-					Tsoxa.kinisiBaza();
+				if (Arena.partida.klikFilo == 3) {
+					delete Arena.partida.klikFilo;
+					Arena.partida.trapeziRefreshDOM();
+					Arena.partida.kinisiBaza();
 				}
 			});
 
@@ -570,8 +570,8 @@ Trapezi.prototype.efoplismosΠΑΙΧΝΙΔΙ = function() {
 				'pektis=' + pektis,
 				'filo=' + filo.data('filo').filo2string()).
 			fail(function(err) {
-				Kafenio.tsoxa.Client.skiserFail(err);
-				delete Tsoxa.klikFilo;
+				Client.skiserFail(err);
+				delete Arena.partida.klikFilo;
 			});
 		});
 	});
@@ -592,7 +592,7 @@ Trapezi.prototype.efoplismosPexnidiFila = function(iseht, over) {
 	var fila, bottom, xroma, found, agora, delay = 100;
 
 	bottom = (iseht == 1 ? '-10px' : 'auto');
-	fila = Arena.partida['fila' + iseht + 'DOM'].find('.tsoxa_xartosiaFilo').
+	fila = Arena.partida['fila' + iseht + 'DOM'].find('.tsoxaXartosiaFilo').
 	// Ο επόμενος mouse event listener κρίθηκε απαραίτητος στην περίπτωση
 	// χειραφετημένηυς τσόχας όπου δεν θέλουμε να κινείται η τσόχα όταν
 	// σέρνουμε λάθος φύλλο.
@@ -608,7 +608,7 @@ Trapezi.prototype.efoplismosPexnidiFila = function(iseht, over) {
 	fila.each(function() {
 		var filo, filoDom;
 
-		filoDom = Kafenio.tsoxa.$(this);
+		filoDom = $(this);
 
 		filo = $(this).data('filo');
 		if (!filo) return;
@@ -632,7 +632,7 @@ Trapezi.prototype.efoplismosPexnidiFila = function(iseht, over) {
 		if (!filo) return;
 		if (filo.filoXromaGet() != xroma) return;
 
-		filoDom = Kafenio.tsoxa.$(this);
+		filoDom = $(this);
 		filoDom.data('ok', true);
 		if (over) filoDom.data('bottom', over).finish().animate({bottom: over}, delay);
 		found = true;
@@ -650,15 +650,15 @@ Trapezi.prototype.efoplismosCLAIM = function() {
 	thesi = this.partidaEpomenosGet();
 	if (Debug.flagGet('epomenosCheck') && (Kafenio.egoThesiGet() !== thesi)) return this;
 
-	Tsoxa.dilosiPanelDOM.empty().
+	Arena.partida.dilosiPanelDOM.empty().
 	append(basi = $('<div>').attr('id', 'tsoxaDilosiPanelBasi'));
 
 	basi.
 	append($('<div>').addClass('tsoxaButton').data('apodoxi', 'ΝΑΙ').text('ΝΑΙ')).
 	append($('<div>').addClass('tsoxaButton').data('apodoxi', 'ΟΧΙ').text('ΟΧΙ'));
 
-	Tsoxa.xipnitiriOplismos();
-	Tsoxa.dilosiPanelDOM.find('.tsoxaButton').addClass('tsoxaDilosiButton').
+	Arena.partida.xipnitiriOplismos();
+	Arena.partida.dilosiPanelDOM.find('.tsoxaButton').addClass('tsoxaDilosiButton').
 	off('mouseenter').on('mouseenter', function(e) {
 		e.stopPropagation();
 		$(this).addClass('tsoxaButtonOplismeno');
@@ -672,22 +672,22 @@ Trapezi.prototype.efoplismosCLAIM = function() {
 	}).
 	off('click').on('click', function(e) {
 		Arena.inputRefocus(e);
-		Tsoxa.xipnitiriAfoplismos();
+		Arena.partida.xipnitiriAfoplismos();
 		if (Arena.partida.akirosiKiniseon()) return;
 		if (klikApantisi) return;
 
 		klikApantisi = true;
-		Tsoxa.enimerosiDOM.css('display', 'none');
+		Arena.partida.enimerosiDOM.css('display', 'none');
 		Client.skiserService('claimApantisi',
 			'thesi=' + thesi,
 			'apodoxi=' + $(this).data('apodoxi')).
 		fail(function(err) {
-			Kafenio.tsoxa.Client.skiserFail(err);
-			Tsoxa.enimerosiDOM.css('display', 'block');
+			Client.skiserFail(err);
+			Arena.partida.enimerosiDOM.css('display', 'block');
 			klikApantisi = false;
 		});
 	});
 
-	Tsoxa.dilosiPanelDOM.css('display', 'block');
+	Arena.partida.dilosiPanelDOM.css('display', 'block');
 	return this;
 };
