@@ -217,42 +217,38 @@ Arena.partida.sizitisiRefreshDOM = function() {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 Arena.partida.enimerosiClearDOM = function() {
-	Arena.partida.enimerosiDOM.css({
-		top: '',
-		backgroundColor: 'transparent',
-	}).empty();
+	Arena.partida.enimerosiDOM.
+	removeClass().
+	empty();
 	return Arena.partida;
 };
 
 Arena.partida.enimerosiRefreshDOM = function() {
-	var proc;
+	var fasi, proc;
 
 	Arena.partida.enimerosiClearDOM();
-	if (Arena.ego.oxiTrapezi()) {
-		Arena.partida.enimerosi();
-		return Arena.partida;
-	}
+	fasi = Arena.ego.oxiTrapezi() ? '' : Arena.ego.trapezi.partidaFasiGet();
+	proc = 'enimerosi' + fasi;
+	if (typeof Arena.partida[proc] !== 'function')
+	return Arena.partida;
 
-	proc = 'enimerosi' + Arena.ego.trapezi.partidaFasiGet();
-	Arena.partida.enimerosiDOM.css('display', 'none').css('width', '').empty();
-	if (typeof Arena.partida[proc] === 'function') Arena.partida[proc]();
+	Arena.partida.enimerosiDOM.css({
+		display: 'block',
+	}).addClass('tsoxaEnimerosi' + fasi);
+	Arena.partida[proc]();
 	return Arena.partida;
 };
 
 Arena.partida.enimerosi = function() {
-	Arena.partida.enimerosiDOM.css({
-		top: '10px',
-		display: 'block',
-	}).
-	append($('<div>').text("Βρίσκεστε στη βασική σελίδα του «Πρεφαδόρου». Πρόκειται για ιστότοπο " +
+	Arena.partida.enimerosiDOM.
+	append($('<p>').text("Βρίσκεστε στη βασική σελίδα του «Πρεφαδόρου». Πρόκειται για ιστότοπο " +
 		"που επιχειρεί να προσομοιάσει ένα διαδικτυακό καφενείο της πρέφας.")).
-	append($('<div>').text("Μπορείτε να δημιουργήσετε ένα τραπέζι και να καλέσετε τους φίλους σας " +
+	append($('<p>').text("Μπορείτε να δημιουργήσετε ένα τραπέζι και να καλέσετε τους φίλους σας " +
 		"για να παίξετε μια παρτίδα πρέφα, ή να αποδεχτείτε κάποια πρόσκληση προκειμένου " +
 		"να παίξετε σε κάποιο άλλο τραπέζι.")).
-	append($('<div>').text("Μπορείτε, ακόμη, να παρακολουθήσετε τις παρτίδες που εξελίσσονται " +
+	append($('<p>').text("Μπορείτε, ακόμη, να παρακολουθήσετε τις παρτίδες που εξελίσσονται " +
 		"σε άλλα τραπέζια του καφενείου, κάνοντας κλικ στον κωδικό οποιουδήποτε τραπεζιού " +
 		"από το χώρο του καφενείου."));
-	Arena.partida.enimerosiDOM.children().addClass('tsoxaEnimerosiBasiki');
 	return Arena.partida;
 };
 
@@ -283,10 +279,10 @@ Arena.partida.enimerosiΔΙΑΝΟΜΗ = function() {
 	}
 
 	kimeno += ' Παρακαλώ περιμένετε…';
-	Arena.partida.enimerosiDOM.css('width', '190px').
-	append($('<img>').attr('src', '../ikona/working/bares.gif').
+	Arena.partida.enimerosiDOM.
+	append($('<img>').attr('src', 'ikona/working/bares.gif').
 	addClass('tsoxaEnimerosiIcon').css('width', '70px')).
-	append($('<div>').text(kimeno)).css('display', 'block');
+	append($('<div>').text(kimeno));
 
 	return Arena.partida;
 };
@@ -298,6 +294,7 @@ Arena.partida.enimerosiΔΗΛΩΣΗ = function() {
 	switch (thesi) {
 	case 1:
 		if (Arena.ego.isPektis()) {
+			Arena.partida.enimerosiDOM.addClass('tsoxaEnimerosiΔΗΛΩΣΗtzogadoros');
 			ikona = 'endixi/nevrikos.gif';
 			ikonaWidth = '46px';
 			kimeno = 'Πλειοδοτήστε προκειμένου να κερδίσετε την αγορά, αλλιώς πείτε πάσο. ' +
@@ -315,12 +312,9 @@ Arena.partida.enimerosiΔΗΛΩΣΗ = function() {
 		break;
 	}
 
-	Arena.partida.enimerosiDOM.css({
-		width: '190px',
-		left: '150px',
-	}).
+	Arena.partida.enimerosiDOM.
 	append($('<img>').attr('src', 'ikona/' + ikona).addClass('tsoxaEnimerosiIcon').css('width', ikonaWidth)).
-	append($('<div>').text(kimeno)).css('display', 'block');
+	append($('<div>').text(kimeno));
 
 	return Arena.partida;
 };
@@ -331,8 +325,8 @@ Arena.partida.enimerosiΑΛΛΑΓΗ = function() {
 	thesi = Arena.ego.thesiMap(Arena.ego.trapezi.partidaEpomenosGet());
 	if (thesi == 1) {
 		if (Arena.ego.isPektis()) {
-			Arena.partida.enimerosiDOM.css('top', '194px');
-			kimeno = 'Αλλάξτε φύλλα και δηλώστε την αγορά σας. Οι συμπαίκτες σας περιμένουν…';
+			Arena.partida.enimerosiDOM.addClass('tsoxaEnimerosiΑΛΛΑΓΗtzogadoros');
+			kimeno = 'Αλλάξτε δύο φύλλα και δηλώστε την αγορά σας. Οι συμπαίκτες σας περιμένουν…';
 			img = 'endixi/nevrikos.gif';
 			iconWidth = '46px';
 			width = '190px';
@@ -357,9 +351,9 @@ Arena.partida.enimerosiΑΛΛΑΓΗ = function() {
 		kimeno += ' αλλάζει φύλλα. Παρακαλώ περιμένετε την αγορά του…';
 	}
 
-	Arena.partida.enimerosiDOM.css('width', width).
+	Arena.partida.enimerosiDOM.
 	append($('<img>').attr('src', 'ikona/' + img).addClass('tsoxaEnimerosiIcon').css('width', iconWidth)).
-	append($('<div>').text(kimeno)).css('display', 'block');
+	append($('<div>').text(kimeno));
 
 	return Arena.partida;
 };
@@ -371,7 +365,7 @@ Arena.partida.enimerosiΣΥΜΜΕΤΟΧΗ = function() {
 	switch (thesi) {
 	case 1:
 		if (Arena.ego.isPektis()) {
-			Arena.partida.enimerosiDOM.css('width', 300);
+			Arena.partida.enimerosiDOM.addClass('tsoxaEnimerosiΣΥΜΜΕΤΟΧΗpektis');
 			ikona = 'endixi/nevrikos.gif';
 			ikonaWidth = '46px';
 			kimeno = 'Αποφασίστε αν θα διεκδικήσετε τις μπάζες που σας αναλογούν. ' +
@@ -391,7 +385,7 @@ Arena.partida.enimerosiΣΥΜΜΕΤΟΧΗ = function() {
 
 	Arena.partida.enimerosiDOM.
 	append($('<img>').attr('src', 'ikona/' + ikona).addClass('tsoxaEnimerosiIcon').css('width', ikonaWidth)).
-	append($('<div>').text(kimeno)).css('display', 'block');
+	append($('<div>').text(kimeno));
 
 	return Arena.partida;
 };
@@ -399,10 +393,7 @@ Arena.partida.enimerosiΣΥΜΜΕΤΟΧΗ = function() {
 Arena.partida.enimerosiΠΛΗΡΩΜΗ = function() {
 	Arena.partida.enimerosiDOM.
 	append($('<img>').attr('src', 'ikona/endixi/pliromi.gif').addClass('tsoxaEnimerosiIcon')).
-	append($('<div>').text('Γίνεται πληρωμή. Παρακαλώ περιμένετε…')).css({
-		display: 'block',
-		width: '190px',
-	});
+	append($('<div>').text('Γίνεται πληρωμή. Παρακαλώ περιμένετε…'));
 	return Arena.partida;
 };
 
@@ -855,7 +846,7 @@ Arena.partida.pektisAnamoniRefreshDOM = function(thesi, iseht, domMain) {
 	case 'ΔΙΑΝΟΜΗ':
 		if (thesi != trapezi.partidaDealerGet()) return Arena.partida;
 		domMain.append(endixi = $('<img>').addClass('tsoxaEndixiAnamoni').attr({
-			src: '../ikona/working/default.gif',
+			src: 'ikona/working/default.gif',
 			title: 'Ο παίκτης μοιράζει φύλλα',
 		}));
 		break;

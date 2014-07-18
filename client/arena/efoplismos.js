@@ -344,12 +344,12 @@ Trapezi.efoplismosAlagiXartosia = function(trapezi) {
 
 	iseht = Arena.ego.thesiMap(tzogadoros);
 	if (iseht == 1) {
-		pano = '26px';
+		pano = '36px';
 		kato = '20px';
 	}
 	else {
-		pano = '22px';
-		kato = '28px';
+		pano = '8px';
+		kato = '20px';
 	}
 
 	Arena.partida['fila' + iseht + 'DOM'].
@@ -394,8 +394,14 @@ Trapezi.efoplismosAlagiXartosia = function(trapezi) {
 			panoCount++;
 		}
 
-		panelDom.find('.tsoxaAgoraGrami').
-		css('display', panoCount === 2 ? 'inline-block' : 'none');
+		if (panoCount === 2) {
+			Arena.partida.enimerosiDOM.css('display', 'none');
+			panelDom.find('.tsoxaAgoraGrami').css('display', 'inline-block');
+		}
+		else {
+			panelDom.find('.tsoxaAgoraGrami').css('display', 'none');
+			Arena.partida.enimerosiDOM.css('display', 'block');
+		}
 	});
 
 	return Trapezi;
