@@ -161,6 +161,9 @@ Skiniko.prototype.egoDataSet = function(data) {
 	Arena.ego.trapezi = this.skinikoTrapeziGet(Arena.ego.trapeziKodikos);
 	if (Arena.ego.trapezi) Arena.flags.partidaMode = false;
 
+	Arena.ego.plati = Arena.ego.pektis.pektisPlatiRBGet();
+	Arena.ego.italp = (Arena.partida.plati === 'R' ? 'B' : 'R');
+
 	return this;
 };
 
