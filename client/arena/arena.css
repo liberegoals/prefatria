@@ -846,12 +846,12 @@ background-color: rgb(211, 211, 108);
 
 /********************************************************************************************************************/
 
-.tsoxa_partidaInfo {
+.tsoxaPartidaInfo {
 	display: inline-block;
 	padding: 4px 0 0 12px;
 }
 
-.tsoxa_partidaInfoFasi {
+.tsoxaPartidaInfoFasi {
 	display: inline-block;
 	padding: 2px 4px;
 	font-weight: bold;
@@ -859,7 +859,7 @@ background-color: rgb(211, 211, 108);
 	background: rgb(235, 228, 77);
 }
 
-.tsoxa_partidaInfoAkirosi {
+.tsoxaPartidaInfoAkirosi {
 	display: inline-block;
 	position: absolute;
 	bottom: 4px;
@@ -871,7 +871,7 @@ background-color: rgb(211, 211, 108);
 	background-color: #EBE44D;
 }
 
-.tsoxa_partidaInfoAkirosiLogin {
+.tsoxaPartidaInfoAkirosiLogin {
 	display: inline;
 	font-weight: bold;
 	color: #C21111;
@@ -895,8 +895,8 @@ background-color: rgb(211, 211, 108);
 	line-height: 120%;
 
 	color: #222222;
-/*
 	background-color: rgba(255, 133, 0, 0.14);
+/*
 */
 }
 
@@ -1024,7 +1024,6 @@ background-color: rgb(211, 211, 108);
 
 .tsoxaAgoraGrami {
 	display: none;
-	display: inline-block;
 	margin-bottom: 8px;
 }
 
@@ -1117,7 +1116,7 @@ cursor: auto;
 	width: 30px;
 }
 
-.tsoxa_filoEpilogi {
+.tsoxaFiloEpilogi {
 	box-shadow: -1px 0px 3px #585858;
 }
 
