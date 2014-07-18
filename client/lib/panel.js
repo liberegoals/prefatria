@@ -111,7 +111,7 @@ BPanel.prototype.bpanelRefresh = function() {
 	return this;
 };
 
-BPanel.prototype.bpanelGetButton = function(id) {
+BPanel.prototype.bpanelButtonGet = function(id) {
 	return this.nottub[id];
 };
 

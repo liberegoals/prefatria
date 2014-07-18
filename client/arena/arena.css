@@ -735,13 +735,13 @@ background-color: rgb(211, 211, 108);
 */
 #tsoxaFila3 {
 	display: none;
-	top: 40px;
+	top: 34px;
 	left: 0;
 }
 
 #tsoxaFila2 {
 	display: none;
-	top: 40px;
+	top: 34px;
 	right: 0;
 }
 
@@ -915,7 +915,7 @@ background-color: rgb(211, 211, 108);
 
 /********************************************************************************************************************/
 
-.tsoxa_button {
+.tsoxaButton {
 	margin-top: 10px;
 	padding: 0 6px;
 
@@ -931,12 +931,12 @@ background-color: rgb(211, 211, 108);
 	cursor: pointer;
 }
 
-.tsoxa_buttonOplismeno {
+.tsoxaButtonOplismeno {
 	border-style: outset;
 	background-color: #FFFF00 !important;
 }
 
-.tsoxa_buttonOplismeno:hover {
+.tsoxaButtonOplismeno:hover {
 	font-weight: bold;
 }
 
@@ -1011,19 +1011,20 @@ background-color: rgb(211, 211, 108);
 
 #tsoxaAgoraPanel {
 	position: absolute;
-	top: 156px;
+	top: 176px;
 	right: 10px;
 
 	height: 170px;
 	width: 330px;
 	white-space: normal;
-/*
 	background-color: rgba(110, 98, 192, 0.18);
+/*
 */
 }
 
 .tsoxaAgoraGrami {
 	display: none;
+	display: inline-block;
 	margin-bottom: 8px;
 }
 
@@ -1056,7 +1057,7 @@ cursor: auto;
 	position: absolute;
 	width: 56px;
 	top: 0px;
-	left: -100px;
+	left: -90px;
 	border-color: rgb(202, 86, 86);
 }
 
@@ -1126,6 +1127,7 @@ cursor: auto;
 	max-width: 240px;
 	text-align: center;
 	padding: 4px 4px 10px 4px;
+	z-index: 2;
 }
 
 #tsoxa_soloEndixi {

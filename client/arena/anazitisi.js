@@ -82,9 +82,9 @@ Arena.anazitisi.panelSetup = function() {
 		e.stopPropagation();
 
 		Arena.flags.epanadiataxiPss = true;
-		Arena.prosklisi.panel.bpanelGetButton('epanadiataxiPss').pbuttonDisplay();
+		Arena.prosklisi.panel.bpanelButtonGet('epanadiataxiPss').pbuttonDisplay();
 		Arena.anazitisi.panelDOM.css('cursor', 'move');
-		Arena.anazitisi.panel.bpanelGetButton('metakinisi').
+		Arena.anazitisi.panel.bpanelButtonGet('metakinisi').
 		pbuttonGetDOM().addClass('panelButtonCandi');
 		$(document).off('mousemove mouseup').
 		on('mousemove', function(e) {
@@ -133,7 +133,7 @@ Arena.anazitisi.panelSetup = function() {
 		on('mouseup', function(e) {
 			e.stopPropagation();
 			Arena.anazitisi.panelDOM.css('cursor', '');
-			Arena.anazitisi.panel.bpanelGetButton('metakinisi').
+			Arena.anazitisi.panel.bpanelButtonGet('metakinisi').
 			pbuttonGetDOM().removeClass('panelButtonCandi');
 			$(document).off('mousemove mouseoff');
 		});

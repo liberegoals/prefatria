@@ -6,7 +6,7 @@ Arena.prosklisi.setup = function() {
 
 	Arena.prosklisi.panel.bpanelRefresh();
 	Arena.prosklisi.panelDOM.append(Arena.prosklisi.panel.bpanelHorizontal().bpanelGetDOM());
-	Arena.prosklisi.panel.bpanelGetButton('epanadiataxiPss').pbuttonDexia();
+	Arena.prosklisi.panel.bpanelButtonGet('epanadiataxiPss').pbuttonDexia();
 	return Arena;
 };
 

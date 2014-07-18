@@ -22,6 +22,7 @@ Selida::javascript("arena/sizitisi");
 Selida::javascript("arena/epanel");
 Selida::javascript("arena/skiniko");
 Selida::javascript("arena/kinisi");
+Selida::javascript("arena/efoplismos");
 Arena::setupView();
 
 Selida::body();
