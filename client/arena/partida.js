@@ -916,6 +916,7 @@ Dilosi.prototype.dilosiDOM = function(idos) {
 Arena.partida.bazaRefreshDOM = function(prev) {
 	var pios, fila, nikitis, i, iseht, epomenos;
 
+	if (Arena.ego.oxiTrapezi()) return Arena.partida;
 	if (prev === undefined) {
 		pios = Arena.ego.trapezi.bazaPios;
 		fila = Arena.ego.trapezi.bazaFila;
@@ -957,6 +958,11 @@ Arena.partida.azabFila = [];
 Arena.partida.azabRefreshDOM = function() {
 	var pios, fila, torini, i, iseht;
 
+	Arena.partida.azabDOM.empty().
+	css('display', Arena.partida.flags.azab ? 'block' : 'none');
+
+	if (Arena.ego.oxiTrapezi()) return Arena.partida;
+
 	// Στο σημείο αυτό ελέγχουμε αν υπάρχουν στοιχεία τελευταίας
 	// μπάζας στην παρτίδα. Αν δεν υπάρχουν σημαίνει ότι δεν
 	// εμφανίσαμε καμία μπάζα γι' αυτή την παρτίδα, οπότε θα
@@ -976,8 +982,6 @@ Arena.partida.azabRefreshDOM = function() {
 		torini = false;
 	}
 
-	Arena.partida.azabDOM.empty().
-	css('display', Arena.partida.flags.azab ? 'block' : 'none');
 	for (i = 0; i < pios.length; i++) {
 		if (torini) {
 			Arena.partida.azabPios.push(pios[i]);
