@@ -476,7 +476,7 @@ Trapezi.prototype.trapeziIsDianomi = function() {
 // στο τραπέζι, αλλιώς επιστρέφει false.
 
 Trapezi.prototype.trapeziOxiDianomi = function() {
-	return this.trapeziIsDianomi();
+	return !this.trapeziIsDianomi();
 };
 
 // Η μέθοδος "telefteaDianomi" επιστρέφει την τελευταία διανομή του τραπεζιού.
