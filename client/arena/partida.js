@@ -713,6 +713,7 @@ Arena.partida.filaClearDOM = function(thesi) {
 	});
 
 	iseht = Arena.ego.thesiMap(thesi);
+	$('.tsoxaXartosiaFilo' + iseht).remove();
 	Arena.partida['fila' + iseht + 'DOM'].empty();
 	return Arena.partida;
 };
@@ -721,6 +722,7 @@ Arena.partida.filaRefreshDOM = function(thesi) {
 	var fila, iseht, dom;
 
 	if (thesi === undefined) return Arena.partida.thesiWalk(function(thesi) {
+		delete Arena.partida.klikFilo;
 		Arena.partida.filaRefreshDOM(thesi);
 	});
 
@@ -1086,7 +1088,11 @@ Arena.partida.kinisiFilo = function(pektis, filo, callback, delay) {
 	
 	filo.css('visibility', 'hidden');
 	if (delay === undefined) delay = 350;
-	olif.removeClass('tsoxaXartosiaFiloOmioxromo').animate(css, delay, callback);
+
+	olif.
+	removeClass('tsoxaXartosiaFiloOmioxromo').
+	animate(css, delay, callback);
+
 	return Arena.partida;
 };
 

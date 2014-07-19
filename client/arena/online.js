@@ -50,13 +50,8 @@ Trapezi.prototype.processEnergiaOnlineΦΥΛΛΟ = function(energia) {
 	// Αν το φύλλο δεν είναι δικό μας, αλλά παίχτηκε από κάποιον άλλον,
 	// πάλι δείχνω τις ίδιες κινήσεις.
 
-	if (Arena.ego.thesiGet() != energia.energiaPektisGet()) {
-		// Κατά την ανάπτυξη προγραμμάτων παίζω εγώ όλους τους παίκτες.
-		// Σ' αυτήν την περίπτωση καθαρίζω την κατάσταση.
-
-		if (!Debug.flagGet('epomenosCheck')) delete Arena.partida.klikFilo;
-		return this.processEnergiaOnlineFiloKinisi(energia);
-	}
+	if (Arena.ego.thesiGet() != energia.energiaPektisGet())
+	return this.processEnergiaOnlineFiloKinisi(energia);
 
 	// Είμαστε στην περίπτωση που παραλαμβάνει την ενέργεια ο παίκτης
 	// που έπαιξε το φύλλο. Αν είμαστε ακόμη σε κατάσταση 1 σημαίνει
@@ -76,7 +71,7 @@ Trapezi.prototype.processEnergiaOnlineΦΥΛΛΟ = function(energia) {
 	// τυχόν μπάζα προς τον παίκτη που την κερδίζει.
 	
 	if (Arena.partida.klikFilo == 2) {
-		delete Arena.partida.klikFilo;
+		//delete Arena.partida.klikFilo;
 		Arena.partida.trapeziRefreshDOM();
 		Arena.partida.kinisiBaza();
 		return this;

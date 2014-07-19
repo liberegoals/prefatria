@@ -525,6 +525,7 @@ Trapezi.prototype.efoplismosΠΑΙΧΝΙΔΙ = function() {
 			e.stopPropagation();
 			e.preventDefault();
 			if (Arena.partida.klikFilo) return;
+
 			filoDom.finish().css('cursor', 'pointer');
 			if (trapezi.partidaBazaCountGet() > 8) return;
 			filoDom.animate({bottom: pano}, delay);
@@ -533,6 +534,7 @@ Trapezi.prototype.efoplismosΠΑΙΧΝΙΔΙ = function() {
 			e.stopPropagation();
 			e.preventDefault();
 			if (Arena.partida.klikFilo) return;
+
 			filoDom.finish().css('cursor', 'auto');
 			if (trapezi.partidaBazaCountGet() > 8) return;
 			filoDom.animate({bottom: filoDom.data('bottom')}, delay);
@@ -566,7 +568,7 @@ Trapezi.prototype.efoplismosΠΑΙΧΝΙΔΙ = function() {
 				// στέλνω την μπάζα εκεί που ανήκει, εφόσον έχει κλείσει μπάζα.
 
 				if (Arena.partida.klikFilo == 3) {
-					delete Arena.partida.klikFilo;
+					//delete Arena.partida.klikFilo;
 					Arena.partida.trapeziRefreshDOM();
 					Arena.partida.kinisiBaza();
 				}
