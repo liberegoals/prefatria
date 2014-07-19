@@ -30,6 +30,8 @@ Arena.partida.flags = {
 	// στο control panel.
 
 	fanera23: false,
+
+	azab: false,
 };
 
 Arena.partida.niofertosView = function() {
@@ -80,8 +82,7 @@ Arena.partida.setup = function() {
 		id: 'tsoxaTzogos',
 		title: 'Τζόγος',
 	})).
-	append(Arena.partida.azabDOM = $('<div>').attr({
-		id: 'tsoxaAzab',
+	append(Arena.partida.azabDOM = $('<div>').addClass('tsoxaAzab').attr({
 		title: 'Τελευταία μπάζα',
 	})).
 	append(Arena.partida.filaPrevDOM = $('<div>').attr({
@@ -146,7 +147,10 @@ Arena.partida.trapeziRefreshDOM = function() {
 	pektisRefreshDOM().
 	dixeKripseFila().
 	filaRefreshDOM().
+	tzogosRefreshDOM().
 	bazaRefreshDOM().
+	azabRefreshDOM().
+	claimRefreshDOM().
 	efoplismos();
 	return Arena.partida;
 };
@@ -738,6 +742,29 @@ Arena.partida.filaRefreshDOM = function(thesi) {
 	return Arena.partida;
 };
 
+Arena.partida.tzogosRefreshDOM = function() {
+	var dom, fila;
+
+	dom = Arena.partida.tzogosDOM.css('display', 'none').empty();
+	if (Arena.ego.oxiTrapezi()) return Arena.partida;
+	fila = Arena.ego.trapezi.partidaTzogosGet();
+	if (!fila) return Arena.partida;
+
+	fila = fila.xartosiaFilaGet();
+	dom.
+	append(fila[0].filoDOM().addClass('tsoxaTzogosFilo tsoxaTzogosFiloLeft')).
+	append(fila[1].filoDOM().addClass('tsoxaTzogosFilo tsoxaTzogosFiloRight'));
+
+	switch (Arena.ego.trapezi.partidaFasiGet()) {
+	case 'ΔΙΑΝΟΜΗ':
+	case 'ΔΗΛΩΣΗ':
+		dom.css('display', 'block');
+		break;
+	}
+
+	return Arena.partida;
+};
+
 // Η function "peristrofiDOM" καλείται κατά τη χειραφεσία της τσόχας, όπου
 // η τσόχα ανεξαρτοποιείται και μπορεί να μετακινηθεί σε οποιοδήποτε μέρος
 // της σελίδας. Σκοπός της function είνα, ακριβώς, να κάνει σαφές αυτό το
@@ -968,6 +995,26 @@ Arena.partida.azabRefreshDOM = function() {
 	return Arena.partida;
 };
 
+Arena.partida.claimRefreshDOM = function() {
+	var filaDom;
+
+	$('#tsoxaClaimXartosia').remove();
+	if (Arena.ego.oxiTrapezi()) return Arena.partida;
+
+	switch (Arena.ego.trapezi.partidaFasiGet()) {
+	case 'CLAIM':
+		break;
+	default:
+		return Arena.partida;
+	}
+
+	filaDom = Arena.ego.trapezi.claimFila.xartosiaDOM(1);
+	Arena.partida.tsoxaDOM.append($('<div>').attr('id', 'tsoxaClaimXartosia').
+	append($('<div>').attr('id', 'tsoxaClaimMinima').text('Δεν δίνω άλλη μπάζα!')).
+	append(filaDom));
+	return Arena.partida;
+};
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Η function "efoplismos" αρματώνει την τσόχα με event listeners και χειρισμούς
@@ -1060,15 +1107,15 @@ Arena.partida.kinisiFilo = function(pektis, filo, callback, delay) {
 
 	switch (Arena.ego.thesiMap(pektis)) {
 	case 3:
-		css.top = 190;
+		css.top = 220;
 		css.left = 200;
 		break;
 	case 2:
-		css.top = 170;
+		css.top = 200;
 		css.left = 260;
 		break;
 	default:
-		css.top = 210;
+		css.top = 240;
 		css.left = 230;
 		break;
 	}
