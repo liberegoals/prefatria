@@ -569,3 +569,21 @@ Skiniko.prototype.processKinisiPostAX = function(data) {
 	Client.sound.tic();
 	return this;
 };
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// RC -- Reject claim
+//
+// Δεδομένα
+//
+//	trapezi		Κωδικός τραπεζιού.
+//	dianomi		Κωδικός διανομής.
+//	ecount		Πλήθος ενεργειών πριν το claim.
+
+Skiniko.prototype.processKinisiPostRC = function(data) {
+	if (Arena.ego.oxiTrapezi()) return this;
+
+	Arena.partida.trapeziRefreshDOM();
+	Arena.panelRefresh();
+	return this;
+};

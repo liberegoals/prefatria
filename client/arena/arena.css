@@ -1227,7 +1227,7 @@ cursor: auto;
 
 #tsoxaClaimXartosia {
 	position: absolute;
-	top: 210px;
+	top: 220px;
 	left: 50px;
 	width: 310px;
 	height: 120px;
@@ -1237,6 +1237,8 @@ background-color: teal;
 }
 
 #tsoxaClaimMinima {
+	position: relative;
+	top: -30px;
 	font-size: 16px;
 	font-style: italic;
 	font-weight: bold;
