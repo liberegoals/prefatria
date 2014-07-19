@@ -286,7 +286,7 @@ Arena.sizitisi.apostoli = function() {
 		return Arena;
 	}
 
-	Client.skiserService((Arena.partidaMode() && Arena.ego.trapezi) ?
+	Client.skiserService((Arena.partidaMode() && Arena.ego.isTrapezi()) ?
 		'sizitisiPartida' : 'sizitisiKafenio', 'sxolio=' + sxolio.uri()).
 	done(function(rsp) {
 		Arena.sizitisi.inputDOM.val('');
