@@ -1,3 +1,43 @@
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// Η function "efoplismos" αρματώνει την τσόχα με event listeners και χειρισμούς
+// που μπορούν να κάνουν οι παίκτες σε κάθε ιδιαίτερη τη φάση του παιχνιδιού.
+// Εκτός, όμως, από το αρμάτωμα κάνουμε και άλλες εξειδικευμένες εργασίες που
+// αφορούν στην εμφάνιση ή μη κάποιων στοιχείων της τσόχας κλπ.
+
+Arena.partida.efoplismos = function() {
+	var thesi, efoplismos;
+
+	if (Arena.ego.oxiTrapezi()) return Arena.partida;
+	if (Arena.ego.oxiPektis()) return Arena.partida;
+
+	// Εκκινούμε τη διαδικασία ακυρώνοντας τυχόν υπάρχοντα οπλισμό της τσόχας.
+
+	Arena.partida.afoplismos();
+
+	// Το «αρμάτωμα» της τσόχας με χειρισμούς και event listeners δεν
+	// το επιχειρούμε με το χέρι, αλλά με ιδιαίτερες functions που
+	// αφορούν στην τρέχουσα φάση του παιχνδιού.
+
+	efoplismos = 'efoplismos' + Arena.ego.trapezi.partidaFasiGet();
+	if (typeof Arena.ego.trapezi[efoplismos] !== 'function')
+	return Arena.partida;
+
+	Arena.ego.trapezi[efoplismos]();
+	return Arena.partida;
+};
+
+// Η function "afoplismos" ακυρώνει event listeners της τσόχας η οποία με
+// αυτόν τον τρόπο καθίσταται ακίνδυνη και ανενεργή.
+
+Arena.partida.afoplismos = function() {
+	Arena.partida.dilosiPanelDOM.css('display', 'none');
+	Arena.partida.agoraPanelDOM.css('display', 'none');
+	Arena.partida.xipnitiriAfoplismos();
+
+	return Arena.partida;
+};
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
 //
 // Κατά τη φάση της πλειοδοσίας για την αγορά ισχύουν τα εξής:
