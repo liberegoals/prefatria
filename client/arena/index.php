@@ -15,6 +15,7 @@ Selida::javascript("common/kinisi");
 Selida::javascript("arena/arena");
 Selida::javascript("arena/kafenio");
 Selida::javascript("arena/partida");
+Selida::javascript("arena/enimerosi");
 Selida::javascript("arena/cpanel");
 Selida::javascript("arena/prosklisi");
 Selida::javascript("arena/anazitisi");
