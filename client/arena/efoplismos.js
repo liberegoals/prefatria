@@ -502,12 +502,12 @@ Trapezi.prototype.efoplismosΠΑΙΧΝΙΔΙ = function() {
 
 	iseht = Arena.ego.thesiMap(pektis);
 	if (iseht === 1) {
-		over = '+4px';
+		over = '30px';
 		pano = '+=10px';
 		kato = '-=10px';
 	}
 	else {
-		over = '22px';
+		over = '12px';
 		pano = '-=8px';
 		kato = '+=8px';
 	}
@@ -597,7 +597,7 @@ Trapezi.prototype.efoplismosPexnidiClaim = function(pektis) {
 Trapezi.prototype.efoplismosPexnidiFila = function(iseht, over) {
 	var fila, bottom, xroma, found, agora, delay = 100;
 
-	bottom = (iseht == 1 ? '-10px' : 'auto');
+	bottom = (iseht == 1 ? '+20px' : 'auto');
 	fila = Arena.partida['fila' + iseht + 'DOM'].find('.tsoxaXartosiaFilo').
 	// Ο επόμενος mouse event listener κρίθηκε απαραίτητος στην περίπτωση
 	// χειραφετημένηυς τσόχας όπου δεν θέλουμε να κινείται η τσόχα όταν
