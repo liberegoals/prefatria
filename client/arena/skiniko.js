@@ -233,10 +233,13 @@ Skiniko.prototype.processPartidaEnergiaData = function(energiaData, online) {
 		if (!allOnline) return;
 
 		procOnline = 'processEnergiaOnline' + energia.energiaIdosGet();
-		if (typeof trapezi[procOnline] !== 'function') allOnline = false;
+		if (typeof Arena.ego.trapezi[procOnline] !== 'function') allOnline = false;
 	});
 
 	Arena.ego.trapezi.partidaReplay();
+	if (!online)
+	return this;
+
 	if (!allOnline) {
 		Arena.partida.trapeziRefreshDOM();
 		Arena.panelRefresh();
@@ -246,8 +249,8 @@ Skiniko.prototype.processPartidaEnergiaData = function(energiaData, online) {
 	Globals.awalk(energiaData, function(i, energia) {
 		if (energia.dianomi != dianomiKodikos) return;
 		procOnline = 'processEnergiaOnline' + energia.energiaIdosGet();
-		if (typeof trapezi[procOnline] !== 'function') return;
-		trapezi[procOnline](energia);
+		if (typeof Arena.ego.trapezi[procOnline] !== 'function') return;
+		Arena.ego.trapezi[procOnline](energia);
 	});
 
 	return this;

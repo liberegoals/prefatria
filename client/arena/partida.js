@@ -137,6 +137,7 @@ Arena.partida.clearDOM = function() {
 };
 
 Arena.partida.trapeziRefreshDOM = function() {
+	$('#tsoxaSoloEndixi').remove();
 	Arena.partida.
 	peximoTheasiRefreshDOM().
 	dataPanoRefreshDOM().
@@ -145,6 +146,7 @@ Arena.partida.trapeziRefreshDOM = function() {
 	pektisRefreshDOM().
 	dixeKripseFila().
 	filaRefreshDOM().
+	bazaRefreshDOM().
 	efoplismos();
 	return Arena.partida;
 };
@@ -395,19 +397,19 @@ Arena.partida.pektisRefreshDOM = function(thesi) {
 
 	if (Arena.partida.isDealer(thesi)) domMain.append($('<img>').
 	addClass('tsoxaPektisIcon').attr({
-		src: Client.server + 'ikona/endixi/dealer.png',
+		src: 'ikona/endixi/dealer.png',
 		title: 'Μοιράζει φύλλα',
 	}));
 
 	if (Arena.partida.isProtos(thesi)) domMain.append($('<img>').
 	addClass('tsoxaPektisIcon').attr({
-		src: Client.server + 'ikona/endixi/protos.png',
+		src: 'ikona/endixi/protos.png',
 		title: 'Πρώτος παίκτης μετά τον παίκτη που μοίρασε',
 	}));
 
 	if (Arena.ego.trapezi.partidaIsClaim(thesi)) domMain.append($('<img>').
 	addClass('tsoxaPektisIcon tsoxaPektisIconClaim').attr({
-		src: Client.server + 'ikona/panel/pexnidi/claim.png',
+		src: 'ikona/panel/claim.png',
 		title: 'Παραιτήθηκε από τις υπόλοιπες μπάζες',
 	}));
 
@@ -882,6 +884,90 @@ Dilosi.prototype.dilosiDOM = function(idos) {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+Arena.partida.bazaRefreshDOM = function(prev) {
+	var pios, fila, nikitis, i, iseht, epomenos;
+
+	if (prev === undefined) {
+		pios = Arena.ego.trapezi.bazaPios;
+		fila = Arena.ego.trapezi.bazaFila;
+	}
+	else {
+		pios = Arena.ego.trapezi.azabPios;
+		fila = Arena.ego.trapezi.azabFila;
+	}
+
+	epomenos = Arena.ego.trapezi.partidaEpomenosGet();
+	nikitis = Arena.ego.trapezi.partidaBazaPios(prev);
+	$('.tsoxaBazaFilo').finish().remove();
+	$('.tsoxaVelosFilo').remove();
+	for (i = 0; i < pios.length; i++) {
+		iseht = Arena.ego.thesiMap(pios[i]);
+		Arena.partida.tsoxaDOM.
+		append($('<img>').addClass('tsoxaBazaFilo').attr({
+			id: 'tsoxaBazaFilo' + iseht,
+			src: 'ikona/trapoula/' + fila[i].filoXromaGet() + fila[i].filoAxiaGet() + '.png',
+		})).
+		append($('<img>').addClass('tsoxaVelosFilo').attr({
+			id: 'tsoxaVelosFilo' + iseht,
+			src: 'ikona/baza/' + (epomenos === pios[i] ? 'pare' : 'dose') + iseht + '.png',
+		}).css('opacity', pios[i] == nikitis ? 1.0 : 0.5));
+	}
+
+	return Arena.partida;
+};
+
+// Στα arrays που ακολουθούν κρατάμε τα στοιχεία της τελευταίας που
+// παίχτηκε στην τσόχα μας. Συνήθως η τελευταία μπάζα εμφανίζεται με
+// βάση τα σχετικά στοιχεία που υπάρχουν στην παρτίδα, αλλά αυτά
+// μηδενίζονται κατά την επαναδιανομή και έτσι δεν μπορούμε να δούμε
+// την τελευταία μπάζα της τελευταίας διανομής μετά την επαναδιανομή.
+
+Arena.partida.azabPios = [];
+Arena.partida.azabFila = [];
+
+Arena.partida.azabRefreshDOM = function() {
+	var pios, fila, torini, i, iseht;
+
+	// Στο σημείο αυτό ελέγχουμε αν υπάρχουν στοιχεία τελευταίας
+	// μπάζας στην παρτίδα. Αν δεν υπάρχουν σημαίνει ότι δεν
+	// εμφανίσαμε καμία μπάζα γι' αυτή την παρτίδα, οπότε θα
+	// πρέπει να καταφύγουμε σε τυχόν κρατημένη τελευταία μπάζα
+	// της τσόχας μας.
+
+	pios = Arena.ego.trapezi.azabPios;
+	if (pios.length) {
+		fila = Arena.ego.trapezi.azabFila;
+		Arena.partida.azabPios = [];
+		Arena.partida.azabFila = [];
+		torini = true;
+	}
+	else {
+		pios = Arena.partida.azabPios;
+		fila = Arena.partida.azabFila;
+		torini = false;
+	}
+
+	Arena.partida.azabDOM.empty().
+	css('display', Arena.partida.flags.azab ? 'block' : 'none');
+	for (i = 0; i < pios.length; i++) {
+		if (torini) {
+			Arena.partida.azabPios.push(pios[i]);
+			Arena.partida.azabFila.push(fila[i]);
+		}
+
+		iseht = Arena.ego.thesiMap(pios[i]);
+		Arena.partida.azabDOM.
+		append($('<img>').addClass('tsoxaAzabFilo').attr({
+			id: 'tsoxaAzabFilo' + iseht,
+			src: 'ikona/trapoula/' + fila[i].filoXromaGet() + fila[i].filoAxiaGet() + '.png',
+		}));
+	}
+
+	return Arena.partida;
+};
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 // Η function "efoplismos" αρματώνει την τσόχα με event listeners και χειρισμούς
 // που μπορούν να κάνουν οι παίκτες σε κάθε ιδιαίτερη τη φάση του παιχνιδιού.
 // Εκτός, όμως, από το αρμάτωμα κάνουμε και άλλες εξειδικευμένες εργασίες που
@@ -902,9 +988,11 @@ Arena.partida.efoplismos = function() {
 	// αφορούν στην τρέχουσα φάση του παιχνδιού.
 
 	efoplismos = 'efoplismos' + Arena.ego.trapezi.partidaFasiGet();
-	if (typeof Arena.ego.trapezi[efoplismos] === 'function') Arena.ego.trapezi[efoplismos]();
+	if (typeof Arena.ego.trapezi[efoplismos] !== 'function')
+	return Arena.partida;
 
-	return Arena.ego.trapezi;
+	Arena.ego.trapezi[efoplismos]();
+	return Arena.partida;
 };
 
 // Η function "afoplismos" ακυρώνει event listeners της τσόχας η οποία με
@@ -999,5 +1087,36 @@ Arena.partida.kinisiFilo = function(pektis, filo, callback, delay) {
 	filo.css('visibility', 'hidden');
 	if (delay === undefined) delay = 350;
 	olif.removeClass('tsoxaXartosiaFiloOmioxromo').animate(css, delay, callback);
+	return Arena.partida;
+};
+
+Arena.partida.kinisiBaza = function() {
+	var trapezi, pios, css = {width: 0};
+
+	if (Arena.ego.oxiTrapezi()) return Arena.partida;
+	if (!Arena.ego.trapezi.bazaFila) return Arena.partida;
+	if (Arena.ego.trapezi.bazaFila.length) return Arena.partida;
+
+	pios = Arena.ego.trapezi.partidaBazaPios(true);
+	switch (Arena.ego.thesiMap(pios)) {
+	case 3:
+		css.left = '100px';
+		css.top = '140px';
+		break;
+	case 2:
+		css.left = '400px';
+		css.top = '140px';
+		break;
+	default:
+		css.left = '160px';
+		css.top = '350px';
+		break;
+	}
+
+	Arena.partida.
+	bazaRefreshDOM(true).
+	azabRefreshDOM();
+	$('.tsoxaVelosFilo').delay(400).fadeOut();
+	$('.tsoxaBazaFilo').delay(600).animate(css);
 	return Arena.partida;
 };
