@@ -1070,6 +1070,98 @@ Skiniko.prototype.pektisTrapeziScroll = function(anim) {
 	return this;
 };
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
+
+Filo.prototype.filoDOM = function() {
+	return $('<img>').data('filo', this).attr({
+		src: Client.server + 'ikona/trapoula/' + this.filoXromaGet() + this.filoAxiaGet() + '.png',
+	});
+};
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// Η μέθοδος "xartosiaDOM" δημιουργεί DOM element με τα φύλλα της χαρτωσιάς.
+// Ως παράμετρο δίνουμε τη θέση του παίκτη, εκτός από την περίπτωση που πρόκειται
+// για προηγούμενη χαρτωσιά που εμφανίζεται στη συζήτηση, όπου δεν καθορίζουμε θέση.
+
+Xartosia.prototype.xartosiaDOM = function(iseht) {
+	var dom, xromaPrev = null, rbPrev = null, cnt = this.xartosiaMikos(), klasi;
+
+	klasi = iseht ? 'tsoxaXartosiaFilo tsoxaXartosiaFilo' + iseht : 'tsoxaXartosiaFiloPrev';
+	dom = $('<div>').addClass('tsoxaXartosiaContainer');
+	Globals.awalk(this.xartosiaFilaGet(), function(i, filo) {
+		var filoDOM, xroma, rb;
+
+		filoDOM = filo.filoDOM().addClass(klasi);
+
+		// Το πρώτο φύλλο εμφανίζεται κανονικά στη σειρά του, τα υπόλοιπα
+		// απανωτίζουν το προηγούμενο φύλλο.
+
+		if (i === 0) filoDOM.css('marginLeft', 0);
+
+		// Κατά τη διάρκεια της αλλαγής τα φύλλα του τζογαδόρου είναι 12,
+		// επομένως απανωτίζουμε λίγο παραπάνω.
+
+		else if (cnt > 10) filoDOM.addClass('tsoxaXartosiaFiloSteno' + iseht);
+
+		// Τα φύλλα του Νότου φαίνονται μεγαλύτερα, καθώς ο διαθέσιμος χώρος
+		// είναι πολύ περισσότερος.
+
+		if (iseht === 1) filoDOM.addClass('tsoxaXartosiaFiloNotos');
+
+		dom.append(filoDOM);
+
+		// Μένει να ελέγξουμε αν υπάρχουν διαδοχικές ομοιόχρωμες φυλές, π.χ.
+		// μετά τα μπαστούνια να ακολουθούν σπαθιά, ή μετά τα καρά να ακολουθούν
+		// κούπες.
+
+		xroma = filo.filoXromaGet();
+		if (xroma === xromaPrev) return;
+
+		// Μόλις αλλάξαμε φυλή και πρέπει να ελέγξουμε αν η νέα φυλή είναι
+		// ομοιόχρωμη με την προηγούμενη (κόκκινα/μαύρα).
+
+		xromaPrev = xroma;
+		rb = Prefadoros.xromaXroma[xroma];
+		if (rb === rbPrev) filoDOM.addClass('tsoxaXartosiaFiloOmioxromo');
+		else rbPrev = rb;
+	});
+
+	return dom;
+};
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+Dilosi.prototype.dilosiDOM = function(idos) {
+	var dom;
+
+	if (idos === undefined) idos = 'Dilosi';
+	dom = $('<div>').addClass('tsoxa' + idos);
+
+	if (this.dilosiIsPaso()) {
+		dom.text('ΠΑΣΟ');
+		return dom;
+	}
+
+	if (this.dilosiIsTagrafo()) {
+		dom.text('Άμα μείνουν');
+		return dom;
+	}
+	
+	if (this.dilosiIsExo()) dom.append($('<div>').addClass('tsoxa' + idos + 'Exo').text('Έχω'));
+	dom.append($('<div>').addClass('tsoxa' + idos + 'Bazes').text(this.dilosiBazesGet()));
+	dom.append($('<img>').addClass('tsoxa' + idos + 'Xroma').attr({
+		src: Client.server + 'ikona/trapoula/xroma' + this.dilosiXromaGet() + '.png',
+	}));
+
+	if (this.dilosiIsAsoi())
+	dom.
+	append($('<div>').addClass('tsoxaDilosiAsoi').
+	append($('<img>').addClass('tsoxaDilosiAsoiIcon').attr('src', 'ikona/panel/asoiOn.png')));
+
+	return dom;
+};
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
 
 // Υπάρχουν κάποιες δομές και διαδικασίες που αφορούν στον χρήστη που τρέχει την
