@@ -110,7 +110,7 @@ Trapezi.efoplismosAlagiPanel = function(trapezi) {
 	minXroma = Prefadoros.xromaAxia[minAgora.dilosiXromaGet()];
 	minBazes = minAgora.dilosiBazesGet();
 
-	panelDom.empty();
+	panelDom.removeData().empty();
 	for (bazes = 6; bazes <= 10; bazes++) {
 		panelDom.append(domGrami = $('<div>').addClass('tsoxaAgoraGrami'));
 		for (i = 0; i < xroma.length; i++) {
@@ -151,7 +151,7 @@ Trapezi.efoplismosAlagiPanelSolo = function(panelDom, minAgora) {
 // τραπέζι παίζονται οι άσοι.
 
 Trapezi.efoplismosAlagiPanelAsoi = function(trapezi, panelDom) {
-	var asoi, asoiDir = Client.server + 'ikona/panel/pexnidi/';
+	var asoi, asoiDir = 'ikona/panel/';
 
 	if (trapezi.trapeziOxiAsoi()) return Trapezi;
 
@@ -159,7 +159,7 @@ Trapezi.efoplismosAlagiPanelAsoi = function(trapezi, panelDom) {
 	trapezi.fila[trapezi.partidaTzogadorosGet()].xartosiaWalk(function(i, filo) {
 		if (filo.filoAxiaGet() === 'A') asoi++;
 	});
-	if (asoi < 4) return Trapezi;
+	//if (asoi < 4) return Trapezi;
 
 	panelDom.data('asoi', true).append($('<img>').attr({
 		id: 'tsoxaAgoraAsoiIcon',
