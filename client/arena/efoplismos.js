@@ -159,7 +159,7 @@ Trapezi.efoplismosAlagiPanelAsoi = function(trapezi, panelDom) {
 	trapezi.fila[trapezi.partidaTzogadorosGet()].xartosiaWalk(function(i, filo) {
 		if (filo.filoAxiaGet() === 'A') asoi++;
 	});
-	//if (asoi < 4) return Trapezi;
+	if (asoi < 4) return Trapezi;
 
 	panelDom.data('asoi', true).append($('<img>').attr({
 		id: 'tsoxaAgoraAsoiIcon',
