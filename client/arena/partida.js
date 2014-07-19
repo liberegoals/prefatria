@@ -877,7 +877,7 @@ Dilosi.prototype.dilosiDOM = function(idos) {
 	if (this.dilosiIsAsoi())
 	dom.
 	append($('<div>').addClass('tsoxaDilosiAsoi').
-	append($('<img>').addClass('tsoxaDilosiAsoiIcon').attr('src', 'ikona/panel/pexnidi/asoiOn.png')));
+	append($('<img>').addClass('tsoxaDilosiAsoiIcon').attr('src', 'ikona/panel/asoiOn.png')));
 
 	return dom;
 };
