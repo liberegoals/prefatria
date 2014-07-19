@@ -449,6 +449,7 @@ Skiniko.prototype.skinikoCreateDOM = function(data) {
 	Arena.prosklisi.areaDOM.empty();
 	Arena.anazitisi.areaDOM.empty();
 	Arena.sizitisi.kafenioDOM.empty();
+	Arena.partida.niofertosDOM.empty();
 
 	Globals.awalk(data.trapezi.sort(function(t1, t2) {
 		if (t1.kodikos < t2.kodikos) return -1;
