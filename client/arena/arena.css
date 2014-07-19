@@ -673,19 +673,19 @@ background-color: rgb(211, 211, 108);
 }
 
 #tsoxaPektisBazes3 {
-	bottom: 0px;
+	bottom: 8px;
 	left: 10px;
 	text-align: left;
 }
 
 #tsoxaPektisBazes2 {
-	bottom: 0px;
+	bottom: 8px;
 	right: 10px;
 	text-align: right;
 }
 
 #tsoxaPektisBazes1 {
-	top: 0px;
+	top: 8px;
 	left: 10px;
 	text-align: left;
 }
@@ -909,8 +909,8 @@ background-color: rgb(211, 211, 108);
 
 .tsoxaEnimerosiΔΙΑΝΟΜΗ {
 	top: 165px;
-	left: 150px;
-	width: 400px;
+	left: 350px;
+	width: 200px;
 }
 
 .tsoxaEnimerosiΔΗΛΩΣΗ {
@@ -1188,17 +1188,17 @@ cursor: auto;
 }
 
 #tsoxaBazaFilo3 {
-	top: 190px;
+	top: 220px;
 	left: 200px;
 }
 
 #tsoxaBazaFilo2 {
-	top: 170px;
+	top: 200px;
 	left: 260px;
 }
 
 #tsoxaBazaFilo1 {
-	top: 210px;
+	top: 240px;
 	left: 230px;
 }
 
@@ -1209,25 +1209,25 @@ cursor: auto;
 }
 
 #tsoxaVelosFilo3 {
-	top: 155px;
+	top: 185px;
 	left: 165px;
 }
 
 #tsoxaVelosFilo2 {
-	top: 135px;
+	top: 165px;
 	left: 335px;
 }
 
 #tsoxaVelosFilo1 {
-	top: 315px;
+	top: 345px;
 	left: 195px;
 }
 
 /**********************************************************************************************************************/
 
-#tsoxa_claimXartosia {
+#tsoxaClaimXartosia {
 	position: absolute;
-	top: 174px;
+	top: 210px;
 	left: 50px;
 	width: 310px;
 	height: 120px;
@@ -1236,7 +1236,7 @@ background-color: teal;
 */
 }
 
-#tsoxa_claimMinima {
+#tsoxaClaimMinima {
 	font-size: 16px;
 	font-style: italic;
 	font-weight: bold;
@@ -1246,7 +1246,7 @@ background-color: teal;
 
 /**********************************************************************************************************************/
 
-#tsoxaAzab {
+.tsoxaAzab {
 	display: none;
 	position: absolute;
 	top: 170px;
@@ -1260,8 +1260,8 @@ background-color: teal;
 }
 
 .tsoxaAzabEmfanis {
-	z-index: 2 !important;
-	opacity: 1 !important;
+	z-index: 2;
+	opacity: 1;
 }
 
 .tsoxaAzabFilo {
