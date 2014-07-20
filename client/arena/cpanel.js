@@ -65,6 +65,25 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 }));
 
 Arena.cpanel.bpanelButtonPush(new PButton({
+	omada: 1,
+	img: 'miaPrefa.png',
+	title: 'Νέο τραπέζι',
+	check: function() {
+		return Arena.ego.oxiPektis();
+	},
+	click: function(e) {
+		Client.fyi.pano('Δημιουργία νέου τραπεζιού. Παρακαλώ περιμένετε…');
+		Client.skiserService('miaPrefa').
+		done(function(rsp) {
+			Client.fyi.epano(rsp);
+		}).
+		fail(function(err) {
+			Client.skiserFail(err);
+		});
+	},
+}));
+
+Arena.cpanel.bpanelButtonPush(new PButton({
 	id: 'diataxi',
 	omada: 1,
 	img: 'diataxi.png',

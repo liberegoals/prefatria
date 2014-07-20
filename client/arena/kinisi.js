@@ -81,6 +81,78 @@ Skiniko.prototype.processKinisiPostNS = function(data) {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+// TR -- Νέο τραπέζι
+//
+// Δεδομένα
+//
+//	trapezi		Τα στοιχεία του τραπεζιού (object).
+//
+// Επιπρόσθετα δεδομένα
+//
+//	trapeziPrin	Προηγούμενο τραπέζι παίκτη (object).
+
+Skiniko.prototype.processKinisiAnteTR = function(data) {
+	var sinedria;
+
+	sinedria = this.skinikoSinedriaGet(data.trapezi.pektis1);
+	if (!sinedria) return this;
+
+	sinedria.
+	sinedriaDetachRebelosDOM().
+	sinedriaDetachTheatisDOM();
+
+	// Παράγουμε ήχο μόνο στην περίπτωση που το τραπέζι δημιουργήθηκε
+	// από άλλον παίκτη και όχι από εμάς, καθώς όταν είμαστε εμείς που
+	// δημιουργούμε το τραπέζι παραλαμβάνουμε και πρόσκληση η οποία θα
+	// δημιουργήσει παρόμοιο ηχητικό σήμα.
+
+	if (data.trapezi.pektis1.oxiEgo())
+	Client.sound.trapeziNeo();
+
+	data.trapeziPrin = this.skinikoTrapeziGet(sinedria.sinedriaTrapeziGet());
+	return this;
+};
+
+Skiniko.prototype.processKinisiPostTR = function(data) {
+	var trapezi, pektis, thesi;
+
+	if (data.trapeziPrin) {
+		data.trapeziPrin.
+		trapeziSimetoxiRefreshDOM().
+		trapeziDataRefreshDOM();
+	}
+
+	trapezi = this.skinikoTrapeziGet(data.trapezi.kodikos);
+	if (!trapezi) return this;
+
+	trapezi.trapeziCreateDOM();
+	pektis = data.trapezi.pektis1;
+	this.pektisEntopismosDOM(pektis);
+
+	if (pektis.isEgo()) {
+		this.pektisTrapeziScroll(true);
+		Arena.panelRefresh();
+		if (Arena.ego.isTrapezi())
+		Arena.partida.refreshDOM();
+		return this;
+	}
+
+	if (Arena.ego.oxiTrapezi())
+	return this;
+
+	// Αν ο δημιουργός μετείχε ως θεατής στην τσόχα μας, έχουν γίνει
+	// ήδη όλες οι απαραίτητες ενέργειες στο ante. Μας ενδιαφέρει
+	// μόνο η περίπτωση κατά την οποία συμμετέχει ως παίκτης στην
+	// τσόχα μας.
+
+	thesi = Arena.ego.trapezi.trapeziThesiPekti(pektis);
+	if (thesi) Arena.partida.pektisDataRefreshDOM(thesi);
+
+	return this;
+};
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 // ET -- Επιλογή τραπεζιού
 //
 // Δεδομένα
@@ -102,7 +174,7 @@ Skiniko.prototype.processKinisiAnteET = function(data) {
 	sinedriaDetachRebelosDOM().
 	sinedriaDetachTheatisDOM();
 
-	trapeziPrin = this.skinikoTrapeziGet(sinedria.sinedriaTrapeziGet());
+	data.trapeziPrin = this.skinikoTrapeziGet(sinedria.sinedriaTrapeziGet());
 	return this;
 };
 
@@ -112,8 +184,8 @@ Skiniko.prototype.processKinisiPostET = function(data) {
 	sinedria = this.skinikoSinedriaGet(data.pektis);
 	if (!sinedria) return this;
 
-	if (trapeziPrin) {
-		trapeziPrin.
+	if (data.trapeziPrin) {
+		data.trapeziPrin.
 		trapeziSimetoxiRefreshDOM().
 		trapeziDataRefreshDOM();
 	}
@@ -326,7 +398,7 @@ Skiniko.prototype.processKinisiAnteAL = function(data) {
 	sinedriaDetachRebelosDOM().
 	sinedriaDetachTheatisDOM();
 
-	trapeziPrin = this.skinikoTrapeziGet(sinedria.sinedriaTrapeziGet());
+	data.trapeziPrin = this.skinikoTrapeziGet(sinedria.sinedriaTrapeziGet());
 	return this;
 };
 
@@ -336,8 +408,8 @@ Skiniko.prototype.processKinisiPostAL = function(data) {
 	sinedria = this.skinikoSinedriaGet(data.pektis);
 	if (!sinedria) return this;
 
-	if (trapeziPrin) {
-		trapeziPrin.
+	if (data.trapeziPrin) {
+		data.trapeziPrin.
 		trapeziSimetoxiRefreshDOM().
 		trapeziDataRefreshDOM();
 	}
@@ -365,7 +437,7 @@ Skiniko.prototype.processKinisiPostAL = function(data) {
 	if (Arena.ego.oxiTrapezi(trapezi))
 	return this;
 
-	Arena.partida.refreshDOM(trapeziPrin != Arena.ego.trapezi);
+	Arena.partida.refreshDOM(data.trapeziPrin != Arena.ego.trapezi);
 	return this;
 };
 
