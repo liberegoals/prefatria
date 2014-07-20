@@ -359,8 +359,17 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 	img: 'akirosiStart.png',
 	title: 'Ακύρωση κινήσεων',
 	check: function() {
+		var dianomi, energiaArray;
+
 		if (Arena.ego.oxiTrapezi()) return false;
 		if (Arena.ego.oxiPektis()) return false;
+
+		dianomi = Arena.ego.trapezi.trapeziTelefteaDianomi();
+		if (!dianomi) return false;
+
+		energiaArray = dianomi.energiaArray;
+		if (!energiaArray) return false;
+		if (energiaArray.length < 2) return false;
 
 		switch (Arena.ego.trapezi.partidaFasiGet()) {
 		case 'ΔΗΛΩΣΗ':
