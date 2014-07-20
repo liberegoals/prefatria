@@ -205,8 +205,6 @@ Arena.partida.theatisRefreshDOM = function() {
 
 Arena.partida.theatisPushDOM = function(sinedria) {
 	Arena.partida.theatisDOM.prepend($('<div>').addClass('tsoxaTheatisKelifos').append(sinedria.tsoxaTheatisDOM));
-	Arena.partida.theatisDOM.prepend($('<div>').addClass('tsoxaTheatisKelifos').
-		append($('<div>').addClass('pektis tsoxaTheatis').text('test')));
 	return Arena.partida;
 }
 

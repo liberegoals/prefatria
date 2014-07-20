@@ -768,7 +768,7 @@ Trapezi.prototype.trapeziGetDOM = function() {
 };
 
 Trapezi.prototype.trapeziCreateDOM = function() {
-	var trapezi = this, klikarismeno = false;
+	var trapezi = this;
 
 	if (this.hasOwnProperty('DOM')) this.DOM.empty();
 	else this.DOM = $('<div>').addClass('trapezi').prependTo(Arena.kafenio.trapeziDOM);
@@ -785,7 +785,7 @@ Trapezi.prototype.trapeziCreateDOM = function() {
 		var trapeziKodikos;
 
 		Arena.inputRefocus(e);
-		if (klikarismeno) return;
+		if ($(this).data('klikarismeno')) return;
 
 		// Αν ο χρήστης κάνει κλικ στο τραπέζι που ήδη έχει επιλέξει, τότε απλώς
 		// εμφανίζεται η παρτίδα.
@@ -797,15 +797,14 @@ Trapezi.prototype.trapeziCreateDOM = function() {
 
 		trapeziKodikos = trapezi.trapeziKodikosGet();
 		Client.fyi.pano('Είσοδος στο τραπέζι ' + trapeziKodikos + '. Παρακαλώ περιμένετε…');
-		klikarismeno = true;
+		$(this).data('klikarismeno', true);
 		Client.skiserService('trapeziEpilogi', 'trapezi=' + trapeziKodikos).
 		done(function() {
-			klikarismeno = false;
+			trapezi.dataDOM.removeData('klikarismeno');
 			Client.fyi.pano();
 		}).
 		fail(function(err) {
-			klikarismeno = false;
-			Client.fyi.pano();
+			trapezi.dataDOM.removeData('klikarismeno');
 			Client.skiserFail(err);
 		});
 	}));
