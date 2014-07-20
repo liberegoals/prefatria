@@ -839,7 +839,7 @@ Trapezi.prototype.trapeziSimetoxiRefreshDOM = function() {
 };
 
 Trapezi.prototype.trapeziDataRefreshDOM = function() {
-	var ipolipo, kodikos;
+	var kodikos, ipolipo;
 
 	kodikos = this.trapeziKodikosGet();
 	ipolipo = this.trapeziIpolipoGet();
@@ -1184,6 +1184,8 @@ Arena.ego.oxiTrapezi = function(trapezi) {
 };
 
 Arena.ego.isPektis = function() {
+	if (!Arena.ego) return false;
+	if (!Arena.ego.sinedria) return false;
 	return Arena.ego.sinedria.sinedriaIsPektis();
 };
 
