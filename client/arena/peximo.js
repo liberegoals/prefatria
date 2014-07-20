@@ -175,7 +175,7 @@ Arena.partida.kinisiBaza = function() {
 	azabRefreshDOM();
 
 	$('.tsoxaVelosFilo').delay(400).fadeOut();
-	$('.tsoxaBazaFilo').delay(600).animate(css);
+	$('.tsoxaBazaFilo').delay(600).animate(css, 350);
 	return Arena.partida;
 };
 

@@ -95,7 +95,7 @@ Trapezi.prototype.processEnergiaOnlineFiloKinisi = function(energia) {
 	}
 
 	if (!filoDom) {
-		css = {position: 'relative'};
+		css = {position: 'absolute'};
 		switch (Arena.ego.thesiMap(pektis)) {
 		case 3:
 			css.left = '90px';
