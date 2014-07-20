@@ -730,6 +730,7 @@ Arena.partida.filaRefreshDOM = function(thesi) {
 	var fila, iseht, dom;
 
 	if (thesi === undefined) return Arena.partida.thesiWalk(function(thesi) {
+		$('.tsoxaBazaFiloProxiro').remove();
 		delete Arena.partida.klikFilo;
 		Arena.partida.filaRefreshDOM(thesi);
 	});
