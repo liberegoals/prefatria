@@ -33,6 +33,7 @@ Skiniko.prototype.processKinisiPostSN = function(data) {
 	// Ο παίκτης μόλις έχει εισέλθει στο καφενείο, επομένως η μόνη περίπτωση
 	// να επηρεάζει την τσόχα μας είναι να κατέχει θέση παίκτη σ' αυτήν.
 
+	if (Arena.ego.oxiTrapezi()) return this;
 	if (Arena.ego.trapezi.trapeziOxiPektis(data.sinedria.pektis)) return this;
 
 	// Διαπιστώσαμε ότι ο νεοεισερχόμενος παίκτης κατέχει θέση παίκτη στην
