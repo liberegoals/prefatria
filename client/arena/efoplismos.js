@@ -49,7 +49,7 @@ Trapezi.prototype.efoplismosΔΗΛΩΣΗ = function() {
 	var basi, thesi, klikDilosi = false;
 
 	thesi = this.partidaEpomenosGet();
-	if (Debug.flagGet('epomenosCheck') && (Kafenio.egoThesiGet() !== thesi)) return this;
+	if (Debug.flagGet('epomenosCheck') && (Arena.ego.thesiGet() !== thesi)) return this;
 
 	Arena.partida.dilosiPanelDOM.empty().
 	append(basi = $('<div>').attr('id', 'tsoxaDilosiPanelBasi'));
