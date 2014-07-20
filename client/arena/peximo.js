@@ -127,7 +127,7 @@ Arena.partida.kinisiFilo = function(pektis, filo, callback, delay) {
 	tsoxaPos = Arena.partida.tsoxaDOM.offset();
 	filoPos = filo.offset();
 
-	olif = filo.clone().appendTo(Arena.partida.tsoxaDOM).css({
+	olif = filo.clone().addClass('tsoxaBazaFiloProxiro').appendTo(Arena.partida.tsoxaDOM).css({
 		position: 'absolute',
 		top: (filoPos.top - tsoxaPos.top - 3) + 'px',
 		left: (filoPos.left - tsoxaPos.left - 3) + 'px',
@@ -173,6 +173,7 @@ Arena.partida.kinisiBaza = function() {
 	Arena.partida.
 	bazaRefreshDOM(true).
 	azabRefreshDOM();
+
 	$('.tsoxaVelosFilo').delay(400).fadeOut();
 	$('.tsoxaBazaFilo').delay(600).animate(css);
 	return Arena.partida;
