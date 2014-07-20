@@ -513,30 +513,35 @@ Skiniko.prototype.processKinisiPD = function(data) {
 //	ecount		Πλήθος ενεργειών που απομένουν.
 
 Skiniko.prototype.processKinisiAK = function(data) {
-	var trapezi, dianomi, ecount, energiaArray, energia;
+	var trapezi, dianomi, ecount, energiaArray, i, energia;
 
 	trapezi = this.skinikoTrapeziGet(data.trapezi);
 	if (!trapezi) return this;
 
-	trapezi.trapeziAkirosiSet(data.pektis);
+	trapezi.trapeziAkirosiSet();
 	if (!data.ecount) return this;
 
 	dianomi = trapezi.trapeziTelefteaDianomi();
 	if (!dianomi) return this;
-
 	if (!dianomi.hasOwnProperty('energiaArray')) return this;
+
 	energiaArray = dianomi.energiaArray;
 	ecount = parseInt(data.ecount);
 	if (energiaArray.length <= ecount) return this;
 
 	dianomi.energiaArray = energiaArray.slice(0, ecount);
+	energiaArray = dianomi.energiaArray;
+
 	dianomi.energia = {};
 	for (i = 0; i < ecount; i++) {
-		energia = dianomi.energiaArray[i];
+		energia = energiaArray[i];
 		dianomi.energia[energia.energiaKodikosGet()] = energia;
 	}
 
 	trapezi.partidaReplay();
+	if (energiaArray.length < 2) return this;
+
+	trapezi.trapeziAkirosiSet(data.pektis);
 	return this;
 };
 
