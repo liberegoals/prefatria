@@ -355,6 +355,55 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 Arena.cpanel.claimButtonDOM = Arena.cpanel.bpanelButtonGet('claim').pbuttonGetDOM();
 
 Arena.cpanel.bpanelButtonPush(new PButton({
+	omada: 1,
+	img: 'akirosiStart.png',
+	title: 'Ακύρωση κινήσεων',
+	check: function() {
+		if (Arena.ego.oxiTrapezi()) return false;
+		if (Arena.ego.oxiPektis()) return false;
+
+		switch (Arena.ego.trapezi.partidaFasiGet()) {
+		case 'ΔΗΛΩΣΗ':
+		case 'ΑΛΛΑΓΗ':
+		case 'ΣΥΜΜΕΤΟΧΗ':
+		case 'ΠΑΙΧΝΙΔΙ':
+		case 'CLAIM':
+			return true;
+		}
+
+		return false;
+	},
+	click: function(e) {
+		if (Arena.ego.oxiTrapezi()) return false;
+		Client.skiserService('akirosiStart').
+		done(function(rsp) {
+			Client.fyi.epano(rsp);
+		}).
+		fail(function(err) {
+			Client.skiserFail(err);
+		});
+	},
+}));
+
+Arena.cpanel.bpanelButtonPush(new PButton({
+	omada: 1,
+	img: 'akirosiStop.png',
+	title: 'Λήξη ακυρώσεων',
+	check: function() {
+		if (Arena.ego.oxiTrapezi()) return false;
+		if (Arena.ego.oxiPektis()) return false;
+		return Arena.ego.trapezi.trapeziAkirosiGet();
+	},
+	click: function(e) {
+		if (Arena.ego.oxiTrapezi()) return false;
+		Client.skiserService('akirosiStop').
+		fail(function(err) {
+			Client.skiserFail(err);
+		});
+	},
+}));
+
+Arena.cpanel.bpanelButtonPush(new PButton({
 	id: 'ananeosi',
 	omada: 1,
 	img: 'bugFix.png',

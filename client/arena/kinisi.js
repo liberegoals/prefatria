@@ -274,6 +274,9 @@ Skiniko.prototype.processKinisiPostRT = function(data) {
 	if (sinedria.sinedriaIsPektis()) trapezi.trapeziThesiRefreshDOM(sinedria.sinedriaThesiGet());
 	else trapezi.theatisDOM.prepend(sinedria.theatisDOM);
 
+	if (data.pektis.isEgo())
+	this.pektisTrapeziScroll(true);
+
 	Arena.partidaModeSet();
 	return this;
 };
@@ -657,6 +660,74 @@ Skiniko.prototype.processKinisiPostRC = function(data) {
 	if (Arena.ego.oxiTrapezi()) return this;
 
 	Arena.partida.trapeziRefreshDOM();
+	Arena.panelRefresh();
+	return this;
+};
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// EG -- Ενέργεια
+//
+// Δεδομένα
+//
+//	kodikos		Κωδικός ενέργειας.
+//	trapezi		Κωδικός τραπεζιού.
+//	dianomi		Κωδικός διανομής.
+//	pektis		Θέση ενεργούντος παίκτη.
+//	data		Data ενέργειας.
+//
+// Οι ενέργειες μεταφέρονται με τα δεδομένα τσόχας και όχι μέσω κινήσεων,
+// επομένως οποιαδήποτε εμφάνιση τέτοιου είδους μεταβολής σηματοδοτεί
+// προγραμματιστικό σφάλμα.
+
+Skiniko.prototype.processKinisiPostEG = function(data) {
+	console.error('παρουσιάστηκαν μεταβολές τύπου "EG"');
+	return this;
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// PD -- Πληρωμή διανομής
+//
+// Δεδομένα
+//
+//	trapezi		Κωδικός τραπεζιού.
+//	dianomi		Κωδικός διανομής.
+//	kasa1		Ποσό κάσας παίκτη θέσης 1.
+//	metrita1	Μετρητά παίκτη θέσης 1.
+//	kasa2		Ποσό κάσας παίκτη θέσης 2.
+//	metrita2	Μετρητά παίκτη θέσης 2.
+//	kasa3		Ποσό κάσας παίκτη θέσης 3.
+//	metrita3	Μετρητά παίκτη θέσης 3.
+
+Skiniko.prototype.processKinisiPostPD = function(data) {
+	if (Arena.ego.oxiTrapezi(data.trapezi)) return this;
+
+	Arena.partida.
+	ipolipoRefreshDOM().
+	pektisKapikiaRefreshDOM();
+	return this;
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// AK -- Ακύρωση κινήσεων
+//
+// Δεδομένα
+//
+//	trapezi		Κωδικός τραπεζιού.
+//
+// Προαιρετικά
+//
+//	pektis		Login name του παίκτη
+//	ecount		Πλήθος ενεργειών που απομένουν.
+
+Skiniko.prototype.processKinisiPostAK = function(data) {
+	if (Arena.ego.oxiTrapezi()) return this;
+
+	if (data.hasOwnProperty('ecount')) Arena.partida.trapeziRefreshDOM();
+	else Arena.partida.dataKatoRefreshDOM();
+
 	Arena.panelRefresh();
 	return this;
 };
