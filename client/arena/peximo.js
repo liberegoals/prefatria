@@ -1,7 +1,12 @@
 Arena.partida.bazaRefreshDOM = function(prev) {
 	var pios, fila, nikitis, i, iseht, epomenos;
 
-	if (Arena.ego.oxiTrapezi()) return Arena.partida;
+	if (Arena.ego.oxiTrapezi()) {
+		$('.tsoxaBazaFilo').remove();
+		$('.tsoxaVelosFilo').remove();
+		return Arena.partida;
+	}
+
 	if (prev === undefined) {
 		pios = Arena.ego.trapezi.bazaPios;
 		fila = Arena.ego.trapezi.bazaFila;
