@@ -128,10 +128,13 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 	img: 'roloi.png',
 	title: 'Κυκλική εναλλαγή θέσης',
 	check: function() {
-		if (Arena.ego.oxiTrapezi()) return false;
-		if (Arena.ego.oxiPektis()) return true;
-		if (Debug.flagGet('rithmisiPanta')) return true;
-		return Arena.ego.trapezi.trapeziOxiDianomi();
+		var rithmisiPanta = Debug.flagGet('rithmisiPanta');
+		Debug.flagSet('rithmisiPanta', false);
+		try {
+			return Arena.trapeziRithmisi();
+		} finally {
+			Debug.flagSet('rithmisiPanta', rithmisiPanta);
+		}
 	},
 	click: function(e) {
 		var img;
@@ -156,7 +159,13 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 	img: 'kasa.png',
 	title: 'Κάσα 50/30',
 	check: function() {
-		return Arena.trapeziRithmisi();
+		var rithmisiPanta = Debug.flagGet('rithmisiPanta');
+		Debug.flagSet('rithmisiPanta', false);
+		try {
+			return Arena.trapeziRithmisi();
+		} finally {
+			Debug.flagSet('rithmisiPanta', rithmisiPanta);
+		}
 	},
 	click: function(e) {
 		var img, kasa;
@@ -285,10 +294,7 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 Arena.cpanel.bpanelButtonPush(new PButton({
 	omada: 1,
 	check: function() {
-		if (Arena.ego.oxiTrapezi()) return false;
-		if (Arena.ego.oxiPektis()) return false;
-		if (Debug.flagGet('rithmisiPanta')) return true;
-		return Arena.ego.trapezi.trapeziOxiDianomi();
+		return Arena.trapeziRithmisi();
 	},
 	refresh: function(img) {
 		var thesi;
@@ -555,10 +561,7 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 	img: 'kasaPano.png',
 	title: 'Αύξηση κάσας',
 	check: function() {
-		if (Arena.ego.oxiTrapezi()) return false;
-		if (Arena.ego.oxiPektis()) return false;
-		if (Debug.flagGet('rithmisiPanta')) return true;
-		return Arena.ego.trapezi.trapeziIsDianomi();
+		return Arena.ego.isPektis();
 	},
 	click: function(e) {
 		var img, kasa;
@@ -585,10 +588,7 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 	img: 'kasaKato.png',
 	title: 'Μείωση κάσας',
 	check: function() {
-		if (Arena.ego.oxiTrapezi()) return false;
-		if (Arena.ego.oxiPektis()) return false;
-		if (Debug.flagGet('rithmisiPanta')) return true;
-		return Arena.ego.trapezi.trapeziIsDianomi();
+		return Arena.ego.isPektis();
 	},
 	click: function(e) {
 		var img, kasa;
