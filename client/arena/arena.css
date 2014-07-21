@@ -173,6 +173,7 @@ body {
 	width: 110px;
 	font-size: 18px;
 	text-align: center;
+	white-space: nowrap;
 	overflow: hidden;
 
 	border-style: solid;
@@ -497,6 +498,7 @@ body {
 	max-width: 96%;
 	margin-left: auto;
 	margin-right: auto;
+	white-space: nowrap;
 	overflow: hidden;
 	height: 30px;
 	font-size: 24px;

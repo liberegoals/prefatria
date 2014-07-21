@@ -67,6 +67,7 @@ Skiniko.prototype.processKinisiAnteNS = function(data) {
 
 Skiniko.prototype.processKinisiPostNS = function(data) {
 	this.pektisEntopismosDOM(data.login);
+	if (Arena.ego.oxiTrapezi()) return this;
 
 	// Ελέγχω αν ο εξελθών παίκτης κατέχει θέση παίκτη στην
 	// τσόχα μας.
