@@ -28,6 +28,8 @@ Arena.cpanel.clickCommon = function(e) {
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
+//
+// Ακολουθούν εργαλεία τα οποία φαίνονται πάντα στο επάνω μέρος του control panel.
 
 Arena.cpanel.bpanelButtonPush(new PButton({
 	id: 'enalagi',
@@ -453,7 +455,7 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 Arena.cpanel.bpanelButtonPush(new PButton({
 	omada: 1,
 	img: 'akirosiStop.png',
-	title: 'Λήξη ακυρώσεων',
+	title: 'Λήξη ακύρωσης κινήσεων',
 	check: function() {
 		if (Arena.ego.oxiTrapezi()) return false;
 		if (Arena.ego.oxiPektis()) return false;
@@ -526,7 +528,7 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 Arena.cpanel.bpanelButtonPush(new PButton({
 	omada: 2,
 	check: function() {
-		return Arena.ego.trapezi;
+		return Arena.ego.isTrapezi();
 	},
 	img: 'exodos.png',
 	title: 'Έξοδος από το τραπέζι',
