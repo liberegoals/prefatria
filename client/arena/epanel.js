@@ -23,7 +23,7 @@ Arena.epanel.bpanelButtonPush(new PButton({
 	title: 'Αρχική σειρά εργαλείων',
 	click: function(e) {
 		Arena.epanel.bpanelOmadaSet(1);
-		Arena.epanel.nottub['enalagi'].pbuttonGetDOM().strofi({
+		Arena.epanel.bpanelButtonGet('enalagi').pbuttonGetDOM().strofi({
 			strofi: -90,
 			duration: 200,
 		});

@@ -9,7 +9,7 @@ Arena.anazitisi.setup = function() {
 	append(Arena.anazitisi.panel.bpanelHorizontal().bpanelSiromeno().bpanelGetDOM());
 	Arena.anazitisi.panelSetup();
 
-	Arena.anazitisi.panel.nottub['metakinisi'].pbuttonGetDOM().
+	Arena.anazitisi.panel.bpanelButtonGet('metakinisi').pbuttonGetDOM().
 	on('mouseenter', function(e) {
 		$(this).css('cursor', 'move');
 	});

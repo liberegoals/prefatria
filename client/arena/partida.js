@@ -238,11 +238,12 @@ Arena.partida.dataPanoRefreshDOM = function() {
 	if (Arena.ego.oxiTrapezi()) return Arena.partida;
 
 	Arena.partida.dataPanoDOM.
+	append($('<div>').attr('id', 'tsoxaPartidaData').
 	append($('<div>').attr('id', 'tsoxaKodikos').addClass('sinefo').
 	attr('title', 'Κωδικός τραπεζιού').text(Arena.ego.trapezi.trapeziKodikosGet())).
 	append(dianomiDOM = $('<div>').attr('id', 'tsoxaDianomi')).
 	append(kasaDOM = $('<div>').attr('id', 'tsoxaKasa')).
-	append(ipolipoDOM = $('<div>').attr('id', 'tsoxaIpolipo'));
+	append(ipolipoDOM = $('<div>').attr('id', 'tsoxaIpolipo')));
 
 	if (Arena.ego.trapezi.trapeziOxiAsoi())
 	Arena.partida.optionsDOM.append($('<img>').addClass('tsoxaOption').attr({
