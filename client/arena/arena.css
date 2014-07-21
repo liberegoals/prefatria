@@ -23,9 +23,6 @@ body {
 	top: -6px;
 	left: 0;
 	padding: 4px;
-/*
-background-color: teal;
-*/
 }
 
 #pektisPanel button {
@@ -208,9 +205,6 @@ background-color: teal;
 	position: relative;
 	display: block;
 	padding: 0 0 10px 0;
-/*
-background-color: rgba(0, 128, 128, 0.2);
-*/
 }
 
 .trapeziFraktis {
@@ -434,9 +428,6 @@ background-color: rgba(0, 128, 128, 0.2);
 	width: 230px;
 	height: 122px;
 	text-align: center;
-/*
-background-color: rgba(245, 255, 0, 0.62);
-*/
 }
 
 .tsoxaTheatis {
@@ -534,9 +525,6 @@ background-color: rgba(245, 255, 0, 0.62);
 	font-size: 16px;
 	font-style: italic;
 	color: #323232;
-/*
-background-color: rgb(90, 168, 172);
-*/
 }
 
 .tsoxaPektisKapikiaPoso {
@@ -558,9 +546,6 @@ background-color: rgb(90, 168, 172);
 	font-weight: bold;
 	font-family: "Comic Sans MS", cursive;
 	color: #323232;
-/*
-background-color: rgb(211, 211, 108);
-*/
 }
 
 .tsoxaPektisAgoraDilosi {
@@ -731,23 +716,20 @@ background-color: rgb(211, 211, 108);
 	width: 226px;
 	text-align: center;
 	white-space: nowrap;
-	background-color: rgba(255, 0, 0, 0.38);
 	z-index: 1;
-/*
-*/
 }
 
 /*
 */
 #tsoxaFila3 {
 	display: none;
-	top: 34px;
+	top: 28px;
 	left: 0;
 }
 
 #tsoxaFila2 {
 	display: none;
-	top: 34px;
+	top: 28px;
 	right: 0;
 }
 
@@ -896,9 +878,6 @@ background-color: rgb(211, 211, 108);
 	line-height: 120%;
 
 	color: #222222;
-/*
-background-color: rgba(255, 133, 0, 0.64);
-*/
 }
 
 .tsoxaEnimerosiIcon {
@@ -1064,9 +1043,6 @@ background-color: rgba(255, 133, 0, 0.64);
 	height: 170px;
 	width: 330px;
 	white-space: normal;
-/*
-background-color: rgba(110, 98, 192, 0.18);
-*/
 }
 
 .tsoxaAgoraGrami {
@@ -1237,9 +1213,6 @@ cursor: auto;
 	width: 310px;
 	height: 120px;
 	text-align: right;
-/*
-background-color: teal;
-*/
 }
 
 #tsoxaClaimMinima {
@@ -1262,9 +1235,6 @@ background-color: teal;
 	height: 150px;
 	width: 140px;
 	opacity: 0.7;
-/*
-	background-color: rgba(184, 0, 255, 0.14);
-*/
 }
 
 .tsoxaAzabEmfanis {
@@ -1571,4 +1541,46 @@ background-color: teal;
 
 .ego {
 	background-color: #FFFFA9;
+}
+
+/***********************************************************************************************************************/
+
+.tsoxaFila {
+	background-color: rgba(255, 0, 0, 0.38);
+}
+
+#pektisPanel {
+	background-color: teal;
+}
+
+.trapezi {
+	background-color: rgba(0, 128, 128, 0.2);
+}
+
+.tsoxaPektis {
+	background-color: rgba(245, 255, 0, 0.62);
+}
+
+.tsoxaPektisKapikia {
+	background-color: rgb(90, 168, 172);
+}
+
+.tsoxaPektisAgora {
+	background-color: rgb(211, 211, 108);
+}
+
+#tsoxaEnimerosi {
+	background-color: rgba(255, 133, 0, 0.64);
+}
+
+#tsoxaAgoraPanel {
+	background-color: rgba(110, 98, 192, 0.18);
+}
+
+#tsoxaClaimXartosia {
+	background-color: teal;
+}
+
+.tsoxaAzab {
+	background-color: rgba(184, 0, 255, 0.14);
 }

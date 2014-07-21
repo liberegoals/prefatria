@@ -114,7 +114,7 @@ Trapezi.prototype.processEnergiaOnlineFiloKinisi = function(energia) {
 			break;
 		}
 
-		filoDom = $('<img>').css(css).attr({
+		filoDom = $('<img>').addClass('tsoxaBazaFiloProxiro').css(css).attr({
 			src: 'ikona/trapoula/' + filo.filoXromaGet() + filo.filoAxiaGet() + '.png',
 		}).appendTo(Arena.partida.tsoxaDOM);
 	}
