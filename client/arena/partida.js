@@ -184,7 +184,12 @@ Arena.partida.peximoTheasiRefreshDOM = function() {
 // ανάλογα με την τιμή της σχετικής flag.
 
 Arena.partida.dixeKripseFila = function(iseht) {
-	var display = Arena.partida.isFanera23() ? 'block' : 'none';
+	var display;
+
+	if (Arena.ego.isPektis()) display = 'none';
+	else if (Arena.partida.isFanera23()) display = 'block';
+	else display = 'none';
+
 	Arena.partida['fila3DOM'].css('display', display);
 	Arena.partida['fila2DOM'].css('display', display);
 	return Arena.partida;

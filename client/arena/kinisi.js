@@ -440,7 +440,9 @@ Skiniko.prototype.processKinisiPostAL = function(data) {
 	if (Arena.ego.oxiTrapezi(trapezi))
 	return this;
 
-	Arena.partida.refreshDOM(data.trapeziPrin != Arena.ego.trapezi);
+	Arena.partida.
+	refreshDOM(data.trapeziPrin != Arena.ego.trapezi).
+	dixeKripseFila();
 	return this;
 };
 
