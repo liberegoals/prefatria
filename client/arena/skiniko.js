@@ -855,7 +855,7 @@ Trapezi.prototype.trapeziDataRefreshDOM = function() {
 	else if (Arena.ego.isProsklisi(this)) this.dataDOM.addClass('trapeziDataProsklisi');
 
 	this.DOM.find('.trapeziTelosIcon').remove();
-	if (ipolipo <= 1000)
+	if (ipolipo <= 0)
 	this.tsoxaDOM.append($('<img>').addClass('trapeziTelosIcon').attr({
 		src: 'ikona/endixi/telos.png',
 		title: 'Η κάσα έχει τελειώσει',
