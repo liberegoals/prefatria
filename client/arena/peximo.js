@@ -137,6 +137,7 @@ Arena.partida.kinisiFilo = function(pektis, filo, callback, delay) {
 		top: (filoPos.top - tsoxaPos.top - 3) + 'px',
 		left: (filoPos.left - tsoxaPos.left - 3) + 'px',
 		marginLeft: 0,
+		zIndex: 1,
 	});
 
 	css.top = css.top + 'px';
@@ -153,14 +154,15 @@ Arena.partida.kinisiFilo = function(pektis, filo, callback, delay) {
 };
 
 Arena.partida.kinisiBaza = function() {
-	var trapezi, pios, css = {width: 0};
+	var trapezi, pios, iseht, css = {width: 0}, bazaDom;
 
 	if (Arena.ego.oxiTrapezi()) return Arena.partida;
 	if (!Arena.ego.trapezi.bazaFila) return Arena.partida;
 	if (Arena.ego.trapezi.bazaFila.length) return Arena.partida;
 
 	pios = Arena.ego.trapezi.partidaBazaPios(true);
-	switch (Arena.ego.thesiMap(pios)) {
+	iseht = Arena.ego.thesiMap(pios);
+	switch (iseht) {
 	case 3:
 		css.left = '100px';
 		css.top = '140px';
@@ -179,8 +181,13 @@ Arena.partida.kinisiBaza = function() {
 	bazaRefreshDOM(true).
 	azabRefreshDOM();
 
+	bazaDom = $('#tsoxaPektisBazes' + iseht).find('.tsoxaPektisBazesBaza').last();
+	bazaDom.data('src', bazaDom.attr('src')).
+	attr('src', 'ikona/endixi/asteraki.gif');
 	$('.tsoxaVelosFilo').delay(400).fadeOut();
-	$('.tsoxaBazaFilo').delay(600).animate(css, 350);
+	$('.tsoxaBazaFilo').delay(600).animate(css, 350, function() {
+		bazaDom.attr('src', bazaDom.data('src'));
+	});
 	return Arena.partida;
 };
 
