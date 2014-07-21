@@ -46,6 +46,10 @@ Arena.partida.isFanera23 = function() {
 	return Arena.partida.flags.fanera23;
 };
 
+Arena.partida.oxiFanera23 = function() {
+	return !Arena.partida.isFanera23();
+};
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
 
 Arena.partida.setup = function() {
@@ -183,16 +187,19 @@ Arena.partida.peximoTheasiRefreshDOM = function() {
 // Η function "dixeKripseFila" εμφανίζει η αποκρύπτει τα φύλλα Ανατολής και Δύσης
 // ανάλογα με την τιμή της σχετικής flag.
 
-Arena.partida.dixeKripseFila = function(iseht) {
+Arena.partida.dixeKripseFila = function() {
 	var display;
 
-	if (Arena.ego.isPektis()) display = 'none';
-	else if (Arena.partida.isFanera23()) display = 'block';
-	else display = 'none';
-
+	display = (Arena.partida.filaFanera23() ? 'block' : 'none');
 	Arena.partida['fila3DOM'].css('display', display);
 	Arena.partida['fila2DOM'].css('display', display);
 	return Arena.partida;
+};
+
+Arena.partida.filaFanera23 = function() {
+	if (Arena.partida.oxiFanera23()) return false;
+	if (Debug.flagGet('striptiz')) return true;
+	return Arena.ego.oxiPektis();
 };
 
 Arena.partida.theatisRefreshDOM = function() {
