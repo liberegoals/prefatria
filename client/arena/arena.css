@@ -434,7 +434,9 @@ background-color: rgba(0, 128, 128, 0.2);
 	width: 230px;
 	height: 122px;
 	text-align: center;
-	background-color: rgba(245, 255, 0, 0.62);
+/*
+background-color: rgba(245, 255, 0, 0.62);
+*/
 }
 
 .tsoxaTheatis {
@@ -894,8 +896,8 @@ background-color: rgb(211, 211, 108);
 	line-height: 120%;
 
 	color: #222222;
-	background-color: rgba(255, 133, 0, 0.64);
 /*
+background-color: rgba(255, 133, 0, 0.64);
 */
 }
 
@@ -1062,8 +1064,8 @@ background-color: rgb(211, 211, 108);
 	height: 170px;
 	width: 330px;
 	white-space: normal;
-	background-color: rgba(110, 98, 192, 0.18);
 /*
+background-color: rgba(110, 98, 192, 0.18);
 */
 }
 
