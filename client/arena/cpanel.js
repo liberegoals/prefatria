@@ -128,13 +128,9 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 	img: 'roloi.png',
 	title: 'Κυκλική εναλλαγή θέσης',
 	check: function() {
-		var rithmisiPanta = Debug.flagGet('rithmisiPanta');
-		Debug.flagSet('rithmisiPanta', false);
-		try {
-			return Arena.trapeziRithmisi();
-		} finally {
-			Debug.flagSet('rithmisiPanta', rithmisiPanta);
-		}
+		if (Arena.ego.oxiTrapezi()) return false;
+		if (Arena.ego.oxiPektis()) return false;
+		return Arena.ego.trapezi.trapeziOxiDianomi();
 	},
 	click: function(e) {
 		var img;
@@ -159,13 +155,9 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 	img: 'kasa.png',
 	title: 'Κάσα 50/30',
 	check: function() {
-		var rithmisiPanta = Debug.flagGet('rithmisiPanta');
-		Debug.flagSet('rithmisiPanta', false);
-		try {
-			return Arena.trapeziRithmisi();
-		} finally {
-			Debug.flagSet('rithmisiPanta', rithmisiPanta);
-		}
+		if (Arena.ego.oxiTrapezi()) return false;
+		if (Arena.ego.oxiPektis()) return false;
+		return Arena.ego.trapezi.trapeziOxiDianomi();
 	},
 	click: function(e) {
 		var img, kasa;
