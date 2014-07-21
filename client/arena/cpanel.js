@@ -745,3 +745,38 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 		this.pbuttonPanelGet().bpanelRefresh();
 	},
 }));
+
+Arena.cpanel.bpanelButtonPush(new PButton({
+	omada: Arena.cpanel.omadaMax,
+	img: 'kinito.png',
+	refresh: function() {
+		var img;
+
+		img = this.pbuttonIconGetDOM();
+		if (Client.session.kinito) img.css('opacity', 0.5).attr({
+			title: 'Ενεργοποίηση πληκτρολογίου αφής',
+		});
+		else img.css('opacity', '').attr({
+			title: 'Απενεργοποίηση πληκτρολογίου αφής',
+		});
+	},
+	click: function(e) {
+		if (Client.session.kinito) {
+			delete Client.session.kinito;
+			params = '';
+		}
+		else {
+			Client.session.kinito = 1;
+			params = 'energo=1';
+		}
+
+		this.refresh();
+		Client.ajaxService('misc/kinito.php', params).
+		done(function(rsp) {
+			Client.fyi.epano(rsp);
+		}).
+		fail(function(err) {
+			Client.skiserFail(err);
+		});
+	},
+}));

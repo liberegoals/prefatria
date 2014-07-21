@@ -128,7 +128,9 @@ Arena.setup = function() {
 	setupMode().
 	viewRefresh();
 
+	if (!Client.session.kinito)
 	Arena.inputTrexon.focus();
+
 	return Arena;
 };
 
@@ -327,6 +329,9 @@ Arena.inputRefocus = function(e) {
 		e.stopPropagation();
 		e.preventDefault();
 	}
+
+	if (Client.session.kinito)
+	return Arena;
 
 	Arena.inputTrexon.focus();
 	return Arena;
