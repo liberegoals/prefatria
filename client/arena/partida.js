@@ -335,7 +335,7 @@ Arena.partida.ipolipoRefreshDOM = function(dom) {
 
 	ipolipo = Arena.ego.trapezi.trapeziIpolipoGet();
 	dom.addClass('sinefo').attr('title', 'Τρέχον υπόλοιπο κάσας').text(ipolipo / 10);
-	if (ipolipo <= 900) {
+	if (ipolipo <= 0) {
 		dom.addClass('tsoxaIpolipoMion');
 		Arena.partida.tsoxaDOM.append($('<img>').addClass('tsoxaTelosIcon').attr({
 			src: 'ikona/endixi/telos.png',
