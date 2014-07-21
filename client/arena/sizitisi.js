@@ -32,7 +32,7 @@ Arena.sizitisi.setup = function() {
 	append(Arena.sizitisi.panel.bpanelHorizontal().bpanelSiromeno().bpanelGetDOM());
 	Arena.sizitisi.panelSetup();
 
-	Arena.sizitisi.panel.nottub['metakinisi'].pbuttonGetDOM().
+	Arena.sizitisi.panel.bpanelButtonGet('metakinisi').pbuttonGetDOM().
 	on('mouseenter', function(e) {
 		$(this).css('cursor', 'move');
 	});

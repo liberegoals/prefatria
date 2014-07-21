@@ -1,20 +1,33 @@
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
+//
+// Ακολουθεί κώδικας που χτίζει το βασικό control panel της εφαρμογής. Πρόκειται
+// για κάθετη στήλη εργαλείων τοποθετημένη στη μέση της σελίδας, η οποία χωρίζει
+// τη σελίδα στο αριστερό μέρος που περιέχει το καφενείο και την παρτίδα, και στο
+// δεξί μέρος που περιέχει τις προσκλήσεις, τις αναζητήσεις και τη συζήτηση που
+// διεξάγεται τόσο στο καφενείο, όσο και στο τρπαπέζι.
+
 Arena.cpanel = new BPanel();
 Arena.cpanel.omadaMax = 3;
+
+// Ακυρώνουμε κάποιους mouse event listeners για να μην έχουμε ανεπιθύμητα φαινόμενα
+// στα κλικ που κάνουμε σε πλήκτρα του control panel.
+
+Arena.cpanel.bpanelGetDOM().
+on('click', function(e) {
+	Arena.inputRefocus(e);
+}).
+on('mousedown', function(e) {
+	Arena.inputRefocus(e);
+});
+
+// Η μέθοδος "clickCommon", εφόσον υπάρχει, καλείται πρώτη στα κλικ που γίνονται σε
+// πλήκτρα του control panel.
 
 Arena.cpanel.clickCommon = function(e) {
 	Arena.inputRefocus(e);
 };
 
-Arena.cpanel.trapeziRithmisi = function() {
-	if (Arena.ego.oxiTrapezi()) return false;
-	if (Arena.ego.oxiPektis()) return false;
-	if (Debug.flagGet('rithmisiPanta')) return true;
-	return Arena.ego.trapezi.trapeziOxiDianomi();
-};
-
-Arena.cpanel.trapeziOxiRithmisi = function() {
-	return !Arena.cpanel.trapeziRithmisi();
-};
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
 
 Arena.cpanel.bpanelButtonPush(new PButton({
 	id: 'enalagi',
@@ -30,20 +43,20 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 }));
 
 Arena.cpanel.bpanelButtonPush(new PButton({
-	id: 'arxiki',
 	img: 'ikona/misc/mazemaPano.png',
 	title: 'Αρχική σειρά εργαλείων',
 	click: function(e) {
 		Arena.cpanel.bpanelOmadaSet(1);
-		Arena.cpanel.nottub['enalagi'].pbuttonGetDOM().strofi({
+		Arena.cpanel.bpanelButtonGet('enalagi').pbuttonGetDOM().strofi({
 			strofi: -90,
 			duration: 200,
 		});
 	},
 }));
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
+
 Arena.cpanel.bpanelButtonPush(new PButton({
-	id: 'emoticon',
 	omada: 1,
 	refresh: function() {
 		if (Arena.flags.emoticon) {
@@ -84,12 +97,11 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 }));
 
 Arena.cpanel.bpanelButtonPush(new PButton({
-	id: 'diataxi',
 	omada: 1,
 	img: 'diataxi.png',
 	title: 'Αλλαγή διάταξης παικτών',
 	check: function() {
-		return Arena.cpanel.trapeziRithmisi();
+		return Arena.trapeziRithmisi();
 	},
 	click: function(e) {
 		var img;
@@ -110,7 +122,6 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 }));
 
 Arena.cpanel.bpanelButtonPush(new PButton({
-	id: 'roloi',
 	omada: 1,
 	img: 'roloi.png',
 	title: 'Κυκλική εναλλαγή θέσης',
@@ -143,7 +154,7 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 	img: 'kasa.png',
 	title: 'Κάσα 50/30',
 	check: function() {
-		return Arena.cpanel.trapeziRithmisi();
+		return Arena.trapeziRithmisi();
 	},
 	click: function(e) {
 		var img, kasa;
@@ -166,12 +177,11 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 }));
 
 Arena.cpanel.bpanelButtonPush(new PButton({
-	id: 'asoiOn',
 	omada: 1,
 	img: 'asoiOn.png',
 	title: 'Να παίζονται οι άσοι',
 	check: function() {
-		if (Arena.cpanel.trapeziOxiRithmisi()) return false;
+		if (Arena.trapeziOxiRithmisi()) return false;
 		return Arena.ego.trapezi.trapeziOxiAsoi();
 	},
 	click: function(e) {
@@ -193,12 +203,11 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 }));
 
 Arena.cpanel.bpanelButtonPush(new PButton({
-	id: 'asoiOff',
 	omada: 1,
 	img: 'asoiOff.png',
 	title: 'Να μην παίζονται οι άσοι',
 	check: function() {
-		if (Arena.cpanel.trapeziOxiRithmisi()) return false;
+		if (Arena.trapeziOxiRithmisi()) return false;
 		return Arena.ego.trapezi.trapeziIsAsoi();
 	},
 	click: function(e) {
@@ -220,12 +229,11 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 }));
 
 Arena.cpanel.bpanelButtonPush(new PButton({
-	id: 'pasoOn',
 	omada: 1,
 	img: 'pasoOn.png',
 	title: 'Να παίζεται το πάσο',
 	check: function() {
-		if (Arena.cpanel.trapeziOxiRithmisi()) return false;
+		if (Arena.trapeziOxiRithmisi()) return false;
 		return Arena.ego.trapezi.trapeziOxiPaso();
 	},
 	click: function(e) {
@@ -247,12 +255,11 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 }));
 
 Arena.cpanel.bpanelButtonPush(new PButton({
-	id: 'pasoOff',
 	omada: 1,
 	img: 'pasoOff.png',
 	title: 'Να μην παίζεται το πάσο',
 	check: function() {
-		if (Arena.cpanel.trapeziOxiRithmisi()) return false;
+		if (Arena.trapeziOxiRithmisi()) return false;
 		return Arena.ego.trapezi.trapeziIsPaso();
 	},
 	click: function(e) {
@@ -356,6 +363,55 @@ Arena.cpanel.claimButtonDOM = Arena.cpanel.bpanelButtonGet('claim').pbuttonGetDO
 
 Arena.cpanel.bpanelButtonPush(new PButton({
 	omada: 1,
+	img: 'bugFix.png',
+	title: 'Ανανέωση σκηνικού',
+	click: function(e) {
+		var img;
+
+		img = this.pbuttonIconGetDOM();
+		img.working(true);
+		Client.fyi.pano('Γίνεται ενημέρωση του σκηνικού. Παρακαλώ περιμένετε…', 0);
+		Arena.skiniko.stisimo(function() {
+			Client.fyi.pano();
+			img.working(false);
+		});
+	},
+}));
+
+Arena.cpanel.bpanelButtonPush(new PButton({
+	id: 'azab',
+	omada: 1,
+	refresh: function() {
+		var img;
+
+		img = this.pbuttonIconGetDOM();
+		if (Arena.partida.flags.azab) img.attr({
+			src: 'ikona/panel/bazaPrevOff.png',
+			title: 'Απόκρυψη προηγούμενης μπάζας',
+		});
+		else img.attr({
+			src: 'ikona/panel/bazaPrevOn.png',
+			title: 'Εμφάνιση προηγούμενης μπάζας',
+		});
+	},
+	click: function(e) {
+		//Arena.partida.azabRefreshDOM();
+		Arena.partida.flags.azab = !Arena.partida.flags.azab;
+		if (Arena.partida.flags.azab) Arena.partida.azabDOM.finish().fadeIn(100);
+		else Arena.partida.azabDOM.finish().fadeOut(200);
+		Arena.cpanel.bpanelRefresh();
+	},
+}));
+Arena.cpanel.bpanelButtonGet('azab').pbuttonGetDOM().
+on('mouseenter', function() {
+	Arena.partida.azabDOM.addClass('tsoxaAzabEmfanis');
+}).
+on('mouseleave', function() {
+	Arena.partida.azabDOM.removeClass('tsoxaAzabEmfanis');
+});
+
+Arena.cpanel.bpanelButtonPush(new PButton({
+	omada: 1,
 	img: 'akirosiStart.png',
 	title: 'Ακύρωση κινήσεων',
 	check: function() {
@@ -412,58 +468,9 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 	},
 }));
 
-Arena.cpanel.bpanelButtonPush(new PButton({
-	id: 'ananeosi',
-	omada: 1,
-	img: 'bugFix.png',
-	title: 'Ανανέωση σκηνικού',
-	click: function(e) {
-		var img;
-
-		img = this.pbuttonIconGetDOM();
-		img.working(true);
-		Client.fyi.pano('Γίνεται ενημέρωση του σκηνικού. Παρακαλώ περιμένετε…', 0);
-		Arena.skiniko.stisimo(function() {
-			Client.fyi.pano();
-			img.working(false);
-		});
-	},
-}));
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
 
 Arena.cpanel.bpanelButtonPush(new PButton({
-	id: 'azab',
-	omada: 1,
-	refresh: function() {
-		var img;
-
-		img = this.pbuttonIconGetDOM();
-		if (Arena.partida.flags.azab) img.attr({
-			src: 'ikona/panel/bazaPrevOff.png',
-			title: 'Απόκρυψη προηγούμενης μπάζας',
-		});
-		else img.attr({
-			src: 'ikona/panel/bazaPrevOn.png',
-			title: 'Εμφάνιση προηγούμενης μπάζας',
-		});
-	},
-	click: function(e) {
-		//Arena.partida.azabRefreshDOM();
-		Arena.partida.flags.azab = !Arena.partida.flags.azab;
-		if (Arena.partida.flags.azab) Arena.partida.azabDOM.finish().fadeIn(100);
-		else Arena.partida.azabDOM.finish().fadeOut(200);
-		Arena.cpanel.bpanelRefresh();
-	},
-}));
-Arena.cpanel.bpanelButtonGet('azab').pbuttonGetDOM().
-on('mouseenter', function() {
-	Arena.partida.azabDOM.addClass('tsoxaAzabEmfanis');
-}).
-on('mouseleave', function() {
-	Arena.partida.azabDOM.removeClass('tsoxaAzabEmfanis');
-});
-
-Arena.cpanel.bpanelButtonPush(new PButton({
-	id: 'pektisTheatis',
 	omada: 2,
 	img: 'matakias.png',
 	title: 'Παίκτης/Θεατής',
@@ -517,7 +524,6 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 }));
 
 Arena.cpanel.bpanelButtonPush(new PButton({
-	id: 'exodos',
 	omada: 2,
 	check: function() {
 		return Arena.ego.trapezi;
@@ -601,6 +607,8 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 		});
 	},
 }));
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
 
 Arena.cpanel.bpanelButtonPush(new PButton({
 	id: 'diafimisi',
