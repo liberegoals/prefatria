@@ -147,7 +147,6 @@ Arena.partida.clearDOM = function() {
 
 Arena.partida.trapeziRefreshDOM = function() {
 	$('#tsoxaSoloEndixi').remove();
-	Arena.partida.dilosiPanelDOM.empty();
 
 	Arena.partida.
 	peximoTheasiRefreshDOM().

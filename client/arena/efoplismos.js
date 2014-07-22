@@ -8,12 +8,12 @@
 Arena.partida.efoplismos = function() {
 	var thesi, efoplismos;
 
-	if (Arena.ego.oxiTrapezi()) return Arena.partida;
-	if (Arena.ego.oxiPektis()) return Arena.partida;
-
 	// Εκκινούμε τη διαδικασία ακυρώνοντας τυχόν υπάρχοντα οπλισμό της τσόχας.
 
 	Arena.partida.afoplismos();
+
+	if (Arena.ego.oxiTrapezi()) return Arena.partida;
+	if (Arena.ego.oxiPektis()) return Arena.partida;
 
 	// Το «αρμάτωμα» της τσόχας με χειρισμούς και event listeners δεν
 	// το επιχειρούμε με το χέρι, αλλά με ιδιαίτερες functions που
