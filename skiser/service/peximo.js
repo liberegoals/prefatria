@@ -109,20 +109,7 @@ Service.peximo.pliromi2 = function(data) {
 	data.conn.commit();
 	delete data.conn;
 
-	kinisiPliromi = new Kinisi({
-		idos: 'PD',
-		data: {
-			trapezi: data.trapeziKodikos,
-			dianomi: data.dianomiKodikos,
-			kasa1: data.dianomi.dianomiKasaGet(1),
-			metrita1: data.dianomi.dianomiMetritaGet(1),
-			kasa2: data.dianomi.dianomiKasaGet(2),
-			metrita2: data.dianomi.dianomiMetritaGet(2),
-			kasa3: data.dianomi.dianomiKasaGet(3),
-			metrita3: data.dianomi.dianomiMetritaGet(3),
-		},
-	});
-
+	kinisiPliromi = data.dianomi.kinisiPliromi();
 	Server.skiniko.
 	processKinisi(kinisiPliromi).
 	kinisiAdd(data.kinisiPeximo, false).

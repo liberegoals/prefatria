@@ -641,6 +641,29 @@ Trapezi.prototype.trapeziFilaPrevSet = function(thesi) {
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+// Η μέθοδος "kinisiPliromi" δημιουργεί κίνηση πληρωμής διανομής. Τέτοιες
+// κινήσεις χρειάζονται σε αρκετές περιπτώσεις, π.χ. μετά από μη συμμετοχή
+// των αμυνομένων στην αγορά, μετά από αποδεκτό claim, μετά το τέλος της
+// εκτέλεσης του συμβολαίου κλπ.
+
+Dianomi.prototype.kinisiPliromi = function() {
+	return new Kinisi({
+		idos: 'PD',
+		data: {
+			trapezi: this.dianomiTrapeziGet(),
+			dianomi: this.dianomiKodikosGet(),
+			kasa1: this.dianomiKasaGet(1),
+			metrita1: this.dianomiMetritaGet(1),
+			kasa2: this.dianomiKasaGet(2),
+			metrita2: this.dianomiMetritaGet(2),
+			kasa3: this.dianomiKasaGet(3),
+			metrita3: this.dianomiMetritaGet(3),
+		},
+	});
+};
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 // Ακολουθούν projection lists των πεδίων των πινάκων που διαβάζουμε από την
 // database για την επανακατασκευή του σκηνικού.
 
