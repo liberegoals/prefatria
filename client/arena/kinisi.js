@@ -251,33 +251,43 @@ Skiniko.prototype.processKinisiAnteRT = function(data) {
 Skiniko.prototype.processKinisiPostRT = function(data) {
 	var sinedria, trapezi;
 
+	Arena.panelRefresh();
 	sinedria = this.skinikoSinedriaGet(data.pektis);
 	if (!sinedria) return this;
 
-	Arena.panelRefresh();
+	// Επαναδιαμορφώνουμε κάποια στοιχεία του τραπεζιού από το οποίο
+	// έγινε έξοδος.
+
 	if (data.trapezi) {
 		data.trapezi.
 		trapeziSimetoxiRefreshDOM().
-		trapeziDataRefreshDOM().
-		trapeziThesiRefreshDOM(data.thesi);
+		trapeziDataRefreshDOM();
+
+		if (data.thesi) {
+			data.trapezi.
+			trapeziThesiRefreshDOM(data.thesi);
+			if (Arena.ego.isTrapezi(data.trapezi))
+			Arena.partida.pektisRefreshDOM(data.thesi);
+		}
 	}
+
+	// Ελέγχουμε τυχόν νέο τραπέζι στο οποίο τοποθετήθηκε ο παίκτης.
 
 	trapezi = this.skinikoTrapeziGet(sinedria.sinedriaTrapeziGet());
 	if (!trapezi) {
 		Arena.kafenio.rebelosDOM.prepend(sinedria.rebelosDOM);
-		Arena.kafenioModeSet();
+		if (data.pektis.isEgo()) {
+			Arena.partida.refreshDOM();
+			Arena.kafenioModeSet();
+		}
 		return this;
 	}
 
 	trapezi.
-	trapeziSimetoxiRefreshDOM().
-	trapeziDataRefreshDOM();
-	if (sinedria.sinedriaIsPektis()) trapezi.trapeziThesiRefreshDOM(sinedria.sinedriaThesiGet());
-	else trapezi.theatisDOM.prepend(sinedria.theatisDOM);
+	trapeziDataRefreshDOM().
+	trapeziThesiRefreshDOM(sinedria.sinedriaThesiGet());
 
-	if (data.pektis.isEgo())
-	this.pektisTrapeziScroll(true);
-
+	if (data.pektis.isEgo()) this.pektisTrapeziScroll(true);
 	Arena.partidaModeSet();
 	return this;
 };
