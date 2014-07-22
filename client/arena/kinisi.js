@@ -714,7 +714,14 @@ Skiniko.prototype.processKinisiPostEG = function(data) {
 //	metrita3	Μετρητά παίκτη θέσης 3.
 
 Skiniko.prototype.processKinisiPostPD = function(data) {
-	if (Arena.ego.oxiTrapezi(data.trapezi)) return this;
+	var trapezi;
+
+	trapezi = this.skinikoTrapeziGet(data.trapezi);
+	if (!trapezi) return this;
+
+	trapezi.trapeziDataRefreshDOM();
+	if (Arena.ego.oxiTrapezi(data.trapezi))
+	return this;
 
 	Arena.partida.
 	ipolipoRefreshDOM().
