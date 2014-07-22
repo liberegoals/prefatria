@@ -181,7 +181,8 @@ Arena.partida.kinisiBaza = function() {
 	bazaRefreshDOM(true).
 	azabRefreshDOM();
 
-	bazaDom = $('#tsoxaPektisBazes' + iseht).find('.tsoxaPektisBazesBaza').last();
+	bazaDom = $('#tsoxaPektisBazes' + iseht).find('.tsoxaPektisBazesBaza');
+	bazaDom = (iseht === 2 ? bazaDom.first() : bazaDom.last());
 	bazaDom.data('src', bazaDom.attr('src')).
 	attr('src', 'ikona/endixi/asteraki.gif');
 	$('.tsoxaVelosFilo').delay(400).fadeOut();

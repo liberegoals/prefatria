@@ -117,12 +117,12 @@ Arena.sizitisi.panel.bpanelButtonPush(new PButton({
 		img = this.pbuttonIconGetDOM();
 		if (Arena.sizitisi.isPagomeni()) {
 			Arena.sizitisi.areaDOM.addClass('sizitisiPagomeni');
-			dom.attr('title', 'XXX');
+			dom.attr('title', 'Ρολάρισμα κειμένου');
 			img.attr('src', 'ikona/panel/xepagoma.png');
 		}
 		else {
 			Arena.sizitisi.areaDOM.removeClass('sizitisiPagomeni');
-			dom.attr('title', 'YYY');
+			dom.attr('title', 'Πάγωμα κειμένου');
 			img.attr('src', 'ikona/panel/pagoma.png');
 		}
 	},
