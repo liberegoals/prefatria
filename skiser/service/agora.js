@@ -154,7 +154,7 @@ Service.agora.solo3 = function(data) {
 	kinisiAdd(kinisiPliromi);
 	data.trapezi.trapeziXeklidoma();
 
-	Service.trapezi.dianomiSeLigo(data.trapezi);
+	Service.trapezi.dianomiSeLigo(data.trapezi, 3000);
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@

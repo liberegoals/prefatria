@@ -67,7 +67,7 @@ Service.simetoxi.dilosi2 = function(data) {
 		data.trapezi.trapeziXeklidoma();
 
 		if (data.trapezi.partidaFasiGet() !== 'ΠΛΗΡΩΜΗ') return;
-		Service.trapezi.dianomiSeLigo(data.trapezi);
+		Service.trapezi.dianomiSeLigo(data.trapezi, 3000);
 
 	});
 };

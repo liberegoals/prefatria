@@ -116,7 +116,7 @@ Service.dilosi.flop = function(data) {
 		data.nodereq.end();
 		Server.skiniko.kinisiAdd();
 
-		Service.trapezi.dianomiSeLigo(data.trapezi);
+		Service.trapezi.dianomiSeLigo(data.trapezi, 2000);
 	});
 };
 

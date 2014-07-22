@@ -356,7 +356,7 @@ Service.trapezi.dianomi = function(trapezi, fail) {
 };
 
 Service.trapezi.dianomiSeLigo = function(trapezi, delay) {
-	if (delay === undefined) delay = 2000;
+	if (delay === undefined) delay = 3000;
 
 	// Πρόκειται να μοιραστεί νέα διανομή. Έχουμε κρατημένα τα φύλλα της
 	// τρέχουσας διανομής (όπως αυτά διαμορφώθηκαν μετά τη φάση της αγοράς)
