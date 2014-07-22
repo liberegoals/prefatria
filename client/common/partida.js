@@ -432,15 +432,7 @@ Trapezi.prototype.partidaPliromiEnas = function(data) {
 		return this;
 	}
 
-	// Εξετάζουμε, κατόπιν, την περίπτωση να έχει βγει κανονικά η αγορά.
-
-	if (this.partidaIsVgike()) {
-		dianomi.dianomiKasaAdd(tzogadoros, axia * bazesTzogadoros);
-		dianomi.dianomiKasaAdd(aminomenos, axia * bazesAminomenos);
-		return this;
-	}
-
-	// Τελευταία εξετάζουμε την περίπτωση να έχουν μπει μέσα οι αμυνόμενοι.
+	// Υπολογίζουμε τις ελάχιστες μπάζες που πρέπει να βγάλει ο αμυνόμενος.
 
 	switch (agora.dilosiBazesGet()) {
 	case 6:
@@ -461,6 +453,17 @@ Trapezi.prototype.partidaPliromiEnas = function(data) {
 	}
 
 	dif = prepi - bazesAminomenos;
+
+	// Εξετάζουμε την περίπτωση να έχει βγει κανονικά η αγορά.
+
+	if (dif <= 0) {
+		dianomi.dianomiKasaAdd(tzogadoros, axia * bazesTzogadoros);
+		dianomi.dianomiKasaAdd(aminomenos, axia * bazesAminomenos);
+		return this;
+	}
+
+	// Τελευταία εξετάζουμε την περίπτωση να έχει μπει μέσα ο αμυνόμενος.
+
 	poso = bazesTzogadoros * axia;
 	if (dif > 1) poso *= 2;
 	dianomi.dianomiMetritaAdd(tzogadoros, poso);
