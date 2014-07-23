@@ -100,6 +100,31 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 
 Arena.cpanel.bpanelButtonPush(new PButton({
 	omada: 1,
+	check: function() {
+		return Arena.ego.isTrapezi();
+	},
+	img: 'exodos.png',
+	title: 'Έξοδος από το τραπέζι',
+	click: function(e) {
+		var img;
+
+		img = this.pbuttonIconGetDOM();
+		img.working(true);
+		Client.fyi.pano('Δρομολογήσατε την έξοδό σας από το τραπέζι. Παρακαλώ περιμένετε…', 0);
+		Client.skiserService('exodosTrapezi').
+		done(function(rsp) {
+			Client.fyi.pano();
+			img.working(false);
+		}).
+		fail(function(err) {
+			Client.skiserFail(err);
+			img.working(false);
+		});
+	},
+}));
+
+Arena.cpanel.bpanelButtonPush(new PButton({
+	omada: 1,
 	img: 'diataxi.png',
 	title: 'Αλλαγή διάταξης παικτών',
 	check: function() {
@@ -520,32 +545,6 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 			Arena.partida.fila3DOM.css('display', 'block');
 			Arena.partida.fila2DOM.css('display', 'block');
 		}
-	},
-}));
-
-Arena.cpanel.bpanelButtonPush(new PButton({
-	omada: 2,
-	check: function() {
-		return Arena.ego.isTrapezi();
-	},
-	img: 'exodos.png',
-	title: 'Έξοδος από το τραπέζι',
-	click: function(e) {
-		var img;
-
-		img = this.pbuttonIconGetDOM();
-		img.working(true);
-		Client.fyi.pano('Δρομολογήσατε την έξοδό σας από το τραπέζι. Παρακαλώ περιμένετε…', 0);
-		Client.skiserService('exodosTrapezi').
-		done(function(rsp) {
-			Client.fyi.pano();
-			img.working(false);
-			Arena.cpanel.bpanelOmadaSet(1);
-		}).
-		fail(function(err) {
-			Client.skiserFail(err);
-			img.working(false);
-		});
 	},
 }));
 
