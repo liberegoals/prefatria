@@ -250,7 +250,10 @@ Skiniko.prototype.processKinisiPostET = function(data) {
 		// παίκτης αλλά ως θεατής, δεν χρειάζονται περαιτέρω
 		// ενέργειες.
 
-		if (data.thesiPektiPrin) Arena.partida.pektisRefreshDOM(data.thesiPektiPrin);
+		if (data.thesiPektiPrin) {
+			Arena.partida.pektisRefreshDOM(data.thesiPektiPrin);
+			//Client.sound.blioup();
+		}
 	}
 
 	// Αν ο παίκτης δεν έχει επιλέξει το δικό μας τραπέζι δεν χρειάζεται
@@ -281,6 +284,7 @@ Skiniko.prototype.processKinisiPostET = function(data) {
 	// δικό μας τραπέζι.
 
 	Arena.partida.pektisRefreshDOM(thesi);
+	//Client.sound.doorbell();
 	return this;
 };
 
