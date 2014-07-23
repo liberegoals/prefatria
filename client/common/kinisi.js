@@ -77,17 +77,27 @@ Skiniko.prototype.processKinisiSL = function(data) {
 //	trapezi		Περιέχει τα στοιχεία του τραπεζιού.
 
 Skiniko.prototype.processKinisiTR = function(data) {
-	var trapezi, sinedria;
+	var trapezi, pektis, sinedria;
 
 	// Εντάσσουμε το τραπέζι στο σκηνικό.
 
 	trapezi = new Trapezi(data.trapezi);
 	this.skinikoTrapeziSet(trapezi);
 
-	// Στην πρώτη θέση πρέπει να υπάρχει ο δημιουργός. Εντοπίζουμε
-	// την σχετική συνεδρία και την μετακινούμε στο νέο τραπέζι.
+	// Στην πρώτη θέση πρέπει να υπάρχει ο δημιουργός.
 
-	sinedria = this.skinikoSinedriaGet(trapezi.trapeziPektisGet(1));
+	pektis = trapezi.trapeziPektisGet(1);
+	if (!pektis) return this;
+
+	// Κρατάμε τον δημιουργό ως τον τελευταίο παίκτη που κάθησε
+	// στην πρώτη θέση.
+
+	trapezi.telefteos[1] = pektis;
+
+	// Εντοπίζουμε τη σχετική συνεδρία και την «τοποθετούμε»
+	// στο νέο τραπέζι.
+
+	sinedria = this.skinikoSinedriaGet(pektis);
 	if (sinedria) sinedria.sinedriaSetPektis(trapezi, 1);
 
 	return this;
