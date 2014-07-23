@@ -84,7 +84,7 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 	img: 'miaPrefa.png',
 	title: 'Νέο τραπέζι',
 	check: function() {
-		return Arena.ego.oxiPektis();
+		return Arena.ego.oxiTrapezi();
 	},
 	click: function(e) {
 		Client.fyi.pano('Δημιουργία νέου τραπεζιού. Παρακαλώ περιμένετε…');
@@ -540,6 +540,7 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 		done(function(rsp) {
 			Client.fyi.pano();
 			img.working(false);
+			Arena.cpanel.bpanelOmadaSet(1);
 		}).
 		fail(function(err) {
 			Client.skiserFail(err);
