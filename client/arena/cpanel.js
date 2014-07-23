@@ -739,7 +739,7 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 			bottom: '',
 			right: '',
 			cursor: '',
-		});
+		}).siromeno(false);
 		Client.fyi.kato('Η τσόχα επανατοθετήθηκε σε σταθερή θέση!');
 		Arena.partida.flags.amolimeni = 0;
 		this.pbuttonPanelGet().bpanelRefresh();
@@ -788,5 +788,31 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 		fail(function(err) {
 			Client.skiserFail(err);
 		});
+	},
+}));
+
+Arena.cpanel.bpanelButtonPush(new PButton({
+	omada: Arena.cpanel.omadaMax,
+	img: 'entasi.png',
+	title: 'Ένταση ήχου: ' + Client.session.entasi,
+	click: function(e) {
+		switch (Client.session.entasi) {
+		case 'ΚΑΝΟΝΙΚΗ':
+			Client.session.entasi = 'ΔΥΝΑΤΗ';
+			break;
+		case 'ΔΥΝΑΤΗ':
+			Client.session.entasi = 'ΣΙΩΠΗΛΟ';
+			break;
+		case 'ΣΙΩΠΗΛΟ':
+			Client.session.entasi = 'ΧΑΜΗΛΗ';
+			break;
+		default:
+			Client.session.entasi = 'ΚΑΝΟΝΙΚΗ';
+			break;
+		}
+		this.pbuttonGetDOM().attr('title', 'Ένταση ήχου: ' + Client.session.entasi);
+		Client.fyi.pano('Ένταση ήχου: ' + Client.session.entasi);
+		Client.sound.beep();
+		Client.ajaxService('misc/setCookie.php', 'tag=entasi', 'val=' + Client.session.entasi);
 	},
 }));
