@@ -290,7 +290,7 @@ Skiniko.prototype.processAlages = function(rsp) {
 	// feredata.
 
 	case '~':
-		if (Debug.flagGet('feredata')) console.log('\t' + rsp, '(υποβλήθηκε νεότερο αίτημα)');
+		if (Debug.flagGet('feredata')) console.log('\t' + rsp, '(υπεβλήθη νεότερο αίτημα)');
 		return this;
 
 	// Ο skiser διατάσσει έξοδο του παρόντος client. Αυτό μπορεί να συμβεί
