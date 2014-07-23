@@ -164,6 +164,7 @@ Skiniko.prototype.processKinisiPostTR = function(data) {
 // Επιπρόσθετα δεδομένα
 //
 //	trapeziPrin	Προηγούμενο τραπέζι παίκτη (object).
+//	thesiPektiPrin	Θέση του παίκτη στο προηγούμενο τραπέζι εφόσον ήταν παίκτης.
 
 Skiniko.prototype.processKinisiAnteET = function(data) {
 	var sinedria;
@@ -176,19 +177,30 @@ Skiniko.prototype.processKinisiAnteET = function(data) {
 	sinedriaDetachTheatisDOM();
 
 	data.trapeziPrin = this.skinikoTrapeziGet(sinedria.sinedriaTrapeziGet());
+	if (data.trapeziPrin) data.thesiPektiPrin = data.trapeziPrin.trapeziThesiPekti(data.pektis);
 	return this;
 };
 
 Skiniko.prototype.processKinisiPostET = function(data) {
-	var sinedria, trapezi;
+	var sinedria, trapezi, thesi;
 
 	sinedria = this.skinikoSinedriaGet(data.pektis);
 	if (!sinedria) return this;
 
+	// Ενημερώνουμε το χρώμα του τραπεζιού αποχώρησης στο καφενείο,
+	// επανεμφανίζουμε την πινακίδα και αν ο παίκτης συμμετείχε ως
+	// παίκτης, επανεμφανίζουμε τη θέση την οποία κατείχε.
+
 	if (data.trapeziPrin) {
-		data.trapeziPrin.
-		trapeziSimetoxiRefreshDOM().
-		trapeziDataRefreshDOM();
+		if (data.pektis.isEgo()) {
+			data.trapeziPrin.
+			trapeziSimetoxiRefreshDOM().
+			trapeziDataRefreshDOM();
+		}
+
+		if (data.thesiPrin) {
+			data.trapeziPrin.trapeziThesiRefresDOM(data.thesiPrin);
+		}
 	}
 
 	trapezi = this.skinikoTrapeziGet(data.trapezi);
@@ -197,18 +209,78 @@ Skiniko.prototype.processKinisiPostET = function(data) {
 		return this;
 	}
 
+	// Από τη στιγμή που ο παίκτης έχει επιλέξει τραπέζι, θα πρέπει
+	// η θέση του στο τραπέζι να είναι καθορισμένη, είτε συμμετέχει
+	// ως παίκτης, είτε παρακολουθεί ως θεατής.
+
+	thesi = sinedria.sinedriaThesiGet();
+	if (!thesi) return this;
+
+	// Ενημερώνουμε το χρώμα του τραπεζιού στο καφενείο ανάλογα με το
+	// αν ο παίκτης συμμετέχει ως παίκτης, ή παρακολουθεί ως θεατής και
+	// επανεμφανίζουμε την πινακίδα ώστε να είναι εμφανές το τρέχον
+	// τραπέζι του παίκτη.
+
+	if (data.pektis.isEgo())
 	trapezi.
 	trapeziSimetoxiRefreshDOM().
 	trapeziDataRefreshDOM();
 
-	if (sinedria.sinedriaIsTheatis())
-	trapezi.theatisDOM.prepend(sinedria.theatisDOM);
+	// Αν ο παίκτης παρακολουθεί πλέον ως θεατής σε κάποιο τραπέζι, πρέπει
+	// να τον εντάξουμε στο μπλοκ των θεατών, αλλιώς συμμετέχει ως παίκτης
+	// και πρέπει να επαναδιαμορφώσουμε τη συγκεκριμένη θέση.
 
-	if (Arena.ego.isTrapezi(trapezi))
-	Arena.partida.refreshDOM(true);
+	if (sinedria.sinedriaIsTheatis()) trapezi.theatisDOM.prepend(sinedria.theatisDOM);
+	else trapezi.trapeziThesiRefreshDOM(thesi);
 
-	Arena.partidaModeSet();
-	Arena.panelRefresh();
+	// Αν ο χρήστης δεν είναι σε κάποιο τραπέζι δεν χρειάζεται να
+	// κάνουμε καμιά περαιτέρω ενέργεια, το DOM του καφενείου έχει
+	// ήδη ενημερωθεί.
+
+	if (Arena.ego.oxiTrapezi())
+	return this;
+
+	// Αν ο παίκτης που επιλέγει τραπέζι ήταν πριν στο τραπέζι μας
+	// ίσως χρειαστεί να αλλάξουμε κάτι στο τραπέζι.
+
+	if (data.trapeziPrin && Arena.ego.isTrapezi(data.trapeziPrin)) {
+		// Αν ο παίκτης που επιλέγει τραπέζι ήταν παίκτης στο
+		// τραπέζι μας, τότε πρέπει να επανασχεδιάσουμε την
+		// περιοχή της συγκεκριμένης θέσης. Αν δεν μετείχε ως
+		// παίκτης αλλά ως θεατής, δεν χρειάζονται περαιτέρω
+		// ενέργειες.
+
+		if (data.thesiPektiPrin) Arena.partida.pektisRefreshDOM(data.thesiPektiPrin);
+	}
+
+	// Αν ο παίκτης δεν έχει επιλέξει το δικό μας τραπέζι δεν χρειάζεται
+	// να κάνουμε καμία επιπλέον ενέργεια.
+
+	if (Arena.ego.oxiTrapezi(trapezi))
+	return this;
+
+	// Ο παίκτης έχει επιλέξει το δικό μας τραπέζι. Ελέγχουμε πρώτα την
+	// περίπτωση να είμαστε εμείς ο παίκτης που επιλέγει τραπέζι.
+
+	if (data.pektis.isEgo()) {
+		Arena.partida.refreshDOM(true);
+		Arena.panelRefresh();
+		Arena.partidaModeSet();
+		return this;
+	}
+
+	// Αν ο παίκτης που επιλέγει τραπέζι τοποθετήθηκε ως θεατής στο δικό μας
+	// τραπέζι, τότε πρέπει να τον εμφανίσουμε στους θεατές.
+
+	if (sinedria.sinedriaIsTheatis()) {
+		Arena.partida.theatisPushDOM(sinedria);
+		return this;
+	}
+
+	// Φαίνεται ότι ο παίκτης που επέλεξε τραπέζι τοποθετήθηκε ως παίκτης στο
+	// δικό μας τραπέζι.
+
+	Arena.partida.pektisRefreshDOM(thesi);
 	return this;
 };
 
@@ -417,43 +489,7 @@ Skiniko.prototype.processKinisiAnteAL = function(data) {
 };
 
 Skiniko.prototype.processKinisiPostAL = function(data) {
-	var sinedria, trpapezi, thesi;
-
-	sinedria = this.skinikoSinedriaGet(data.pektis);
-	if (!sinedria) return this;
-
-	if (data.trapeziPrin) {
-		data.trapeziPrin.
-		trapeziSimetoxiRefreshDOM().
-		trapeziDataRefreshDOM();
-	}
-
-	trapezi = this.skinikoTrapeziGet(data.trapezi);
-	if (!trapezi) {
-		Arena.kafenio.rebelosDOM.prepend(sinedria.rebelosDOM);
-		return this;
-	}
-
-	trapezi.
-	trapeziSimetoxiRefreshDOM().
-	trapeziDataRefreshDOM();
-
-	if (sinedria.sinedriaIsTheatis()) {
-		trapezi.theatisDOM.prepend(sinedria.theatisDOM);
-	}
-	else {
-		thesi = trapezi.trapeziThesiPekti(data.pektis);
-		trapezi.trapeziThesiRefreshDOM(thesi);
-	}
-
-	Arena.partidaModeSet();
-	Arena.panelRefresh();
-	if (Arena.ego.oxiTrapezi(trapezi))
-	return this;
-
-	Arena.partida.
-	refreshDOM(data.trapeziPrin != Arena.ego.trapezi).
-	dixeKripseFila();
+	this.processKinisiPostET(data);
 	return this;
 };
 
@@ -487,10 +523,22 @@ Skiniko.prototype.processKinisiPostPT = function(data) {
 	trapeziSimetoxiRefreshDOM();
 	trapezi.theatisDOM.prepend(sinedria.theatisDOM);
 	Arena.panelRefresh();
+
 	if (Arena.ego.oxiTrapezi(trapezi))
 	return this;
 
-	Arena.partida.refreshDOM();
+	// Εάν είμαστε εμείς που κάνουμε την αλλαγή, τότε επαναδιαμορφώνουμε
+	// εκ νέου το DOM της παρτίδας.
+
+	if (data.pektis.isEgo()) {
+		Arena.partida.refreshDOM();
+		return this;
+	}
+
+	Arena.partida.
+	pektisRefreshDOM(data.thesi).
+	theatisPushDOM(sinedria);
+
 	return this;
 };
 
