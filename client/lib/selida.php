@@ -57,6 +57,8 @@ class Selida {
 	}
 
 	public static function javascript($script) {
+		$file = Globals::$www . "client/" . $script . ".js";
+		if (!file_exists($file)) return;
 		?><script type="text/javascript" src="<?php Globals::url($script); ?>.js"></script><?php
 	}
 
