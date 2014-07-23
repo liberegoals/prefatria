@@ -746,6 +746,16 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 	},
 }));
 
+Arena.cpanel.bpanelButtonPush(Arena.paraskinio.button = new PButton({
+	omada: Arena.cpanel.omadaMax,
+	img: 'paraskinio.png',
+	title: 'Αλλαγή παρασκηνίου',
+	click: function(e) {
+		Arena.paraskinio.open();
+	},
+}));
+Arena.paraskinio.button = Arena.paraskinio.button.pbuttonGetDOM();
+
 Arena.cpanel.bpanelButtonPush(new PButton({
 	omada: Arena.cpanel.omadaMax,
 	img: 'kinito.png',

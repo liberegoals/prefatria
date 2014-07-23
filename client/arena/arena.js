@@ -106,6 +106,23 @@ $(document).ready(function() {
 	});
 });
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+Arena.unload = function() {
+	if (Arena.unloaded) return;
+	Arena.unloaded = true;
+
+	Arena.paraskinio.close();
+};
+
+$(window).on('beforeunload', function() {
+	Arena.unload();
+});
+
+$(window).on('unload', function() {
+	Arena.unload();
+});
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
 
 Arena.setup = function() {
@@ -350,4 +367,36 @@ Arena.trapeziRithmisi = function() {
 
 Arena.trapeziOxiRithmisi = function() {
 	return !Arena.trapeziRithmisi();
+};
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+Arena.paraskinio = {
+	win: null,
+	button: $(),
+};
+
+Arena.paraskinio.open = function() {
+	if (Arena.paraskinio.win)
+	return Arena.paraskinio.close();
+
+	Arena.paraskinio.close(button);
+	Arena.paraskinio.win = window.open(Client.server + 'paraskinio',
+		'_blank', 'top=80,left=80,width=820,height=400,scrollbars=1');
+	Arena.paraskinio.button.addClass('panelButtonEkremes');
+	return Arena.paraskinio;
+};
+
+Arena.paraskinio.close = function() {
+	if (!Arena.paraskinio.win)
+	return Arena.paraskinio;
+
+	Arena.paraskinio.win.close();
+	delete Arena.paraskinio.win;
+	Arena.paraskinio.button.removeClass('panelButtonEkremes');
+	return Arena.paraskinio;
+};
+
+Arena.paraskinioAlagi = function(img) {
+	$(document.body).css({backgroundImage:img});
 };
