@@ -66,27 +66,6 @@ Client.provlima = function(msg) {
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-Client.paraskinio = {
-	epilogiButtonDOM: $(),
-};
-
-Client.paraskinio.open = function() {
-	if (Client.paraskinio.win) return Client.paraskinio.close();
-	Client.paraskinio.close();
-	Client.paraskinio.win = window.open(Client.server + 'paraskinio',
-		'_blank', 'top=80,left=80,width=820,height=400,scrollbars=1');
-	Client.paraskinio.epilogiButtonDOM.addClass('iconEkremes');
-};
-
-Client.paraskinio.close = function() {
-	if (!Client.paraskinio.win) return;
-	Client.paraskinio.win.close();
-	delete Client.paraskinio.win;
-	Client.paraskinio.epilogiButtonDOM.removeClass('iconEkremes');
-};
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 Client.fyi = {};
 
 Client.fyi.setup = function() {
@@ -613,23 +592,6 @@ jQuery.fn.emfanesDebug = function() {
 		$(this).css('backgroundColor', 'red');
 	});
 };
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-Client.unload = function() {
-	if (Client.unloaded) return;
-	Client.unloaded = true;
-
-	Client.paraskinio.close();
-};
-
-$(window).on('beforeunload', function() {
-	Client.unload();
-});
-
-$(window).on('unload', function() {
-	Client.unload();
-});
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

@@ -329,6 +329,12 @@ background-color: #008080;
 	background-color: #FFFFD2;
 }
 
+.panelButtonEkremes {
+	background-color: #FFFF9D !important;
+	border-style: double !important;
+	border-color: rgba(255, 0, 0, 0.22) !important;
+}
+
 /************************************************************************************************************************/
 
 .klisimoIcon {
