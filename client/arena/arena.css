@@ -1510,7 +1510,8 @@ cursor: auto;
 }
 
 .fantasma {
-	color: #6D6D6D;
+	color: rgba(109, 109, 109, 0.44);
+	font-weight: bold;
 	font-style: italic;
 }
 

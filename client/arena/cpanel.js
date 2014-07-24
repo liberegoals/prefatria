@@ -474,33 +474,6 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 
 Arena.cpanel.bpanelButtonPush(new PButton({
 	omada: 2,
-	img: 'roloi.png',
-	title: 'Κυκλική εναλλαγή θέσης',
-	check: function() {
-		if (Arena.ego.oxiTrapezi()) return false;
-		if (Arena.ego.oxiPektis()) return false;
-		return Arena.ego.trapezi.trapeziOxiDianomi();
-	},
-	click: function(e) {
-		var img;
-
-		img = this.pbuttonIconGetDOM();
-		img.working(true);
-		Client.fyi.pano('Κυκλική εναλλαγή θέσης. Παρακαλώ περιμένετε…', 0);
-		Client.skiserService('roloi').
-		done(function(rsp) {
-			Client.fyi.pano();
-			img.working(false);
-		}).
-		fail(function(err) {
-			Client.skiserFail(err);
-			img.working(false);
-		});
-	},
-}));
-
-Arena.cpanel.bpanelButtonPush(new PButton({
-	omada: 2,
 	img: 'matakias.png',
 	title: 'Παίκτης/Θεατής',
 	check: function() {
@@ -517,6 +490,33 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 		img.working(true);
 		Client.fyi.pano('Εναλλαγή παίκτη/θεατή. Παρακαλώ περιμένετε…', 0);
 		Client.skiserService('pektisTheatis').
+		done(function(rsp) {
+			Client.fyi.pano();
+			img.working(false);
+		}).
+		fail(function(err) {
+			Client.skiserFail(err);
+			img.working(false);
+		});
+	},
+}));
+
+Arena.cpanel.bpanelButtonPush(new PButton({
+	omada: 2,
+	img: 'roloi.png',
+	title: 'Κυκλική εναλλαγή θέσης',
+	check: function() {
+		if (Arena.ego.oxiTrapezi()) return false;
+		if (Arena.ego.oxiPektis()) return false;
+		return Arena.ego.trapezi.trapeziOxiDianomi();
+	},
+	click: function(e) {
+		var img;
+
+		img = this.pbuttonIconGetDOM();
+		img.working(true);
+		Client.fyi.pano('Κυκλική εναλλαγή θέσης. Παρακαλώ περιμένετε…', 0);
+		Client.skiserService('roloi').
 		done(function(rsp) {
 			Client.fyi.pano();
 			img.working(false);
