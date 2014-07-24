@@ -13,6 +13,9 @@ Skiniko.prototype.processKinisiAnteSN = function(data) {
 	sinedria = this.skinikoSinedriaGet(data.sinedria.pektis);
 	if (!sinedria) return this;
 
+	// Αποσύρουμε τυχόν DOM elements της συνεδρίας από τις περιοχές των νεοφερμένων,
+	// των περιφερομένων και των θεατών καφενείου και τσόχας.
+
 	sinedria.
 	sinedriaDetachNiofertosDOM().
 	sinedriaDetachRebelosDOM().
@@ -22,7 +25,7 @@ Skiniko.prototype.processKinisiAnteSN = function(data) {
 };
 
 Skiniko.prototype.processKinisiPostSN = function(data) {
-	var sinedria;
+	var sinedria, thesi;
 
 	sinedria = this.skinikoSinedriaGet(data.sinedria.pektis);
 	if (!sinedria) return this;
@@ -30,16 +33,19 @@ Skiniko.prototype.processKinisiPostSN = function(data) {
 	sinedria.sinedriaCreateDOM();
 	this.pektisEntopismosDOM(data.sinedria.pektis);
 
+	if (Arena.ego.oxiTrapezi())
+	return this;
+
 	// Ο παίκτης μόλις έχει εισέλθει στο καφενείο, επομένως η μόνη περίπτωση
 	// να επηρεάζει την τσόχα μας είναι να κατέχει θέση παίκτη σ' αυτήν.
 
-	if (Arena.ego.oxiTrapezi()) return this;
-	if (Arena.ego.trapezi.trapeziOxiPektis(data.sinedria.pektis)) return this;
+	thesi = Arena.ego.trapezi.trapeziThesiPekti(data.sinedria.pektis);
+	if (!thesi) return this;
 
 	// Διαπιστώσαμε ότι ο νεοεισερχόμενος παίκτης κατέχει θέση παίκτη στην
 	// τσόχα μας.
 
-	Arena.partida.trapeziRefreshDOM();
+	Arena.partida.pektisRefreshDOM(thesi);
 	return this;
 };
 
@@ -52,7 +58,7 @@ Skiniko.prototype.processKinisiPostSN = function(data) {
 //	login		Είναι το login name του παίκτη τής προς διαγραφήν συνεδρίας.
 
 Skiniko.prototype.processKinisiAnteNS = function(data) {
-	var sinedria, dom;
+	var sinedria;
 
 	sinedria = this.skinikoSinedriaGet(data.login);
 	if (!sinedria) return this;
@@ -66,18 +72,68 @@ Skiniko.prototype.processKinisiAnteNS = function(data) {
 };
 
 Skiniko.prototype.processKinisiPostNS = function(data) {
+	var thesi;
+
 	this.pektisEntopismosDOM(data.login);
 	if (Arena.ego.oxiTrapezi()) return this;
 
 	// Ελέγχω αν ο εξελθών παίκτης κατέχει θέση παίκτη στην
 	// τσόχα μας.
 
-	if (Arena.ego.trapezi.trapeziOxiPektis(data.login)) return this;
+	thesi = Arena.ego.trapezi.trapeziThesiPekti(data.login);
+	if (!thesi) return this;
 
 	// Ο εξελθών παίκτης κατέχει θέση παίκτη στην τσόχα μας.
 
-	Arena.partida.trapeziRefreshDOM();
+	Arena.partida.pektisRefreshDOM(thesi);
 	return this;
+};
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// SL -- Χαιρετισμός / Ανανέωση συνεδρίας
+//
+// Δεδομένα
+//
+//	login		Είναι το login name του παίκτη τής προς διαγραφήν συνεδρίας.
+
+Skiniko.prototype.processKinisiPostSL = function(data) {
+	var sinedria, trapezi, thesi, jql;
+
+	sinedria = this.skinikoSinedriaGet(data.login);
+	if (!sinedria) return this;
+
+	jql = $();
+
+	if (sinedria.hasOwnProperty('niofertosDOM'))
+	jql = jql.add(sinedria.niofertosDOM);
+
+	if (sinedria.hasOwnProperty('theatisDOM'))
+	jql = jql.add(sinedria.theatisDOM);
+
+	if (sinedria.hasOwnProperty('tsoxaTheatisDOM'))
+	jql = jql.add(sinedria.tsoxaTheatisDOM);
+
+	if (Arena.ego.isTrapezi(trapezi)) {
+		thesi = Arena.ego.trapezi.trapeziThesiPekti(data.login);
+		if (thesi) jql = jql.add(Arena.partida['pektis' + thesi + 'DOM'].find('.tsoxaPektisMain'));
+	}
+
+	jql.sinedriaSalute();
+	return this;
+};
+
+jQuery.fn.sinedriaSalute = function() {
+	return this.each(function() {
+		var borderColor;
+
+		borderColor = $(this).css('borderColor');
+		if (!borderColor) return;
+
+		$(this).finish().css('borderColor', '#FF9900').animate({
+			borderColor: borderColor,
+		}, 1000);
+	});
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
