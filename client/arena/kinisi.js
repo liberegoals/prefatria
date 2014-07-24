@@ -105,14 +105,17 @@ Skiniko.prototype.processKinisiPostSL = function(data) {
 
 	jql = $();
 
-	if (sinedria.hasOwnProperty('niofertosDOM'))
-	jql = jql.add(sinedria.niofertosDOM);
+	if (sinedria.hasOwnProperty('rebelosDOM'))
+	jql = jql.add(sinedria.rebelosDOM);
 
 	if (sinedria.hasOwnProperty('theatisDOM'))
 	jql = jql.add(sinedria.theatisDOM);
 
 	if (sinedria.hasOwnProperty('tsoxaTheatisDOM'))
 	jql = jql.add(sinedria.tsoxaTheatisDOM);
+
+	if (sinedria.hasOwnProperty('niofertosDOM'))
+	jql = jql.add(sinedria.niofertosDOM);
 
 	if (Arena.ego.isTrapezi(trapezi)) {
 		thesi = Arena.ego.trapezi.trapeziThesiPekti(data.login);
