@@ -165,6 +165,7 @@ Skiniko.prototype.processKinisiPostTR = function(data) {
 //
 //	trapeziPrin	Προηγούμενο τραπέζι παίκτη (object).
 //	thesiPektiPrin	Θέση του παίκτη στο προηγούμενο τραπέζι εφόσον ήταν παίκτης.
+//	telefteos	Λίστα καθημένων στο τραπέζι επιλογής.
 
 Skiniko.prototype.processKinisiAnteET = function(data) {
 	var sinedria;
@@ -178,6 +179,7 @@ Skiniko.prototype.processKinisiAnteET = function(data) {
 
 	data.trapeziPrin = this.skinikoTrapeziGet(sinedria.sinedriaTrapeziGet());
 	if (data.trapeziPrin) data.thesiPektiPrin = data.trapeziPrin.trapeziThesiPekti(data.pektis);
+
 	return this;
 };
 
@@ -252,7 +254,7 @@ Skiniko.prototype.processKinisiPostET = function(data) {
 
 		if (data.thesiPektiPrin) {
 			Arena.partida.pektisRefreshDOM(data.thesiPektiPrin);
-			//Client.sound.blioup();
+			Client.sound.blioup();
 		}
 	}
 
@@ -284,7 +286,9 @@ Skiniko.prototype.processKinisiPostET = function(data) {
 	// δικό μας τραπέζι.
 
 	Arena.partida.pektisRefreshDOM(thesi);
-	//Client.sound.doorbell();
+	if (data.telefteos && (!data.telefteos[thesi]))
+	Client.sound.doorbell();
+
 	return this;
 };
 
@@ -342,8 +346,10 @@ Skiniko.prototype.processKinisiPostRT = function(data) {
 		if (data.thesi) {
 			data.trapezi.
 			trapeziThesiRefreshDOM(data.thesi);
-			if (Arena.ego.isTrapezi(data.trapezi))
-			Arena.partida.pektisRefreshDOM(data.thesi);
+			if (Arena.ego.isTrapezi(data.trapezi)) {
+				Arena.partida.pektisRefreshDOM(data.thesi);
+				if (data.pektis.oxiEgo()) Client.sound.blioup();
+			}
 		}
 	}
 
@@ -363,7 +369,9 @@ Skiniko.prototype.processKinisiPostRT = function(data) {
 	trapeziDataRefreshDOM().
 	trapeziThesiRefreshDOM(sinedria.sinedriaThesiGet());
 
-	if (data.pektis.isEgo()) this.pektisTrapeziScroll(true);
+	if (data.pektis.oxiEgo()) return this;
+
+	this.pektisTrapeziScroll(true);
 	Arena.partidaModeSet();
 	return this;
 };
@@ -477,9 +485,10 @@ Skiniko.prototype.processKinisiPostPL = function(data) {
 // Επιπρόσθετα δεδομένα
 //
 //	trapeziPrin	Προηγούμενο τραπέζι παίκτη.
+//	telefteos	Λίστα καθημένων πριν την αποδοχή.
 
 Skiniko.prototype.processKinisiAnteAL = function(data) {
-	var sinedria;
+	var sinedria, trapezi;
 
 	sinedria = this.skinikoSinedriaGet(data.pektis);
 	if (!sinedria) return this;
@@ -489,6 +498,15 @@ Skiniko.prototype.processKinisiAnteAL = function(data) {
 	sinedriaDetachTheatisDOM();
 
 	data.trapeziPrin = this.skinikoTrapeziGet(sinedria.sinedriaTrapeziGet());
+
+	trapezi = this.skinikoTrapeziGet(data.trapezi);
+	if (!trapezi) return this;
+
+	data.telefteos = {};
+	trapezi.trapeziThesiWalk(function(thesi) {
+		data.telefteos[thesi] = trapezi.trapeziPektisGet(thesi);
+	});
+
 	return this;
 };
 
@@ -522,10 +540,12 @@ Skiniko.prototype.processKinisiPostPT = function(data) {
 	sinedria.
 	sinedriaDetachRebelosDOM().
 	sinedriaDetachTheatisDOM();
+
 	trapezi.
 	trapeziThesiRefreshDOM().
 	trapeziSimetoxiRefreshDOM();
 	trapezi.theatisDOM.prepend(sinedria.theatisDOM);
+
 	Arena.panelRefresh();
 
 	if (Arena.ego.oxiTrapezi(trapezi))
