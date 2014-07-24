@@ -576,6 +576,13 @@ Skiniko.prototype.processKinisiAnteAL = function(data) {
 
 Skiniko.prototype.processKinisiPostAL = function(data) {
 	this.processKinisiPostET(data);
+
+	// Μπορεί ο παίκτης που πήρε την πρόσκληση να κατέλαβε θέση
+	// παίκτη, οπότε κάποια πλήκτρα, π.χ. "παίκτης/θεατής" ίσως
+	// πρέπει να απενεργοποιηθούν.
+
+	Arena.panelRefresh();
+
 	return this;
 };
 
