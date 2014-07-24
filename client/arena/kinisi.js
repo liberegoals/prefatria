@@ -108,6 +108,11 @@ Skiniko.prototype.processKinisiPostSL = function(data) {
 	if (sinedria.hasOwnProperty('rebelosDOM'))
 	jql = jql.add(sinedria.rebelosDOM);
 
+	this.skinikoThesiWalk(function(thesi) {
+		if (this.trapeziPektisGet(thesi) == data.login)
+		jql = jql.add(this.thesiDOM[thesi]);
+	});
+
 	if (sinedria.hasOwnProperty('theatisDOM'))
 	jql = jql.add(sinedria.theatisDOM);
 
