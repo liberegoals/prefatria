@@ -606,6 +606,22 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 	},
 }));
 
+Arena.cpanel.bpanelButtonPush(new PButton({
+	omada: 2,
+	img: 'araxni.png',
+	title: 'Επίδειξη προηγούμενης χαρτωσιάς',
+	check: function() {
+		return Arena.ego.isPektis();
+	},
+	click: function(e) {
+		if (Arena.ego.oxiPektis()) return;
+		Client.skiserService('filaPrev').
+		fail(function(err) {
+			Client.skiserFail(err);
+		});
+	},
+}));
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
 
 Arena.cpanel.bpanelButtonPush(new PButton({
