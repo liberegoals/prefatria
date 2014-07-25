@@ -822,15 +822,10 @@ Trapezi.prototype.trapeziCreateDOM = function() {
 };
 
 Trapezi.prototype.trapeziRefreshDOM = function() {
-	var theatis;
-
-	theatis = (this.theatisDOM ? this.theatisDOM.html() : null);
-	this.trapeziCreateDOM();
-	if (theatis) trapezi.theatisDOM.html(theatis);
-	else Arena.skiniko.skinikoSinedriaWalk(function() {
-		if (this.sinedriaOxiTrapezi(trapezi)) return;
-		if (this.sinedriaOxiTheatis()) return;
-		trapezi.trapeziTheatisPushDOM(this);
+	this.trapeziDataRefreshDOM();
+	this.trapeziOptsRefreshDOM();
+	this.trapeziThesiWalk(function(thesi) {
+		this.trapeziThesiRefreshDOM(thesi);
 	});
 
 	return this;
