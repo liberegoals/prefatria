@@ -27,6 +27,10 @@ Arena.flags = {
 
 	partidaMode: false,
 
+	// Η flag "rebelosView" δείχνει αν θα είναι εμφανείς οι περιφερόμενοι παίκτες
+	// (ρέμπελοι) στο καφενείο. Η αλλαγή της τιμής της flag γίνεται μέσω ειδικού
+	// πλήκτρου στο panel προσκλήσεων.
+
 	rebelosView: true,
 
 	// Η flag "theatisView" δείχνει αν θα είναι εμφανείς οι θεατές στο καφενείο
@@ -81,13 +85,23 @@ Arena.kafenioMode = function() {
 	return !Arena.partidaMode();
 };
 
+// Η function "rebelosView" επιστρέφει true όσο η περιοχή των περιφερομένων παικτών είναι
+// εμφανής.
+
 Arena.rebelosView = function() {
 	return Arena.flags.rebelosView;
 };
 
+// Η function "theatisView" επιστρέφει true όσο η περιοχή των θεατών, τόσο στο καφενείο όσο
+// και στην παρτίδα είναι εμφανής.
+
 Arena.theatisView = function() {
 	return Arena.flags.theatisView;
 };
+
+// Η function "kouskous" επιστρέφει true εφόσον ο χρήστης έχει επιλέξει mode συζήτησης, όπου
+// τόσο το καφενείο όσο και η παρτίδα έχουν αποκρυβεί και έχει απλωθεί απ' άκρου εις άκρον
+// η περιοχή προσκλήσεων, αναζητήσεων και συζήτησης.
 
 Arena.kouskous = function() {
 	return Arena.flags.kouskous;
