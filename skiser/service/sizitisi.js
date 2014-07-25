@@ -88,7 +88,7 @@ Service.sizitisi.filaPrev = function(nodereq) {
 	}
 
 	nodereq.url.sxolio = 'FP^' + fila;
-	Service.sizitisi.trapezi(nodereq);
+	Service.sizitisi.partida(nodereq);
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
