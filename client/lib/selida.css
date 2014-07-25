@@ -45,9 +45,6 @@ background-color: rgba(128, 0, 97, 0.37);
 	border-style: none none solid none;
 	border-width: 2px;
 	border-color: #999966;
-background-color: #CD5C5C;
-/*
-*/
 }
 
 #toolbarTable {
@@ -74,7 +71,6 @@ background-color: #CD5C5C;
 	border-style: solid none none none;
 	border-width: 2px;
 	border-color: #999966;
-background-color: #008080;
 }
 
 #ribbonTable {
@@ -520,3 +516,15 @@ border-color: red !important;
 .nobr {
 	white-space: nowrap;
 }
+
+/************************************************************************************************************************/
+
+/*
+#toolbar {
+	background-color: #CD5C5C;
+}
+
+#ribbon {
+	background-color: #008080;
+}
+*/
