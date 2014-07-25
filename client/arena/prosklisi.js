@@ -81,7 +81,7 @@ Arena.prosklisi.panel.bpanelButtonPush(new PButton({
 	id: 'rebelos',
 	img: 'rebelos.png',
 	refresh: function() {
-		if (Arena.kafenio.rebelosView()) {
+		if (Arena.rebelosView()) {
 			this.pbuttonIconGetDOM().css('opacity', 1);
 			this.pbuttonGetDOM().attr('title', 'Απόκρυψη περιφερόμενων θαμώνων');
 		}
@@ -91,10 +91,10 @@ Arena.prosklisi.panel.bpanelButtonPush(new PButton({
 		}
 	},
 	click: function(e) {
-		Arena.kafenio.flags.rebelosView = !Arena.kafenio.flags.rebelosView;
-		Arena.kafenio.rebelosDOM.css('display', Arena.kafenio.rebelosView() ? 'block' : 'none');
+		Arena.flags.rebelosView = !Arena.flags.rebelosView;
+		Arena.rebelosDOM.css('display', Arena.rebelosView() ? 'block' : 'none');
 		this.pbuttonRefresh();
-		this.pbuttonIconGetDOM().strofi(Arena.kafenio.rebelosView() ? -180 : 180);
+		this.pbuttonIconGetDOM().strofi(Arena.rebelosView() ? -180 : 180);
 	},
 }));
 

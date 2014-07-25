@@ -443,8 +443,8 @@ Skiniko.prototype.feredataError = function(err, rsp) {
 Skiniko.prototype.skinikoCreateDOM = function(data) {
 	var skiniko = this;
 
-	Arena.kafenio.rebelosDOM.empty();
-	Arena.kafenio.trapeziDOM.empty();
+	Arena.rebelosDOM.empty();
+	Arena.trapeziDOM.empty();
 	Arena.prosklisi.areaDOM.empty();
 	Arena.anazitisi.areaDOM.empty();
 	Arena.sizitisi.kafenioDOM.empty();
@@ -689,7 +689,7 @@ Sinedria.prototype.sinedriaCreateDOM = function() {
 
 	trapezi = this.sinedriaTrapeziGet();
 	if (!trapezi) {
-		Arena.kafenio.rebelosDOM.prepend(this.rebelosDOM);
+		Arena.rebelosDOM.prepend(this.rebelosDOM);
 		return this;
 	}
 
@@ -771,7 +771,7 @@ Trapezi.prototype.trapeziCreateDOM = function() {
 	var trapezi = this;
 
 	if (this.hasOwnProperty('DOM')) this.DOM.empty();
-	else this.DOM = $('<div>').addClass('trapezi').prependTo(Arena.kafenio.trapeziDOM);
+	else this.DOM = $('<div>').addClass('trapezi').prependTo(Arena.trapeziDOM);
 
 	this.DOM.
 	append($('<hr>').addClass('trapeziFraktis')).

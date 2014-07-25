@@ -27,6 +27,8 @@ Arena.flags = {
 
 	partidaMode: false,
 
+	rebelosView: true,
+
 	// Η flag "theatisView" δείχνει αν θα είναι εμφανείς οι θεατές στο καφενείο
 	// και στην παρτίδα. Η αλλαγή της τιμής της flag γίνεται μέσω ειδικού πλήκτρου
 	// στο panel προσκλήσεων.
@@ -48,20 +50,39 @@ Arena.flags = {
 	kouskous: false,
 };
 
+// Η function "viewBoth" επιστρέφει true εφόσον ο χρήστης έχει επιλέξει πανοραμική άποψη,
+// ήτοι ταυτόχρονη άποψη παρτίδας και καφενείου.
+
 Arena.viewBoth = function() {
 	return Arena.flags.viewBoth;
 };
+
+// Η function "viewSingle" επιστρέφει true εφόσον ο χρήστης έχει επιλέξει οικονομική
+// άποψη, ήτοι άποψη της παρτίδας ή του καφενείου.
 
 Arena.viewSingle = function() {
 	return !Arena.viewBoth();
 };
 
+// Η function "partidaMode" επιστρέφει true εφόσον ο χρήστης έχει επιλέξει την περιοχή
+// της παρτίδας. Η παρτίδα περιλαμβάνει τους νεοφερμένους, την τσόχα του τραπεζιού στο
+// οποίο εξελίσσεται η παρτίδα και τη συζήτηση που αφορά στο συγκεκριμένο τραπέζι.
+
 Arena.partidaMode = function() {
 	return Arena.flags.partidaMode;
 };
 
+// Η function "kafenioMode" επιστρέφει true εφόσον ο χρήστης έχει επιλέξει την περιοχή
+// καφενείου. Η περιοχή καφενείου περιλαμβάνει τους περιφερόμενους παίκτες και συνοπτική
+// άποψη όλων των τραπεζιών. Όσον αφορά στη συζήτηση, στο προσκήνιο έρχεται η συζήτηση
+// που εξελίσσεται στο συγκεκριμένο τραπέζι.
+
 Arena.kafenioMode = function() {
 	return !Arena.partidaMode();
+};
+
+Arena.rebelosView = function() {
+	return Arena.flags.rebelosView;
 };
 
 Arena.theatisView = function() {
@@ -136,7 +157,7 @@ Arena.setup = function() {
 	Arena.
 	setupDiafimisi().
 	setupMotd().
-	kafenio.setup().
+	setupKafenio().
 	partida.setup().
 	setupPss().
 	setupCpanel().
@@ -165,6 +186,14 @@ Arena.setupMotd = function() {
 		Client.motd.emfanes = false;
 		Arena.cpanel.bpanelButtonGet('motd').refresh();
 	};
+
+	return Arena;
+};
+
+Arena.setupKafenio = function() {
+	Arena.kafenioDOM.css('overflowY', 'auto');
+	Arena.rebelosDOM = $('<div>').attr('id', 'rebelos').appendTo(Arena.kafenioDOM);
+	Arena.trapeziDOM = $('<div>').attr('id', 'trapezi').appendTo(Arena.kafenioDOM);
 
 	return Arena;
 };
