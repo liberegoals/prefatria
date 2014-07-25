@@ -822,7 +822,17 @@ Trapezi.prototype.trapeziCreateDOM = function() {
 };
 
 Trapezi.prototype.trapeziRefreshDOM = function() {
+	var theatis;
+
+	theatis = (this.theatisDOM ? this.theatisDOM.html() : null);
 	this.trapeziCreateDOM();
+	if (theatis) trapezi.theatisDOM.html(theatis);
+	else Arena.skiniko.skinikoSinedriaWalk(function() {
+		if (this.sinedriaOxiTrapezi(trapezi)) return;
+		if (this.sinedriaOxiTheatis()) return;
+		trapezi.trapeziTheatisPushDOM(this);
+	});
+
 	return this;
 };
 
@@ -918,6 +928,8 @@ Trapezi.prototype.trapeziThesiRefreshDOM = function(thesi) {
 };
 
 Trapezi.prototype.trapeziTheatisPushDOM = function(sinedria) {
+	if (!sinedria.theatisDOM) return this;
+	sinedria.theatisDOM.detach();
 	this.theatisDOM.prepend(sinedria.theatisDOM);
 	return this;
 };
