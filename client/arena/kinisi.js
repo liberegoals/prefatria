@@ -271,7 +271,7 @@ Skiniko.prototype.processKinisiPostET = function(data) {
 
 	trapezi = this.skinikoTrapeziGet(data.trapezi);
 	if (!trapezi) {
-		Arena.kafenio.rebelosDOM.prepend(sinedria.rebelosDOM);
+		Arena.rebelosDOM.prepend(sinedria.rebelosDOM);
 		return this;
 	}
 
@@ -421,7 +421,7 @@ Skiniko.prototype.processKinisiPostRT = function(data) {
 
 	trapezi = this.skinikoTrapeziGet(sinedria.sinedriaTrapeziGet());
 	if (!trapezi) {
-		Arena.kafenio.rebelosDOM.prepend(sinedria.rebelosDOM);
+		Arena.rebelosDOM.prepend(sinedria.rebelosDOM);
 		if (data.pektis.isEgo()) {
 			Arena.partida.refreshDOM();
 			Arena.kafenioModeSet();

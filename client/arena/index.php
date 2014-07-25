@@ -13,7 +13,6 @@ Selida::javascript("common/partida");
 Selida::javascript("common/energia");
 Selida::javascript("common/kinisi");
 Selida::javascript("arena/arena");
-Selida::javascript("arena/kafenio");
 Selida::javascript("arena/partida");
 Selida::javascript("arena/enimerosi");
 Selida::javascript("arena/peximo");
