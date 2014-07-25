@@ -781,15 +781,15 @@ body {
 	margin-left: -59.55px;
 }
 
-.tsoxaXartosiaFiloOmioxromo {
-	box-shadow: -5px 0px 1px rgba(105, 213, 153, 0.73);
-}
-
 .tsoxaXartosiaFiloPrev {
 	position: relative;
-	width: 70px;
+	width: 68px;
 	margin-left: -48px;
 	box-shadow: -1px 1px 1px #888;
+}
+
+.tsoxaXartosiaFiloOmioxromo {
+	box-shadow: -5px 0px 1px rgba(105, 213, 153, 0.73);
 }
 
 /********************************************************************************************************************/
