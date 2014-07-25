@@ -388,8 +388,8 @@ Trapezi.efoplismosAlagiXartosia = function(trapezi) {
 		kato = '20px';
 	}
 	else {
-		pano = '8px';
-		kato = '20px';
+		pano = '14px';
+		kato = '26px';
 	}
 
 	Arena.partida['fila' + iseht + 'DOM'].
@@ -547,7 +547,7 @@ Trapezi.prototype.efoplismosΠΑΙΧΝΙΔΙ = function() {
 		kato = '-=10px';
 	}
 	else {
-		over = '12px';
+		over = '18px';
 		pano = '-=8px';
 		kato = '+=8px';
 	}
@@ -642,7 +642,7 @@ Trapezi.prototype.efoplismosPexnidiFila = function(iseht, over) {
 	bottom = (iseht == 1 ? '+20px' : 'auto');
 	fila = Arena.partida['fila' + iseht + 'DOM'].find('.tsoxaXartosiaFilo').
 	// Ο επόμενος mouse event listener κρίθηκε απαραίτητος στην περίπτωση
-	// χειραφετημένηυς τσόχας όπου δεν θέλουμε να κινείται η τσόχα όταν
+	// χειραφετημένης τσόχας όπου δεν θέλουμε να κινείται η τσόχα όταν
 	// σέρνουμε λάθος φύλλο.
 	off('mousedown').on('mousedown', function(e) {
 		Arena.inputRefocus(e);
