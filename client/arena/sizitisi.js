@@ -469,12 +469,14 @@ Sizitisi.ikonaAppend = function(dom, s) {
 	}
 
 	dom.
-	append(img = $('<img>').attr({
+	append(img = $('<img>').addClass('sizitisiIkona').attr({
 		src: s.replace(/[-+]*$/, ''),
 	}));
 
-	if (!sinPlin.length) return;
-	width = 20;
+	if (!sinPlin.length)
+	return;
+
+	width = 80;
 	for (i = 0; i < sinPlin.length; i++) {
 		width *= sinPlin[i];
 	}
