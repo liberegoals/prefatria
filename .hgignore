@@ -5,3 +5,4 @@ glob:rcLocal.js
 glob:client/site/motd.php
 glob:client/site/diafimisi.php
 glob:*~
+glob:*.gz
