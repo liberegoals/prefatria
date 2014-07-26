@@ -103,33 +103,58 @@ Skiniko.prototype.processKinisiPostSL = function(data) {
 	sinedria = this.skinikoSinedriaGet(data.login);
 	if (!sinedria) return this;
 
+	// Θα μαζέψουμε όλα τα κουτάκια του παίκτη.
+
 	jql = $();
+
+	// Ξεκινάμε με τυχόν εμφάνιση του παίκτη στους περιφερόμενους.
 
 	if (sinedria.hasOwnProperty('rebelosDOM'))
 	jql = jql.add(sinedria.rebelosDOM);
+
+	// Συνεχίζουμε με όλες τις εμφανίσεις του παίκτη ως παίκτη σε
+	// διάφορα τραπέζια του καφενείου.
 
 	this.skinikoThesiWalk(function(thesi) {
 		if (this.trapeziPektisGet(thesi) == data.login)
 		jql = jql.add(this.thesiDOM[thesi]);
 	});
 
+	// Συνεχίζουμε με τυχόν εμφανίσεις του παίκτη ως θεατή σε τραπέζια
+	// του καφενείου.
+
 	if (sinedria.hasOwnProperty('theatisDOM'))
 	jql = jql.add(sinedria.theatisDOM);
 
-	if (sinedria.hasOwnProperty('tsoxaTheatisDOM'))
-	jql = jql.add(sinedria.tsoxaTheatisDOM);
+	// Συνεχίζουμε με τυχόν εμφανίσεις του παίκτη ως νεοφερμένου στην
+	// περιοχή της παρτίδας.
 
 	if (sinedria.hasOwnProperty('niofertosDOM'))
 	jql = jql.add(sinedria.niofertosDOM);
+
+	// Συνεχίζουμε με τυχόν εμφανίσεις του παίκτη ως παίκτη στην τσόχα,
+	// στην περιοχή της παρτίδας.
 
 	if (Arena.ego.isTrapezi(trapezi)) {
 		thesi = Arena.ego.trapezi.trapeziThesiPekti(data.login);
 		if (thesi) jql = jql.add(Arena.partida['pektis' + thesi + 'DOM'].find('.tsoxaPektisMain'));
 	}
 
+	// Συνεχίζουμε με τυχόν εμφανίσεις του παίκτη ως θεατή στην τσόχα,
+	// στην περιοχή της παρτίδας.
+
+	if (sinedria.hasOwnProperty('tsoxaTheatisDOM'))
+	jql = jql.add(sinedria.tsoxaTheatisDOM);
+
+	// Σε όλα τα κουτάκια που αφορούν τον παίκτη εφαρμόζουμε μέθοδο που
+	// θα κάνει εμφανή την ανανέωση της συνεδρίας του παίκτη.
+
 	jql.sinedriaSalute();
 	return this;
 };
+
+// Η jQuery μέθοδος "salute" εφαρμόζεται σε κουτάκια παίκτη και σκοπό έχει να κάνει
+// εμφανή την ανανέωση της συνεδρίας αλλάζοντας για λίγο το χρώμα του border.
 
 jQuery.fn.sinedriaSalute = function() {
 	return this.each(function() {
@@ -141,6 +166,9 @@ jQuery.fn.sinedriaSalute = function() {
 		$(this).finish().css('borderColor', '#FF9900').animate({
 			borderColor: borderColor,
 		}, 1000, function() {
+			// Πρέπει να αφαιρεθεί το border color, αλλιώς επικρατεί λόγω
+			// στιλ και δεν φαίνονται τυχόν επόμενες αλλαγές από κλάσεις.
+
 			$(this).css('borderColor', '');
 		});
 	});
