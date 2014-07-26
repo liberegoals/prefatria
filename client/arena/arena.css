@@ -747,7 +747,6 @@ body {
 .tsoxaXartosiaFilo {
 	position: relative;
 	width: 64px;
-	box-shadow: -1px 1px 1px #888;
 	box-shadow: -2px 1px 4px rgba(23, 31, 21, 0.45);
 }
 
@@ -1162,7 +1161,7 @@ cursor: auto;
 .tsoxaBazaFilo {
 	position: absolute;
 	width: 88px;
-	box-shadow: -1px 1px 1px #616D86;
+	box-shadow: -2px 1px 4px rgba(23, 31, 21, 0.45);
 }
 
 #tsoxaBazaFilo3 {
@@ -1242,7 +1241,7 @@ cursor: auto;
 .tsoxaAzabFilo {
 	position: absolute;
 	width: 80px;
-	box-shadow: -1px 1px 1px #616D86;
+	box-shadow: -2px 1px 4px rgba(23, 31, 21, 0.45);
 }
 
 #tsoxaAzabFilo3 {
