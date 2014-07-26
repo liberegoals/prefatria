@@ -79,6 +79,10 @@ background-color: rgba(128, 0, 97, 0.37);
 	width: 100%;
 }
 
+#ribbonTable td {
+	vertical-align: top;
+}
+
 #ribbonLeft {
 	text-align: left;
 }
