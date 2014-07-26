@@ -778,7 +778,7 @@ body {
 }
 
 .tsoxaXartosiaFiloSteno1 {
-	margin-left: -67.8px;
+	margin-left: -67.5px;
 }
 
 .tsoxaXartosiaFiloPrev {
@@ -1547,6 +1547,7 @@ cursor: auto;
 /***********************************************************************************************************************/
 
 /*
+*/
 .tsoxaFila {
 	background-color: rgba(255, 0, 0, 0.38);
 }
@@ -1590,4 +1591,3 @@ cursor: auto;
 .tsoxaData {
 	background-color: rgba(64, 162, 187, 0.52);
 }
-*/
