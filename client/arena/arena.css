@@ -761,12 +761,12 @@ body {
 }
 
 .tsoxaXartosiaFilo1 {
-	bottom: 20px;
-	margin-left: -55px;
+	bottom: 30px;
+	margin-left: -64px;
 }
 
 .tsoxaXartosiaFiloNotos {
-	width: 80px;
+	width: 88px;
 }
 
 .tsoxaXartosiaFiloSteno3 {
@@ -778,7 +778,7 @@ body {
 }
 
 .tsoxaXartosiaFiloSteno1 {
-	margin-left: -59.55px;
+	margin-left: -67.8px;
 }
 
 .tsoxaXartosiaFiloPrev {
@@ -1160,7 +1160,7 @@ cursor: auto;
 
 .tsoxaBazaFilo {
 	position: absolute;
-	width: 80px;
+	width: 88px;
 	box-shadow: -1px 1px 1px #616D86;
 }
 
@@ -1187,16 +1187,16 @@ cursor: auto;
 
 #tsoxaVelosFilo3 {
 	top: 185px;
-	left: 165px;
+	left: 164px;
 }
 
 #tsoxaVelosFilo2 {
-	top: 165px;
-	left: 335px;
+	top: 166px;
+	left: 344px;
 }
 
 #tsoxaVelosFilo1 {
-	top: 345px;
+	top: 352px;
 	left: 195px;
 }
 
@@ -1213,7 +1213,7 @@ cursor: auto;
 
 #tsoxaClaimMinima {
 	position: relative;
-	top: -30px;
+	top: -36px;
 	font-size: 16px;
 	font-style: italic;
 	font-weight: bold;
@@ -1547,6 +1547,7 @@ cursor: auto;
 /***********************************************************************************************************************/
 
 /*
+*/
 .tsoxaFila {
 	background-color: rgba(255, 0, 0, 0.38);
 }
@@ -1590,4 +1591,3 @@ cursor: auto;
 .tsoxaData {
 	background-color: rgba(64, 162, 187, 0.52);
 }
-*/
