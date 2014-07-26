@@ -91,6 +91,16 @@ background-color: rgba(128, 0, 97, 0.37);
 	text-align: right;
 }
 
+.ribbonIcon {
+	max-height: 24px;
+	margin: 2px 2px 0 0;
+}
+
+#donate {
+	display: inline-block;
+display: none;
+}
+
 /************************************************************************************************************************/
 
 .tab {
