@@ -140,7 +140,9 @@ jQuery.fn.sinedriaSalute = function() {
 
 		$(this).finish().css('borderColor', '#FF9900').animate({
 			borderColor: borderColor,
-		}, 1000);
+		}, 1000, function() {
+			$(this).css('borderColor', '');
+		});
 	});
 };
 
