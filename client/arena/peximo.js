@@ -112,7 +112,7 @@ Arena.partida.claimRefreshDOM = function() {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
 
 Arena.partida.kinisiFilo = function(pektis, filo, callback, delay) {
-	var css = {width: '80px'}, tsoxaPos, filoPos, olif;
+	var css = {width: '88px'}, tsoxaPos, filoPos, olif;
 
 	switch (Arena.ego.thesiMap(pektis)) {
 	case 3:
