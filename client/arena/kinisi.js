@@ -332,6 +332,7 @@ Skiniko.prototype.processKinisiPostET = function(data) {
 	// περίπτωση να είμαστε εμείς ο παίκτης που επιλέγει τραπέζι.
 
 	if (data.pektis.isEgo()) {
+		this.pektisTrapeziScroll(true);
 		Arena.partida.refreshDOM(true);
 		Arena.panelRefresh();
 		Arena.partidaModeSet();
