@@ -824,9 +824,7 @@ Trapezi.prototype.trapeziCreateDOM = function() {
 Trapezi.prototype.trapeziRefreshDOM = function() {
 	this.trapeziDataRefreshDOM();
 	this.trapeziOptsRefreshDOM();
-	this.trapeziThesiWalk(function(thesi) {
-		this.trapeziThesiRefreshDOM(thesi);
-	});
+	this.trapeziThesiRefreshDOM();
 
 	return this;
 };
@@ -885,14 +883,11 @@ Trapezi.prototype.trapeziOptionDOM = function(desc, img) {
 };
 
 Trapezi.prototype.trapeziThesiRefreshDOM = function(thesi) {
-	var skiniko, dom, login, pektis, sinedria;
+	var dom, login, pektis, sinedria;
 
 	if (thesi === undefined) return this.trapeziThesiWalk(function(thesi) {
 		this.trapeziThesiRefreshDOM(thesi);
 	});
-
-	skiniko = this.trapeziSkinikoGet();
-	if (!skiniko) return this;
 
 	dom = this.thesiDOM[thesi];
 	dom.removeClass('offline fantasma filos apoklismenos ego apodoxi xapodoxi');
@@ -902,7 +897,7 @@ Trapezi.prototype.trapeziThesiRefreshDOM = function(thesi) {
 	login = this.trapeziPektisGet(thesi);
 	if (login) {
 		dom.text(login);
-		sinedria = skiniko.skinikoSinedriaGet(login);
+		sinedria = Arena.skiniko.skinikoSinedriaGet(login);
 		if (!sinedria) dom.addClass('offline');
 		if (login.isEgo()) dom.addClass('ego');
 		else if (Arena.ego.isFilos(login)) dom.addClass('filos');
@@ -913,7 +908,7 @@ Trapezi.prototype.trapeziThesiRefreshDOM = function(thesi) {
 		if (login) dom.addClass('fantasma').text(login);
 	}
 
-	pektis = login ? skiniko.skinikoPektisGet(login) : null;
+	pektis = login ? Arena.skiniko.skinikoPektisGet(login) : null;
 	if (pektis) dom.on('click', function(e) {
 		pektis.pektisFormaPopupDOM(e);
 	});

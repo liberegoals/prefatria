@@ -385,7 +385,9 @@ Skiniko.prototype.processKinisiRL = function(data) {
 //	apodoxi		ΝΑΙ = Αποδοχή, ΟΧΙ = Επαναδιαπραγμάτευση.
 
 Skiniko.prototype.processKinisiAX = function(data) {
-	var trapezi = this.skinikoTrapeziGet(data.trapezi);
+	var trapezi;
+
+	trapezi = this.skinikoTrapeziGet(data.trapezi);
 	if (!trapezi) return this;
 
 	trapezi.trapeziApodoxiSet(data.thesi, data.apodoxi.isNai());
