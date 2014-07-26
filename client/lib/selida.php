@@ -196,21 +196,19 @@ class Selida {
 		<div id="ribbon">
 			<table id="ribbonTable">
 			<tr>
-			<td style="width: 50%;">
+			<td style="width: 40%;">
 				<div id="ribbonLeft">
-				<?php Selida::sinefo_span_begin(); ?>
-					LEFT
-				<?php Selida::sinefo_span_end(); ?>
+					<?php Selida::ribbon_left(); ?>
 				</div>
 			</td>
-			<td style="width: 0;">
+			<td style="width: 20%;">
 				<div id="ribbonCenter">
 				<?php Selida::sinefo_span_begin(); ?>
 					CENTER
 				<?php Selida::sinefo_span_end(); ?>
 				</div>
 			</td>
-			<td style="width: 50%;">
+			<td style="width: 40%;">
 				<div id="ribbonRight">
 				<?php Selida::sinefo_span_begin(); ?>
 					RIGHT
@@ -219,6 +217,35 @@ class Selida {
 			</td>
 			</tr>
 			</table>
+		</div>
+		<?php
+	}
+
+	public static function ribbon_left() {
+		?>
+		<a target="_blank" href="http://www.hellasbridge.org/"><img class="ribbonIcon"
+			src="<?php Globals::url("ikona/external/eom.png"); ?>" /></a>
+		<a target="_blank" href="http://www.bridgebase.com/"><img class="ribbonIcon"
+			src="<?php Globals::url("ikona/external/bbo.png"); ?>" /></a>
+		<?php if (Globals::is_pektis()) self::donate(); ?>
+		<br />
+		<a target="_blank" href="https://twitter.com/prefadorosTT"><img class="ribbonIcon"
+			src="<?php Globals::url("ikona/external/twitter.png"); ?>" /></a>
+		<a target="_blank" href="https://www.facebook.com/groups/prefadoros"><img class="ribbonIcon"
+			src="<?php Globals::url("ikona/external/facebook.jpg"); ?>" /></a>
+		<?php
+	}
+
+	public static function donate() {
+		?>
+		<div id="donate" title="Για τις ανάγκες του server…">
+		<form target="_blank" action="https://www.paypal.com/cgi-bin/webscr" method="post">
+		<input type="hidden" name="cmd" value="_s-xclick" />
+		<input type="hidden" name="hosted_button_id" value="7UGXKWGRM5TXU" />
+		<input type="image" src="<?php Globals::url("ikona/external/donate.gif"); ?>"
+			border="0" name="submit" title="Buy me a beer!"
+			alt="PayPal - The safer, easier way to pay online!" />
+		</form>
 		</div>
 		<?php
 	}
