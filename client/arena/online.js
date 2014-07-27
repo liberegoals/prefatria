@@ -15,21 +15,35 @@ Trapezi.prototype.processEnergiaOnlineΣΟΛΟ = function(energia) {
 };
 
 Trapezi.prototype.processEnergiaOnlineΣΥΜΜΕΤΟΧΗ = function(energia) {
-	var pektis;
+	// Εμφανίζουμε το τραπέζι μετά την ένταξη και επεξεργασία της
+	// ανά χείρας συμετοχής.
 
 	Arena.partida.trapeziRefreshDOM();
+
+	// Αν η ανά χείρας συμμετοχή είναι "ΜΑΖΙ", τότε πρέπει αυτό να
+	// γίνει αισθητό σε παίκτες και θεατές.
+
+	if (energia.energiaDataGet().simetoxiIsMazi())
+	Client.sound.bikebell();
+
+	// Αν δεν είμαστε παίκτες, δεν χρειάζονται περαιτέρω ενέργειες.
+
 	if (Arena.ego.oxiPektis()) return this;
-	if (Debug.flagGet('epomenosCheck') &&
-	this.partidaTzogadorosGet() != Arena.ego.thesiGet()) return this;
+
+	// Ελέγχουμε αν μετά την ανά χείρας συμμετοχή το παιχνίδι έχει
+	// περάσει σε φάση παιχνιδιού.
+
 	switch (this.partidaFasiGet()) {
+
+	// Ένας, ή και οι δυο αμυνόμενοι έπαιξαν, επομένως πρέπει να
+	// ξανασχηματίσουμε το control panel, π.χ. ο τζογαδόρος πρέπει
+	// να έχει δυνατότητα claim.
+
 	case 'ΠΑΙΧΝΙΔΙ':
+		Arena.panelRefresh();
 		break;
-	default:
-		return this;
 	}
 
-	Arena.cpanel.bpanelRefresh();
-	if (energia.energiaDataGet().simetoxiIsMazi()) Client.sound.bikebell();
 	return this;
 };
 
