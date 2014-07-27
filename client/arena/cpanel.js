@@ -550,13 +550,13 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 	click: function(e) {
 		if (Arena.partida.flags.fanera23) {
 			delete Arena.partida.flags.fanera23;
-			Arena.partida.fila3DOM.css('display', 'none');
-			Arena.partida.fila2DOM.css('display', 'none');
+			Arena.partida.fila3DOM.css('visibility', 'hidden');
+			Arena.partida.fila2DOM.css('visibility', 'hidden');
 		}
 		else {
 			Arena.partida.flags.fanera23 = true;
-			Arena.partida.fila3DOM.css('display', 'block');
-			Arena.partida.fila2DOM.css('display', 'block');
+			Arena.partida.fila3DOM.css('visibility', 'visible');
+			Arena.partida.fila2DOM.css('visibility', 'visible');
 		}
 	},
 }));
