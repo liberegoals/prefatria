@@ -938,13 +938,24 @@ Skiniko.prototype.processKinisiPostAK = function(data) {
 Skiniko.prototype.processKinisiPostKN = function(data) {
 	var trapezi, sizitisi;
 
+	// Αν δεν εμπλεκόμαστε στο τραπέζι στο οποίο ήχησε η κόρνα, τότε κακώς
+	// λάβαμε τη συγκεκριμένη κίνηση εκτός και αν κατέχουμε θέση παίκτη στο
+	// τραπέζι και αλητεύουμε σε άλλο τραπέζι, πράγμα πολύ πιθανό. Σ' αυτή
+	// την περίπτωση θα πάρουμε ηχητικό σήμα και σχετικό μήνυμα όπου κι αν
+	// βρισκόμαστε.
+
 	if (Arena.ego.oxiTrapezi(data.trapezi)) {
 		trapezi = Arena.skiniko.skinikoTrapeziGet(data.trapezi);
 		if (!trapezi) return this;
 		if (!trapezi.trapeziThesiPekti(Client.session.pektis)) return this;
 		Client.sound.play('korna.ogg');
+		Client.fyi.ekato('Ο παίκτης <b>' + data.pektis +
+			'</b> αδημονεί και κορνάρει στο τραπέζι <b>' + data.trapezi + '</b>');
 		return this;
 	}
+
+	// Εμπλεκόμαστε στο τραπέζι είτε ως παίκτες είτε ως θεατές. Η κόρνα θα εμφανιστεί
+	// στο χώρο συζήτησης και θα ηχήσει στον υπολογιστή μας.
 
 	sizitisi = new Sizitisi({
 		pektis: data.pektis,

@@ -6,20 +6,24 @@ Service.misc = {};
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
 
-Service.misc.korna = function(nodereq) {
-	var kinisi;
+// Με το αίτημα κόρνας ο παίκτης κορνάρει σε όσους έχουν σχέση με το τραπέζι στο
+// οποίο παίζει. Όσοι βρίσκονται στο τραπέζι του ως παίκτες ή ως θεατές θα δουν
+// στη συζήτηση του τραπεζιού μια κόρνα από τον συγκεκριμένο παίκτη και θα
+// ακούσουν ηχητικό σήμα κόρνας. Αν κάποιος παίκτης του τραπεζιού αλητεύει
+// σε άλλο τραπέζι, τοτε και αυτός θα ακούσει το σήμα.
 
+Service.misc.korna = function(nodereq) {
 	if (nodereq.isvoli()) return;
 	if (nodereq.oxiPektis()) return;
-
 	nodereq.end();
 
-	kinisi = new Kinisi('KN');
-	kinisi.data = {
-		pektis: nodereq.loginGet(),
-		trapezi: nodereq.trapeziGet().trapeziKodikosGet(),
-	};
-
 	Server.skiniko.
-	kinisiAdd(kinisi);
+	kinisiAdd(new Kinisi({
+		idos: 'KN',
+		data: {
+			pektis: nodereq.loginGet(),
+			trapezi: nodereq.trapeziGet().trapeziKodikosGet(),
+		},
+	}));;
+
 };

@@ -156,20 +156,30 @@ Kinisi.prototype.isAdiaforiRC = function(sinedria) {
 };
 
 // KN		Κόρνα
-
+//
+// Η κόρνα αφορά σε όλους εμπλέκονται σε κάποιο τραπέζι και αυτοί είναι οι παίκτες
+// και οι θεατές του τραπεζιού.
 Kinisi.prototype.isAdiaforiKN = function(sinedria) {
 	var trapezi, pektis;
 
-	trapezi = Server.skiniko.skinikoTrapeziGet(this.data.trapezi);
-	if (!trapezi) return true;
+	// Αν η συνεδρία εμπλέκεται στο τραπέζι είτε ως παίκτης είτε ως θεατής
+	// τότε η κόρνα την αφορά.
+
+	if (sinedria.sinedriaIsTrapezi(this.data.trapezi)) return false;
+
+	// Η συνεδρία δείχνει να μην εμπλέκεται στο τραπέζι στο οποία ήχησε
+	// η κόρνα από κάποιον παίκτη του τραπεζιού. Η μόνη περίπτωση να
+	// αφορά η κόρνα τη συγκεκριμένη συνεδρία είναι ο παίκτης της
+	// συνεδρίας να κατεει θεη παίκτη στο τραπέζι και αυτή τη στιγμή
+	// να αλητεύει.
 
 	pektis = sinedria.sinedriaPektisGet();
 	if (!pektis) return true;
 
-	if (trapezi.trapeziThesiPekti(pektis))
-	return false;
+	trapezi = Server.skiniko.skinikoTrapeziGet(this.data.trapezi);
+	if (!trapezi) return true;
 
-	return sinedria.sinedriaOxiTrapezi(this.data.trapezi);
+	return(!trapezi.trapeziThesiPekti(pektis));
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
