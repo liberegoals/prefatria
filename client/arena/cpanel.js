@@ -622,6 +622,19 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 	},
 }));
 
+Arena.cpanel.bpanelButtonPush(new PButton({
+	omada: 2,
+	img: 'korna.png',
+	title: 'Κόρνα',
+	check: function() {
+		return Arena.ego.isPektis();
+	},
+	click: function(e) {
+		if (Arena.ego.oxiPektis()) return;
+		Client.skiserService('korna');
+	},
+}));
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
 
 Arena.cpanel.bpanelButtonPush(new PButton({
