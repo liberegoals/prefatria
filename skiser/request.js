@@ -258,7 +258,7 @@ NodeRequest.prototype.oxiTrapezi = function(s) {
 NodeRequest.prototype.oxiPektis = function(s) {
 	var trapezi;
 
-	if (this.oxiTrapezi()) return true;
+	if (this.oxiTrapezi(s)) return true;
 
 	trapezi = this.trapeziGet();
 	if (trapezi.trapeziThesiPekti(this.loginGet())) return false;

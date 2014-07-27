@@ -373,13 +373,21 @@ Sizitisi.prototype.sizitisiSxolioCreateDOM = function(dom) {
 	dom.empty();
 
 	switch (tmima[0]) {
-	
+
 	// Αν το πρώτο πεδίο του σχολίου είναι "FP" τότε πρόκειται για τα φύλλα της
 	// προηγούμενης διανομής του παίκτη.
 
 	case 'FP':
 		sxolio = tmima[1].string2xartosia().xartosiaTaxinomisi().xartosiaDOM();
 		dom.append(sxolio);
+		return this;
+
+	// Αν το πρώτο πεδίο του σχολίου είναι "KN" τότε πρόκειται για κόρνα από
+	// κάποιον παίκτη του τραπεζιού.
+
+	case 'KN':
+		dom.append($('<img>').addClass('sizitisiKorna').
+		attr('src', 'ikona/panel/korna.png'));
 		return this;
 	}
 

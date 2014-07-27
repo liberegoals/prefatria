@@ -8,6 +8,7 @@
 Service = {};
 
 Log.level.push();
+require('./service/misc.js');
 require('./service/claim.js');
 require('./service/akirosi.js');
 require('./service/peximo.js');
@@ -32,6 +33,7 @@ Log.level.pop();
 // επεξεργασία που υφίσταται από τον server.
 
 Server.router = {
+	'/korna': Service.misc.korna,
 	'/filaPrev': Service.sizitisi.filaPrev,
 	'/claimApantisi': Service.claim.apantisi,
 	'/claimProtasi': Service.claim.protasi,

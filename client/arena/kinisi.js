@@ -925,3 +925,31 @@ Skiniko.prototype.processKinisiPostAK = function(data) {
 	Arena.panelRefresh();
 	return this;
 };
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// KN -- Κόρνα
+//
+// Δεδομένα
+//
+//	pektis		Login name του παίκτη.
+//	trapezi		Κωδικός τραπεζιού.
+
+Skiniko.prototype.processKinisiPostKN = function(data) {
+	var sizitisi;
+
+	if (Arena.ego.oxiTrapezi(data.trapezi))
+	return this;
+
+	sizitisi = new Sizitisi({
+		pektis: data.pektis,
+		trapezi: data.trapezi,
+		sxolio: 'KN',
+	});
+
+	sizitisi.sizitisiCreateDOM();
+	if (Arena.sizitisi.oxiPagomeni())
+	Arena.sizitisi.areaDOM.scrollKato();
+
+	return this;
+};
