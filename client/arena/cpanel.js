@@ -352,6 +352,15 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 }));
 
 Arena.cpanel.bpanelButtonPush(new PButton({
+	omada: 1,
+	img: 'refresh.png',
+	title: 'Επαναφόρτωση σελίδας',
+	click: function(e) {
+		location.reload(true);
+	},
+}));
+
+Arena.cpanel.bpanelButtonPush(new PButton({
 	id: 'azab',
 	omada: 1,
 	check: function() {
@@ -608,6 +617,18 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 
 Arena.cpanel.bpanelButtonPush(new PButton({
 	omada: 2,
+	img: 'korna.png',
+	title: 'Κόρνα',
+	check: function() {
+		return Arena.ego.isPektis();
+	},
+	click: function(e) {
+		Client.skiserService('korna');
+	},
+}));
+
+Arena.cpanel.bpanelButtonPush(new PButton({
+	omada: 2,
 	img: 'araxni.png',
 	title: 'Επίδειξη προηγούμενης χαρτωσιάς',
 	check: function() {
@@ -619,19 +640,6 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 		fail(function(err) {
 			Client.skiserFail(err);
 		});
-	},
-}));
-
-Arena.cpanel.bpanelButtonPush(new PButton({
-	omada: 2,
-	img: 'korna.png',
-	title: 'Κόρνα',
-	check: function() {
-		return Arena.ego.isPektis();
-	},
-	click: function(e) {
-		if (Arena.ego.oxiPektis()) return;
-		Client.skiserService('korna');
 	},
 }));
 
