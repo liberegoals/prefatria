@@ -936,10 +936,15 @@ Skiniko.prototype.processKinisiPostAK = function(data) {
 //	trapezi		Κωδικός τραπεζιού.
 
 Skiniko.prototype.processKinisiPostKN = function(data) {
-	var sizitisi;
+	var trapezi, sizitisi;
 
-	if (Arena.ego.oxiTrapezi(data.trapezi))
-	return this;
+	if (Arena.ego.oxiTrapezi(data.trapezi)) {
+		trapezi = Arena.skiniko.skinikoTrapeziGet(data.trapezi);
+		if (!trapezi) return this;
+		if (!trapezi.trapeziThesiPekti(Client.session.pektis)) return this;
+		Client.sound.play('korna.ogg');
+		return this;
+	}
 
 	sizitisi = new Sizitisi({
 		pektis: data.pektis,

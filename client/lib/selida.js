@@ -748,6 +748,10 @@ Client.sound = {
 	polivolo: function() {
 		Client.sound.play('polivolo.ogg', Client.sound.entasi['ΔΥΝΑΤΗ']);
 	},
+
+	korna: function() {
+		Client.sound.play('korna.ogg', Client.sound.entasi['ΔΥΝΑΤΗ']);
+	},
 };
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
