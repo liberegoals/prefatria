@@ -45,7 +45,7 @@ background-color: rgba(128, 0, 97, 0.37);
 	border-style: none none solid none;
 	border-width: 2px;
 	border-color: #999966;
-	background-color: rgba(247, 255, 60, 0.21);
+	background-color: rgba(234, 236, 182, 0.10);
 }
 
 #toolbarTable {
@@ -72,7 +72,7 @@ background-color: rgba(128, 0, 97, 0.37);
 	border-style: solid none none none;
 	border-width: 2px;
 	border-color: #999966;
-	background-color: rgba(247, 255, 60, 0.21);
+	background-color: rgba(234, 236, 182, 0.10);
 }
 
 #ribbonTable {
@@ -534,13 +534,3 @@ border-color: red !important;
 }
 
 /************************************************************************************************************************/
-
-/*
-#toolbar {
-	background-color: #CD5C5C;
-}
-
-#ribbon {
-	background-color: #008080;
-}
-*/
