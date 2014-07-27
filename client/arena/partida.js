@@ -73,7 +73,8 @@ Arena.partida.setup = function() {
 
 		pektisDOM.on('mouseleave', function(e) {
 			e.stopPropagation();
-			filaDOM.css('visibility', 'visible');
+			if (Debug.flagGet('striptiz')) return;
+			filaDOM.css('visibility', Arena.partida.isFanera23() ? 'visible' : 'hidden');
 		});
 
 		filaDOM.on('mouseenter', function(e) {
@@ -192,8 +193,8 @@ Arena.partida.dixeKripseFila = function() {
 	var visibility;
 
 	visibility = (Arena.partida.filaFanera23() ? 'visible' : 'hidden');
-	Arena.partida['fila3DOM'].css('display', visibility);
-	Arena.partida['fila2DOM'].css('display', visibility);
+	Arena.partida['fila3DOM'].css('visibility', visibility);
+	Arena.partida['fila2DOM'].css('visibility', visibility);
 	return Arena.partida;
 };
 
