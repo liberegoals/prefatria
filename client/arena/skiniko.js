@@ -406,7 +406,7 @@ Skiniko.prototype.processAlagesPartida = function(data, trapeziPrin) {
 			sizitisi.sizitisiCreateDOM();
 		});
 
-		if (Arena.sizitisi.oxiPagomeni()) Arena.sizitisi.areaDOM.scrollKato();
+		Arena.sizitisi.scrollKato();
 	}
 
 	return this;

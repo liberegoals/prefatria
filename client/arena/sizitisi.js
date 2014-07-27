@@ -356,7 +356,7 @@ Sizitisi.prototype.sizitisiCreateDOM = function(pro) {
 	this.sizitisiSxolioCreateDOM(sxolioDOM);
 
 	if (pro) {
-		if (Arena.sizitisi.oxiPagomeni()) Arena.sizitisi.areaDOM.scrollKato();
+		Arena.sizitisi.scrollKato(true);
 		return this;
 	}
 
