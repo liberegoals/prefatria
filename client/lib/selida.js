@@ -331,9 +331,12 @@ String.prototype.oxiEgo = function() {
 // προκαλεί scroll bottom στα συγκεκριμένα elements.
 
 jQuery.fn.scrollKato = function(anim, callback) {
+	var delay;
+
+	delay = (typeof anim === 'number' ? anim : 'fast');
 	return this.each(function() {
 		try {
-			if (anim) $(this).animate({scrollTop: this.scrollHeight}, 'fast', function() {
+			if (anim) $(this).finish().animate({scrollTop: this.scrollHeight}, delay, function() {
 				if (callback) callback();
 			});
 			else this.scrollTop = this.scrollHeight;
