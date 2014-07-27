@@ -189,11 +189,11 @@ Arena.partida.peximoTheasiRefreshDOM = function() {
 // ανάλογα με την τιμή της σχετικής flag.
 
 Arena.partida.dixeKripseFila = function() {
-	var display;
+	var visibility;
 
-	display = (Arena.partida.filaFanera23() ? 'block' : 'none');
-	Arena.partida['fila3DOM'].css('display', display);
-	Arena.partida['fila2DOM'].css('display', display);
+	visibility = (Arena.partida.filaFanera23() ? 'visible' : 'hidden');
+	Arena.partida['fila3DOM'].css('display', visibility);
+	Arena.partida['fila2DOM'].css('display', visibility);
 	return Arena.partida;
 };
 

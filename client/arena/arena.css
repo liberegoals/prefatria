@@ -718,16 +718,14 @@ body {
 	z-index: 1;
 }
 
-/*
-*/
 #tsoxaFila3 {
-	display: none;
+	visibility: hidden;
 	top: 28px;
 	left: 0;
 }
 
 #tsoxaFila2 {
-	display: none;
+	visibility: hidden;
 	top: 28px;
 	right: 0;
 }
