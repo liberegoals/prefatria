@@ -155,6 +155,23 @@ Kinisi.prototype.isAdiaforiRC = function(sinedria) {
 	return !sinedria.tsoxaEnergiaGet(this.data.trapezi);
 };
 
+// KN		Κόρνα
+
+Kinisi.prototype.isAdiaforiKN = function(sinedria) {
+	var trapezi, pektis;
+
+	trapezi = Server.skiniko.skinikoTrapeziGet(this.data.trapezi);
+	if (!trapezi) return true;
+
+	pektis = sinedria.sinedriaPektisGet();
+	if (!pektis) return true;
+
+	if (trapezi.trapeziThesiPekti(pektis))
+	return false;
+
+	return sinedria.sinedriaOxiTrapezi(this.data.trapezi);
+};
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 Kinisi.prototype.prosarmogiPK = function(sinedria) {

@@ -386,8 +386,7 @@ Sizitisi.prototype.sizitisiSxolioCreateDOM = function(dom) {
 	// κάποιον παίκτη του τραπεζιού.
 
 	case 'KN':
-		dom.append($('<img>').addClass('sizitisiKorna').
-		attr('src', 'ikona/panel/korna.png'));
+		Sizitisi.kornaAppend(dom);
 		return this;
 	}
 
@@ -429,6 +428,17 @@ Sizitisi.emoticonAppend = function(dom, s) {
 	ikona = parseInt(tmima[1]);
 	dom.append($('<img>').addClass('sizitisiEmoticon').
 	attr('src', 'ikona/emoticon/set' + omada + '/' + Arena.epanel.lefkoma[omada - 1][ikona - 1]));
+};
+
+Sizitisi.kornaAppend = function(dom) {
+	var img;
+
+	img = $('<img>').attr('src', 'ikona/panel/korna.png').css('width', '20px');
+	dom.append(img);
+	img.animate({
+		width: '40px',
+	}, 1000, 'easeInOutBounce');
+	Client.sound.play('korna.ogg');
 };
 
 Sizitisi.youtubeAppend = function(dom, s) {
