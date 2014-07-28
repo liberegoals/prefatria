@@ -361,42 +361,6 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 }));
 
 Arena.cpanel.bpanelButtonPush(new PButton({
-	id: 'azab',
-	omada: 1,
-	check: function() {
-		if (Arena.ego.oxiTrapezi()) return false;
-		return Arena.ego.trapezi.trapeziIsDianomi();
-	},
-	refresh: function() {
-		var img;
-
-		img = this.pbuttonIconGetDOM();
-		if (Arena.partida.flags.azab) img.attr({
-			src: 'ikona/panel/bazaPrevOff.png',
-			title: 'Απόκρυψη προηγούμενης μπάζας',
-		});
-		else img.attr({
-			src: 'ikona/panel/bazaPrevOn.png',
-			title: 'Εμφάνιση προηγούμενης μπάζας',
-		});
-	},
-	click: function(e) {
-		//Arena.partida.azabRefreshDOM();
-		Arena.partida.flags.azab = !Arena.partida.flags.azab;
-		if (Arena.partida.flags.azab) Arena.partida.azabDOM.finish().fadeIn(100);
-		else Arena.partida.azabDOM.finish().fadeOut(200);
-		Arena.cpanel.bpanelRefresh();
-	},
-}));
-Arena.cpanel.bpanelButtonGet('azab').pbuttonGetDOM().
-on('mouseenter', function() {
-	Arena.partida.azabDOM.addClass('tsoxaAzabEmfanis');
-}).
-on('mouseleave', function() {
-	Arena.partida.azabDOM.removeClass('tsoxaAzabEmfanis');
-});
-
-Arena.cpanel.bpanelButtonPush(new PButton({
 	omada: 1,
 	img: 'akirosiStart.png',
 	title: 'Ακύρωση κινήσεων',
@@ -453,6 +417,42 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 		});
 	},
 }));
+
+Arena.cpanel.bpanelButtonPush(new PButton({
+	id: 'azab',
+	omada: 1,
+	check: function() {
+		if (Arena.ego.oxiTrapezi()) return false;
+		return Arena.ego.trapezi.trapeziIsDianomi();
+	},
+	refresh: function() {
+		var img;
+
+		img = this.pbuttonIconGetDOM();
+		if (Arena.partida.flags.azab) img.attr({
+			src: 'ikona/panel/bazaPrevOff.png',
+			title: 'Απόκρυψη προηγούμενης μπάζας',
+		});
+		else img.attr({
+			src: 'ikona/panel/bazaPrevOn.png',
+			title: 'Εμφάνιση προηγούμενης μπάζας',
+		});
+	},
+	click: function(e) {
+		//Arena.partida.azabRefreshDOM();
+		Arena.partida.flags.azab = !Arena.partida.flags.azab;
+		if (Arena.partida.flags.azab) Arena.partida.azabDOM.finish().fadeIn(100);
+		else Arena.partida.azabDOM.finish().fadeOut(200);
+		Arena.cpanel.bpanelRefresh();
+	},
+}));
+Arena.cpanel.bpanelButtonGet('azab').pbuttonGetDOM().
+on('mouseenter', function() {
+	Arena.partida.azabDOM.addClass('tsoxaAzabEmfanis');
+}).
+on('mouseleave', function() {
+	Arena.partida.azabDOM.removeClass('tsoxaAzabEmfanis');
+});
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
 
