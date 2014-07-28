@@ -964,8 +964,7 @@ Skiniko.prototype.processKinisiPostKN = function(data) {
 	});
 
 	sizitisi.sizitisiCreateDOM();
-	if (Arena.sizitisi.oxiPagomeni())
-	Arena.sizitisi.areaDOM.scrollKato();
+	Arena.sizitisi.scrollKato();
 
 	return this;
 };
