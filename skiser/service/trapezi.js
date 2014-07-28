@@ -107,12 +107,11 @@ Service.trapezi.epilogi = function(nodereq) {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
 
 Service.trapezi.exodos = function(nodereq) {
-	var sinedria, trapeziKodikos, trapezi, thesi;
+	var trapeziKodikos, trapezi, thesi;
 
 	if (nodereq.isvoli()) return;
 
-	sinedria = nodereq.sinedria;
-	trapeziKodikos = sinedria.sinedriaTrapeziGet();
+	trapeziKodikos = nodereq.sinedria.sinedriaTrapeziGet();
 	if (!trapeziKodikos) return nodereq.end('Ακαθόριστο τραπέζι');
 
 	trapezi = Server.skiniko.skinikoTrapeziGet(trapeziKodikos);
@@ -120,12 +119,12 @@ Service.trapezi.exodos = function(nodereq) {
 
 	thesi = trapezi.trapeziThesiPekti(nodereq.login);
 	if (thesi) DB.connection().transaction(function(conn) {
-		Service.trapezi.exodosPektis(nodereq, conn, sinedria, trapeziKodikos, thesi);
+		Service.trapezi.exodosPektis(nodereq, conn, trapeziKodikos, thesi);
 	});
-	else Service.trapezi.exodosTheatis(nodereq, sinedria);
+	else Service.trapezi.exodosTheatis(nodereq);
 };
 
-Service.trapezi.exodosPektis = function(nodereq, conn, sinedria, trapezi, thesi) {
+Service.trapezi.exodosPektis = function(nodereq, conn, trapezi, thesi) {
 	var query;
 
 	query = 'UPDATE `trapezi` SET `pektis' + thesi + '` = NULL WHERE `kodikos` = ' + trapezi;
@@ -135,26 +134,11 @@ Service.trapezi.exodosPektis = function(nodereq, conn, sinedria, trapezi, thesi)
 			return nodereq.error('Απέτυχε η έξοδος παίκτη από το τραπέζι');
 		}
 
-		Service.trapezi.exodosPektis2(nodereq, conn, sinedria, trapezi, thesi);
+		Service.trapezi.exodosPektis2(nodereq, conn, trapezi, thesi);
 	});
 };
 
-Service.trapezi.exodosPektis2 = function(nodereq, conn, sinedria, trapezi, thesi) {
-	var query;
-
-	query = 'UPDATE `sinedria` SET `trapezi` = NULL, `thesi` = NULL, `simetoxi` = NULL ' +
-		'WHERE `pektis` = ' + nodereq.login.json();
-	conn.connection.query(query, function(err, res) {
-		if ((!res) || (res.affectedRows < 1)) {
-			conn.rollback();
-			return nodereq.error('Απέτυχε η ενημέρωση της σνεδρίας');
-		}
-
-		Service.trapezi.exodosPektis3(nodereq, conn, trapezi, thesi);
-	});
-};
-
-Service.trapezi.exodosPektis3 = function(nodereq, conn, trapezi, thesi) {
+Service.trapezi.exodosPektis2 = function(nodereq, conn, trapezi, thesi) {
 	var query;
 
 	query = 'REPLACE INTO `telefteos` (`trapezi`, `thesi`, `pektis`) VALUES (' +
@@ -165,7 +149,7 @@ Service.trapezi.exodosPektis3 = function(nodereq, conn, trapezi, thesi) {
 			return nodereq.error('Απέτυχε η ενημέρωση τελευταίου παίκτη');
 		}
 
-		Service.trapezi.exodosPektis4(nodereq, conn, trapezi, thesi);
+		Service.trapezi.exodosPektis3(nodereq, conn, trapezi, thesi);
 	});
 };
 
@@ -185,7 +169,7 @@ Service.trapezi.exodosPektis3 = function(nodereq, conn, trapezi, thesi) {
 	});
 };
 
-Service.trapezi.exodosTheatis = function(nodereq, sinedria) {
+Service.trapezi.exodosTheatis = function(nodereq) {
 	var query, conn;
 
 	query = 'UPDATE `sinedria` SET `trapezi` = NULL, `thesi` = NULL, `simetoxi` = NULL ' +
