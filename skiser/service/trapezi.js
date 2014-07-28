@@ -106,6 +106,8 @@ Service.trapezi.epilogi = function(nodereq) {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
 
+// Ακολουθεί υπηρεσία εξόδου παίκτη/θεατή από το τραπέζι.
+
 Service.trapezi.exodos = function(nodereq) {
 	var trapeziKodikos, trapezi, thesi;
 
@@ -117,12 +119,25 @@ Service.trapezi.exodos = function(nodereq) {
 	trapezi = Server.skiniko.skinikoTrapeziGet(trapeziKodikos);
 	if (!trapezi) return nodereq.end('Δεν βρέθηκε το τραπέζι στο σκηνικό');
 
+	// Ελέγχουμε αν ο παίκτης συμμετέχει ως παίκτης στο τραπέζι από το οποίο εξέρχεται.
+	// Σ' αυτή την περίπτωση θα πρέπει να κρατήσουμε στοιχεία τελευταίου καθημένου και
+	// τελευταίας συμμετοχής.
+
 	thesi = trapezi.trapeziThesiPekti(nodereq.login);
 	if (thesi) DB.connection().transaction(function(conn) {
 		Service.trapezi.exodosPektis(nodereq, conn, trapeziKodikos, thesi);
 	});
+
+	// Αλλιώς ο παίκτης συμμετέχει ως θεατής, οπότε η διαδικασία είναι μάλλον
+	// απλούστερη.
+
 	else Service.trapezi.exodosTheatis(nodereq);
 };
+
+//--------------------------------------------------------------------------------------------------------------------------@
+
+// Πρώτο βήμα κατά την έξοδο του παίκτη από το τραπέζι στο οποίο συμμετέχει ως παίκτης
+// είναι η ενημέρωση του σχετικού πεδίου στο συγκεκριμένο τραπέζι.
 
 Service.trapezi.exodosPektis = function(nodereq, conn, trapezi, thesi) {
 	var query;
@@ -138,6 +153,10 @@ Service.trapezi.exodosPektis = function(nodereq, conn, trapezi, thesi) {
 	});
 };
 
+// Κατόπιν ενημερώνουμε τον πίνακα τελευταίου καθημένου με τα στοιχεία θέσης
+// του εξερχόμενου παίκτη. Με άλλα λόγια καταγράφουμε ότι στο συγκεκριμένο
+// τραπέζι, στη συγκεκριμένη θέση καθόταν ο συγκεκριμένος παίκτης.
+
 Service.trapezi.exodosPektis2 = function(nodereq, conn, trapezi, thesi) {
 	var query;
 
@@ -152,6 +171,9 @@ Service.trapezi.exodosPektis2 = function(nodereq, conn, trapezi, thesi) {
 		Service.trapezi.exodosPektis3(nodereq, conn, trapezi, thesi);
 	});
 };
+
+// Κατόπιν ενημερώνουμε τον πίνακα συμμετοχών όπου καταγράφουμε ότι στο συγκεκριμένο
+// τραπέζι, ο συγκεκριμένος παίκτης κάθησε τελευταία φορά στη συγκεκριμένη θέση.
 
 Service.trapezi.exodosPektis3 = function(nodereq, conn, trapezi, thesi) {
 	var query;
@@ -169,6 +191,14 @@ Service.trapezi.exodosPektis3 = function(nodereq, conn, trapezi, thesi) {
 	});
 };
 
+//--------------------------------------------------------------------------------------------------------------------------@
+
+// Κατά την έξοδο του θεατή από το τραπέζι, απλώς ενημερώνουμε τη σχετική συνεδρία
+// καθαρίζοντας τα στοιχεία θέσης. Αυτό δεν το κάναμε στην περίπτωση της εξόδου
+// του παίκτη από το τραπέζι, καθώς η κένωση τη συγκεκριμένης θέσης αρκεί για τη
+// διόρθωση τυχόν λανθασμένων στοιχείων θέσης συνεδρίας κατά την επανεκκίνηση
+// του skiser.
+
 Service.trapezi.exodosTheatis = function(nodereq) {
 	var query, conn;
 
@@ -182,18 +212,28 @@ Service.trapezi.exodosTheatis = function(nodereq) {
 	});
 };
 
+//--------------------------------------------------------------------------------------------------------------------------@
+
+// Ακολουθεί το τελευταίο βήμα εξόδου παίκτη/θεατή από το τραπέζι. Πρόκειται
+// για τη δημιουργία της σχετικής κίνησης, την επεξεργασία της στο σκηνικό
+// του skiser και την τοποθέτησή της στο transaction log προκειμένου να
+// ενημερωθούν και οι clients.
+
 Service.trapezi.exodos2 = function(nodereq) {
 	var kinisi;
 
-	kinisi = new Kinisi('RT');
-	kinisi.data = {
-		pektis: nodereq.login,
-	};
+	nodereq.end();
 
-	nodereq.skiniko.
+	kinisi = new Kinisi({
+		idos: 'RT',
+		data: {
+			pektis: nodereq.login,
+		},
+	});
+
+	Server.skiniko.
 	processKinisi(kinisi).
 	kinisiAdd(kinisi);
-	nodereq.end();
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
