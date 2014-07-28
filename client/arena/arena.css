@@ -784,7 +784,7 @@ body {
 	position: relative;
 	width: 68px;
 	margin-left: -48px;
-	box-shadow: -1px 1px 1px #888;
+	box-shadow: -2px 1px 4px rgba(23, 31, 21, 0.45);
 }
 
 .tsoxaXartosiaFiloOmioxromo {
@@ -809,7 +809,7 @@ body {
 	position: absolute;
 	bottom: 20px;
 	width: 80px;
-	box-shadow: -1px 1px 1px #888;
+	box-shadow: -2px 1px 4px rgba(23, 31, 21, 0.45);
 }
 
 .tsoxaTzogosFiloLeft {

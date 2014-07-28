@@ -57,7 +57,7 @@ Trapezi.prototype.partidaIsClaim = function(thesi) {
 	return this.claim[thesi];
 };
 
-Trapezi.prototype.partidaIsMesa = function(poses) {
+Trapezi.prototype.partidaAgoraMesa = function(poses) {
 	var agora, tzogadoros, dif;
 
 	agora = this.partidaAgoraGet();
@@ -128,12 +128,12 @@ Trapezi.prototype.partidaBazaPios = function(prev) {
 	return nikitis;
 };
 
-Trapezi.prototype.partidaIsSolo = function() {
-	return this.partidaIsMesa(2);
+Trapezi.prototype.partidaAgoraSolo = function() {
+	return this.partidaAgoraMesa(2);
 };
 
-Trapezi.prototype.partidaIsVgike = function() {
-	return this.partidaIsMesa(0);
+Trapezi.prototype.partidaAgoraVgike = function() {
+	return this.partidaAgoraMesa(0);
 };
 
 Trapezi.prototype.partidaKapikiaSet = function(thesi, kapikia) {
@@ -239,8 +239,9 @@ Trapezi.prototype.partidaSkartaGet = function() {
 
 // Η μέθοδος "partidaPliromi" θέτει το ανά χείρας τραπέζι σε φάση πληρωμής και
 // ενημερώνει τα στοιχεία πληρωμής της τελευταίας διανομής με βάση τα στοιχεία
-// της αγοράς, τους άσους, τις συμμετοχές, τις μπάζες που έχουν γίνει και γενικά
-// όλες εκείνες τις παραμέτρους που καθορίζουν τα κέρδη και τις ζημίες μιας αγοράς.
+// της αγοράς, τους άσους, το πάσο, τις συμμετοχές, τις μπάζες που έχουν γίνει
+// και γενικά όλες εκείνες τις παραμέτρους που καθορίζουν τα κέρδη και τις
+// ζημίες μιας αγοράς.
 
 Trapezi.prototype.partidaPliromi = function() {
 	var data = {}, asoi;
@@ -250,36 +251,57 @@ Trapezi.prototype.partidaPliromi = function() {
 	data.dianomi = this.trapeziTelefteaDianomi();
 	if (!data.dianomi) return this;
 
+	// Κάθε παίκτης έχει πάρε-δώσε με την κάσα και με τους υπόλοιπους
+	// παίκτες. Στη διανομή υπάρχουν πεδία "kasaN" και "metritaN" για
+	// κάθε έναν από τους τρεις παίκτες, όπου "N" είναι ο αριθμός θέσης.
+	// Μηδενίζουμε αρχικά τα συγκεκριμένα πεδία.
+
 	Prefadoros.thesiWalk(function(thesi) {
 		data.dianomi.dianomiKasaSet(thesi, 0);
 		data.dianomi.dianomiMetritaSet(thesi, 0);
 	});
 
-	// Αν δεν έχουμε αγορά αλλά έχουμε περάσει σε φάση πληρωμής, τότε
-	// στο τραπέζι παίζει το πάσο.
+	// Επιχειρούμε να αποσπάσουμε την αγορά που «παίζει» αυτή τη στιγμή
+	// στο ανά χείρας τραπέζι.
 
 	data.agora = this.partidaAgoraGet();
+
+	// Αν δεν έχουμε αγορά αλλά έχουμε περάσει σε φάση πληρωμής, τότε
+	// στο τραπέζι παίζει το πάσο (οι «πολλές»).
+
 	if (!data.agora) return this.partidaPliromiPaso(data);
+
+	// Στο τραπέζι υπάρχει αγορά, οπότε αποσπούμε την αξία της αγοράς,
+	// ήτοι πόσα καπίκια αποτιμάται κάθε μια μπάζα της αγοράς.
 
 	data.axia = data.agora.dilosiAxiaAgoras();
 	if (!data.axia) return this;
 
+	// Πρώτος αμυνόμενος είναι ο αμυνόμενος αμέσως μετά τον τζογαδόρο
+	// και δεύτερος είναι ο επόμενος.
+
 	data.tzogadoros = this.partidaTzogadorosGet();
 	data.protos = data.tzogadoros.epomeniThesi();
 	data.defteros = data.protos.epomeniThesi();
+
+	// Η λίστα "simetoxi" περιέχει τις δηλώσεις συμμετοχής για κάθε θέση.
+	// Θυμίζουμε ότι οι δηλώσεις συμμετοχής είναι: "ΠΑΣΟ", "ΠΑΙΖΩ",
+	// "ΜΑΖΙ" και "ΒΟΗΘΑΩ".
 
 	data.simetoxi = this.sdilosi;
 
 	// Εξετάζουμε πρώτα την περίπτωση κατά την οποία και οι δύο
 	// αμυνόμενοι δήλωσαν πάσο.
 
-	if (data.simetoxi[data.protos].simetoxiIsPaso() && data.simetoxi[data.defteros].simetoxiIsPaso())
+	if (data.simetoxi[data.protos].simetoxiIsPaso()
+	&& data.simetoxi[data.defteros].simetoxiIsPaso())
 	this.partidaPliromiAforologita(data);
 
 	// Κατόπιν εξετάζουμε την περίπτωση που έπαιξαν και οι δύο
 	// αμυνόμενοι είτε αυτοβούλως, είτε με προσεταιρισμό.
 
-	else if (data.simetoxi[data.protos].simetoxiOxiPaso() && data.simetoxi[data.defteros].simetoxiOxiPaso())
+	else if (data.simetoxi[data.protos].simetoxiOxiPaso()
+	&& data.simetoxi[data.defteros].simetoxiOxiPaso())
 	this.partidaPliromiOloi(data);
 
 	// Τελευταία εξετάζουμε την περίπτωση να έπαιξε μόνο ένας
@@ -294,7 +316,7 @@ Trapezi.prototype.partidaPliromi = function() {
 	if (data.agora.dilosiOxiAsoi()) return this;
 
 	asoi = (data.agora.dilosiBazesGet() > 6 ? 50 : 25);
-	if (this.partidaIsMesa()) asoi = -asoi;
+	if (this.partidaAgoraMesa()) asoi = -asoi;
 
 	data.dianomi.dianomiMetritaAdd(data.tzogadoros, 2 * asoi);
 	data.dianomi.dianomiMetritaAdd(data.protos, -asoi);
@@ -302,6 +324,9 @@ Trapezi.prototype.partidaPliromi = function() {
 
 	return this;
 };
+
+// Αν στην αγορά δεν έπαιξε κανένας αμυνόμενος, ο τζογαδόρος πληρώνεται
+// όλες τις μπάζες από την κάσα.
 
 Trapezi.prototype.partidaPliromiAforologita = function(data) {
 	this.partidaBazesSet(data.tzogadoros, 10);
@@ -328,23 +353,23 @@ Trapezi.prototype.partidaPliromiOloi = function(data) {
 	if (data.simetoxi[protos].simetoxiIsMazi()) defteros = protos;
 	else if (data.simetoxi[defteros].simetoxiIsMazi()) protos = defteros;
 
-	// Εξετάζουμε πρώτα την περίπτωση να μπήκε μέσα ο τζογαδόρος.
+	// Εξετάζουμε, πρώτα, την περίπτωση να έχει βγει κανονικά η αγορά.
 
-	if (this.partidaIsMesa()) {
-		if (this.partidaIsSolo()) axia *= 2;
+	if (this.partidaAgoraVgike()) {
+		dianomi.dianomiKasaAdd(tzogadoros, axia * bazesTzogadoros);
+		dianomi.dianomiKasaAdd(protos, axia * bazesProtos);
+		dianomi.dianomiKasaAdd(defteros, axia * bazesDefteros);
+		return this;
+	}
+
+	// Εξετάζουμε, κατόπιν, την περίπτωση να μπήκε μέσα ο τζογαδόρος.
+
+	if (this.partidaAgoraMesa()) {
+		if (this.partidaAgoraSolo()) axia *= 2;
 		dianomi.dianomiKasaAdd(tzogadoros, -axia * 10);
 		dianomi.dianomiMetritaAdd(protos, axia * bazesProtos);
 		dianomi.dianomiMetritaAdd(defteros, axia * bazesDefteros);
 		dianomi.dianomiMetritaAdd(tzogadoros, -axia * (bazesProtos + bazesDefteros));
-		return this;
-	}
-
-	// Εξετάζουμε, κατόπιν, την περίπτωση να έχει βγει κανονικά η αγορά.
-
-	if (this.partidaIsVgike()) {
-		dianomi.dianomiKasaAdd(tzogadoros, axia * bazesTzogadoros);
-		dianomi.dianomiKasaAdd(protos, axia * bazesProtos);
-		dianomi.dianomiKasaAdd(defteros, axia * bazesDefteros);
 		return this;
 	}
 
@@ -372,6 +397,9 @@ Trapezi.prototype.partidaPliromiOloi = function(data) {
 		prepiDefteros = 0;
 		break;
 	}
+
+	// Υπολογίζουμε το υστέρημα μπαζών για καθέναν από τους δύο
+	// αμυνόμενους.
 
 	difProtos = prepiProtos - bazesProtos;
 	difDefteros = prepiDefteros - bazesDefteros;
@@ -410,22 +438,22 @@ Trapezi.prototype.partidaPliromiOloi = function(data) {
 };
 
 Trapezi.prototype.partidaPliromiEnas = function(data) {
-	var dianomi, agora, axia, tzogadoros, aminomenos, bazesTzogadoros,
-		bazesAminomenos, prepi, dif, poso;
+	var dianomi, agora, axia, tzogadoros, aminomenos,
+		bazesTzogadoros, bazesAminomenos, prepi, dif, poso;
 
 	dianomi = data.dianomi;
 	agora = data.agora;
 	axia = data.axia;
 	tzogadoros = data.tzogadoros;
-	aminomenos = (data.simetoxi[data.protos].simetoxiOxiPaso() ? data.protos : data.defteros),
+	aminomenos = (data.simetoxi[data.protos].simetoxiOxiPaso() ? data.protos : data.defteros);
 
 	bazesTzogadoros = this.partidaBazesGet(tzogadoros);
 	bazesAminomenos = this.partidaBazesGet(aminomenos);
 
 	// Εξετάζουμε πρώτα την περίπτωση να μπήκε μέσα ο τζογαδόρος.
 
-	if (this.partidaIsMesa()) {
-		if (this.partidaIsSolo()) axia *= 2;
+	if (this.partidaAgoraMesa()) {
+		if (this.partidaAgoraSolo()) axia *= 2;
 		dianomi.dianomiKasaAdd(tzogadoros, -axia * 10);
 		dianomi.dianomiMetritaAdd(aminomenos, axia * bazesAminomenos);
 		dianomi.dianomiMetritaAdd(tzogadoros, -axia * bazesAminomenos);
@@ -452,6 +480,8 @@ Trapezi.prototype.partidaPliromiEnas = function(data) {
 		break;
 	}
 
+	// Υπολογίζουμε το υστέρημα μπαζών του αμυνόμενου.
+
 	dif = prepi - bazesAminomenos;
 
 	// Εξετάζουμε την περίπτωση να έχει βγει κανονικά η αγορά.
@@ -462,7 +492,7 @@ Trapezi.prototype.partidaPliromiEnas = function(data) {
 		return this;
 	}
 
-	// Τελευταία εξετάζουμε την περίπτωση να έχει μπει μέσα ο αμυνόμενος.
+	// Τελευταία εξετάζουμε την περίπτωση όπου ο αμυνόμενος έχει μπει μέσα.
 
 	poso = bazesTzogadoros * axia;
 	if (dif > 1) poso *= 2;
