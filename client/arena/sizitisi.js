@@ -433,7 +433,7 @@ Sizitisi.emoticonAppend = function(dom, s) {
 Sizitisi.kornaAppend = function(dom) {
 	var img;
 
-	img = $('<img>').attr('src', 'ikona/panel/korna.png').css('width', '20px');
+	img = $('<img>').attr('src', 'ikona/panel/korna.png').css('width', '60px');
 	dom.append(img);
 	img.animate({
 		width: '40px',
