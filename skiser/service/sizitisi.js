@@ -61,6 +61,12 @@ Service.sizitisi.klisimo = function(nodereq, kodikos, trapezi) {
 	Server.skiniko.
 	processKinisi(kinisi).
 	kinisiAdd(kinisi);
+
+	// Καλό είναι να διαγράψουμε και τυχόν εγγραφή που
+	// ίσως έχει κρατηθεί για το μολύβι κατά την έναρξη
+	// γραφής του σχολίου.
+
+	delete Service.sizitisi.moliviTrapezi[nodereq.login];
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
@@ -150,4 +156,56 @@ Service.sizitisi.kontemaTrapezi = function(trapezi) {
 		if ((!err) && (res.affectedRows >= count)) return;
 		console.error('Απέτυχε το κόντεμα της συζήτησης για το τραπέζι ' + trapeziKodikos);
 	});
+};
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
+
+// Στη λίστα "moliviTrapezi" κρατάμε τον κωδικό τραπεζιού για κάθε παίκτη
+// που προκαλεί εκκίνηση μολυβιού. Το τραπέζι αυτό θα το χρειαστούμε πάλι
+// κατά το «καθάρισμα» του μολυβιού.
+
+Service.sizitisi.moliviTrapezi = {};
+
+Service.sizitisi.moliviStart = function(nodereq) {
+	var pektis, trapezi, kinisi;
+
+	if (nodereq.isvoli()) return;
+	if (nodereq.oxiTrapezi()) return;
+	nodereq.end();
+
+	pektis = nodereq.loginGet();
+	trapezi = nodereq.trapeziGet();
+	trapezi = trapezi.trapeziKodikosGet();
+
+	Service.sizitisi.moliviTrapezi[pektis] = trapezi;
+
+	kinisi = new Kinisi('MV');
+	kinisi.data = {
+		pektis: pektis,
+		trapezi: trapezi,
+	};
+
+	Server.skiniko.
+	kinisiAdd(kinisi);
+};
+
+Service.sizitisi.moliviEnd = function(nodereq) {
+	var pektis, trapezi, kinisi;
+
+	if (nodereq.isvoli()) return;
+	nodereq.end();
+
+	pektis = nodereq.loginGet();
+	trapezi = Service.sizitisi.moliviTrapezi[pektis];
+	delete Service.sizitisi.moliviTrapezi[pektis];
+	if (!trapezi) return;
+
+	kinisi = new Kinisi('VM');
+	kinisi.data = {
+		pektis: pektis,
+		trapezi: trapezi,
+	};
+
+	Server.skiniko.
+	kinisiAdd(kinisi);
 };

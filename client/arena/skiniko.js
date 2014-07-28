@@ -402,7 +402,15 @@ Skiniko.prototype.processAlagesPartida = function(data, trapeziPrin) {
 
 	if (data.partida.sizitisi.length) {
 		Globals.awalk(data.partida.sizitisi, function(i, sizitisi) {
-			if (sizitisi.sizitisiPektisGet().isEgo()) Arena.sizitisi.proepiskopisiDOM.empty();
+			var pektis;
+
+			pektis = sizitisi.sizitisiPektisGet();
+			if (!pektis) return;
+
+			if (pektis.isEgo())
+			Arena.sizitisi.proepiskopisiDOM.empty();
+
+			Sizitisi.moliviTelos(pektis);
 			sizitisi.sizitisiCreateDOM();
 		});
 
