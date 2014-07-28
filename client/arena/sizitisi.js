@@ -2,6 +2,7 @@ Arena.sizitisi = {};
 
 Arena.sizitisi.flags = {
 	pagomeni: false,
+	molivi: false,
 };
 
 Arena.sizitisi.isPagomeni = function() {
@@ -10,6 +11,14 @@ Arena.sizitisi.isPagomeni = function() {
 
 Arena.sizitisi.oxiPagomeni = function() {
 	return !Arena.sizitisi.isPagomeni();
+};
+
+Arena.sizitisi.isMolivi = function() {
+	return Arena.sizitisi.flags.molivi;
+};
+
+Arena.sizitisi.oxiMolivi = function() {
+	return !Arena.sizitisi.isMolivi();
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
@@ -274,6 +283,10 @@ Arena.sizitisi.keyup = function(e) {
 		sxolio: sxolio,
 		pote: Globals.toraServer(),
 	}).sizitisiCreateDOM(true);
+
+	if (Arena.sizitisi.oxiMolivi())
+	Arena.sizitisi.moliviStart();
+
 	return Arena;
 };
 
@@ -285,6 +298,14 @@ Arena.sizitisi.apostoli = function() {
 		Arena.sizitisi.katharismos();
 		return Arena;
 	}
+
+	// Κατά την αποστολή δεν κάνουμε καθαρισμό μολυβιού με την
+	// κλασική διαδικασία, καθώς το μολύβι θα «καθαρίσει» όταν
+	// θα προστεθεί το σχόλιο της συζήτησης που αποστέλλεται.
+	// Απλώς ακυρώνουμε το μολύβι τοπικά, ώστε να μπορεί να
+	// επανεκκινήσει όταν ο χρήστης ξεκινήσει νέο σχόλιο.
+
+	Arena.sizitisi.flags.molivi = false;
 
 	Client.skiserService((Arena.partidaMode() && Arena.ego.isTrapezi()) ?
 		'sizitisiPartida' : 'sizitisiKafenio', 'sxolio=' + sxolio.uri()).
@@ -301,11 +322,25 @@ Arena.sizitisi.apostoli = function() {
 Arena.sizitisi.katharismos = function() {
 	Arena.sizitisi.inputDOM.val('');
 	Arena.sizitisi.proepiskopisiClearDOM();
+
+	if (Arena.sizitisi.isMolivi())
+	Arena.sizitisi.moliviEnd();
+
 	return Arena;
 };
 
 Arena.sizitisi.proepiskopisiClearDOM = function() {
 	Arena.sizitisi.proepiskopisiDOM.empty();
+};
+
+Arena.sizitisi.moliviStart = function() {
+	Arena.sizitisi.flags.molivi = true;
+	Client.skiserService('moliviStart');
+};
+
+Arena.sizitisi.moliviEnd = function() {
+	Client.skiserService('moliviEnd');
+	Arena.sizitisi.flags.molivi = false;
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
@@ -382,6 +417,13 @@ Sizitisi.prototype.sizitisiSxolioCreateDOM = function(dom) {
 		dom.append(sxolio);
 		return this;
 
+	// Αν το πρώτο πεδίο του σχολίου είναι "MV" τότε πρόκειται για έναρξη
+	// μολυβιού.
+
+	case 'MV':
+		Sizitisi.moliviEnarxi(this, dom);
+		return this;
+
 	// Αν το πρώτο πεδίο του σχολίου είναι "KN" τότε πρόκειται για κόρνα από
 	// κάποιον παίκτη του τραπεζιού.
 
@@ -418,16 +460,35 @@ Sizitisi.prototype.sizitisiSxolioCreateDOM = function(dom) {
 	return this;
 };
 
-Sizitisi.emoticonAppend = function(dom, s) {
-	var tmima, omada, ikona;
+// Στη λίστα "moliviPektis" κρατάμε τα dom elements των σχολίων μολιβιού
+// δεικτοδοτημένα με το login name του αντίστοιχου παίκτη.
 
-	tmima = s.split(':');
-	if (tmima.length != 2) return;
+Sizitisi.moliviPektis = {};
 
-	omada = parseInt(tmima[0].replace(/^E/, ''));
-	ikona = parseInt(tmima[1]);
-	dom.append($('<img>').addClass('sizitisiEmoticon').
-	attr('src', 'ikona/emoticon/set' + omada + '/' + Arena.epanel.lefkoma[omada - 1][ikona - 1]));
+Sizitisi.moliviEnarxi = function(sizitisi, dom) {
+	var pektis;
+
+	pektis = sizitisi.sizitisiPektisGet();
+
+	// Αρχικά διαγράφουμε τυχόν υπάρχον μολύβι για τον συγκεκριμένο
+	// παίκτη.
+
+	if (Sizitisi.moliviPektis[pektis])
+	Sizitisi.moliviPektis[pektis].remove();
+
+	// Κρατάμε το φρέσκο dom element μολυβιού που μόλις παραλάβαμε
+	// και σχηματίζουμε το μολύβι.
+
+	Sizitisi.moliviPektis[pektis] = dom.parents('.sizitisi');
+	dom.append($('<img>').attr('src', 'ikona/endixi/moliviPartida.gif').css('width', '30px'));
+};
+
+// Η function "moliviTelos" διαγράφει τυχόν μολύβι για τον παίκτη του οποίου
+// το login δίνουμε ως παράμετρο.
+
+Sizitisi.moliviTelos = function(pektis) {
+	if (Sizitisi.moliviPektis[pektis])
+	Sizitisi.moliviPektis[pektis].remove();
 };
 
 Sizitisi.kornaAppend = function(dom) {
@@ -439,6 +500,18 @@ Sizitisi.kornaAppend = function(dom) {
 		width: '40px',
 	}, 1000, 'easeInOutBounce');
 	Client.sound.play('korna.ogg');
+};
+
+Sizitisi.emoticonAppend = function(dom, s) {
+	var tmima, omada, ikona;
+
+	tmima = s.split(':');
+	if (tmima.length != 2) return;
+
+	omada = parseInt(tmima[0].replace(/^E/, ''));
+	ikona = parseInt(tmima[1]);
+	dom.append($('<img>').addClass('sizitisiEmoticon').
+	attr('src', 'ikona/emoticon/set' + omada + '/' + Arena.epanel.lefkoma[omada - 1][ikona - 1]));
 };
 
 Sizitisi.youtubeAppend = function(dom, s) {

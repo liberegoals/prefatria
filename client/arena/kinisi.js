@@ -968,3 +968,50 @@ Skiniko.prototype.processKinisiPostKN = function(data) {
 
 	return this;
 };
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// MV -- Μολύβι έναρξη.
+//
+// Δεδομένα
+//
+//	pektis		Login name του παίκτη.
+//	trapezi		Κωδικός τραπεζιού.
+
+Skiniko.prototype.processKinisiPostMV = function(data) {
+	var sizitisi;
+
+	// Αν το μολύβι που παραλάβαμε αφορά σε άλλο τραπέζι από
+	// αυτό που είμαστε τώρα, το αγνοούμε.
+
+	if (Arena.ego.oxiTrapezi(data.trapezi))
+	return this;
+
+	// Αλλιώς δημιουργούμε φευδοrecord συζήτησης με την ένδειξη
+	// του μολυβιού και το εντάσσουμε στη συζήτηση της παρτίδας.
+
+	sizitisi = new Sizitisi({
+		pektis: data.pektis,
+		trapezi: data.trapezi,
+		sxolio: 'MV',
+	});
+
+	sizitisi.sizitisiCreateDOM();
+	Arena.sizitisi.scrollKato();
+
+	return this;
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// VM -- Μολύβι τέλος.
+//
+// Δεδομένα
+//
+//	pektis		Login name του παίκτη.
+//	trapezi		Κωδικός τραπεζιού.
+
+Skiniko.prototype.processKinisiPostVM = function(data) {
+	Sizitisi.moliviTelos(data.pektis);
+	return this;
+};

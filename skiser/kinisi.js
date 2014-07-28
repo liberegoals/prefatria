@@ -225,3 +225,23 @@ return false;
 
 	return true;
 };
+
+Kinisi.prototype.isAdiaforiMV = function(sinedria) {
+	// Δεν βγάζουμε μολύβι για τον ίδιο τον παίκτη που
+	// εκκινεί κάποιο σχόλιο.
+
+	if (sinedria.sinedriaPektisGet() == this.data.pektis)
+	return true;
+
+	// Για τους υπόλοιπους διαλέγουμε αυτούς που βρίσκονται
+	// στο ίδιο τραπέζι.
+
+	return sinedria.sinedriaOxiTrapezi(this.data.trapezi);
+};
+
+Kinisi.prototype.isAdiaforiVM = function(sinedria) {
+	if (sinedria.sinedriaPektisGet() == this.data.pektis)
+	return true;
+
+	return sinedria.sinedriaOxiTrapezi(this.data.trapezi);
+};
