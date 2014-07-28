@@ -1,15 +1,21 @@
 Trapezi.prototype.processEnergiaOnlineΣΟΛΟ = function(energia) {
-	var soloDom;
-
 	Arena.partida.
 	trapeziRefreshDOM().
 	enimerosiRefreshDOM().
-	tsoxaDOM.append(soloDom = $('<img>').attr({
-		id: 'tsoxaSoloEndixi',
+	tsoxaDOM.append(Arena.partida.soloEndixiDOM = $('<img>').attr({
 		src: Client.server + 'ikona/endixi/solo.png',
-	}));
+		title: 'Ο τζογαδόρος έγραψε σόλο μέσα την αγορά',
+	}).css({
+		position: 'absolute',
+		left: '250px',
+		top: '150px',
+		width: '100px',
+	}).animate({
+		left: '200px',
+		width: '200px',
+		top: '130px',
+	}, 1000, 'easeOutBounce'));
 
-	$(soloDom).fadeIn(300);
 	Client.sound.kanonia();
 	return this;
 };

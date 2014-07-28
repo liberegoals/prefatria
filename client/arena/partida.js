@@ -105,6 +105,7 @@ Arena.partida.setup = function() {
 
 	Arena.partida.theatisDOM = $('<div>').attr('id', 'theatis').appendTo(Arena.partida.tsoxaDOM);
 	Arena.partida.optionsDOM = $('<div>').attr('id', 'tsoxaOptions').appendTo(Arena.partidaDOM);
+	Arena.partida.soloEndixiDOM = null;
 	return Arena;
 };
 
@@ -146,10 +147,18 @@ Arena.partida.clearDOM = function() {
 	return Arena.partida;
 };
 
-Arena.partida.trapeziRefreshDOM = function() {
-	$('#tsoxaSoloEndixi').remove();
+Arena.partida.soloEndixiClearDOM = function() {
+	if (!Arena.partida.soloEndixiDOM)
+	return Arena.partida;
 
+	Arena.partida.soloEndixiDOM.remove();
+	Arena.partida.soloEndixiDOM = null;
+	return Arena.partida;
+};
+
+Arena.partida.trapeziRefreshDOM = function() {
 	Arena.partida.
+	soloEndixiClearDOM().
 	peximoTheasiRefreshDOM().
 	dataPanoRefreshDOM().
 	dataKatoRefreshDOM().
