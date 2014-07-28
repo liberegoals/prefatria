@@ -40,13 +40,20 @@ Skiniko.prototype.stisimoTrapezi = function(conn) {
 
 			// Κρατάμε όλους τους εμπλεκόμενους παίκτες στη λίστα "sitkep".
 			// Ενδεχομένως να κρατήσουμε και κενή εγγραφή, αλλά αργότερα
-			// θα διαγράψουμε τις κενές εγγραφές.
+			// θα διαγράψουμε την κενή εγγραφή. Εκμεταλλευόμαστε αυτή τη
+			// λίστα για να κρατήσουμε και τα πιο φρέσκα στοιχεία θέσης
+			// του παίκτη, καθώς επισκεπτόμαστε τα τραπέζι κατ' αύξουσα
+			// σειρά.
 
 			trapezi.trapeziThesiWalk(function(thesi) {
-				skiniko.sitkep[this.trapeziPektisGet(thesi)] = true;
+				skiniko.sitkep[this.trapeziPektisGet(thesi)] = {
+					trapezi: trapezi.kodikos,
+					thesi: thesi,
+				};
 			});
 		});
 
+		delete skiniko.sitkep[null];
 		Log.print('Παράμετροι τραπεζιών');
 		skiniko.izepart2 = {};		// δευτερεύουσα λίστα τραπεζιών
 		skiniko.stisimoTrparam(conn);
@@ -284,7 +291,7 @@ Skiniko.prototype.stisimoSinedria = function(conn) {
 	query = 'SELECT ' + Sinedria.projection + ' FROM `sinedria` ORDER BY `isodos`';
 	conn.query(query, function(conn, rows) {
 		Globals.awalk(rows, function(i, sinedria) {
-			var trapezi, thesi;
+			var pektis, trapezi, thesi;
 
 			sinedria = new Sinedria(sinedria);
 			sinedria.
@@ -294,9 +301,10 @@ Skiniko.prototype.stisimoSinedria = function(conn) {
 
 			// Ελέγχουμε και διορθώνουμε τα στοιχεία θέσης της συνεδρίας.
 
+			pektis = sinedria.sinedriaPektisGet();
 			trapezi = skiniko.skinikoTrapeziGet(sinedria.sinedriaTrapeziGet());
 			if (trapezi) {
-				thesi = trapezi.trapeziThesiPekti(sinedria.sinedriaPektisGet());
+				thesi = trapezi.trapeziThesiPekti(pektis);
 				if (thesi) {
 					sinedria.thesi = thesi;
 					sinedria.simetoxi = 'ΠΑΙΚΤΗΣ';
@@ -305,6 +313,11 @@ Skiniko.prototype.stisimoSinedria = function(conn) {
 					if (Prefadoros.oxiThesi(sinedria.thesi)) sinedria.thesi = 1;
 					sinedria.simetoxi = 'ΘΕΑΤΗΣ';
 				}
+			}
+			else if (skiniko.sitkep[pektis]) {
+				sinedria.trapezi = skiniko.sitkep[pektis].trapezi;
+				sinedria.thesi = skiniko.sitkep[pektis].thesi;
+				sinedria.simetoxi = 'ΠΑΙΚΤΗΣ';
 			}
 			else {
 				delete sinedria.trapezi;
@@ -316,13 +329,15 @@ Skiniko.prototype.stisimoSinedria = function(conn) {
 
 			skiniko.skinikoSinedriaSet(sinedria);
 
-			// Κρατάμε τον παίκτη στη λίστα "sitkep".
+			// Κρατάμε τον παίκτη στη λίστα "sitkep". Μπορεί να χαλάσουμε
+			// τα ήδη κρατημένα στοιχεία θέσης, αλλά αυτά δεν μας ενδιαφέρουν
+			// πια. Αυτό που μας ενδιαφέρει είναι να έχουμε λίστα εμπλεκομένων
+			// παικτών.
 
 			skiniko.sitkep[sinedria.sinedriaPektisGet()] = true;
 		});
 
 		Log.print('Παίκτες');
-		delete skiniko.sitkep[null];
 		skiniko.sitkep2 = {};		// δευτερεύουσα λίστα παικτών
 		skiniko.pektis = {};
 		skiniko.stisimoPektis(conn);
