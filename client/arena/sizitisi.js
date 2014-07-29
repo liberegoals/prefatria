@@ -118,6 +118,19 @@ Arena.sizitisi.panel.bpanelButtonPush(new PButton({
 }));
 
 Arena.sizitisi.panel.bpanelButtonPush(new PButton({
+	id: 'korna',
+	img: 'korna.png',
+	title: 'Κόρνα',
+	click: function(e) {
+		if (Arena.ego.isPektis())
+		return Client.skiserService('korna');
+
+		Client.fyi.ekato('Μην κορνάρετε, δεν σας ακούει κανείς!');
+		Client.sound.play('korna1.ogg');
+	},
+}));
+
+Arena.sizitisi.panel.bpanelButtonPush(new PButton({
 	id: 'pagoma',
 	refresh: function() {
 		var dom, img;

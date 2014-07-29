@@ -590,6 +590,18 @@ Trapezi.prototype.trapeziOxiAsoi = function() {
 	return !this.trapeziIsAsoi();
 };
 
+Trapezi.prototype.trapeziIsIdioktito = function() {
+	var idioktito;
+
+	idioktito = this.trapeziTrparamGet('ΙΔΙΟΚΤΗΤΟ');
+	if (typeof idioktito !== 'string') return false;
+	return idioktito.isNai();
+};
+
+Trapezi.prototype.trapeziIsElefthero = function() {
+	return !this.trapeziIsIdioktito();
+};
+
 Trapezi.prototype.trapeziSizitisiWalk = function(callback, dir) {
 	var keys = [];
 
