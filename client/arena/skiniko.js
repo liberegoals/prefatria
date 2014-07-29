@@ -1247,8 +1247,9 @@ Arena.ego.thesiGet = function() {
 };
 
 Arena.ego.thesiMap = function(thesi) {
-	var egoThesi = Arena.ego.thesiGet();
+	var egoThesi;
 
+	egoThesi = Arena.ego.thesiGet();
 	switch (egoThesi) {
 	case 2:
 	case 3:

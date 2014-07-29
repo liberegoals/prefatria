@@ -49,7 +49,7 @@ Trapezi.prototype.efoplismosΔΗΛΩΣΗ = function() {
 	var basi, thesi, klikDilosi = false;
 
 	thesi = this.partidaEpomenosGet();
-	if (Debug.flagGet('epomenosCheck') && (Arena.ego.thesiGet() !== thesi)) return this;
+	if (Debug.flagGet('epomenosCheck') && Arena.ego.oxiThesi(thesi)) return this;
 
 	Arena.partida.dilosiPanelDOM.empty().
 	append(basi = $('<div>').attr('id', 'tsoxaDilosiPanelBasi'));
@@ -127,7 +127,7 @@ Trapezi.prototype.efoplismosΔΗΛΩΣΗ = function() {
 // τζογαδόρο.
 
 Trapezi.prototype.efoplismosΑΛΛΑΓΗ = function() {
-	if (Debug.flagGet('epomenosCheck') && (Arena.ego.thesiGet() != this.partidaEpomenosGet())) return this;
+	if (Debug.flagGet('epomenosCheck') && Arena.ego.oxiThesi(this.partidaEpomenosGet())) return this;
 
 	Trapezi.
 	efoplismosAlagiPanel(this).
@@ -453,7 +453,7 @@ Trapezi.prototype.efoplismosΣΥΜΜΕΤΟΧΗ = function() {
 	var basi, pektis, simpektis, silosi, klikDilosi = false;
 
 	pektis = this.partidaEpomenosGet();
-	if (Debug.flagGet('epomenosCheck') && (Arena.ego.thesiGet() !== pektis)) return this;
+	if (Debug.flagGet('epomenosCheck') && Arena.ego.oxiThesi(pektis)) return this;
 
 	simpektis = pektis.epomeniThesi();
 	if (simpektis == this.partidaTzogadorosGet()) simpektis = simpektis.epomeniThesi();
@@ -536,7 +536,7 @@ Trapezi.prototype.efoplismosΠΑΙΧΝΙΔΙ = function() {
 
 	Arena.cpanel.claimButtonDOM.data('akiro', true).css('opacity', 0.3);
 	pektis = this.partidaEpomenosGet();
-	if (Debug.flagGet('epomenosCheck') && (Arena.ego.thesiGet() !== pektis)) return this;
+	if (Debug.flagGet('epomenosCheck') && Arena.ego.oxiThesi(pektis)) return this;
 
 	this.efoplismosPexnidiClaim(pektis);
 
@@ -696,7 +696,7 @@ Trapezi.prototype.efoplismosCLAIM = function() {
 	var thesi, basi, klikApantisi;
 
 	thesi = this.partidaEpomenosGet();
-	if (Debug.flagGet('epomenosCheck') && (Arena.ego.thesiGet() !== thesi)) return this;
+	if (Debug.flagGet('epomenosCheck') && Arena.ego.oxiThesi(thesi)) return this;
 
 	Arena.partida.dilosiPanelDOM.empty().
 	append(basi = $('<div>').attr('id', 'tsoxaDilosiPanelBasi'));
