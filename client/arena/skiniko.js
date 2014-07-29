@@ -884,7 +884,14 @@ Trapezi.prototype.trapeziDataRefreshDOM = function() {
 Trapezi.prototype.trapeziOptsRefreshDOM = function() {
 	this.optsDOM.empty();
 	if (this.trapeziIsIdioktito()) this.trapeziOptionDOM('Ιδιόκτητο τραπέζι',
-		Arena.ego.thesiGet() === 1 ? 'idioktito.png' : 'elefthero.png');
+		this.trapeziThesiPekti(Client.session.pektis) === 1 ? 'elefthero.png' : 'idioktito.png');
+	if (this.trapeziIsPrive()) {
+		this.tsoxaDOM.addClass('prive');
+		this.trapeziOptionDOM('Πριβέ τραπέζι', 'prive.png');
+	}
+	else {
+		this.tsoxaDOM.removeClass('prive');
+	}
 	if (this.trapeziOxiAsoi()) this.trapeziOptionDOM('Δεν παίζονται οι άσοι', 'asoiOn.png');
 	if (this.trapeziIsPaso()) this.trapeziOptionDOM('Παίζεται το πάσο', 'pasoOn.png');
 	return this;
@@ -1079,7 +1086,8 @@ Skiniko.prototype.pektisTrapeziScroll = function(anim) {
 
 	cdom = Arena.kafenioDOM;
 	tdom = Arena.ego.trapezi.trapeziGetDOM();
-	scrollTop = tdom.offset().top - cdom.offset().top + cdom.scrollTop() - 4;
+	scrollTop = tdom.offset().top - cdom.offset().top + cdom.scrollTop() - 20;
+	if (scrollTop < 0) scrollTop = 0;
 	cdom.finish();
 	if (anim) cdom.animate({scrollTop: scrollTop}, 100);
 	else cdom.scrollTop(scrollTop);

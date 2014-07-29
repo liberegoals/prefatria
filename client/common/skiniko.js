@@ -602,6 +602,18 @@ Trapezi.prototype.trapeziIsElefthero = function() {
 	return !this.trapeziIsIdioktito();
 };
 
+Trapezi.prototype.trapeziIsPrive = function() {
+	var prive;
+
+	prive = this.trapeziTrparamGet('ΠΡΙΒΕ');
+	if (typeof prive !== 'string') return false;
+	return prive.isNai();
+};
+
+Trapezi.prototype.trapeziIsDimosio = function() {
+	return !this.trapeziIsPrive();
+};
+
 Trapezi.prototype.trapeziSizitisiWalk = function(callback, dir) {
 	var keys = [];
 

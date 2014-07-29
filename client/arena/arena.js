@@ -399,18 +399,21 @@ Arena.inputRefocus = function(e) {
 
 // Η function "trapeziRithmisi" επιστρέφει true εφόσον ο χρήστης ανήκει σε κάποιο
 // τραπέζι και το τραπέζι βρίσκεται σε φάση ρυθμίσεων, δηλαδή πριν παιχτεί οποιαδήποτε
-// διανομή.
+// διανομή. Αν θέλουμε μπορούμε αγνοήσουμε το αν υπάρχουν ή όχι διανομές περνώτας
+// literal false.
 
-Arena.trapeziRithmisi = function() {
+Arena.trapeziRithmisi = function(dianomi) {
 	if (Arena.ego.oxiTrapezi()) return false;
 	if (Arena.ego.oxiPektis()) return false;
 	if (Arena.ego.trapezi.trapeziIsIdioktito() && (Arena.ego.thesiGet() != 1)) return false;
 	if (Debug.flagGet('rithmisiPanta')) return true;
+
+	if (dianomi === false) return true;
 	return Arena.ego.trapezi.trapeziOxiDianomi();
 };
 
-Arena.trapeziOxiRithmisi = function() {
-	return !Arena.trapeziRithmisi();
+Arena.trapeziOxiRithmisi = function(dianomi) {
+	return !Arena.trapeziRithmisi(dianomi);
 };
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
