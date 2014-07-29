@@ -609,9 +609,15 @@ Arena.pektisPanelRefreshDOM = function() {
 		Arena.alagiSxesis(e, login, 'ΑΠΟΚΛΕΙΣΜΕΝΟΣ');
 	}));
 
-	prosklisiButton.css('display', Arena.ego.isPektis() ? 'inline-block' : 'none');
+	prosklisiButton.css('display', Arena.dikeomaProsklisis() ? 'inline-block' : 'none');
 	Arena.pektisPanelDOM.append($('<div>').attr('id', 'pektisFormaOnoma').text(login));
 	return Arena;
+};
+
+Arena.dikeomaProsklisis = function() {
+	if (Arena.ego.oxiPektis()) return false;
+	if (Arena.ego.trapezi.trapeziIsElefthero()) return true;
+	return(Arena.ego.thesiGet() == 1);
 };
 
 // Η αλλαγή σχέσης δεν αφορά κανέναν παρά μόνον τον παίκτη που την αλλάζει.
@@ -877,6 +883,8 @@ Trapezi.prototype.trapeziDataRefreshDOM = function() {
 
 Trapezi.prototype.trapeziOptsRefreshDOM = function() {
 	this.optsDOM.empty();
+	if (this.trapeziIsIdioktito()) this.trapeziOptionDOM('Ιδιόκτητο τραπέζι',
+		Arena.ego.thesiGet() === 1 ? 'idioktito.png' : 'elefthero.png');
 	if (this.trapeziOxiAsoi()) this.trapeziOptionDOM('Δεν παίζονται οι άσοι', 'asoiOn.png');
 	if (this.trapeziIsPaso()) this.trapeziOptionDOM('Παίζεται το πάσο', 'pasoOn.png');
 	return this;

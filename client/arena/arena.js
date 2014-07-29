@@ -404,6 +404,7 @@ Arena.inputRefocus = function(e) {
 Arena.trapeziRithmisi = function() {
 	if (Arena.ego.oxiTrapezi()) return false;
 	if (Arena.ego.oxiPektis()) return false;
+	if (Arena.ego.trapezi.trapeziIsIdioktito() && (Arena.ego.thesiGet() != 1)) return false;
 	if (Debug.flagGet('rithmisiPanta')) return true;
 	return Arena.ego.trapezi.trapeziOxiDianomi();
 };

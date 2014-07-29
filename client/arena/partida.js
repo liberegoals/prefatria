@@ -268,6 +268,12 @@ Arena.partida.dataPanoRefreshDOM = function() {
 	append(kasaDOM = $('<div>').attr('id', 'tsoxaKasa')).
 	append(ipolipoDOM = $('<div>').attr('id', 'tsoxaIpolipo')));
 
+	if (Arena.ego.trapezi.trapeziIsIdioktito())
+	Arena.partida.optionsDOM.append($('<img>').addClass('tsoxaOption').attr({
+		src: 'ikona/panel/' + (Arena.ego.thesiGet() === 1 ? 'idioktito.png' : 'elefthero.png'),
+		title: 'Ιδιόκτητο τραπέζι',
+	}));
+
 	if (Arena.ego.trapezi.trapeziOxiAsoi())
 	Arena.partida.optionsDOM.append($('<img>').addClass('tsoxaOption').attr({
 		src: 'ikona/panel/asoiOn.png',

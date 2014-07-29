@@ -512,12 +512,68 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 
 Arena.cpanel.bpanelButtonPush(new PButton({
 	omada: 2,
-	img: 'roloi.png',
-	title: 'Κυκλική εναλλαγή θέσης',
+	img: 'idioktito.png',
+	title: 'Ιδιόκτητο τραπέζι',
 	check: function() {
 		if (Arena.ego.oxiTrapezi()) return false;
 		if (Arena.ego.oxiPektis()) return false;
-		return Arena.ego.trapezi.trapeziOxiDianomi();
+		if (Arena.ego.trapezi.trapeziIsIdioktito()) return false;
+		if (Arena.ego.thesiGet() != 1) return false;
+		return true;
+	},
+	click: function(e) {
+		var img;
+
+		img = this.pbuttonIconGetDOM();
+		img.working(true);
+		Client.fyi.pano('Μετατροπή τραπεζιού σε ιδιόκτητο. Παρακαλώ περιμένετε…', 0);
+		Client.skiserService('trparamSet', 'param=ΙΔΙΟΚΤΗΤΟ', 'timi=ΝΑΙ').
+		done(function(rsp) {
+			Client.fyi.pano();
+			img.working(false);
+		}).
+		fail(function(err) {
+			Client.skiserFail(err);
+			img.working(false);
+		});
+	},
+}));
+
+Arena.cpanel.bpanelButtonPush(new PButton({
+	omada: 2,
+	img: 'elefthero.png',
+	title: 'Ελεύθερο τραπέζι',
+	check: function() {
+		if (Arena.ego.oxiTrapezi()) return false;
+		if (Arena.ego.oxiPektis()) return false;
+		if (Arena.ego.trapezi.trapeziIsElefthero()) return false;
+		if (Arena.ego.thesiGet() != 1) return false;
+		return true;
+	},
+	click: function(e) {
+		var img;
+
+		img = this.pbuttonIconGetDOM();
+		img.working(true);
+		Client.fyi.pano('Μετατροπή τραπεζιού σε ελεύθερο. Παρακαλώ περιμένετε…', 0);
+		Client.skiserService('trparamSet', 'param=ΙΔΙΟΚΤΗΤΟ', 'timi=ΟΧΙ').
+		done(function(rsp) {
+			Client.fyi.pano();
+			img.working(false);
+		}).
+		fail(function(err) {
+			Client.skiserFail(err);
+			img.working(false);
+		});
+	},
+}));
+
+Arena.cpanel.bpanelButtonPush(new PButton({
+	omada: 2,
+	img: 'roloi.png',
+	title: 'Κυκλική εναλλαγή θέσης',
+	check: function() {
+		return Arena.trapeziRithmisi();
 	},
 	click: function(e) {
 		var img;
@@ -612,18 +668,6 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 			Client.skiserFail(err);
 			img.working(false);
 		});
-	},
-}));
-
-Arena.cpanel.bpanelButtonPush(new PButton({
-	omada: 2,
-	img: 'korna.png',
-	title: 'Κόρνα',
-	check: function() {
-		return Arena.ego.isPektis();
-	},
-	click: function(e) {
-		Client.skiserService('korna');
 	},
 }));
 
