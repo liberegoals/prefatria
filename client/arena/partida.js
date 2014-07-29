@@ -751,7 +751,7 @@ Arena.partida.pektisAnamoniRefreshDOM = function(thesi, iseht, domMain) {
 
 Arena.partida.pektisAnamoniIkona = function(thesi, img) {
 	if (img === undefined) img = 'working/rologaki.gif';
-	return 'ikona/' + (Arena.ego.isPektis() && Arena.ego.isThesi(thesi)) ? 'endixi/rollStar.gif' : img);
+	return 'ikona/' + ((Arena.ego.isPektis() && Arena.ego.isThesi(thesi)) ? 'endixi/rollStar.gif' : img);
 };
 
 Arena.partida.filaClearDOM = function(thesi) {
