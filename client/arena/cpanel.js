@@ -113,7 +113,7 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 		Client.fyi.pano('Αλλαγή διάταξης παικτών. Παρακαλώ περιμένετε…', 0);
 		Client.skiserService('diataxi').
 		done(function(rsp) {
-			Client.fyi.pano();
+			Client.fyi.pano(rsp);
 			img.working(false);
 		}).
 		fail(function(err) {
@@ -128,9 +128,7 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 	img: 'kasa.png',
 	title: 'Κάσα 50/30',
 	check: function() {
-		if (Arena.ego.oxiTrapezi()) return false;
-		if (Arena.ego.oxiPektis()) return false;
-		return Arena.ego.trapezi.trapeziOxiDianomi();
+		return Arena.trapeziRithmisi();
 	},
 	click: function(e) {
 		var img, kasa;
@@ -142,7 +140,7 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 		Client.fyi.pano('Αλλαγή κάσας σε ' + kasa + '. Παρακαλώ περιμένετε…', 0);
 		Client.skiserService('trparamSet', 'param=ΚΑΣΑ', 'timi=' + kasa).
 		done(function(rsp) {
-			Client.fyi.pano();
+			Client.fyi.pano(rsp);
 			img.working(false);
 		}).
 		fail(function(err) {
@@ -168,7 +166,7 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 		Client.fyi.pano('Αλλαγή καθεστώτος πληρωμής άσων. Παρακαλώ περιμένετε…', 0);
 		Client.skiserService('trparamSet', 'param=ΑΣΟΙ', 'timi=ΝΑΙ').
 		done(function(rsp) {
-			Client.fyi.pano();
+			Client.fyi.pano(rsp);
 			img.working(false);
 		}).
 		fail(function(err) {
@@ -194,7 +192,7 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 		Client.fyi.pano('Αλλαγή καθεστώτος πληρωμής άσων. Παρακαλώ περιμένετε…', 0);
 		Client.skiserService('trparamSet', 'param=ΑΣΟΙ', 'timi=ΟΧΙ').
 		done(function(rsp) {
-			Client.fyi.pano();
+			Client.fyi.pano(rsp);
 			img.working(false);
 		}).
 		fail(function(err) {
@@ -220,7 +218,7 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 		Client.fyi.pano('Αλλαγή καθεστώτος άγονης αγοράς. Παρακαλώ περιμένετε…', 0);
 		Client.skiserService('trparamSet', 'param=ΠΑΣΟ', 'timi=ΝΑΙ').
 		done(function(rsp) {
-			Client.fyi.pano();
+			Client.fyi.pano(rsp);
 			img.working(false);
 		}).
 		fail(function(err) {
@@ -246,7 +244,7 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 		Client.fyi.pano('Αλλαγή καθεστώτος άγονης αγοράς. Παρακαλώ περιμένετε…', 0);
 		Client.skiserService('trparamSet', 'param=ΠΑΣΟ', 'timi=ΟΧΙ').
 		done(function(rsp) {
-			Client.fyi.pano();
+			Client.fyi.pano(rsp);
 			img.working(false);
 		}).
 		fail(function(err) {
@@ -291,7 +289,7 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 		Client.fyi.pano(this.pbuttonGetDOM().attr('title') + '. Παρακαλώ περιμένετε…', 0);
 		Client.skiserService('apodoxi').
 		done(function(rsp) {
-			Client.fyi.pano();
+			Client.fyi.pano(rsp);
 			img.working(false);
 		}).
 		fail(function(err) {
@@ -471,7 +469,7 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 		Client.fyi.pano('Δρομολογήσατε την έξοδό σας από το τραπέζι. Παρακαλώ περιμένετε…', 0);
 		Client.skiserService('exodosTrapezi').
 		done(function(rsp) {
-			Client.fyi.pano();
+			Client.fyi.pano(rsp);
 			img.working(false);
 		}).
 		fail(function(err) {
@@ -487,7 +485,6 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 	title: 'Παίκτης/Θεατής',
 	check: function() {
 		if (Arena.ego.oxiTrapezi()) return false;
-
 		if (Arena.ego.isPektis()) return true;
 		if (!Arena.ego.trapezi.trapeziKeniThesi()) return false;
 		return Arena.ego.trapezi.trapeziIsProsklisi(Client.session.pektis);
@@ -500,90 +497,7 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 		Client.fyi.pano('Εναλλαγή παίκτη/θεατή. Παρακαλώ περιμένετε…', 0);
 		Client.skiserService('pektisTheatis').
 		done(function(rsp) {
-			Client.fyi.pano();
-			img.working(false);
-		}).
-		fail(function(err) {
-			Client.skiserFail(err);
-			img.working(false);
-		});
-	},
-}));
-
-Arena.cpanel.bpanelButtonPush(new PButton({
-	omada: 2,
-	img: 'idioktito.png',
-	title: 'Ιδιόκτητο τραπέζι',
-	check: function() {
-		if (Arena.ego.oxiTrapezi()) return false;
-		if (Arena.ego.oxiPektis()) return false;
-		if (Arena.ego.trapezi.trapeziIsIdioktito()) return false;
-		if (Arena.ego.thesiGet() != 1) return false;
-		return true;
-	},
-	click: function(e) {
-		var img;
-
-		img = this.pbuttonIconGetDOM();
-		img.working(true);
-		Client.fyi.pano('Μετατροπή τραπεζιού σε ιδιόκτητο. Παρακαλώ περιμένετε…', 0);
-		Client.skiserService('trparamSet', 'param=ΙΔΙΟΚΤΗΤΟ', 'timi=ΝΑΙ').
-		done(function(rsp) {
-			Client.fyi.pano();
-			img.working(false);
-		}).
-		fail(function(err) {
-			Client.skiserFail(err);
-			img.working(false);
-		});
-	},
-}));
-
-Arena.cpanel.bpanelButtonPush(new PButton({
-	omada: 2,
-	img: 'elefthero.png',
-	title: 'Ελεύθερο τραπέζι',
-	check: function() {
-		if (Arena.ego.oxiTrapezi()) return false;
-		if (Arena.ego.oxiPektis()) return false;
-		if (Arena.ego.trapezi.trapeziIsElefthero()) return false;
-		if (Arena.ego.thesiGet() != 1) return false;
-		return true;
-	},
-	click: function(e) {
-		var img;
-
-		img = this.pbuttonIconGetDOM();
-		img.working(true);
-		Client.fyi.pano('Μετατροπή τραπεζιού σε ελεύθερο. Παρακαλώ περιμένετε…', 0);
-		Client.skiserService('trparamSet', 'param=ΙΔΙΟΚΤΗΤΟ', 'timi=ΟΧΙ').
-		done(function(rsp) {
-			Client.fyi.pano();
-			img.working(false);
-		}).
-		fail(function(err) {
-			Client.skiserFail(err);
-			img.working(false);
-		});
-	},
-}));
-
-Arena.cpanel.bpanelButtonPush(new PButton({
-	omada: 2,
-	img: 'roloi.png',
-	title: 'Κυκλική εναλλαγή θέσης',
-	check: function() {
-		return Arena.trapeziRithmisi();
-	},
-	click: function(e) {
-		var img;
-
-		img = this.pbuttonIconGetDOM();
-		img.working(true);
-		Client.fyi.pano('Κυκλική εναλλαγή θέσης. Παρακαλώ περιμένετε…', 0);
-		Client.skiserService('roloi').
-		done(function(rsp) {
-			Client.fyi.pano();
+			Client.fyi.pano(rsp);
 			img.working(false);
 		}).
 		fail(function(err) {
@@ -619,10 +533,147 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 
 Arena.cpanel.bpanelButtonPush(new PButton({
 	omada: 2,
+	img: 'roloi.png',
+	title: 'Κυκλική εναλλαγή θέσης',
+	check: function() {
+		if (Arena.ego.oxiTrapezi()) return false;
+		if (Arena.ego.trapezi.trapeziIsIdioktito()) return false;
+		return Arena.trapeziRithmisi();
+	},
+	click: function(e) {
+		var img;
+
+		img = this.pbuttonIconGetDOM();
+		img.working(true);
+		Client.fyi.pano('Κυκλική εναλλαγή θέσης. Παρακαλώ περιμένετε…', 0);
+		Client.skiserService('roloi').
+		done(function(rsp) {
+			Client.fyi.epano(rsp);
+			img.working(false);
+		}).
+		fail(function(err) {
+			Client.skiserFail(err);
+			img.working(false);
+		});
+	},
+}));
+
+Arena.cpanel.bpanelButtonPush(new PButton({
+	omada: 2,
+	img: 'idioktito.png',
+	title: 'Ιδιόκτητο τραπέζι',
+	check: function() {
+		if (Arena.ego.oxiTrapezi()) return false;
+		if (Arena.ego.oxiPektis()) return false;
+		if (Arena.ego.trapezi.trapeziIsIdioktito()) return false;
+		if (Arena.ego.thesiGet() != 1) return false;
+		return true;
+	},
+	click: function(e) {
+		var img;
+
+		img = this.pbuttonIconGetDOM();
+		img.working(true);
+		Client.fyi.pano('Μετατροπή τραπεζιού σε ιδιόκτητο. Παρακαλώ περιμένετε…', 0);
+		Client.skiserService('trparamSet', 'param=ΙΔΙΟΚΤΗΤΟ', 'timi=ΝΑΙ').
+		done(function(rsp) {
+			Client.fyi.pano(rsp);
+			img.working(false);
+		}).
+		fail(function(err) {
+			Client.skiserFail(err);
+			img.working(false);
+		});
+	},
+}));
+
+Arena.cpanel.bpanelButtonPush(new PButton({
+	omada: 2,
+	img: 'elefthero.png',
+	title: 'Ελεύθερο τραπέζι',
+	check: function() {
+		if (Arena.ego.oxiTrapezi()) return false;
+		if (Arena.ego.oxiPektis()) return false;
+		if (Arena.ego.trapezi.trapeziIsElefthero()) return false;
+		if (Arena.ego.thesiGet() != 1) return false;
+		return true;
+	},
+	click: function(e) {
+		var img;
+
+		img = this.pbuttonIconGetDOM();
+		img.working(true);
+		Client.fyi.pano('Μετατροπή τραπεζιού σε ελεύθερο. Παρακαλώ περιμένετε…', 0);
+		Client.skiserService('trparamSet', 'param=ΙΔΙΟΚΤΗΤΟ', 'timi=ΟΧΙ').
+		done(function(rsp) {
+			Client.fyi.pano(rsp);
+			img.working(false);
+		}).
+		fail(function(err) {
+			Client.skiserFail(err);
+			img.working(false);
+		});
+	},
+}));
+
+Arena.cpanel.bpanelButtonPush(new PButton({
+	omada: 2,
+	img: 'prive.png',
+	title: 'Πριβέ τραπέζι',
+	check: function() {
+		if (Arena.trapeziOxiRithmisi(false)) return false;
+		return Arena.ego.trapezi.trapeziIsDimosio();
+	},
+	click: function(e) {
+		var img;
+
+		img = this.pbuttonIconGetDOM();
+		img.working(true);
+		Client.fyi.pano('Κλείδωμα τραπεζιού. Παρακαλώ περιμένετε…', 0);
+		Client.skiserService('trparamSet', 'param=ΠΡΙΒΕ', 'timi=ΝΑΙ').
+		done(function(rsp) {
+			Client.fyi.pano(rsp);
+			img.working(false);
+		}).
+		fail(function(err) {
+			Client.skiserFail(err);
+			img.working(false);
+		});
+	},
+}));
+
+Arena.cpanel.bpanelButtonPush(new PButton({
+	omada: 2,
+	img: 'dimosio.png',
+	title: 'Δημόσιο τραπέζι',
+	check: function() {
+		if (Arena.trapeziOxiRithmisi(false)) return false;
+		return Arena.ego.trapezi.trapeziIsPrive();
+	},
+	click: function(e) {
+		var img;
+
+		img = this.pbuttonIconGetDOM();
+		img.working(true);
+		Client.fyi.pano('Ξεκλείδωμα τραπεζιού. Παρακαλώ περιμένετε…', 0);
+		Client.skiserService('trparamSet', 'param=ΠΡΙΒΕ', 'timi=ΟΧΙ').
+		done(function(rsp) {
+			Client.fyi.pano(rsp);
+			img.working(false);
+		}).
+		fail(function(err) {
+			Client.skiserFail(err);
+			img.working(false);
+		});
+	},
+}));
+
+Arena.cpanel.bpanelButtonPush(new PButton({
+	omada: 2,
 	img: 'kasaPano.png',
 	title: 'Αύξηση κάσας',
 	check: function() {
-		return Arena.ego.isPektis();
+		return Arena.trapeziRithmisi();
 	},
 	click: function(e) {
 		var img, kasa;
@@ -634,7 +685,7 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 		Client.fyi.pano('Αύξηση κάσας. Παρακαλώ περιμένετε…', 0);
 		Client.skiserService('trparamSet', 'param=ΚΑΣΑ', 'timi=' + kasa, 'apodoxi=1').
 		done(function(rsp) {
-			Client.fyi.pano();
+			Client.fyi.pano(rsp);
 			img.working(false);
 		}).
 		fail(function(err) {
@@ -649,7 +700,7 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 	img: 'kasaKato.png',
 	title: 'Μείωση κάσας',
 	check: function() {
-		return Arena.ego.isPektis();
+		return Arena.trapeziRithmisi();
 	},
 	click: function(e) {
 		var img, kasa;
@@ -661,7 +712,7 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 		Client.fyi.pano('Αύξηση κάσας. Παρακαλώ περιμένετε…', 0);
 		Client.skiserService('trparamSet', 'param=ΚΑΣΑ', 'timi=' + kasa, 'apodoxi=1').
 		done(function(rsp) {
-			Client.fyi.pano();
+			Client.fyi.pano(rsp);
 			img.working(false);
 		}).
 		fail(function(err) {

@@ -302,6 +302,8 @@ Service.trapezi.roloi = function(nodereq) {
 	}
 
 	trapezi = nodereq.trapeziGet();
+	if (trapezi.trapeziIsIdioktito())
+	return nodereq.end('Το τραπέζι είναι ιδιόκτητο');
 
 	p1 = trapezi.trapeziPektisGet(1);
 	a1 = trapezi.trapeziApodoxiGet(1);

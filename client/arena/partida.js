@@ -268,10 +268,10 @@ Arena.partida.dataPanoRefreshDOM = function() {
 	append(kasaDOM = $('<div>').attr('id', 'tsoxaKasa')).
 	append(ipolipoDOM = $('<div>').attr('id', 'tsoxaIpolipo')));
 
-	if (Arena.ego.trapezi.trapeziIsIdioktito())
+	if (Arena.ego.trapezi.trapeziIsPaso())
 	Arena.partida.optionsDOM.append($('<img>').addClass('tsoxaOption').attr({
-		src: 'ikona/panel/' + (Arena.ego.thesiGet() === 1 ? 'idioktito.png' : 'elefthero.png'),
-		title: 'Ιδιόκτητο τραπέζι',
+		src: 'ikona/panel/pasoOn.png',
+		title: 'Παίζεται το πάσο',
 	}));
 
 	if (Arena.ego.trapezi.trapeziOxiAsoi())
@@ -280,10 +280,21 @@ Arena.partida.dataPanoRefreshDOM = function() {
 		title: 'Δεν παίζονται οι άσοι',
 	}));
 
-	if (Arena.ego.trapezi.trapeziIsPaso())
+	if (Arena.ego.trapezi.trapeziIsPrive()) {
+		Arena.partida.tsoxaDOM.addClass('prive');
+		Arena.partida.optionsDOM.append($('<img>').addClass('tsoxaOption').attr({
+			src: 'ikona/panel/prive.png',
+			title: 'Πριβέ τραπέζι',
+		}));
+	}
+	else {
+		Arena.partida.tsoxaDOM.removeClass('prive');
+	}
+
+	if (Arena.ego.trapezi.trapeziIsIdioktito())
 	Arena.partida.optionsDOM.append($('<img>').addClass('tsoxaOption').attr({
-		src: 'ikona/panel/pasoOn.png',
-		title: 'Παίζεται το πάσο',
+		src: 'ikona/panel/' + (Arena.ego.thesiGet() === 1 ? 'elefthero.png' : 'idioktito.png'),
+		title: 'Ιδιόκτητο τραπέζι',
 	}));
 
 	Arena.partida.

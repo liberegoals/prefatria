@@ -292,6 +292,7 @@ body {
 .trapeziOption {
 	display: inline;
 	width: 30px;
+	margin-right: 4px;
 }
 
 .trapeziPektis {
@@ -417,6 +418,7 @@ body {
 	position: relative;
 	display: inline-block;
 	width: 36px;
+	margin-left: 4px;
 }
 
 /********************************************************************************************************************/
@@ -1533,6 +1535,10 @@ cursor: auto;
 
 .ego {
 	background-color: #FFFFA9;
+}
+
+.prive {
+	border-style: solid !important;
 }
 
 /***********************************************************************************************************************/
