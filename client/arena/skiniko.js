@@ -617,7 +617,7 @@ Arena.pektisPanelRefreshDOM = function() {
 Arena.dikeomaProsklisis = function() {
 	if (Arena.ego.oxiPektis()) return false;
 	if (Arena.ego.trapezi.trapeziIsElefthero()) return true;
-	return(Arena.ego.thesiGet() == 1);
+	return Arena.ego.isThesi(1);
 };
 
 // Η αλλαγή σχέσης δεν αφορά κανέναν παρά μόνον τον παίκτη που την αλλάζει.
@@ -1257,4 +1257,15 @@ Arena.ego.thesiMap = function(thesi) {
 	}
 
 	return thesi;
+};
+
+// Η function "isThesi" επιστρέφει true εφόσον η θέση μας είναι αυτή
+// που αναφέρεται στην παράμετρο.
+
+Arena.ego.isThesi = function(thesi) {
+	return(Arena.ego.thesiGet() == thesi));
+};
+
+Arena.ego.oxiThesi = function(thesi) {
+	return !Arena.ego.isThesi(thesi);
 };

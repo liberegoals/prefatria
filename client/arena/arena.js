@@ -401,6 +401,9 @@ Arena.inputRefocus = function(e) {
 // τραπέζι και το τραπέζι βρίσκεται σε φάση ρυθμίσεων, δηλαδή πριν παιχτεί οποιαδήποτε
 // διανομή. Αν θέλουμε μπορούμε αγνοήσουμε το αν υπάρχουν ή όχι διανομές περνώτας
 // literal false.
+//
+// Η function χρησιμποιείται κατά κόρον στο control panel, μπορεί όμως να χρησιμοποιηθεί
+// και οπουδήποτε αλλού.
 
 Arena.trapeziRithmisi = function(dianomi) {
 	if (Arena.ego.oxiTrapezi()) return false;
