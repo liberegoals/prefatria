@@ -58,6 +58,7 @@ Service.prosklisi.diagrafi = function(nodereq) {
 	data = {
 		nodereq: nodereq,
 		prosklisi: nodereq.url.prosklisi,
+		trapezi: prosklisi.prosklisiTrapeziGet(),
 	};
 
 	data.apo = prosklisi.prosklisiApoGet();
@@ -91,6 +92,52 @@ Service.prosklisi.diagrafi2 = function(data) {
 	Server.skiniko.
 	processKinisi(kinisi).
 	kinisiAdd(kinisi);
+
+	// Έχουμε διαγράψει την πρόσκληση και θα ελέγξουμε μήπως
+	// το τραπέζι είναι πριβέ, οπότε θα πρέπει να ελέγξουμε
+	// μήπως ο παραλήπτης είναι θεατής στο τραπέζι και σ' αυτή
+	// την περίπτωση να κάνουμε τις απαραίτητες ενέργειες.
+
+	Service.prosklisi.diagrafi3(data);
+};
+
+Service.prosklisi.diagrafi3 = function(data) {
+	var sinedria, trapezi, conn, query;
+
+	sinedria = Server.skiniko.skinikoSinedriaGet(data.pros);
+	if (sinedria.sinedriaOxiTrapezi(data.trapezi)) return;
+	if (sinedria.sinedriaOxiTheatis()) return;
+
+	trapezi = Server.skiniko.skinikoTrapeziGet(data.trapezi);
+	if (!trapezi) return;
+	if (trapezi.trapeziIsDimosio()) return;
+
+	conn = DB.connection();
+	query = 'UPDATE `sinedria` SET `trapezi` = NULL, `thesi` = NULL, `simetoxi` = NULL ' +
+		'WHERE `pektis` = ' + data.pros.json();
+	conn.connection.query(query, function(err, res) {
+		var kinisi;
+
+		conn.free();
+
+		// Αν κάτι δεν πήγε καλά, αφήνω τον θεατή στο κλειδωμένο
+		// τραπέζι ώστε οι κλειδοκράτορες να γνωρίζουν ότι αυτός
+		// παραμένει.
+
+		if ((!res) || (res.affectedRows < 1))
+		return;
+
+		kinisi = new Kinisi({
+			idos: 'RT',
+			data: {
+				pektis: data.pros,
+			},
+		});
+
+		Server.skiniko.
+		processKinisi(kinisi).
+		kinisiAdd(kinisi);
+	});
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@

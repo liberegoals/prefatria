@@ -801,6 +801,12 @@ Trapezi.prototype.trapeziCreateDOM = function() {
 		Arena.inputRefocus(e);
 		if ($(this).data('klikarismeno')) return;
 
+		if (trapezi.trapeziIsPrive() && trapezi.trapeziOxiProsklisi(Client.session.pektis)) {
+			Client.fyi.epano('Το τραπέζι είναι πριβέ');
+			Client.sound.beep();
+			return;
+		}
+
 		// Αν ο χρήστης κάνει κλικ στο τραπέζι που ήδη έχει επιλέξει, τότε απλώς
 		// εμφανίζεται η παρτίδα.
 
