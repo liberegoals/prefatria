@@ -1263,7 +1263,7 @@ Arena.ego.thesiMap = function(thesi) {
 // που αναφέρεται στην παράμετρο.
 
 Arena.ego.isThesi = function(thesi) {
-	return(Arena.ego.thesiGet() == thesi));
+	return(Arena.ego.thesiGet() == thesi);
 };
 
 Arena.ego.oxiThesi = function(thesi) {
