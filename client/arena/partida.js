@@ -293,7 +293,7 @@ Arena.partida.dataPanoRefreshDOM = function() {
 
 	if (Arena.ego.trapezi.trapeziIsIdioktito())
 	Arena.partida.optionsDOM.append($('<img>').addClass('tsoxaOption').attr({
-		src: 'ikona/panel/' + (Arena.ego.thesiGet() === 1 ? 'elefthero.png' : 'idioktito.png'),
+		src: 'ikona/panel/' + (Arena.ego.isThesi(1) ? 'elefthero.png' : 'idioktito.png'),
 		title: 'Ιδιόκτητο τραπέζι',
 	}));
 
@@ -486,7 +486,7 @@ Arena.partida.pektisRefreshDOM = function(thesi) {
 
 	dom.off('click').on('click', function(e) {
 		Arena.inputRefocus(e);
-		if (Arena.ego.thesiGet() === thesi) return;
+		if (Arena.ego.isThesi(thesi)) return;
 
 		Client.fyi.pano('Αλλαγή θέσης θέασης. Παρακαλώ περιμένετε…');
 		Client.skiserService('thesiTheasis', 'thesi=' + thesi).
@@ -642,7 +642,7 @@ Arena.partida.pektisDilosiRefreshDOM = function(thesi, iseht, dom) {
 
 		if (thesi !== trapezi.partidaEpomenosGet()) return Arena.partida;
 		if (!trapezi.anext) return Arena.partida;
-		if (Arena.ego.isPektis() && (Arena.ego.thesiGet() == thesi)) return Arena.partida;
+		if (Arena.ego.isPektis() && Arena.ego.isThesi(thesi)) return Arena.partida;
 
 		dilosi = trapezi.anext;
 		if (dilosi.dilosiIsTagrafo() && (trapezi.apasoCount == 2)) dilosi = new Dilosi('DS6');
@@ -751,7 +751,7 @@ Arena.partida.pektisAnamoniRefreshDOM = function(thesi, iseht, domMain) {
 
 Arena.partida.pektisAnamoniIkona = function(thesi, img) {
 	if (img === undefined) img = 'working/rologaki.gif';
-	return 'ikona/' + ((Arena.ego.isPektis() && (thesi == Arena.ego.thesiGet())) ? 'endixi/rollStar.gif' : img);
+	return 'ikona/' + (Arena.ego.isPektis() && Arena.ego.isThesi(thesi)) ? 'endixi/rollStar.gif' : img);
 };
 
 Arena.partida.filaClearDOM = function(thesi) {

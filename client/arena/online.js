@@ -70,7 +70,7 @@ Trapezi.prototype.processEnergiaOnlineΦΥΛΛΟ = function(energia) {
 	// Αν το φύλλο δεν είναι δικό μας, αλλά παίχτηκε από κάποιον άλλον,
 	// πάλι δείχνω τις ίδιες κινήσεις.
 
-	if (Arena.ego.thesiGet() != energia.energiaPektisGet())
+	if (Arena.ego.oxiThesi(energia.energiaPektisGet()))
 	return this.processEnergiaOnlineFiloKinisi(energia);
 
 	// Είμαστε στην περίπτωση που παραλαμβάνει την ενέργεια ο παίκτης
