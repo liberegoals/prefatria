@@ -105,6 +105,8 @@ Service.prosklisi.diagrafi3 = function(data) {
 	var sinedria, trapezi, conn, query;
 
 	sinedria = Server.skiniko.skinikoSinedriaGet(data.pros);
+	if (!sinedria) return;
+
 	if (sinedria.sinedriaOxiTrapezi(data.trapezi)) return;
 	if (sinedria.sinedriaOxiTheatis()) return;
 
