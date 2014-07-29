@@ -257,7 +257,10 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 Arena.cpanel.bpanelButtonPush(new PButton({
 	omada: 1,
 	check: function() {
-		return Arena.trapeziRithmisi();
+		if (Arena.ego.oxiTrapezi()) return false;
+		if (Arena.ego.oxiPektis()) return false;
+		if (Debug.flagGet('rithmisiPanta')) return true;
+		return Arena.ego.trapezi.trapeziOxiDianomi();
 	},
 	refresh: function(img) {
 		var thesi;
