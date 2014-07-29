@@ -673,7 +673,8 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 	img: 'kasaPano.png',
 	title: 'Αύξηση κάσας',
 	check: function() {
-		return Arena.trapeziRithmisi();
+		if (Arena.trapeziOxiRithmisi(false)) return false;
+		return Arena.ego.trapezi.trapeziIsDianomi();
 	},
 	click: function(e) {
 		var img, kasa;
@@ -700,7 +701,8 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 	img: 'kasaKato.png',
 	title: 'Μείωση κάσας',
 	check: function() {
-		return Arena.trapeziRithmisi();
+		if (Arena.trapeziOxiRithmisi(false)) return false;
+		return Arena.ego.trapezi.trapeziIsDianomi();
 	},
 	click: function(e) {
 		var img, kasa;
