@@ -278,6 +278,11 @@ body {
 	background-color: #5AAF6E;
 }
 
+.trapeziDataPrive {
+	background-image: url('../ikona/endixi/ektosSmall.png');
+	background-repeat: repeat;
+}
+
 .trapeziDataEpilogi {
 	border-color: #D5D51B;
 	background-color: #D5D51B;

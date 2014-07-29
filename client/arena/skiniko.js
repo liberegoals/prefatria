@@ -861,7 +861,7 @@ Trapezi.prototype.trapeziDataRefreshDOM = function() {
 	ipolipo = this.trapeziIpolipoGet();
 
 	this.dataDOM.empty().
-	removeClass('trapeziDataEpilogi trapeziDataProsklisi').
+	removeClass('trapeziDataEpilogi trapeziDataProsklisi trapeziDataPrive').
 	append($('<div>').addClass('trapeziDataKodikos').
 	attr('title', 'Κωδικός τραπεζιού: ' + kodikos).text(kodikos)).
 
@@ -870,6 +870,7 @@ Trapezi.prototype.trapeziDataRefreshDOM = function() {
 
 	if (Arena.ego.isTrapezi(this)) this.dataDOM.addClass('trapeziDataEpilogi');
 	else if (Arena.ego.isProsklisi(this)) this.dataDOM.addClass('trapeziDataProsklisi');
+	else if (this.trapeziIsPrive()) this.dataDOM.addClass('trapeziDataPrive');
 
 	this.DOM.find('.trapeziTelosIcon').remove();
 	if (ipolipo <= 0)

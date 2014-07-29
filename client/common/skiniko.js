@@ -1375,6 +1375,9 @@ Skiniko.prototype.skinikoSinedriaWalk = function(callback, dir, sort) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+// Η μέθοδος "skinikoProsklisiSet" εντάσσει μια πρόσκληση στο σκηνικό.
+// Αν υπάρχει ήδη πρόσκληση με τα ίδια στοιχεία, τότε αυτή διαγράφεται.
+
 Skiniko.prototype.skinikoProsklisiSet = function(prosklisi) {
 	var i, p, trapezi, apo, pros;
 

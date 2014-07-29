@@ -630,7 +630,7 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 		img = this.pbuttonIconGetDOM();
 		img.working(true);
 		Client.fyi.pano('Κλείδωμα τραπεζιού. Παρακαλώ περιμένετε…', 0);
-		Client.skiserService('trparamSet', 'param=ΠΡΙΒΕ', 'timi=ΝΑΙ').
+		Client.skiserService('trparamSet', 'param=ΠΡΙΒΕ', 'timi=ΝΑΙ', 'apodoxi=1').
 		done(function(rsp) {
 			Client.fyi.pano(rsp);
 			img.working(false);
@@ -656,7 +656,7 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 		img = this.pbuttonIconGetDOM();
 		img.working(true);
 		Client.fyi.pano('Ξεκλείδωμα τραπεζιού. Παρακαλώ περιμένετε…', 0);
-		Client.skiserService('trparamSet', 'param=ΠΡΙΒΕ', 'timi=ΟΧΙ').
+		Client.skiserService('trparamSet', 'param=ΠΡΙΒΕ', 'timi=ΟΧΙ', 'apodoxi=1').
 		done(function(rsp) {
 			Client.fyi.pano(rsp);
 			img.working(false);
