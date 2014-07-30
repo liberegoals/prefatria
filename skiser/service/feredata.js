@@ -521,7 +521,7 @@ Sinedria.prototype.tsoxaNeoteraEnergia = function(nodereq, trapezi, tsoxa) {
 		nodereq.write(hdr);
 		hdr = '';
 		nodereq.write('\t\t');
-		nodereq.write(this.energiaFeredata(sinedria));
+		nodereq.write(this.energiaFeredata(sinedria, trapezi));
 		nodereq.write(',\n');
 		sinedria.tsoxaNeoteraNone = false;
 	});
@@ -591,11 +591,13 @@ Dianomi.prototype.dianomiFeredata = function() {
 	});
 };
 
-Energia.prototype.energiaFeredata = function(sinedria) {
+Energia.prototype.energiaFeredata = function(sinedria, trapezi) {
 	var prosarmogi;
 
 	prosarmogi = 'energiaProsarmogi' + this.energiaIdosGet();
-	if (typeof this[prosarmogi] === 'function') return this[prosarmogi](sinedria);
+	if (typeof this[prosarmogi] === 'function')
+	return this[prosarmogi](sinedria, trapezi);
+
 	return JSON.stringify(this);
 };
 
