@@ -563,6 +563,58 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 
 Arena.cpanel.bpanelButtonPush(new PButton({
 	omada: 2,
+	img: 'agonistiki.png',
+	title: 'Αγωνιστική παρτίδα',
+	check: function() {
+		if (Arena.trapeziOxiRithmisi()) return false;
+		return Arena.ego.trapezi.trapeziIsFiliki();
+	},
+	click: function(e) {
+		var img;
+
+		img = this.pbuttonIconGetDOM();
+		img.working(true);
+		Client.fyi.pano('Αγωνιστική παρτίδα. Παρακαλώ περιμένετε…', 0);
+		Client.skiserService('trparamSet', 'param=ΦΙΛΙΚΗ', 'timi=ΟΧΙ').
+		done(function(rsp) {
+			Client.fyi.pano(rsp);
+			img.working(false);
+		}).
+		fail(function(err) {
+			Client.skiserFail(err);
+			img.working(false);
+		});
+	},
+}));
+
+Arena.cpanel.bpanelButtonPush(new PButton({
+	omada: 2,
+	img: 'filiki.png',
+	title: 'ΕκπαιδευτικήΦιλική παρτίδα',
+	check: function() {
+		if (Arena.trapeziOxiRithmisi()) return false;
+		return Arena.ego.trapezi.trapeziIsAgonistiki();
+	},
+	click: function(e) {
+		var img;
+
+		img = this.pbuttonIconGetDOM();
+		img.working(true);
+		Client.fyi.pano('Φιλική παρτίδα. Παρακαλώ περιμένετε…', 0);
+		Client.skiserService('trparamSet', 'param=ΦΙΛΙΚΗ', 'timi=ΝΑΙ').
+		done(function(rsp) {
+			Client.fyi.pano(rsp);
+			img.working(false);
+		}).
+		fail(function(err) {
+			Client.skiserFail(err);
+			img.working(false);
+		});
+	},
+}));
+
+Arena.cpanel.bpanelButtonPush(new PButton({
+	omada: 2,
 	img: 'idioktito.png',
 	title: 'Ιδιόκτητο τραπέζι',
 	check: function() {

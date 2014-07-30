@@ -626,6 +626,18 @@ Trapezi.prototype.trapeziIsKlisto = function() {
 	return !this.trapeziIsAnikto();
 };
 
+Trapezi.prototype.trapeziIsFiliki = function() {
+	var filiki;
+
+	filiki = this.trapeziTrparamGet('ΦΙΛΙΚΗ');
+	if (typeof filiki !== 'string') return false;
+	return filiki.isNai();
+};
+
+Trapezi.prototype.trapeziIsAgonistiki = function() {
+	return !this.trapeziIsFiliki();
+};
+
 Trapezi.prototype.trapeziSizitisiWalk = function(callback, dir) {
 	var keys = [];
 
