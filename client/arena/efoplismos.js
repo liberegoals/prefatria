@@ -552,7 +552,13 @@ Trapezi.prototype.efoplismosΠΑΙΧΝΙΔΙ = function() {
 		pano = '-=8px';
 		kato = '+=8px';
 	}
-	if (this.partidaBazaCountGet() > 8) over = null;
+
+	// Η παράμετρος "over" δείχνει πόσο θα ανασηκωθούν τα φύλλα που μπορούν
+	// να παιχτούν. Αυτό, προφανώς, δεν έχει νόημα όταν έχει μείνει ένα μόνο
+	// φύλλο, ή όταν τα φύλλα είναι κλειστά για τους θεατές.
+
+	if ((this.partidaBazaCountGet() > 8) || Arena.ego.klistaFila())
+	over = null;
 
 	Arena.partida.xipnitiriOplismos();
 	this.efoplismosPexnidiFila(iseht, over).each(function() {
