@@ -286,6 +286,12 @@ Arena.partida.dataPanoRefreshDOM = function() {
 		title: 'Δεν παίζονται οι άσοι',
 	}));
 
+	if (Arena.ego.trapezi.trapeziIsKlisto())
+	Arena.partida.optionsDOM.append($('<img>').addClass('tsoxaOption').attr({
+		src: 'ikona/panel/klisto.png',
+		title: 'Κλειστό τραπέζι',
+	}));
+
 	if (Arena.ego.trapezi.trapeziIsPrive()) {
 		Arena.partida.tsoxaDOM.addClass('prive');
 		Arena.partida.optionsDOM.append($('<img>').addClass('tsoxaOption').attr({
@@ -788,7 +794,7 @@ Arena.partida.filaRefreshDOM = function(thesi) {
 
 	iseht = Arena.ego.thesiMap(thesi);
 	dom = Arena.partida['fila' + iseht + 'DOM'];
-	dom.append(fila.xartosiaTaxinomisi().xartosiaDOM(iseht));
+	dom.append(fila.xartosiaTaxinomisi().xartosiaDOM(iseht, Arena.ego.klistaFila()));
 	return Arena.partida;
 };
 

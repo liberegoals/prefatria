@@ -643,6 +643,12 @@ Energia.prototype.energiaProsarmogiΔΙΑΝΟΜΗ = function(sinedria) {
 	fila = this.energiaDataGet();
 
 	if (sinedria.sinedriaOxiPektis() || Debug.flagGet('striptiz')) {
+		// Ίσως κάποιος πει ότι εδώ πρέπει να παρεμβληθεί κώδικας
+		// σχετικά με την απόκρυψη των φύλλων στους θεατές. Αυτό,
+		// αν και θεωρητικά είναι σωστό, δημιουργεί πολλά τεχνικά
+		// προβλήματα οπότε προτιμάμε να αποκρύψουμε τα φύλλα κατά
+		// την εμφάνισή τους στο DOM.
+
 		alif = fila.substr(0, 60);
 	}
 	else {

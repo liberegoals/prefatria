@@ -899,6 +899,7 @@ Trapezi.prototype.trapeziOptsRefreshDOM = function() {
 	else {
 		this.tsoxaDOM.removeClass('prive');
 	}
+	if (this.trapeziIsKlisto()) this.trapeziOptionDOM('Κλειστό τραπέζι', 'klisto.png');
 	if (this.trapeziOxiAsoi()) this.trapeziOptionDOM('Δεν παίζονται οι άσοι', 'asoiOn.png');
 	if (this.trapeziIsPaso()) this.trapeziOptionDOM('Παίζεται το πάσο', 'pasoOn.png');
 	return this;
@@ -1103,10 +1104,11 @@ Skiniko.prototype.pektisTrapeziScroll = function(anim) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
 
-Filo.prototype.filoDOM = function() {
-	return $('<img>').data('filo', this).attr({
-		src: Client.server + 'ikona/trapoula/' + this.filoXromaGet() + this.filoAxiaGet() + '.png',
-	});
+Filo.prototype.filoDOM = function(klisto) {
+	var img;
+
+	img = klisto ? Arena.ego.plati + 'V' : this.filoXromaGet() + this.filoAxiaGet();
+	return $('<img>').data('filo', this).attr('src', 'ikona/trapoula/' + img + '.png');
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1115,7 +1117,7 @@ Filo.prototype.filoDOM = function() {
 // Ως παράμετρο δίνουμε τη θέση του παίκτη, εκτός από την περίπτωση που πρόκειται
 // για προηγούμενη χαρτωσιά που εμφανίζεται στη συζήτηση, όπου δεν καθορίζουμε θέση.
 
-Xartosia.prototype.xartosiaDOM = function(iseht) {
+Xartosia.prototype.xartosiaDOM = function(iseht, klista) {
 	var dom, xromaPrev = null, rbPrev = null, cnt = this.xartosiaMikos(), klasi;
 
 	klasi = iseht ? 'tsoxaXartosiaFilo tsoxaXartosiaFilo' + iseht : 'tsoxaXartosiaFiloPrev';
@@ -1123,7 +1125,7 @@ Xartosia.prototype.xartosiaDOM = function(iseht) {
 	Globals.awalk(this.xartosiaFilaGet(), function(i, filo) {
 		var filoDOM, xroma, rb;
 
-		filoDOM = filo.filoDOM().addClass(klasi);
+		filoDOM = filo.filoDOM(klista).addClass(klasi);
 
 		// Το πρώτο φύλλο εμφανίζεται κανονικά στη σειρά του, τα υπόλοιπα
 		// απανωτίζουν το προηγούμενο φύλλο.
@@ -1146,6 +1148,7 @@ Xartosia.prototype.xartosiaDOM = function(iseht) {
 		// μετά τα μπαστούνια να ακολουθούν σπαθιά, ή μετά τα καρά να ακολουθούν
 		// κούπες.
 
+		if (klista) return;
 		xroma = filo.filoXromaGet();
 		if (xroma === xromaPrev) return;
 
@@ -1247,6 +1250,12 @@ Arena.ego.isFilos = function(pektis) {
 
 Arena.ego.isApoklismenos = function(pektis) {
 	return Arena.ego.pektis.pektisIsApoklismenos(pektis);
+};
+
+Arena.ego.klistaFila = function() {
+	if (Arena.ego.oxiTrapezi()) return false;
+	if (Arena.ego.isPektis()) return false;
+	return Arena.ego.trapezi.trapeziIsKlisto();
 };
 
 Arena.ego.thesiGet = function() {
