@@ -1500,6 +1500,18 @@ cursor: auto;
 	overflow: hidden;
 }
 
+.sizitisiMoliviContainer {
+	position: relative;
+	display: inline-block;
+}
+
+.sizitisiMolivi {
+	position: absolute;
+	bottom: 0;
+	height: 20px;
+	max-width: 46px;
+}
+
 /***********************************************************************************************************************/
 
 .rebelos {

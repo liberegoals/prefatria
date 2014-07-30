@@ -478,8 +478,12 @@ Sizitisi.prototype.sizitisiSxolioCreateDOM = function(dom) {
 
 Sizitisi.moliviPektis = {};
 
+Sizitisi.moliviMoliviMin = 1;
+Sizitisi.moliviMoliviMax = 5;
+Sizitisi.moliviMolivi = Globals.random(Sizitisi.moliviMoliviMin, Sizitisi.moliviMoliviMax);
+
 Sizitisi.moliviEnarxi = function(sizitisi, dom) {
-	var pektis;
+	var pektis, molivi;
 
 	pektis = sizitisi.sizitisiPektisGet();
 
@@ -493,7 +497,12 @@ Sizitisi.moliviEnarxi = function(sizitisi, dom) {
 	// και σχηματίζουμε το μολύβι.
 
 	Sizitisi.moliviPektis[pektis] = dom.parents('.sizitisi');
-	dom.append($('<img>').attr('src', 'ikona/endixi/moliviPartida.gif').css('width', '30px'));
+	dom.append($('<div>').addClass('sizitisiMoliviContainer').
+	append($('<img>').addClass('sizitisiMolivi').
+	attr('src', 'ikona/molivi/molivi' + Sizitisi.moliviMolivi + '.gif')));
+
+	if (++Sizitisi.moliviMolivi > Sizitisi.moliviMoliviMax)
+	Sizitisi.moliviMolivi = Sizitisi.moliviMoliviMin;
 };
 
 // Η function "moliviTelos" διαγράφει τυχόν μολύβι για τον παίκτη του οποίου
