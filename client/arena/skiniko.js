@@ -890,8 +890,10 @@ Trapezi.prototype.trapeziDataRefreshDOM = function() {
 
 Trapezi.prototype.trapeziOptsRefreshDOM = function() {
 	this.optsDOM.empty();
-	if (this.trapeziIsIdioktito()) this.trapeziOptionDOM('Ιδιόκτητο τραπέζι',
-		this.trapeziThesiPekti(Client.session.pektis) === 1 ? 'elefthero.png' : 'idioktito.png');
+	if (this.trapeziIsPaso()) this.trapeziOptionDOM('Παίζεται το πάσο', 'pasoOn.png');
+	if (this.trapeziOxiAsoi()) this.trapeziOptionDOM('Δεν παίζονται οι άσοι', 'asoiOn.png');
+	if (this.trapeziIsFiliki()) this.trapeziOptionDOM('Εκπαιδευτική/Φιλική παρτίδα', 'filiki.png');
+	if (this.trapeziIsKlisto()) this.trapeziOptionDOM('Κλειστό τραπέζι', 'klisto.png');
 	if (this.trapeziIsPrive()) {
 		this.tsoxaDOM.addClass('prive');
 		this.trapeziOptionDOM('Πριβέ τραπέζι', 'prive.png');
@@ -899,9 +901,8 @@ Trapezi.prototype.trapeziOptsRefreshDOM = function() {
 	else {
 		this.tsoxaDOM.removeClass('prive');
 	}
-	if (this.trapeziIsKlisto()) this.trapeziOptionDOM('Κλειστό τραπέζι', 'klisto.png');
-	if (this.trapeziOxiAsoi()) this.trapeziOptionDOM('Δεν παίζονται οι άσοι', 'asoiOn.png');
-	if (this.trapeziIsPaso()) this.trapeziOptionDOM('Παίζεται το πάσο', 'pasoOn.png');
+	if (this.trapeziIsIdioktito()) this.trapeziOptionDOM('Ιδιόκτητο τραπέζι',
+		this.trapeziThesiPekti(Client.session.pektis) === 1 ? 'elefthero.png' : 'idioktito.png');
 	return this;
 };
 

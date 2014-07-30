@@ -274,22 +274,10 @@ Arena.partida.dataPanoRefreshDOM = function() {
 	append(kasaDOM = $('<div>').attr('id', 'tsoxaKasa')).
 	append(ipolipoDOM = $('<div>').attr('id', 'tsoxaIpolipo')));
 
-	if (Arena.ego.trapezi.trapeziIsPaso())
+	if (Arena.ego.trapezi.trapeziIsIdioktito())
 	Arena.partida.optionsDOM.append($('<img>').addClass('tsoxaOption').attr({
-		src: 'ikona/panel/pasoOn.png',
-		title: 'Παίζεται το πάσο',
-	}));
-
-	if (Arena.ego.trapezi.trapeziOxiAsoi())
-	Arena.partida.optionsDOM.append($('<img>').addClass('tsoxaOption').attr({
-		src: 'ikona/panel/asoiOn.png',
-		title: 'Δεν παίζονται οι άσοι',
-	}));
-
-	if (Arena.ego.trapezi.trapeziIsKlisto())
-	Arena.partida.optionsDOM.append($('<img>').addClass('tsoxaOption').attr({
-		src: 'ikona/panel/klisto.png',
-		title: 'Κλειστό τραπέζι',
+		src: 'ikona/panel/' + (Arena.ego.isThesi(1) ? 'elefthero.png' : 'idioktito.png'),
+		title: 'Ιδιόκτητο τραπέζι',
 	}));
 
 	if (Arena.ego.trapezi.trapeziIsPrive()) {
@@ -303,10 +291,28 @@ Arena.partida.dataPanoRefreshDOM = function() {
 		Arena.partida.tsoxaDOM.removeClass('prive');
 	}
 
-	if (Arena.ego.trapezi.trapeziIsIdioktito())
+	if (Arena.ego.trapezi.trapeziIsKlisto())
 	Arena.partida.optionsDOM.append($('<img>').addClass('tsoxaOption').attr({
-		src: 'ikona/panel/' + (Arena.ego.isThesi(1) ? 'elefthero.png' : 'idioktito.png'),
-		title: 'Ιδιόκτητο τραπέζι',
+		src: 'ikona/panel/klisto.png',
+		title: 'Κλειστό τραπέζι',
+	}));
+
+	if (Arena.ego.trapezi.trapeziIsFiliki())
+	Arena.partida.optionsDOM.append($('<img>').addClass('tsoxaOption').attr({
+		src: 'ikona/panel/filiki.png',
+		title: 'Εκπαιδευτική/Φιλική παρτίδα',
+	}));
+
+	if (Arena.ego.trapezi.trapeziOxiAsoi())
+	Arena.partida.optionsDOM.append($('<img>').addClass('tsoxaOption').attr({
+		src: 'ikona/panel/asoiOn.png',
+		title: 'Δεν παίζονται οι άσοι',
+	}));
+
+	if (Arena.ego.trapezi.trapeziIsPaso())
+	Arena.partida.optionsDOM.append($('<img>').addClass('tsoxaOption').attr({
+		src: 'ikona/panel/pasoOn.png',
+		title: 'Παίζεται το πάσο',
 	}));
 
 	Arena.partida.
