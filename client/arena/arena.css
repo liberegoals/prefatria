@@ -133,7 +133,7 @@ body {
 	width: 556px;
 	overflow: hidden;
 
-	border-style: double;
+	border-style: solid;
 	border-width: 3px;
 /*
 	border-radius: 10px;
@@ -145,14 +145,14 @@ body {
 .tsoxaPeximo {
 	background-color: rgb(172, 209, 93);
 	background-image: url('../ikona/trapezi/tsoxaPeximo.jpg');
-	border-color: #488141;
+	border-color: #8EAC8A;
 	
 }
 
 .tsoxaTheasi {
 	background-color: #B0A376;
 	background-image: url('../ikona/trapezi/tsoxaTheasi.jpg');
-	border-color: #887945;
+	border-color: #AFA275;
 }
 
 #theatis {
@@ -222,8 +222,8 @@ body {
 	background-image: url('../ikona/trapezi/kafenioPeximo.jpg');
 	background-repeat: repeat;
 
-	border-style: double;
-	border-color: #488141;
+	border-style: solid;
+	border-color: #8EAC8A;
 	border-width: 3px;
 
 	box-shadow: 2px 2px 6px #353535;
@@ -231,7 +231,7 @@ body {
 
 .trapeziTsoxaTheatis {
 	background-image: url('../ikona/trapezi/kafenioTheasi.jpg');
-	border-color: #887945;
+	border-color: #AFA275;
 }
 
 .trapeziData {
