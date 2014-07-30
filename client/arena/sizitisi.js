@@ -98,6 +98,7 @@ Arena.sizitisi.panel.bpanelButtonPush(new PButton({
 	title: 'Καθαρισμός πεδίου εισαγωγής σχολίου',
 	click: function(e) {
 		Arena.sizitisi.katharismos();
+		Arena.sizitisi.moliviTelos();
 	},
 }));
 
@@ -337,7 +338,7 @@ Arena.sizitisi.katharismos = function() {
 	Arena.sizitisi.proepiskopisiClearDOM();
 
 	if (Arena.sizitisi.isMolivi())
-	Arena.sizitisi.moliviEnd();
+	Arena.sizitisi.moliviStop();
 
 	return Arena;
 };
@@ -351,9 +352,50 @@ Arena.sizitisi.moliviStart = function() {
 	Client.skiserService('moliviStart');
 };
 
-Arena.sizitisi.moliviEnd = function() {
-	Client.skiserService('moliviEnd');
+Arena.sizitisi.moliviStop = function() {
+	Client.skiserService('moliviStop');
 	Arena.sizitisi.flags.molivi = false;
+};
+
+// Στη λίστα "moliviPektis" κρατάμε τα dom elements των σχολίων μολιβιού
+// δεικτοδοτημένα με το login name του αντίστοιχου παίκτη.
+
+Arena.sizitisi.moliviPektis = {};
+
+Arena.sizitisi.moliviEnarxi = function(sizitisi, dom) {
+	var pektis, molivi;
+
+	pektis = sizitisi.sizitisiPektisGet();
+
+	// Αρχικά διαγράφουμε τυχόν υπάρχον μολύβι για τον συγκεκριμένο
+	// παίκτη.
+
+	if (Arena.sizitisi.moliviPektis[pektis])
+	Arena.sizitisi.moliviPektis[pektis].remove();
+
+	// Κρατάμε το φρέσκο dom element μολυβιού που μόλις παραλάβαμε
+	// και σχηματίζουμε το μολύβι.
+
+	Arena.sizitisi.moliviPektis[pektis] = dom.parents('.sizitisi');
+	dom.append($('<div>').addClass('sizitisiMoliviContainer').
+	append($('<img>').addClass('sizitisiMolivi').
+	attr('src', 'ikona/endixi/grafi.gif')));
+};
+
+// Η function "moliviTelos" διαγράφει τυχόν μολύβι για τον παίκτη του οποίου
+// το login δίνουμε ως παράμετρο. Αν δεν περάσουμε παίκτη, τότε διαγράφονται
+// όλα τα μολύβια.
+
+Arena.sizitisi.moliviTelos = function(pektis) {
+	if (pektis === undefined) {
+		for (pektis in Arena.sizitisi.moliviPektis) {
+			Arena.sizitisi.moliviTelos(pektis);
+		}
+		return;
+	}
+
+	if (Arena.sizitisi.moliviPektis[pektis])
+	Arena.sizitisi.moliviPektis[pektis].remove();
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
@@ -434,7 +476,7 @@ Sizitisi.prototype.sizitisiSxolioCreateDOM = function(dom) {
 	// μολυβιού.
 
 	case 'MV':
-		Sizitisi.moliviEnarxi(this, dom);
+		Arena.sizitisi.moliviEnarxi(this, dom);
 		return this;
 
 	// Αν το πρώτο πεδίο του σχολίου είναι "KN" τότε πρόκειται για κόρνα από
@@ -471,46 +513,6 @@ Sizitisi.prototype.sizitisiSxolioCreateDOM = function(dom) {
 	}
 
 	return this;
-};
-
-// Στη λίστα "moliviPektis" κρατάμε τα dom elements των σχολίων μολιβιού
-// δεικτοδοτημένα με το login name του αντίστοιχου παίκτη.
-
-Sizitisi.moliviPektis = {};
-
-Sizitisi.moliviMoliviMin = 1;
-Sizitisi.moliviMoliviMax = 5;
-Sizitisi.moliviMolivi = Globals.random(Sizitisi.moliviMoliviMin, Sizitisi.moliviMoliviMax);
-
-Sizitisi.moliviEnarxi = function(sizitisi, dom) {
-	var pektis, molivi;
-
-	pektis = sizitisi.sizitisiPektisGet();
-
-	// Αρχικά διαγράφουμε τυχόν υπάρχον μολύβι για τον συγκεκριμένο
-	// παίκτη.
-
-	if (Sizitisi.moliviPektis[pektis])
-	Sizitisi.moliviPektis[pektis].remove();
-
-	// Κρατάμε το φρέσκο dom element μολυβιού που μόλις παραλάβαμε
-	// και σχηματίζουμε το μολύβι.
-
-	Sizitisi.moliviPektis[pektis] = dom.parents('.sizitisi');
-	dom.append($('<div>').addClass('sizitisiMoliviContainer').
-	append($('<img>').addClass('sizitisiMolivi').
-	attr('src', 'ikona/molivi/molivi' + Sizitisi.moliviMolivi + '.gif')));
-
-	if (++Sizitisi.moliviMolivi > Sizitisi.moliviMoliviMax)
-	Sizitisi.moliviMolivi = Sizitisi.moliviMoliviMin;
-};
-
-// Η function "moliviTelos" διαγράφει τυχόν μολύβι για τον παίκτη του οποίου
-// το login δίνουμε ως παράμετρο.
-
-Sizitisi.moliviTelos = function(pektis) {
-	if (Sizitisi.moliviPektis[pektis])
-	Sizitisi.moliviPektis[pektis].remove();
 };
 
 Sizitisi.kornaAppend = function(dom) {
