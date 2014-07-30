@@ -116,7 +116,8 @@ Arena.partida.enimerosiΑΛΛΑΓΗ = function() {
 	if (thesi == 1) {
 		if (Arena.ego.isPektis()) {
 			Arena.partida.enimerosiDOM.addClass('tsoxaEnimerosiΑΛΛΑΓΗactive');
-			kimeno = 'Αλλάξτε δύο φύλλα και δηλώστε την αγορά σας. Οι συμπαίκτες σας περιμένουν…';
+			kimeno = 'Αλλάξτε δύο φύλλα και δηλώστε την αγορά σας, ή γράψτε τα σόλο ' +
+				'στην ελάχιστη δυνατή αγορά. Οι συμπαίκτες σας περιμένουν…';
 			img = 'endixi/nevrikos.gif';
 			imgWidth = 40;
 		}

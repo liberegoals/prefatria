@@ -147,6 +147,11 @@ Arena.partida.clearDOM = function() {
 	return Arena.partida;
 };
 
+Arena.partida.dialogosClearDOM = function() {
+	Arena.partida.dialogosDOM.css('display', '').empty();
+	return Arena.partida;
+};
+
 Arena.partida.soloEndixiClearDOM = function() {
 	if (!Arena.partida.soloEndixiDOM)
 	return Arena.partida;
@@ -158,6 +163,7 @@ Arena.partida.soloEndixiClearDOM = function() {
 
 Arena.partida.trapeziRefreshDOM = function() {
 	Arena.partida.
+	dialogosClearDOM().
 	soloEndixiClearDOM().
 	peximoTheasiRefreshDOM().
 	dataPanoRefreshDOM().
