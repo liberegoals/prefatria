@@ -570,6 +570,7 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 		if (Arena.ego.oxiPektis()) return false;
 		if (Arena.ego.trapezi.trapeziIsIdioktito()) return false;
 		if (Arena.ego.oxiThesi(1)) return false;
+		if (Arena.ego.trapezi.trapeziIsDianomi()) return false;
 		return true;
 	},
 	click: function(e) {

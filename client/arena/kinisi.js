@@ -696,6 +696,7 @@ Skiniko.prototype.processKinisiPostTS = function(data) {
 		break;
 	case 'ΠΡΙΒΕ':
 		trapezi.trapeziDataRefreshDOM();
+		Client.sound.tic();
 		break;
 	default:
 		Client.sound.tic();
