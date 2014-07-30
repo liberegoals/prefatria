@@ -134,6 +134,7 @@ Trapezi.prototype.efoplismosΑΛΛΑΓΗ = function() {
 	efoplismosAlagiPanelArmatoma(this).
 	efoplismosAlagiXartosia(this);
 	Arena.partida.agoraPanelDOM.css('display', 'block');
+	Client.sound.bikebell();
 	return this;
 };
 
