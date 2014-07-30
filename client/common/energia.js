@@ -340,7 +340,7 @@ Trapezi.prototype.energiaSimetoxiPexnidiStart = function() {
 // ΦΥΛΛΟ
 
 Trapezi.prototype.processEnergiaΦΥΛΛΟ = function(energia) {
-	var xeri, fila, filo, i, epomenos;
+	var pektis, xeri, fila, filo, i, epomenos;
 
 	pektis = energia.energiaPektisGet();
 	xeri = this.partidaFilaGet(pektis);
@@ -412,7 +412,7 @@ Trapezi.prototype.processEnergiaCLAIM = function(energia) {
 // ΠΑΡΑΙΤΗΣΗ
 
 Trapezi.prototype.processEnergiaΠΑΡΑΙΤΗΣΗ = function(energia) {
-	var pektis;
+	var apodoxi, pektis;
 
 	apodoxi = (energia.energiaDataGet() === 'ΝΑΙ');
 	if (!apodoxi) return this.processEnergiaParetisiOxi(energia);
