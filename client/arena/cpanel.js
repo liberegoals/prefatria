@@ -673,6 +673,58 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 
 Arena.cpanel.bpanelButtonPush(new PButton({
 	omada: 2,
+	img: 'klisto.png',
+	title: 'Κλείσιμο φύλλων για τους θεατές',
+	check: function() {
+		if (Arena.trapeziOxiRithmisi(false)) return false;
+		return Arena.ego.trapezi.trapeziIsAnikto();
+	},
+	click: function(e) {
+		var img;
+
+		img = this.pbuttonIconGetDOM();
+		img.working(true);
+		Client.fyi.pano('Κλείσιμο φύλλων για τους θεατές. Παρακαλώ περιμένετε…', 0);
+		Client.skiserService('trparamSet', 'param=ΑΝΟΙΚΤΟ', 'timi=ΟΧΙ', 'apodoxi=1').
+		done(function(rsp) {
+			Client.fyi.pano(rsp);
+			img.working(false);
+		}).
+		fail(function(err) {
+			Client.skiserFail(err);
+			img.working(false);
+		});
+	},
+}));
+
+Arena.cpanel.bpanelButtonPush(new PButton({
+	omada: 2,
+	img: 'anikto.png',
+	title: 'Άνοιγμα φύλλων για τους θεατές',
+	check: function() {
+		if (Arena.trapeziOxiRithmisi(false)) return false;
+		return Arena.ego.trapezi.trapeziIsKlisto();
+	},
+	click: function(e) {
+		var img;
+
+		img = this.pbuttonIconGetDOM();
+		img.working(true);
+		Client.fyi.pano('Άνοιγμα φύλλων για τους θεατές. Παρακαλώ περιμένετε…', 0);
+		Client.skiserService('trparamSet', 'param=ΑΝΟΙΚΤΟ', 'timi=ΝΑΙ', 'apodoxi=1').
+		done(function(rsp) {
+			Client.fyi.pano(rsp);
+			img.working(false);
+		}).
+		fail(function(err) {
+			Client.skiserFail(err);
+			img.working(false);
+		});
+	},
+}));
+
+Arena.cpanel.bpanelButtonPush(new PButton({
+	omada: 2,
 	img: 'kasaPano.png',
 	title: 'Αύξηση κάσας',
 	check: function() {

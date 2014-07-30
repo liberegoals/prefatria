@@ -614,6 +614,18 @@ Trapezi.prototype.trapeziIsDimosio = function() {
 	return !this.trapeziIsPrive();
 };
 
+Trapezi.prototype.trapeziIsAnikto = function() {
+	var anikto;
+
+	anikto = this.trapeziTrparamGet('ΑΝΟΙΚΤΟ');
+	if (typeof anikto !== 'string') return true;
+	return anikto.isNai();
+};
+
+Trapezi.prototype.trapeziIsKlisto = function() {
+	return !this.trapeziIsAnikto();
+};
+
 Trapezi.prototype.trapeziSizitisiWalk = function(callback, dir) {
 	var keys = [];
 
