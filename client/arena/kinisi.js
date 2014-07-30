@@ -455,6 +455,7 @@ Skiniko.prototype.processKinisiPostRT = function(data) {
 		if (data.pektis.isEgo()) {
 			Arena.partida.refreshDOM();
 			Arena.kafenioModeSet();
+			Arena.kafenioDOM.finish().animate({scrollTop: 0}, 400, 'easeInQuint');
 		}
 		return this;
 	}
