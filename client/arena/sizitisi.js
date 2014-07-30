@@ -357,7 +357,7 @@ Arena.sizitisi.moliviStop = function() {
 	Arena.sizitisi.flags.molivi = false;
 };
 
-// Στη λίστα "moliviPektis" κρατάμε τα dom elements των σχολίων μολιβιού
+// Στη λίστα "moliviPektis" κρατάμε τα dom elements των σχολίων μολυβιού
 // δεικτοδοτημένα με το login name του αντίστοιχου παίκτη.
 
 Arena.sizitisi.moliviPektis = {};
