@@ -189,7 +189,7 @@ Service.sizitisi.moliviStart = function(nodereq) {
 	kinisiAdd(kinisi);
 };
 
-Service.sizitisi.moliviEnd = function(nodereq) {
+Service.sizitisi.moliviStop = function(nodereq) {
 	var pektis, trapezi, kinisi;
 
 	if (nodereq.isvoli()) return;

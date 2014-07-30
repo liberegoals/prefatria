@@ -1016,6 +1016,6 @@ Skiniko.prototype.processKinisiPostMV = function(data) {
 //	trapezi		Κωδικός τραπεζιού.
 
 Skiniko.prototype.processKinisiPostVM = function(data) {
-	Sizitisi.moliviTelos(data.pektis);
+	Arena.sizitisi.moliviTelos(data.pektis);
 	return this;
 };

@@ -410,7 +410,7 @@ Skiniko.prototype.processAlagesPartida = function(data, trapeziPrin) {
 			if (pektis.isEgo())
 			Arena.sizitisi.proepiskopisiDOM.empty();
 
-			Sizitisi.moliviTelos(pektis);
+			Arena.sizitisi.moliviTelos(pektis);
 			sizitisi.sizitisiCreateDOM();
 		});
 
