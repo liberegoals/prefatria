@@ -337,6 +337,22 @@ Arena.cpanel.claimButtonDOM = Arena.cpanel.bpanelButtonGet('claim').pbuttonGetDO
 
 Arena.cpanel.bpanelButtonPush(new PButton({
 	omada: 1,
+	img: 'araxni.png',
+	title: 'Επίδειξη προηγούμενης χαρτωσιάς',
+	check: function() {
+		return Arena.ego.isPektis();
+	},
+	click: function(e) {
+		if (Arena.ego.oxiPektis()) return;
+		Client.skiserService('filaPrev').
+		fail(function(err) {
+			Client.skiserFail(err);
+		});
+	},
+}));
+
+Arena.cpanel.bpanelButtonPush(new PButton({
+	omada: 1,
 	img: 'bugFix.png',
 	title: 'Ανανέωση σκηνικού',
 	click: function(e) {
@@ -349,15 +365,6 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 			Client.fyi.pano();
 			img.working(false);
 		});
-	},
-}));
-
-Arena.cpanel.bpanelButtonPush(new PButton({
-	omada: 1,
-	img: 'refresh.png',
-	title: 'Επαναφόρτωση σελίδας',
-	click: function(e) {
-		location.reload(true);
 	},
 }));
 
@@ -834,17 +841,10 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 
 Arena.cpanel.bpanelButtonPush(new PButton({
 	omada: 2,
-	img: 'araxni.png',
-	title: 'Επίδειξη προηγούμενης χαρτωσιάς',
-	check: function() {
-		return Arena.ego.isPektis();
-	},
+	img: 'refresh.png',
+	title: 'Επαναφόρτωση σελίδας',
 	click: function(e) {
-		if (Arena.ego.oxiPektis()) return;
-		Client.skiserService('filaPrev').
-		fail(function(err) {
-			Client.skiserFail(err);
-		});
+		location.reload(true);
 	},
 }));
 
