@@ -22,7 +22,7 @@ Arena.epanel.bpanelButtonPush(new PButton({
 	img: 'ikona/misc/mazemaPano.png',
 	title: 'Αρχική σειρά εργαλείων',
 	click: function(e) {
-		Arena.epanel.bpanelOmadaSet(1);
+		Arena.epanel.bpanelOmadaSet(2);
 		Arena.epanel.bpanelButtonGet('enalagi').pbuttonGetDOM().strofi({
 			strofi: -90,
 			duration: 200,
