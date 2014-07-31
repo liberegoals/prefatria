@@ -997,10 +997,10 @@ Trapezi.prototype.telefteaPliromiSet = function(posa) {
 		posa[idx] = parseInt(posa[idx]);
 		if (!posa[idx]) return;
 
-		kasa = Math.round(posa[idx] * (2.0 / 3.0));
+		kasa = posa[idx] * 2.0 / 3.0;
 		kapikia[thesi] += kasa;
 
-		asak = Math.round(kasa / 2.0);
+		asak = kasa / 2.0;
 		switch (thesi) {
 		case 1:
 			kapikia[2] -= asak;
@@ -1015,6 +1015,10 @@ Trapezi.prototype.telefteaPliromiSet = function(posa) {
 			kapikia[2] -= asak;
 			break;
 		}
+	});
+
+	Prefadoros.thesiWalk(function(thesi) {
+		kapikia[thesi] = Math.round(kapikia[thesi]);
 	});
 
 	// Προχωρούμε σε κάποια μικροδιόρθωση των ποσών που έχουν υπολογιστεί.
