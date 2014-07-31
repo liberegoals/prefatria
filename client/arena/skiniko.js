@@ -956,6 +956,77 @@ Trapezi.prototype.trapeziTheatisPushDOM = function(sinedria) {
 	return this;
 };
 
+// Η μέθοδος "telefteaPliromiSet" θέτει τα στοιχεία της λίστας "telefteaPliromi"
+// στα ποσά που κέρδισε ή έχασε καθένας από τους παίκτες στην τελευταία πληρωμή.
+// Μπορούμε να περάσουμε τα ποσά σε λίστα με δείκτες "kasa1", "metrita1", "kasa2",
+// "metrita2", "kasa3", "metrita3". Αν δεν περάσουμε λίστα ποσών, υποτίθενται τα
+// αντίστοιχα ποσά της προτελευταίας διανομής του τραπεζιού.
+
+Trapezi.prototype.telefteaPliromiSet = function(posa) {
+	var trapezi = this, dianomiArray, dianomi, kapikia;
+
+	this.telefteaPliromi = {
+		1: 0,
+		2: 0,
+		3: 0,
+	};
+
+	if (posa === undefined) {
+		dianomiArray = this.dianomiArray;
+		if (dianomiArray.length < 2) return this;
+
+		posa = {};
+		dianomi = dianomiArray[dianomiArray.length - 2];
+		Prefadoros.thesiWalk(function(thesi) {
+			posa['kasa' + thesi] = dianomi.dianomiKasaGet(thesi);
+			posa['metrita' + thesi] = dianomi.dianomiMetritaGet(thesi);
+		});
+	}
+
+	// Συντομογραφούμε το όνομα για απλούστευση του κώδικα που ακολουθεί.
+
+	kapikia = this.telefteaPliromi;
+	Prefadoros.thesiWalk(function(thesi) {
+		var idx, kasa, asak;
+
+		idx = 'metrita' + thesi;
+		posa[idx] = parseInt(posa[idx]);
+		if (posa[idx]) kapikia[thesi] += posa[idx];
+
+		idx = 'kasa' + thesi;
+		posa[idx] = parseInt(posa[idx]);
+		if (!posa[idx]) return;
+
+		kasa = Math.round(posa[idx] * (2.0 / 3.0));
+		kapikia[thesi] += kasa;
+
+		asak = Math.round(kasa / 2.0);
+		switch (thesi) {
+		case 1:
+			kapikia[2] -= asak;
+			kapikia[3] -= asak;
+			break;
+		case 2:
+			kapikia[1] -= asak;
+			kapikia[3] -= asak;
+			break;
+		case 3:
+			kapikia[1] -= asak;
+			kapikia[2] -= asak;
+			break;
+		}
+	});
+
+	// Προχωρούμε σε κάποια μικροδιόρθωση των ποσών που έχουν υπολογιστεί.
+	// Φροντίζουμε ώστε τυχόν ίδια ποσά να παραμείνουν ίδια.
+
+	if (kapikia[1] == kapikia[2]) kapikia[3] -= (kapikia[1] + kapikia[2] + kapikia[3]); 
+	else if (kapikia[1] == kapikia[3]) kapikia[2] -= (kapikia[1] + kapikia[2] + kapikia[3]); 
+	else kapikia[1] -= (kapikia[1] + kapikia[2] + kapikia[3]); 
+
+	return this;
+};
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 Prosklisi.prototype.prosklisiCreateDOM = function() {
