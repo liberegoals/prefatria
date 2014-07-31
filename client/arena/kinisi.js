@@ -901,9 +901,29 @@ Skiniko.prototype.processKinisiPostPD = function(data) {
 	if (Arena.ego.oxiTrapezi(data.trapezi))
 	return this;
 
+	trapezi.telefteaPliromiSet(data);
 	Arena.partida.
 	ipolipoRefreshDOM().
+	pliromiRefreshDOM().
 	pektisKapikiaRefreshDOM();
+
+	Arena.partida.pliromiIconDOM.data('emfanisPlirom', true);
+	$('.tsoxaPektisPliromi').finish().fadeIn(100);
+
+	return this;
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// DN -- Νέα διανομή
+//
+// Δεδομένα
+//
+// Προς το παρόν δεν χρησιμοποιούμε τα δεδομένα της διανομής.
+
+Skiniko.prototype.processKinisiPostDN = function(data) {
+	$('.tsoxaPektisPliromi').finish().fadeOut(600);
+	Arena.partida.falgs.telepli = false;
 	return this;
 };
 
