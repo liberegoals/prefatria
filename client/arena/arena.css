@@ -603,7 +603,7 @@ body {
 	border-color: rgba(231, 231, 104, 0.90);
 	text-align: center;
 
-	font-size: 68px;
+	font-size: 40px;
 	font-weight: bold;
 
 	background-color: rgba(231, 231, 104, 0.40);
@@ -613,6 +613,8 @@ body {
 }
 
 .tsoxaPektisPliromiPoso {
+	position: relative;
+	top: 10px;
 	display: inline;
 }
 
