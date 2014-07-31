@@ -207,6 +207,7 @@ Trapezi.prototype.processEnergiaΣΟΛΟ = function(energia) {
 		this.bazes[tzogadoros] = 5;
 		this.bazes[protos] = 3;
 		this.bazes[defteros] = 2;
+		break;
 	case 8:
 		this.bazes[tzogadoros] = 6;
 		this.bazes[protos] = 2;
