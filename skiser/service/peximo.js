@@ -13,7 +13,11 @@ Service.peximo.peximo = function(nodereq) {
 	if (nodereq.denPerastike('pektis', true)) return;
 	if (nodereq.denPerastike('filo', true)) return;
 
-	if (Prefadoros.oxiThesi(nodereq.url.pektis)) return nodereq.error('ακαθόριστη θέση δηλούντος');
+	// Ελέγχουμε και μετατρέπουμε σε ακέραιο τη θέση του παίκτη
+	// που παίζει το φύλλο.
+
+	if (Prefadoros.oxiThesi(nodereq.url.pektis))
+	return nodereq.error('ακαθόριστη θέση παίκτη');
 	nodereq.url.pektis = parseInt(nodereq.url.pektis);
 
 	data = {
@@ -40,6 +44,8 @@ Service.peximo.peximo = function(nodereq) {
 };
 
 Service.peximo.peximo2 = function(data) {
+	var query;
+
 	data.kinisiPeximo = new Kinisi({
 		idos: 'EG',
 		data: {
@@ -82,8 +88,9 @@ Service.peximo.peximo2 = function(data) {
 };
 
 Service.peximo.pliromi = function(data) {
-	var dianomi = data.dianomi, query;
+	var dianomi, query;
 
+	dianomi = data.dianomi;
 	query = 'UPDATE `dianomi` SET ' +
 		'`kasa1` = ' + dianomi.dianomiKasaGet(1) + ', `metrita1` = ' + dianomi.dianomiMetritaGet(1) + ', ' +
 		'`kasa2` = ' + dianomi.dianomiKasaGet(2) + ', `metrita2` = ' + dianomi.dianomiMetritaGet(2) + ', ' +
@@ -104,8 +111,9 @@ Service.peximo.pliromi = function(data) {
 };
 
 Service.peximo.pliromi2 = function(data) {
-	var dianomi = data.dianomi, kinisiPliromi;
+	var dianomi, kinisiPliromi;
 
+	dianomi = data.dianomi;
 	data.conn.commit();
 	delete data.conn;
 
