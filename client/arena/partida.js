@@ -563,6 +563,7 @@ Arena.partida.pektisRefreshDOM = function(thesi) {
 
 	switch (Arena.ego.trapezi.partidaFasiGet()) {
 	case 'ΠΑΙΧΝΙΔΙ':
+	case 'CLAIM':
 	case 'ΠΛΗΡΩΜΗ':
 		if (Arena.ego.trapezi.sdilosi[thesi]) {
 			if (Arena.ego.trapezi.sdilosi[thesi].simetoxiIsPaso())
