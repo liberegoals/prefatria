@@ -585,6 +585,62 @@ body {
 	background-repeat: repeat;
 }
 
+#tsoxaPliromiIcon {
+	position:absolute;
+	top: 40px;
+	left: 263px;
+	width: 30px;
+	cursor: pointer;
+}
+
+.tsoxaPektisPliromi {
+	display: none;
+	position: absolute;
+	width: 206px;
+	text-align: center;
+
+	font-size: 68px;
+	font-weight: bold;
+
+	z-index: 1;
+}
+
+.tsoxaPektisPliromiPoso {
+	display: inline;
+	padding: 0 25px;
+	background-color: #E7E768;
+	border-radius: 10px;
+}
+
+.tsoxaPektisPliromiPosoSin {
+	color: #0A345A;
+	text-shadow: 2px 2px 2px #272B8A;
+}
+
+.tsoxaPektisPliromiPosoSin:before {
+	content: '+';
+}
+
+.tsoxaPektisPliromiPosoMion {
+	color: #7A0505;
+	text-shadow: 2px 2px 2px #130C31;
+}
+
+#tsoxaPektisPliromi3 {
+	top: 40px;
+	left: 10px;
+}
+
+#tsoxaPektisPliromi2 {
+	top: 40px;
+	right: 10px;
+}
+
+#tsoxaPektisPliromi1 {
+	bottom: 40px;
+	left: 10px;
+}
+
 /********************************************************************************************************************/
 
 .tsoxaPektisDilosi {
