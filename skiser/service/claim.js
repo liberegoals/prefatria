@@ -110,6 +110,8 @@ Service.claim.apantisi = function(nodereq) {
 };
 
 Service.claim.apantisi2 = function(data) {
+	var query;
+
 	data.kinisiParetisi = new Kinisi({
 		idos: 'EG',
 		data: {
@@ -152,13 +154,16 @@ Service.claim.apantisi2 = function(data) {
 };
 
 Service.claim.apantisi3 = function(data) {
-	var energiaArray, i;
+	var energiaArray, i, query;
 
 	energiaArray = data.dianomi.energiaArray;
 	for (i = 0; i < energiaArray.length; i++) {
-		if (energiaArray[i].energiaIdosGet() === 'CLAIM') break;
+		if (energiaArray[i].energiaIdosGet() === 'CLAIM')
+		break;
 	}
-	if (i >= energiaArray.length) return Service.claim.apotixia(data, 'Δεν βρέθηκε ενέργεια claim');
+
+	if (i >= energiaArray.length)
+	return Service.claim.apotixia(data, 'Δεν βρέθηκε ενέργεια claim');
 
 	query = 'DELETE FROM `energia` WHERE `dianomi` = ' + data.dianomiKodikos +
 		' AND `kodikos` >= ' + energiaArray[i].energiaKodikosGet();
@@ -198,8 +203,9 @@ Service.claim.apantisi4 = function(data) {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
 
 Service.claim.pliromi = function(data) {
-	var dianomi = data.dianomi, query;
+	var dianomi, query;
 
+	dianomi = data.dianomi;
 	query = 'UPDATE `dianomi` SET ' +
 		'`kasa1` = ' + dianomi.dianomiKasaGet(1) + ', `metrita1` = ' + dianomi.dianomiMetritaGet(1) + ', ' +
 		'`kasa2` = ' + dianomi.dianomiKasaGet(2) + ', `metrita2` = ' + dianomi.dianomiMetritaGet(2) + ', ' +
@@ -220,7 +226,7 @@ Service.claim.pliromi = function(data) {
 };
 
 Service.claim.pliromi2 = function(data) {
-	var dianomi = data.dianomi, kinisiPliromi;
+	var kinisiPliromi;
 
 	data.conn.commit();
 	delete data.conn;
