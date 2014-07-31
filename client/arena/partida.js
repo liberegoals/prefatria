@@ -36,6 +36,13 @@ Arena.partida.flags = {
 	// control panel.
 
 	azab: false,
+
+	// Η flag "telepli" δείχνει αν τα καπίκια της τελευταίας πληρωμής είναι
+	// εμφανή ή έχουν αποκρυβεί. Η τιμή της flag αλλάζει είτε με κλικ στο
+	// σχετικό εικονίδιο, είτε αυτόματα εφόσον χρειαστεί να αποκρυβούν ή να
+	// εμφανιστούν τα καπίκια της τελευταίας διανομής.
+
+	telepli: false,
 };
 
 Arena.partida.niofertosView = function() {
@@ -48,6 +55,14 @@ Arena.partida.isFanera23 = function() {
 
 Arena.partida.oxiFanera23 = function() {
 	return !Arena.partida.isFanera23();
+};
+
+Arena.partida.isTelepli = function() {
+	return Arena.partida.flags.telepli;
+};
+
+Arena.partida.oxiTelepli = function() {
+	return !Arena.partida.isTelepli();
 };
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
@@ -68,6 +83,9 @@ Arena.partida.setup = function() {
 
 		filaDOM = Arena.partida['fila' + thesi + 'DOM'] = $('<div>').attr('id', 'tsoxaFila' + thesi).
 		addClass('tsoxaFila').appendTo(Arena.partida.tsoxaDOM);
+
+		Arena.partida['pliromi' + thesi + 'DOM'] = $('<div>').attr('id', 'tsoxaPektisPliromi' + thesi).
+		addClass('tsoxaPektisPliromi').appendTo(Arena.partida.tsoxaDOM);
 
 		if (thesi === 1) return;
 
@@ -106,6 +124,28 @@ Arena.partida.setup = function() {
 	Arena.partida.theatisDOM = $('<div>').attr('id', 'theatis').appendTo(Arena.partida.tsoxaDOM);
 	Arena.partida.optionsDOM = $('<div>').attr('id', 'tsoxaOptions').appendTo(Arena.partidaDOM);
 	Arena.partida.soloEndixiDOM = null;
+	Arena.partida.setupPliromi();
+
+	return Arena;
+};
+
+Arena.partida.setupPliromi = function() {
+	Arena.partida.pliromiIconDOM = $('<img>').attr({
+		id: 'tsoxaPliromiIcon',
+		src: 'ikona/panel/kapikia.png',
+		title: 'Καπίκια τελευταίας πληρωμής',
+	}).
+	on('click', function(e) {
+		Arena.inputRefocus(e);
+		Arena.partida.flags.telepli = !Arena.partida.flags.telepli;
+
+		if (Arena.partida.isTelepli())
+		$('.tsoxaPektisPliromi').finish().fadeIn(100);
+
+		else
+		$('.tsoxaPektisPliromi').finish().fadeOut(200);
+	}).appendTo(Arena.partida.tsoxaDOM);
+
 	return Arena;
 };
 
@@ -168,6 +208,7 @@ Arena.partida.trapeziRefreshDOM = function() {
 	peximoTheasiRefreshDOM().
 	dataPanoRefreshDOM().
 	dataKatoRefreshDOM().
+	pliromiRefreshDOM().
 	enimerosiRefreshDOM().
 	pektisRefreshDOM().
 	dixeKripseFila().
@@ -404,6 +445,46 @@ Arena.partida.ipolipoRefreshDOM = function(dom) {
 		if (ipolipo < 300) dom.addClass('tsoxaIpolipoLigo');
 		else dom.removeClass('tsoxaIpolipoLigo');
 	}
+
+	return Arena.partida;
+};
+
+Arena.partida.pliromiRefreshDOM = function() {
+	var kapikia;
+
+	$('.tsoxaPektisPliromi').empty();
+
+	if (Arena.ego.oxiTrapezi()) {
+		Arena.partida.pliromiIconDOM.css('display', 'none');
+		return Arena.partida;
+	}
+
+	Arena.partida.pliromiIconDOM.css('display', 'block');
+	if (!Arena.ego.trapezi.telefteaPliromi)
+	Arena.ego.trapezi.telefteaPliromiSet();
+
+	kapikia = Arena.ego.trapezi.telefteaPliromi;
+	Arena.ego.trapezi.trapeziThesiWalk(function(thesi) {
+		var iseht, pliromiDom, posoDom;
+
+		if (kapikia[thesi] === 0) return;
+
+		// Εντοπίζουμε το DOM element εμφάνισης πληρωμής για την
+		// ανά χείρας θέση.
+
+		iseht = Arena.ego.thesiMap(thesi);
+		pliromiDom = Arena.partida['pliromi' + iseht + 'DOM'];
+		pliromiDom.empty();
+
+		// Δημιουργούμε το DOM element του ποσού που αντιστοιχεί στην
+		// ανά χείρας θέση.
+
+		posoDom = $('<div>').removeClass('tsoxaPektisPliromiPosoSin tsoxaPektisPliromiPosoMion').
+		text(kapikia[thesi]).addClass('tsoxaPektisPliromiPoso').
+		addClass(kapikia[thesi] > 0 ? 'tsoxaPektisPliromiPosoSin' : 'tsoxaPektisPliromiPosoMion');
+
+		pliromiDom.append(posoDom);
+	});
 
 	return Arena.partida;
 };
