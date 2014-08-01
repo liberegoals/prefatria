@@ -348,8 +348,14 @@ Arena.sizitisi.proepiskopisiClearDOM = function() {
 };
 
 Arena.sizitisi.moliviStart = function() {
+	var params;
+
+	params = '';
+	if (Arena.kafenioMode()) params += '&kafenio';
+	else if (Arena.ego.oxiTrapezi()) return;
+
 	Arena.sizitisi.flags.molivi = true;
-	Client.skiserService('moliviStart');
+	Client.skiserService('moliviStart', params);
 };
 
 Arena.sizitisi.moliviStop = function() {
@@ -363,9 +369,19 @@ Arena.sizitisi.moliviStop = function() {
 Arena.sizitisi.moliviPektis = {};
 
 Arena.sizitisi.moliviEnarxi = function(sizitisi, dom) {
-	var pektis, molivi;
+	var pektis, molivi, klasi;
 
 	pektis = sizitisi.sizitisiPektisGet();
+	switch (sizitisi.sizitisiSxolioGet()) {
+	case 'MVT':
+		molivi = 'grafi';
+		klasi = 'sizitisiMoliviTrapezi';
+		break;
+	default:
+		molivi = 'pliktrologisi';
+		klasi = 'sizitisiMoliviKafenio';
+		break;
+	}
 
 	// Αρχικά διαγράφουμε τυχόν υπάρχον μολύβι για τον συγκεκριμένο
 	// παίκτη.
@@ -378,8 +394,8 @@ Arena.sizitisi.moliviEnarxi = function(sizitisi, dom) {
 
 	Arena.sizitisi.moliviPektis[pektis] = dom.parents('.sizitisi');
 	dom.append($('<div>').addClass('sizitisiMoliviContainer').
-	append($('<img>').addClass('sizitisiMolivi').
-	attr('src', 'ikona/endixi/grafi.gif')));
+	append($('<img>').addClass(klasi).
+	attr('src', 'ikona/endixi/' + molivi + '.gif')));
 };
 
 // Η function "moliviTelos" διαγράφει τυχόν μολύβι για τον παίκτη του οποίου
@@ -472,10 +488,11 @@ Sizitisi.prototype.sizitisiSxolioCreateDOM = function(dom) {
 		dom.append(sxolio);
 		return this;
 
-	// Αν το πρώτο πεδίο του σχολίου είναι "MV" τότε πρόκειται για έναρξη
+	// Αν το πρώτο πεδίο του σχολίου είναι "MV[KT]" τότε πρόκειται για έναρξη
 	// μολυβιού.
 
-	case 'MV':
+	case 'MVT':
+	case 'MVK':
 		Arena.sizitisi.moliviEnarxi(this, dom);
 		return this;
 

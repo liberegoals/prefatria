@@ -62,11 +62,12 @@ Service.sizitisi.klisimo = function(nodereq, kodikos, trapezi) {
 	processKinisi(kinisi).
 	kinisiAdd(kinisi);
 
-	// Καλό είναι να διαγράψουμε και τυχόν εγγραφή που
-	// ίσως έχει κρατηθεί για το μολύβι κατά την έναρξη
+	// Καλό είναι να διαγράψουμε και τυχόν εγγραφές που
+	// ίσως έχουν κρατηθεί για το μολύβι κατά την έναρξη
 	// γραφής του σχολίου.
 
 	delete Service.sizitisi.moliviTrapezi[nodereq.login];
+	delete Service.sizitisi.moliviKafenio[nodereq.login];
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
@@ -166,45 +167,67 @@ Service.sizitisi.kontemaTrapezi = function(trapezi) {
 
 Service.sizitisi.moliviTrapezi = {};
 
+// Στη λίστα "moliviKafenio" κρατάμε μια εγγραφή για κάθε παίκτη που προκαλεί
+// εκκίνηση μολυβιού στο καφενείο.
+
+Service.sizitisi.moliviKafenio = {};
+
 Service.sizitisi.moliviStart = function(nodereq) {
-	var pektis, trapezi, kinisi;
+	var pektis, trapezi, kafenio, kinisi;
 
 	if (nodereq.isvoli()) return;
-	if (nodereq.oxiTrapezi()) return;
 	nodereq.end();
 
 	pektis = nodereq.loginGet();
 	trapezi = nodereq.trapeziGet();
-	trapezi = trapezi.trapeziKodikosGet();
-
-	Service.sizitisi.moliviTrapezi[pektis] = trapezi;
+	kafenio = nodereq.perastike('kafenio');
 
 	kinisi = new Kinisi('MV');
 	kinisi.data = {
 		pektis: pektis,
-		trapezi: trapezi,
 	};
+
+	if (trapezi) {
+		Service.sizitisi.moliviTrapezi[pektis] = trapezi;
+		kinisi.data.trapezi = trapezi.trapeziKodikosGet();
+	}
+
+	if (kafenio) {
+		Service.sizitisi.moliviKafenio[pektis] = true;
+		kinisi.data.kafenio = 1;
+	}
 
 	Server.skiniko.
 	kinisiAdd(kinisi);
 };
 
 Service.sizitisi.moliviStop = function(nodereq) {
-	var pektis, trapezi, kinisi;
+	var pektis, trapezi, kafenio, kinisi;
 
 	if (nodereq.isvoli()) return;
 	nodereq.end();
 
 	pektis = nodereq.loginGet();
+
 	trapezi = Service.sizitisi.moliviTrapezi[pektis];
 	delete Service.sizitisi.moliviTrapezi[pektis];
-	if (!trapezi) return;
+
+	kafenio = Service.sizitisi.moliviKafenio[pektis];
+	delete Service.sizitisi.moliviKafenio[pektis];
+
+	if ((!trapezi) && (!kafenio))
+	return;
 
 	kinisi = new Kinisi('VM');
 	kinisi.data = {
 		pektis: pektis,
-		trapezi: trapezi,
-	};
+	}
+
+	if (trapezi)
+	kinisi.data.trapezi = trapezi.trapeziKodikosGet();
+
+	if (kafenio)
+	kinisi.data.kafenio = 1;
 
 	Server.skiniko.
 	kinisiAdd(kinisi);
