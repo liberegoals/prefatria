@@ -791,7 +791,7 @@ Skiniko.prototype.processKinisiPostTT = function(data) {
 //	sxolio		Το σχόλιο αυτό καθαυτό.
 
 Skiniko.prototype.processKinisiPostSZ = function(data) {
-	var tsoxa, trapezi, sizitisi, xoros;
+	var sizitisi, pektis;
 
 	// Τα σχόλια συζήτησης που αφορούν στο τραπέζι μεταφέρονται με τα
 	// δεδομένα παρτίδας και όχι μέσω κινήσεων.
@@ -804,8 +804,9 @@ Skiniko.prototype.processKinisiPostSZ = function(data) {
 	sizitisi = this.skinikoSizitisiGet(data.kodikos);
 	if (!sizitisi) return this;
 
-	if (sizitisi.sizitisiPektisGet().isEgo())
-	Arena.sizitisi.proepiskopisiClearDOM();
+	pektis = sizitisi.sizitisiPektisGet();
+	if (pektis.isEgo()) Arena.sizitisi.proepiskopisiClearDOM();
+	else Arena.sizitisi.moliviTelos(pektis);
 
 	sizitisi.sizitisiCreateDOM();
 	Arena.sizitisi.scrollKato();
@@ -1001,23 +1002,15 @@ Skiniko.prototype.processKinisiPostKN = function(data) {
 //
 //	pektis		Login name του παίκτη.
 //	trapezi		Κωδικός τραπεζιού.
+//	kafenio		Δείχνει αν το μολύβι αφορά στο καφενείο.
 
 Skiniko.prototype.processKinisiPostMV = function(data) {
 	var sizitisi;
 
-	// Αν το μολύβι που παραλάβαμε αφορά σε άλλο τραπέζι από
-	// αυτό που είμαστε τώρα, το αγνοούμε.
-
-	if (Arena.ego.oxiTrapezi(data.trapezi))
-	return this;
-
-	// Αλλιώς δημιουργούμε φευδοrecord συζήτησης με την ένδειξη
-	// του μολυβιού και το εντάσσουμε στη συζήτηση της παρτίδας.
-
 	sizitisi = new Sizitisi({
 		pektis: data.pektis,
 		trapezi: data.trapezi,
-		sxolio: 'MV',
+		sxolio: data.kafenio ? 'MVK' : 'MVT',
 	});
 
 	sizitisi.sizitisiCreateDOM();

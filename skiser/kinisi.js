@@ -233,6 +233,12 @@ Kinisi.prototype.isAdiaforiMV = function(sinedria) {
 	if (sinedria.sinedriaPektisGet() == this.data.pektis)
 	return true;
 
+	// Αν το μολύβι εκκίνησε ενώ ο παίκτης βρισκόταν στο καφενείο,
+	// τότε αφορά τους πάντες.
+
+	if (this.data.kafenio)
+	return false;
+
 	// Για τους υπόλοιπους διαλέγουμε αυτούς που βρίσκονται
 	// στο ίδιο τραπέζι.
 
@@ -242,6 +248,9 @@ Kinisi.prototype.isAdiaforiMV = function(sinedria) {
 Kinisi.prototype.isAdiaforiVM = function(sinedria) {
 	if (sinedria.sinedriaPektisGet() == this.data.pektis)
 	return true;
+
+	if (this.data.kafenio)
+	return false;
 
 	return sinedria.sinedriaOxiTrapezi(this.data.trapezi);
 };

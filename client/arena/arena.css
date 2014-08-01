@@ -1567,11 +1567,16 @@ cursor: auto;
 	display: inline-block;
 }
 
-.sizitisiMolivi {
+.sizitisiMoliviKafenio {
 	position: absolute;
-	bottom: 0;
-	height: 20px;
-	max-width: 46px;
+	bottom: -2px;
+	height: 12px;
+}
+
+.sizitisiMoliviTrapezi {
+	position: absolute;
+	bottom: -1px;
+	height: 18px;
 }
 
 /***********************************************************************************************************************/
