@@ -1,4 +1,10 @@
-Arena.sizitisi = {};
+Arena.sizitisi = {
+	// Η παράμετρος "lexiMax" δείχνει το μέγιστο μήκος λέξης
+	//σχολίου συζήτησης. Τίθεται περιορισμός ώστε να μην
+	// απλώνεται η περιοχή της συζήτησης από μεγάλες λέξεις.
+
+	lexiMax: 40,
+};
 
 Arena.sizitisi.flags = {
 	pagomeni: false,
@@ -471,7 +477,7 @@ Sizitisi.prototype.sizitisiCreateDOM = function(pro) {
 };
 
 Sizitisi.prototype.sizitisiSxolioCreateDOM = function(dom) {
-	var sxolio, tmima, dom, html, i;
+	var sxolio, tmima, dom, html, i, lexi, j;
 
 	sxolio = this.sizitisiSxolioGet();
 	tmima = sxolio.split('^');
@@ -526,6 +532,16 @@ Sizitisi.prototype.sizitisiSxolioCreateDOM = function(dom) {
 		}
 
 		sxolio = tmima[i].replace(/</g, '&lt;');
+		lexi = sxolio.split(/[ ]/);
+		Arena.sizitisi.lexiMax = 40;
+		sxolio = null;
+		for (j = 0; j < lexi.length; j++) {
+			if (lexi[j].length > Arena.sizitisi.lexiMax)
+			lexi[j] = lexi[j].substr(0, Arena.sizitisi.lexiMax);
+
+			if (sxolio === null) sxolio = lexi[j];
+			else sxolio += ' ' + lexi[j];
+		}
 		dom.append(sxolio);
 	}
 
@@ -589,10 +605,10 @@ Sizitisi.ikonaAppend = function(dom, s) {
 	for (i = 0; i < s.length; i++) {
 		switch (s.substr(i, 1)) {
 		case '+':
-			sinPlin.push(2);
+			sinPlin.push(1.5);
 			break;
 		case '-':
-			sinPlin.push(0.5);
+			sinPlin.push(0.75);
 			break;
 		default:
 			sinPlin = [];
@@ -608,7 +624,7 @@ Sizitisi.ikonaAppend = function(dom, s) {
 	if (!sinPlin.length)
 	return;
 
-	width = 80;
+	width = 100;
 	for (i = 0; i < sinPlin.length; i++) {
 		width *= sinPlin[i];
 	}
