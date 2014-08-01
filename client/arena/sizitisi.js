@@ -7,9 +7,22 @@ Arena.sizitisi = {
 };
 
 Arena.sizitisi.flags = {
+	// Η flag "pagomeni" δείχνει αν η περιοχή της συζήτησης είναι
+	// σταθερή και δεν σκρολάρει κάθε φορά που εμφανίζεται κάποιο
+	// καινούριο σχόλιο.
+
 	pagomeni: false,
+
+	// Η flag "molivi" δείχνει αν ο χρήστης έχει αρχινημένο μολύβι.
+	// Το μολύβι εκκινεί κάθε φορά που ο χρήστης αρχίζει να γράφει
+	// στο πεδίο εισαγωγής σχολίων, και παύει όταν ο χρήστης καθαρίσει
+	// το πεδίο, ή με την παραλαβή σχολίου του συγκεκριμένου χρήστη
+	// από τον server.
+
 	molivi: false,
 };
+
+// Η function "isPagomeni" δείχνει αν η περιοχή συζήτησης είναι παγωμένη.
 
 Arena.sizitisi.isPagomeni = function() {
 	return Arena.sizitisi.pagomeni;
@@ -18,6 +31,8 @@ Arena.sizitisi.isPagomeni = function() {
 Arena.sizitisi.oxiPagomeni = function() {
 	return !Arena.sizitisi.isPagomeni();
 };
+
+// Η function "isMolivi" δείχνει αν ο χρήστης έχει αρχινημένο μολύβι.
 
 Arena.sizitisi.isMolivi = function() {
 	return Arena.sizitisi.flags.molivi;
@@ -104,7 +119,6 @@ Arena.sizitisi.panel.bpanelButtonPush(new PButton({
 	title: 'Καθαρισμός πεδίου εισαγωγής σχολίου',
 	click: function(e) {
 		Arena.sizitisi.katharismos();
-		Arena.sizitisi.moliviTelos();
 	},
 }));
 
@@ -304,8 +318,7 @@ Arena.sizitisi.keyup = function(e) {
 		pote: Globals.toraServer(),
 	}).sizitisiCreateDOM(true);
 
-	if (Arena.sizitisi.oxiMolivi())
-	Arena.sizitisi.moliviStart();
+	Arena.sizitisi.moliviEkinisi();
 
 	return Arena;
 };
@@ -320,10 +333,12 @@ Arena.sizitisi.apostoli = function() {
 	}
 
 	// Κατά την αποστολή δεν κάνουμε καθαρισμό μολυβιού με την
-	// κλασική διαδικασία, καθώς το μολύβι θα «καθαρίσει» όταν
-	// θα προστεθεί το σχόλιο της συζήτησης που αποστέλλεται.
-	// Απλώς ακυρώνουμε το μολύβι τοπικά, ώστε να μπορεί να
-	// επανεκκινήσει όταν ο χρήστης ξεκινήσει νέο σχόλιο.
+	// κλασική διαδικασία, καθώς το μολύβι θα «καθαρίσει» στους
+	// διάφορους clients όταν θα παραλάβουν το σχόλιο συζήτησης
+	// που αποστέλλεται τώρα. Απλώς ακυρώνουμε το μολύβι τοπικά,
+	// ώστε να μπορεί να επανεκκινήσει όταν ο χρήστης ξεκινήσει
+	// νέο σχόλιο. Έτσι γλιτώνουμε κλήσεις στον skiser και ίσως
+	// να έχουμε και ορθότερη ακύρωση του μολυβιού στους clients.
 
 	Arena.sizitisi.flags.molivi = false;
 
@@ -342,37 +357,71 @@ Arena.sizitisi.apostoli = function() {
 Arena.sizitisi.katharismos = function() {
 	Arena.sizitisi.inputDOM.val('');
 	Arena.sizitisi.proepiskopisiClearDOM();
-
-	if (Arena.sizitisi.isMolivi())
-	Arena.sizitisi.moliviStop();
+	Arena.sizitisi.moliviAkirosi();
 
 	return Arena;
 };
 
 Arena.sizitisi.proepiskopisiClearDOM = function() {
 	Arena.sizitisi.proepiskopisiDOM.empty();
+
+	return Arena;
 };
 
-Arena.sizitisi.moliviStart = function() {
-	var params;
+// Η function "moliviEkinisi" κοινοποιεί το μολύβι του χρήστη στους
+// εμπλεκόμενους clients.
 
-	params = '';
-	if (Arena.kafenioMode()) params += '&kafenio';
-	else if (Arena.ego.oxiTrapezi()) return;
+Arena.sizitisi.moliviEkinisi = function() {
+	var service;
+
+	// Αν έχουμε ήδη κοινοποιήσει μολύβι του χρήστη δεν
+	// προχωρούμε σε περαιτέρω ενέργειες.
+
+	if (Arena.sizitisi.isMolivi())
+	return Arena;
+
+	service = 'moliviEkinisi';
+
+	// Αν ο χρήστης εκκινεί τη γραφή σχολίου καθώς βρίσκεται
+	// σε mode καφενείου, το μολύβι θα πρέπει να είναι μολύβι
+	// καφενείου και θα πρέπει να κοινοποιηθεί σε όλους.
+
+	if (Arena.kafenioMode())
+	service += '&kafenio';
+
+	// Αλλιώς ο χρήστης βρίσκεται σε mode παρτίδας, επομένως
+	// θα πρέπει να γίνει κοινοποίηση μολυβιού στους παίκτες
+	// και στους θεατές του τραπεζιού του χρήστη.
+
+	// Αν ο χρήστης δεν έχει καθορισμένο τραπέζι, παρ' όλο
+	// που βρίσκεται σε mode παρτίδας, τότε δεν χρειάζεται
+	// να γίνει καμια κοινοποίηση μολυβιού.
+
+	else if (Arena.ego.oxiTrapezi())
+	return;
 
 	Arena.sizitisi.flags.molivi = true;
-	Client.skiserService('moliviStart', params);
+	Client.skiserService('moliviEkinisi');
+
+	return Arena;
 };
 
-Arena.sizitisi.moliviStop = function() {
-	Client.skiserService('moliviStop');
+Arena.sizitisi.moliviAkirosi = function() {
+	if (Arena.sizitisi.oxiMolivi())
+	return Arena;
+
 	Arena.sizitisi.flags.molivi = false;
+	Client.skiserService('moliviAkirosi');
 };
 
 // Στη λίστα "moliviPektis" κρατάμε τα dom elements των σχολίων μολυβιού
 // δεικτοδοτημένα με το login name του αντίστοιχου παίκτη.
 
 Arena.sizitisi.moliviPektis = {};
+
+// Η function "moliviEnarxi" δέχεται ένα record συζήτησης μολυβιού και
+// το αντίστοιχο DOM element και σχηματίζει το μολύβι ανάλογα με το αν
+// πρόκειται για μολύβι καφενείου ή τραπεζιού.
 
 Arena.sizitisi.moliviEnarxi = function(sizitisi, dom) {
 	var pektis, molivi, klasi;

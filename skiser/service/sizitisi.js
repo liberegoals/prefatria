@@ -172,7 +172,7 @@ Service.sizitisi.moliviTrapezi = {};
 
 Service.sizitisi.moliviKafenio = {};
 
-Service.sizitisi.moliviStart = function(nodereq) {
+Service.sizitisi.moliviEkinisi = function(nodereq) {
 	var pektis, trapezi, kafenio, kinisi;
 
 	if (nodereq.isvoli()) return;
@@ -201,7 +201,7 @@ Service.sizitisi.moliviStart = function(nodereq) {
 	kinisiAdd(kinisi);
 };
 
-Service.sizitisi.moliviStop = function(nodereq) {
+Service.sizitisi.moliviAkirosi = function(nodereq) {
 	var pektis, trapezi, kafenio, kinisi;
 
 	if (nodereq.isvoli()) return;
