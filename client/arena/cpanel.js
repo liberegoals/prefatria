@@ -667,7 +667,7 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 		img = this.pbuttonIconGetDOM();
 		img.working(true);
 		Client.fyi.pano('Μετατροπή τραπεζιού σε ελεύθερο. Παρακαλώ περιμένετε…', 0);
-		Client.skiserService('trparamSet', 'param=ΙΔΙΟΚΤΗΤΟ', 'timi=ΟΧΙ').
+		Client.skiserService('trparamSet', 'param=ΙΔΙΟΚΤΗΤΟ', 'timi=ΟΧΙ', 'apodoxi=1').
 		done(function(rsp) {
 			Client.fyi.pano(rsp);
 			img.working(false);
