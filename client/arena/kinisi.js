@@ -1009,9 +1009,39 @@ Skiniko.prototype.processKinisiPostMV = function(data) {
 
 	sizitisi = new Sizitisi({
 		pektis: data.pektis,
-		trapezi: data.trapezi,
 		sxolio: data.kafenio ? 'MVK' : 'MVT',
 	});
+
+	// Αν το μολύβι έχει εκκινήσει από το καφενείο, τότε θα πρέπει
+	// να φανεί στη συζήτηση του καφενείου.
+
+	if (data.kafenio) {
+		sizitisi.sxolio = 'MVK';
+
+		// Αν βρισκόμαστε σε mode παρτίδας και βρισκόμαστε στο
+		// ίδιο τραπέζι με τον παίκτη που εκκίνησε το μολύβι,
+		// τότε προτιμούμε την εμφάνιση του μολυβιού στη συζήτηση
+		// του τραπεζιού.
+
+		if (Arena.partidaMode() && Arena.ego.isTrapezi(data.trapezi))
+		sizitisi.trapezi = data.trapezi;
+	}
+
+	// Αλλιώς το μολύβι έχει ξεκινήσει σε mode τραπεζιού. Σ' αυτή την
+	// περίπτωση θα εμφανίσουμε μολύβι παρτίδας ση συζήτηση της παρτίδας
+	// εφόσον βρσικόμαστε στο ίδιο τραπέζι.
+
+	else if (Arena.ego.isTrapezi(data.trapezi)) {
+		sizitisi.trapezi = data.trapezi;
+		sizitisi.sxolio = 'MVT';
+	}
+
+	// Το μολύβι είναι μολύβι παρτίδας και έχει εκκινήσει σε άλλο τραπέζι
+	// από αυτό που βρισκόμαστε τώρα, επομένως δεν χρειάζεται να κάνουμε
+	// καμια περαιτέρω ενέργεια.
+
+	else
+	return this;
 
 	sizitisi.sizitisiCreateDOM();
 	Arena.sizitisi.scrollKato();

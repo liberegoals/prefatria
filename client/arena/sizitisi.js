@@ -372,7 +372,7 @@ Arena.sizitisi.proepiskopisiClearDOM = function() {
 // εμπλεκόμενους clients.
 
 Arena.sizitisi.moliviEkinisi = function() {
-	var service;
+	var mode = null;
 
 	// Αν έχουμε ήδη κοινοποιήσει μολύβι του χρήστη δεν
 	// προχωρούμε σε περαιτέρω ενέργειες.
@@ -387,7 +387,7 @@ Arena.sizitisi.moliviEkinisi = function() {
 	// καφενείου και θα πρέπει να κοινοποιηθεί σε όλους.
 
 	if (Arena.kafenioMode())
-	service += '&kafenio';
+	mode = 'kafenio';
 
 	// Αλλιώς ο χρήστης βρίσκεται σε mode παρτίδας, επομένως
 	// θα πρέπει να γίνει κοινοποίηση μολυβιού στους παίκτες
@@ -401,7 +401,7 @@ Arena.sizitisi.moliviEkinisi = function() {
 	return;
 
 	Arena.sizitisi.flags.molivi = true;
-	Client.skiserService('moliviEkinisi');
+	Client.skiserService('moliviEkinisi', mode);
 
 	return Arena;
 };
