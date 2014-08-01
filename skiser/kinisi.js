@@ -246,11 +246,5 @@ Kinisi.prototype.isAdiaforiMV = function(sinedria) {
 };
 
 Kinisi.prototype.isAdiaforiVM = function(sinedria) {
-	if (sinedria.sinedriaPektisGet() == this.data.pektis)
-	return true;
-
-	if (this.data.kafenio)
-	return false;
-
-	return sinedria.sinedriaOxiTrapezi(this.data.trapezi);
+	return this.isAdiaforiMV(sinedria);
 };

@@ -33,8 +33,8 @@ Log.level.pop();
 // επεξεργασία που υφίσταται από τον server.
 
 Server.router = {
-	'/moliviStop': Service.sizitisi.moliviStop,
-	'/moliviStart': Service.sizitisi.moliviStart,
+	'/moliviAkirosi': Service.sizitisi.moliviAkirosi,
+	'/moliviEkinisi': Service.sizitisi.moliviEkinisi,
 	'/korna': Service.misc.korna,
 	'/filaPrev': Service.sizitisi.filaPrev,
 	'/claimApantisi': Service.claim.apantisi,
