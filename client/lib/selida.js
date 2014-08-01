@@ -38,7 +38,10 @@ Client.skiserService = function() {
 		service += '&PK=' + Client.session.pektis.uri() + '&KL=' + Client.session.klidi.uri();
 	} catch (e) {}
 
-	for (i = 1; i < arguments.length; i++) service += '&' + arguments[i];
+	for (i = 1; i < arguments.length; i++) {
+		if (typeof arguments[i] === 'string')
+		service += '&' + arguments[i];
+	}
 	return $.ajax(service);
 };
 
