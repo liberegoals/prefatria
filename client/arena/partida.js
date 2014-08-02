@@ -344,6 +344,18 @@ Arena.partida.dataPanoRefreshDOM = function() {
 		title: 'Εκπαιδευτική/Φιλική παρτίδα',
 	}));
 
+	if (Arena.ego.trapezi.trapeziTeliomaAnisoropo())
+	Arena.partida.optionsDOM.append($('<img>').addClass('tsoxaOption').attr({
+		src: 'ikona/panel/postel/anisoropo.png',
+		title: 'Ανισόρροπη πληρωμή τελευταίας αγοράς',
+	}));
+
+	else if (Arena.ego.trapezi.trapeziTeliomaDikeo())
+	Arena.partida.optionsDOM.append($('<img>').addClass('tsoxaOption').attr({
+		src: 'ikona/panel/postel/dikeo.png',
+		title: 'Δίκαιη πληρωμή τελευταίας αγοράς',
+	}));
+
 	if (Arena.ego.trapezi.trapeziOxiAsoi())
 	Arena.partida.optionsDOM.append($('<img>').addClass('tsoxaOption').attr({
 		src: 'ikona/panel/asoiOn.png',
