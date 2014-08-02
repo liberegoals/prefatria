@@ -750,7 +750,7 @@ Arena.partida.markAlagiIcon = {
 // ονομασία της αλλαγής, όπως "ΔΙΑΤΑΞΗ", "ΡΟΛΟΙ", "ΑΠΟΔΟΧΗ,ΝΑΙ", "ΑΠΟΔΟΧΗ,ΟΧΙ" κλπ.
 
 Arena.partida.markAlagiPios = function(trapezi, data, param) {
-	var thesi, idx, icon, iseht, dom;
+	var thesi, idx, icon, iseht, tdom, dom;
 
 	thesi = parseInt(data.thesi);
 	if (!thesi) thesi = trapezi.trapeziThesiPekti(data.pektis);
@@ -763,8 +763,18 @@ Arena.partida.markAlagiPios = function(trapezi, data, param) {
 	if (!icon) return;
 
 	iseht = Arena.ego.thesiMap(thesi);
-	Arena.partida['pektisMain' + iseht + 'DOM'].
+	tdom = Arena.partida['pektisMain' + iseht + 'DOM'];
+	tdom.find('.tsoxaPektisOptionIcon').remove();
+	tdom.
 	append(dom = $('<img>').addClass('tsoxaPektisOptionIcon').attr('src', 'ikona/panel/' + icon));
+	dom.finish().delay(2000).fadeOut(600, function() {
+		$(this).remove();
+	});
+
+	trapezi.tsoxaDOM.find('.trapeziPektisOptionIcon').remove();
+	trapezi.tsoxaDOM.
+	append(dom = $('<img>').addClass('trapeziPektisOptionIcon trapeziPektisOptionIcon' + thesi).
+	attr('src', 'ikona/panel/' + icon));
 	dom.finish().delay(2000).fadeOut(600, function() {
 		$(this).remove();
 	});
