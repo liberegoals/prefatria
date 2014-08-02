@@ -892,6 +892,10 @@ Trapezi.prototype.trapeziOptsRefreshDOM = function() {
 	this.optsDOM.empty();
 	if (this.trapeziIsPaso()) this.trapeziOptionDOM('Παίζεται το πάσο', 'pasoOn.png');
 	if (this.trapeziOxiAsoi()) this.trapeziOptionDOM('Δεν παίζονται οι άσοι', 'asoiOn.png');
+	if (this.trapeziTeliomaAnisoropo())
+	this.trapeziOptionDOM('Ανισόρροπη πληρωμή τελευταίας αγοράς', 'postel/anisoropo.png');
+	else if (this.trapeziTeliomaDikeo())
+	this.trapeziOptionDOM('Δίκαιη πληρωμή τελευταίας αγοράς', 'postel/dikeo.png');
 	if (this.trapeziIsFiliki()) this.trapeziOptionDOM('Εκπαιδευτική/Φιλική παρτίδα', 'filiki.png');
 	if (this.trapeziIsKlisto()) this.trapeziOptionDOM('Κλειστό τραπέζι', 'klisto.png');
 	if (this.trapeziIsPrive()) {
