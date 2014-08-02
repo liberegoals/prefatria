@@ -1569,7 +1569,7 @@ cursor: auto;
 
 .sizitisiIkona {
 	max-width: 80%;
-	overflow: hidden;
+	overflow-x: hidden;
 }
 
 .sizitisiMoliviContainer {
