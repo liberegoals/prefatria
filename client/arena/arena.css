@@ -576,7 +576,7 @@ body {
 	width: 50px;
 }
 
-.tsoxaEpomenos {
+.tsoxaPektisEpomenos {
 	border-color: #FFD700 !important;
 }
 
@@ -584,6 +584,8 @@ body {
 	background-image: url('../ikona/endixi/ektos.png');
 	background-repeat: repeat;
 }
+
+/********************************************************************************************************************/
 
 #tsoxaPliromiIcon {
 	position:absolute;

@@ -559,7 +559,7 @@ Arena.partida.pektisRefreshDOM = function(thesi) {
 		title: 'Παραιτήθηκε από τις υπόλοιπες μπάζες',
 	}));
 
-	if (Arena.partida.isEpomenos(thesi)) domMain.addClass('tsoxaEpomenos');
+	if (Arena.partida.isEpomenos(thesi)) domMain.addClass('tsoxaPektisEpomenos');
 
 	switch (Arena.ego.trapezi.partidaFasiGet()) {
 	case 'ΠΑΙΧΝΙΔΙ':
