@@ -543,6 +543,71 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 
 Arena.cpanel.bpanelButtonPush(new PButton({
 	omada: 2,
+	check: function() {
+		return Arena.trapeziRithmisi();
+	},
+	refresh: function() {
+		var trapezi, img;
+
+		if (Arena.ego.oxiTrapezi()) return;
+
+		img = this.pbuttonIconGetDOM();
+		switch (Arena.ego.trapezi.trapeziTelioma()) {
+		case 'ΚΑΝΟΝΙΚΟ':
+			img.attr({
+				src: 'ikona/panel/postel/anisoropo.png',
+				title: 'Ανισόρροπος τρόπος πληρωμής τελευταίας αγοράς',
+			});
+			break;
+		case 'ΑΝΙΣΟΡΡΟΠΟ':
+			img.attr({
+				src: 'ikona/panel/postel/dikeo.png',
+				title: 'Δίκαιος τρόπος πληρωμής τελευταίας αγοράς',
+			});
+			break;
+		default:
+			img.attr({
+				src: 'ikona/panel/postel/kanoniko.png',
+				title: 'Συμβατικός τρόπος πληρωμής τελευταίας αγοράς',
+			});
+			break;
+		}
+	},
+	click: function(e) {
+		var telioma, img;
+
+		if (Arena.ego.oxiTrapezi()) return;
+
+		img = this.pbuttonIconGetDOM();
+		img.working(true);
+
+		switch (Arena.ego.trapezi.trapeziTelioma()) {
+		case 'ΚΑΝΟΝΙΚΟ':
+			telioma = 'ΑΝΙΣΟΡΡΟΠΟ';
+			break;
+		case 'ΑΝΙΣΟΡΡΟΠΟ':
+			telioma = 'ΔΙΚΑΙΟ';
+			break;
+		default:
+			telioma = 'ΚΑΝΟΝΙΚΟ';
+			break;
+		}
+
+		Client.fyi.pano('Μετατροπή τρόπου πληρωμής τελευταίας αγοράς. Παρακαλώ περιμένετε…', 0);
+		Client.skiserService('trparamSet', 'param=ΤΕΛΕΙΩΜΑ', 'timi=' + telioma).
+		done(function(rsp) {
+			Client.fyi.pano(rsp);
+			img.working(false);
+		}).
+		fail(function(err) {
+			Client.skiserFail(err);
+			img.working(false);
+		});
+	},
+}));
+
+Arena.cpanel.bpanelButtonPush(new PButton({
+	omada: 2,
 	img: 'roloi.png',
 	title: 'Κυκλική εναλλαγή θέσης',
 	check: function() {

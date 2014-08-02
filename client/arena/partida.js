@@ -518,7 +518,9 @@ Arena.partida.pektisRefreshDOM = function(thesi) {
 	if (Arena.ego.oxiTrapezi()) return Arena.partida;
 
 	dom = Arena.partida['pektis' + iseht + 'DOM'].
-	append(domMain = $('<div>').attr('id', 'tsoxaPektisMain' + iseht).addClass('tsoxaPektisMain').
+	append(domMain = Arena.partida['pektisMain' + iseht + 'DOM'] = $('<div>').
+		attr('id', 'tsoxaPektisMain' + iseht).addClass('tsoxaPektisMain').
+	append(Arena.partida['pektisOptions' + iseht + 'DOM'] = $('<div>').addClass('tsoxaPektisOptions')).
 	append(domOnoma = $('<div>').addClass('tsoxaPektisOnoma')).
 	append(domKapikia = $('<div>').addClass('tsoxaPektisKapikia')).
 	append(domAgora = $('<div>').addClass('tsoxaPektisAgora'))).

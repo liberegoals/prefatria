@@ -674,6 +674,7 @@ Skiniko.prototype.processKinisiPostPT = function(data) {
 //
 // Δεδομένα
 //
+//	pektis		Login name παίκτη.
 //	trapezi		Κωδικός τραπεζιού.
 //	param		Ονομασία παραμέτρου.
 //	timi		Τιμή παραμέτρου.
@@ -703,7 +704,70 @@ Skiniko.prototype.processKinisiPostTS = function(data) {
 		break;
 	}
 
+	Arena.partida.markAlagiPios(trapezi, data);
 	return this;
+};
+
+Arena.partida.markAlagiIcon = {
+	'ΚΑΣΑ':			'kasa.png',
+	'ΑΣΟΙ,ΟΧΙ':		'asoiOff.png',
+	'ΑΣΟΙ':			'asoiOn.png',
+	'ΠΑΣΟ,ΟΧΙ':		'pasoOff.png',
+	'ΠΑΣΟ':			'pasoOn.png',
+	'ΤΕΛΕΙΩΜΑ,ΑΝΙΣΟΡΡΟΠΟ':	'postel/anisoropo.png',
+	'ΤΕΛΕΙΩΜΑ,ΔΙΚΑΙΟ':	'postel/dikeo.png',
+	'ΤΕΛΕΙΩΜΑ':		'postel/kanoniko.png',
+	'ΠΡΙΒΕ,ΟΧΙ':		'dimosio.png',
+	'ΠΡΙΒΕ':		'prive.png',
+	'ΦΙΛΙΚΗ,ΟΧΙ':		'agonistiki.png',
+	'ΦΙΛΙΚΗ':		'filiki.png',
+	'ΑΝΟΙΚΤΟ,ΟΧΙ':		'klisto.png',
+	'ΑΝΟΙΚΤΟ':		'anikto.png',
+	'ΙΔΙΟΚΤΗΤΟ,ΟΧΙ':	'elefthero.png',
+	'ΙΔΙΟΚΤΗΤΟ':		'idioktito.png',
+	'ΔΙΑΤΑΞΗ':		'diataxi.png',
+	'ΡΟΛΟΙ':		'roloi.png',
+	'ΑΠΟΔΟΧΗ,ΝΑΙ':		'apodoxi.png',
+	'ΑΠΟΔΟΧΗ,ΟΧΙ':		'ixodopa.png',
+};
+
+// Η function "markAlagiPios" δέχεται το τραπέζι (object) και τα δεδομένα κίνησης
+// (list) και κάνει εμφανές το ποιος παίκτης προκάλεσε την αλλαγή κάποιας παραμέτρου
+// του τραπεζιού, π.χ. αλλαγή κάσας, αλλαγή καθεστώτος άσων κλπ.
+//
+// Στην παράμετρο των δεδομένων της αλλαγής (data) ελέγχονται τα εξής στοιχεία:
+//
+//	thesi		Η θέση του παίκτη που προκάλεσε την αλλαγή.
+//	pektis		Το login name του παίκτη που προκάλεσε την αλλαγή.
+//	param		Η ονομασία της παραμέτρου που τίθεται, π.χ. "ΑΣΟΙ"
+//	timi		Η τιμή της παραμέτρου, π.χ. "ΝΑΙ"
+//
+// Αν η θέση είναι συμπληρωμένη η παράμετρος "pektis" αγνοείται, αλλιώς υπολογίζεται
+// η θέση του παίκτη από το login name του παίκτη.
+// Επίσης, σε κάποιες περιπτώσεις δεν πρόκειται ακριβώς για αλλαγή παραμέτρου, αλλά
+// για κάποια άλλη σημαντική αλλαγή που εφαρμόζεται στο τραπέζι, π.χ. αλλαγή διάταξης,
+// αποδοχή όρων κλπ. Σ' αυτές τις περιπτώσεις περνάμε ως τρίτη παράμετρο μια κωδική
+// ονομασία της αλλαγής, όπως "ΔΙΑΤΑΞΗ", "ΡΟΛΟΙ", "ΑΠΟΔΟΧΗ,ΝΑΙ", "ΑΠΟΔΟΧΗ,ΟΧΙ" κλπ.
+
+Arena.partida.markAlagiPios = function(trapezi, data, param) {
+	var thesi, idx, icon, iseht, dom;
+
+	thesi = parseInt(data.thesi);
+	if (!thesi) thesi = trapezi.trapeziThesiPekti(data.pektis);
+	if (!thesi) return;
+
+	if (param === undefined) param = data.param;
+	idx = param + ',' + data.timi;
+	icon = Arena.partida.markAlagiIcon[idx];
+	if (!icon) icon = Arena.partida.markAlagiIcon[param];
+	if (!icon) return;
+
+	iseht = Arena.ego.thesiMap(thesi);
+	Arena.partida['pektisMain' + iseht + 'DOM'].
+	append(dom = $('<img>').addClass('tsoxaPektisOptionIcon').attr('src', 'ikona/panel/' + icon));
+	dom.finish().delay(2000).fadeOut(600, function() {
+		$(this).remove();
+	});
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -713,6 +777,7 @@ Skiniko.prototype.processKinisiPostTS = function(data) {
 // Δεδομένα
 //
 //	trapezi		Κωδικός τραπεζιού.
+//	pektis		Login name του παίκτη που κάνει την αλλαγή.
 //	h1		Θέση παίκτη.
 //	p1		Παίκτης για τη θέση h1.
 //	h2		Θέση παίκτη.
@@ -730,6 +795,8 @@ Skiniko.prototype.processKinisiPostDX = function(data) {
 
 	Arena.partida.trapeziRefreshDOM();
 	Client.sound.tic();
+	Arena.partida.markAlagiPios(trapezi, data, 'ΔΙΑΤΑΞΗ');
+
 	return this;
 };
 
@@ -740,6 +807,7 @@ Skiniko.prototype.processKinisiPostDX = function(data) {
 // Δεδομένα
 //
 //	trapezi		Κωδικός τραπεζιού.
+//	pektis		Login name του παίκτη που κάνει την αλλαγή.
 //	p1		Παίκτης για τη θέση 1.
 //	a1		Αποδοχή για τη θέση 1.
 //	p2		Παίκτης για τη θέση 2.
@@ -759,6 +827,8 @@ Skiniko.prototype.processKinisiPostRL = function(data) {
 
 	Arena.partida.trapeziRefreshDOM();
 	Client.sound.tic();
+	Arena.partida.markAlagiPios(trapezi, data, 'ΡΟΛΟΙ');
+
 	return this;
 };
 
@@ -835,6 +905,8 @@ Skiniko.prototype.processKinisiPostAX = function(data) {
 
 	Arena.partida.refreshDOM();
 	Client.sound.tic();
+	Arena.partida.markAlagiPios(trapezi, data, 'ΑΠΟΔΟΧΗ,' + data.apodoxi);
+
 	return this;
 };
 

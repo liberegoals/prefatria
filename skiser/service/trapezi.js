@@ -278,6 +278,7 @@ Service.trapezi.diataxi3 = function(nodereq, kodikos, h1, p1, h2, p2) {
 	kinisi = new Kinisi('DX');
 	kinisi.data = {
 		trapezi: kodikos,
+		pektis: nodereq.loginGet(),
 		h1: h1,
 		p1: p1,
 		h2: h2,
@@ -336,6 +337,7 @@ Service.trapezi.roloi2 = function(nodereq, kodikos, p1, a1, p2, a2, p3, a3) {
 	kinisi = new Kinisi('RL');
 	kinisi.data = {
 		trapezi: kodikos,
+		pektis: nodereq.loginGet(),
 		p1: p1,
 		a1: a1,
 		p2: p2,

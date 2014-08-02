@@ -590,6 +590,34 @@ Trapezi.prototype.trapeziOxiAsoi = function() {
 	return !this.trapeziIsAsoi();
 };
 
+Trapezi.prototype.trapeziTelioma = function() {
+	var telioma;
+
+	telioma = this.trapeziTrparamGet('ΤΕΛΕΙΩΜΑ');
+	switch (telioma) {
+	case 'ΑΝΙΣΟΡΡΟΠΟ':
+	case 'ΔΙΚΑΙΟ':
+		break;
+	default:
+		telioma = 'ΚΑΝΟΝΙΚΟ';
+		break;
+	}
+
+	return telioma;
+};
+
+Trapezi.prototype.trapeziTeliomaKanoniko = function() {
+	return(this.trapeziTelioma() === 'ΚΑΝΟΝΙΚΟ');
+};
+
+Trapezi.prototype.trapeziTeliomaAnisoropo = function() {
+	return(this.trapeziTelioma() === 'ΑΝΙΣΟΡΡΟΠΟ');
+};
+
+Trapezi.prototype.trapeziTeliomaDikeo = function() {
+	return(this.trapeziTelioma() === 'ΔΙΚΑΙΟ');
+};
+
 Trapezi.prototype.trapeziIsIdioktito = function() {
 	var idioktito;
 
