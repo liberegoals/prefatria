@@ -320,6 +320,25 @@ body {
 	-webkit-transform:rotate(-45deg);
 }
 
+.trapeziPektisOptionIcon {
+	position: absolute;
+	top: 2px;
+	width: 26px;
+	z-index: 1;
+}
+
+.trapeziPektisOptionIcon1 {
+	left: 230px;
+}
+
+.trapeziPektisOptionIcon2 {
+	left: 362px;
+}
+
+.trapeziPektisOptionIcon3 {
+	left: 498px;
+}
+
 /********************************************************************************************************************/
 
 .tsoxaData {
@@ -1568,7 +1587,7 @@ cursor: auto;
 }
 
 .sizitisiIkona {
-	max-width: 80%;
+	max-width: 500px;
 	overflow-x: hidden;
 }
 
