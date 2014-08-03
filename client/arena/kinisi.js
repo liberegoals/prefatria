@@ -580,6 +580,7 @@ Skiniko.prototype.processKinisiPostPL = function(data) {
 // Επιπρόσθετα δεδομένα
 //
 //	trapeziPrin	Προηγούμενο τραπέζι παίκτη.
+//	oxiPektisPrin	Δείχνει αν πριν τη αποδοχή δεν ήταν παίκτης.
 //	telefteos	Λίστα καθημένων πριν την αποδοχή.
 
 Skiniko.prototype.processKinisiAnteAL = function(data) {
@@ -593,6 +594,7 @@ Skiniko.prototype.processKinisiAnteAL = function(data) {
 	sinedriaDetachTheatisDOM();
 
 	data.trapeziPrin = this.skinikoTrapeziGet(sinedria.sinedriaTrapeziGet());
+	data.oxiPektisPrin = sinedria.sinedriaOxiPektis();
 
 	trapezi = this.skinikoTrapeziGet(data.trapezi);
 	if (!trapezi) return this;
@@ -606,13 +608,25 @@ Skiniko.prototype.processKinisiAnteAL = function(data) {
 };
 
 Skiniko.prototype.processKinisiPostAL = function(data) {
+	var sinderia, panelOmada;
+
+	// Αν ο παίκτης που αποδέχεται την πρόσκληση δεν ήταν πριν παίκτης στο
+	// ίδιο ή σε άλλο τραπέζι, ενώ μετά την αποδοχή έχει καταστεί παίκτης,
+	// τότε επαναφέρουμε το control panel στη βασική ομάδα εργαλείων.
+
+	if (data.oxiPektisPrin) {
+		sinedria = this.skinikoSinedriaGet(data.pektis);
+		if (!sinedria) return this;
+		panelOmada = sinedria.sinedriaIsPektis() ? 1 : Arena.cpanel.bpanelOmadaGet();
+	}
+
 	this.processKinisiPostET(data);
 
-	// Μπορεί ο παίκτης που πήρε την πρόσκληση να κατέλαβε θέση
-	// παίκτη, οπότε κάποια πλήκτρα, π.χ. "παίκτης/θεατής" ίσως
-	// πρέπει να απενεργοποιηθούν.
+	// Ξανασχηματίζουμε τώρα το control panel καθώς ο παίκτης που απεδέχθη
+	// την πρόσκληση μπορεί να άλλαξε ρόλο, οπότε κάποια πλήκτρα θα πρέπει
+	// να ενεργοποιηθούν και κάποια άλλα να ενεργοποιηθούν.
 
-	Arena.panelRefresh();
+	Arena.panelRefresh(panelOmada);
 
 	return this;
 };
