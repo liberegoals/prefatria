@@ -124,6 +124,7 @@ Arena.partida.setup = function() {
 	Arena.partida.theatisDOM = $('<div>').attr('id', 'theatis').appendTo(Arena.partida.tsoxaDOM);
 	Arena.partida.optionsDOM = $('<div>').attr('id', 'tsoxaOptions').appendTo(Arena.partidaDOM);
 	Arena.partida.soloEndixiDOM = null;
+	Arena.partida.setupKitapi();
 	Arena.partida.setupPliromi();
 
 	return Arena;
@@ -144,6 +145,24 @@ Arena.partida.setupPliromi = function() {
 
 		else
 		$('.tsoxaPektisPliromi').finish().fadeOut(200);
+	}).appendTo(Arena.partida.tsoxaDOM);
+
+	return Arena;
+};
+
+Arena.partida.setupKitapi = function() {
+	Arena.partida.kitapiIconDOM = $('<img>').attr({
+		id: 'tsoxaKitapiIcon',
+		src: 'ikona/panel/kitapi.png',
+		title: 'Κιτάπι',
+	}).
+	on('click', function(e) {
+		Arena.inputRefocus(e);
+
+		if (Arena.partida.oxiKitapi())
+		return Arena.partida.kitapiAnigma();
+
+		return Arena.partida.kitapiKlisimo();
 	}).appendTo(Arena.partida.tsoxaDOM);
 
 	return Arena;
@@ -975,4 +994,28 @@ Arena.partida.isProtos = function(thesi) {
 Arena.partida.isEpomenos = function(thesi) {
 	if (Arena.ego.oxiTrapezi()) return false;
 	return(Arena.ego.trapezi.partidaEpomenosGet() === thesi);
+};
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
+
+Arena.partida.isKitapi = function() {
+	return Arena.partida.kitapi;
+};
+
+Arena.partida.oxiKitapi = function() {
+	return !Arena.partida.isKitapi();
+};
+
+Arena.partida.kitapiAnigma = function() {
+	Arena.partida.kitapi = window.open('asdasd', '_blank', 'height=700,width=600,top=100,left=10');
+	return Arena;
+};
+
+Arena.partida.kitapiKlisimo = function() {
+	try {
+		Arena.partida.kitapi.close();
+		delete Arena.partida.kitapi;
+	} catch (e) {}
+
+	return Arena;
 };

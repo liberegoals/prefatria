@@ -148,6 +148,7 @@ Arena.unload = function() {
 	Arena.unloaded = true;
 
 	Arena.paraskinio.close();
+	Arena.partida.kitapiKlisimo();
 };
 
 $(window).on('beforeunload', function() {

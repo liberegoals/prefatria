@@ -614,10 +614,18 @@ body {
 
 /********************************************************************************************************************/
 
+#tsoxaKitapiIcon {
+	position:absolute;
+	top: 30px;
+	left: 250px;
+	width: 60px;
+	cursor: pointer;
+}
+
 #tsoxaPliromiIcon {
 	position:absolute;
-	top: 40px;
-	left: 263px;
+	top: 74px;
+	left: 244px;
 	width: 30px;
 	cursor: pointer;
 }
