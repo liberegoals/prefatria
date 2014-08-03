@@ -101,7 +101,8 @@ BPanel.prototype.bpanelButtonWalk = function(callback) {
 	return this;
 };
 
-BPanel.prototype.bpanelRefresh = function() {
+BPanel.prototype.bpanelRefresh = function(omada) {
+	if (omada) this.omada = omada;
 	this.bpanelButtonWalk(function() {
 		this.
 		pbuttonRefresh().

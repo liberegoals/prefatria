@@ -658,12 +658,6 @@ Arena.alagiSxesis = function(e, login, sxesi) {
 	});
 };
 
-Arena.panelRefresh = function() {
-	Arena.cpanel.bpanelRefresh();
-	Arena.pektisPanelRefreshDOM();
-	return Arena;
-}
-
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 Sinedria.prototype.sinedriaCreateDOM = function() {
