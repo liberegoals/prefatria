@@ -51,10 +51,10 @@ Arena.epanel.lefkoma = [
 		'binelikia.gif',
 		'plastis.gif',
 		'ipopto.gif',
-		'keratas.png',
 		'klama.png',
 		'oxi.gif',
 		'glosa.png',
+		'toulipa.gif',
 		'angry.png',
 	],
 	[
