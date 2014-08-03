@@ -148,15 +148,20 @@ Arena.unload = function() {
 	Arena.unloaded = true;
 
 	Arena.paraskinio.close();
-	Arena.partida.kitapiKlisimo();
+	Arena.kitapi.klisimo();
 };
 
-$(window).on('beforeunload', function() {
+$(window).
+on('beforeunload', function() {
 	Arena.unload();
-});
-
-$(window).on('unload', function() {
+}).
+on('unload', function() {
 	Arena.unload();
+}).
+on('focus', function() {
+	setTimeout(function() {
+		Arena.inputRefocus();
+	}, 100);
 });
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@

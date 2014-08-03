@@ -151,7 +151,7 @@ Arena.partida.setupPliromi = function() {
 };
 
 Arena.partida.setupKitapi = function() {
-	Arena.partida.kitapiIconDOM = $('<img>').attr({
+	Arena.kitapi.iconDOM = $('<img>').attr({
 		id: 'tsoxaKitapiIcon',
 		src: 'ikona/panel/kitapi.png',
 		title: 'Κιτάπι',
@@ -159,10 +159,13 @@ Arena.partida.setupKitapi = function() {
 	on('click', function(e) {
 		Arena.inputRefocus(e);
 
-		if (Arena.partida.oxiKitapi())
-		return Arena.partida.kitapiAnigma();
+		if (Arena.kitapi.isKlisto())
+		return Arena.kitapi.anigma(e);
 
-		return Arena.partida.kitapiKlisimo();
+		if (Arena.kitapi.isBlur())
+		return Arena.kitapi.focus();
+
+		Arena.kitapi.klisimo();
 	}).appendTo(Arena.partida.tsoxaDOM);
 
 	return Arena;
@@ -998,24 +1001,81 @@ Arena.partida.isEpomenos = function(thesi) {
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
 
-Arena.partida.isKitapi = function() {
-	return Arena.partida.kitapi;
+Arena.kitapi = {};
+
+Arena.kitapi.isAnikto = function() {
+	return Arena.kitapi.win;
 };
 
-Arena.partida.oxiKitapi = function() {
-	return !Arena.partida.isKitapi();
+Arena.kitapi.isKlisto = function() {
+	return !Arena.kitapi.isAnikto();
 };
 
-Arena.partida.kitapiAnigma = function() {
-	Arena.partida.kitapi = window.open('asdasd', '_blank', 'height=700,width=600,top=100,left=10');
+Arena.kitapi.isBlur = function() {
+	if (!Arena.kitapi.blurTS)
+	return false;
+
+	return(Globals.torams() - Arena.kitapi.blurTS > 100);
+};
+
+Arena.kitapi.anigma = function(e) {
+	if (!Arena.kitapi.position) {
+		Arena.kitapi.position = Arena.kitapi.iconDOM.screenPosition();
+		Arena.kitapi.position.top = 100;
+		Arena.kitapi.position.left += 100;
+	}
+
+	Arena.kitapi.win = window.open('kitapi/index.php', '_blank', 'height=700,width=600,top=' +
+		Arena.kitapi.position.top + ',left=' + Arena.kitapi.position.left);
+
+	$(Arena.kitapi.win).
+	on('blur', function() {
+		Arena.kitapi.blurTS = Globals.torams();
+		Arena.inputRefocus();
+		Arena.kitapi.entonoIcon();
+	}).
+	on('focus', function() {
+		delete Arena.kitapi.blurTS;
+		Arena.kitapi.axnoIcon();
+	});
+
 	return Arena;
 };
 
-Arena.partida.kitapiKlisimo = function() {
+Arena.kitapi.focus = function() {
 	try {
-		Arena.partida.kitapi.close();
-		delete Arena.partida.kitapi;
+		return Arena.kitapi.win.focus();
 	} catch (e) {}
 
+	return Arena;
+};
+
+Arena.kitapi.klisimo = function() {
+	var kitapi;
+
+	kitapi = Arena.kitapi.win;
+	try {
+		if (kitapi.screenLeft) Arena.kitapi.position.left = kitapi.screenLeft;
+		else if (kitapi.screenX) Arena.kitapi.position.left = kitapi.screenX;
+
+		if (kitapi.screenTop) Arena.kitapi.position.top = kitapi.screenTop;
+		else if (kitapi.screenY) Arena.kitapi.position.top = kitapi.screenY;
+		kitapi.close();
+	} catch (e) {}
+
+	delete Arena.kitapi.win;
+	delete Arena.kitapi.blurTS;
+	Arena.kitapi.entonoIcon();
+
+	return Arena;
+};
+
+Arena.kitapi.entonoIcon = function() {
+	Arena.kitapi.iconDOM.removeClass('tsoxaKitapiIconAxno');
+	return Arena;
+};
+
+Arena.kitapi.axnoIcon = function() {
+	Arena.kitapi.iconDOM.addClass('tsoxaKitapiIconAxno');
 	return Arena;
 };

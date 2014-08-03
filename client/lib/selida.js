@@ -599,6 +599,24 @@ jQuery.fn.emfanesDebug = function() {
 	});
 };
 
+jQuery.fn.screenPosition = function() {
+	var pos;
+
+	this.each(function() {
+		pos = $(this).offset();
+
+		if (window.hasOwnProperty('screenLeft')) pos.left += window.screenLeft;
+		else if (window.hasOwnProperty('screenX')) pos.left += window.screenX;
+		else pos.left = 0;
+
+		if (window.hasOwnProperty('screenTop')) pos.top += window.screenTop;
+		else if (window.hasOwnProperty('screenY')) pos.top += window.screenY;
+		else pos.top = 0;
+	});
+
+	return pos;
+};
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 Client.session.entasi = 'ΚΑΝΟΝΙΚΗ';
