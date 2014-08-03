@@ -1,8 +1,20 @@
 $(document).ready(function() {
+	var ofelimoDOM;
+
 	Kitapi.opener = window.opener;
 	Client.bodyDOM.css({
 		backgroundImage: "url('../ikona/paraskinio/kitapi.jpg')",
 	});
+
+/*
+	ofelimoDOM = $('#ofelimo');
+	Kitapi.perioxi3 = $('<div>').attr('id', 'kitapiPerioxi3').
+	addClass('kitapiPerioxi').appendTo(ofelimoDOM);
+	Kitapi.perioxi2 = $('<div>').attr('id', 'kitapiPerioxi2').
+	addClass('kitapiPerioxi').appendTo(ofelimoDOM);
+	Kitapi.perioxi1 = $('<div>').attr('id', 'kitapiPerioxi1').
+	addClass('kitapiPerioxi').appendTo(ofelimoDOM);
+*/
 });
 
 Kitapi = {};

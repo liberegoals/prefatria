@@ -3,3 +3,32 @@
 	line-height: 150%;
 	font-style: italic;
 }
+
+.kitapiPerioxi {
+	border-color: rgb(29, 29, 138);
+	background-color: olive;
+}
+
+#kitapiPerioxi3 {
+	display: inline-block;
+	width: 40%;
+	height: 200px;
+	border-style: none solid solid none;
+	border-width: 1px;
+}
+
+#kitapiPerioxi2 {
+	display: inline-block;
+	width: 40%;
+	height: 200px;
+	background-color: olive;
+	border-style: none none solid solid;
+	border-width: 1px;
+}
+
+#kitapiPerioxi1 {
+	display: block;
+	height: 100%;
+	border-style: solid none none none;
+	border-width: 2px;
+}

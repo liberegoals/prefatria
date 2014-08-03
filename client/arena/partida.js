@@ -1015,7 +1015,7 @@ Arena.kitapi.isBlur = function() {
 	if (!Arena.kitapi.blurTS)
 	return false;
 
-	return(Globals.torams() - Arena.kitapi.blurTS > 100);
+	return(Globals.torams() - Arena.kitapi.blurTS > 500);
 };
 
 Arena.kitapi.anigma = function(e) {
