@@ -11,7 +11,7 @@ Kitapi.unload = function() {
 	if (Kitapi.unloaded) return;
 	Kitapi.unloaded = true;
 	if (!Kitapi.opener) return;
-
+	if (!Kitapi.opener.Arena) return;
 	Kitapi.opener.Arena.kitapi.klisimo();
 }
 
