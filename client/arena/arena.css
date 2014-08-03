@@ -622,11 +622,15 @@ body {
 	cursor: pointer;
 }
 
+.tsoxaKitapiIconAxno {
+	opacity: 0.7;
+}
+
 #tsoxaPliromiIcon {
 	position:absolute;
-	top: 74px;
-	left: 244px;
-	width: 30px;
+	top: 68px;
+	left: 236px;
+	width: 40px;
 	cursor: pointer;
 }
 
