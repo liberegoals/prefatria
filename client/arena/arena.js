@@ -220,6 +220,12 @@ Arena.setupCpanel = function() {
 	return Arena;
 };
 
+Arena.panelRefresh = function(omada) {
+	Arena.cpanel.bpanelRefresh(omada);
+	Arena.pektisPanelRefreshDOM();
+	return Arena;
+}
+
 Arena.setupEpanel = function() {
 	Arena.epanel.setup();
 	Arena.epanel.bpanelRefresh();
