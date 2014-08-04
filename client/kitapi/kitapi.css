@@ -1,34 +1,204 @@
-.kitapiEnimerosi {
-	padding-top: 10px;
+body {
+	margin: 0;
+	max-width: none;
+	font-family: "Comic Sans MS", cursive;
+	color: #191970;
+}
+
+table {
+	border-spacing: 0;
+	border-collapse: collapse;
+}
+
+table td {
+	padding: 0;
+}
+
+#ofelimo {
+	min-height: 0;
+}
+
+#kitapiTabela {
+	padding: 20px;
 	line-height: 150%;
 	font-style: italic;
 }
 
+.kitapiTabelaParagrafos {
+	padding-top: 10px;
+}
+
+/***********************************************************************************************************************/
+
+#kitapiPinakas {
+	width: 100%;
+	border-spacing: 0;
+	border-collapse: collapse;
+}
+
 .kitapiPerioxi {
-	border-color: rgb(29, 29, 138);
-	background-color: olive;
+	border-width: 1px;
+	border-color: #333333;
+	min-height: 430px;
 }
 
 #kitapiPerioxi3 {
-	display: inline-block;
-	width: 40%;
-	height: 200px;
 	border-style: none solid solid none;
-	border-width: 1px;
 }
 
 #kitapiPerioxi2 {
-	display: inline-block;
-	width: 40%;
-	height: 200px;
-	background-color: olive;
 	border-style: none none solid solid;
-	border-width: 1px;
 }
 
 #kitapiPerioxi1 {
-	display: block;
-	height: 100%;
 	border-style: solid none none none;
-	border-width: 2px;
+	min-height: 0;
 }
+
+/***********************************************************************************************************************/
+
+.kitapiPektisData {
+	padding: 2px;
+	text-align: center;
+}
+
+.kitapiPektisOnoma {
+	display: inline-block;
+	padding: 0 4px 0 4px;
+
+	font-size: 22px;
+	font-weight: bold;
+
+	color: #003366;
+	background-color: #FFFF66;
+
+	border-style: solid;
+	border-width: 1px 2px 2px 1px;
+	border-color: #C2C2C2;
+
+	white-space: nowrap;
+	opacity: 0.5;
+}
+
+.kitapiPerioxi {
+}
+
+/***********************************************************************************************************************/
+
+.kitapiDaraveri {
+	width: 25%;
+	padding: 6px;
+}
+
+#kitapiDaraveri31 {
+	vertical-align: bottom;
+	text-align: left;
+}
+
+#kitapiDaraveri32 {
+	vertical-align: top;
+	text-align: right;
+}
+
+#kitapiDaraveri23 {
+	vertical-align: top;
+	text-align: left;
+}
+
+#kitapiDaraveri21 {
+	vertical-align: bottom;
+	text-align: right;
+}
+
+#kitapiDaraveri13 {
+	vertical-align: top;
+	text-align: left;
+}
+
+#kitapiDaraveri12 {
+	vertical-align: top;
+	text-align: right;
+}
+
+/***********************************************************************************************************************/
+
+.kitapiStiliKasa {
+	padding: 10px 0 0 0;
+	margin: 0 auto;
+
+	column-count: 1;
+	-moz-column-count: 1;
+	-webkit-column-count: 1;
+
+	column-gap: 0;
+	-moz-column-gap: 0;
+	-webkit-column-gap: 0;
+}
+
+.kitapiKasa {
+	width: 40px;
+	text-align: center;
+	font-size: 20px;
+	font-weight: bold;
+	text-decoration: line-through;
+}
+
+.kitapiKasaDiagrafi {
+	text-decoration:line-through;
+	color: #6B7A8A;
+}
+
+/***********************************************************************************************************************/
+
+.kitapiStiliKapikia {
+	margin: 0 auto;
+
+	column-count: 1;
+	-moz-column-count: 1;
+	-webkit-column-count: 1;
+
+	column-gap: 0;
+	-moz-column-gap: 0;
+	-webkit-column-gap: 0;
+}
+
+.kitapiKapikia {
+	width: 30px;
+	text-align: center;
+	font-size: 18px;
+	font-weight: bold;
+	text-decoration: line-through;
+}
+
+.kitapiKapikiaDiagrafi {
+	text-decoration:line-through;
+	color: #6B7A8A;
+}
+
+/***********************************************************************************************************************/
+
+/*
+.kitapiPerioxi {
+	background-color: rgba(128, 128, 0, 0.14);
+}
+
+.kitapiDaraveri {
+	background-color: teal;
+}
+
+.kitapiStiliKasa {
+	background-color: yellow;
+}
+
+.kitapiPektisData {
+	background-color: rgba(255, 0, 0, 0.06);
+}
+
+.kitapiKasa {
+	background-color: rgba(255, 0, 255, 0.05);
+}
+
+.kitapiStiliKapikia {
+	background-color: crimson;
+}
+*/
