@@ -1023,10 +1023,14 @@ Arena.kitapi.anigma = function(e) {
 		Arena.kitapi.position = Arena.kitapi.iconDOM.screenPosition();
 		Arena.kitapi.position.top = 100;
 		Arena.kitapi.position.left += 100;
+		Arena.kitapi.position.height = 700;
+		Arena.kitapi.position.width = 600;
 	}
 
-	Arena.kitapi.win = window.open('kitapi/index.php', '_blank', 'height=700,width=600,top=' +
-		Arena.kitapi.position.top + ',left=' + Arena.kitapi.position.left);
+	Arena.kitapi.win = window.open('kitapi/index.php', '_blank',
+		'height=' + Arena.kitapi.position.height + ',width=' + Arena.kitapi.position.width +
+		',scrollbars=1,' +
+		'top=' + Arena.kitapi.position.top + ',left=' + Arena.kitapi.position.left);
 
 	$(Arena.kitapi.win).
 	on('blur', function() {
