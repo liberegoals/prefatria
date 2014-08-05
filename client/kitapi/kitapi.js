@@ -46,6 +46,7 @@ $(document).ready(function() {
 	Kitapi.
 	perioxiSetup().
 	stresarisma();
+return;
 Kitapi.testData();
 });
 
