@@ -58,13 +58,19 @@ Client.isSession = function(tag) {
 	return Client.session.hasOwnProperty(tag);
 };
 
-Client.provlima = function(msg) {
+Client.provlima = function(msg, fatal) {
 	var provlimaDom;
 
 	if (msg === undefined) msg = 'Απροσδιόριστο σοβαρό σφάλμα';
 	provlimaDom = $('<div>').addClass('dialogos provlima').
-	append(msg);
+	append(msg).siromeno({
+		top: '60px',
+		left: '10px',
+	});
 	$('#ofelimo').append(provlimaDom);
+	if (fatal) throw msg;
+
+	return provlimaDom;
 };
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
