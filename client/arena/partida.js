@@ -1023,8 +1023,8 @@ Arena.kitapi.anigma = function(e) {
 		Arena.kitapi.position = Arena.kitapi.iconDOM.screenPosition();
 		Arena.kitapi.position.top = 100;
 		Arena.kitapi.position.left += 100;
-		Arena.kitapi.position.height = 700;
-		Arena.kitapi.position.width = 600;
+		Arena.kitapi.position.height = 710;
+		Arena.kitapi.position.width = 610;
 	}
 
 	Arena.kitapi.win = window.open('kitapi/index.php', '_blank',
