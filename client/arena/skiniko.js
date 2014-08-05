@@ -439,7 +439,7 @@ Skiniko.prototype.feredataError = function(err, rsp) {
 	else if (this.feredataErrorCount++ < 5) delay = 200;
 	else if (this.feredataErrorCount < 10) delay = 500;
 	else if (this.feredataErrorCount < 15) delay = 1000;
-	else return Client.provlima('feredata error');
+	else return Client.provlima('feredata error', true);
 
 	setTimeout(function() {
 		skiniko.stisimo();

@@ -415,9 +415,24 @@ Trapezi.prototype.partidaPliromiOloi = function(data) {
 	// Εξετάζουμε, πρώτα, την περίπτωση να έχει βγει κανονικά η αγορά.
 
 	if (this.partidaAgoraVgike()) {
+		/*
+		// Ο κώδικας που ακολουθεί είναι ο ορθός βάσει του οποίου
+		// πληρώνεται κάθε παίκτης τις μπάζες του από την κάσα.
+
 		dianomi.dianomiKasaAdd(tzogadoros, axia * bazesTzogadoros);
 		dianomi.dianomiKasaAdd(protos, axia * bazesProtos);
 		dianomi.dianomiKasaAdd(defteros, axia * bazesDefteros);
+		*/
+
+		// Ο κώδικας που ακολουθεί κάνει ακριβώς την ίδια πληρωμή,
+		// αλλά δίνει στον τζογαδόρο 10 μπάζες από την κάσα και
+		// κατόπιν ο τζογαδόρος πληρώνει τους αμυνομένους.
+
+		dianomi.dianomiKasaAdd(tzogadoros, axia * 10);
+		dianomi.dianomiMetritaAdd(protos, axia * bazesProtos);
+		dianomi.dianomiMetritaSub(tzogadoros, axia * bazesProtos);
+		dianomi.dianomiMetritaAdd(defteros, axia * bazesDefteros);
+		dianomi.dianomiMetritaSub(tzogadoros, axia * bazesDefteros);
 		return this;
 	}
 
@@ -547,8 +562,14 @@ Trapezi.prototype.partidaPliromiEnas = function(data) {
 	// Εξετάζουμε την περίπτωση να έχει βγει κανονικά η αγορά.
 
 	if (dif <= 0) {
+		/*
 		dianomi.dianomiKasaAdd(tzogadoros, axia * bazesTzogadoros);
 		dianomi.dianomiKasaAdd(aminomenos, axia * bazesAminomenos);
+		*/
+
+		dianomi.dianomiKasaAdd(tzogadoros, axia * 10);
+		dianomi.dianomiMetritaAdd(aminomenos, axia * bazesAminomenos);
+		dianomi.dianomiMetritaSub(tzogadoros, axia * bazesAminomenos);
 		return this;
 	}
 

@@ -819,6 +819,11 @@ Dianomi.prototype.dianomiMetritaAdd = function(thesi, kapikia) {
 	return this;
 };
 
+Dianomi.prototype.dianomiMetritaSub = function(thesi, kapikia) {
+	this['metrita' + thesi] -= kapikia;
+	return this;
+};
+
 Dianomi.prototype.dianomiMetritaGet = function(thesi) {
 	return this['metrita' + thesi];
 };
