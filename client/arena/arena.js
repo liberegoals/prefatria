@@ -409,6 +409,14 @@ Arena.inputRefocus = function(e) {
 	return Arena;
 };
 
+Arena.kafenioScrollTop = function() {
+	Arena.kafenioDOM.finish().animate({
+		scrollTop: 0
+	}, 400, 'easeInQuint');
+
+	return Arena;
+};
+
 // Η function "trapeziRithmisi" επιστρέφει true εφόσον ο χρήστης ανήκει σε κάποιο
 // τραπέζι και το τραπέζι βρίσκεται σε φάση ρυθμίσεων, δηλαδή πριν παιχτεί οποιαδήποτε
 // διανομή. Αν θέλουμε μπορούμε αγνοήσουμε το αν υπάρχουν ή όχι διανομές περνώτας
