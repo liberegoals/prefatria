@@ -225,8 +225,10 @@ Skiniko.prototype.processKinisiPostTR = function(data) {
 	this.pektisEntopismosDOM(pektis);
 
 	if (pektis.isEgo()) {
-		this.pektisTrapeziScroll(true);
-		Arena.panelRefresh();
+		Arena.
+		panelRefresh().
+		kafenioScrollTop();
+
 		if (Arena.ego.isTrapezi())
 		Arena.partida.refreshDOM();
 		return this;
@@ -455,7 +457,7 @@ Skiniko.prototype.processKinisiPostRT = function(data) {
 		if (data.pektis.isEgo()) {
 			Arena.partida.refreshDOM();
 			Arena.kafenioModeSet();
-			Arena.kafenioDOM.finish().animate({scrollTop: 0}, 400, 'easeInQuint');
+			Arena.kafenioScrollTop();
 		}
 		return this;
 	}
@@ -610,6 +612,11 @@ Skiniko.prototype.processKinisiAnteAL = function(data) {
 Skiniko.prototype.processKinisiPostAL = function(data) {
 	var sinderia, panelOmada;
 
+	this.processKinisiPostET(data);
+
+	if (data.pektis.oxiEgo())
+	return this;
+
 	// Αν ο παίκτης που αποδέχεται την πρόσκληση δεν ήταν πριν παίκτης στο
 	// ίδιο ή σε άλλο τραπέζι, ενώ μετά την αποδοχή έχει καταστεί παίκτης,
 	// τότε επαναφέρουμε το control panel στη βασική ομάδα εργαλείων.
@@ -620,13 +627,12 @@ Skiniko.prototype.processKinisiPostAL = function(data) {
 		panelOmada = sinedria.sinedriaIsPektis() ? 1 : Arena.cpanel.bpanelOmadaGet();
 	}
 
-	this.processKinisiPostET(data);
-
 	// Ξανασχηματίζουμε τώρα το control panel καθώς ο παίκτης που απεδέχθη
 	// την πρόσκληση μπορεί να άλλαξε ρόλο, οπότε κάποια πλήκτρα θα πρέπει
 	// να ενεργοποιηθούν και κάποια άλλα να ενεργοποιηθούν.
 
 	Arena.panelRefresh(panelOmada);
+	this.pektisTrapeziScroll(true);
 
 	return this;
 };

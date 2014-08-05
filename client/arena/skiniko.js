@@ -1168,10 +1168,10 @@ Skiniko.prototype.pektisTrapeziScroll = function(anim) {
 
 	cdom = Arena.kafenioDOM;
 	tdom = Arena.ego.trapezi.trapeziGetDOM();
-	scrollTop = tdom.offset().top - cdom.offset().top + cdom.scrollTop() - 20;
+	scrollTop = tdom.offset().top - cdom.offset().top + cdom.scrollTop() - 80;
 	if (scrollTop < 0) scrollTop = 0;
 	cdom.finish();
-	if (anim) cdom.animate({scrollTop: scrollTop}, 100);
+	if (anim) cdom.animate({scrollTop: scrollTop}, 400, 'easeInQuint');
 	else cdom.scrollTop(scrollTop);
 	return this;
 };
