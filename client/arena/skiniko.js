@@ -934,7 +934,9 @@ Trapezi.prototype.trapeziThesiRefreshDOM = function(thesi) {
 		else if (Arena.ego.isApoklismenos(login)) dom.addClass('apoklismenos');
 	}
 	else {
+console.log(this.trapeziKodikosGet(), this.telefteos);
 		login = this.trapeziTelefteosGet(thesi);
+console.log(thesi, login);
 		if (login) dom.addClass('fantasma').text(login);
 	}
 
