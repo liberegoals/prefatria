@@ -276,14 +276,13 @@ Kitapi.pliromiPush = function(data) {
 
 		idx = 'kasaLast' + thesi;
 		Kitapi[idx] -= kasa;
-console.log(Kitapi[idx]);
-		Kitapi.kasaPush(thesi, Math.floor(Kitapi[idx] / 10));
+		Kitapi.kasaPush(thesi, Math.floor(Kitapi[idx] / 10), (kasa < 0));
 	});
 
 	return Kitapi;
 };
 
-Kitapi.kasaPush = function(thesi, kasa) {
+Kitapi.kasaPush = function(thesi, kasa, mesa) {
 	var kasaStiliDom, count, stiles, xorane, platos, idx, kasaDom;
 
 	kasaStiliDom = Kitapi['kasa' + thesi + 'DOM'];
@@ -303,7 +302,7 @@ Kitapi.kasaPush = function(thesi, kasa) {
 	if (kasaDom) kasaDom.addClass('kitapiKasaDiagrafi');
 
 	kasaDom = $('<div>').addClass('kitapiKasa').text(kasa);
-	Kitapi[idx] = kasaDom;
+	if (mesa) kasaDom.addClass('kitapiKasaMesa');
 
 	kasaStiliDom.css({
 		width: platos,
@@ -312,6 +311,7 @@ Kitapi.kasaPush = function(thesi, kasa) {
 		'-webkit-column-count': stiles,
 	}).append(kasaDom);
 
+	Kitapi[idx] = kasaDom;
 	return Kitapi;
 };
 
