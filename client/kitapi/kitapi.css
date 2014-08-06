@@ -18,6 +18,20 @@ table td {
 	min-height: 0;
 }
 
+#kitapiTrapezi {
+	position: absolute;
+	top: 0px;
+	left: 6px;
+	white-space: nowrap;
+
+	font-family: "Impact", "Charcoal", sans-serif;
+	font-size: 30px;
+	letter-spacing: 2px;
+
+	color: #0A334E;
+	opacity: 0.3;
+}
+
 #kitapiTabela {
 	padding: 20px;
 	line-height: 150%;
@@ -74,7 +88,7 @@ table td {
 	background-color: #FFFF66;
 
 	border-style: solid;
-	border-width: 1px 2px 2px 1px;
+	border-width: 1px;
 	border-color: #C2C2C2;
 
 	white-space: nowrap;
@@ -185,7 +199,6 @@ table td {
 /***********************************************************************************************************************/
 
 /*
-*/
 .kitapiPerioxi {
 	background-color: rgba(128, 128, 0, 0.14);
 }
@@ -213,3 +226,4 @@ table td {
 .kitapiStiliKapikia {
 	background-color: crimson;
 }
+*/
