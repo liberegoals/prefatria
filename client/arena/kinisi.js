@@ -386,6 +386,7 @@ Skiniko.prototype.processKinisiPostET = function(data) {
 	// δικό μας τραπέζι.
 
 	Arena.partida.pektisRefreshDOM(thesi);
+	Arena.kitapi.refresh();
 	if (data.telefteos && (!data.telefteos[thesi]))
 	Client.sound.doorbell();
 
@@ -719,6 +720,7 @@ Skiniko.prototype.processKinisiPostTS = function(data) {
 
 	switch (data.param) {
 	case 'ΚΑΣΑ':
+		Arena.kitapi.refresh();
 		Client.sound.blioup();
 		break;
 	case 'ΠΡΙΒΕ':
@@ -833,6 +835,9 @@ Skiniko.prototype.processKinisiPostDX = function(data) {
 	Client.sound.tic();
 	Arena.partida.markAlagiPios(trapezi, data, 'ΔΙΑΤΑΞΗ');
 
+	if (Arena.kitapi.isAnikto())
+	Arena.kitapi.win.Kitapi.pektisRefreshDOM();
+
 	return this;
 };
 
@@ -864,6 +869,9 @@ Skiniko.prototype.processKinisiPostRL = function(data) {
 	Arena.partida.trapeziRefreshDOM();
 	Client.sound.tic();
 	Arena.partida.markAlagiPios(trapezi, data, 'ΡΟΛΟΙ');
+
+	if (Arena.kitapi.isAnikto())
+	Arena.kitapi.win.Kitapi.pektisRefreshDOM();
 
 	return this;
 };

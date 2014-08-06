@@ -68,7 +68,7 @@ table td {
 
 .kitapiPektisOnoma {
 	display: inline-block;
-	padding: 0 4px 0 4px;
+	padding: 0px 2px 2px 2px;
 	min-width: 100px;
 
 	font-size: 22px;
@@ -193,6 +193,7 @@ table td {
 /***********************************************************************************************************************/
 
 /*
+*/
 .kitapiPerioxi {
 	background-color: rgba(128, 128, 0, 0.14);
 }
@@ -220,4 +221,3 @@ table td {
 .kitapiStiliKapikia {
 	background-color: crimson;
 }
-*/

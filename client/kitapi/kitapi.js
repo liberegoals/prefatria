@@ -502,3 +502,11 @@ Kitapi.refreshDOM = function() {
 
 	return Kitapi;
 };
+
+Kitapi.pektisRefreshDOM = function() {
+	Prefadoros.thesiWalk(function(thesi) {
+		Kitapi.onomaDOM[thesi].html(Kitapi.onomaGet(thesi));
+	});
+
+	return Kitapi;
+};
