@@ -8,8 +8,8 @@ Selida::javascript("kitapi/kitapi");
 
 Selida::body();
 Selida::ofelimo_begin();
-//Kitapi::setup();
-Kitapi::enimerosi();
+Kitapi::setup();
+//Kitapi::enimerosi();
 Selida::ofelimo_end();
 Selida::telos();
 

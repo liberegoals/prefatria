@@ -133,6 +133,7 @@ table td {
 .kitapiStiliKasa {
 	padding: 14px 0 0 0;
 	margin: 0 auto;
+	color: #111185;
 
 	column-count: 1;
 	-moz-column-count: 1;
@@ -148,7 +149,6 @@ table td {
 	text-align: center;
 	font-size: 16px;
 	font-weight: bold;
-	text-decoration: line-through;
 }
 
 .kitapiKasaDiagrafi {
@@ -159,6 +159,8 @@ table td {
 /***********************************************************************************************************************/
 
 .kitapiStiliKapikia {
+	color: #111185;
+
 	column-count: 1;
 	-moz-column-count: 1;
 	-webkit-column-count: 1;
@@ -172,7 +174,6 @@ table td {
 	width: 36px;
 	text-align: center;
 	font-size: 14px;
-	text-decoration: line-through;
 }
 
 .kitapiKapikiaDiagrafi {
@@ -183,6 +184,7 @@ table td {
 /***********************************************************************************************************************/
 
 /*
+*/
 .kitapiPerioxi {
 	background-color: rgba(128, 128, 0, 0.14);
 }
@@ -210,4 +212,3 @@ table td {
 .kitapiStiliKapikia {
 	background-color: crimson;
 }
-*/

@@ -1024,7 +1024,7 @@ Arena.kitapi.anigma = function(e) {
 		Arena.kitapi.position.top = 100;
 		Arena.kitapi.position.left += 100;
 		Arena.kitapi.position.height = 710;
-		Arena.kitapi.position.width = 610;
+		Arena.kitapi.position.width = 590;
 	}
 
 	Arena.kitapi.win = window.open('kitapi/index.php', '_blank',
