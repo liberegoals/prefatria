@@ -1058,18 +1058,49 @@ Arena.kitapi.klisimo = function() {
 	var kitapi;
 
 	kitapi = Arena.kitapi.win;
-	try {
-		if (kitapi.screenLeft) Arena.kitapi.position.left = kitapi.screenLeft;
-		else if (kitapi.screenX) Arena.kitapi.position.left = kitapi.screenX;
+	if (kitapi) {
+		try {
+			if (kitapi.screenLeft) Arena.kitapi.position.left = kitapi.screenLeft;
+			else if (kitapi.screenX) Arena.kitapi.position.left = kitapi.screenX;
 
-		if (kitapi.screenTop) Arena.kitapi.position.top = kitapi.screenTop;
-		else if (kitapi.screenY) Arena.kitapi.position.top = kitapi.screenY;
-		kitapi.close();
-	} catch (e) {}
+			if (kitapi.screenTop) Arena.kitapi.position.top = kitapi.screenTop;
+			else if (kitapi.screenY) Arena.kitapi.position.top = kitapi.screenY;
+			kitapi.close();
+		} catch (e) {}
+	}
 
 	delete Arena.kitapi.win;
 	delete Arena.kitapi.blurTS;
 	Arena.kitapi.entonoIcon();
+
+	return Arena;
+};
+
+Arena.kitapi.refresh = function() {
+	var Kitapi;
+
+	if (Arena.kitapi.isKlisto())
+	return Arena;
+
+	Kitapi = Arena.kitapi.win.Kitapi;
+	Kitapi.refreshDOM();
+
+	return Arena;
+};
+
+Arena.kitapi.pliromiPush = function(pliromi) {
+	var Kitapi;
+
+	if (Arena.kitapi.isKlisto())
+	return Arena;
+
+	Kitapi = Arena.kitapi.win.Kitapi;
+	Prefadoros.thesiWalk(function(thesi) {
+		var kasa;
+
+		kasa = pliromi['kasa' + thesi];
+		if (kasa) Kitapi.kasaPush(thesi, kasa);
+	});
 
 	return Arena;
 };
