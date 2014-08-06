@@ -1094,14 +1094,7 @@ Arena.kitapi.pliromiPush = function(pliromi) {
 	if (Arena.kitapi.isKlisto())
 	return Arena;
 
-	Kitapi = Arena.kitapi.win.Kitapi;
-	Prefadoros.thesiWalk(function(thesi) {
-		var kasa;
-
-		kasa = pliromi['kasa' + thesi];
-		if (kasa) Kitapi.kasaPush(thesi, kasa);
-	});
-
+	Arena.kitapi.win.Kitapi.pliromiPush(pliromi);
 	return Arena;
 };
 
