@@ -189,6 +189,7 @@ Kitapi.onomaGet = function(thesi) {
 	return Kitapi.onomasiaThesis[thesi];
 
 	pektis = Arena.ego.trapezi.trapeziPektisGet(thesi);
+	if (!pektis) pektis = Arena.ego.trapezi.trapeziTelefteosGet(thesi);
 	return pektis ? pektis : '&nbsp;';
 }
 
