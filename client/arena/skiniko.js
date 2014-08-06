@@ -938,7 +938,7 @@ Trapezi.prototype.trapeziThesiRefreshDOM = function(thesi) {
 		if (login) dom.addClass('fantasma').text(login);
 	}
 
-	pektis = login ? Arena.skiniko.skinikoPektisGet(login) : null;
+	pektis = (login ? Arena.skiniko.skinikoPektisGet(login) : null);
 	if (pektis) dom.on('click', function(e) {
 		pektis.pektisFormaPopupDOM(e);
 	});
