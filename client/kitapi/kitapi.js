@@ -1,29 +1,102 @@
 Kitapi = {
-	// Η παράμετρος "maxKasaLen1" δείχνει το μέγιστο πλήθος
-	// εγγραφών κάσας που χωράνε καθ' ύψος στην περιοχή
-	// του Νότου (θέση 1). Ακολουθούν αντίστοιχες παράμετροι
-	// για τις περιοχές Ανατολής (θέση 2) και Δύσης (θέση 3).
+	// Η λίστα "maxKasaLen" δείχνει το μέγιστο πλήθος εγγραφών
+	// κάσας που χωράνε καθ' ύψος στην περιοχή κάθε παίκτη και
+	// είναι δεικτοδοτημένη με τη θέση του παίκτη.
 
-	maxKasaLen1: 9,
-	maxKasaLen2: 16,
-	maxKasaLen3: 16,
+	maxKasaLen: {
+		1: 9,
+		2: 16,
+		3: 16,
+	},
 
-	maxKapikiaLen1: 12,
-	maxKapikiaLen2: 18,
-	maxKapikiaLen3: 18,
+	// Η λίστα "maxKasaStiles" δείχνει το μέγιστο πλήθος στηλών
+	// εγγραφών κάσας που χωράνε γενικώς στην περιοχή κάθε παίκτη
+	// και είναι δεικτοδοτημένη με τη θέση του παίκτη.
 
-	// Η παράμετρος "maxKasaStiles" δείχνει το μέγιστο πλήθος
-	// στηλών εγγραφών κάσας που χωράνε γενικώς στην περιοχή του
-	// Νότου (θέση 1). Ακολουθούν αντίστοιχες παράμετροι για τις
-	// περιοχές Ανατολής (θέση 2) και Δύσης (θέση 3).
+	maxKasaStiles: {
+		1: 6,
+		2: 2,
+		3: 2,
+	},
 
-	maxKasaStiles1: 6,
-	maxKasaStiles2: 2,
-	maxKasaStiles3: 2,
+	// Η λίστα "maxKasaCount" δείχνει το μέγιστο πλήθος εγγραφών κάσας
+	// για κάθε παίκτη και είναι δεικτοδοτημένη με τη θέση του παίκτη.
+	// Οι τιμές της λίστας υπολογίζονται αργότερα και προκύπουν, προφανώς,
+	// από τα στοιχεία των λιστών "maxKasaLen" και "maxKasaStiles".
 
-	maxKapikiaStiles1: 3,
-	maxKapikiaStiles2: 2,
-	maxKapikiaStiles3: 2,
+
+	maxKasaCount: {},
+
+	// Η λίστα "maxKapikiaLen" δείχνει το μέγιστο πλήθος εγγραφών
+	// καπικιών που χωράνε καθ' ύψος στην περιοχή κάθε παίκτη και
+	// είναι δεικτοδοτημένη με τη θέση του παίκτη.
+
+	maxKapikiaLen: {
+		1: 12,
+		2: 18,
+		3: 18,
+	},
+
+	// Η λίστα "maxKapikiaStiles" δείχνει το μέγιστο πλήθος στηλών
+	// εγγραφών καπικιών που χωράνε γενικώς στην περιοχή κάθε παίκτη
+	// και είναι δεικτοδοτημένη με τη θέση του παίκτη.
+
+	maxKapikiaStiles: {
+		1: 4,
+		2: 2,
+		3: 2,
+	},
+
+	// Η λίστα "maxKapikiaCount" δείχνει το μέγιστο πλήθος εγγραφών καπικιών
+	// για κάθε παίκτη και είναι δεικτοδοτημένη με τη θέση του παίκτη.
+	// Οι τιμές της λίστας υπολογίζονται αργότερα και προκύπουν, προφανώς,
+	// από τα στοιχεία των λιστών "maxKapikiaLen" και "maxKapikiaStiles".
+
+
+	maxKapikiaCount: {},
+
+	// Η λίστα "onomaDOM" περιέχει τα DOM elements των ονομάτων των
+	// παικτών και είναι δεικοτοδοτημένη με τη θέση του παίκτη.
+
+	onomaDOM: {},
+
+	// Η λίστα "kasaStiliDOM" περιέχει τα DOM elements των στηλών κάσας
+	// και είναι δεικτοδοτημένη με τη θέση του παίκτη.
+
+	kasaStiliDOM: {},
+
+	// Η λίστα "kapikiaStiliDOM" δείχνει τα DOM elements από των στηλών
+	// ανταλλαγής καπικιών και δεικτοδοτείται ως εξής:
+	//
+	//	12	Ανταλλαγές καπικιών στην περιοχή του παίκτη 1 με τον
+	//		τον παίκτη 2 (κάτω δεξιά).
+	//
+	//	13	Ανταλλαγές καπικιών στην περιοχή του παίκτη 1 με τον
+	//		τον παίκτη 3 (κάτω αριστερά).
+	//
+	//	21	Ανταλλαγές καπικιών στην περιοχή του παίκτη 2 με τον
+	//		τον παίκτη 1 (πάνω δεξιά).
+	//
+	//	23	Ανταλλαγές καπικιών στην περιοχή του παίκτη 2 με τον
+	//		τον παίκτη 3 (κέντρο δεξιά).
+	//
+	//	32	Ανταλλαγές καπικιών στην περιοχή του παίκτη 3 με τον
+	//		τον παίκτη 2 (κέντρο αριστερά).
+	//
+	//	31	Ανταλλαγές καπικιών στην περιοχή του παίκτη 3 με τον
+	//		τον παίκτη 1 (πάνω αριστερά).
+
+	kapikiaStiliDOM: {},
+
+	// Η λίστα "kasa" περιέχει την τρέχουσα κάσα κάθε παίκτη και είναι
+	// δεικτοδοτημένη με τη θέση του παίκτη.
+
+	kasa: {},
+
+	// Η λίστα "kasaLastDOM" περιέχει την τελευταία εγγραφή κάσας για κάθε
+	// παίκτη και είναι δεικτοδοτημένη με τη θέση του παίκτη.
+
+	kasaLastDOM: {},
 };
 
 $(document).ready(function() {
@@ -52,7 +125,9 @@ $(document).ready(function() {
 Kitapi.unload = function() {
 	if (Kitapi.unloaded) return;
 	Kitapi.unloaded = true;
-	if (Arena) Arena.kitapi.klisimo();
+
+	if (Kitapi.isArena())
+	Arena.kitapi.klisimo();
 };
 
 $(window).on('beforeunload', function() {
@@ -78,7 +153,6 @@ Kitapi.perioxiSetup = function() {
 		//	Kitapi.perioxi3DOM	(Δύση)
 
 		perioxiDom = $('#kitapiPerioxi' + thesi);
-		Kitapi['perioxi' + thesi + 'DOM'] = perioxiDom;
 
 		// Στο επάνω μέρος κάθε περιοχής υπάρχει περιοχή, επονομαζόμενη
 		// "data" στην οποία εμφανίζεται το όνομα του αντίστοιχου παίκτη.
@@ -93,43 +167,30 @@ Kitapi.perioxiSetup = function() {
 		dataDom = $('<div>').addClass('kitapiPektisData').
 		append(onomaDom = $('<div>').addClass('kitapiPektisOnoma').
 		text(Kitapi.onomasiaThesis[thesi]));
-		Kitapi['onoma' + thesi + 'DOM'] = onomaDom;
+		Kitapi.onomaDOM[thesi] = onomaDom;
 
 		if (thesi === 3) {
-			kl = '31';
-			kr = '32';
+			kl = 31;
+			kr = 32;
 		}
 		else if (thesi === 2) {
-			kl = '23';
-			kr = '21';
+			kl = 23;
+			kr = 21;
 		}
 		else {
-			kl = '13';
-			kr = '12';
+			kl = 13;
+			kr = 12;
 		}
-
-		// Σε κάθε περιοχή υπάρχουν δύο υποπεριοχές που αφορούν στις συναλλαγές
-		// καπικιών μεταξύ των παικτών.
-		//
-		// Τα DOM elements των περιοχών συναλλαγής καπικιών μεταξύ των παικτών
-		// είναι προσβάσιμα μέσω των μεταβλητών:
-		//
-		//	Kitapi.kapikia12DOM	(Νότος/Ανατολή)
-		//	Kitapi.kapikia13DOM	(Νότος/Δύση)
-		//	Kitapi.kapikia21DOM	(Ανατολή/Νότος)
-		//	Kitapi.kapikia23DOM	(Ανατολή/Δύση)
-		//	Kitapi.kapikia31DOM	(Δύση/Νότος)
-		//	Kitapi.kapikia32DOM	(Δύση/Ανατολή)
 
 		daraveriDom = $('<table>').css('width', '100%').
 		append($('<td>').attr('id', 'kitapiDaraveri' + kl).addClass('kitapiDaraveri').
-		append(Kitapi['kapikia' + kl + 'DOM'] = $('<div>').
+		append(Kitapi.kapikiaStiliDOM[kl] = $('<div>').
 		addClass('kitapiStiliKapikia kitapiStiliKapikia' + kl))).
 		append(kasaDom = $('<td>').css({
 			textAlign: 'center',
 		})).
 		append($('<td>').attr('id', 'kitapiDaraveri' + kr).addClass('kitapiDaraveri').
-		append(Kitapi['kapikia' + kr + 'DOM'] = $('<div>').
+		append(Kitapi.kapikiaStiliDOM[kr] = $('<div>').
 		addClass('kitapiStiliKapikia kitapiStiliKapikia' + kr)));
 
 		if (thesi === 1) {
@@ -159,14 +220,7 @@ Kitapi.perioxiSetup = function() {
 			dom.css('height', h + 'px');
 		}
 
-		// Τα DOM elements των περιοχών κάσας είναι προσβάσιμα μέσω των
-		// μεταβλητών:
-		//
-		//	Kitapi.kasa1DOM	(Νότος)
-		//	Kitapi.kasa2DOM	(Ανατολή)
-		//	Kitapi.kasa3DOM	(Δύση)
-
-		Kitapi['kasa' + thesi + 'DOM'] = dom;
+		Kitapi.kasaStiliDOM[thesi] = dom;
 		perioxiDom.append(daraveriDom);
 	});
 
@@ -200,26 +254,33 @@ Kitapi.onomaGet = function(thesi) {
 Kitapi.stresarisma = function() {
 	var i;
 
-	for (i = 1; i <= Kitapi.maxKasaLen1; i++) Kitapi.kasaPush(1, i);
-	for (i = 1; i <= Kitapi.maxKapikiaLen1; i++) Kitapi.kapikiaPush(1, 3, i);
-	for (i = 1; i <= Kitapi.maxKapikiaLen1; i++) Kitapi.kapikiaPush(1, 2, i);
+	for (i = 1; i <= Kitapi.maxKasaLen[1]; i++) Kitapi.kasaPush(1, i);
+	for (i = 1; i <= Kitapi.maxKapikiaLen[1]; i++) Kitapi.kapikiaPush(1, 3, i);
+	for (i = 1; i <= Kitapi.maxKapikiaLen[1]; i++) Kitapi.kapikiaPush(1, 2, i);
 
-	for (i = 1; i <= Kitapi.maxKasaLen3; i++) Kitapi.kasaPush(3, i);
-	for (i = 1; i <= Kitapi.maxKapikiaLen3; i++) Kitapi.kapikiaPush(3, 1, i);
+	for (i = 1; i <= Kitapi.maxKasaLen[2]; i++) Kitapi.kasaPush(2, i);
+	for (i = 1; i <= Kitapi.maxKapikiaLen[2]; i++) Kitapi.kapikiaPush(2, 1, i);
 
-	for (i = 1; i <= Kitapi.maxKasaLen2; i++) Kitapi.kasaPush(2, i);
-	for (i = 1; i <= Kitapi.maxKapikiaLen2; i++) Kitapi.kapikiaPush(2, 1, i);
+	for (i = 1; i <= Kitapi.maxKasaLen[3]; i++) Kitapi.kasaPush(3, i);
+	for (i = 1; i <= Kitapi.maxKapikiaLen[3]; i++) Kitapi.kapikiaPush(3, 1, i);
 
 	Kitapi.
 	resize().
 	clearDOM();
 
-	Prefadoros.thesiWalk(function(thesi) {
-		Kitapi['maxKasaLen' + thesi]--;
-		Kitapi['maxKasaCount' + thesi] = Kitapi['maxKasaStiles' + thesi] * Kitapi['maxKasaLen' + thesi];
+	// Έχουμε φέρει το μέγεθος του κιταπιού στα επιθυμητά πλαίσια. Τώρα
+	// μειώνουμε κατά μια θέση το μήκος των επιμέρους στηλών, οπότε έχουμε
+	// περισσότερη σιγουριά, και αμέσως μετά υπολογίζουμε το μέγιστο πλήθος
+	// στοιχείων για κάθε στήλη. Υπενθυμίζουμε ότι μόλις υπερβούμε το μέγιστο
+	// πλήθος στοιχείων σε κάποια στήλη, κονταίνουμε τη στήλη και τοποθετούμε
+	// κάθετα αποσιωπητικά στην αρχή της στήλης.
 
-		Kitapi['maxKapikiaLen' + thesi]--;
-		Kitapi['maxKapikiaCount' + thesi] = Kitapi['maxKapikiaStiles' + thesi] * Kitapi['maxKapikiaLen' + thesi];
+	Prefadoros.thesiWalk(function(thesi) {
+		Kitapi.maxKasaLen[thesi]--;
+		Kitapi.maxKasaCount[thesi] = Kitapi.maxKasaStiles[thesi] * Kitapi.maxKasaLen[thesi];
+
+		Kitapi.maxKapikiaLen[thesi]--;
+		Kitapi.maxKapikiaCount[thesi] = Kitapi.maxKapikiaStiles[thesi] * Kitapi.maxKapikiaLen[thesi];
 	});
 
 	return Kitapi;
@@ -250,56 +311,76 @@ Kitapi.oxiArena = function() {
 	return !Kitapi.isArena();
 };
 
-Kitapi.provlima = function(msg) {
-	Kitapi.error = msg;
-	Client.provlima(msg, true).css('top', '10px');
-	return Kitapi;
-};
-
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+// Η function "pliromiPush" δέχεται ένα record πληρωμής διανομής και επιτελεί
+// τις σχετικές αλλαγές στο κιτάπι. Το record πληρωμής διανομής πρέπει να έχει
+// τα παρακάτω στοιχεία:
+//
+//	kasa1		Είναι τα καπίκια που σηκώνει (θετικό), ή καταθέτει (αρνητικό)
+//			στη κάσα ο παίκτης στη θέση 1, αν π.χ. είναι 30 σημαίνει ότι
+//			ο παίκτης 1 σηκώνει από την κάσα 30 καπίκια, ενώ αν είναι -30,
+//			σημαίνει ότι ο παίκτης 1 καταθέτει στην κάσα 30 καπίκια.
+//
+//	metrita1	Είναι καπίκια που δίνει (αρνητικό), ή παίρνει (θετικό) ο παίκτης
+//			στη θέση 1 από τους άλλους παίκτες, αν π.χ. είναι -35 σημαίνει
+//			ότι ο παίκτης 1 δίνει στους παίκτες 2 και 3 συνολικά 35 καπίκια,
+//			ενώ αν είναι 96, σημαίνεί ότι ο παίκτης 1 παίρνει από τους παίκτες
+//			2 και 3 συνολικά 96 καπίκια.
+//
+//	kasa2		Παρόμοιο με το "kasa1" αλλά για τον παίκτη 2.
+//
+//	kapikia2	Παρόμοιο με το "kapikia2" αλλά για τον παίκτη 2.
+//
+//	kasa3		Παρόμοιο με το "kasa1" αλλά για τον παίκτη 3.
+//
+//	kapikia3	Παρόμοιο με το "kapikia3" αλλά για τον παίκτη 3.
+
 Kitapi.pliromiPush = function(data) {
-	var pliromi = {};
+	var pliromi;
 
-	// Δημιουργούμε αντίγραφο της πληρωμής, καθώς είναι πολύ πιθανόν
-	// να πειράξουμε τα δεδομένα.
+	// Δημιουργούμε αντίγραφο με τα στοιχεία της πληρωμής, καθώς είναι πολύ
+	// πιθανόν να πειράξουμε τα δεδομένα και δεν θέλουμε να αλλοιώσουμε τα
+	// αρχικά δεδομένα.
 
+	pliromi = {
+		kasa: {},
+		metrita: {},
+	};
 	Prefadoros.thesiWalk(function(thesi) {
-		pliromi['kasa' + thesi] = parseInt(data['kasa' + thesi]);
-		pliromi['metrita' + thesi] = parseInt(data['metrita' + thesi]);
+		pliromi.kasa[thesi] = parseInt(data['kasa' + thesi]);
+		pliromi.metrita[thesi] = parseInt(data['metrita' + thesi]);
 	});
 
+	// Πρώτα ασχολούμαστε με τις δοσοληψίες των παικτών με την κάσα.
+
 	Prefadoros.thesiWalk(function(thesi) {
-		var kasa, idx, kasaLast;
+		if (!pliromi.kasa[thesi])
+		return;
 
-		kasa = pliromi['kasa' + thesi];
-		if (!kasa) return;
-
-		idx = 'kasaLast' + thesi;
-		Kitapi[idx] -= kasa;
-		Kitapi.kasaPush(thesi, Math.floor(Kitapi[idx] / 10), (kasa < 0));
+		Kitapi.kasa[thesi] -= pliromi.kasa[thesi];
+		Kitapi.kasaPush(thesi, Math.floor(Kitapi.kasa[thesi] / 10), (pliromi.kasa[thesi] < 0));
 	});
 
 	return Kitapi;
 };
 
 Kitapi.kasaPush = function(thesi, kasa, mesa) {
-	var kasaStiliDom, count, stiles, xorane, platos, idx, kasaDom;
+	var kasaStiliDom, count, stiles, xorane, platos, kasaDom;
 
-	kasaStiliDom = Kitapi['kasa' + thesi + 'DOM'];
+	kasaStiliDom = Kitapi.kasaStiliDOM[thesi];
 	count = kasaStiliDom.children('.kitapiKasa').length + 1;
 
-	if (count > Kitapi['maxKasaCount' + thesi])
+	if (count > Kitapi.maxKasaCount[thesi])
 	count = Kitapi.kasaKontema(thesi);
 
-	xorane = Kitapi['maxKasaLen' + thesi];
+	xorane = Kitapi.maxKasaLen[thesi];
 	stiles = Math.floor(count / xorane);
 	if ((stiles * xorane) < count) stiles++;
 	platos = (38 * stiles) + 'px';
 	stiles += '';
 
-	idx = 'kasaLast' + thesi + 'DOM';
-	kasaDom = Kitapi[idx];
+	kasaDom = Kitapi.kasaLastDOM[thesi];
 	if (kasaDom) kasaDom.addClass('kitapiKasaDiagrafi');
 
 	kasaDom = $('<div>').addClass('kitapiKasa').text(kasa);
@@ -312,14 +393,14 @@ Kitapi.kasaPush = function(thesi, kasa, mesa) {
 		'-webkit-column-count': stiles,
 	}).append(kasaDom);
 
-	Kitapi[idx] = kasaDom;
+	Kitapi.kasaLastDOM[thesi] = kasaDom;
 	return Kitapi;
 };
 
 Kitapi.kasaKontema = function(thesi) {
 	var jql, count, del, i;
 
-	jql = Kitapi['kasa' + thesi + 'DOM'].children('.kitapiKasa');
+	jql = Kitapi.kasaStiliDOM[thesi].children('.kitapiKasa');
 	count = jql.length + 1;
 	del = Math.floor(count / 2);
 	if (del < 1) return count;
@@ -338,13 +419,13 @@ Kitapi.kapikiaPush = function(apo, pros, kapikia) {
 	if (apo === pros)
 	return Kitapi;
 
-	kapikiaStiliDom = Kitapi['kapikia' + apo + '' + pros + 'DOM'];
+	kapikiaStiliDom = Kitapi.kapikiaStiliDOM[apo + '' + pros];
 	count = kapikiaStiliDom.children('.kitapiKapikia').length + 1;
 
-	if (count > Kitapi['maxKapikiaCount' + apo])
+	if (count > Kitapi.maxKapikiaCount[apo])
 	count = Kitapi.kapikiaKontema(apo, pros);
 
-	xorane = Kitapi['maxKapikiaLen' + apo];
+	xorane = Kitapi.maxKapikiaLen[apo];
 	stiles = Math.floor(count / xorane);
 	if ((stiles * xorane) < count) stiles++;
 	platos = (36 * stiles) + 'px';
@@ -363,7 +444,7 @@ Kitapi.kapikiaPush = function(apo, pros, kapikia) {
 Kitapi.kapikiaKontema = function(apo, pros) {
 	var jql, count, del, i;
 
-	jql = Kitapi['kapikia' + apo + '' + pros + 'DOM'].children('.kitapiKapikia');
+	jql = Kitapi.kapikiaStiliDOM[apo + '' + pros].children('.kitapiKapikia');
 	count = jql.length + 1;
 	del = Math.floor(count / 2);
 	if (del < 1) return count;
@@ -380,22 +461,20 @@ Kitapi.kapikiaKontema = function(apo, pros) {
 
 Kitapi.clearDOM = function() {
 	Kitapi.trapeziDOM.empty();
-	Kitapi.kasa1DOM.empty();
-	Kitapi.kapikia13DOM.empty();
-	Kitapi.kapikia12DOM.empty();
+	Kitapi.kasaStiliDOM[1].empty();
+	Kitapi.kapikiaStiliDOM[13].empty();
+	Kitapi.kapikiaStiliDOM[12].empty();
 
-	Kitapi.kasa2DOM.empty();
-	Kitapi.kapikia21DOM.empty();
-	Kitapi.kapikia23DOM.empty();
+	Kitapi.kasaStiliDOM[2].empty();
+	Kitapi.kapikiaStiliDOM[21].empty();
+	Kitapi.kapikiaStiliDOM[23].empty();
 
-	Kitapi.kasa3DOM.empty();
-	Kitapi.kapikia31DOM.empty();
-	Kitapi.kapikia32DOM.empty();
+	Kitapi.kasaStiliDOM[3].empty();
+	Kitapi.kapikiaStiliDOM[31].empty();
+	Kitapi.kapikiaStiliDOM[32].empty();
 
-	Prefadoros.thesiWalk(function(thesi) {
-		delete Kitapi['kasaLast' + thesi];
-		delete Kitapi['kasaLast' + thesi + 'DOM'];
-	});
+	Kitapi.kasa = {};
+	Kitapi.kasaLastDOM = {};
 
 	return Kitapi;
 };
@@ -412,74 +491,14 @@ Kitapi.refreshDOM = function() {
 	Kitapi.trapeziDOM.text(Arena.ego.trapezi.trapeziKodikosGet() % 10000);
 	kasa = trapezi.trapeziKasaGet();
 	Prefadoros.thesiWalk(function(thesi) {
-		Kitapi['onoma' + thesi + 'DOM'].html(Kitapi.onomaGet(thesi));
+		Kitapi.onomaDOM[thesi].html(Kitapi.onomaGet(thesi));
 		Kitapi.kasaPush(thesi, kasa);
-		Kitapi['kasaLast' + thesi] = kasa * 10;
+		Kitapi.kasa[thesi] = kasa * 10;
 	});
 
 	trapezi.trapeziDianomiWalk(function(dianomi) {
 		Kitapi.pliromiPush(this);
 	}, 1);
-return Kitapi;
-
-	var aa, timer;
-	aa = 0;
-	timer = setInterval(function() {
-		var thesi, kasa, apo, pros;
-
-		if (Kitapi.error) {
-			clearInterval(timer);
-			return;
-		}
-
-		thesi = Globals.random(1, 3);
-		kasa = Globals.random(-150, 150);
-		Kitapi.kasaPush(thesi, kasa);
-
-		apo = Globals.random(1, 3);
-		pros = Globals.random(1, 3);
-		kapikia = Globals.random(-150, 150);
-		Kitapi.kapikiaPush(apo, pros, kapikia);
-
-		apo = Globals.random(1, 3);
-		pros = Globals.random(1, 3);
-		kapikia = Globals.random(-150, 150);
-		Kitapi.kapikiaPush(apo, pros, kapikia);
-
-		if (aa++ > 10) clearInterval(timer);
-	}, Globals.random(100, 100));
-
-	return Kitapi;
-};
-
-Kitapi.testData = function() {
-	var aa, timer;
-
-	aa = 0;
-	timer = setInterval(function() {
-		var thesi, kasa, apo, pros;
-
-		if (Kitapi.error) {
-			clearInterval(timer);
-			return;
-		}
-
-		thesi = Globals.random(1, 3);
-		kasa = Globals.random(-150, 150);
-		Kitapi.kasaPush(thesi, kasa);
-
-		apo = Globals.random(1, 3);
-		pros = Globals.random(1, 3);
-		kapikia = Globals.random(-150, 150);
-		Kitapi.kapikiaPush(apo, pros, kapikia);
-
-		apo = Globals.random(1, 3);
-		pros = Globals.random(1, 3);
-		kapikia = Globals.random(-150, 150);
-		Kitapi.kapikiaPush(apo, pros, kapikia);
-
-		if (aa++ > 350) clearInterval(timer);
-	}, Globals.random(100, 100));
 
 	return Kitapi;
 };
