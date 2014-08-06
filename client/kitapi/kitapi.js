@@ -9,22 +9,22 @@ Kitapi = {
 	maxKasaLen3: 16,
 
 	maxKapikiaLen1: 12,
-	maxKapikiaLen2: 20,
-	maxKapikiaLen3: 20,
+	maxKapikiaLen2: 18,
+	maxKapikiaLen3: 18,
+
+	// Η παράμετρος "maxKasaStiles" δείχνει το μέγιστο πλήθος
+	// στηλών εγγραφών κάσας που χωράνε γενικώς στην περιοχή του
+	// Νότου (θέση 1). Ακολουθούν αντίστοιχες παράμετροι για τις
+	// περιοχές Ανατολής (θέση 2) και Δύσης (θέση 3).
+
+	maxKasaStiles1: 6,
+	maxKasaStiles2: 2,
+	maxKasaStiles3: 2,
+
+	maxKapikiaStiles1: 3,
+	maxKapikiaStiles2: 2,
+	maxKapikiaStiles3: 2,
 };
-
-// Η παράμετρος "maxKasaCount1" δείχνει το μέγιστο πλήθος
-// εγγραφών κάσας που χωράνε γενικώς στην περιοχή του Νότου
-// (θέση 1). Ακολουθούν αντίστοιχες παράμετροι για τις περιοχές
-// Ανατολής (θέση 2) και Δύσης (θέση 3).
-
-Kitapi.maxKasaCount1 = 6 * Kitapi.maxKasaLen1;
-Kitapi.maxKasaCount2 = 2 * Kitapi.maxKasaLen2;
-Kitapi.maxKasaCount3 = 2 * Kitapi.maxKasaLen3;
-
-Kitapi.maxKapikiaCount1 = 3 * Kitapi.maxKapikiaLen1;
-Kitapi.maxKapikiaCount2 = 2 * Kitapi.maxKapikiaLen2;
-Kitapi.maxKapikiaCount3 = 2 * Kitapi.maxKapikiaLen3;
 
 $(document).ready(function() {
 	// Χρειαζόμαστε πρόσβαση στη βασική σελίδα του «Πρεφαδόρου», από
@@ -45,8 +45,8 @@ $(document).ready(function() {
 
 	Kitapi.
 	perioxiSetup().
-	stresarisma();
-Kitapi.testData();
+	stresarisma().
+	refreshDOM();
 });
 
 Kitapi.unload = function() {
@@ -179,13 +179,16 @@ Kitapi.onomasiaThesis = {
 };
 
 Kitapi.onomaGet = function(thesi) {
+	var pektis;
+
 	if (Kitapi.oxiArena())
 	return Kitapi.onomasiaThesis[thesi];
 
 	if (Arena.ego.oxiTrapezi())
 	return Kitapi.onomasiaThesis[thesi];
 
-	return Arena.ego.trapezi.trapeziPektisGet(thesi);
+	pektis = Arena.ego.trapezi.trapeziPektisGet(thesi);
+	return pektis ? pektis : '&nbsp;';
 }
 
 // Με την function "stresarisma" εισάγουμε μέγιστο πλήθος εγγραφών κάσας
@@ -195,27 +198,27 @@ Kitapi.onomaGet = function(thesi) {
 Kitapi.stresarisma = function() {
 	var i;
 
-	for (i = 1; i <= Kitapi.maxKasaLen1; i++) {
-		Kitapi.kasaPush(1, i, false);
-	}
+	for (i = 1; i <= Kitapi.maxKasaLen1; i++) Kitapi.kasaPush(1, i);
+	for (i = 1; i <= Kitapi.maxKapikiaLen1; i++) Kitapi.kapikiaPush(1, 3, i);
+	for (i = 1; i <= Kitapi.maxKapikiaLen1; i++) Kitapi.kapikiaPush(1, 2, i);
 
-	for (i = 1; i <= Kitapi.maxKapikiaLen1; i++) {
-		Kitapi.kapikiaPush(1, 3, i, false);
-	}
+	for (i = 1; i <= Kitapi.maxKasaLen3; i++) Kitapi.kasaPush(3, i);
+	for (i = 1; i <= Kitapi.maxKapikiaLen3; i++) Kitapi.kapikiaPush(3, 1, i);
 
-	for (i = 1; i <= Kitapi.maxKasaLen3; i++) {
-		Kitapi.kasaPush(3, i, false);
-	}
+	for (i = 1; i <= Kitapi.maxKasaLen2; i++) Kitapi.kasaPush(2, i);
+	for (i = 1; i <= Kitapi.maxKapikiaLen2; i++) Kitapi.kapikiaPush(2, 1, i);
 
-	for (i = 1; i <= Kitapi.maxKapikiaLen3; i++) {
-		Kitapi.kapikiaPush(3, 1, i, false);
-	}
+	Kitapi.
+	resize().
+	clearDOM();
 
-	Kitapi.resize();
-	Kitapi.kasa1DOM.empty();
-	Kitapi.kapikia13DOM.empty();
-	Kitapi.kasa3DOM.empty();
-	Kitapi.kapikia31DOM.empty();
+	Prefadoros.thesiWalk(function(thesi) {
+		Kitapi['maxKasaLen' + thesi]--;
+		Kitapi['maxKasaCount' + thesi] = Kitapi['maxKasaStiles' + thesi] * Kitapi['maxKasaLen' + thesi];
+
+		Kitapi['maxKapikiaLen' + thesi]--;
+		Kitapi['maxKapikiaCount' + thesi] = Kitapi['maxKapikiaStiles' + thesi] * Kitapi['maxKapikiaLen' + thesi];
+	});
 
 	return Kitapi;
 };
@@ -224,12 +227,12 @@ Kitapi.resize = function() {
 	var dh, dw;
 
 	dh = ($(document.body).height() - $(window).outerHeight()) || $(document).height() - $(window).height();
-	if (dh <= 0) return;
-	if (dh > 200) return;
+	if (dh <= 0) return Kitapi;
+	if (dh > 200) return Kitapi;
 
 	dw = parseInt(dh * 0.86);
 	window.resizeBy(dw, dh);
-	if (!Arena) return;
+	if (!Arena) return Kitapi;
 
 	Arena.kitapi.position.width += dw;
 	Arena.kitapi.position.height += dh;
@@ -253,7 +256,7 @@ Kitapi.provlima = function(msg) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-Kitapi.kasaPush = function(thesi, kasa, resize) {
+Kitapi.kasaPush = function(thesi, kasa) {
 	var kasaStiliDom, count, stiles, xorane, platos;
 
 	kasaStiliDom = Kitapi['kasa' + thesi + 'DOM'];
@@ -275,9 +278,6 @@ Kitapi.kasaPush = function(thesi, kasa, resize) {
 		'-webkit-column-count': stiles,
 	}).append($('<div>').addClass('kitapiKasa kitapiKasaDiagrafi').text(kasa));
 
-	if (resize === undefined) resize = true;
-	if (resize) Kitapi.resize();
-
 	return Kitapi;
 };
 
@@ -297,7 +297,7 @@ Kitapi.kasaKontema = function(thesi) {
 	return count - del;
 };
 
-Kitapi.kapikiaPush = function(apo, pros, kapikia, resize) {
+Kitapi.kapikiaPush = function(apo, pros, kapikia) {
 	var kapikiaStiliDom, count, stiles, xorane, platos;
 
 	if (apo === pros)
@@ -322,9 +322,6 @@ Kitapi.kapikiaPush = function(apo, pros, kapikia, resize) {
 		'-webkit-column-count': stiles,
 	}).append($('<div>').addClass('kitapiKapikia kitapiKapikiaDiagrafi').text(kapikia));
 
-	if (resize === undefined) resize = true;
-	if (resize) Kitapi.resize();
-
 	return Kitapi;
 };
 
@@ -345,6 +342,55 @@ Kitapi.kapikiaKontema = function(apo, pros) {
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+Kitapi.clearDOM = function() {
+	Kitapi.kasa1DOM.empty();
+	Kitapi.kapikia13DOM.empty();
+	Kitapi.kapikia12DOM.empty();
+
+	Kitapi.kasa2DOM.empty();
+	Kitapi.kapikia21DOM.empty();
+	Kitapi.kapikia23DOM.empty();
+
+	Kitapi.kasa3DOM.empty();
+	Kitapi.kapikia31DOM.empty();
+	Kitapi.kapikia32DOM.empty();
+
+	return Kitapi;
+};
+
+Kitapi.refreshDOM = function() {
+	var aa, timer;
+
+	Kitapi.clearDOM();
+	aa = 0;
+	timer = setInterval(function() {
+		var thesi, kasa, apo, pros;
+
+		if (Kitapi.error) {
+			clearInterval(timer);
+			return;
+		}
+
+		thesi = Globals.random(1, 3);
+		kasa = Globals.random(1, 150);
+		Kitapi.kasaPush(thesi, kasa);
+
+		apo = Globals.random(1, 3);
+		pros = Globals.random(1, 3);
+		kapikia = Globals.random(1, 150);
+		Kitapi.kapikiaPush(apo, pros, kapikia);
+
+		apo = Globals.random(1, 3);
+		pros = Globals.random(1, 3);
+		kapikia = Globals.random(1, 150);
+		Kitapi.kapikiaPush(apo, pros, kapikia);
+
+		if (aa++ > 10) clearInterval(timer);
+	}, Globals.random(100, 100));
+
+	return Kitapi;
+};
 
 Kitapi.testData = function() {
 	var aa, timer;

@@ -227,7 +227,8 @@ Skiniko.prototype.processKinisiPostTR = function(data) {
 	if (pektis.isEgo()) {
 		Arena.
 		panelRefresh().
-		kafenioScrollTop();
+		kafenioScrollTop().
+		kitapi.klisimo();
 
 		if (Arena.ego.isTrapezi())
 		Arena.partida.refreshDOM();
@@ -304,6 +305,7 @@ Skiniko.prototype.processKinisiPostET = function(data) {
 	trapezi = this.skinikoTrapeziGet(data.trapezi);
 	if (!trapezi) {
 		Arena.rebelosDOM.prepend(sinedria.rebelosDOM);
+		if (data.pektis.isEgo()) Arena.kitapi.klisimo();
 		return this;
 	}
 
@@ -319,10 +321,12 @@ Skiniko.prototype.processKinisiPostET = function(data) {
 	// επανεμφανίζουμε την πινακίδα ώστε να είναι εμφανές το τρέχον
 	// τραπέζι του παίκτη.
 
-	if (data.pektis.isEgo())
-	trapezi.
-	trapeziSimetoxiRefreshDOM().
-	trapeziDataRefreshDOM();
+	if (data.pektis.isEgo()) {
+		trapezi.
+		trapeziSimetoxiRefreshDOM().
+		trapeziDataRefreshDOM();
+		Arena.kitapi.refresh();
+	}
 
 	// Αν ο παίκτης παρακολουθεί πλέον ως θεατής σε κάποιο τραπέζι, πρέπει
 	// να τον εντάξουμε στο μπλοκ των θεατών, αλλιώς συμμετέχει ως παίκτης
@@ -455,6 +459,7 @@ Skiniko.prototype.processKinisiPostRT = function(data) {
 	if (!trapezi) {
 		Arena.rebelosDOM.prepend(sinedria.rebelosDOM);
 		if (data.pektis.isEgo()) {
+			Arena.kitapi.klisimo();
 			Arena.partida.refreshDOM();
 			Arena.kafenioModeSet();
 			Arena.kafenioScrollTop();
@@ -468,6 +473,7 @@ Skiniko.prototype.processKinisiPostRT = function(data) {
 
 	if (data.pektis.oxiEgo()) return this;
 
+	Arena.kitapi.refresh();
 	this.pektisTrapeziScroll(true);
 	Arena.partidaModeSet();
 	return this;
@@ -1009,6 +1015,7 @@ Skiniko.prototype.processKinisiPostPD = function(data) {
 	ipolipoRefreshDOM().
 	pliromiRefreshDOM().
 	pektisKapikiaRefreshDOM();
+	Arena.kitapi.pliromiPush(data);
 
 	Arena.partida.pliromiIconDOM.data('emfanisPlirom', true);
 	$('.tsoxaPektisPliromi').finish().fadeIn(100);
