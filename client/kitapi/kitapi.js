@@ -18,11 +18,11 @@ Kitapi = {
 // (θέση 1). Ακολουθούν αντίστοιχες παράμετροι για τις περιοχές
 // Ανατολής (θέση 2) και Δύσης (θέση 3).
 
-Kitapi.maxKasaCount1 = 7 * Kitapi.maxKasaLen1;
-Kitapi.maxKasaCount2 = 3 * Kitapi.maxKasaLen2;
-Kitapi.maxKasaCount3 = 3 * Kitapi.maxKasaLen3;
+Kitapi.maxKasaCount1 = 6 * Kitapi.maxKasaLen1;
+Kitapi.maxKasaCount2 = 2 * Kitapi.maxKasaLen2;
+Kitapi.maxKasaCount3 = 2 * Kitapi.maxKasaLen3;
 
-Kitapi.maxKapikiaCount1 = 4 * Kitapi.maxKapikiaLen1;
+Kitapi.maxKapikiaCount1 = 3 * Kitapi.maxKapikiaLen1;
 Kitapi.maxKapikiaCount2 = 2 * Kitapi.maxKapikiaLen2;
 Kitapi.maxKapikiaCount3 = 2 * Kitapi.maxKapikiaLen3;
 
@@ -46,7 +46,6 @@ $(document).ready(function() {
 	Kitapi.
 	perioxiSetup().
 	stresarisma();
-return;
 Kitapi.testData();
 });
 
@@ -259,9 +258,9 @@ Kitapi.kasaPush = function(thesi, kasa, resize) {
 
 	kasaStiliDom = Kitapi['kasa' + thesi + 'DOM'];
 	count = kasaStiliDom.children('.kitapiKasa').length + 1;
+
 	if (count > Kitapi['maxKasaCount' + thesi])
-	Kitapi.provlima('Παρουσιάστηκε υπέρβαση μέγιστου επιτρεπτού πλήθους ' +
-		'εγγραφών κάσας.<br />Μήπως να τελειώνατε αυτήν την παρτίδα;');
+	count = Kitapi.kasaKontema(thesi);
 
 	xorane = Kitapi['maxKasaLen' + thesi];
 	stiles = Math.floor(count / xorane);
@@ -282,6 +281,22 @@ Kitapi.kasaPush = function(thesi, kasa, resize) {
 	return Kitapi;
 };
 
+Kitapi.kasaKontema = function(thesi) {
+	var jql, count, del, i;
+
+	jql = Kitapi['kasa' + thesi + 'DOM'].children('.kitapiKasa');
+	count = jql.length + 1;
+	del = Math.floor(count / 2);
+	if (del < 1) return count;
+
+	for (i = 0; i < del; i++) {
+		$(jql.get(i)).remove();
+	}
+
+	$(jql.get(i)).removeClass('kitapiKasaDiagrafi').html('&#8942;');
+	return count - del;
+};
+
 Kitapi.kapikiaPush = function(apo, pros, kapikia, resize) {
 	var kapikiaStiliDom, count, stiles, xorane, platos;
 
@@ -290,9 +305,9 @@ Kitapi.kapikiaPush = function(apo, pros, kapikia, resize) {
 
 	kapikiaStiliDom = Kitapi['kapikia' + apo + '' + pros + 'DOM'];
 	count = kapikiaStiliDom.children('.kitapiKapikia').length + 1;
+
 	if (count > Kitapi['maxKapikiaCount' + apo])
-	Kitapi.provlima('Παρουσιάστηκε υπέρβαση μέγιστου επιτρεπτού πλήθους ' +
-		'εγγραφών καπικιών.<br />Μήπως να τελειώνατε αυτήν την παρτίδα;');
+	count = Kitapi.kapikiaKontema(apo, pros);
 
 	xorane = Kitapi['maxKapikiaLen' + apo];
 	stiles = Math.floor(count / xorane);
@@ -311,6 +326,22 @@ Kitapi.kapikiaPush = function(apo, pros, kapikia, resize) {
 	if (resize) Kitapi.resize();
 
 	return Kitapi;
+};
+
+Kitapi.kapikiaKontema = function(apo, pros) {
+	var jql, count, del, i;
+
+	jql = Kitapi['kapikia' + apo + '' + pros + 'DOM'].children('.kitapiKapikia');
+	count = jql.length + 1;
+	del = Math.floor(count / 2);
+	if (del < 1) return count;
+
+	for (i = 0; i < del; i++) {
+		$(jql.get(i)).remove();
+	}
+
+	$(jql.get(i)).removeClass('kitapiKapikiaDiagrafi').html('&#8942;');
+	return count - del;
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -341,7 +372,7 @@ Kitapi.testData = function() {
 		kapikia = Globals.random(1, 150);
 		Kitapi.kapikiaPush(apo, pros, kapikia);
 
-		if (aa++ > 150) clearInterval(timer);
+		if (aa++ > 350) clearInterval(timer);
 	}, Globals.random(100, 100));
 
 	return Kitapi;
