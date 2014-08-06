@@ -168,7 +168,11 @@ table td {
 
 .kitapiKasaDiagrafi {
 	text-decoration:line-through;
-	color: #6B7A8A;
+	opacity: 0.5;
+}
+
+.kitapiKasaMesa {
+	color: #A80101;
 }
 
 /***********************************************************************************************************************/
