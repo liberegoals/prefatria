@@ -110,17 +110,11 @@ Service.agora.solo = function(data) {
 };
 
 Service.agora.solo2 = function(data) {
-	var dianomi = data.dianomi;
-
 	Server.skiniko.
 	processKinisi(data.kinisiSolo).
 	kinisiAdd(data.kinisiSolo, false);
 
-	query = 'UPDATE `dianomi` SET ' +
-		'`kasa1` = ' + dianomi.dianomiKasaGet(1) + ', metrita1 = ' + dianomi.dianomiMetritaGet(1) + ', ' +
-		'`kasa2` = ' + dianomi.dianomiKasaGet(2) + ', metrita2 = ' + dianomi.dianomiMetritaGet(2) + ', ' +
-		'`kasa3` = ' + dianomi.dianomiKasaGet(3) + ', metrita3 = ' + dianomi.dianomiMetritaGet(3) +
-		' WHERE `kodikos` = ' + data.dianomiKodikos;
+	query = data.dianomi.queryPliromi();
 	data.conn.connection.query(query, function(err, res) {
 		if (err || (res.affectedRows != 1))
 		return Service.dilosi.apotixia(data, 'Απέτυχε η ενημέρωση πληρωμής σολαρίας στην database');

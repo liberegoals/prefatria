@@ -508,8 +508,10 @@ Skiniko.prototype.skinikoCreateDOM = function(data) {
 	// Όταν κάνουμε restart τον skiser οι ενεργές συνεδρίες λαμβάνουν φρέσκα σκηνικά
 	// δεδομένα στα οποία υπάρχει και attribute "reset".
 
-	if (data.reset)
-	Client.fyi.pano('Επαναδιαμορφώθηκε το σκηνικό του καφενείου');
+	if (data.reset) {
+		Client.fyi.pano('Επαναδιαμορφώθηκε το σκηνικό του καφενείου');
+		Arena.kitapi.refresh();
+	}
 
 	Arena.panelRefresh();
 	return this;

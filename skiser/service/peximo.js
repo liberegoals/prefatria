@@ -88,14 +88,9 @@ Service.peximo.peximo2 = function(data) {
 };
 
 Service.peximo.pliromi = function(data) {
-	var dianomi, query;
+	var query;
 
-	dianomi = data.dianomi;
-	query = 'UPDATE `dianomi` SET ' +
-		'`kasa1` = ' + dianomi.dianomiKasaGet(1) + ', `metrita1` = ' + dianomi.dianomiMetritaGet(1) + ', ' +
-		'`kasa2` = ' + dianomi.dianomiKasaGet(2) + ', `metrita2` = ' + dianomi.dianomiMetritaGet(2) + ', ' +
-		'`kasa3` = ' + dianomi.dianomiKasaGet(3) + ', `metrita3` = ' + dianomi.dianomiMetritaGet(3) +
-		' WHERE `kodikos` = ' + data.dianomiKodikos;
+	query = data.dianomi.queryPliromi();
 	data.conn.connection.query(query, function(err, res) {
 		if ((!err) && (res.affectedRows == 1)) 
 		return Service.peximo.pliromi2(data);
@@ -103,8 +98,8 @@ Service.peximo.pliromi = function(data) {
 		data.conn.rollback();
 		delete data.conn;
 
-		dianomi.dianomiEnergiaDelete(data.energiaFiloKodikos);
-		dianomi.energiaArray.pop();
+		data.dianomi.dianomiEnergiaDelete(data.energiaFiloKodikos);
+		data.dianomi.energiaArray.pop();
 		data.trapezi.partidaReplay();
 		Service.peximo.apotixia(data, 'Απέτυχε η ενημέρωση πληρωμής διανομής στην database');
 	});

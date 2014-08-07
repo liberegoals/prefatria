@@ -662,19 +662,38 @@ Trapezi.prototype.trapeziFilaPrevSet = function(thesi) {
 // εκτέλεσης του συμβολαίου κλπ.
 
 Dianomi.prototype.kinisiPliromi = function() {
-	return new Kinisi({
+	var dianomi = this, kinisi;
+
+	kinisi = new Kinisi({
 		idos: 'PD',
 		data: {
 			trapezi: this.dianomiTrapeziGet(),
 			dianomi: this.dianomiKodikosGet(),
-			kasa1: this.dianomiKasaGet(1),
-			metrita1: this.dianomiMetritaGet(1),
-			kasa2: this.dianomiKasaGet(2),
-			metrita2: this.dianomiMetritaGet(2),
-			kasa3: this.dianomiKasaGet(3),
-			metrita3: this.dianomiMetritaGet(3),
-		},
+		}
 	});
+
+	Prefadoros.thesiWalk(function(thesi) {
+		kinisi.data['kasa' + thesi] = dianomi.dianomiKasaGet(thesi);
+		kinisi.data['metrita' + thesi] = dianomi.dianomiMetritaGet(thesi);
+	});
+
+	return kinisi;
+};
+
+// Η μέθοδος "queryPliromi" επιστρέφει query ενημέρωσης της database με τα
+// στοιχεία πληρωμής της διανομής.
+
+Dianomi.prototype.queryPliromi = function() {
+	var dianomi = this, query;
+
+	query = 'UPDATE `dianomi` SET ';
+	Prefadoros.thesiWalk(function(thesi) {
+		query += '`kasa' + thesi + '` = ' + dianomi.dianomiKasaGet(thesi) + ', ';
+		query += '`metrita' + thesi + '` = ' + dianomi.dianomiMetritaGet(thesi) + ', ';
+	});
+	query += '`telos` = NOW() WHERE `kodikos` = ' + this.dianomiKodikosGet();
+
+	return query;
 };
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
