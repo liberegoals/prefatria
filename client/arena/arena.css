@@ -994,7 +994,10 @@ body {
 }
 
 .tsoxaEnimerosi {
+/*
 	top: 100px;
+*/
+	top: 120px;
 	left: 40px;
 	width: 480px;
 }
