@@ -15,8 +15,8 @@ Kitapi = {
 
 	maxKasaStiles: {
 		1: 6,
-		2: 3,
-		3: 3,
+		2: 2,	// χωράνε και τρεις στήλες, αλλά δεν είναι καλό,
+		3: 2,	// γιατί δεν ξεχωρίζουν κάσες και καπίκια.
 	},
 
 	// Η λίστα "maxKasaCount" δείχνει το μέγιστο πλήθος εγγραφών κάσας
@@ -139,7 +139,7 @@ $(document).ready(function() {
 	perioxiSetup().
 	stresarisma().
 	refreshDOM();
-Kitapi.fullData();
+//Kitapi.fullData();
 });
 
 Kitapi.unload = function() {
@@ -157,6 +157,14 @@ $(window).on('beforeunload', function() {
 $(window).on('unload', function() {
 	Kitapi.unload();
 });
+
+Kitapi.isArena = function() {
+	return Arena;
+};
+
+Kitapi.oxiArena = function() {
+	return !Kitapi.isArena();
+};
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
 
@@ -298,34 +306,37 @@ Kitapi.stresarisma = function() {
 };
 
 Kitapi.fullData = function() {
-	var i, j;
+	Prefadoros.thesiWalk(function(thesi) {
+		var p1, p2, i, j;
 
-	for (i = 0; i < Kitapi.maxKasaStiles[1]; i++)
-	for (j = 1; j <= Kitapi.maxKasaLen[1]; j++) Kitapi.kasaPush(1, j);
+		switch (thesi) {
+		case 1:
+			p1 = 2;
+			p2 = 3;
+			break;
+		case 2:
+			p1 = 1;
+			p2 = 3;
+			break;
+		case 3:
+			p1 = 1;
+			p2 = 2;
+			break;
+		}
 
-	for (i = 0; i < Kitapi.maxKapikiaStiles[1]; i++)
-	for (j = 1; j <= Kitapi.maxKapikiaLen[1]; j++) Kitapi.kapikiaPush(1, 3, j);
+		for (i = 0; i < Kitapi.maxKasaStiles[thesi]; i++) {
+			for (j = 1; j <= Kitapi.maxKasaLen[thesi]; j++) {
+				Kitapi.kasaPush(thesi, j);
+			}
+		}
 
-	for (i = 0; i < Kitapi.maxKapikiaStiles[1]; i++)
-	for (j = 1; j <= Kitapi.maxKapikiaLen[1]; j++) Kitapi.kapikiaPush(1, 2, j);
-
-	for (i = 0; i < Kitapi.maxKasaStiles[2]; i++)
-	for (j = 1; j <= Kitapi.maxKasaLen[2]; j++) Kitapi.kasaPush(2, j);
-
-	for (i = 0; i < Kitapi.maxKapikiaStiles[2]; i++)
-	for (j = 1; j <= Kitapi.maxKapikiaLen[2]; j++) Kitapi.kapikiaPush(2, 1, j);
-
-	for (i = 0; i < Kitapi.maxKapikiaStiles[2]; i++)
-	for (j = 1; j <= Kitapi.maxKapikiaLen[2]; j++) Kitapi.kapikiaPush(2, 3, j);
-
-	for (i = 0; i < Kitapi.maxKasaStiles[3]; i++)
-	for (j = 1; j <= Kitapi.maxKasaLen[3]; j++) Kitapi.kasaPush(3, j);
-
-	for (i = 0; i < Kitapi.maxKapikiaStiles[3]; i++)
-	for (j = 1; j <= Kitapi.maxKapikiaLen[3]; j++) Kitapi.kapikiaPush(3, 1, j);
-
-	for (i = 0; i < Kitapi.maxKapikiaStiles[3]; i++)
-	for (j = 1; j <= Kitapi.maxKapikiaLen[3]; j++) Kitapi.kapikiaPush(3, 2, j);
+		for (i = 0; i < Kitapi.maxKapikiaStiles[thesi]; i++) {
+			for (j = 1; j <= Kitapi.maxKapikiaLen[thesi]; j++) {
+				Kitapi.kapikiaPush(thesi, p1, j);
+				Kitapi.kapikiaPush(thesi, p2, j);
+			}
+		}
+	});
 
 	return Kitapi;
 };
@@ -345,14 +356,6 @@ Kitapi.resize = function() {
 	Arena.kitapi.position.height += dh;
 
 	return Kitapi;
-};
-
-Kitapi.isArena = function() {
-	return Arena;
-};
-
-Kitapi.oxiArena = function() {
-	return !Kitapi.isArena();
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -391,6 +394,7 @@ Kitapi.pliromiPush = function(data) {
 		kasa: {},
 		metrita: {},
 	};
+
 	Prefadoros.thesiWalk(function(thesi) {
 		pliromi.kasa[thesi] = parseInt(data['kasa' + thesi]);
 		pliromi.metrita[thesi] = parseInt(data['metrita' + thesi]);
