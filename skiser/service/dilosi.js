@@ -63,22 +63,24 @@ Service.dilosi.dilosi2 = function(data) {
 		processKinisi(data.kinisiDilosi).
 		kinisiAdd(data.kinisiDilosi, false);
 
-		data.conn.commit();
-		delete data.conn;
+		data.conn.commit(function() {
+			data.conn.free();
+			delete data.conn;
 
-		switch (data.trapezi.partidaFasiGet()) {
-		case 'ΔΙΑΝΟΜΗ':
-			Service.dilosi.flop(data);
-			break;
-		case 'ΑΛΛΑΓΗ':
-			Service.dilosi.alagi(data);
-			break;
-		default:
-			data.nodereq.end();
-			Server.skiniko.kinisiAdd();
-			data.trapezi.trapeziXeklidoma();
-			break;
-		}
+			switch (data.trapezi.partidaFasiGet()) {
+			case 'ΔΙΑΝΟΜΗ':
+				Service.dilosi.flop(data);
+				break;
+			case 'ΑΛΛΑΓΗ':
+				Service.dilosi.alagi(data);
+				break;
+			default:
+				data.nodereq.end();
+				Server.skiniko.kinisiAdd();
+				data.trapezi.trapeziXeklidoma();
+				break;
+			}
+		});
 	});
 };
 
