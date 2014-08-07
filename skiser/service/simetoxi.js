@@ -61,6 +61,7 @@ Service.simetoxi.dilosi2 = function(data) {
 
 		if (err || (res.affectedRows != 1))
 		return Service.simetoxi.apotixia(data, 'Απέτυχε η ένταξη της δήλωσης συμμετοχής στην database');
+
 		data.conn.commit();
 		data.nodereq.end();
 
@@ -79,6 +80,7 @@ Service.simetoxi.dilosi2 = function(data) {
 		Server.skiniko.
 		processKinisi(kinisiPliromi).
 		kinisiAdd(kinisiPliromi);
+
 		data.trapezi.trapeziXeklidoma();
 		Service.trapezi.dianomiSeLigo(data.trapezi, 3000);
 
