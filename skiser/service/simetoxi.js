@@ -40,9 +40,7 @@ Service.simetoxi.dilosi = function(nodereq) {
 };
 
 Service.simetoxi.dilosi2 = function(data) {
-	var kinisiSimetoxi;
-
-	kinisiSimetoxi = new Kinisi({
+	data.kinisiSimetoxi = new Kinisi({
 		idos: 'EG',
 		data: {
 			trapezi: data.trapeziKodikos,
@@ -54,37 +52,64 @@ Service.simetoxi.dilosi2 = function(data) {
 	});
 
 	query = 'INSERT INTO `energia` (`dianomi`, `pektis`, `idos`, `data`) VALUES (' +
-		kinisiSimetoxi.data.dianomi + ', ' + kinisiSimetoxi.data.pektis + ', ' +
-		kinisiSimetoxi.data.idos.json() + ', ' + kinisiSimetoxi.data.data.json() + ')';
+		data.kinisiSimetoxi.data.dianomi + ', ' + data.kinisiSimetoxi.data.pektis + ', ' +
+		data.kinisiSimetoxi.data.idos.json() + ', ' + data.kinisiSimetoxi.data.data.json() + ')';
 	data.conn.connection.query(query, function(err, res) {
-		var kinisiPliromi;
-
 		if (err || (res.affectedRows != 1))
 		return Service.simetoxi.apotixia(data, 'Απέτυχε η ένταξη της δήλωσης συμμετοχής στην database');
+
+		data.energiaSimetoxiKodikos = res.insertId;
+		data.kinisiSimetoxi.data.kodikos = data.energiaSimetoxiKodikos;
+		Server.skiniko.
+		processKinisi(data.kinisiSimetoxi);
+
+		if (data.trapezi.partidaFasiGet() === 'ΠΛΗΡΩΜΗ')
+		return Service.simetoxi.dilosi3(data);
 
 		data.conn.commit();
 		data.nodereq.end();
 
-		kinisiSimetoxi.data.kodikos = res.insertId;
 		Server.skiniko.
-		processKinisi(kinisiSimetoxi).
-		kinisiAdd(kinisiSimetoxi, false);
+		kinisiAdd(data.kinisiSimetoxi);
+		data.trapezi.trapeziXeklidoma();
+	});
+};
 
-		if (data.trapezi.partidaFasiGet() !== 'ΠΛΗΡΩΜΗ') {
-			Server.skiniko.kinisiAdd();
-			data.trapezi.trapeziXeklidoma();
-			return;
-		}
+Service.simetoxi.dilosi3 = function(data) {
+	var query;
+
+	query = data.dianomi.queryPliromi();
+	data.conn.connection.query(query, function(err, res) {
+		var kinisiPliromi;
+
+		if (err || (res.affectedRows != 1))
+		return Service.simetoxi.dilosi4(data);
+
+		data.conn.commit();
+		data.nodereq.end();
 
 		kinisiPliromi = data.dianomi.kinisiPliromi();
 		Server.skiniko.
 		processKinisi(kinisiPliromi).
+		kinisiAdd(data.kinisiSimetoxi, false).
 		kinisiAdd(kinisiPliromi);
 
 		data.trapezi.trapeziXeklidoma();
 		Service.trapezi.dianomiSeLigo(data.trapezi, 3000);
-
 	});
+};
+
+Service.simetoxi.dilosi4 = function(data) {
+	data.conn.rollback();
+
+	data.dianomi.dianomiEnergiaDelete(data.energiaSimetoxiKodikos);
+	data.dianomi.energiaArray.pop();
+
+	data.trapezi.
+	partidaReplay().
+	trapeziXeklidoma();
+
+	data.nodereq.error('Απέτυχε η πληρωμή της διανομής στην database');
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
