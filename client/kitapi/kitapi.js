@@ -391,7 +391,7 @@ Kitapi.resize = function() {
 //	kapikia3	Παρόμοιο με το "kapikia3" αλλά για τον παίκτη 3.
 
 Kitapi.pliromiPush = function(data) {
-	var pliromi, asak = {}, idos = {};
+	var pliromi, asak = {}, kasaIdos;
 
 	// Δημιουργούμε αντίγραφο με τα στοιχεία της πληρωμής, καθώς είναι πολύ
 	// πιθανόν να πειράξουμε τα δεδομένα και δεν θέλουμε να αλλοιώσουμε τα
@@ -407,14 +407,84 @@ Kitapi.pliromiPush = function(data) {
 		pliromi.metrita[thesi] = parseInt(data['metrita' + thesi]);
 
 		// Στη λίστα "asak" κρατάμε τα ποσά της κάσας για
-		// κάθε θέση, πριν την επεξεργασία της πληρωμής.
+		// κάθε θέση, ΠΡΙΝ την επεξεργασία της πληρωμής.
 
 		asak[thesi] = Kitapi.kasa[thesi];
 	});
 
-	// Κατ' αρχάς ασχολούμαστε με τις δοσοληψίες των παικτών με την κάσα.
-	// Το πρώτο βήμα είναι να δούμε ποιες κάσες δεν επαρκούν ώστε να μειώσουμε
-	// από τις άλλες και να ανταλλάξουμε τα ανάλογα καπίκια (γλείψιμο).
+	if (Kitapi.pliromiKasaLathos(data, pliromi))
+	return Kitapi;
+
+	if (Kitapi.pliromiKapikiaLathos(data, pliromi))
+	return Kitapi;
+
+	kasaIdos = Kitapi.pliromiKasaFix(pliromi);
+	Prefadoros.thesiWalk(function(thesi) {
+		if (Kitapi.kasa[thesi] !== asak[thesi])
+		Kitapi.kasaPush(thesi, Math.floor(Kitapi.kasa[thesi] / 10), kasaIdos[thesi]);
+	});
+
+	return Kitapi;
+};
+
+Kitapi.pliromiKasaLathos = function(data, pliromi) {
+	var kasaSin, kasaPlin;
+
+	// Μπορεί να υπάρχει μια το πολύ θετική κάσα και αυτή παρουσιάζεται
+	// στην περίπτωση που έχει γίνει αγορά και ο τζογαδόρος έχει βγάλει
+	// την αγορά.
+
+	kasaSin = 0;
+	kasaPlin = 0;
+
+	Prefadoros.thesiWalk(function(thesi) {
+		if (pliromi.kasa[thesi] > 0) kasaSin++;
+		if (pliromi.kasa[thesi] < 0) kasaPlin++;
+	});
+
+	if ((kasaSin === 1) && kasaPlin) {
+		console.error('Παρουσιάστηκαν αρνητικές κάσες', data);
+		return true;
+	}
+
+	if (kasaSin > 1) {
+		console.error('Παρουσιάστηκαν περισσότερες από μια θετικές κάσες', data);
+		return true;
+	}
+
+	if ((kasaSin === 1) && kasaPlin) {
+		console.error('Περισσότερες από μια θετικές κάσες', data);
+		return true;
+	}
+
+	return false;
+};
+
+Kitapi.pliromiKapikiaLathos = function(data, pliromi) {
+	var metrita;
+
+	// Το αλγεβρικό σύνολο των μετρητών πρέπει να είναι μηδέν. Θέτουμε,
+	// λοιπόν, αρχικά το σύνολο των μετρητών σε μηδέν.
+
+	metrita = 0;
+
+	Prefadoros.thesiWalk(function(thesi) {
+		metrita += pliromi.metrita[thesi];
+	});
+
+	if (metrita) {
+		console.error('Λανθασμένα μετρητά πληρωμής', data);
+		return true;
+	}
+
+	return false;
+};
+
+// Η function "pliromiKasaFix" ελέγχει ποιες κάσες δεν επαρκούν ώστε να
+// μειώσουμε από τις άλλες και να ανταλλάξουμε τα ανάλογα καπίκια (γλείψιμο).
+
+Kitapi.pliromiKasaFix = function(pliromi) {
+	var idos = {};
 
 	Prefadoros.thesiWalk(function(thesi) {
 		var kasa, alos1, alos2;
@@ -552,13 +622,10 @@ Kitapi.pliromiPush = function(data) {
 		Kitapi.kasa[thesi] -= kasa;
 	});
 
-	Prefadoros.thesiWalk(function(thesi) {
-		if (Kitapi.kasa[thesi] !== asak[thesi])
-		Kitapi.kasaPush(thesi, Math.floor(Kitapi.kasa[thesi] / 10), idos[thesi]);
-	});
-
-	return Kitapi;
+	return idos;
 };
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 Kitapi.kasaPush = function(thesi, kasa, idos) {
 	var kasaStiliDom, count, stiles, xorane, platos, kasaDom;
