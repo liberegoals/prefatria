@@ -165,7 +165,7 @@ Arena.partida.setupKitapi = function() {
 		if (Arena.kitapi.isBlur())
 		return Arena.kitapi.focus();
 
-		Arena.kitapi.klisimo();
+		Arena.kitapi.blur(e);
 	}).appendTo(Arena.partida.tsoxaDOM);
 
 	return Arena;
@@ -1011,11 +1011,19 @@ Arena.kitapi.isKlisto = function() {
 	return !Arena.kitapi.isAnikto();
 };
 
+// Η function "isBlur" ελέγχει αν το κιτάπι είναι blured, δηλαδή αν το σχετικό
+// παράθυρο είναι στο background. Αυτό ελέγχεται από την παράμετρο "blurTS" που
+// δείχνει το timestamp της στιγμής που το παράθυρο έχασε το focus. Ο λόγος αυτής
+// της περιπλοκής είναι ο εξής: Ας υποθέσουμε ότι το κιτάπι βρίσκεται στο προσκήνιο
+// και ο χρήστης κάνει κλικ στο σχετικό εικονίδιο προκειμένου να το ενατοποθετήσει
+// στο παρασκήνιο. Με το κλικ στο εικονίδιο γίνεται focus το παράθυρο της παρτίδας
+// οπότε το κιτάπι καθίσταται ήδη unfocus και έτσι έχουμε πρόβλημα.
+
 Arena.kitapi.isBlur = function() {
 	if (!Arena.kitapi.blurTS)
 	return false;
 
-	return(Globals.torams() - Arena.kitapi.blurTS > 500);
+	return(Globals.torams() - Arena.kitapi.blurTS > 200);
 };
 
 Arena.kitapi.anigma = function(e) {
@@ -1051,6 +1059,12 @@ Arena.kitapi.focus = function() {
 		return Arena.kitapi.win.focus();
 	} catch (e) {}
 
+	return Arena;
+};
+
+Arena.kitapi.blur = function(e) {
+	Arena.inputRefocus(e);
+	self.focus();
 	return Arena;
 };
 
