@@ -194,7 +194,7 @@ Kitapi.perioxiSetup = function() {
 
 		dataDom = $('<div>').addClass('kitapiPektisData').
 		append(onomaDom = $('<div>').addClass('kitapiPektisOnoma').
-		text(Kitapi.onomasiaThesis[thesi]));
+		html(Kitapi.onomasiaThesis[thesi]));
 		Kitapi.onomaDOM[thesi] = onomaDom;
 
 		if (thesi === 3) {
@@ -260,6 +260,13 @@ Kitapi.onomasiaThesis = {
 	2: 'ΑΝΑΤΟΛΗ',
 	3: 'ΔΥΣΗ',
 };
+
+// Αρχικά υπήρχε η σκέψη σε μη παρτίδα να αναγράφονται οι συμβολικές
+// ονομασίες θέσης των παικτών, αλλά το μετάνιωσα.
+
+Prefadoros.thesiWalk(function(thesi) {
+	Kitapi.onomasiaThesis[thesi] = '&nbsp;';
+});
 
 Kitapi.onomaGet = function(thesi) {
 	var pektis;
@@ -417,10 +424,12 @@ Kitapi.kasaPush = function(thesi, kasa, mesa) {
 	var kasaStiliDom, count, stiles, xorane, platos, kasaDom;
 
 	kasaStiliDom = Kitapi.kasaAreaDOM[thesi];
-	count = kasaStiliDom.children('.kitapiKasa').length + 1;
+	count = kasaStiliDom.children('.kitapiKasa').length;
 
-	if (count > Kitapi.maxKasaCount[thesi])
+	if (count >= Kitapi.maxKasaCount[thesi])
 	count = Kitapi.kasaKontema(thesi);
+
+	count++;
 
 	xorane = Kitapi.maxKasaLen[thesi];
 	stiles = Math.floor(count / xorane);
@@ -445,19 +454,24 @@ Kitapi.kasaPush = function(thesi, kasa, mesa) {
 	return Kitapi;
 };
 
+// Η function "kasaKontema" κονταίνει τη λίστα κασών συγκεκριμένης θέσης
+// και επιστρέφει το νέο πλήθος της λίστας.
+
 Kitapi.kasaKontema = function(thesi) {
 	var jql, count, del, i;
 
 	jql = Kitapi.kasaAreaDOM[thesi].children('.kitapiKasa');
-	count = jql.length + 1;
-	del = Math.floor(count / 2);
-	if (del < 1) return count;
+	count = jql.length;
 
+	del = 1;
+	if (count <= del) return count;
+
+	del = 1;
 	for (i = 0; i < del; i++) {
 		$(jql.get(i)).remove();
 	}
 
-	$(jql.get(i)).removeClass('kitapiKasaDiagrafi').html('&#8942;');
+	$(jql.get(i)).removeClass('kitapiKasaDiagrafi kitapiKasaMesa').html('&#8942;');
 	return count - del;
 };
 
@@ -468,10 +482,12 @@ Kitapi.kapikiaPush = function(apo, pros, kapikia) {
 	return Kitapi;
 
 	kapikiaStiliDom = Kitapi.kapikiaAreaDOM[apo + '' + pros];
-	count = kapikiaStiliDom.children('.kitapiKapikia').length + 1;
+	count = kapikiaStiliDom.children('.kitapiKapikia').length;
 
-	if (count > Kitapi.maxKapikiaCount[apo])
+	if (count >= Kitapi.maxKapikiaCount[apo])
 	count = Kitapi.kapikiaKontema(apo, pros);
+
+	count++;
 
 	xorane = Kitapi.maxKapikiaLen[apo];
 	stiles = Math.floor(count / xorane);
@@ -489,13 +505,17 @@ Kitapi.kapikiaPush = function(apo, pros, kapikia) {
 	return Kitapi;
 };
 
+// Η function "kasaKontema" κονταίνει τη λίστα κασών συγκεκριμένου
+// ζεύγους παικτών και επιστρέφει το νέο πλήθος της λίστας.
+
 Kitapi.kapikiaKontema = function(apo, pros) {
 	var jql, count, del, i;
 
 	jql = Kitapi.kapikiaAreaDOM[apo + '' + pros].children('.kitapiKapikia');
-	count = jql.length + 1;
-	del = Math.floor(count / 2);
-	if (del < 1) return count;
+	count = jql.length;
+	del = 1;
+
+	if (count <= del) return count;
 
 	for (i = 0; i < del; i++) {
 		$(jql.get(i)).remove();
