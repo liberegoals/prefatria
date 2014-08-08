@@ -391,7 +391,7 @@ Kitapi.resize = function() {
 //	kapikia3	Παρόμοιο με το "kapikia3" αλλά για τον παίκτη 3.
 
 Kitapi.pliromiPush = function(data) {
-	var pliromi;
+	var pliromi, asak = {}, idos = {};
 
 	// Δημιουργούμε αντίγραφο με τα στοιχεία της πληρωμής, καθώς είναι πολύ
 	// πιθανόν να πειράξουμε τα δεδομένα και δεν θέλουμε να αλλοιώσουμε τα
@@ -405,22 +405,162 @@ Kitapi.pliromiPush = function(data) {
 	Prefadoros.thesiWalk(function(thesi) {
 		pliromi.kasa[thesi] = parseInt(data['kasa' + thesi]);
 		pliromi.metrita[thesi] = parseInt(data['metrita' + thesi]);
+
+		// Στη λίστα "asak" κρατάμε τα ποσά της κάσας για
+		// κάθε θέση, πριν την επεξεργασία της πληρωμής.
+
+		asak[thesi] = Kitapi.kasa[thesi];
 	});
 
-	// Πρώτα ασχολούμαστε με τις δοσοληψίες των παικτών με την κάσα.
+	// Κατ' αρχάς ασχολούμαστε με τις δοσοληψίες των παικτών με την κάσα.
+	// Το πρώτο βήμα είναι να δούμε ποιες κάσες δεν επαρκούν ώστε να μειώσουμε
+	// από τις άλλες και να ανταλλάξουμε τα ανάλογα καπίκια (γλείψιμο).
 
 	Prefadoros.thesiWalk(function(thesi) {
-		if (!pliromi.kasa[thesi])
-		return;
+		var kasa, alos1, alos2;
 
-		Kitapi.kasa[thesi] -= pliromi.kasa[thesi];
-		Kitapi.kasaPush(thesi, Math.floor(Kitapi.kasa[thesi] / 10), (pliromi.kasa[thesi] < 0));
+		// Η μεταβλητή "kasa" περιέχει το ποσό της κάσας του παίκτη
+		// στην ανά χείρας θέση. Αυτό το ποσό ενδεχομένως να υποστεί
+		// αλλοιώσεις.
+
+		kasa = pliromi.kasa[thesi];
+		if (!kasa) return;
+
+		// Αν η δοσοληψία του παίκτη με την κάσα είναι αρνητική, τότε
+		// το ποσό ΚΑΤΑΤΙΘΕΤΑΙ στην κάσα (μέσα αγορά, ή πάσο πάσο),
+		// επομένως δεν έχουμε πρόβλημα.
+
+		if (kasa < 0) {
+			Kitapi.kasa[thesi] -= kasa;
+			idos[thesi] = 'ΑΥΞΗΣΗ';
+			return;
+		}
+
+		// Το ποσό είναι θετικό, επομένως πρόκειται για ποσό που «σηκώνει»
+		// ο παίκτης από την κάσα. Αν υπάρχει θετικό ποσό κάσας πρόκειται
+		// για τον τζογαδόρο και δεν θα υπάρξει άλλο ποσό κάσας.
+
+		kasesDone = true;
+
+		// Αν το ποσό της κάσας του παίκτη επαρκεί, μειώνουμε τη δική του
+		// κάσα και έχουμε τελειώσει.
+
+		if (kasa <= Kitapi.kasa[thesi]) {
+			Kitapi.kasa[thesi] -= kasa;
+			return;
+		}
+
+		// Εκμεταλλευόμαστε το όποιο υπόλοιπο κάσας έχει ο ανά χείρας παίκτης.
+
+		if (Kitapi.kasa[thesi] > 0) {
+			kasa -= Kitapi.kasa[thesi];
+			Kitapi.kasa[thesi] = 0;
+		}
+
+		// Εντοπίζουμε τις άλλες δυο κάσες και θέτουμε τη μεγαλύτερη
+		// από τις δυο στο "alos1" και την άλλη στο "alos2".
+
+		switch (thesi) {
+		case 1:
+			if (Kitapi.kasa[2] > Kitapi.kasa[3]) {
+				alos1 = 2;
+				alos2 = 3;
+			}
+			else {
+				alos1 = 3;
+				alos2 = 2;
+			}
+			break;
+		case 2:
+			if (Kitapi.kasa[1] > Kitapi.kasa[3]) {
+				alos1 = 1;
+				alos2 = 3;
+			}
+			else {
+				alos1 = 3;
+				alos2 = 1;
+			}
+			break;
+		case 3:
+			if (Kitapi.kasa[1] > Kitapi.kasa[2]) {
+				alos1 = 1;
+				alos2 = 2;
+			}
+			else {
+				alos1 = 2;
+				alos2 = 1;
+			}
+			break;
+		}
+
+		// Αν η μεγαλύτερη από τις άλλες δυο κάσες δεν έχει υπόλοιπο
+		// τότε δεν γίνεται τίποτα και μειώνω από την κάσα του παίκτη.
+
+		if (Kitapi.kasa[alos1] <= 0) {
+			Kitapi.kasa[thesi] -= kasa;
+			return;
+		}
+
+		// Η μεγαλύτερη από τις άλλες δύο κάσες σίγουρα θα υποστεί
+		// μείωση.
+
+		idos[alos1] = 'ΓΛΕΙΨΙΜΟ';
+
+		// Αν η μεγαλύτερη από τις άλλες δυο κάσες επαρκεί, τότε κάνω
+		// τη μείωση από αυτή την κάσα και δίνω καπίκια.
+
+		if (kasa <= Kitapi.kasa[alos1]) {
+			pliromi.metrita[thesi] += kasa;
+			pliromi.metrita[alos1] -= kasa;
+			Kitapi.kasa[alos1] -= kasa;
+			return;
+		}
+
+		// Η μεγαλύτερη από τις άλλες δυο κάσες δεν επαρκεί αλλά έχει
+		// κάποιο ποσό, το οποίο και εκμεταλλεύομαι.
+
+		pliromi.metrita[thesi] += Kitapi.kasa[alos1];
+		pliromi.metrita[alos1] -= Kitapi.kasa[alos1];
+		kasa -= Kitapi.kasa[alos1];
+		Kitapi.kasa[alos1] = 0;
+		if (kasa <= 0) return;
+
+		// Μετά το «γλείψιμο» από την μεγαλύτερη κάσα έχει απομείνει κάποιο
+		// υπόλοιπο και ελέγχουμε αν υπάρχει υπόλοιπο στην τρίτη κάσα. Αν δεν
+		// υπάρχει υπόλοιπο, μειώνουμε από την κάσα του παίκτη.
+
+		if (Kitapi.kasa[alos2] <= 0) {
+			Kitapi.kasa[thesi] -= kasa;
+			return;
+		}
+
+		idos[alos2] = 'ΓΛΕΙΨΙΜΟ';
+
+		if (kasa <= Kitapi.kasa[alos2]) {
+			pliromi.metrita[thesi] += kasa;
+			pliromi.metrita[alos2] -= kasa;
+			Kitapi.kasa[alos2] -= kasa;
+			return;
+		}
+
+		pliromi.metrita[thesi] += Kitapi.kasa[alos2];
+		pliromi.metrita[alos2] -= Kitapi.kasa[alos2];
+		kasa -= Kitapi.kasa[alos2];
+		Kitapi.kasa[alos2] = 0;
+		if (kasa <= 0) return;
+
+		Kitapi.kasa[thesi] -= kasa;
+	});
+
+	Prefadoros.thesiWalk(function(thesi) {
+		if (Kitapi.kasa[thesi] !== asak[thesi])
+		Kitapi.kasaPush(thesi, Math.floor(Kitapi.kasa[thesi] / 10), idos[thesi]);
 	});
 
 	return Kitapi;
 };
 
-Kitapi.kasaPush = function(thesi, kasa, mesa) {
+Kitapi.kasaPush = function(thesi, kasa, idos) {
 	var kasaStiliDom, count, stiles, xorane, platos, kasaDom;
 
 	kasaStiliDom = Kitapi.kasaAreaDOM[thesi];
@@ -441,7 +581,14 @@ Kitapi.kasaPush = function(thesi, kasa, mesa) {
 	if (kasaDom) kasaDom.addClass('kitapiKasaDiagrafi');
 
 	kasaDom = $('<div>').addClass('kitapiKasa').text(kasa);
-	if (mesa) kasaDom.addClass('kitapiKasaMesa');
+	switch (idos) {
+	case 'ΑΥΞΗΣΗ':
+		kasaDom.addClass('kitapiKasaMesa');
+		break;
+	case 'ΓΛΕΙΨΙΜΟ':
+		kasaDom.addClass('kitapiKasaGlipsimo');
+		break;
+	}
 
 	kasaStiliDom.css({
 		width: platos,
@@ -471,7 +618,7 @@ Kitapi.kasaKontema = function(thesi) {
 		$(jql.get(i)).remove();
 	}
 
-	$(jql.get(i)).removeClass('kitapiKasaDiagrafi kitapiKasaMesa').html('&#8942;');
+	$(jql.get(i)).removeClass('kitapiKasaDiagrafi kitapiKasaMesa KitapiKasaGlipsimo').html('&#8942;');
 	return count - del;
 };
 
