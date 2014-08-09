@@ -1599,6 +1599,23 @@ cursor: auto;
 	cursor: pointer;
 }
 
+.sizitisiSindesmos {
+	position: relative;
+	bottom: -4px;
+	display: inline-block;
+	width: 110px;
+
+	border-style: solid;
+	border-width: 1px;
+	border-color: rgba(73, 82, 146, 0.30);
+
+	cursor: pointer;
+}
+
+.sizitisiSindesmos:hover {
+	border-color: #323F9E;
+}
+
 .sizitisiIframe {
 	display: inline-block;
 }

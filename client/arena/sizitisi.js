@@ -575,6 +575,11 @@ Sizitisi.prototype.sizitisiSxolioCreateDOM = function(dom) {
 			continue;
 		}
 
+		if (tmima[i].match(/^https?:\/\/.*/i)) {
+			Sizitisi.sindesmosAppend(dom, tmima[i]);
+			continue;
+		}
+
 		if (tmima[i] === '~') {
 			dom.append($('<br />'));
 			continue;
@@ -645,6 +650,18 @@ Sizitisi.youtubeAppend = function(dom, s) {
 		}));
 	})).
 	append(iframe = $('<div>').addClass('sizitisiIframe'));
+};
+
+Sizitisi.sindesmosAppend = function(dom, s) {
+	var iframe;
+
+	dom.
+	append($('<a>').attr({
+		target: '_blank',
+		href: s,
+		title: 'Μετάβαση στο σύνδεσμο με δική σας ευθύνη',
+	}).
+	append($('<img>').addClass('sizitisiSindesmos').attr('src', 'ikona/misc/link.png')));
 };
 
 Sizitisi.ikonaAppend = function(dom, s) {
