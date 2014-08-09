@@ -1605,7 +1605,7 @@ cursor: auto;
 	display: inline-block;
 	width: 110px;
 
-	border-style: solid;
+	border-style: dotted;
 	border-width: 1px;
 	border-color: rgba(73, 82, 146, 0.30);
 
@@ -1613,6 +1613,7 @@ cursor: auto;
 }
 
 .sizitisiSindesmos:hover {
+	border-style: solid;
 	border-color: #323F9E;
 }
 
