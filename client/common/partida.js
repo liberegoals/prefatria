@@ -395,7 +395,8 @@ Trapezi.prototype.partidaPliromiAforologita = function(data) {
 Trapezi.prototype.partidaPliromiOloi = function(data) {
 	var dianomi, agora, axia, axiaMesa, tzogadoros, protos, defteros,
 		bazesTzogadoros, bazesProtos, bazesDefteros,
-		prepiProtos, prepiDefteros, difProtos, difDefteros, poso;
+		prepiProtos, prepiDefteros, difProtos, difDefteros,
+		mesaProtos, mesaDefteros, poso;
 
 	dianomi = data.dianomi;
 	agora = data.agora;
@@ -478,11 +479,17 @@ Trapezi.prototype.partidaPliromiOloi = function(data) {
 	difProtos = prepiProtos - bazesProtos;
 	difDefteros = prepiDefteros - bazesDefteros;
 
+	mesaProtos = difProtos;
+	if (difDefteros < 0) mesaProtos += difDefteros;
+
+	mesaDefteros = difDefteros;
+	if (difProtos < 0) mesaDefteros += difProtos;
+
 	// Εξετάζουμε την περίπτωση να μπήκε μέσα ο πρώτος αμυνόμενος.
 
-	if (difProtos > 0) {
+	if (mesaProtos > 0) {
 		poso = bazesTzogadoros * axiaMesa;
-		if (difProtos > 1) poso *= 2;
+		if (mesaProtos > 1) poso *= 2;
 		dianomi.dianomiMetritaAdd(tzogadoros, poso);
 		dianomi.dianomiMetritaAdd(protos, -poso);
 
@@ -495,9 +502,9 @@ Trapezi.prototype.partidaPliromiOloi = function(data) {
 
 	// Τώρα εξετάζουμε την περίπτωση να μπήκε μέσα ο δεύτερος αμυνόμενος.
 
-	if (difDefteros > 0) {
+	if (mesaDefteros > 0) {
 		poso = bazesTzogadoros * axiaMesa;
-		if (difDefteros > 1) poso *= 2;
+		if (mesaDefteros > 1) poso *= 2;
 		dianomi.dianomiMetritaAdd(tzogadoros, poso);
 		dianomi.dianomiMetritaAdd(defteros, -poso);
 
