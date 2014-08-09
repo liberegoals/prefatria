@@ -116,6 +116,12 @@ Kitapi = {
 	// δεικτοδοτημένη με τη θέση του παίκτη.
 
 	kasa: {},
+
+	// Η λίστα "kapikia" περιέχει την τρέχουσα συναλλαγή καπικιών κάθε
+	// παίκτη με τους άλλους δύο. Η λίστα δεικτοδοτείται με σύνθετο
+	// δείκτη που αποτελείται από τις θέσεις των συναλλασσομένων.
+
+	kapikia: {},
 };
 
 $(document).ready(function() {
@@ -164,6 +170,20 @@ Kitapi.isArena = function() {
 
 Kitapi.oxiArena = function() {
 	return !Kitapi.isArena();
+};
+
+// Η function "sinalagiWalk" διατρέχει τις συναλλαγές μεταξύ των παικτών
+// καλεί callback function για κάθε συναλλαγή, με παράμετρο το συνδυασμό
+// των θέσεων των συναλλασσομένων παικτών.
+
+Kitapi.sinalagiWalk = function(callback) {
+	Prefadoros.thesiWalk(function(apo) {
+		Prefadoros.thesiWalk(function(pros) {
+			if (pros !== apo) callback(apo + '' + pros);
+		});
+	});
+
+	return Kitapi;
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
@@ -384,14 +404,14 @@ Kitapi.resize = function() {
 //
 //	kasa2		Παρόμοιο με το "kasa1" αλλά για τον παίκτη 2.
 //
-//	kapikia2	Παρόμοιο με το "kapikia2" αλλά για τον παίκτη 2.
+//	metrita2	Παρόμοιο με το "metrita2" αλλά για τον παίκτη 2.
 //
 //	kasa3		Παρόμοιο με το "kasa1" αλλά για τον παίκτη 3.
 //
-//	kapikia3	Παρόμοιο με το "kapikia3" αλλά για τον παίκτη 3.
+//	metrita3	Παρόμοιο με το "metrita3" αλλά για τον παίκτη 3.
 
 Kitapi.pliromiPush = function(data) {
-	var pliromi, asak = {}, kasaIdos;
+	var pliromi, asak = {}, aikipak = {}, kasaIdos;
 
 	// Δημιουργούμε αντίγραφο με τα στοιχεία της πληρωμής, καθώς είναι πολύ
 	// πιθανόν να πειράξουμε τα δεδομένα και δεν θέλουμε να αλλοιώσουμε τα
@@ -407,9 +427,19 @@ Kitapi.pliromiPush = function(data) {
 		pliromi.metrita[thesi] = parseInt(data['metrita' + thesi]);
 
 		// Στη λίστα "asak" κρατάμε τα ποσά της κάσας για
-		// κάθε θέση, ΠΡΙΝ την επεξεργασία της πληρωμής.
+		// κάθε θέση ΠΡΙΝ την επεξεργασία της πληρωμής.
 
 		asak[thesi] = Kitapi.kasa[thesi];
+	});
+
+	Kitapi.sinalagiWalk(function(apoPros) {
+		// Στη λίστα "aikipak" κρατάμε τα δούναι και λαβείν
+		// καπικιών μεταξύ των παικτών ΠΡΙΝ την επεξεργασία
+		// της πληρωμής, π.χ. το "aikipak[23]" δείχνει τα
+		// καπίκια που δίνει ο παίκτης 2 στον παίκτη 3 πριν
+		// την επεξεργασία της πληρωμής.
+
+		aikipak[apoPros] = Kitapi.kapikia[apoPros];
 	});
 
 	if (Kitapi.pliromiKasaLathos(data, pliromi))
@@ -422,6 +452,13 @@ Kitapi.pliromiPush = function(data) {
 	Prefadoros.thesiWalk(function(thesi) {
 		if (Kitapi.kasa[thesi] !== asak[thesi])
 		Kitapi.kasaPush(thesi, Math.floor(Kitapi.kasa[thesi] / 10), kasaIdos[thesi]);
+	});
+
+	Kitapi.pliromiKapikiaPios(pliromi.metrita);
+	Kitapi.sinalagiWalk(function(apoPros) {
+		if (Kitapi.kapikia[apoPros] === aikipak[apoPros]) return;
+		if (Kitapi.kapikia[apoPros] > 0) return;
+		Kitapi.kapikiaPush(apoPros.substr(0, 1), apoPros.substr(1, 1), -Kitapi.kapikia[apoPros]);
 	});
 
 	return Kitapi;
@@ -625,6 +662,73 @@ Kitapi.pliromiKasaFix = function(pliromi) {
 	return idos;
 };
 
+Kitapi.pliromiKapikiaPios = function(metrita) {
+	var alos1, alos2, kapikia = {}, i;
+
+	// Εντοπίζουμε τα πρώτα θετικά καπίκια και με βάση αυτή την
+	// εγγραφή ανασυνθέτουμε τις συναλλαγές μεταξύ των παικτών.
+
+	for (thesi = 1; thesi <= Prefadoros.thesiMax; thesi++) {
+		if (metrita[thesi] <= 0) continue;
+
+		switch (thesi) {
+		case 1:
+			alos1 = 2;
+			alos2 = 3;
+			break;
+		case 2:
+			alos1 = 1;
+			alos2 = 3;
+			break;
+		case 3:
+			alos1 = 1;
+			alos2 = 2;
+			break;
+		}
+
+		if (metrita[alos1] > 0) {
+			kapikia[alos2 + '' + thesi] = metrita[thesi];
+			kapikia[alos2 + '' + alos1] = metrita[alos1];
+
+			kapikia[thesi + '' + alos2] = -metrita[thesi];
+			kapikia[alos1 + '' + alos2] = -metrita[alos1];
+			break;
+		}
+
+		if (metrita[alos2] > 0) {
+			kapikia[alos1 + '' + thesi] = metrita[thesi];
+			kapikia[alos1 + '' + alos2] = metrita[alos2];
+
+			kapikia[thesi + '' + alos1] = -metrita[thesi];
+			kapikia[alos2 + '' + alos1] = -metrita[alos2];
+			break;
+		}
+
+		if (metrita[alos1] === 0) {
+			kapikia[alos2 + '' + thesi] = metrita[thesi];
+			kapikia[thesi + '' + alos2] = -metrita[thesi];
+			break;
+		}
+
+		if (metrita[alos2] === 0) {
+			kapikia[alos1 + '' + thesi] = metrita[thesi];
+			kapikia[thesi + '' + alos1] = -metrita[thesi];
+			break;
+		}
+
+		kapikia[alos1 + '' + thesi] = -metrita[alos1];
+		kapikia[alos2 + '' + thesi] = -metrita[alos2];
+
+		kapikia[thesi + '' + alos1] = metrita[alos1];
+		kapikia[thesi + '' + alos2] = metrita[alos2];
+		break;
+	}
+
+	for (i in kapikia) {
+		Kitapi.kapikia[i] += kapikia[i];
+	}
+};
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 Kitapi.kasaPush = function(thesi, kasa, idos) {
@@ -690,12 +794,14 @@ Kitapi.kasaKontema = function(thesi) {
 };
 
 Kitapi.kapikiaPush = function(apo, pros, kapikia) {
-	var kapikiaStiliDom, count, stiles, xorane, platos;
+	var apoPros, prosApo, kapikiaStiliDom, count, stiles, xorane, platos, kapikiaDom;
 
 	if (apo === pros)
 	return Kitapi;
 
-	kapikiaStiliDom = Kitapi.kapikiaAreaDOM[apo + '' + pros];
+	apoPros = apo + '' + pros;
+	prosApo = pros + '' + apo;
+	kapikiaStiliDom = Kitapi.kapikiaAreaDOM[apoPros];
 	count = kapikiaStiliDom.children('.kitapiKapikia').length;
 
 	if (count >= Kitapi.maxKapikiaCount[apo])
@@ -709,13 +815,27 @@ Kitapi.kapikiaPush = function(apo, pros, kapikia) {
 	platos = (36 * stiles) + 'px';
 	stiles += '';
 
+	kapikiaDom = Kitapi.kapikiaDOM[apoPros];
+	delete Kitapi.kapikiaDOM[apoPros];
+	if (kapikiaDom) kapikiaDom.addClass('kitapiKapikiaDiagrafi');
+
+	kapikiaDom = Kitapi.kapikiaDOM[prosApo];
+	delete Kitapi.kapikiaDOM[prosApo];
+	if (kapikiaDom) kapikiaDom.addClass('kitapiKapikiaDiagrafi');
+
+	if (!kapikia)
+	return Kitapi;
+
+	kapikiaDom = $('<div>').addClass('kitapiKapikia').text(kapikia);
+
 	kapikiaStiliDom.css({
 		width: platos,
 		'column-count': stiles,
 		'-moz-column-count': stiles,
 		'-webkit-column-count': stiles,
-	}).append($('<div>').addClass('kitapiKapikia kitapiKapikiaDiagrafi').text(kapikia));
+	}).append(kapikiaDom);
 
+	Kitapi.kapikiaDOM[apoPros] = kapikiaDom;
 	return Kitapi;
 };
 
@@ -758,6 +878,9 @@ Kitapi.clearDOM = function() {
 	Kitapi.kasa = {};
 	Kitapi.kasaDOM = {};
 
+	Kitapi.kapikia = {};
+	Kitapi.kapikiaDOM = {};
+
 	return Kitapi;
 };
 
@@ -776,6 +899,10 @@ Kitapi.refreshDOM = function() {
 		Kitapi.onomaDOM[thesi].html(Kitapi.onomaGet(thesi));
 		Kitapi.kasaPush(thesi, kasa);
 		Kitapi.kasa[thesi] = kasa * 10;
+	});
+
+	Kitapi.sinalagiWalk(function(apoPros) {
+		Kitapi.kapikia[apoPros] = 0;
 	});
 
 	trapezi.trapeziDianomiWalk(function(dianomi) {
