@@ -411,7 +411,13 @@ Kitapi.resize = function() {
 //	metrita3	Παρόμοιο με το "metrita3" αλλά για τον παίκτη 3.
 
 Kitapi.pliromiPush = function(data) {
-	var pliromi, asak = {}, aikipak = {}, kasaIdos;
+	var pliromi, mideniki, asak = {}, aikipak = {}, kasaIdos;
+
+	// Αρχικά θεωρούμε ότι η πληρωμή παρουσιάζει μηδενικά ποσά πληρωμής.
+	// Αυτή η υπόθεση ενδεχομένως να αλλάξει κατά τον έλεγχο των ποσών
+	// πληρωμής.
+
+	mideniki = true;
 
 	// Δημιουργούμε αντίγραφο με τα στοιχεία της πληρωμής, καθώς είναι πολύ
 	// πιθανόν να πειράξουμε τα δεδομένα και δεν θέλουμε να αλλοιώσουμε τα
@@ -426,27 +432,46 @@ Kitapi.pliromiPush = function(data) {
 		pliromi.kasa[thesi] = parseInt(data['kasa' + thesi]);
 		pliromi.metrita[thesi] = parseInt(data['metrita' + thesi]);
 
-		// Στη λίστα "asak" κρατάμε τα ποσά της κάσας για
-		// κάθε θέση ΠΡΙΝ την επεξεργασία της πληρωμής.
+		// Ελέγχουμε αν υπάρχουν μη μηδενικά ποσά στην πληρωμή.
 
-		asak[thesi] = Kitapi.kasa[thesi];
+		if (pliromi.kasa[thesi]) mideniki = false;
+		else if (pliromi.metrita[thesi]) mideniki = false;
 	});
 
-	Kitapi.sinalagiWalk(function(apoPros) {
-		// Στη λίστα "aikipak" κρατάμε τα δούναι και λαβείν
-		// καπικιών μεταξύ των παικτών ΠΡΙΝ την επεξεργασία
-		// της πληρωμής, π.χ. το "aikipak[23]" δείχνει τα
-		// καπίκια που δίνει ο παίκτης 2 στον παίκτη 3 πριν
-		// την επεξεργασία της πληρωμής.
+	// Αν η πληρωμή πράγματι περιείχε μόνο μηδενικά ποσά πληρωμής, τότε δεν
+	// προχωρούμε σε καμία περαιτέρω ενέργεια.
 
-		aikipak[apoPros] = Kitapi.kapikia[apoPros];
-	});
+	if (mideniki)
+	return Kitapi;
+
+	// Η πληρωμή περιλαμβάνει μη μηδενικά ποσά πληρωμής, επομένως τα ποσά στο
+	// κιτάπι θα αλλάξουν. Ακυρώνουμε τυχόν έντονη εμφάνιση των ποσών που άλλαξαν
+	// ή προσετέθησαν στην προηγούμενη πληρωμή, καθώς θα πρέπει πλέον να τονίσουμε
+	// τα ΝΕΑ ποσά που θα αλλάξουν ή θα προστεθούν από την ανά χείρας πληρωμή.
+
+	$('.kitapiEmfanesPoso').removeClass('kitapiEmfanesPoso');
 
 	if (Kitapi.pliromiKasaLathos(data, pliromi))
 	return Kitapi;
 
 	if (Kitapi.pliromiKapikiaLathos(data, pliromi))
 	return Kitapi;
+
+	// Στη λίστα "asak" κρατάμε τα ποσά της κάσας για κάθε θέση ΠΡΙΝ την επεξεργασία
+	// της ανά χείρας πληρωμής.
+
+	Prefadoros.thesiWalk(function(thesi) {
+		asak[thesi] = Kitapi.kasa[thesi];
+	});
+
+	// Στη λίστα "aikipak" κρατάμε τα δούναι και λαβείν καπικιών μεταξύ των παικτών
+	// ΠΡΙΝ την επεξεργασία της πληρωμής, π.χ. το "aikipak[23]" δείχνει τα καπίκια
+	// που δίνει ο παίκτης 2 στον παίκτη 3 πριν την επεξεργασία της ανά χείρας
+	// πληρωμής.
+
+	Kitapi.sinalagiWalk(function(apoPros) {
+		aikipak[apoPros] = Kitapi.kapikia[apoPros];
+	});
 
 	kasaIdos = Kitapi.pliromiKasaFix(pliromi);
 	Prefadoros.thesiWalk(function(thesi) {
@@ -749,9 +774,9 @@ Kitapi.kasaPush = function(thesi, kasa, idos) {
 	stiles += '';
 
 	kasaDom = Kitapi.kasaDOM[thesi];
-	if (kasaDom) kasaDom.addClass('kitapiKasaDiagrafi');
+	if (kasaDom) kasaDom.addClass('kitapiKasaDiagrafi kitapiEmfanesPoso');
 
-	kasaDom = $('<div>').addClass('kitapiKasa').text(kasa);
+	kasaDom = $('<div>').addClass('kitapiKasa kitapiEmfanesPoso').text(kasa);
 	switch (idos) {
 	case 'ΑΥΞΗΣΗ':
 		kasaDom.addClass('kitapiKasaMesa');
@@ -817,16 +842,16 @@ Kitapi.kapikiaPush = function(apo, pros, kapikia) {
 
 	kapikiaDom = Kitapi.kapikiaDOM[apoPros];
 	delete Kitapi.kapikiaDOM[apoPros];
-	if (kapikiaDom) kapikiaDom.addClass('kitapiKapikiaDiagrafi');
+	if (kapikiaDom) kapikiaDom.addClass('kitapiKapikiaDiagrafi kitapiEmfanesPoso');
 
 	kapikiaDom = Kitapi.kapikiaDOM[prosApo];
 	delete Kitapi.kapikiaDOM[prosApo];
-	if (kapikiaDom) kapikiaDom.addClass('kitapiKapikiaDiagrafi');
+	if (kapikiaDom) kapikiaDom.addClass('kitapiKapikiaDiagrafi kitapiEmfanesPoso');
 
 	if (!kapikia)
 	return Kitapi;
 
-	kapikiaDom = $('<div>').addClass('kitapiKapikia').text(kapikia);
+	kapikiaDom = $('<div>').addClass('kitapiKapikia kitapiEmfanesPoso').text(kapikia);
 
 	kapikiaStiliDom.css({
 		width: platos,
