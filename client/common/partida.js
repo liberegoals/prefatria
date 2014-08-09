@@ -279,6 +279,10 @@ Trapezi.prototype.partidaPliromi = function() {
 	// με μηδενικά ποσά πληρωμής.
 
 	this.partidaAxiaAgorasSet(data);
+
+	// Η αγορά μπορεί να έχει μηδενική αξία, π.χ. στην περίπτωση που
+	// οι παίκτες δεν προσέθεσαν κάσα.
+
 	if (!data.axia) return this;
 
 	// Πρώτος αμυνόμενος είναι ο αμυνόμενος αμέσως μετά τον τζογαδόρο
@@ -479,8 +483,15 @@ Trapezi.prototype.partidaPliromiOloi = function(data) {
 	difProtos = prepiProtos - bazesProtos;
 	difDefteros = prepiDefteros - bazesDefteros;
 
+	// Υπολογίζουμε πόσες μπάζες έχει μπει μέσα ο πρώτος αμυνόμενος
+	// εκκινώντας με το υστέρημα των μπαζών του και αφαιρώντας τυχόν
+	// περίσσευμα του συμπαίκτη.
+
 	mesaProtos = difProtos;
 	if (difDefteros < 0) mesaProtos += difDefteros;
+
+	// Με παρόμοιο τρόπο υπολογίζουμε πόσες μπάζες έχει μπει μέσα
+	// ο δεύτερος αμυνόμενος.
 
 	mesaDefteros = difDefteros;
 	if (difProtos < 0) mesaDefteros += difProtos;
