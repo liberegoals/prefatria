@@ -344,6 +344,11 @@ Kitapi.stresarisma = function() {
 	return Kitapi;
 };
 
+// Η function "fullData" γεμίζει το κιτάπι με εικονικά δεδομένα τόσο στις περιοχές
+// γραφής των κασών, όσο και στις περιοχές γραφής των καπικιών. Η συνήθης χρήση της
+// function είναι η αναπροσαρμογή του μεγέθους του παραθύρου ώστε να χωρά άνετα
+// τα δεδομένα.
+
 Kitapi.fullData = function() {
 	Prefadoros.thesiWalk(function(thesi) {
 		var p1, p2, i, j;
@@ -379,6 +384,10 @@ Kitapi.fullData = function() {
 
 	return Kitapi;
 };
+
+// Η function "resize" καλείται συνήθως μετά το «γέμισμα» του κιταπιού με εικονικά
+// δεδομένα και σκοπό έχει την αναδιαμόρφωση των διαστάσεων του παραθύρου ώστε να
+// χωρά άνετα όλα τα δεδομένα.
 
 Kitapi.resize = function() {
 	var dh, dw;
