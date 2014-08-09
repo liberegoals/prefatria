@@ -100,6 +100,18 @@ Kitapi = {
 
 	kapikiaAreaDOM: {},
 
+	// Η λίστα "kapikiaAnadpoda" δείχνει ποιες από τις περιοχές γραφής
+	// καπικιών γράφονται ανάποδα. Πιο συγκεκριμένα, οι περιοχές συναλλαγής
+	// καπικιών επάνω δεξιά (παίκτης 2, παίκτης 1) και επάνω αριστερά
+	// (παίκτης 3, παίκτης 1) γράφονται ανάποδα, δηλαδή τα καπίκια
+	// προστίθενται στο επάνω μέρος της λίστας και κατά το κόντεμα
+	// αποκόπτονται τα κάτω στοιχεία της λίστας.
+
+	kapikiaAnapoda: {
+		21: true,
+		31: true,
+	},
+
 	// Η λίστα "kapikiaDOM" δείχνει τα DOM elements των τελευταίων
 	// συναλλαγών καπικιών μεταξύ οποιουδήποτε ζεύγους παικτών. Η λίστα
 	// δεικτοδοτείται όπως και η λίστα των αντίστοιχων περιοχών στις
@@ -819,7 +831,7 @@ Kitapi.kasaKontema = function(thesi) {
 };
 
 Kitapi.kapikiaPush = function(apo, pros, kapikia) {
-	var apoPros, prosApo, kapikiaStiliDom, count, stiles, xorane, platos, kapikiaDom;
+	var apoPros, prosApo, kapikiaStiliDom, anapoda, count, stiles, xorane, platos, kapikiaDom;
 
 	if (apo === pros)
 	return Kitapi;
@@ -827,10 +839,11 @@ Kitapi.kapikiaPush = function(apo, pros, kapikia) {
 	apoPros = apo + '' + pros;
 	prosApo = pros + '' + apo;
 	kapikiaStiliDom = Kitapi.kapikiaAreaDOM[apoPros];
+	anapoda = Kitapi.kapikiaAnapoda.hasOwnProperty(apoPros);
 	count = kapikiaStiliDom.children('.kitapiKapikia').length;
 
 	if (count >= Kitapi.maxKapikiaCount[apo])
-	count = Kitapi.kapikiaKontema(apo, pros);
+	count = Kitapi.kapikiaKontema(apo, pros, anapoda);
 
 	count++;
 
@@ -858,7 +871,13 @@ Kitapi.kapikiaPush = function(apo, pros, kapikia) {
 		'column-count': stiles,
 		'-moz-column-count': stiles,
 		'-webkit-column-count': stiles,
-	}).append(kapikiaDom);
+	});
+
+	if (anapoda)
+	kapikiaStiliDom.prepend(kapikiaDom);
+
+	else
+	kapikiaStiliDom.append(kapikiaDom);
 
 	Kitapi.kapikiaDOM[apoPros] = kapikiaDom;
 	return Kitapi;
@@ -867,7 +886,7 @@ Kitapi.kapikiaPush = function(apo, pros, kapikia) {
 // Η function "kasaKontema" κονταίνει τη λίστα κασών συγκεκριμένου
 // ζεύγους παικτών και επιστρέφει το νέο πλήθος της λίστας.
 
-Kitapi.kapikiaKontema = function(apo, pros) {
+Kitapi.kapikiaKontema = function(apo, pros, anapoda) {
 	var jql, count, del, i;
 
 	jql = Kitapi.kapikiaAreaDOM[apo + '' + pros].children('.kitapiKapikia');
@@ -876,8 +895,15 @@ Kitapi.kapikiaKontema = function(apo, pros) {
 
 	if (count <= del) return count;
 
-	for (i = 0; i < del; i++) {
-		$(jql.get(i)).remove();
+	if (anapoda) {
+		for (i = del - 1; i >= 0; i--) {
+			$(jql.get(i)).remove();
+		}
+	}
+	else {
+		for (i = 0; i < del; i++) {
+			$(jql.get(i)).remove();
+		}
 	}
 
 	$(jql.get(i)).removeClass('kitapiKapikiaDiagrafi').html('&#8942;');
