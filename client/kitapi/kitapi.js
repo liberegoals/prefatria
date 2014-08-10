@@ -134,6 +134,8 @@ Kitapi = {
 	// δείκτη που αποτελείται από τις θέσεις των συναλλασσομένων.
 
 	kapikia: {},
+
+	paraskinio: [],
 };
 
 $(document).ready(function() {
@@ -150,7 +152,8 @@ $(document).ready(function() {
 	// την επιλογή του χρήστη, αλλά ειδικά το κιτάπι έχει δικό του.
 
 	Client.bodyDOM.css({
-		backgroundImage: "url('../ikona/paraskinio/kitapi.jpg')",
+		backgroundImage: "url('../ikona/kitapi/" +
+		Kitapi.paraskinio[Globals.random(0, Kitapi.paraskinio.length - 1)] + "')",
 	});
 
 	Kitapi.
