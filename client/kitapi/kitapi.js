@@ -793,14 +793,13 @@ Kitapi.kasaPush = function(thesi, kasa, idos) {
 	// θέση.
 
 	kasaStiliDom = Kitapi.kasaAreaDOM[thesi];
-	count = kasaStiliDom.children('.kitapiKasa').length;
 
 	// Αν έχουμε φτάσει στο μέγιστο πλήθος εγγραφών κάσας της συγκεκριμένης
 	// περιοχής, προβαίνουμε σε «κόντεμα» αφαιρώντας τις παλαιότερες εγγραφές.
 
+	count = kasaStiliDom.children('.kitapiKasa').length;
 	if (count >= Kitapi.maxKasaCount[thesi])
 	count = Kitapi.kasaKontema(thesi);
-
 	count++;
 
 	// Υπολογίζουμε τα χαρακτηριστικά (πλάτος, στήλες κλπ) της συγκεκριμένης
@@ -871,45 +870,82 @@ Kitapi.kasaKontema = function(thesi) {
 		$(jql.get(i)).remove();
 	}
 
-	$(jql.get(i)).removeClass('kitapiKasaDiagrafi kitapiKasaMesa KitapiKasaGlipsimo').html('&#8942;');
+	$(jql.get(i)).removeClass().addClass('kitapiKasa').html('&#8942;');
 	return count - del;
 };
+
+// Η function "kapikiaPush" προσθέτει εγγραφή καπικιών στη περιοχή συναλλαγής
+// καπικιών δύο παικτών των οποίων οι θέσεις δίνονται ως πρώτη και δεύτερη
+// παράμετρος. Τρίτη παράμετρος είναι τα καπίκια, ή οτιδήποτε άλλο θέλουμε
+// να προσθέσουμε στη συγκεκριμένη περιοχή. Η σειρά των παικτών έχει σημασία·
+// πρώτος είναι ο παίκτης στην περιοχή του οποίου θα προστεθεί η νέα εγγραφή
+// και δεύτερος είναι ο παίκτης με τον οποίον γίνεται η εν λόγω συναλλαγή.
 
 Kitapi.kapikiaPush = function(apo, pros, kapikia) {
 	var apoPros, prosApo, kapikiaStiliDom, anapoda, count, stiles, xorane, platos, kapikiaDom;
 
+	// Δεν υφίσταται συναλλαγή καπικιών παίκτη με τον εαυτό του.
+
 	if (apo === pros)
 	return Kitapi;
 
+	// Υπολογίζουμε τους σύνθετους δείκτες περιοχών συναλλαγής για τους ανά
+	// χείρας παίκτες, π.χ. για τους παίκτες 1 και 3 θα έχουμε τους δείκτες
+	// 13 και 31, καθώς και οι δύο περιοχές ενδεχομένως να επηρεαστούν.
+
 	apoPros = apo + '' + pros;
 	prosApo = pros + '' + apo;
-	kapikiaStiliDom = Kitapi.kapikiaAreaDOM[apoPros];
-	anapoda = Kitapi.kapikiaAnapoda.hasOwnProperty(apoPros);
-	count = kapikiaStiliDom.children('.kitapiKapikia').length;
 
+	// Εμφανίζουμε ως διαγραμμένη τυχόν παλαιότερη εγγραφή καπικιών για την
+	// κύρια περιοχή.
+
+	kapikiaDom = Kitapi.kapikiaDOM[apoPros];
+	if (kapikiaDom) kapikiaDom.addClass('kitapiKapikiaDiagrafi kitapiEmfanesPoso');
+	delete Kitapi.kapikiaDOM[apoPros];
+
+	// Εμφανίζουμε ως διαγραμμένη τυχόν παλαιότερη εγγραφή καπικιών για την
+	// δευτερεύουσα περιοχή.
+
+	kapikiaDom = Kitapi.kapikiaDOM[prosApo];
+	if (kapikiaDom) kapikiaDom.addClass('kitapiKapikiaDiagrafi kitapiEmfanesPoso');
+	delete Kitapi.kapikiaDOM[prosApo];
+
+	// Αν τα καπίκια που πρέπει να προστεθούν είναι μηδενικά, δεν τα εμφανίζουμε
+	// και ως εκ τούτου δεν δημιουργούμε νέα εγγραφή, επομένως δεν προβαίνουμε σε
+	// καμία περαιτέρω ενέργεια.
+
+	if (!kapikia)
+	return Kitapi;
+
+	// Θα προστεθεί νέα εγγραφή, επομένως πρέπει να ελέγξουμε το πλήθος των εγγραφών
+	// στην κύρια περιοχή. Με τη δευτερεύουσα περιοχή έχουμε τελειώσει.
+
+	kapikiaStiliDom = Kitapi.kapikiaAreaDOM[apoPros];
+
+	// Σε δύο περιοχές γράφουμε ανάποδα, δηλαδή από κάτω προς τα πάνω. Πράγματι,
+	// πρόκειται για τις περιοχές 12 (πάνω δεξιά) και 13 (πάνω αριστερά).
+
+	anapoda = Kitapi.kapikiaAnapoda.hasOwnProperty(apoPros);
+
+	// Ελέγχουμε το πλήθος των εγγραφών στην περιοχή στην οποία προτιθέμεθα να
+	// προσθέσουμε την νέα εγγραφή καπικιών. Αν το πλήθος των εγγραφών καπικιών
+	// στη συγκεκριμένη περιοχή έχει ήδη φτάσει το μέγιστο επιτρεπτό πλήθος για
+	// τη συγκεκριμένη περιοχή, προβαίνουμε σε «κόντεμα» αυτής της περιοχής.
+
+	count = kapikiaStiliDom.children('.kitapiKapikia').length;
 	if (count >= Kitapi.maxKapikiaCount[apo])
 	count = Kitapi.kapikiaKontema(apo, pros, anapoda);
-
 	count++;
+
+	// Υπολογίζουμε και εφαρμόζουμε τα στιλιστικά χαρακτηριστικά (πλάτος, στήλες κλπ)
+	// της συγκεκριμένης περιοχής γραφής καπικιών με βάση το πλήθος των εγγραφών
+	// συνυπολογιζομένης και της νέας εγγραφής.
 
 	xorane = Kitapi.maxKapikiaLen[apo];
 	stiles = Math.floor(count / xorane);
 	if ((stiles * xorane) < count) stiles++;
 	platos = (36 * stiles) + 'px';
 	stiles += '';
-
-	kapikiaDom = Kitapi.kapikiaDOM[apoPros];
-	delete Kitapi.kapikiaDOM[apoPros];
-	if (kapikiaDom) kapikiaDom.addClass('kitapiKapikiaDiagrafi kitapiEmfanesPoso');
-
-	kapikiaDom = Kitapi.kapikiaDOM[prosApo];
-	delete Kitapi.kapikiaDOM[prosApo];
-	if (kapikiaDom) kapikiaDom.addClass('kitapiKapikiaDiagrafi kitapiEmfanesPoso');
-
-	if (!kapikia)
-	return Kitapi;
-
-	kapikiaDom = $('<div>').addClass('kitapiKapikia kitapiEmfanesPoso').text(kapikia);
 
 	kapikiaStiliDom.css({
 		width: platos,
@@ -918,11 +954,13 @@ Kitapi.kapikiaPush = function(apo, pros, kapikia) {
 		'-webkit-column-count': stiles,
 	});
 
-	if (anapoda)
-	kapikiaStiliDom.prepend(kapikiaDom);
+	// Δημιουργούμε DOM element για τη νέα εγγραφή καπικιών και την προσθέτουμε
+	// στην επίμαχη περιοχή είτε από πάνω, είτε από κάτω ανάλογα με την περιοχή,
+	// και κρατάμε το νεοεισαχθέν DOM element για την εν λόγω περιοχή.
 
-	else
-	kapikiaStiliDom.append(kapikiaDom);
+	kapikiaDom = $('<div>').addClass('kitapiKapikia kitapiEmfanesPoso').text(kapikia);
+	if (anapoda) kapikiaStiliDom.prepend(kapikiaDom);
+	else kapikiaStiliDom.append(kapikiaDom);
 
 	Kitapi.kapikiaDOM[apoPros] = kapikiaDom;
 	return Kitapi;
