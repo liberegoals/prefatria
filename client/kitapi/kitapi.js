@@ -801,7 +801,7 @@ Kitapi.kasaPush = function(thesi, kasa, idos) {
 	}
 
 	kasaDom = $('<div>').addClass('kitapiKasa kitapiEmfanesPoso').
-	html(kasa ? kasa : '&empty;');
+	html(kasa ? kasa : '&#9872;');
 	switch (idos) {
 	case 'ΑΥΞΗΣΗ':
 		kasaDom.addClass('kitapiKasaMesa');
