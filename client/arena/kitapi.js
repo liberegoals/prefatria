@@ -115,7 +115,9 @@ Arena.kitapi.refresh = function() {
 	return Arena;
 
 	Kitapi = Arena.kitapi.win.Kitapi;
-	Kitapi.refreshDOM();
+	try {
+		Kitapi.refreshDOM();
+	} catch (e) {}
 
 	return Arena;
 };
@@ -126,7 +128,10 @@ Arena.kitapi.pliromiPush = function(pliromi) {
 	if (Arena.kitapi.isKlisto())
 	return Arena;
 
-	Arena.kitapi.win.Kitapi.pliromiPush(pliromi);
+	try {
+		Arena.kitapi.win.Kitapi.pliromiPush(pliromi);
+	} catch (e) {}
+
 	return Arena;
 };
 
