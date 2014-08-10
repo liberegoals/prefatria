@@ -211,7 +211,8 @@ Sinedria.prototype.feredataObsolete = function() {
 // γεγονός περνώντας σχετικό μήνυμα λάθους.
 
 Sinedria.prototype.feredataClose = function(err) {
-	if (this.oxiFeredata()) return this;
+	if (this.oxiFeredata())
+	return this;
 
 	if (err !== undefined) console.error(err);
 	this.feredataEnd('-');
@@ -397,7 +398,9 @@ Sinedria.prototype.feredataAlages = function() {
 
 	hdr = 'kinisi: [\n';
 	for (i = floter; i < skiniko.kinisi.length; i++) {
-		if (skiniko.kinisi[i].isAdiafori(this)) continue;
+		if (skiniko.kinisi[i].isAdiafori(this))
+		continue;
+
 		nodereq.write(hdr);
 		hdr = '';
 		skiniko.kinisi[i].apostoli(this);
@@ -701,7 +704,8 @@ Energia.prototype.energiaProsarmogiΤΖΟΓΟΣ = function(sinedria) {
 };
 
 Sinedria.prototype.tsoxaNeoteraEpikefalida = function(nodereq) {
-	if (!this.tsoxaNeoteraNone) return this;
+	if (!this.tsoxaNeoteraNone)
+	return this;
 
 	nodereq.write('partida: {\n');
 	this.tsoxaNeoteraNone = false;
@@ -709,7 +713,8 @@ Sinedria.prototype.tsoxaNeoteraEpikefalida = function(nodereq) {
 };
 
 Sinedria.prototype.tsoxaNeoteraKlisimo = function(nodereq) {
-	if (this.tsoxaNeoteraNone) return this;
+	if (this.tsoxaNeoteraNone)
+	return this;
 
 	nodereq.write('},\n');
 	return this;
