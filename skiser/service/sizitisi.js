@@ -113,13 +113,15 @@ Service.sizitisi.kontema = function() {
 		sizitisi.push(this.sizitisiKodikosGet());
 	}, 1);
 
-	if (sizitisi.length < Service.sizitisi.mikosMax) return;
+	if (sizitisi.length < Service.sizitisi.mikosMax)
+	return;
 
 	count = sizitisi.length - Service.sizitisi.mikosMin;
 	for (i = 0; i < count; i++) {
 		skiniko.skinikoSizitisiDelete(sizitisi[i]);
 	}
 
+	console.log('Κόντεμα δημόσιας συζήτησης κατά ' + count);
 	conn = DB.connection();
 	query = 'DELETE FROM `sizitisi` WHERE `trapezi` IS NULL AND `kodikos` < ' + sizitisi[i];
 	conn.connection.query(query, function(err, res) {
@@ -143,13 +145,15 @@ Service.sizitisi.kontemaTrapezi = function(trapezi) {
 		sizitisi.push(this.sizitisiKodikosGet());
 	}, 1);
 
-	if (sizitisi.length < Service.sizitisi.mikosMax) return;
+	if (sizitisi.length < Service.sizitisi.mikosMax)
+	return;
 
 	count = sizitisi.length - Service.sizitisi.mikosMin;
 	for (i = 0; i < count; i++) {
 		trapezi.trapeziSizitisiDelete(sizitisi[i]);
 	}
 
+	console.log('Κόντεμα συζήτησης τραπεζιού ' + trapeziKodikos + ' κατά ' + count);
 	conn = DB.connection();
 	query = 'DELETE FROM `sizitisi` WHERE `trapezi` = ' + trapeziKodikos + ' AND `kodikos` < ' + sizitisi[i];
 	conn.connection.query(query, function(err, res) {
