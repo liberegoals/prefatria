@@ -215,7 +215,7 @@ body {
 .trapeziTsoxa {
 	position: relative;
 	display: block;
-	padding: 6px 4px;
+	padding: 6px 4px 3px 4px;
 	width: 520px;
 	overflow: hidden;
 
