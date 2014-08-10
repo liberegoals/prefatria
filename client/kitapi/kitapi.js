@@ -795,9 +795,13 @@ Kitapi.kasaPush = function(thesi, kasa, idos) {
 	stiles += '';
 
 	kasaDom = Kitapi.kasaDOM[thesi];
-	if (kasaDom) kasaDom.addClass('kitapiKasaDiagrafi kitapiEmfanesPoso');
+	if (kasaDom) {
+		kasaDom.addClass('kitapiEmfanesPoso');
+		if (Kitapi.kasa[thesi]) kasaDom.addClass('kitapiKasaDiagrafi');
+	}
 
-	kasaDom = $('<div>').addClass('kitapiKasa kitapiEmfanesPoso').text(kasa);
+	kasaDom = $('<div>').addClass('kitapiKasa kitapiEmfanesPoso').
+	html(kasa ? kasa : '&empty;');
 	switch (idos) {
 	case 'ΑΥΞΗΣΗ':
 		kasaDom.addClass('kitapiKasaMesa');
