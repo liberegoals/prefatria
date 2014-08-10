@@ -375,7 +375,7 @@ Sinedria.prototype.feredataFreska = function() {
 };
 
 Sinedria.prototype.feredataAlages = function() {
-	var skiniko = Server.skiniko, nodereq, floter, hdr, i;
+	var skiniko = Server.skiniko, nodereq, floter, kinisiNone, hdr, i;
 
 	nodereq = this.feredataGet();
 	if (!nodereq) return this;
@@ -396,6 +396,7 @@ Sinedria.prototype.feredataAlages = function() {
 	// Ακολουθούν οι νέες κινήσεις από τις οποίες θα πρέπει να ξεδιαλέξουμε
 	// όσες αφορούν στην ανά χείρας συνεδρία.
 
+	kinisiNone = true;
 	hdr = 'kinisi: [\n';
 	for (i = floter; i < skiniko.kinisi.length; i++) {
 		if (skiniko.kinisi[i].isAdiafori(this))
@@ -403,9 +404,11 @@ Sinedria.prototype.feredataAlages = function() {
 
 		nodereq.write(hdr);
 		hdr = '';
+
 		skiniko.kinisi[i].apostoli(this);
+		kinisiNone = false;
 	}
-	if (hdr === '') nodereq.write('],\n');
+	if (!kinisiNone) nodereq.write('],\n');
 
 	// Θέτουμε τον δείκτη κινήσεων στο τρέχον σημείο.
 
@@ -414,7 +417,7 @@ Sinedria.prototype.feredataAlages = function() {
 	// Αν τελικά δεν υπήρχαν νεότερα τσόχας ούτε απεστάλησαν κινήσεις,
 	// μπαίνουμε σε long polling.
 
-	if (this.tsoxaNeoteraNone && (hdr !== '')) return this;
+	if (this.tsoxaNeoteraNone && kinisiNone) return this;
 
 	// Αλλιώς κλείνουμε την αποστολή των σκηνικών δεδομένων κα θα δρομολογηθεί
 	// νέο αίτημα από τον client.
@@ -504,7 +507,7 @@ Sinedria.prototype.tsoxaNeoteraSizitisi = function(nodereq, trapezi, tsoxa) {
 		nodereq.write('\t\t');
 		nodereq.write(this.sizitisiFeredata());
 		nodereq.write(',\n');
-		sinedria.tsoxaNeoteraNone = false;
+		//sinedria.tsoxaNeoteraNone = false;
 	});
 
 	tsoxa.sizitisi = max;
@@ -532,7 +535,7 @@ Sinedria.prototype.tsoxaNeoteraEnergia = function(nodereq, trapezi, tsoxa) {
 		nodereq.write('\t\t');
 		nodereq.write(this.energiaFeredata(sinedria, trapezi));
 		nodereq.write(',\n');
-		sinedria.tsoxaNeoteraNone = false;
+		//sinedria.tsoxaNeoteraNone = false;
 	});
 
 	tsoxa.energia = max;
