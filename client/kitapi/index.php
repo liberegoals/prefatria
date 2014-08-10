@@ -5,6 +5,7 @@ Selida::head("Πρεφαδόρος - Κιτάπι");
 Selida::stylesheet("kitapi/kitapi");
 Selida::javascript("common/prefadoros");
 Selida::javascript("kitapi/kitapi");
+kitapi::paraskinio();
 
 Selida::body();
 Selida::ofelimo_begin();
@@ -26,6 +27,25 @@ class Kitapi {
 		</tr>
 		</table>
 		<div id="kitapiPerioxi1" class="kitapiPerioxi"></div>
+		<?php
+	}
+
+	public static function paraskinio() {
+		$paleta = scandir("../ikona/kitapi");
+		$n = count($paleta);
+		?>
+		<script type="text/javascript">
+		//<![CDATA[
+		<?php
+		for ($i = 0; $i < $n; $i++) {
+			if (!preg_match("/\.(JPG|GIF|PNG)$/i", $paleta[$i])) continue;
+			?>
+			Kitapi.paraskinio.push('<?php print $paleta[$i]; ?>');
+			<?php
+		}
+		?>
+		//]]>
+		</script>
 		<?php
 	}
 }
