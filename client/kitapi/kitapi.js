@@ -777,16 +777,35 @@ Kitapi.pliromiKapikiaPios = function(metrita) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+// Η function "kasaPush" προσθέτει νέα εγγραφή κάσας στην περιοχή γραφής κάσας
+// συγκεκριμένου παίκτη του οποίου τη θέση περνάμε ως πρώτη παράμετρο. Το ποσό
+// της κάσας της νέας εγγραφής, ή οτιδήποτε άλλο θέλουμε να εμφανιστεί στη θέση
+// της κάσας (π.χ. σημαιάκι τέλους), περνιέται ως δεύτερη παράμετρος. Μπορούμε
+// να περάσουμε και τρίτη παράμετρο που δείχνει αν η νέα εγγραφή αφορά σε αύξηση
+// της κάσας από μέσα αγορά του εν λόγω παίκτη, ή σε μείωση από «γλείψιμο», δηλαδή
+// από αγορά άλλου παίκτη του οποίου η κάσα δεν επαρκεί για να πληρωθεί η αγορά.
+
 Kitapi.kasaPush = function(thesi, kasa, idos) {
 	var kasaStiliDom, count, stiles, xorane, platos, kasaDom;
 
+	// Πρώτα ελέγχουμε αν οι εγγραφές κάσας του συγκεκριμένου παίκτης έχουν ήδη
+	// φτάσει στο μέγιστο επιτρεπτό πλήθος εγγραφών κάσας για τη συγκεκριμένη
+	// θέση.
+
 	kasaStiliDom = Kitapi.kasaAreaDOM[thesi];
 	count = kasaStiliDom.children('.kitapiKasa').length;
+
+	// Αν έχουμε φτάσει στο μέγιστο πλήθος εγγραφών κάσας της συγκεκριμένης
+	// περιοχής, προβαίνουμε σε «κόντεμα» αφαιρώντας τις παλαιότερες εγγραφές.
 
 	if (count >= Kitapi.maxKasaCount[thesi])
 	count = Kitapi.kasaKontema(thesi);
 
 	count++;
+
+	// Υπολογίζουμε τα χαρακτηριστικά (πλάτος, στήλες κλπ) της συγκεκριμένης
+	// περιοχής γραφής κασών, με βάση το τρέχον πλήθος των εγγραφών κάσας
+	// της συγκεκριμένης περιοχής (μαζί με την νέα εγγραφή).
 
 	xorane = Kitapi.maxKasaLen[thesi];
 	stiles = Math.floor(count / xorane);
@@ -794,11 +813,25 @@ Kitapi.kasaPush = function(thesi, kasa, idos) {
 	platos = (38 * stiles) + 'px';
 	stiles += '';
 
+	kasaStiliDom.css({
+		width: platos,
+		'column-count': stiles,
+		'-moz-column-count': stiles,
+		'-webkit-column-count': stiles,
+	});
+
+	// Αλλάζουμε κάποια χαρακτηριστικά του DOM element της τελευταίας εγγραφής
+	// κάσας της συγκεκριμένης περιοχής, εφόσον, βεβαίως, υπάρχει παλαιότερη
+	// τέτοια εγγραφή στη συγκεκριμένη περιοχή.
+
 	kasaDom = Kitapi.kasaDOM[thesi];
 	if (kasaDom) {
 		kasaDom.addClass('kitapiEmfanesPoso');
 		if (Kitapi.kasa[thesi]) kasaDom.addClass('kitapiKasaDiagrafi');
 	}
+
+	// Δημιουργούμε DOM element για την νέα εγγραφή που θα προστεθεί στη
+	// συγκεκριμένη περιοχή γραφής κασών.
 
 	kasaDom = $('<div>').addClass('kitapiKasa kitapiEmfanesPoso').
 	html(kasa ? kasa : '&#9872;');
@@ -811,14 +844,13 @@ Kitapi.kasaPush = function(thesi, kasa, idos) {
 		break;
 	}
 
-	kasaStiliDom.css({
-		width: platos,
-		'column-count': stiles,
-		'-moz-column-count': stiles,
-		'-webkit-column-count': stiles,
-	}).append(kasaDom);
+	// Προσθέτουμε το DOM element της νέας εγγραφής στη συγκεκριμένη περιοχή
+	// γραφής κασών και κρατάμε το DOM element ως τελευταίο DOM element κάσας
+	// της συγκεκριμένης περιοχής. 
 
+	kasaStiliDom.append(kasaDom);
 	Kitapi.kasaDOM[thesi] = kasaDom;
+
 	return Kitapi;
 };
 
