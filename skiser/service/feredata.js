@@ -111,7 +111,9 @@ Sinedria.prototype.oxiFeredata = function() {
 // ενημερωμένη.
 
 Sinedria.prototype.kinisiFloterSet = function(len) {
-	if (len === undefined) len = Server.skiniko.kinisi.length;
+	if (len === undefined)
+	len = Server.skiniko.kinisi.length;
+
 	this.kinisiFloter = len;
 	return this;
 };
@@ -166,7 +168,9 @@ Sinedria.prototype.feredataPollGet = function() {
 // της ανά χείρας συνεδρίας στο τρέχον (ή σε άλλο επιθυμητό) timestamp.
 
 Sinedria.prototype.feredataPollSet = function(ts) {
-	if (ts === undefined) ts = Globals.toraServer();
+	if (ts === undefined)
+	ts = Globals.toraServer();
+
 	this.feredataPoll = ts;
 	return this;
 };
@@ -191,7 +195,9 @@ Sinedria.prototype.feredataEnd = function(s) {
 // κανάλι κατέστη παρωχημένο.
 
 Sinedria.prototype.feredataObsolete = function() {
-	if (this.oxiFeredata()) return this;
+	if (this.oxiFeredata())
+	return this;
+
 	this.feredataEnd('~');
 	return this;
 };
