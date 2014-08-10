@@ -367,7 +367,7 @@ Sinedria.prototype.feredataFreska = function() {
 
 	this.
 	tsoxaReset().
-	tsoxaNeotera().
+	tsoxaNeotera(true).
 	kinisiFloterSet().
 	feredataResetCheck().
 	feredataApostoli();
@@ -467,7 +467,7 @@ Sinedria.prototype.tsoxaCheck = function(trapezi) {
 	return this;
 };
 
-Sinedria.prototype.tsoxaNeotera = function() {
+Sinedria.prototype.tsoxaNeotera = function(freska) {
 	var sinedria = this, trapeziKodikos, tsoxa;
 
 	this.tsoxaNeoteraNone = true;
@@ -484,7 +484,7 @@ Sinedria.prototype.tsoxaNeotera = function() {
 
 	this.
 	tsoxaNeoteraSizitisi(nodereq, trapezi, tsoxa).
-	tsoxaNeoteraEnergia(nodereq, trapezi, tsoxa).
+	tsoxaNeoteraEnergia(nodereq, trapezi, tsoxa, freska).
 	tsoxaNeoteraKlisimo(nodereq);
 
 	return this;
@@ -515,28 +515,62 @@ Sinedria.prototype.tsoxaNeoteraSizitisi = function(nodereq, trapezi, tsoxa) {
 	return this;
 };
 
-Sinedria.prototype.tsoxaNeoteraEnergia = function(nodereq, trapezi, tsoxa) {
-	var sinedria = this, dianomi, hdr, max;
+Sinedria.prototype.tsoxaNeoteraEnergia = function(nodereq, trapezi, tsoxa, freska) {
+	var sinedria = this, dianomi, hdr, max, diakopi, i, energia, kodikos;
 
 	dianomi = trapezi.trapeziTelefteaDianomi();
 	if (!dianomi) return this;
 
-	hdr = '\tenergia:      [\n';
+	hdr = '\tenergia: [\n';
 	max = tsoxa.energia;
 
-	dianomi.dianomiEnergiaWalk(function() {
-		var kodikos = this.energiaKodikosGet();
-		if (kodikos <= tsoxa.energia) return;
+	// Η flag "diakopi" θα δείξει αν πρέπει να διακόψουμε τον έλεγχο των
+	// νέων ενεργειών και να αφήσουμε κάποιες ενέργειες για την επόμενη
+	// αποστολή.
+
+	diakopi = false;
+
+	for (i = 0; i < dianomi.energiaArray.length; i++) {
+		energia = dianomi.energiaArray[i];
+		kodikos = energia.energiaKodikosGet();
+		if (kodikos <= tsoxa.energia) continue;
 
 		if (kodikos > max) max = kodikos;
 		sinedria.tsoxaNeoteraEpikefalida(nodereq);
 		nodereq.write(hdr);
 		hdr = '';
 		nodereq.write('\t\t');
-		nodereq.write(this.energiaFeredata(sinedria, trapezi));
+		nodereq.write(energia.energiaFeredata(sinedria, trapezi));
 		nodereq.write(',\n');
-		//sinedria.tsoxaNeoteraNone = false;
-	});
+
+		// Αν το αίτημα αφορούσε σε αποστολή φρέσκων σκηνικών δεδομένων
+		// συνεχίζουμε κανονικά τη διαδικασία για όλες τις ενέργειες
+		// της διανομής.
+
+		if (freska)
+		continue;
+
+		// Κάποια είδη ενέργειας πρέπει να φύγουν χωρίς να ακολουθήσουν
+		// άμεσα τυχόν επόμενες ενέργειες που έχουν ήδη κοινοποιηθεί στον
+		// skiser. Αν π.χ. κάποιος παίκτης παίξει το τελευταίο φύλλο μιας
+		// μπάζας, κερδίσει την μπάζα και παίξει το επόμενο φύλλο, τότε
+		// υπάρχει περίπτωση κάποιος καθυστερημένος client να παραλάβει
+		// τις δύο ενέργειες μαζί, επομένως θα παραλάβει δύο συνεχόμενα
+		// φύλλα, ένα που παίρνει την μπάζα και το πρώτο φύλλο της
+		// επόμενης μπάζας. Εκεί μπορεί να χαθεί η εικόνα και να φανεί
+		// μόνο το πρώτο φύλλο της νέας μπάζας και όχι το τελευταίο φύλλο
+		// της προηγούμενης μπάζας, επομένως είναι καλό σε τέτοιου είδους
+		// ενέργειες να κάνουμε διακοπή και αποστολή μέρους των ενεργειών.
+		// Οι ενέργειες που δεν αποστέλλονται με την παρούσα αποστολή θα
+		// αποσταλούν σε επόμενη αποστολή.
+
+		switch (energia.energiaIdosGet()) {
+		case 'ΦΥΛΛΟ':
+			diakopi = true;
+		}
+
+		if (diakopi) break;
+	}
 
 	tsoxa.energia = max;
 	if (hdr === '') nodereq.write('\t],\n');
