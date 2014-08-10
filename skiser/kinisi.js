@@ -1,7 +1,8 @@
 Kinisi.maxLength = 1000;
 
 Skiniko.prototype.kinisiAdd = function(kinisi, dose) {
-	if (kinisi !== undefined) this.kinisiKontema().kinisiPush(kinisi);
+	if (kinisi !== undefined)
+	this.kinisiKontema().kinisiPush(kinisi);
 
 	if (dose === undefined) dose = true;
 	if (!dose) return this;
@@ -14,9 +15,10 @@ Skiniko.prototype.kinisiAdd = function(kinisi, dose) {
 };
 
 Skiniko.prototype.kinisiKontema = function() {
-	var min;
+	var min, count;
 
-	if (this.kinisi.length < Kinisi.maxLength) return this;
+	if (this.kinisi.length < Kinisi.maxLength)
+	return this;
 
 	min = this.kinisi.length;
 	this.skinikoSinedriaWalk(function() {
@@ -26,13 +28,19 @@ Skiniko.prototype.kinisiKontema = function() {
 
 	if (min <= 0) throw new Error('transaction log overflow');
 
+	console.log('Κόντεμα πίνακα κινήσεων κατά ' + min);
 	this.kinisi.splice(0, min);
+
+	count = 0;
 	this.skinikoSinedriaWalk(function() {
-		if (!this.hasOwnProperty('kinisiFloter')) return;
+		if (!this.hasOwnProperty('kinisiFloter'))
+		return;
+
 		this.kinisiFloter -= min;
-		
+		count++;
 	});
 
+	console.log('Μειώθηκαν δείκτες κινήσεων σε ' + count + ' συνεδρίες');
 	return this;
 };
 

@@ -612,6 +612,7 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 	title: 'Κυκλική εναλλαγή θέσης',
 	check: function() {
 		if (Arena.ego.oxiTrapezi()) return false;
+		if (Arena.ego.isTheatis()) return true;
 		if (Arena.ego.trapezi.trapeziIsIdioktito()) return false;
 		return Arena.trapeziRithmisi();
 	},
