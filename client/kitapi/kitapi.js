@@ -546,6 +546,7 @@ Kitapi.pliromiPush = function(data) {
 		Kitapi.kapikiaPush(apoPros.substr(0, 1), apoPros.substr(1, 1), -Kitapi.kapikia[apoPros]);
 	});
 
+	Kitapi.isozigioRefreshDOM();
 	return Kitapi;
 };
 
@@ -1086,7 +1087,6 @@ Kitapi.refreshDOM = function() {
 		Kitapi.pliromiPush(this);
 	}, 1);
 
-	Kitapi.isozigioRefreshDOM();
 	return Kitapi;
 };
 
