@@ -467,6 +467,10 @@ Sinedria.prototype.tsoxaCheck = function(trapezi) {
 	return this;
 };
 
+// Η μέθοδος "tsoxaNeotera" αναλαμβάνει τον έλεγχο του τραπεζιού του αιτούντος
+// client όσον αφορά στη συζήτηση και στις ενέργειες που έλαβαν χώρα μετά την
+// τελευταία σχετική ενημέρωση.
+
 Sinedria.prototype.tsoxaNeotera = function(freska) {
 	var sinedria = this, trapeziKodikos, tsoxa;
 
