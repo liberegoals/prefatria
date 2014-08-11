@@ -546,7 +546,6 @@ Kitapi.pliromiPush = function(data) {
 		Kitapi.kapikiaPush(apoPros.substr(0, 1), apoPros.substr(1, 1), -Kitapi.kapikia[apoPros]);
 	});
 
-	Kitapi.isozigioRefreshDOM();
 	return Kitapi;
 };
 
@@ -1087,8 +1086,13 @@ Kitapi.refreshDOM = function() {
 		Kitapi.pliromiPush(this);
 	}, 1);
 
+	Kitapi.isozigioRefreshDOM();
 	return Kitapi;
 };
+
+// Η function "isozigioRefreshDOM" μοιράζει τις κάσες, ενημερώνει τα κέρδη
+// και τις ζημίες των παικτών και εμφανίζει τα αποτελέσματα στο επάνω δεξιά
+// μέρος της περιοχής κάθε παίκτη.
 
 Kitapi.isozigioRefreshDOM = function() {
 	var kasa, isozigio = {};
@@ -1097,6 +1101,10 @@ Kitapi.isozigioRefreshDOM = function() {
 	Prefadoros.thesiWalk(function(thesi) {
 		isozigio[thesi] = Kitapi.isozigioMetrita[thesi] + kasa;
 	});
+
+	// Είναι πιθανόν να υπάρχουν μικροσφάλματα λόγω της στρογγυλοποίησης,
+	// επομένως ισοσκελίζουμε ώστε να έχουμε μηδενικό αλγεβρικό άθροισμα.
+
 	isozigio[1] = -isozigio[3] - isozigio[2];
 
 	Prefadoros.thesiWalk(function(thesi) {

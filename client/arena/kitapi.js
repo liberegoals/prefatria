@@ -131,6 +131,7 @@ Arena.kitapi.pliromiPush = function(pliromi) {
 
 	try {
 		Arena.kitapi.win.Kitapi.pliromiPush(pliromi);
+		Arena.kitapi.win.Kitapi.isozigioRefreshDOM();
 	} catch (e) {}
 
 	return Arena;
