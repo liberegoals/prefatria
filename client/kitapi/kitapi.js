@@ -148,15 +148,8 @@ $(document).ready(function() {
 
 	Arena = (window.opener && window.opener.Arena ? window.opener.Arena : null);
 
-	// Όλα τα παρασκήνια στις σελίδες του «Πρεφαδόρου» τίθενται με βάση
-	// την επιλογή του χρήστη, αλλά ειδικά το κιτάπι έχει δικό του.
-
-	Client.bodyDOM.css({
-		backgroundImage: "url('../ikona/kitapi/" +
-		Kitapi.paraskinio[Globals.random(0, Kitapi.paraskinio.length - 1)] + "')",
-	});
-
 	Kitapi.
+	paraskinioSet().
 	perioxiSetup().
 	stresarisma().
 	refreshDOM();
@@ -178,6 +171,18 @@ $(window).on('beforeunload', function() {
 $(window).on('unload', function() {
 	Kitapi.unload();
 });
+
+// Όλα τα παρασκήνια στις σελίδες του «Πρεφαδόρου» τίθενται με βάση
+// την επιλογή του χρήστη, αλλά ειδικά το κιτάπι έχει δικό του.
+
+Kitapi.paraskinioSet = function() {
+	Client.bodyDOM.css({
+		backgroundImage: "url('../ikona/kitapi/" +
+		Kitapi.paraskinio[Globals.random(0, Kitapi.paraskinio.length - 1)] + "')",
+	});
+
+	return Kitapi;
+};
 
 Kitapi.isArena = function() {
 	return Arena;

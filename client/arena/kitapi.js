@@ -74,7 +74,8 @@ Arena.kitapi.anigma = function(e) {
 
 Arena.kitapi.focus = function() {
 	try {
-		return Arena.kitapi.win.focus();
+		Arena.kitapi.win.Kitapi.paraskinioSet();
+		Arena.kitapi.win.focus();
 	} catch (e) {}
 
 	return Arena;
