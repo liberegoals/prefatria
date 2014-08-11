@@ -135,7 +135,27 @@ Kitapi = {
 
 	kapikia: {},
 
+	// Το array "paraskinio" περιέχει όλα τα αρχεία εικόνας που βρίσκονται
+	// στο directory "ikona/kitapi" και χρησιμοποιούνται ως παρασκήνιο για
+	// το κιτάπι. Το παρασκήνιο επιλέγεται τυχαία με κάθε επαναφόρτωση του
+	// κιταπιού, ή όταν κάνουμε focus στο κιτάπι.
+
 	paraskinio: [],
+
+	// Η παράμετρος "isozigioKasa" περιέχει το συνολικό υπόλοιπο που έχει
+	// απομείνει στην κάσα.
+
+	isozigioKasa: 0,
+
+	// Η λίστα "isozigioMetrita" περιέχει τα καπίκια που έδωσε ή πήρε συνολικά
+	// ο κάθε παίκτης και είναι δεικτοδοτημένη με τη θέση του παίκτη.
+
+	isozigioMetrita: {},
+
+	// Η λίστα "isozigioDOM" δείχνει τα DOM elements ισοζυγίου για κάθε παίκτη
+	// και είναι δεικτοδοτημένη με τη θέση του παίκτη.
+
+	isozigioDOM: {},
 };
 
 $(document).ready(function() {
@@ -211,7 +231,8 @@ Kitapi.sinalagiWalk = function(callback) {
 Kitapi.perioxiSetup = function() {
 	Kitapi.trapeziDOM = $('<div>').attr('id', 'kitapiTrapezi').prependTo(Client.ofelimoDOM);
 	Prefadoros.thesiWalk(function(thesi) {
-		var perioxiDom, dataDom, onomaDom, daravaeriDom, kasaDom, kl, kr, dom, h;
+		var perioxiDom, dataDom, onomaDom, daraveriDom, daraveriKD,
+			kasaDom, isozigioDom, kl, kr, dom, h;
 
 		// Δημιουργούμε DOM elements για τις τρεις περιοχές του κιταπιού.
 		// Αυτές είναι πλέον προσβάσιμες μέσω των μεταβλητών:
@@ -257,7 +278,7 @@ Kitapi.perioxiSetup = function() {
 		append(kasaDom = $('<td>').css({
 			textAlign: 'center',
 		})).
-		append($('<td>').attr('id', 'kitapiDaraveri' + kr).addClass('kitapiDaraveri').
+		append(daraveriKD = $('<td>').attr('id', 'kitapiDaraveri' + kr).addClass('kitapiDaraveri').
 		append(Kitapi.kapikiaAreaDOM[kr] = $('<div>').
 		addClass('kitapiStiliKapikia kitapiStiliKapikia' + kr)));
 
@@ -288,8 +309,15 @@ Kitapi.perioxiSetup = function() {
 			dom.css('height', h + 'px');
 		}
 
+		isozigioDom = $('<div>').addClass('kitapiIsozigio');
+		if (thesi === 1) isozigioDom.css('right', '150px');
+
+		perioxiDom.
+		append(daraveriDom).
+		append(isozigioDom);
+
 		Kitapi.kasaAreaDOM[thesi] = dom;
-		perioxiDom.append(daraveriDom);
+		Kitapi.isozigioDOM[thesi] = isozigioDom;
 	});
 
 	return Kitapi;
@@ -460,6 +488,9 @@ Kitapi.pliromiPush = function(data) {
 	Prefadoros.thesiWalk(function(thesi) {
 		pliromi.kasa[thesi] = parseInt(data['kasa' + thesi]);
 		pliromi.metrita[thesi] = parseInt(data['metrita' + thesi]);
+
+		Kitapi.isozigioKasa -= pliromi.kasa[thesi];
+		Kitapi.isozigioMetrita[thesi] += pliromi.kasa[thesi] + pliromi.metrita[thesi];
 
 		// Ελέγχουμε αν υπάρχουν μη μηδενικά ποσά στην πληρωμή.
 
@@ -1036,11 +1067,15 @@ Kitapi.refreshDOM = function() {
 
 	trapezi = Arena.ego.trapezi;
 	Kitapi.trapeziDOM.text(Arena.ego.trapezi.trapeziKodikosGet() % 10000);
+
 	kasa = trapezi.trapeziKasaGet();
+	Kitapi.isozigioKasa = kasa * 30;
+
 	Prefadoros.thesiWalk(function(thesi) {
 		Kitapi.onomaDOM[thesi].html(Kitapi.onomaGet(thesi));
 		Kitapi.kasaPush(thesi, kasa);
 		Kitapi.kasa[thesi] = kasa * 10;
+		Kitapi.isozigioMetrita[thesi] = -Kitapi.kasa[thesi];
 	});
 
 	Kitapi.sinalagiWalk(function(apoPros) {
@@ -1050,6 +1085,31 @@ Kitapi.refreshDOM = function() {
 	trapezi.trapeziDianomiWalk(function(dianomi) {
 		Kitapi.pliromiPush(this);
 	}, 1);
+
+	Kitapi.isozigioRefreshDOM();
+	return Kitapi;
+};
+
+Kitapi.isozigioRefreshDOM = function() {
+	var kasa, isozigio = {};
+
+	kasa = Math.floor(Kitapi.isozigioKasa / 3.0);
+	Prefadoros.thesiWalk(function(thesi) {
+		isozigio[thesi] = Kitapi.isozigioMetrita[thesi] + kasa;
+	});
+	isozigio[1] = -isozigio[3] - isozigio[2];
+
+	Prefadoros.thesiWalk(function(thesi) {
+		Kitapi.isozigioDOM[thesi].removeClass().addClass('kitapiIsozigio');
+		if (isozigio[thesi] < 0)
+		Kitapi.isozigioDOM[thesi].addClass('kitapiIsozigioMion').text(isozigio[thesi]);
+
+		else if(isozigio[thesi] > 0)
+		Kitapi.isozigioDOM[thesi].addClass('kitapiIsozigioSin').text('+' + isozigio[thesi]);
+
+		else
+		Kitapi.isozigioDOM[thesi].empty();
+	});
 
 	return Kitapi;
 };

@@ -41,6 +41,7 @@ table td {
 }
 
 .kitapiPerioxi {
+	position: relative;
 	border-width: 1px;
 	border-color: #333333;
 	min-height: 420px;
@@ -131,6 +132,27 @@ table td {
 #kitapiDaraveri12 {
 	vertical-align: top;
 	text-align: right;
+}
+
+/***********************************************************************************************************************/
+
+.kitapiIsozigio {
+	position: absolute;
+	top: 4px;
+	right: 10px;
+
+	font-family: "Georgia", serif;
+	font-weight: bold;
+	font-size: 20px;
+	color: #095802;
+}
+
+.kitapiIsozigioSin {
+	color: #095802;
+}
+
+.kitapiIsozigioMion {
+	color: #B60B03;
 }
 
 /***********************************************************************************************************************/
