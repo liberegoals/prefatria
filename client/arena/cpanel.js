@@ -337,6 +337,14 @@ Arena.cpanel.claimButtonDOM = Arena.cpanel.bpanelButtonGet('claim').pbuttonGetDO
 
 Arena.cpanel.bpanelButtonPush(new PButton({
 	omada: 1,
+	img: 'kafedaki.png',
+	title: 'Καφετζής',
+	click: function(e) {
+	},
+}));
+
+Arena.cpanel.bpanelButtonPush(new PButton({
+	omada: 1,
 	img: 'araxni.png',
 	title: 'Επίδειξη προηγούμενης χαρτωσιάς',
 	check: function() {
