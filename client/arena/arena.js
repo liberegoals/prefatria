@@ -137,7 +137,10 @@ $(document).ready(function() {
 	}).
 	fail(function(rsp) {
 		$.ajax('account/exodos.php', {async: false});
-		Client.provlima('Η συνεδρία σας έχει λήξει!');
+		Client.provlima('<div>Η συνεδρία σας έχει λήξει!</div><div><a href="' +
+		Client.server + 'isodos" target="_self">Επανείσοδος</a></div>').css({
+			textAlign: 'center',
+		});
 	});
 });
 
