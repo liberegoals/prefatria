@@ -978,3 +978,7 @@ Arena.partida.isEpomenos = function(thesi) {
 	if (Arena.ego.oxiTrapezi()) return false;
 	return(Arena.ego.trapezi.partidaEpomenosGet() === thesi);
 };
+
+Arena.partida.oxiEpomenos = function(thesi) {
+	return !Arena.partida.isEpomenos(thesi);
+};

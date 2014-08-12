@@ -127,7 +127,21 @@ Trapezi.prototype.efoplismosΔΗΛΩΣΗ = function() {
 // τζογαδόρο.
 
 Trapezi.prototype.efoplismosΑΛΛΑΓΗ = function() {
-	if (Debug.flagGet('epomenosCheck') && Arena.ego.oxiThesi(this.partidaEpomenosGet())) return this;
+	var tzogadoros, iseht;
+
+	tzogadoros = this.partidaEpomenosGet();
+	iseht = Arena.ego.thesiMap(tzogadoros);
+	Arena.partida['pektisAgora' + iseht + 'DOM'].
+	append($('<img>').attr({
+		id: 'tsoxaPektisAgoraTzogadoros',
+		src: 'ikona/endixi/fotorithmiko.gif',
+	}).
+	addClass('tsoxaPektisIcon tsoxaPektisAgoraTzogadoros').delay(3000).fadeOut(600, function() {
+		$(this).remove();
+	}));
+
+	if (Debug.flagGet('epomenosCheck') && Arena.ego.oxiThesi(tzogadoros))
+	return this;
 
 	Trapezi.
 	efoplismosAlagiPanel(this).
