@@ -744,6 +744,7 @@ Arena.partida.pektisDilosiRefreshDOM = function(thesi, iseht, dom) {
 
 	switch (trapezi.partidaFasiGet()) {
 	case 'ΔΗΛΩΣΗ':
+	case 'ΑΛΛΑΓΗ':
 		paso = trapezi.apaso;
 		if (paso.hasOwnProperty(thesi)) {
 			dom.addClass('tsoxaPektisDilosiPaso').text('ΠΑΣΟ');
