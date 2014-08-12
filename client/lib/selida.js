@@ -708,6 +708,10 @@ Client.sound = {
 		Client.sound.play('bikebell.ogg', vol);
 	},
 
+	handbell: function(vol) {
+		Client.sound.play('handbell.ogg', vol);
+	},
+
 	tik: function(vol) {
 		if (vol === undefined) vol = Client.sound.entasi['ΚΑΝΟΝΙΚΗ'];
 		Client.sound.play('tik.wav', vol);
