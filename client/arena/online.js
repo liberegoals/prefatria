@@ -20,6 +20,36 @@ Trapezi.prototype.processEnergiaOnlineΣΟΛΟ = function(energia) {
 	return this;
 };
 
+Trapezi.prototype.processEnergiaOnlineΑΓΟΡΑ = function() {
+	var tzogadoros, iseht;
+
+	if (Arena.ego.oxiTrapezi())
+	return this;
+
+	tzogadoros = Arena.ego.trapezi.partidaTzogadorosGet();
+	iseht = Arena.ego.thesiMap(tzogadoros);
+
+	Arena.partida.trapeziRefreshDOM();
+	Arena.partida['pektisAgora' + iseht + 'DOM'].
+	append($('<img>').attr({
+		id: 'tsoxaPektisAgoraDixe',
+		src: 'ikona/endixi/fotorithmiko.gif',
+	}).
+	addClass('tsoxaPektisIcon').delay(2000).animate({
+		width: 0,
+		top: '+=7px',
+		left: '+=7px',
+	}, 1000, function() {
+		$(this).remove();
+	}));
+
+	if (Arena.ego.isPektis() && Arena.ego.isThesi(tzogadoros))
+	return this;
+
+	Client.sound.bikebell();
+	return this;
+};
+
 Trapezi.prototype.processEnergiaOnlineΣΥΜΜΕΤΟΧΗ = function(energia) {
 	// Εμφανίζουμε το τραπέζι μετά την ένταξη και επεξεργασία της
 	// ανά χείρας συμετοχής.
