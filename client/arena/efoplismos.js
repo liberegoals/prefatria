@@ -133,10 +133,14 @@ Trapezi.prototype.efoplismosΑΛΛΑΓΗ = function() {
 	iseht = Arena.ego.thesiMap(tzogadoros);
 	Arena.partida['pektisAgora' + iseht + 'DOM'].
 	append($('<img>').attr({
-		id: 'tsoxaPektisAgoraTzogadoros',
-		src: 'ikona/endixi/fotorithmiko.gif',
+		id: 'tsoxaPektisAgoraTzogosDixe',
+		src: 'ikona/endixi/asteraki.gif',
 	}).
-	addClass('tsoxaPektisIcon tsoxaPektisAgoraTzogadoros').delay(3000).fadeOut(600, function() {
+	addClass('tsoxaPektisIcon').delay(2000).animate({
+		width: 0,
+		top: '4px',
+		left: '10px',
+	}, 1000, function() {
 		$(this).remove();
 	}));
 
