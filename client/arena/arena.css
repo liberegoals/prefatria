@@ -595,6 +595,12 @@ body {
 	width: 50px;
 }
 
+#tsoxaPektisAgoraTzogadoros {
+	top: 8px;
+	left: 48px;
+	width: 10px;
+}
+
 .tsoxaPektisEpomenos {
 	border-color: #FFD700 !important;
 }
@@ -994,11 +1000,10 @@ body {
 }
 
 .tsoxaEnimerosi {
-/*
-	top: 100px;
-*/
 	top: 120px;
+	bottom: auto;
 	left: 40px;
+	right: auto;
 	width: 480px;
 }
 
@@ -1040,6 +1045,17 @@ body {
 	top: 200px;
 	left: 150px;
 	width: 210px;
+}
+
+.tsoxaEnimerosiΠΑΙΧΝΙΔΙ {
+	top: auto;
+	bottom: 6px;
+	left: 230px;
+	padding: 2px 4px;
+	width: auto;
+	color: #0035A5 !important;
+	background-color: rgba(255, 244, 0, 0.40) !important;
+	border-radius: 3px;
 }
 
 .tsoxaEnimerosiΠΛΗΡΩΜΗ {

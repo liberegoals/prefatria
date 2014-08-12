@@ -174,6 +174,24 @@ Arena.partida.enimerosiΣΥΜΜΕΤΟΧΗ = function() {
 	return Arena.partida;
 };
 
+Arena.partida.enimerosiΠΑΙΧΝΙΔΙ = function() {
+	Arena.partida.enimerosiDOM.css('display', 'none');
+	if (Arena.ego.oxiPektis())
+	return Arena.partida;
+
+	if (Arena.partida.oxiEpomenos(Arena.ego.thesiGet()))
+	return Arena.partida;
+
+	if (Arena.partida.akirosiKiniseon())
+	return Arena.partida;
+
+	Arena.partida.enimerosiDOM.
+	css('display', 'block').
+	text('Παίξτε ένα φύλλο…')
+
+	return Arena.partida;
+};
+
 Arena.partida.enimerosiΠΛΗΡΩΜΗ = function() {
 	Arena.partida.enimerosiFillDOM('Γίνεται πληρωμή. Παρακαλώ περιμένετε…', 'endixi/pliromi.gif');
 	return Arena.partida;
