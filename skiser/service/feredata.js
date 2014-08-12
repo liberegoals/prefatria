@@ -519,8 +519,31 @@ Sinedria.prototype.tsoxaNeoteraSizitisi = function(nodereq, trapezi, tsoxa) {
 	return this;
 };
 
+// Η μέθοδος "tsoxaAlagiTrapezi" ελέγχει αν το τραπέζι από το οποίο επιλέγουμε
+// νεότερες ενέργειες είναι διαφορετικό από αυτό που επιλέξαμε νεότερες ενέργειες
+// την προηγούμενη φορά.
+
+Sinedria.prototype.tsoxaAlagiTrapezi = function(trapezi) {
+	var kodikosTrapezi;
+
+	kodikosTrapezi = trapezi.trapeziKodikosGet();
+	if (this.tsoxaTrapeziLast === kodikosTrapezi)
+	return false;
+
+	this.tsoxaTrapeziLast = kodikosTrapezi;
+	return true;
+};
+
 Sinedria.prototype.tsoxaNeoteraEnergia = function(nodereq, trapezi, tsoxa, freska) {
 	var sinedria = this, dianomi, hdr, max, diakopi, i, energia, kodikos;
+
+	// Αν την προηγούμενη φορά που μαζέψαμε νεότερες ενέργειες βρισκόμασταν
+	// σε άλλο τραπέζι, τότε δεν θα διακόψουμε τη διαδικασία σε περίπτωση
+	// που οι νεότερες ενέργειες απαιτούν διακοπή, αλλά θα τις αποστείλουμε
+	// όλες μαζί σαν να ζητήθηκαν φρέσκα σκηνικά δεδομένα.
+
+	if (this.tsoxaAlagiTrapezi(trapezi))
+	freska = true;
 
 	dianomi = trapezi.trapeziTelefteaDianomi();
 	if (!dianomi) return this;
