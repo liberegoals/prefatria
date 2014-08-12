@@ -38,7 +38,7 @@ Trapezi.prototype.processEnergiaOnlineΑΓΟΡΑ = function() {
 	Arena.partida['pektisAgora' + iseht + 'DOM'].
 	append($('<img>').attr({
 		id: 'tsoxaPektisAgoraDixe',
-		src: 'ikona/endixi/fotorithmiko.gif',
+		src: 'ikona/endixi/asteraki.gif',
 	}).
 	addClass('tsoxaPektisIcon').delay(2000).animate({
 		width: 0,
