@@ -863,10 +863,7 @@ Kitapi.kasaPush = function(thesi, kasa, idos) {
 	// τέτοια εγγραφή στη συγκεκριμένη περιοχή.
 
 	kasaDom = Kitapi.kasaDOM[thesi];
-	if (kasaDom) {
-		kasaDom.addClass('kitapiEmfanesPoso');
-		if (Kitapi.kasa[thesi]) kasaDom.addClass('kitapiKasaDiagrafi');
-	}
+	if (kasaDom) kasaDom.addClass('kitapiEmfanesPoso kitapiKasaDiagrafi');
 
 	// Δημιουργούμε DOM element για την νέα εγγραφή που θα προστεθεί στη
 	// συγκεκριμένη περιοχή γραφής κασών.

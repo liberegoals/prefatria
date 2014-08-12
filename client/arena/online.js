@@ -38,13 +38,9 @@ Trapezi.prototype.processEnergiaOnlineΑΓΟΡΑ = function() {
 	Arena.partida['pektisAgora' + iseht + 'DOM'].
 	append($('<img>').attr({
 		id: 'tsoxaPektisAgoraDixe',
-		src: 'ikona/endixi/asteraki.gif',
+		src: 'ikona/endixi/that.gif',
 	}).
-	addClass('tsoxaPektisIcon').delay(2000).animate({
-		width: 0,
-		top: '+=7px',
-		left: '+=7px',
-	}, 1000, function() {
+	addClass('tsoxaPektisIcon').delay(3000).fadeOut(400, function() {
 		$(this).remove();
 	}));
 
@@ -62,7 +58,7 @@ Trapezi.prototype.processEnergiaOnlineΑΓΟΡΑ = function() {
 	// Είμαστε αμυνόμενοι, επομένως θα ακουστεί ηχητικό σήμα που δείχνει
 	// ότι έγινε αποφώνηση του τελικού συμβολαίου.
 
-	Client.sound.bikebell();
+	Client.sound.handbell();
 	return this;
 };
 
