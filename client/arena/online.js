@@ -23,13 +23,18 @@ Trapezi.prototype.processEnergiaOnlineΣΟΛΟ = function(energia) {
 Trapezi.prototype.processEnergiaOnlineΑΓΟΡΑ = function() {
 	var tzogadoros, iseht;
 
-	if (Arena.ego.oxiTrapezi())
-	return this;
+	// Εμφανίζουμε το τραπέζι μετά την ένταξη και επεξεργασία της
+	// ανά χείρας ενέργειας δήλωσης τελικού συμβολαίου.
+
+	Arena.partida.trapeziRefreshDOM();
+
+	// Κάνουμε εμφανές στους παίκτες και στους θεατές του τραπεζιού
+	// το τελικό συμβόλαιο, εμφανίζοντας ειδική σήμανση στην περιοχή
+	// του τζογαδόρου.
 
 	tzogadoros = Arena.ego.trapezi.partidaTzogadorosGet();
 	iseht = Arena.ego.thesiMap(tzogadoros);
 
-	Arena.partida.trapeziRefreshDOM();
 	Arena.partida['pektisAgora' + iseht + 'DOM'].
 	append($('<img>').attr({
 		id: 'tsoxaPektisAgoraDixe',
@@ -43,8 +48,19 @@ Trapezi.prototype.processEnergiaOnlineΑΓΟΡΑ = function() {
 		$(this).remove();
 	}));
 
-	if (Arena.ego.isPektis() && Arena.ego.isThesi(tzogadoros))
+	// Οι αμυνόμενοι θα ακούσουν και ηχητικό σήμα. Αν είμαστε θεατές
+	// δεν θα γίνει καμία περαιτέρω ενέργεια.
+
+	if (Arena.ego.oxiPektis())
 	return this;
+
+	// Ο τζογαδόρος δεν χρειάζεται να ακούσει ηχητικό σήμα.
+
+	if (Arena.ego.isThesi(tzogadoros))
+	return this;
+
+	// Είμαστε αμυνόμενοι, επομένως θα ακουστεί ηχητικό σήμα που δείχνει
+	// ότι έγινε αποφώνηση του τελικού συμβολαίου.
 
 	Client.sound.bikebell();
 	return this;
@@ -56,15 +72,16 @@ Trapezi.prototype.processEnergiaOnlineΣΥΜΜΕΤΟΧΗ = function(energia) {
 
 	Arena.partida.trapeziRefreshDOM();
 
+	// Αν δεν είμαστε παίκτες, δεν χρειάζονται περαιτέρω ενέργειες.
+
+	if (Arena.ego.oxiPektis())
+	return this;
+
 	// Αν η ανά χείρας συμμετοχή είναι "ΜΑΖΙ", τότε πρέπει αυτό να
-	// γίνει αισθητό σε παίκτες και θεατές.
+	// γίνει αισθητό στους παίκτες του τραπεζιού.
 
 	if (energia.energiaDataGet().simetoxiIsMazi())
 	Client.sound.bikebell();
-
-	// Αν δεν είμαστε παίκτες, δεν χρειάζονται περαιτέρω ενέργειες.
-
-	if (Arena.ego.oxiPektis()) return this;
 
 	// Ελέγχουμε αν μετά την ανά χείρας συμμετοχή το παιχνίδι έχει
 	// περάσει σε φάση παιχνιδιού.
