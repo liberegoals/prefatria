@@ -608,7 +608,10 @@ Trapezi.prototype.efoplismosΠΑΙΧΝΙΔΙ = function() {
 			var olif, filo = $(this);
 
 			Arena.inputRefocus(e);
-			Arena.partida.xipnitiriAfoplismos();
+			Arena.partida.
+			xipnitiriAfoplismos().
+			enimerosiClearDOM();
+
 			if (Arena.partida.akirosiKiniseon()) return;
 			if (Arena.partida.klikFilo) return;
 
