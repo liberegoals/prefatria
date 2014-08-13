@@ -1007,6 +1007,20 @@ Skiniko.prototype.processKinisiPostEG = function(data) {
 //	metrita2	Μετρητά παίκτη θέσης 2.
 //	kasa3		Ποσό κάσας παίκτη θέσης 3.
 //	metrita3	Μετρητά παίκτη θέσης 3.
+//
+// Επιπρόσθετα δεδομένα
+//
+//	kasaPrin	Υπόλοιπο κάσας πριν την πληρωμή.
+
+Skiniko.prototype.processKinisiAntePD = function(data) {
+	var trapezi;
+
+	trapezi = this.skinikoTrapeziGet(data.trapezi);
+	if (!trapezi) return this;
+
+	data.kasaPrin = trapezi.trapeziIpolipoGet();
+	return this;
+}
 
 Skiniko.prototype.processKinisiPostPD = function(data) {
 	var trapezi;
@@ -1024,6 +1038,9 @@ Skiniko.prototype.processKinisiPostPD = function(data) {
 	pliromiRefreshDOM().
 	pektisKapikiaRefreshDOM();
 	Arena.kitapi.pliromiPush(data);
+
+	if ((data.kasaPrin > 0) && (trapezi.trapeziIpolipoGet() <= 0))
+	Client.sound.applause();
 
 	Arena.partida.pliromiIconDOM.data('emfanisPlirom', true);
 	$('.tsoxaPektisPliromi').finish().fadeIn(100);

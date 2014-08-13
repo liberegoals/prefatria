@@ -786,6 +786,10 @@ Client.sound = {
 	korna: function() {
 		Client.sound.play('korna.ogg', Client.sound.entasi['ΔΥΝΑΤΗ']);
 	},
+
+	applause: function() {
+		Client.sound.play('applause.ogg', Client.sound.entasi['ΚΑΝΟΝΙΚΗ']);
+	},
 };
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
