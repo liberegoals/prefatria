@@ -733,7 +733,7 @@ Arena.partida.pektisAgoraRefreshDOM = function(thesi, iseht, dom) {
 };
 
 Arena.partida.pektisDilosiRefreshDOM = function(thesi, iseht, dom) {
-	var trapezi = Arena.ego.trapezi, paso, dilosi;
+	var trapezi = Arena.ego.trapezi, paso, dilosi, dilosiDom;
 
 	if (!trapezi) return Arena.partida;
 	if (iseht === undefined) iseht = Arena.ego.thesiMap(thesi);
@@ -762,8 +762,9 @@ Arena.partida.pektisDilosiRefreshDOM = function(thesi, iseht, dom) {
 
 		dilosi = trapezi.anext;
 		if (dilosi.dilosiIsTagrafo() && (trapezi.apasoCount == 2)) dilosi = new Dilosi('DS6');
-		dom.append(dilosi.dilosiDOM()).addClass('tsoxaPektisDilosiAgora').
+		dom.append(dilosiDom = dilosi.dilosiDOM()).addClass('tsoxaPektisDilosiAgora').
 		attr({title: 'Σκέφτεται "' + dilosi.dilosiLektiko() + '"'});
+		dilosiDom.addClass('tsoxaDilosiProtasi');
 		break;
 	case 'ΣΥΜΜΕΤΟΧΗ':
 	case 'ΠΑΙΧΝΙΔΙ':
