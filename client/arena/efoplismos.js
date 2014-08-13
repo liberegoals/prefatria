@@ -608,6 +608,11 @@ Trapezi.prototype.efoplismosΠΑΙΧΝΙΔΙ = function() {
 			var olif, filo = $(this);
 
 			Arena.inputRefocus(e);
+
+			// Από τη στιγμή που γίνεται κλικ στο φύλλο, απενεργοποιούμε
+			// την ηχητική υπενθύμιση και καθαρίζουμε τυχόν μηνύματα
+			// προτροπής προς το χρήστη.
+
 			Arena.partida.
 			xipnitiriAfoplismos().
 			enimerosiClearDOM();
