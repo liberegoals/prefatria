@@ -617,8 +617,17 @@ Trapezi.prototype.efoplismosΠΑΙΧΝΙΔΙ = function() {
 			xipnitiriAfoplismos().
 			enimerosiClearDOM();
 
-			if (Arena.partida.akirosiKiniseon()) return;
-			if (Arena.partida.klikFilo) return;
+			// Αν είμαστε σε καθεστώς ακύρωσης κινήσεων, δεν προβαίνουμε
+			// σε περαιτέρω ενέργειες.
+
+			if (Arena.partida.akirosiKiniseon())
+			return;
+
+			// Αν το φύλλο έχει ήδη κλικαριστεί, δεν προβαίνουμε σε πραιτέρω
+			// ενέργειες.
+
+			if (Arena.partida.klikFilo)
+			return;
 
 			// Κάνοντας κλικ το φύλλο μαρκάρω με 1, εκκινώ κίνηση φύλλου και
 			// κοινοποιώ το κλικ στον σέρβερ.
