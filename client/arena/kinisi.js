@@ -432,7 +432,13 @@ Skiniko.prototype.processKinisiAnteRT = function(data) {
 Skiniko.prototype.processKinisiPostRT = function(data) {
 	var sinedria, trapezi;
 
-	Arena.panelRefresh();
+	// Αν η έξοδος από το τραπέζι μας οδηγεί σε άλλο τραπέζι, τότε
+	// παραμένουμε στην ίδια ομάδα εργαλείων του control panel, αλλιώς
+	// εμφανίζουμε τη βασική ομάδα εργαλείων. Σε κάθε περίπτωση το
+	// control panel πρέπει να επαναδιαμορφωθεί.
+
+	Arena.panelRefresh(Arena.ego.isTrapezi() ? null : 1);
+
 	sinedria = this.skinikoSinedriaGet(data.pektis);
 	if (!sinedria) return this;
 
