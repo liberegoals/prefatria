@@ -99,6 +99,27 @@ Arena.prosklisi.panel.bpanelButtonPush(new PButton({
 }));
 
 Arena.prosklisi.panel.bpanelButtonPush(new PButton({
+	img: 'leak.png',
+	title: 'Inspect memory',
+	check: function() {
+		return Debug.flagGet('developer');
+	},
+	click: function(e) {
+		var count, max;
+
+		count = 0;
+		max = 0;
+		for (i in $.cache) {
+			count++;
+			if (parseInt(i) > max)
+			max = i;
+		}
+		Client.fyi.pano('cache count: ' + count + ', max: ' + max);
+		console.log($.cache);
+	},
+}));
+
+Arena.prosklisi.panel.bpanelButtonPush(new PButton({
 	id: 'epanadiataxiPss',
 	img: 'resize.gif',
 	title: 'Επαναδιάταξη περιοχών',
