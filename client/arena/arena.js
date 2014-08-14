@@ -125,6 +125,7 @@ $(document).ready(function() {
 		Arena.skiniko.stisimo(function() {
 			Client.fyi.pano('Καλώς ήλθατε στον «Πρεφαδόρο»');
 			Client.fyi.kato('Καλή διασκέδαση και καλές σολαρίες!');
+			Arena.prosklisi.panel.bpanelRefresh();
 			if (Arena.ego.oxiTrapezi()) return;
 
 			// Αν ο παίκτης βρίσκεται σε κάποιο τραπέζι, τον περνάμε αυτόματα

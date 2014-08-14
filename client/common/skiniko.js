@@ -113,6 +113,16 @@ Pektis.prototype.pektisAxiomaRankGet = function() {
 	return(Peparam.axiomaRank.hasOwnProperty(axioma) ? Peparam.axiomaRank[axioma] : 0);
 };
 
+Pektis.prototype.pektisIsDeveloper = function() {
+	var developer = this.pektisPeparamGet('DEVELOPER');
+	if (!developer) return false;
+	return developer.isNai();
+};
+
+Pektis.prototype.pektisOxiDeveloper = function() {
+	return !this.pektisIsDeveloper();
+};
+
 Pektis.prototype.pektisSxesiSet = function(sxetizomenos, sxesi) {
 	if (sxesi) this.sxesi[sxetizomenos] = sxesi;
 	else this.pektisSxesiSetAsxetos(sxetizomenos);

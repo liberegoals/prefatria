@@ -100,9 +100,10 @@ Arena.prosklisi.panel.bpanelButtonPush(new PButton({
 
 Arena.prosklisi.panel.bpanelButtonPush(new PButton({
 	img: 'leak.png',
-	title: 'Inspect memory',
+	title: 'Inspect memory leaks',
 	check: function() {
-		return Debug.flagGet('developer');
+		if (Debug.flagGet('developer')) return true;
+		return Arena.ego.isDeveloper();
 	},
 	click: function(e) {
 		var count, max;
