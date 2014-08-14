@@ -56,6 +56,25 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 	},
 }));
 
+Arena.cpanel.bpanelButtonPush(new PButton({
+	img: 'ikona/panel/leak.png',
+	title: 'Inspect memory',
+	check: function() {
+		return Debug.flagGet('developer');
+	},
+	click: function(e) {
+		var max;
+
+		max = 0;
+		for (i in $.cache) {
+			if (parseInt(i) > max)
+			max = i;
+		}
+		Client.fyi.pano('cache size: ' + i);
+		console.log($.cache);
+	},
+}));
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
 
 Arena.cpanel.bpanelButtonPush(new PButton({

@@ -31,8 +31,8 @@ Arena.partida.efoplismos = function() {
 // αυτόν τον τρόπο καθίσταται ακίνδυνη και ανενεργή.
 
 Arena.partida.afoplismos = function() {
-	Arena.partida.dilosiPanelDOM.css('display', 'none');
-	Arena.partida.agoraPanelDOM.css('display', 'none');
+	Arena.partida.dilosiPanelDOM.css('display', 'none').empty();
+	Arena.partida.agoraPanelDOM.css('display', 'none').empty();
 	Arena.partida.xipnitiriAfoplismos();
 
 	return Arena.partida;
