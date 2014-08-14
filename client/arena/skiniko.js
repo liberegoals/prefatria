@@ -1324,10 +1324,12 @@ Arena.ego.oxiProsklisi = function(trapezi) {
 };
 
 Arena.ego.isFilos = function(pektis) {
+	if (!Arena.ego.pektis) return false;
 	return Arena.ego.pektis.pektisIsFilos(pektis);
 };
 
 Arena.ego.isApoklismenos = function(pektis) {
+	if (!Arena.ego.pektis) return false;
 	return Arena.ego.pektis.pektisIsApoklismenos(pektis);
 };
 
@@ -1364,4 +1366,14 @@ Arena.ego.isThesi = function(thesi) {
 
 Arena.ego.oxiThesi = function(thesi) {
 	return !Arena.ego.isThesi(thesi);
+};
+
+Arena.ego.isDeveloper = function() {
+	if (!Arena.ego.pektis) return false;
+	return Arena.ego.pektis.pektisIsDeveloper();
+};
+
+Arena.ego.oxiDeveloper = function() {
+	if (!Arena.ego.pektis) return true;
+	return Arena.ego.pektis.pektisOxiDeveloper();
 };
