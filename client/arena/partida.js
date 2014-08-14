@@ -743,8 +743,23 @@ Arena.partida.pektisDilosiRefreshDOM = function(thesi, iseht, dom) {
 		'tsoxaPektisSimetoxiMazi tsoxaPektisSimetoxiMonos');
 
 	switch (trapezi.partidaFasiGet()) {
-	case 'ΔΗΛΩΣΗ':
+	// Αν είμαστε σε φάση αλλαγής δείχνουμε τα ίδια στοιχεία με αυτά που
+	// δείχνουμε στις δηλώσεις εκτός από τον τζογαδόρο όπου δεν υπάρχει
+	// λόγος να δείξουμε την τελευταία αγορά που του προτάθηκε, καθώς
+	// έχει ήδη κερδίσει την αγορά και σκέφτεται με αφετηρία την
+	// τελευταία του δήλωση.
 	case 'ΑΛΛΑΓΗ':
+		// Αν πρόκειται για τον τζογαδόρο δεν δείχνουμε κάτι.
+
+		if (thesi === trapezi.partidaTzogadorosGet())
+		return Arena.partida;
+
+		// Δεν πρόκειται για τον τζογαδόρο, επομένως δείχνουμε
+		// ό,τι και στη φάση των δηλώσεων, δηλαδή είτε "ΠΑΣΟ"
+		// εφόσον ο παίκτης δήλωσε πάσο, είτε την αγορά που
+		// προτείνεται αυτή τη στιγμή στον παίκτη.
+
+	case 'ΔΗΛΩΣΗ':
 		paso = trapezi.apaso;
 		if (paso.hasOwnProperty(thesi)) {
 			dom.addClass('tsoxaPektisDilosiPaso').text('ΠΑΣΟ');
@@ -756,9 +771,14 @@ Arena.partida.pektisDilosiRefreshDOM = function(thesi, iseht, dom) {
 			return Arena.partida;
 		}
 
-		if (thesi !== trapezi.partidaEpomenosGet()) return Arena.partida;
-		if (!trapezi.anext) return Arena.partida;
-		if (Arena.ego.isPektis() && Arena.ego.isThesi(thesi)) return Arena.partida;
+		if (thesi !== trapezi.partidaEpomenosGet())
+		return Arena.partida;
+
+		if (!trapezi.anext)
+		return Arena.partida;
+
+		if (Arena.ego.isPektis() && Arena.ego.isThesi(thesi))
+		return Arena.partida;
 
 		dilosi = trapezi.anext;
 		if (dilosi.dilosiIsTagrafo() && (trapezi.apasoCount == 2)) dilosi = new Dilosi('DS6');
@@ -773,7 +793,8 @@ Arena.partida.pektisDilosiRefreshDOM = function(thesi, iseht, dom) {
 			return Arena.partida;
 		}
 
-		if (thesi === trapezi.partidaTzogadorosGet()) return Arena.partida;
+		if (thesi === trapezi.partidaTzogadorosGet())
+		return Arena.partida;
 
 		dilosi = trapezi.sdilosi;
 		if (!dilosi[thesi]) return Arena.partida;
