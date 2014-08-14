@@ -63,14 +63,16 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 		return Debug.flagGet('developer');
 	},
 	click: function(e) {
-		var max;
+		var count, max;
 
+		count = 0;
 		max = 0;
 		for (i in $.cache) {
+			count++;
 			if (parseInt(i) > max)
 			max = i;
 		}
-		Client.fyi.pano('cache size: ' + i);
+		Client.fyi.pano('cache count: ' + count + ', max: ' + max);
 		console.log($.cache);
 	},
 }));
@@ -175,6 +177,8 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 	title: 'Να παίζονται οι άσοι',
 	check: function() {
 		if (Arena.trapeziOxiRithmisi()) return false;
+		if (Debug.flagGet('developer') && Arena.ego.trapezi.trapeziIsDianomi())
+		return false;
 		return Arena.ego.trapezi.trapeziOxiAsoi();
 	},
 	click: function(e) {
@@ -201,6 +205,8 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 	title: 'Να μην παίζονται οι άσοι',
 	check: function() {
 		if (Arena.trapeziOxiRithmisi()) return false;
+		if (Debug.flagGet('developer') && Arena.ego.trapezi.trapeziIsDianomi())
+		return false;
 		return Arena.ego.trapezi.trapeziIsAsoi();
 	},
 	click: function(e) {
@@ -227,6 +233,8 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 	title: 'Να παίζεται το πάσο',
 	check: function() {
 		if (Arena.trapeziOxiRithmisi()) return false;
+		if (Debug.flagGet('developer') && Arena.ego.trapezi.trapeziIsDianomi())
+		return false;
 		return Arena.ego.trapezi.trapeziOxiPaso();
 	},
 	click: function(e) {
@@ -253,6 +261,8 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 	title: 'Να μην παίζεται το πάσο',
 	check: function() {
 		if (Arena.trapeziOxiRithmisi()) return false;
+		if (Debug.flagGet('developer') && Arena.ego.trapezi.trapeziIsDianomi())
+		return false;
 		return Arena.ego.trapezi.trapeziIsPaso();
 	},
 	click: function(e) {
