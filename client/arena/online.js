@@ -148,7 +148,7 @@ Trapezi.prototype.processEnergiaOnlineΦΥΛΛΟ = function(energia) {
 };
 
 Trapezi.prototype.processEnergiaOnlineFiloKinisi = function(energia) {
-	var pektis, filo, filoFom, fila, i, css = {};
+	var pektis, filo, filoDom, fila, i, css = {};
 
 	pektis = energia.energiaPektisGet();
 	filo = energia.energiaDataGet().string2filo();
