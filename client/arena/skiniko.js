@@ -724,7 +724,7 @@ Sinedria.prototype.sinedriaNiofertosPushDOM = function() {
 	var dom;
 
 	dom = Arena.partida.niofertosDOM.children('.niofertos');
-	if (dom.length > 3) dom.last().remove();
+	if (dom.length > 4) dom.last().remove();
 
 	Arena.partida.niofertosDOM.prepend(this.niofertosDOM);
 	return this;
