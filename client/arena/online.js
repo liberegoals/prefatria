@@ -44,7 +44,7 @@ Trapezi.prototype.processEnergiaOnlineΑΓΟΡΑ = function() {
 		id: 'tsoxaPektisAgoraDixe',
 		src: 'ikona/endixi/that.gif',
 	}).
-	addClass('tsoxaPektisIcon').delay(300000).fadeOut(400, function() {
+	addClass('tsoxaPektisIcon').delay(3000).fadeOut(400, function() {
 		$(this).remove();
 	}));
 
@@ -59,8 +59,8 @@ Trapezi.prototype.processEnergiaOnlineΑΓΟΡΑ = function() {
 	if (Arena.ego.isThesi(tzogadoros))
 	return this;
 
-	// Είμαστε αμυνόμενοι, επομένως θα ακουστεί ηχητικό σήμα που δείχνει
-	// ότι έγινε αποφώνηση του τελικού συμβολαίου.
+	// Είμαστε αμυνόμενοι, επομένως θα ακουστεί διακριτικό ηχητικό σήμα
+	// που «σημαίνει» ότι έγινε αποφώνηση του τελικού συμβολαίου.
 
 	Client.sound.handbell();
 	return this;
