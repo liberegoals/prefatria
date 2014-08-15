@@ -35,12 +35,16 @@ Trapezi.prototype.processEnergiaOnlineΑΓΟΡΑ = function() {
 	tzogadoros = Arena.ego.trapezi.partidaTzogadorosGet();
 	iseht = Arena.ego.thesiMap(tzogadoros);
 
+	// Εντοπίζουμε το DOM element της δήλωσης του τελικού συμβολαίου
+	// και εμφανίζουμε αριστερά βελάκι που δείχνει την αγορά.
+
 	Arena.partida['pektisAgora' + iseht + 'DOM'].
+	find('.tsoxaPektisAgoraDilosi').
 	append($('<img>').attr({
 		id: 'tsoxaPektisAgoraDixe',
 		src: 'ikona/endixi/that.gif',
 	}).
-	addClass('tsoxaPektisIcon').delay(3000).fadeOut(400, function() {
+	addClass('tsoxaPektisIcon').delay(300000).fadeOut(400, function() {
 		$(this).remove();
 	}));
 
