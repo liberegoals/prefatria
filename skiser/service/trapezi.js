@@ -360,7 +360,8 @@ Service.trapezi.apodoxi = function(nodereq) {
 	if (nodereq.oxiPektis()) return;
 
 	trapezi = nodereq.trapeziGet();
-	if (!trapezi.trapeziKlidoma()) return;
+	if (!trapezi.trapeziKlidoma())
+	return nodereq.error('Το τραπέζι είναι κλειδωμένο');
 
 	thesi = trapezi.trapeziThesiPekti(nodereq.login);
 	if (!thesi) {
