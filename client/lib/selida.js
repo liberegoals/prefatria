@@ -684,6 +684,10 @@ Client.sound = {
 		Client.sound.play('pop.ogg', vol);
 	},
 
+	bop: function(vol) {
+		Client.sound.play('bop.ogg', vol);
+	},
+
 	plop: function(vol) {
 		Client.sound.play('plop.ogg', vol);
 	},
