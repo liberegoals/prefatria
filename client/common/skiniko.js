@@ -242,6 +242,19 @@ Trapezi.prototype.trapeziKodikosGet = function() {
 	return this.kodikos;
 };
 
+Trapezi.prototype.trapeziStisimoSet = function(ts) {
+	if (ts === undefined)
+	ts = Globals.toraServer();
+
+	this.stisimo = ts;
+	this.poll = ts;
+	return this;
+};
+
+Trapezi.prototype.trapeziStisimoGet = function() {
+	return this.stisimo;
+};
+
 Trapezi.prototype.trapeziIsTrapezi = function(trapezi) {
 	if (trapezi === undefined) return false;
 	if (trapezi === null) return false;

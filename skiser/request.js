@@ -190,6 +190,12 @@ NodeRequest.prototype.nosinedria = function(s) {
 		return true;
 	}
 
+	// Από τη στιγμή που έχουμε συνεδρία που επικοινωνεί με τον skiser και
+	// εμπλέκεται με κάποιο τραπέζι, ανανεώνουμε το poll timestamp του εν
+	// λόγω τραπεζιού.
+
+	this.trapezi.trapeziPollSet();
+
 	return false;
 };
 

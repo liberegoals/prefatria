@@ -12,7 +12,7 @@ Peripolos.ergasia = {
 	trapeziKlidoma: { period: 5000, action: 'Service.trapezi.klidomaCheck' },
 	sinedria: { period: 21000, action: 'Service.sinedria.check' },
 	feredata: { period: 10000, action: 'Service.feredata.check' },
-	trapezi: { period: 60000, action: 'Service.trapezi.check' },
+	trapezi: { period: 6000, action: 'Service.trapezi.check' },
 	dbconn: { period: 12000, action: 'DB.check' },
 };
 
