@@ -458,3 +458,113 @@ Service.trapezi.klidomaCheck = function(nodereq, trapezi, thesi, apodoxi) {
 		console.log(this.trapeziKodikosGet() + ': ξεκλείδωμα τραπεζιού');
 	});
 };
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+Service.trapezi.check = function() {
+	var tora, arxio, arxio2;
+
+	tora = Globals.tora();
+	if (Debug.flagGet('trapeziCheck'))
+	console.log('Περίπολος: trapezi.check: ', tora);
+
+	// Κρατάμε στη λίστα "arxio" τα τραπέζια που αρχειοθετούνται
+	// λόγω μεγάλου χρόνου αδράνειας.
+
+	arxio = {};
+
+	Server.skiniko.skinikoTrapeziWalk(function() {
+		var trapezi, kinisi;
+
+		if (this.trapeziSeXrisi(tora))
+		return;
+
+		trapezi = this.trapeziKodikosGet();
+		console.log(trapezi + ': ανενεργό τραπέζι');
+		arxio[trapezi] = true;
+	});
+
+	// Αρχειοθετούμε στην database τα τραπέζια που έκλεισαν λόγω
+	// μεγάλου χρόνου αδράνειας. Παράλληλα δημιουργούμε δεύτερη
+	// λίστα με τα τραπέζια που αρχειοθετούνται επιτυχώς στην
+	// database.
+
+	arxio2 = {};
+	Service.trapezi.arxiothetisi(arxio, arxio2);
+};
+
+// Η μέθοδος "trapeziSeXrisi" ελέγχει αν οι παίκτες του τραπεζιού έχουν αποχωρήσει
+// από το τραπέζι και το τραπέζι έχει μείνει χωρίς επισκέπτες για μεγάλο χρονικό
+// διάστημα.
+
+Trapezi.prototype.trapeziSeXrisi = function(tora) {
+	var timeout, thesi;
+
+	// Ελέγχουμε κατ' αρχάς αν υπάρχει παίκτης στο τραπέζι που δεν έχει
+	// αποχωρήσει ακόμη ώστε να αποφασίσουμε το χρόνο που το τραπέζι θα
+	// θεωρηθεί ανενεργό. Αν υπάρχει έστω και ένας παίκτης στο τραπέζι
+	// δίνουμε περισσότερο χρόνο.
+
+	timeout = 5 * 60 * 1000; // 5 λεπτά
+	for (thesi = 1; thesi <= Prefadoros.thesiMax; thesi++) {
+		if (!this.trapeziPekitsGet(thesi))
+		continue;
+
+		timeout = 60 * 60 * 1000;	// 1 ώρα
+		break;
+	}
+
+	if (tora === undefined)
+	tora = Globals.tora();
+
+	return(tora - this.pollGet() < timeout);
+};
+
+Service.trapezi.arxiothetisi = function(lista, lista2) {
+	var trapezi;
+
+	for (trapezi in lista) {
+		Service.trapezi.arxiothetisi2(trapezi, lista, lista2);
+		return;
+	}
+
+	Service.trapezi.arxiothesitis3(lista2);
+};
+
+Service.trapezi.arxiothetisi2 = function(trapezi, lista, lista2) {
+	var conn, query;
+
+	conn = DB.connection();
+	query = 'UPDATE `trapezi` SET `arxio` = NOW() WHERE `kodikos` = ' + trapezi;
+	conn.connection.query(query, function(err, res) {
+		conn.free();
+		delete lista[trapezi];
+
+		if (err || (res.affectedRows != 1))
+		console.error(trapezi + ': απέτυχε η αρχειοθέτηση του τραπεζιού');
+
+		else
+		lista2[trapezi] = true;
+
+		Service.trapezi.arxiothetisi(lista, lista2);
+	});
+};
+
+Service.trapezi.arxiothetisi3 = function(lista) {
+	var trapezi, kinisi;
+
+	for (trapezi in lista) {
+		kinisi = new Kinisi({
+			idos: 'AT',
+			data: {
+				trapezi: trapezi,
+			}
+		});
+
+		Server.skiniko.
+		processKinisi(kinisi).
+		kinisiAdd(kinisi, false);
+	}
+
+	Server.skiniko.kinisiAdd();
+};

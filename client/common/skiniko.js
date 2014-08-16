@@ -309,7 +309,9 @@ Trapezi.prototype.trapeziApodoxiCount = function() {
 };
 
 Trapezi.prototype.trapeziPollSet = function(ts) {
-	if (ts === undefined) ts = Globals.toraServer();
+	if (ts === undefined)
+	ts = Globals.toraServer();
+
 	this.poll = ts;
 	return this;
 };
