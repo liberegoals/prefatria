@@ -461,6 +461,9 @@ Service.trapezi.klidomaCheck = function(nodereq, trapezi, thesi, apodoxi) {
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+// Από καιρού εις καιρόν και μέσω των διαδικασιών περιπόλου ελέγχονται τα τραπέζια
+// προκειμένου κάποια από να αρχειοθετηθούν.
+
 Service.trapezi.check = function() {
 	var tora, arxio, arxio2;
 
@@ -494,23 +497,29 @@ Service.trapezi.check = function() {
 };
 
 // Η μέθοδος "trapeziSeXrisi" ελέγχει αν οι παίκτες του τραπεζιού έχουν αποχωρήσει
-// από το τραπέζι και το τραπέζι έχει μείνει χωρίς επισκέπτες για μεγάλο χρονικό
-// διάστημα.
+// από το τραπέζι και το τραπέζι έχει μείνει χωρίς online επισκέπτες για μεγάλο
+// χρονικό διάστημα.
 
 Trapezi.prototype.trapeziSeXrisi = function(tora) {
 	var timeout, thesi;
 
 	// Ελέγχουμε κατ' αρχάς αν υπάρχει παίκτης στο τραπέζι που δεν έχει
-	// αποχωρήσει ακόμη ώστε να αποφασίσουμε το χρόνο που το τραπέζι θα
-	// θεωρηθεί ανενεργό. Αν υπάρχει έστω και ένας παίκτης στο τραπέζι
-	// δίνουμε περισσότερο χρόνο.
+	// αποχωρήσει ακόμη, προκειμένου να αποφασίσουμε το χρόνο που το
+	// τραπέζι θα θεωρηθεί ανενεργό. Αν υπάρχει έστω και ένας παίκτης
+	// στο τραπέζι δίνουμε περισσότερο χρόνο.
 
-	timeout = 15 * 60; // 15 λεπτά
+	// Αρχικά θεωρούμε χρόνο αδράνειας τα 5 λεπτά.
+
+	timeout = 5 * 60;
+
 	for (thesi = 1; thesi <= Prefadoros.thesiMax; thesi++) {
 		if (!this.trapeziPektisGet(thesi))
 		continue;
 
-		timeout = 60 * 60;	// 1 ώρα
+		// Εφόσον υπάρχει παίκτης ξεχασμένος στο τραπέζι αυξάνουμε
+		// το χρόνο αδράνειας στα 15 λεπτά.
+
+		timeout = 15 * 60;
 		break;
 	}
 
@@ -520,10 +529,21 @@ Trapezi.prototype.trapeziSeXrisi = function(tora) {
 	return(tora - this.trapeziPollGet() < timeout);
 };
 
+// Η function "arxiothesisi" δέχεται μια λίστα τραπεζιών και επιχειρεί να τα
+// αρχειοθετήσει στην database, δηλαδή να ενημερώσει το timestamp αρχειοθέτησης
+// σε καθένα από αυτά τα τραπέζια. Ως δεύτερη παράμετρο περνάμε μια αρχικά κενή
+// λίστα και εισάγουμε σ' αυτήν τη λίστα τα τραπέζια τα οποία αρχειοθετήθηκαν
+// επιτυχώς στην database, προκειμένου αμέσως μετά να ενημερώσουμε τους clients
+// ότι αυτά τα τραπέζια έχουν αρχειοθετηθεί.
+
 Service.trapezi.arxiothetisi = function(lista, lista2) {
 	var trapezi;
 
+	// Η αρχειοθέτηση των τραπεζιών γίνεται αλυσιδωτά ώστε να αποφύγουμε
+	// τη δημιουργία πολλών database connections.
+
 	for (trapezi in lista) {
+		delete lista[trapezi];
 		Service.trapezi.arxiothetisi2(trapezi, lista, lista2);
 		return;
 	}
@@ -538,7 +558,6 @@ Service.trapezi.arxiothetisi2 = function(trapezi, lista, lista2) {
 	query = 'UPDATE `trapezi` SET `arxio` = NOW() WHERE `kodikos` = ' + trapezi;
 	conn.connection.query(query, function(err, res) {
 		conn.free();
-		delete lista[trapezi];
 
 		if (err || (res.affectedRows != 1))
 		console.error(trapezi + ': απέτυχε η αρχειοθέτηση του τραπεζιού');
