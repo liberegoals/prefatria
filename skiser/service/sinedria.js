@@ -425,11 +425,14 @@ Service.sinedria.thesiTheasis3 = function(nodereq) {
 Service.sinedria.check = function() {
 	var tora = Globals.tora(), arxio = {};
 
-	if (Debug.flagGet('sinedriaCheck')) console.log('Περίπολος: sinedria.check: ', tora);
+	if (Debug.flagGet('sinedriaCheck'))
+	console.log('Περίπολος: sinedria.check: ', tora);
+
 	Server.skiniko.skinikoSinedriaWalk(function() {
 		var pektis;
 
-		if (this.sinedriaSeXrisi(tora)) return;
+		if (this.sinedriaSeXrisi(tora))
+		return;
 
 		pektis = this.sinedriaPektisGet();
 		console.log(pektis + ': ανενεργή συνεδρία');
