@@ -82,6 +82,7 @@ Skiniko.prototype.processKinisiTR = function(data) {
 	// Εντάσσουμε το τραπέζι στο σκηνικό.
 
 	trapezi = new Trapezi(data.trapezi);
+	trapezi.trapeziStisimoSet();
 	this.skinikoTrapeziSet(trapezi);
 
 	// Στην πρώτη θέση πρέπει να υπάρχει ο δημιουργός.

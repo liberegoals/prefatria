@@ -483,6 +483,8 @@ Service.trapezi.check = function() {
 		console.log(trapezi + ': ανενεργό τραπέζι');
 		arxio[trapezi] = true;
 	});
+console.log(arxio);
+return;
 
 	// Αρχειοθετούμε στην database τα τραπέζια που έκλεισαν λόγω
 	// μεγάλου χρόνου αδράνειας. Παράλληλα δημιουργούμε δεύτερη
@@ -507,7 +509,7 @@ Trapezi.prototype.trapeziSeXrisi = function(tora) {
 
 	timeout = 5 * 60 * 1000; // 5 λεπτά
 	for (thesi = 1; thesi <= Prefadoros.thesiMax; thesi++) {
-		if (!this.trapeziPekitsGet(thesi))
+		if (!this.trapeziPektisGet(thesi))
 		continue;
 
 		timeout = 60 * 60 * 1000;	// 1 ώρα
@@ -517,7 +519,8 @@ Trapezi.prototype.trapeziSeXrisi = function(tora) {
 	if (tora === undefined)
 	tora = Globals.tora();
 
-	return(tora - this.pollGet() < timeout);
+console.log(this.trapeziKodikosGet(), tora, this.trapeziPollGet(), timeout, tora - this.trapeziPollGet());
+	return(tora - this.trapeziPollGet() < timeout);
 };
 
 Service.trapezi.arxiothetisi = function(lista, lista2) {
