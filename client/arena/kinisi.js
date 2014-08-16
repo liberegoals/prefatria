@@ -1202,3 +1202,42 @@ Skiniko.prototype.processKinisiPostVM = function(data) {
 	Arena.sizitisi.moliviTelos(data.pektis);
 	return this;
 };
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// AT -- Αρχειοθέτηση τραπεζιού.
+//
+// Δεδομένα
+//
+//	trapezi		Κωδικός τραπεζιού.
+//
+// Επιπρόσθετα δεδομένα
+//
+//	trapeziDOM	DOM element τραπεζιού.
+
+Skiniko.prototype.processKinisiAnteAT = function(data) {
+	var trapezi;
+
+	trapezi = this.skinikoTrapeziGet(data.trapezi);
+	if (!trapezi) return this;
+
+	data.trapeziDOM = trapezi.trapeziGetDOM();
+	return this;
+};
+
+Skiniko.prototype.processKinisiPostAT = function(data) {
+	var trapezi;
+
+	// Αν το τραπέζι εντοπιστεί στο σκηνικό, παρά την υποτιθέμενη
+	// αρχειοθέτησή του, τότε κάτι πήγε στραβά οπότε δεν προβαίνουμε
+	// σε καμία περαιτέρω ενέργεια.
+
+	trapezi = this.skinikoTrapeziGet(data.trapezi);
+	if (trapezi) return this;
+
+	if (!data.trapeziDOM)
+	return this;
+
+	data.trapeziDOM.remove();
+	return this;
+};

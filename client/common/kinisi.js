@@ -592,3 +592,17 @@ Skiniko.prototype.processKinisiRC = function(data) {
 	trapezi.partidaReplay();
 	return this;
 };
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// AT -- Αρχειοθέτηση τραπεζιού
+//
+// Δεδομένα
+//
+//	trapezi		Κωδικός τραπεζιού.
+
+Skiniko.prototype.processKinisiAT = function(data) {
+	this.skinikoTrapeziDelete(data.trapezi);
+
+	return this;
+};
