@@ -5,15 +5,13 @@ Peripolos = {};
 // ελέγχου ως function.
 
 Peripolos.ergasia = {
-/*
-	pektis: { period: 3600000, action: Service.pektis.check },
-*/
-	sizitisiKontema: { period: 61000, action: 'Service.sizitisi.kontema' },
-	trapeziKlidoma: { period: 5000, action: 'Service.trapezi.klidomaCheck' },
-	sinedria: { period: 21000, action: 'Service.sinedria.check' },
-	feredata: { period: 10000, action: 'Service.feredata.check' },
-	trapezi: { period: 61000, action: 'Service.trapezi.check' },
-	dbconn: { period: 12000, action: 'DB.check' },
+	pektis:			{ period: 59 * 60 * 1000, action: 'Service.pektis.check' },
+	sizitisiKontema:	{ period:  1 * 61 * 1000, action: 'Service.sizitisi.kontema' },
+	trapezi:		{ period:  1 * 31 * 1000, action: 'Service.trapezi.check' },
+	sinedria:		{ period:  1 * 21 * 1000, action: 'Service.sinedria.check' },
+	feredata:		{ period:  1 * 11 * 1000, action: 'Service.feredata.check' },
+	dbconn:			{ period:  1 * 13 * 1000, action: 'DB.check' },
+	trapeziKlidoma:		{ period:  1 *  7 * 1000, action: 'Service.trapezi.klidomaCheck' },
 };
 
 // Η μέθοδος "setup" στήνει τους βασικούς κύκλους ελέγχου.
