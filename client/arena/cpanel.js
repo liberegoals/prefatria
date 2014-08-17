@@ -60,6 +60,25 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 
 Arena.cpanel.bpanelButtonPush(new PButton({
 	omada: 1,
+	img: 'miaPrefa.png',
+	title: 'Νέο τραπέζι',
+	check: function() {
+		return Arena.ego.oxiTrapezi();
+	},
+	click: function(e) {
+		Client.fyi.pano('Δημιουργία νέου τραπεζιού. Παρακαλώ περιμένετε…');
+		Client.skiserService('miaPrefa').
+		done(function(rsp) {
+			Client.fyi.epano(rsp);
+		}).
+		fail(function(err) {
+			Client.skiserFail(err);
+		});
+	},
+}));
+
+Arena.cpanel.bpanelButtonPush(new PButton({
+	omada: 1,
 	refresh: function() {
 		if (Arena.flags.emoticon) {
 			this.pbuttonIconGetDOM().attr('src', 'ikona/panel/emoticonOff.png');
@@ -76,25 +95,6 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 		Arena.flags.emoticon = !Arena.flags.emoticon;
 		$('#stiliEpanel').css('display', Arena.flags.emoticon ? 'table-cell' : 'none');
 		this.refresh();
-	},
-}));
-
-Arena.cpanel.bpanelButtonPush(new PButton({
-	omada: 1,
-	img: 'miaPrefa.png',
-	title: 'Νέο τραπέζι',
-	check: function() {
-		return Arena.ego.oxiTrapezi();
-	},
-	click: function(e) {
-		Client.fyi.pano('Δημιουργία νέου τραπεζιού. Παρακαλώ περιμένετε…');
-		Client.skiserService('miaPrefa').
-		done(function(rsp) {
-			Client.fyi.epano(rsp);
-		}).
-		fail(function(err) {
-			Client.skiserFail(err);
-		});
 	},
 }));
 

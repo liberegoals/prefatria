@@ -64,7 +64,7 @@ Server.router = {
 	'/salute': Service.sinedria.salute,
 	'/fereFreska': Service.feredata.freska,
 	'/fereAlages': Service.feredata.alages,
-	'/pektisFetch': Service.pektisFetch,
+	'/pektisFetch': Service.pektis.fetch,
 	'/exodos': Service.sinedria.exodos,
 	'/checkin': Service.sinedria.checkin,
 	'/stop': Service.stop,

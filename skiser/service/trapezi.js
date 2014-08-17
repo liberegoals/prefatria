@@ -507,7 +507,7 @@ Service.trapezi.oxiKenoTimeout = 15 * 60;
 // χρονικό διάστημα.
 
 Trapezi.prototype.trapeziSeXrisi = function(tora) {
-	var timeout, thesi;
+	var timeout, thesi, pektis;
 
 	// Ελέγχουμε κατ' αρχάς αν υπάρχει παίκτης στο τραπέζι που δεν έχει
 	// αποχωρήσει ακόμη, προκειμένου να αποφασίσουμε το χρόνο που το
@@ -530,7 +530,33 @@ Trapezi.prototype.trapeziSeXrisi = function(tora) {
 	if (tora === undefined)
 	tora = Globals.tora();
 
-	return(tora - this.trapeziPollGet() < timeout);
+	if (tora - this.trapeziPollGet() < timeout)
+	return true;
+
+	// Το poll timestamp του τραπεζιού δείχνει ότι το τραπέζι είναι
+	// ανανεργό. Ωστόσο, υπάρχει περίπτωση κάποιος από τους παίκτες
+	// του τραπεζιού να παρακολουθεί, ή να παίζει σε άλλο τραπέζι.
+	// Σενάριο: Ανοίγω τραπέζι, προσκαλώ δύο φίλους και μέχρι να
+	// έρθουν αυτοί παρακολουθώ σε κάποιο άλλο τραπέζι. Σ' αυτή την
+	// περίπτωση τα pollings που κάνω ενημερώνουν το poll timestamp
+	// στο τραπέζι που παρακολουθώ και έτσι το κυρίως τραπέζι μου
+	// θα φανεί ανενεργό και θα δρομολογηθεί προς αρχειοθέτηση,
+	// πράγμα που δεν είναι σωστό.
+
+	for (thesi = 1; thesi <= Prefadoros.thesiMax; thesi++) {
+		pektis = this.trapeziPektisGet(thesi);
+		if (!pektis) continue;
+
+		// Αν οποιοσδήποτε παίκτης του τραπεζιού έχει ενεργή
+		// συνεδρία, τότε το τραπέζι θεωρείται ενεργό.
+
+		if (Server.skiniko.skinikoSinedriaGet(pektis))
+		return true;
+	}
+
+	// Είναι πια η ώρα το τραπέζι να θεωρηθεί ανενεργό.
+
+	return false;
 };
 
 // Η function "arxiothesisi" δέχεται μια λίστα τραπεζιών και επιχειρεί να τα
