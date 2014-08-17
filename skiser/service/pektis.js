@@ -42,9 +42,19 @@ Service.pektis.check = function() {
 	Server.skiniko.skinikoPektisWalk(function() {
 		var poll, login;
 
+		// Υπενθυμίζουμε ότι το poll timestamp του παίκτη ΔΕΝ είναι
+		// η χρονική στιγμή κατά την οποία ο παίκτης είχε επαφή μέσω
+		// κάποιας συνεδρίας του, αλλά η χρονική στιγμή κατά την οποία
+		// προσπελάστηκε τελευταία φορά ο παίκτης στο σκηνικό.
+
 		poll = this.pektisPollGet();
 		if (tora - poll < Service.pektis.timeout)
 		return;
+
+		// Ο παίκτης δεν φαίνεται να έχει προσπελαστεί το τελευταίο
+		// διάστημα, επομένως είναι υποψήφιος για αποκαθήλωση. Πριν
+		// προχωρήσουμε στο επόμεν ο βήμα, ελέγχουμε αν υπάρχει στο
+		// σκηνικό συνεδρία για τον εν λόγω παίκτη.
 
 		login = this.pektisLoginGet();
 		if (Server.skiniko.skinikoSinedriaGet(login))
