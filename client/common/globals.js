@@ -116,6 +116,17 @@ Globals.pote = function(ts) {
 	return Globals.mera(ts) + ', ' + Globals.ora(ts);
 };
 
+// Η function "poteOra" είναι παρόμοια με την "pote" καθώς τυπώνει την ώρα για
+// το τρέχον 24ωρο, ενώ για παλαιότερες χρονικές στιγμές τυπώνει και την ημέρα.
+
+Globals.poteOra = function(ts) {
+	var tora = Globals.tora();
+	var dif = tora - ts;
+
+	ts = new Date(ts * 1000);
+	return(dif < 86400 ? Globals.ora(ts) : Globals.mera(ts) + ', ' + Globals.ora(ts));
+};
+
 // Η function "mera" δίνει την τρέχουσα ημερομηνία στη μηχανή που τρέχει.
 // Μπορούμε να δώσουμε και συγκεκριμένη ώρα ως παράμετρο.
 
@@ -147,7 +158,7 @@ Globals.mera = function(d) {
 // Η function "ora" δίνει την τρέχουσα ώρα στη μηχανή που τρέχει.
 // Μπορούμε να δώσουμε και συγκεκριμένη ώρα ως παράμετρο.
 
-Globals.ora = function(d) {
+Globals.ora = function(d, seconds) {
 	if (d === undefined) d = new Date;
 	var s = '';
 
@@ -157,11 +168,17 @@ Globals.ora = function(d) {
 
 	x = d.getMinutes();
 	if (x < 10) s += '0';
-	s += x + ':';
-
-	x = d.getSeconds();
-	if (x < 10) s += '0';
 	s += x;
+
+	if (seconds === undefined)
+	seconds = false;
+
+	if (seconds) {
+		s += ':';
+		x = d.getSeconds();
+		if (x < 10) s += '0';
+		s += x;
+	}
 
 	return s;
 };
