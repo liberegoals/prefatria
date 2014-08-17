@@ -471,7 +471,8 @@ Service.trapezi.check = function() {
 
 	tora = Globals.tora();
 	if (Debug.flagGet('trapeziCheck'))
-	console.log('Περίπολος: trapezi.check: ', tora);
+	console.log('Περίπολος: trapezi.check: ' + tora + ' (' + Service.trapezi.kenoTimeout +
+		', ' + Service.trapezi.oxiKenoTimeout + ')');
 
 	// Κρατάμε στη λίστα "arxio" τα τραπέζια που αρχειοθετούνται
 	// λόγω μεγάλου χρόνου αδράνειας.
@@ -498,6 +499,9 @@ Service.trapezi.check = function() {
 	Service.trapezi.arxiothetisi(arxio, arxio2);
 };
 
+Service.trapezi.kenoTimeout = 5 * 60;
+Service.trapezi.oxiKenoTimeout = 15 * 60;
+
 // Η μέθοδος "trapeziSeXrisi" ελέγχει αν οι παίκτες του τραπεζιού έχουν αποχωρήσει
 // από το τραπέζι και το τραπέζι έχει μείνει χωρίς online επισκέπτες για μεγάλο
 // χρονικό διάστημα.
@@ -510,18 +514,16 @@ Trapezi.prototype.trapeziSeXrisi = function(tora) {
 	// τραπέζι θα θεωρηθεί ανενεργό. Αν υπάρχει έστω και ένας παίκτης
 	// στο τραπέζι δίνουμε περισσότερο χρόνο.
 
-	// Αρχικά θεωρούμε χρόνο αδράνειας τα 5 λεπτά.
-
-	timeout = 5 * 60;
+	timeout = Service.trapezi.kenoTimeout;
 
 	for (thesi = 1; thesi <= Prefadoros.thesiMax; thesi++) {
 		if (!this.trapeziPektisGet(thesi))
 		continue;
 
 		// Εφόσον υπάρχει παίκτης ξεχασμένος στο τραπέζι αυξάνουμε
-		// το χρόνο αδράνειας στα 15 λεπτά.
+		// το χρόνο αδράνειας.
 
-		timeout = 15 * 60;
+		timeout = Service.trapezi.oxiKenoTimeout;
 		break;
 	}
 
