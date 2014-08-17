@@ -432,11 +432,12 @@ Skiniko.prototype.processKinisiAnteRT = function(data) {
 Skiniko.prototype.processKinisiPostRT = function(data) {
 	var sinedria, trapezi;
 
-	// Αν η έξοδος από το τραπέζι μας οδηγεί σε άλλο τραπέζι, τότε
+	// Αν η έξοδος από το τραπέζι μάς οδηγεί σε άλλο τραπέζι, τότε
 	// παραμένουμε στην ίδια ομάδα εργαλείων του control panel, αλλιώς
 	// εμφανίζουμε τη βασική ομάδα εργαλείων. Σε κάθε περίπτωση το
 	// control panel πρέπει να επαναδιαμορφωθεί.
 
+	if (data.pektis.isEgo())
 	Arena.panelRefresh(Arena.ego.isTrapezi() ? null : 1);
 
 	sinedria = this.skinikoSinedriaGet(data.pektis);
@@ -1213,10 +1214,25 @@ Skiniko.prototype.processKinisiPostVM = function(data) {
 //
 // Επιπρόσθετα δεδομένα
 //
+//	sinedria	Λίστα συνεδριών που εμπλέκονται με το τραπέζι.
 //	trapeziDOM	DOM element τραπεζιού.
 
 Skiniko.prototype.processKinisiAnteAT = function(data) {
 	var trapezi;
+
+	// Μαζεύουμε τις συνεδρίες που εμπλέκονται με το προς αρχειοθέτηση
+	// τραπέζι στη λίστα "data.sinedria".
+
+	data.sinedria = {};
+	this.skinikoSinedriaWalk(function() {
+		if (this.sinedriaOxiTrapezi(data.trapezi))
+		return;
+
+		data.sinedria[this.sinedriaPektisGet()] = true;
+	});
+
+	// Προχωρούμε στον εντοπισμό του DOM element του τραπεζιού
+	// στο καφενείο.
 
 	trapezi = this.skinikoTrapeziGet(data.trapezi);
 	if (!trapezi) return this;
@@ -1226,7 +1242,7 @@ Skiniko.prototype.processKinisiAnteAT = function(data) {
 };
 
 Skiniko.prototype.processKinisiPostAT = function(data) {
-	var trapezi;
+	var skiniko = this, trapezi;
 
 	// Αν το τραπέζι εντοπιστεί στο σκηνικό, παρά την υποτιθέμενη
 	// αρχειοθέτησή του, τότε κάτι πήγε στραβά οπότε δεν προβαίνουμε
@@ -1234,6 +1250,39 @@ Skiniko.prototype.processKinisiPostAT = function(data) {
 
 	trapezi = this.skinikoTrapeziGet(data.trapezi);
 	if (trapezi) return this;
+
+	// Διατρέχουμε τις συνεδρίες που εμπλέκονταν με το τραπέζι και
+	// ελέγχουμε τα νέα στοιχεία θέσης.
+
+	Globals.walk(data.sinedria, function(pektis) {
+		var sinedria;
+
+		sinedria = skiniko.skinikoSinedriaGet(pektis);
+		if (!sinedria) return;
+
+		sinedria.
+		sinedriaDetachRebelosDOM().
+		sinedriaDetachTheatisDOM();
+
+		// Αν ο παίκτης έχει συμπληρωμένο τραπέζι μετά την αρχειοθέτηση
+		// του τραπεζιού, σημαίνει ότι κατά τον επανεντοπισμό του βρέθηκε
+		// να είναι παίκτης σε άλλο τραπέζι, οπότε δεν προβαίνουμε σε
+		// περαιτέρω ενέργειες.
+
+		if (sinedria.sinedriaTrapeziGet())
+		return;
+
+		// Ο παίκτης είναι περιφερόμενος, επομένως πρέπει να εμφανιστεί
+		// στην περιοχή των περιφερομένων.
+
+		Arena.rebelosDOM.prepend(sinedria.rebelosDOM);
+
+		// Δεν χρειάζεται να προβούμε σε ενέργειες ανάλογες με εκείνες
+		// της εξόδου από τραπέζι, καθώς εδώ πρόκειται για αρχειοθέτηση
+		// τραπεζιού, επομένως δεν υπάρχει περίπτωση να είναι ο παίκτης
+		// που τρέχει το πρόγραμμα ένας από τους εμπλεκόμενους στο τραπέζι,
+		// διότι τότε το τραπέζι δεν θα είχε επιλεγεί προς αρχειοθέτηση.
+	});
 
 	if (!data.trapeziDOM)
 	return this;

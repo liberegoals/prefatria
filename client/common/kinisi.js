@@ -603,6 +603,12 @@ Skiniko.prototype.processKinisiRC = function(data) {
 
 Skiniko.prototype.processKinisiAT = function(data) {
 	this.skinikoTrapeziDelete(data.trapezi);
+	this.skinikoSinedriaWalk(function() {
+		if (this.sinedriaOxiTrapezi(data.trapezi))
+		return;
+
+		this.sinedriaEntopismos();
+	});
 
 	return this;
 };
