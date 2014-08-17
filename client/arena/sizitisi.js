@@ -492,7 +492,7 @@ Sizitisi.prototype.sizitisiGetDOM = function() {
 };
 
 Sizitisi.prototype.sizitisiCreateDOM = function(pro) {
-	var pektis, klasi, xroma, dom, sxolioDOM;
+	var pektis, klasi, xroma, dom, sxolioDOM, pote;
 
 	pektis = this.sizitisiPektisGet();
 	klasi = 'sizitisiPektis';
@@ -521,6 +521,27 @@ Sizitisi.prototype.sizitisiCreateDOM = function(pro) {
 		return this;
 	}
 
+	pote = this.sizitisiPoteGet();
+	dom.
+	append($('<div>').addClass('sizitisiPote').text(pote)).
+	on('mouseenter', function(e) {
+		$(this).
+		addClass('sizitisiEpilogi').
+		children('.sizitisiPote').css('display', 'block');
+	}).
+	on('mouseleave', function(e) {
+		$(this).
+		removeClass('sizitisiEpilogi').
+		children('.sizitisiPote').css('display', 'none');
+	}).
+	on('mousedown', function(e) {
+		$(this).
+		children('.sizitisiPote').css('display', 'none');
+	}).
+	on('mouseup', function(e) {
+		$(this).
+		children('.sizitisiPote').css('display', 'block');
+	});
 	this.DOM.appendTo(this.sizitisiTrapeziGet() ? Arena.sizitisi.trapeziDOM : Arena.sizitisi.kafenioDOM);
 	return this;
 };

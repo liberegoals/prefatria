@@ -1583,7 +1583,12 @@ cursor: auto;
 }
 
 .sizitisi {
+	position: relative;
 	margin: 0 0 2px 20px;
+}
+
+.sizitisiEpilogi {
+	background-color: rgba(217, 189, 226, 0.18);
 }
 
 .sizitisiPektis {
@@ -1606,15 +1611,21 @@ cursor: auto;
 }
 
 .sizitisiPote {
-	display: inline;
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	display: none;
+
+	color: rgb(30, 156, 216);
+	background-color: rgb(253, 253, 181);
 }
 
 .sizitisiPote:before {
-	content: ' [';
+	content: '[\2009';
 }
 
 .sizitisiPote:after {
-	content: ']';
+	content: '\2009]';
 }
 
 .sizitisiEmoticon {
