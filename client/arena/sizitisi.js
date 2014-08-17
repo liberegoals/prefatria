@@ -531,7 +531,7 @@ Sizitisi.prototype.sizitisiCreateDOM = function(pro) {
 		pote = $(this).data('pote');
 		if (!pote) return;
 
-		pote = Globals.pote(pote + Client.timeDif);
+		pote = Globals.poteOra(pote + Client.timeDif);
 		$(this).append($('<div>').addClass('sizitisiPote').text(pote));
 	}).
 	on('mouseleave', function(e) {
