@@ -29,3 +29,28 @@ Service.pektis.fetch = function(nodereq) {
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
+
+// Αν κάποιος παίκτης δεν έχει σχετική συνεδρία, ή δεν έχει προσπελαστεί
+// για περισσότερες 12 ώρες, τον βγάζουμε εκτός σκηνικού.
+
+Service.pektis.timeout = 12 * 60 * 60;
+
+Service.pektis.check = function() {
+	var tora;
+
+	tora = Globals.tora();
+	Server.skiniko.skinikoPektisWalk(function() {
+		var poll, login;
+
+		poll = this.pektisPollGet();
+		if (tora - poll < Service.pektis.timeout)
+		return;
+
+		login = this.pektisLoginGet();
+		if (Server.skiniko.skinikoSinedriaGet(login))
+		return;
+
+		console.log(login + ': αποκαθήλωση παίκτη');
+		Server.skiniko.skinikoPektisDelete(login);
+	});
+};

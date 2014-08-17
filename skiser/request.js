@@ -249,7 +249,18 @@ NodeRequest.prototype.isvoli = function(s) {
 	// requests. Αν το αίτημα δεν ανήκει σ' αυτά τα αιτήματα ενημερώνουμε
 	// το poll timestamp της συνεδρίας.
 
-	if (!Server.noPoll.hasOwnProperty(this.service)) sinedria.sinedriaPollSet();
+	if (Server.noPoll.hasOwnProperty(this.service))
+	return false;
+
+	// Το αίτημα δεν ήταν αυτοματοποιημένο, επομένως θεωρούμε ότι η συνεδρία
+	// είναι ενεργή και επικοινωνεί με τον skiser στέλνοντας διάφορα αιτήματα.
+
+	sinedria.sinedriaPollSet();
+
+	// Παράλληλα κρατάμε ζωντανό και τον παίκτη, απλώς επιχειρώντας να τον
+	// προσπελάσουμε στο σκηνικό.
+
+	Server.skiniko.skinikoPektisGet(this.loginGet());
 
 	return false;
 };

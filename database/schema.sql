@@ -32,7 +32,7 @@ CREATE TABLE `pektis` (
 	-- Θα μπορούσε να είναι current timestamp, αλλά έχω ήδη ένα τέτοιο πεδίο
 	-- και η MySQL δεν επιτρέπει δεύτερο. Λύνεται με trigger.
 
-	`poll`		TIMESTAMP NOT NULL COMMENT 'Τελευταία επαφή',
+	`poll`		TIMESTAMP NOT NULL COMMENT 'Τελευταία προσπέλαση του παίκτη',
 
 	PRIMARY KEY (
 		`login`
