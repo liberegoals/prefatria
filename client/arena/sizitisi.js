@@ -492,7 +492,7 @@ Sizitisi.prototype.sizitisiGetDOM = function() {
 };
 
 Sizitisi.prototype.sizitisiCreateDOM = function(pro) {
-	var pektis, klasi, xroma, dom, sxolioDOM, pote;
+	var pektis, klasi, xroma, dom, sxolioDOM;
 
 	pektis = this.sizitisiPektisGet();
 	klasi = 'sizitisiPektis';
@@ -521,18 +521,23 @@ Sizitisi.prototype.sizitisiCreateDOM = function(pro) {
 		return this;
 	}
 
-	pote = this.sizitisiPoteGet();
 	dom.
-	append($('<div>').addClass('sizitisiPote').text(pote)).
+	data('pote', this.sizitisiPoteGet()).
 	on('mouseenter', function(e) {
-		$(this).
-		addClass('sizitisiEpilogi').
-		children('.sizitisiPote').css('display', 'block');
+		var pote;
+
+		$(this).addClass('sizitisiEpilogi');
+
+		pote = $(this).data('pote');
+		if (!pote) return;
+
+		pote = Globals.pote(pote + Client.timeDif);
+		$(this).append($('<div>').addClass('sizitisiPote').text(pote));
 	}).
 	on('mouseleave', function(e) {
 		$(this).
 		removeClass('sizitisiEpilogi').
-		children('.sizitisiPote').css('display', 'none');
+		children('.sizitisiPote').remove();
 	}).
 	on('mousedown', function(e) {
 		$(this).
