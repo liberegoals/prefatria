@@ -869,7 +869,8 @@ Kitapi.kasaPush = function(thesi, kasa, idos) {
 	// συγκεκριμένη περιοχή γραφής κασών.
 
 	kasaDom = $('<div>').addClass('kitapiKasa kitapiEmfanesPoso').
-	html(kasa ? kasa : '&#9872;');
+	//html(kasa ? kasa : '&#9872;');	// σημαιάκι (δεν φαίνεται)
+	html(kasa ? kasa : '&#10004;');		// τσεκ
 	switch (idos) {
 	case 'ΑΥΞΗΣΗ':
 		kasaDom.addClass('kitapiKasaMesa');
