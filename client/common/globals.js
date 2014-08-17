@@ -119,12 +119,21 @@ Globals.pote = function(ts) {
 // Η function "poteOra" είναι παρόμοια με την "pote" καθώς τυπώνει την ώρα για
 // το τρέχον 24ωρο, ενώ για παλαιότερες χρονικές στιγμές τυπώνει και την ημέρα.
 
-Globals.poteOra = function(ts) {
-	var tora = Globals.tora();
-	var dif = tora - ts;
+Globals.poteOra = function(pote) {
+	var tora, toraMera, toraMinas, toraEtos, poteMera, poteMinas, poteEtos;
 
-	ts = new Date(ts * 1000);
-	return(dif < 86400 ? Globals.ora(ts) : Globals.mera(ts) + ', ' + Globals.ora(ts));
+	tora = new Date(Globals.torams());
+	toraMera = tora.getDate();
+	toraMinas = tora.getMonth();
+	toraEtos = tora.getFullYear();
+
+	pote = new Date(pote * 1000);
+	poteMera = pote.getDate();
+	poteMinas = pote.getMonth();
+	poteEtos = pote.getFullYear();
+
+	return((poteEtos === toraEtos) && (poteMinas === toraMinas) && (poteMera === poteMera) ?
+		Globals.ora(pote) : Globals.mera(pote) + ', ' + Globals.ora(pote));
 };
 
 // Η function "mera" δίνει την τρέχουσα ημερομηνία στη μηχανή που τρέχει.
