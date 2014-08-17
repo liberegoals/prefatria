@@ -132,7 +132,7 @@ Globals.poteOra = function(pote) {
 	poteMinas = pote.getMonth();
 	poteEtos = pote.getFullYear();
 
-	return((poteEtos === toraEtos) && (poteMinas === toraMinas) && (poteMera === poteMera) ?
+	return((poteEtos === toraEtos) && (poteMinas === toraMinas) && (poteMera === toraMera) ?
 		Globals.ora(pote) : Globals.mera(pote) + ', ' + Globals.ora(pote));
 };
 
