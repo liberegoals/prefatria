@@ -63,6 +63,16 @@ Pektis.prototype.pektisOnomaGet = function() {
 	return this.onoma;
 };
 
+Pektis.prototype.pektisPollSet = function(ts) {
+	if (ts === undefined) ts = Globals.toraServer();
+	this.poll = ts;
+	return this;
+};
+
+Pektis.prototype.pektisPollGet = function() {
+	return this.poll;
+};
+
 Pektis.prototype.pektisPeparamSet = function(peparam) {
 	this.peparam[peparam.peparamParamGet()] = peparam.peparamTimiGet();
 	return this;
@@ -1269,12 +1279,29 @@ Skiniko.prototype.skinikoReset = function() {
 
 Skiniko.prototype.skinikoPektisSet = function(pektis) {
 	this.pektis[pektis.pektisLoginGet()] = pektis;
-	pektis.pektisSkinikoSet(this);
+
+	pektis.
+	pektisSkinikoSet(this).
+	pektisPollSet();
+
 	return this;
 };
 
+// Όταν προσπελαύνουμε τον παίκτη για οποιονδήποτε λόγο ενημερώνουμε το
+// poll timestamp του παίκτη που δείχνει ακριβώς αυτό.
+
 Skiniko.prototype.skinikoPektisGet = function(login) {
-	return this.pektis[login];
+	var pektis;
+
+	pektis = this.pektis[login];
+	if (pektis) pektis.pektisPollSet();
+
+	return pektis;
+};
+
+Skiniko.prototype.skinikoPektisDelete = function(login) {
+	delete this.pektis[login];
+	return this;
 };
 
 Skiniko.prototype.skinikoPektisWalk = function(callback) {
