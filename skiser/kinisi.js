@@ -120,6 +120,16 @@ Kinisi.prototype.isAdiaforiSZ = function(sinedria) {
 	return false;
 };
 
+// Για τη διαγραφή σχολίων συζήτησης είμαστε αναγκασμένοι να κοινοποιούμε
+// όλους, καθώς οι συζητήσεις των τραπεζιών κρατούνται στους clients και
+// οι χρήστες μπορεί να έχουν αλλάξει τραπέζι και να επιστρέψουν αργότερα
+// σε τραπέζι από το οποίο έχει γίνει διαγραφή σχολίου συζήτησης.
+
+// Για λόγους ασφαλείας έχω σχετική function σε σχόλιο προκειμένου να μην
+// την προσθέσω αργότερα πιστεύοντας ότι την έχω ξεχάσει.
+
+// Kinisi.prototype.isAdiaforiZS = function(sinedria) { return false; };
+
 Kinisi.prototype.isAdiaforiXL = function(sinedria) {
 	return(sinedria.sinedriaPektisGet() != this.data.pektis);
 };
@@ -167,6 +177,7 @@ Kinisi.prototype.isAdiaforiRC = function(sinedria) {
 //
 // Η κόρνα αφορά σε όλους εμπλέκονται σε κάποιο τραπέζι και αυτοί είναι οι παίκτες
 // και οι θεατές του τραπεζιού.
+
 Kinisi.prototype.isAdiaforiKN = function(sinedria) {
 	var trapezi, pektis;
 
