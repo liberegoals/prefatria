@@ -1320,7 +1320,7 @@ Skiniko.prototype.processKinisiPostAT = function(data) {
 //
 // Επιπρόσθετα δεδομένα
 //
-//	dom		DOM element σχολίου προς διαγραφή.
+//	dom		DOM element σχολίου, ή ομάδας σχολίων προς διαγραφή.
 
 Skiniko.prototype.processKinisiAnteZS = function(data) {
 	var trapezi, sxolio;
@@ -1328,7 +1328,21 @@ Skiniko.prototype.processKinisiAnteZS = function(data) {
 	trapezi = this.skinikoTrapeziGet(data.trapezi);
 	if (!trapezi) return this;
 
-	sxolio = trapezi.trapeziSizitisiGet(parseInt(data.sxolio));
+	if (data.sxolio === 'ALL') {
+		data.dom = $();
+		trapezi.trapeziSizitisiWalk(function() {
+			var dom;
+
+			dom = this.sizitisiGetDOM();
+			if (!dom) return;
+
+			data.dom = data.dom.add(dom);
+		});
+
+		return this;
+	}
+
+	sxolio = trapezi.trapeziSizitisiGet(data.sxolio);
 	if (!sxolio) return this;
 
 	data.dom = sxolio.sizitisiGetDOM();
@@ -1336,21 +1350,14 @@ Skiniko.prototype.processKinisiAnteZS = function(data) {
 };
 
 Skiniko.prototype.processKinisiPostZS = function(data) {
-	var trapezi, sxolio;
-
 	if (!data.dom)
 	return this;
-
-	trapezi = this.skinikoTrapeziGet(data.trapezi);
-	if (!trapezi) return this;
-
-	sxolio = trapezi.trapeziSizitisiGet(data.sxolio);
-	if (sxolio) return this;
 
 	data.dom.remove();
 	if (Arena.ego.oxiTrapezi(data.trapezi))
 	return this;
 
-	Client.fyi.epano('Ο παίκτης <span class="entona ble">' + data.pektis + '</span> διέγραψε κάποιο σχόλιο');
+	Client.fyi.epano('Ο παίκτης <span class="entona ble">' + data.pektis + '</span> διέγραψε ' +
+		(data.sxolio === 'ALL' ? 'τη συζήτηση' : 'κάποιο σχόλιο'));
 	return this;
 };
