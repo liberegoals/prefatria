@@ -122,8 +122,10 @@ Arena.sizitisi.panel.bpanelButtonPush(new PButton({
 	},
 }));
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
+
 Arena.sizitisi.panel.bpanelButtonPush(new PButton({
-	id: 'delete',
+	id: 'diagrafi',
 	img: 'ikona/misc/Xred.png',
 	title: 'Διαγραφή σχολίου',
 	click: function(e) {
@@ -136,7 +138,13 @@ Arena.sizitisi.panel.bpanelButtonPush(new PButton({
 		return Client.fyi.epano('Δεν επιτρέπεται διαγραφή σχολίων από τους θεατές');
 
 		sxolio = Arena.ego.trapezi.trapeziSizitisiLast();
-		if (!sxolio) return Client.fyi.epano('Δεν υφίσταται σχόλιο συζήτησης προς διαγραφή');
+		if (!sxolio) return;
+
+		// Με πολλές επαναλμβανόμενες διαγραφές σε σύντομο χρονικό διάστημα
+		// σηματοδοτούμε διαγραφή όλης της συζήτησης του τραπεζιού.
+
+		if (Arena.sizitisi.diagrafiPolapli())
+		sxolio = 'ALL';
 
 		Client.skiserService('sizitisiDiagrafi', 'sxolio=' + sxolio).
 		done(function(rsp) {
@@ -147,6 +155,32 @@ Arena.sizitisi.panel.bpanelButtonPush(new PButton({
 		});
 	},
 }));
+
+Arena.sizitisi.diagrafiPolapliCount = 0;
+Arena.sizitisi.diagrafiPolapliLast = 0;
+
+Arena.sizitisi.diagrafiPolapli = function() {
+	var tora;
+
+	tora = Globals.torams();
+	if (tora - Arena.sizitisi.diagrafiPolapliLast > 2000) {
+		Arena.sizitisi.diagrafiPolapliReset(tora);
+		return false;
+	}
+
+	if (++Arena.sizitisi.diagrafiPolapliCount < 7)
+	return false;
+
+	Arena.sizitisi.diagrafiPolapliReset(tora);
+	return true;
+};
+
+Arena.sizitisi.diagrafiPolapliReset = function(tora) {
+	Arena.sizitisi.diagrafiPolapliLast = tora;
+	Arena.sizitisi.diagrafiPolapliCount = 1;
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
 
 Arena.sizitisi.panel.bpanelButtonPush(new PButton({
 	id: 'sigasi',
