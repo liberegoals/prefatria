@@ -310,7 +310,9 @@ Skiniko.prototype.processAlages = function(rsp) {
 
 	case '-':
 		if (Debug.flagGet('feredata')) console.log('\t' + rsp, '(διακοπή της επικοινωνίας)');
-		Client.provlima('Ο server σκηνικού διέκοψε την επικοινωνία');
+		Client.provlima('<div>Ο server σκηνικού διέκοψε την επικοινωνία</div>' +
+			'<div style="text-align: center"><a href="' + Client.server +
+			'isodos" target="_self">Επανείσοδος</a></div>', true);
 		return this;
 
 	// Παρουσιάστηκε κάποιο πρόβλημα στην ομαλή ενημέρωση σκηνικών δεδομένων
