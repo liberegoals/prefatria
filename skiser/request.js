@@ -105,7 +105,7 @@ NodeRequest.prototype.write = function(s) {
 NodeRequest.prototype.end = function(s) {
 	this.headerCheck();
 	if (s === undefined) this.response.end();
-	else if (typeof s === 'number') this.response.end(s);
+	else if (typeof s === 'number') this.response.end(s.toString());
 	else if (typeof s !== 'string') globals.fatal('response.end: invalid data type');
 	else if (s !== '') this.response.end(s);
 	else this.response.end();
