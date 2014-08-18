@@ -236,3 +236,46 @@ Service.sizitisi.moliviAkirosi = function(nodereq) {
 	Server.skiniko.
 	kinisiAdd(kinisi);
 };
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
+
+Service.sizitisi.diagrafi = function(nodereq) {
+	var trapezi, sxolio, conn, query;
+
+	if (nodereq.isvoli()) return;
+	if (nodereq.denPerastike('sxolio', true)) return;
+
+	trapezi = nodereq.trapeziGet();
+	if (!trapezi)
+	return nodereq.error('Δεν επιτρέπεται διαγραφή στη δημόσια συζήτηση');
+
+	if (nodereq.oxiPektis()) return;
+
+	sxolio = nodereq.url.sxolio;
+	if (parseInt(sxolio) != sxolio)
+	return nodereq.error('Λανθασμένος κωδικός σχολίου');
+
+	conn = DB.connection();
+	query = 'DELETE FROM `sizitisi` WHERE `kodikos` = ' + sxolio;
+	conn.connection.query(query, function(err, res) {
+		var kinisi;
+
+		conn.free();
+		if ((!res) || (res.affectedRows != 1))
+		return nodereq.error('Απέτυχε η διαγραφή σχολίου');
+
+		kinisi = new Kinisi({
+			idos: 'ZS',
+			data: {
+				trapezi: trapezi.trapeziKodikosGet(),
+				sxolio: sxolio,
+				pektis: nodereq.loginGet(),
+			},
+		});
+
+		nodereq.end();
+		Server.skiniko.
+		processKinisi(kinisi).
+		kinisiAdd(kinisi);
+	});
+};
