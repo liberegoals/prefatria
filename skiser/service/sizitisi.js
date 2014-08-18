@@ -268,7 +268,7 @@ Service.sizitisi.diagrafi = function(nodereq) {
 
 		conn.free();
 		if ((!res) || (res.affectedRows < 1))
-		return nodereq.error('Απέτυχε η διαγραφή σχολίου');
+		return nodereq.end();	// δεν πρέπει να επιστρέψουμε μήνυμα λάθους
 
 		kinisi = new Kinisi({
 			idos: 'ZS',
