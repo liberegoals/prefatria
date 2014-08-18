@@ -6,7 +6,7 @@ Peripolos = {};
 
 Peripolos.ergasia = {
 	pektis:			{ period: 59 * 60 * 1000, action: 'Service.pektis.check' },
-	sizitisiKontema:	{ period:  1 * 61 * 1000, action: 'Service.sizitisi.kontema' },
+	sizitisiKontema:	{ period:  7 * 61 * 1000, action: 'Service.sizitisi.kontema' },
 	trapezi:		{ period:  1 * 31 * 1000, action: 'Service.trapezi.check' },
 	sinedria:		{ period:  1 * 21 * 1000, action: 'Service.sinedria.check' },
 	feredata:		{ period:  1 * 11 * 1000, action: 'Service.feredata.check' },
