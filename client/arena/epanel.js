@@ -1,5 +1,13 @@
 Arena.epanel = new BPanel();
 
+Arena.epanel.bpanelGetDOM().
+on('click', function(e) {
+	Arena.inputRefocus(e);
+}).
+on('mousedown', function(e) {
+	Arena.inputRefocus(e);
+});
+
 Arena.epanel.clickCommon = function(e) {
 	Arena.inputRefocus(e);
 };
