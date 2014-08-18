@@ -1290,3 +1290,52 @@ Skiniko.prototype.processKinisiPostAT = function(data) {
 	data.trapeziDOM.remove();
 	return this;
 };
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// ZS -- Διαγραφή σχολίου συζήτησης
+//
+// Διαγραφή τελευταίου σχολίου συζήτησης τραπεζιού.
+//
+// Δεδομένα
+//
+//	trapezi		Κωδικός τραπεζιού στο οποίο διεξάγεται η συζήτηση.
+//	sxolio		Κωδικός αριθμός σχολίου προς διαγραφή.
+//	pektis		Login name του παίκτη που διαγράφει το σχόλιο.
+//
+// Επιπρόσθετα δεδομένα
+//
+//	dom		DOM element σχολίου προς διαγραφή.
+
+Skiniko.prototype.processKinisiAnteZS = function(data) {
+	var trapezi, sxolio;
+
+	trapezi = this.skinikoTrapeziGet(data.trapezi);
+	if (!trapezi) return this;
+
+	sxolio = trapezi.trapeziSizitisiGet(parseInt(data.sxolio));
+	if (!sxolio) return this;
+
+	data.dom = sxolio.sizitisiGetDOM();
+	return this;
+};
+
+Skiniko.prototype.processKinisiPostZS = function(data) {
+	var trapezi, sxolio;
+
+	if (!data.dom)
+	return this;
+
+	trapezi = this.skinikoTrapeziGet(data.trapezi);
+	if (!trapezi) return this;
+
+	sxolio = trapezi.trapeziSizitisiGet(data.sxolio);
+	if (sxolio) return this;
+
+	data.dom.remove();
+	if (Arena.ego.oxiTrapezi(data.trapezi))
+	return this;
+
+	Client.fyi.epano('Ο παίκτης <span class="entona ble">' + data.pektis + '</span> διέγραψε κάποιο σχόλιο');
+	return this;
+};
