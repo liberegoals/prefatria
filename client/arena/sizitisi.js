@@ -127,6 +127,24 @@ Arena.sizitisi.panel.bpanelButtonPush(new PButton({
 	img: 'ikona/misc/Xred.png',
 	title: 'Διαγραφή σχολίου',
 	click: function(e) {
+		var sxolio;
+
+		if (Arena.kafenioMode())
+		return Client.fyi.epano('Δεν επιτρέπεται διαγραφή σχολίων δημόσιας συζήτησης');
+
+		if (Arena.ego.oxiPektis())
+		return Client.fyi.epano('Δεν επιτρέπεται διαγραφή σχολίων από τους θεατές');
+
+		sxolio = Arena.ego.trapezi.trapeziSizitisiLast();
+		if (!sxolio) return Client.fyi.epano('Δεν υφίσταται σχόλιο συζήτησης προς διαγραφή');
+
+		Client.skiserService('sizitisiDiagrafi', 'sxolio=' + sxolio).
+		done(function(rsp) {
+			Client.fyi.pano(rsp);
+		}).
+		fail(function(err) {
+			Client.skiserFail(err);
+		});
 	},
 }));
 
