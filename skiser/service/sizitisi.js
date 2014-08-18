@@ -240,28 +240,34 @@ Service.sizitisi.moliviAkirosi = function(nodereq) {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
 
 Service.sizitisi.diagrafi = function(nodereq) {
-	var trapezi, sxolio, conn, query;
+	var trapezi, sxolio, kritirio, conn, query;
 
 	if (nodereq.isvoli()) return;
 	if (nodereq.denPerastike('sxolio', true)) return;
 
 	trapezi = nodereq.trapeziGet();
-	if (!trapezi)
-	return nodereq.error('Δεν επιτρέπεται διαγραφή στη δημόσια συζήτηση');
+	if (!trapezi) return nodereq.error('Δεν επιτρέπεται διαγραφή στη δημόσια συζήτηση');
 
 	if (nodereq.oxiPektis()) return;
 
 	sxolio = nodereq.url.sxolio;
-	if (parseInt(sxolio) != sxolio)
+
+	if (sxolio === 'ALL')
+	kritirio = '`trapezi` = ' + trapezi.trapeziKodikosGet();
+
+	else if (parseInt(sxolio) != sxolio)
 	return nodereq.error('Λανθασμένος κωδικός σχολίου');
 
+	else
+	kritirio = '`kodikos` = ' + sxolio;
+
 	conn = DB.connection();
-	query = 'DELETE FROM `sizitisi` WHERE `kodikos` = ' + sxolio;
+	query = 'DELETE FROM `sizitisi` WHERE ' + kritirio;
 	conn.connection.query(query, function(err, res) {
 		var kinisi;
 
 		conn.free();
-		if ((!res) || (res.affectedRows != 1))
+		if ((!res) || (res.affectedRows < 1))
 		return nodereq.error('Απέτυχε η διαγραφή σχολίου');
 
 		kinisi = new Kinisi({
