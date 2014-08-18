@@ -1216,6 +1216,7 @@ Skiniko.prototype.processKinisiPostVM = function(data) {
 //
 //	sinedria	Λίστα συνεδριών που εμπλέκονται με το τραπέζι.
 //	trapeziDOM	DOM element τραπεζιού.
+//	sizitisi	Λίστα σχολίων συζήτησης τραπεζιού.
 
 Skiniko.prototype.processKinisiAnteAT = function(data) {
 	var trapezi;
@@ -1238,6 +1239,12 @@ Skiniko.prototype.processKinisiAnteAT = function(data) {
 	if (!trapezi) return this;
 
 	data.trapeziDOM = trapezi.trapeziGetDOM();
+
+	// Θα μας χρειαστούν και τα σχόλια της συζήτησης του τραπεζιού,
+	// ώστε να μπορέσουμε να διαγράψουμε τα σχετικά DOM elements,
+	// τα οποία αλλιώς θα παρέμεναν -απροσπέλαστα πλέον- στη μνήμη.
+
+	data.sizitisi = trapezi.sizitisi;
 	return this;
 };
 
@@ -1284,10 +1291,18 @@ Skiniko.prototype.processKinisiPostAT = function(data) {
 		// διότι τότε το τραπέζι δεν θα είχε επιλεγεί προς αρχειοθέτηση.
 	});
 
-	if (!data.trapeziDOM)
-	return this;
-
+	if (data.trapeziDOM)
 	data.trapeziDOM.remove();
+
+	if (data.sizitisi) {
+		Globals.walk(data.sizitisi, function(kodikos, sxolio) {
+			var dom;
+
+			dom = sxolio.sizitisiGetDOM();
+			if (dom) dom.remove();
+		});
+	}
+
 	return this;
 };
 
