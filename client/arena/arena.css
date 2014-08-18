@@ -1569,6 +1569,15 @@ cursor: auto;
 	opacity: 0.3;
 }
 
+#sizitisiDiagrafiAllIcon {
+	display: none;
+	position: absolute;
+	left: 258px;
+	width: 100px;
+	z-index: 1;
+	cursor: pointer;
+}
+
 .sizitisiArea {
 	display: none;
 }

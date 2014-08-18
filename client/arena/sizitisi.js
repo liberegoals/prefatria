@@ -50,7 +50,45 @@ Arena.sizitisi.setup = function() {
 	Arena.sizitisi.panelDOM = $('<div>').appendTo(Arena.pssDOM);
 	dom = $('<div>').appendTo(Arena.pssDOM).css('position', 'relative');
 
+	// Ακολουθεί η πινακίδα στο επάνω μέρος της συζήτησης που αναφέρει,
+	// με μεγάλα πλην αχνά γράμματα, αν πρόκειται για δημόσια συζήτηση,
+	// ή για συζήτηση τραπεζιού.
+
 	Arena.sizitisi.tabelaDOM = $('<div>').attr('id', 'sizitisiTabela').appendTo(dom);
+
+	// Ακολουθεί, πάλι στο επάνω μέρος της συζήτησης, το εικονίδιο διαγραφής
+	// ολόκληρηςη της συζήτησης τραπεζιού. Αυτό το εικονίδιο εμφανίζεται όταν
+	// ο χρήστης διαγράφει το τελευταίο σχόλιο και εξαφανίζεται μετά από λίγο,
+	// εκτός και αν ο χρήστης τοποθετήσει επάνω στο εικονίδιο τον δείκτη τού
+	// ποντικιού, οπότε διαρκεί όσο ο δείκτης παραμένει εκεί.
+
+	Arena.sizitisi.diagrafiAllDOM = $('<img>').attr({
+		id: 'sizitisiDiagrafiAllIcon',
+		src: 'ikona/misc/Xred.png',
+		title: 'Διαγραφή συζήτησης',
+	}).
+	on('click', function(e) {
+		Arena.inputRefocus(e);
+		Client.skiserService('sizitisiDiagrafi', 'sxolio=ALL').
+		done(function(rsp) {
+			Arena.sizitisi.diagrafiAllDOM.finish().fadeOut(200);
+			Client.fyi.pano(rsp);
+		}).
+		fail(function(err) {
+			Client.skiserFail(err);
+		});
+	}).
+	on('mouseenter', function(e) {
+		Arena.sizitisi.diagrafiAllDOM.finish().css('display', 'block');
+	}).
+	on('mouseleave', function(e) {
+		Arena.sizitisi.diagrafiAllDOM.finish().fadeOut(200);
+	}).appendTo(dom);
+
+	// Ακολουθεί η περιοχή στην οποία περιέχονται τόσο η δημόσια συζήτηση,
+	// όσο και η συζήτηση τραπεζιού. Περιέχεται επίσης η περιοχή προεπισκόπησης
+	// σχολίων.
+
 	Arena.sizitisi.areaDOM = $('<div>').addClass('pss').appendTo(dom);
 
 	Arena.sizitisi.kafenioDOM = $('<div>').addClass('sizitisiArea').appendTo(Arena.sizitisi.areaDOM);
@@ -140,11 +178,8 @@ Arena.sizitisi.panel.bpanelButtonPush(new PButton({
 		sxolio = Arena.ego.trapezi.trapeziSizitisiLast();
 		if (!sxolio) return;
 
-		// Με πολλές επαναλμβανόμενες διαγραφές σε σύντομο χρονικό διάστημα
-		// σηματοδοτούμε διαγραφή όλης της συζήτησης του τραπεζιού.
-
-		if (Arena.sizitisi.diagrafiPolapli())
-		sxolio = 'ALL';
+		Arena.sizitisi.diagrafiAllDOM.finish().css('display', 'block').
+		delay(1000).fadeOut(800);
 
 		Client.skiserService('sizitisiDiagrafi', 'sxolio=' + sxolio).
 		done(function(rsp) {
@@ -155,30 +190,6 @@ Arena.sizitisi.panel.bpanelButtonPush(new PButton({
 		});
 	},
 }));
-
-Arena.sizitisi.diagrafiPolapliCount = 0;
-Arena.sizitisi.diagrafiPolapliLast = 0;
-
-Arena.sizitisi.diagrafiPolapli = function() {
-	var tora;
-
-	tora = Globals.torams();
-	if (tora - Arena.sizitisi.diagrafiPolapliLast > 2000) {
-		Arena.sizitisi.diagrafiPolapliReset(tora);
-		return false;
-	}
-
-	if (++Arena.sizitisi.diagrafiPolapliCount < 7)
-	return false;
-
-	Arena.sizitisi.diagrafiPolapliReset(tora);
-	return true;
-};
-
-Arena.sizitisi.diagrafiPolapliReset = function(tora) {
-	Arena.sizitisi.diagrafiPolapliLast = tora;
-	Arena.sizitisi.diagrafiPolapliCount = 1;
-};
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
 
