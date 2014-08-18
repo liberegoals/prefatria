@@ -612,3 +612,25 @@ Skiniko.prototype.processKinisiAT = function(data) {
 
 	return this;
 };
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// ZS -- Διαγραφή σχολίου συζήτησης
+//
+// Διαγραφή σχολίου συζήτησης τραπεζιού.
+//
+// Δεδομένα
+//
+//	trapezi		Κωδικός τραπεζιού στο οποίο διεξάγεται η συζήτηση.
+//	sxolio		Κωδικός αριθμός σχολίου προς διαγραφή.
+//	pektis		Login name του παίκτη που διαγράφει το σχόλιο.
+
+Skiniko.prototype.processKinisiZS = function(data) {
+	var trapezi;
+
+	trapezi = this.skinikoTrapeziGet(data.trapezi);
+	if (!trapezi) return this;
+
+	trapezi.trapeziSizitisiDelete(data.sxolio);
+	return this;
+};
