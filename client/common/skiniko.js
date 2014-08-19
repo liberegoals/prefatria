@@ -677,6 +677,18 @@ Trapezi.prototype.trapeziIsDimosio = function() {
 	return !this.trapeziIsPrive();
 };
 
+Trapezi.prototype.trapeziIsAorato = function() {
+	var aorato;
+
+	aorato = this.trapeziTrparamGet('ΑΟΡΑΤΟ');
+	if (typeof aorato !== 'string') return false;
+	return aorato.isNai();
+};
+
+Trapezi.prototype.trapeziIsOrato = function() {
+	return !this.trapeziIsAorato();
+};
+
 Trapezi.prototype.trapeziIsAnikto = function() {
 	var anikto;
 
