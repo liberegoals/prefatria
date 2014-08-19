@@ -573,6 +573,9 @@ body {
 	font-weight: bold;
 	font-family: "Comic Sans MS", cursive;
 	color: #323232;
+/*
+	background-color: rgba(178, 232, 236, 0.5);
+*/
 }
 
 .tsoxaPektisAgoraDilosi {
@@ -731,7 +734,12 @@ body {
 
 .tsoxaPektisDilosiPaso {
 	display: block;
+	color: rgb(49, 75, 114);
+	background-color: rgba(185, 199, 201, 1);
+	text-shadow: 1px 1px 2px #886C6C;
+/*
 	background-color: #6E9490;
+*/
 }
 
 .tsoxaPektisSimetoxiPezo {
