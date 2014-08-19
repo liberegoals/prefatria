@@ -1310,6 +1310,11 @@ Skiniko.prototype.processKinisiPostAT = function(data) {
 	if (data.trapeziDOM)
 	data.trapeziDOM.remove();
 
+	skiniko.skinikoProsklisiWalk(function() {
+		if (this.prosklisiTrapeziGet() == data.trapezi)
+		this.prosklisiGetDOM().remove();
+	});
+
 	if (data.sizitisi) {
 		Globals.walk(data.sizitisi, function(kodikos, sxolio) {
 			var dom;
