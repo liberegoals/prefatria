@@ -351,8 +351,14 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 		return Arena.ego.isPektis();
 	},
 	click: function(e) {
-		if (Arena.ego.oxiPektis()) return;
+		if (Arena.ego.oxiPektis())
+		return;
+
 		Client.skiserService('filaPrev').
+		done(function(fila) {
+			Arena.sizitisi.inputDOM.val('FP^' + fila);
+			Arena.sizitisi.keyup();
+		}).
 		fail(function(err) {
 			Client.skiserFail(err);
 		});

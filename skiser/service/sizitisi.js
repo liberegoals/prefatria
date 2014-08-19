@@ -83,7 +83,8 @@ Service.sizitisi.filaPrev = function(nodereq) {
 	if (nodereq.oxiTrapezi()) return;
 
 	sinedria = nodereq.sinedriaGet();
-	if (sinedria.sinedriaOxiPektis()) return nodereq.error('Δεν είστε παίκτης στο τραπέζι');
+	if (sinedria.sinedriaOxiPektis())
+	return nodereq.error('Δεν είστε παίκτης στο τραπέζι');
 
 	trapezi = nodereq.trapeziGet();
 	thesi = sinedria.sinedriaThesiGet();
@@ -94,8 +95,7 @@ Service.sizitisi.filaPrev = function(nodereq) {
 		return nodereq.error('Δεν υπάρχουν φύλλα προηγούμενης διανομής');
 	}
 
-	nodereq.url.sxolio = 'FP^' + fila;
-	Service.sizitisi.partida(nodereq);
+	nodereq.end(fila);
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
