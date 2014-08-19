@@ -243,7 +243,6 @@ Service.sizitisi.diagrafi = function(nodereq) {
 	var trapezi, sxolio, kritirio, conn, query;
 
 	if (nodereq.isvoli()) return;
-	if (nodereq.denPerastike('sxolio', true)) return;
 
 	trapezi = nodereq.trapeziGet();
 	if (!trapezi) return nodereq.error('Δεν επιτρέπεται διαγραφή στη δημόσια συζήτηση');
@@ -252,7 +251,7 @@ Service.sizitisi.diagrafi = function(nodereq) {
 
 	sxolio = nodereq.url.sxolio;
 
-	if (sxolio === 'ALL')
+	if (!sxolio)
 	kritirio = '`trapezi` = ' + trapezi.trapeziKodikosGet();
 
 	else if (parseInt(sxolio) != sxolio)
@@ -274,10 +273,12 @@ Service.sizitisi.diagrafi = function(nodereq) {
 			idos: 'ZS',
 			data: {
 				trapezi: trapezi.trapeziKodikosGet(),
-				sxolio: sxolio,
 				pektis: nodereq.loginGet(),
 			},
 		});
+
+		if (sxolio)
+		kinisi.data.sxolio = sxolio;
 
 		nodereq.end();
 		Server.skiniko.
