@@ -570,36 +570,77 @@ Service.trapezi.arxiothetisi = function(lista, lista2) {
 	var trapezi;
 
 	// Η αρχειοθέτηση των τραπεζιών γίνεται αλυσιδωτά ώστε να αποφύγουμε
-	// τη δημιουργία πολλών database connections.
+	// τη δημιουργία πολλών database connections. Αρχειοθετούμε, δηλαδή,
+	// το πρώτο τραπέζι της λίστας και διακόπτουμε τη διαδικασία, καθώς
+	// κατά το τέλος της διαδικασίας αρχειοθέτησης εκκινούμε εκ αναδρομικά
+	// τη διαδικασία.
 
 	for (trapezi in lista) {
 		delete lista[trapezi];
-		Service.trapezi.arxiothetisi2(trapezi, lista, lista2);
+		Service.trapezi.arxiothetisiTrapezi(trapezi, lista, lista2);
 		return;
 	}
 
-	Service.trapezi.arxiothetisi3(lista2);
+	// Η λίστα έχει εξαντληθεί και εκκινούμε τις διαδικασίες κλεισίματος
+	// της αρχειοθέτησης τραπεζιών.
+
+	Service.trapezi.arxiothetisiTelos(lista2);
 };
 
-Service.trapezi.arxiothetisi2 = function(trapezi, lista, lista2) {
+Service.trapezi.arxiothetisiTrapezi = function(trapezi, lista, lista2) {
 	var conn, query;
 
 	conn = DB.connection();
 	query = 'UPDATE `trapezi` SET `arxio` = NOW() WHERE `kodikos` = ' + trapezi;
 	conn.connection.query(query, function(err, res) {
-		conn.free();
+		if (err || (res.affectedRows != 1)) {
+			conn.free();
+			console.error(trapezi + ': απέτυχε η αρχειοθέτηση του τραπεζιού');
+			Service.trapezi.arxiothetisi(lista, lista2);
+			return;
+		}
 
-		if (err || (res.affectedRows != 1))
-		console.error(trapezi + ': απέτυχε η αρχειοθέτηση του τραπεζιού');
+		// Το τραπέζι έχει αρχειοθετηθεί επιτυχώς. Ακολουθούν οι διαγραφές
+		// προσκλήσεων και συζήτησης του τραπεζιού. Κανονικά θα έπρεπε να
+		// γίνουν όλα αυτά στα πλαίσια κάποιας ενιαίας transaction, αλλά
+		// δεν πειράζει και να αποτύχουν οι διαγραφές, οπότε αποφεύγουμε
+		// τη διαδικασία λογικής transaction.
 
-		else
 		lista2[trapezi] = true;
+		Service.trapezi.arxiothetisiProsklisi(conn, trapezi, lista, lista2);
+	});
+};
+
+Service.trapezi.arxiothetisiProsklisi = function(conn, trapezi, lista, lista2) {
+	var query;
+
+	query = 'DELETE FROM `prosklisi` WHERE `trapezi` = ' + trapezi;
+	conn.connection.query(query, function(err, res) {
+		if (err) {
+			conn.free();
+			console.error(trapezi + ': απέτυχε η διαγραφή προσκλήσεων κατά την αρχειοθέτηση');
+			Service.trapezi.arxiothetisi(lista, lista2);
+			return;
+		}
+
+		Service.trapezi.arxiothetisiSizitisi(conn, trapezi, lista, lista2);
+	});
+};
+
+Service.trapezi.arxiothetisiSizitisi = function(conn, trapezi, lista, lista2) {
+	var query;
+
+	query = 'DELETE FROM `sizitisi` WHERE `trapezi` = ' + trapezi;
+	conn.connection.query(query, function(err, res) {
+		conn.free();
+		if (err)
+		console.error(trapezi + ': απέτυχε η διαγραφή συζήτησης κατά την αρχειοθέτηση');
 
 		Service.trapezi.arxiothetisi(lista, lista2);
 	});
 };
 
-Service.trapezi.arxiothetisi3 = function(lista) {
+Service.trapezi.arxiothetisiTelos = function(lista) {
 	var trapezi, kinisi;
 
 	for (trapezi in lista) {
