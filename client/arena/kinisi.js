@@ -1315,7 +1315,8 @@ Skiniko.prototype.processKinisiPostAT = function(data) {
 // Δεδομένα
 //
 //	trapezi		Κωδικός τραπεζιού στο οποίο διεξάγεται η συζήτηση.
-//	sxolio		Κωδικός αριθμός σχολίου προς διαγραφή.
+//	sxolio		Κωδικός αριθμός σχολίου προς διαγραφή. Αν δεν έχει
+//			καθοριστεί σημαίνει μαζική διαγραφή.
 //	pektis		Login name του παίκτη που διαγράφει το σχόλιο.
 //
 // Επιπρόσθετα δεδομένα
@@ -1328,7 +1329,7 @@ Skiniko.prototype.processKinisiAnteZS = function(data) {
 	trapezi = this.skinikoTrapeziGet(data.trapezi);
 	if (!trapezi) return this;
 
-	if (data.sxolio === 'ALL') {
+	if (!data.sxolio) {
 		data.dom = $();
 		trapezi.trapeziSizitisiWalk(function() {
 			var dom;
@@ -1358,6 +1359,6 @@ Skiniko.prototype.processKinisiPostZS = function(data) {
 	return this;
 
 	Client.fyi.epano('Ο παίκτης <span class="entona ble">' + data.pektis + '</span> διέγραψε ' +
-		(data.sxolio === 'ALL' ? 'τη συζήτηση' : 'κάποιο σχόλιο'));
+		(data.sxolio ? 'κάποιο σχόλιο' : 'τη συζήτηση'));
 	return this;
 };

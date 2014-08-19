@@ -133,6 +133,10 @@ Client.fyi.ekato = function(s) {
 	return Client.fyi.error(s, $('#fyiKato'));
 };
 
+Client.fyi.ekatoDexia = function(s) {
+	return Client.fyi.error('<div class="dexia">' + s + '</div>', $('#fyiKato'));
+};
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 Client.isPektis = function() {

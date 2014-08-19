@@ -69,7 +69,7 @@ Arena.sizitisi.setup = function() {
 	}).
 	on('click', function(e) {
 		Arena.inputRefocus(e);
-		Client.skiserService('sizitisiDiagrafi', 'sxolio=ALL').
+		Client.skiserService('sizitisiDiagrafi').
 		done(function(rsp) {
 			Arena.sizitisi.diagrafiAllDOM.finish().fadeOut(200);
 			Client.fyi.pano(rsp);
@@ -169,14 +169,24 @@ Arena.sizitisi.panel.bpanelButtonPush(new PButton({
 	click: function(e) {
 		var sxolio;
 
-		if (Arena.kafenioMode())
-		return Client.fyi.epano('Δεν επιτρέπεται διαγραφή σχολίων δημόσιας συζήτησης');
+		if (Arena.kafenioMode()) {
+			Client.sound.beep();
+			Client.fyi.ekatoDexia('Δεν επιτρέπεται διαγραφή σχολίων δημόσιας συζήτησης');
+			return;
+		}
 
-		if (Arena.ego.oxiPektis())
-		return Client.fyi.epano('Δεν επιτρέπεται διαγραφή σχολίων από τους θεατές');
+		if (Arena.ego.oxiPektis()) {
+			Client.sound.beep();
+			Client.fyi.ekatoDexia('Δεν επιτρέπεται διαγραφή σχολίων από τους θεατές');
+			return;
+		}
 
 		sxolio = Arena.ego.trapezi.trapeziSizitisiLast();
-		if (!sxolio) return;
+		if (!sxolio) {
+			Client.sound.beep();
+			Client.fyi.ekatoDexia('Δεν υφίσταται σχόλιο προς διαγραφή');
+			return;
+		}
 
 		Arena.sizitisi.diagrafiAllDOM.finish().css('display', 'block').
 		delay(1000).fadeOut(800);
