@@ -786,6 +786,7 @@ Trapezi.prototype.trapeziCreateDOM = function() {
 
 	if (this.hasOwnProperty('DOM')) this.DOM.empty();
 	else this.DOM = $('<div>').addClass('trapezi').prependTo(Arena.trapeziDOM);
+	if (this.trapeziIsAorato()) this.DOM.css('display', 'none');
 
 	this.DOM.
 	append($('<hr>').addClass('trapeziFraktis')).
@@ -905,6 +906,7 @@ Trapezi.prototype.trapeziOptsRefreshDOM = function() {
 	else {
 		this.tsoxaDOM.removeClass('prive');
 	}
+	if (this.trapeziIsAorato()) this.trapeziOptionDOM('Αόρατο τραπέζι', 'aorato.png');
 	if (this.trapeziIsIdioktito()) this.trapeziOptionDOM('Ιδιόκτητο τραπέζι',
 		this.trapeziThesiPekti(Client.session.pektis) === 1 ? 'elefthero.png' : 'idioktito.png');
 	return this;

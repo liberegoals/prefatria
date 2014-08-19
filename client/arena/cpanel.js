@@ -813,6 +813,58 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 
 Arena.cpanel.bpanelButtonPush(new PButton({
 	omada: 2,
+	img: 'aorato.png',
+	title: 'Απόκρυψη τραπεζιού',
+	check: function() {
+		if (Arena.trapeziOxiRithmisi(false)) return false;
+		return Arena.ego.trapezi.trapeziIsOrato();
+	},
+	click: function(e) {
+		var img;
+
+		img = this.pbuttonIconGetDOM();
+		img.working(true);
+		Client.fyi.pano('Απόκρυψη τραπεζιού. Παρακαλώ περιμένετε…', 0);
+		Client.skiserService('trparamSet', 'param=ΑΟΡΑΤΟ', 'timi=ΝΑΙ', 'apodoxi=1').
+		done(function(rsp) {
+			Client.fyi.pano(rsp);
+			img.working(false);
+		}).
+		fail(function(err) {
+			Client.skiserFail(err);
+			img.working(false);
+		});
+	},
+}));
+
+Arena.cpanel.bpanelButtonPush(new PButton({
+	omada: 2,
+	img: 'orato.png',
+	title: 'Αποκάλυψη τραπεζιού',
+	check: function() {
+		if (Arena.trapeziOxiRithmisi(false)) return false;
+		return Arena.ego.trapezi.trapeziIsAorato();
+	},
+	click: function(e) {
+		var img;
+
+		img = this.pbuttonIconGetDOM();
+		img.working(true);
+		Client.fyi.pano('Αποκάλυψη τραπεζιού. Παρακαλώ περιμένετε…', 0);
+		Client.skiserService('trparamSet', 'param=ΑΟΡΑΤΟ', 'timi=ΟΧΙ', 'apodoxi=1').
+		done(function(rsp) {
+			Client.fyi.pano(rsp);
+			img.working(false);
+		}).
+		fail(function(err) {
+			Client.skiserFail(err);
+			img.working(false);
+		});
+	},
+}));
+
+Arena.cpanel.bpanelButtonPush(new PButton({
+	omada: 2,
 	img: 'klisto.png',
 	title: 'Κλείσιμο φύλλων για τους θεατές',
 	check: function() {

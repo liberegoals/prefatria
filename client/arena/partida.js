@@ -322,6 +322,12 @@ Arena.partida.dataPanoRefreshDOM = function() {
 		title: 'Ιδιόκτητο τραπέζι',
 	}));
 
+	if (Arena.ego.trapezi.trapeziIsAorato())
+	Arena.partida.optionsDOM.append($('<img>').addClass('tsoxaOption').attr({
+		src: 'ikona/panel/aorato.png',
+		title: 'Αόρατο τραπέζι',
+	}));
+
 	if (Arena.ego.trapezi.trapeziIsPrive()) {
 		Arena.partida.tsoxaDOM.addClass('prive');
 		Arena.partida.optionsDOM.append($('<img>').addClass('tsoxaOption').attr({

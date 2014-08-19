@@ -720,8 +720,19 @@ Skiniko.prototype.processKinisiPostTS = function(data) {
 	if (!trapezi) return this;
 
 	trapezi.trapeziRefreshDOM();
+	switch (data.param) {
+	case 'ΑΟΡΑΤΟ':
+		if (trapezi.trapeziIsOrato())
+		trapezi.trapeziGetDOM().finish().fadeIn();
+
+		else
+		trapezi.trapeziGetDOM().finish().fadeOut();
+		break;
+	}
 	Arena.panelRefresh();
-	if (Arena.ego.oxiTrapezi(data.trapezi)) return this;
+
+	if (Arena.ego.oxiTrapezi(data.trapezi))
+	return this;
 
 	Arena.partida.refreshDOM();
 
@@ -733,6 +744,9 @@ Skiniko.prototype.processKinisiPostTS = function(data) {
 	case 'ΠΡΙΒΕ':
 		trapezi.trapeziDataRefreshDOM();
 		Client.sound.tic();
+		break;
+	case 'ΑΟΡΑΤΟ':
+		Client.sound.play(trapezi.trapeziIsOrato() ? 'pop.ogg' : 'top.ogg');
 		break;
 	default:
 		Client.sound.tic();
@@ -754,6 +768,8 @@ Arena.partida.markAlagiIcon = {
 	'ΤΕΛΕΙΩΜΑ':		'postel/kanoniko.png',
 	'ΠΡΙΒΕ,ΟΧΙ':		'dimosio.png',
 	'ΠΡΙΒΕ':		'prive.png',
+	'ΑΟΡΑΤΟ,ΟΧΙ':		'orato.png',
+	'ΑΟΡΑΤΟ':		'aorato.png',
 	'ΦΙΛΙΚΗ,ΟΧΙ':		'agonistiki.png',
 	'ΦΙΛΙΚΗ':		'filiki.png',
 	'ΑΝΟΙΚΤΟ,ΟΧΙ':		'klisto.png',
