@@ -471,7 +471,7 @@ Service.trapezi.check = function() {
 
 	tora = Globals.tora();
 	if (Debug.flagGet('trapeziCheck'))
-	console.log('Περίπολος: trapezi.check: ' + tora + ' (' + Service.trapezi.kenoTimeout +
+	console.log('Περίπολος: trapezi.check: ' + Globals.poteOra(tora, true) + ' (' + Service.trapezi.kenoTimeout +
 		', ' + Service.trapezi.oxiKenoTimeout + ')');
 
 	// Κρατάμε στη λίστα "arxio" τα τραπέζια που αρχειοθετούνται
