@@ -789,9 +789,10 @@ Sizitisi.ikonaAppend = function(dom, s) {
 	if (!sinPlin.length)
 	return;
 
-	width = 100;
+	width = 80;
 	for (i = 0; i < sinPlin.length; i++) {
 		width *= sinPlin[i];
+		if (width > 80) width = 80;
 	}
 	img.css('width', width + '%');
 };
