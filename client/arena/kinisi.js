@@ -1231,20 +1231,16 @@ Skiniko.prototype.processKinisiPostVM = function(data) {
 // Επιπρόσθετα δεδομένα
 //
 //	sinedria	Λίστα συνεδριών που εμπλέκονται με το τραπέζι.
-//	trapeziDOM	DOM element τραπεζιού.
-//	sizitisi	Λίστα σχολίων συζήτησης τραπεζιού.
 
 Skiniko.prototype.processKinisiAnteAT = function(data) {
-	var trapezi;
+	var trapezi, dom;
 
 	// Μαζεύουμε τις συνεδρίες που εμπλέκονται με το προς αρχειοθέτηση
 	// τραπέζι στη λίστα "data.sinedria".
 
 	data.sinedria = {};
 	this.skinikoSinedriaWalk(function() {
-		if (this.sinedriaOxiTrapezi(data.trapezi))
-		return;
-
+		if (this.sinedriaIsTrapezi(data.trapezi))
 		data.sinedria[this.sinedriaPektisGet()] = true;
 	});
 
@@ -1254,25 +1250,42 @@ Skiniko.prototype.processKinisiAnteAT = function(data) {
 	trapezi = this.skinikoTrapeziGet(data.trapezi);
 	if (!trapezi) return this;
 
-	data.trapeziDOM = trapezi.trapeziGetDOM();
+	dom = trapezi.trapeziGetDOM();
+	if (dom) dom.remove();
 
-	// Θα μας χρειαστούν και τα σχόλια της συζήτησης του τραπεζιού,
-	// ώστε να μπορέσουμε να διαγράψουμε τα σχετικά DOM elements,
-	// τα οποία αλλιώς θα παρέμεναν -απροσπέλαστα πλέον- στη μνήμη.
+	// Διαγράφουμε τα DOM elements των σχολίων συζήτησης του
+	// τραπεζιού.
 
-	data.sizitisi = trapezi.sizitisi;
+	trapezi.trapeziSizitisiWalk(function() {
+		var dom;
+
+		dom = this.sizitisiGetDOM();
+		if (dom) dom.remove();
+	});
+
+	// Διαγράφουμε τα DOM elements των προσκλήσεων που αφορούν
+	// στο συγκεκριμένο τραπέζι.
+
+	this.skinikoProsklisiWalk(function() {
+		var dom;
+
+		if (this.prosklisiOxiTrapezi(data.trapezi))
+		return;
+
+		dom = this.prosklisiGetDOM();
+		if (dom) dom.remove();
+	});
+
 	return this;
 };
 
 Skiniko.prototype.processKinisiPostAT = function(data) {
-	var skiniko = this, trapezi;
+	var skiniko = this, oxiEgo;
 
-	// Αν το τραπέζι εντοπιστεί στο σκηνικό, παρά την υποτιθέμενη
-	// αρχειοθέτησή του, τότε κάτι πήγε στραβά οπότε δεν προβαίνουμε
-	// σε καμία περαιτέρω ενέργεια.
+	// Η flag "oxiEgo" δείχνει αν εμείς είμαστε άσχετοι με το
+	// εν λόγω τραπέζι.
 
-	trapezi = this.skinikoTrapeziGet(data.trapezi);
-	if (trapezi) return this;
+	oxiEgo = true;
 
 	// Διατρέχουμε τις συνεδρίες που εμπλέκονταν με το τραπέζι και
 	// ελέγχουμε τα νέα στοιχεία θέσης.
@@ -1287,6 +1300,12 @@ Skiniko.prototype.processKinisiPostAT = function(data) {
 		sinedriaDetachRebelosDOM().
 		sinedriaDetachTheatisDOM();
 
+		// Αν είμαστε εμείς που εμπλεκόμαστε με το συγκεκριμένο τραπέζι,
+		// θέτουμε τη σχετική flag.
+
+		if (sinedria.sinedriaIsEgo())
+		oxiEgo = false;
+
 		// Αν ο παίκτης έχει συμπληρωμένο τραπέζι μετά την αρχειοθέτηση
 		// του τραπεζιού, σημαίνει ότι κατά τον επανεντοπισμό του βρέθηκε
 		// να είναι παίκτης σε άλλο τραπέζι, οπότε δεν προβαίνουμε σε
@@ -1299,30 +1318,34 @@ Skiniko.prototype.processKinisiPostAT = function(data) {
 		// στην περιοχή των περιφερομένων.
 
 		Arena.rebelosDOM.prepend(sinedria.rebelosDOM);
-
-		// Δεν χρειάζεται να προβούμε σε ενέργειες ανάλογες με εκείνες
-		// της εξόδου από τραπέζι, καθώς εδώ πρόκειται για αρχειοθέτηση
-		// τραπεζιού, επομένως δεν υπάρχει περίπτωση να είναι ο παίκτης
-		// που τρέχει το πρόγραμμα ένας από τους εμπλεκόμενους στο τραπέζι,
-		// διότι τότε το τραπέζι δεν θα είχε επιλεγεί προς αρχειοθέτηση.
 	});
 
-	if (data.trapeziDOM)
-	data.trapeziDOM.remove();
+	// Αν δεν εμπλεκόμαστε με το τραπέζι που αρχειοθετήθηκε, τότε δεν προβαίνουμε
+	// σε περαιτέρω ενέργειες.
 
-	skiniko.skinikoProsklisiWalk(function() {
-		if (this.prosklisiTrapeziGet() == data.trapezi)
-		this.prosklisiGetDOM().remove();
-	});
+	if (oxiEgo)
+	return;
 
-	if (data.sizitisi) {
-		Globals.walk(data.sizitisi, function(kodikos, sxolio) {
-			var dom;
+	// Εμπλεκόμασταν, μάλλον ως θεατές, στο τραπέζι που αρχειοθετήθηκε, επομένως
+	// είναι καλό να ξανασχηματίσουμε το control panel.
 
-			dom = sxolio.sizitisiGetDOM();
-			if (dom) dom.remove();
-		});
+	Arena.panelRefresh();
+
+	// Αν μετά την αρχειοθέτηση του τραπεζιού βρεθήκαμε σε άλλο τραπέζι, πρέπει
+	// να ξανασχηματίσουμε την παρτίδα και να κάνουμε τις σχετικές αλλαγές στο
+	// καφενείο.
+
+	if (Arena.ego.isTrapezi()) {
+		Arena.partida.refreshDOM();
+		Arena.ego.trapezi.trapeziDataRefreshDOM();
+		this.pektisTrapeziScroll(true);
 	}
+
+	// Αλλιώς, μετά την αρχειοθέτηση βρεθήκαμε περιφερόμενοι, οπότε είναι καλό
+	// να γυρίσουμε σε mode καφενείου.
+
+	else
+	Arena.kafenioModeSet();
 
 	return this;
 };

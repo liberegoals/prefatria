@@ -602,12 +602,26 @@ Skiniko.prototype.processKinisiRC = function(data) {
 //	trapezi		Κωδικός τραπεζιού.
 
 Skiniko.prototype.processKinisiAT = function(data) {
-	this.skinikoTrapeziDelete(data.trapezi);
-	this.skinikoSinedriaWalk(function() {
-		if (this.sinedriaOxiTrapezi(data.trapezi))
-		return;
+	var skiniko = this;
 
+	// Διαγράφουμε το τραπέζι από το σκηνικό.
+
+	this.skinikoTrapeziDelete(data.trapezi);
+
+	// Επανεντοπίζουμε τις συνεδρίες που εμπλέκονταν με
+	// το συγκεκριμένο τραπέζι.
+
+	this.skinikoSinedriaWalk(function() {
+		if (this.sinedriaIsTrapezi(data.trapezi))
 		this.sinedriaEntopismos();
+	});
+
+	// Διαγράφουμε τις προσκλήσεις που αναφέρονται στο
+	// συγκεκριμένο τραπέζι.
+
+	this.skinikoProsklisiWalk(function() {
+		if (this.prosklisiIsTrapezi(data.trapezi))
+		delete skiniko.prosklisi[this.prosklisiKodikosGet()];
 	});
 
 	return this;

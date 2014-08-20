@@ -1231,6 +1231,20 @@ Prosklisi.prototype.prosklisiTrapeziGet = function() {
 	return this.trapezi;
 };
 
+Prosklisi.prototype.prosklisiIsTrapezi = function(trapezi) {
+	if (!trapezi)
+	return false;
+
+	if (typeof trapezi === 'object')
+	trapezi = trapezi.trapeziKodikosGet();
+
+	return(this.prosklisiTrapeziGet() == trapezi);
+};
+
+Prosklisi.prototype.prosklisiOxiTrapezi = function(trapezi) {
+	return !this.prosklisiIsTrapezi(trapezi);
+};
+
 Prosklisi.prototype.prosklisiApoSet = function(apo) {
 	this.apo = apo;
 	return this;
