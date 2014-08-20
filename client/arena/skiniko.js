@@ -775,6 +775,14 @@ Sinedria.prototype.sinedriaDetachNiofertosDOM = function() {
 	return this;
 };
 
+Sinedria.prototype.sinedriaIsEgo = function() {
+	return(this.sinedriaPektisGet() === Client.session.pektis);
+};
+
+Sinedria.prototype.sinedriaOxiEgo = function() {
+	return !this.sinedriaIsEgo();
+};
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 Trapezi.prototype.trapeziGetDOM = function() {
