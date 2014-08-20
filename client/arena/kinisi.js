@@ -1379,6 +1379,18 @@ Skiniko.prototype.processKinisiPostZS = function(data) {
 	if (Arena.ego.oxiTrapezi(data.trapezi))
 	return this;
 
+	// Βρισκόμαστε στο τραπέζι στο οποίο έγινε διαγραφή σχολίων.
+	// Οι κόρνες, τα μολύβια κλπ δεν γράφονται στην database και
+	// ως εκ τούτου δεν έχουν κωδικό και δεν υφίστανται στη λίστα
+	// σχολίων του τραπεζιού. Αυτό έχει ως παρενέργεια την μη
+	// διαγραφή αυτών των σχολίων από τη συζήτηση του τραπεζιού.
+	// Αν, όμως, η διαγραφή είναι μαζική, τότε μπορούμε απλά να
+	// διαγράψουμε όποιο σχόλιο έχει απομείνει στο χώρο συζήτησης
+	// τού τραπεζιού.
+
+	if (!data.sxolio)
+	Arena.sizitisi.trapeziDOM.find('.sizitisi').remove();
+
 	Client.fyi.epano('Ο παίκτης <span class="entona ble">' + data.pektis + '</span> διέγραψε ' +
 		(data.sxolio ? 'κάποιο σχόλιο' : 'τη συζήτηση'));
 	return this;

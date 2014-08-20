@@ -71,7 +71,6 @@ Arena.sizitisi.setup = function() {
 		Arena.inputRefocus(e);
 		Client.skiserService('sizitisiDiagrafi').
 		done(function(rsp) {
-			Arena.sizitisi.trapeziDOM.find('.sizitisi').remove();
 			Arena.sizitisi.diagrafiAllDOM.finish().fadeOut(200);
 			Client.fyi.pano(rsp);
 		}).
