@@ -181,15 +181,36 @@ Arena.sizitisi.panel.bpanelButtonPush(new PButton({
 			return;
 		}
 
+		// Επιχειρούμε να αδράξουμε τον κωδικό του τελευταίου σχολίου της
+		// συζήτησης του τραπεζιού.
+
 		sxolio = Arena.ego.trapezi.trapeziSizitisiLast();
-		if (!sxolio) {
+
+		// Αν υπάρχει σχόλιο στη συζήτηση του τραπεζιού, τότε προτείνουμε
+		// το εικονίδιο μαζικής διαγραφής και προχωρούμε στη διαγραφή του
+		// σχολίου.
+
+		if (sxolio)
+		Arena.sizitisi.diagrafiAllDOM.finish().css('display', 'block').
+		delay(1000).fadeOut(800);
+
+		// Σε περίπτωση που δεν υπάρχουν σχόλια στη λίστα σχολίων του τραπεζιού
+		// αλλά υπάρχουν DOM elements σχολίων συζήτησης τραπεζιού, πρόκειται
+		// για κόρνες, μολύβια κλπ, που δεν καταχωρούνται στην database και
+		// στη λίστα συζήτησης του τραπεζιού. Σ' αυτή την περίπτωση διαγράφουμε
+		// όλη τη συζήτηση, δηλαδή όλα αυτά τα σχόλια από το DOM.
+
+		else if (Arena.sizitisi.trapeziDOM.children('.sizitisi').length)
+		sxolio = 0;
+
+		// Δεν υπάρχουν σχόλια ούτε στη λίστα σχολίων της συζήτησης του τραπεζιού
+		// ούτε στο DOM της συζήτησης τραπεζιού. Εδώ δεν υπάρχει κάτι για διαγραφή.
+
+		else {
 			Client.sound.beep();
 			Client.fyi.ekatoDexia('Δεν υφίσταται σχόλιο προς διαγραφή');
 			return;
 		}
-
-		Arena.sizitisi.diagrafiAllDOM.finish().css('display', 'block').
-		delay(1000).fadeOut(800);
 
 		Client.skiserService('sizitisiDiagrafi', 'sxolio=' + sxolio).
 		done(function(rsp) {

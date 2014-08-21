@@ -1395,6 +1395,8 @@ Skiniko.prototype.processKinisiAnteZS = function(data) {
 };
 
 Skiniko.prototype.processKinisiPostZS = function(data) {
+	var fyi, sxolio, dom, domLast;
+
 	if (!data.dom)
 	return this;
 
@@ -1407,14 +1409,41 @@ Skiniko.prototype.processKinisiPostZS = function(data) {
 	// ως εκ τούτου δεν έχουν κωδικό και δεν υφίστανται στη λίστα
 	// σχολίων του τραπεζιού. Αυτό έχει ως παρενέργεια την μη
 	// διαγραφή αυτών των σχολίων από τη συζήτηση του τραπεζιού.
-	// Αν, όμως, η διαγραφή είναι μαζική, τότε μπορούμε απλά να
-	// διαγράψουμε όποιο σχόλιο έχει απομείνει στο χώρο συζήτησης
-	// τού τραπεζιού.
 
-	if (!data.sxolio)
-	Arena.sizitisi.trapeziDOM.find('.sizitisi').remove();
+	fyi = 'Ο παίκτης <span class="entona ble">' + data.pektis + '</span> διέγραψε ';
+	if (!data.sxolio) {
+		Arena.sizitisi.trapeziDOM.empty();
+		Client.fyi.epano(fyi + 'τη συζήτηση');
+		return this;
+	}
 
-	Client.fyi.epano('Ο παίκτης <span class="entona ble">' + data.pektis + '</span> διέγραψε ' +
-		(data.sxolio ? 'κάποιο σχόλιο' : 'τη συζήτηση'));
+	Client.fyi.epano(fyi + ' κάποιο σχόλιο');
+
+	sxolio = Arena.ego.trapezi.trapeziSizitisiLast();
+	sxolio = Arena.ego.trapezi.trapeziSizitisiGet(sxolio);
+
+	// Αν δεν έχει απομείνει άλλο σχόλιο στη λίστα σχολίων της συζήτησης
+	// του τραπεζιού, τότε καθαρίζουμε το χώρο συζήτησης από τυχόν άλλου
+	// είδους σχόλια (κόρνες, μολύβια κλπ).
+
+	if (!sxolio) {
+		Arena.sizitisi.trapeziDOM.empty();
+		return this;
+	}
+
+	dom = sxolio.sizitisiGetDOM();
+	if (!dom) return this;
+
+	dom = dom[0];
+	while (true) {
+		domLast = Arena.sizitisi.trapeziDOM.find('.sizitisi').last();
+		if (!domLast) break;
+
+		if (domLast[0] === dom)
+		break;
+
+		domLast.remove();
+	}
+
 	return this;
 };

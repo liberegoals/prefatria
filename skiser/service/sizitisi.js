@@ -249,7 +249,7 @@ Service.sizitisi.diagrafi = function(nodereq) {
 
 	if (nodereq.oxiPektis()) return;
 
-	sxolio = nodereq.url.sxolio;
+	sxolio = parseInt(nodereq.url.sxolio);
 
 	if (!sxolio)
 	kritirio = '`trapezi` = ' + trapezi.trapeziKodikosGet();
@@ -266,7 +266,7 @@ Service.sizitisi.diagrafi = function(nodereq) {
 		var kinisi;
 
 		conn.free();
-		if ((!res) || (res.affectedRows < 1))
+		if ((!res) || (sxolio && (res.affectedRows < 1)))
 		return nodereq.end();	// δεν πρέπει να επιστρέψουμε μήνυμα λάθους
 
 		kinisi = new Kinisi({
