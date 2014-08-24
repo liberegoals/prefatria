@@ -62,6 +62,7 @@ Arena.partida.azabRefreshDOM = function() {
 	case 'ΔΗΛΩΣΗ':
 	case 'ΑΛΛΑΓΗ':
 	case 'ΣΥΜΜΕΤΟΧΗ':
+	case 'ΠΛΗΡΩΜΗ':
 		Arena.cpanel.bpanelButtonGet('azab').pbuttonGetDOM().
 		data('what', 'τζόγου προηγούμενης διανομής');
 		Arena.partida.azabDOM.attr('title', 'Τζόγος προηγούμενης διανομής');
