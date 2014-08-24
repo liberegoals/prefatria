@@ -267,3 +267,7 @@ Kinisi.prototype.isAdiaforiMV = function(sinedria) {
 Kinisi.prototype.isAdiaforiVM = function(sinedria) {
 	return this.isAdiaforiMV(sinedria);
 };
+
+Kinisi.prototype.isAdiaforiZP = function(sinedria) {
+	return sinedria.sinedriaOxiTrapezi(this.data.trapezi);
+};

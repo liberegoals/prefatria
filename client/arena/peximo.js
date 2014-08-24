@@ -59,6 +59,7 @@ Arena.partida.azabRefreshDOM = function() {
 	// προηγούμενης διανομής.
 
 	switch (Arena.ego.trapezi.partidaFasiGet()) {
+	case 'ΔΙΑΝΟΜΗ':
 	case 'ΔΗΛΩΣΗ':
 	case 'ΑΛΛΑΓΗ':
 	case 'ΣΥΜΜΕΤΟΧΗ':
