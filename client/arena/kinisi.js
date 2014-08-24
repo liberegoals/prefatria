@@ -1030,6 +1030,7 @@ Skiniko.prototype.processKinisiPostEG = function(data) {
 //	metrita2	Μετρητά παίκτη θέσης 2.
 //	kasa3		Ποσό κάσας παίκτη θέσης 3.
 //	metrita3	Μετρητά παίκτη θέσης 3.
+//	tzogosPrev	Φύλλα τζόγου προηγούμενης διανομής.
 //
 // Επιπρόσθετα δεδομένα
 //
@@ -1042,6 +1043,14 @@ Skiniko.prototype.processKinisiAntePD = function(data) {
 	if (!trapezi) return this;
 
 	data.kasaPrin = trapezi.trapeziIpolipoGet();
+
+	if (!data.tzogosPrev)
+	return this;
+
+	if (Arena.ego.oxiTrapezi(data.trapezi))
+	return this;
+
+	Arena.ego.trapezi.tzogosPrev = data.tzogosPrev.string2xartosia();
 	return this;
 }
 
@@ -1080,15 +1089,10 @@ Skiniko.prototype.processKinisiPostPD = function(data) {
 //	kodikos		Κωδικός διανομής.
 //	trapezi		Κωδικός τραπεζιού.
 //	dealer		Θέση dealer.
-//	tzogosPrev	Φύλλα τζόγου προηγούμενης διανομής.
 
 Skiniko.prototype.processKinisiPostDN = function(data) {
 	$('.tsoxaPektisPliromi').finish().fadeOut(600);
 	Arena.partida.flags.telepli = false;
-
-	if (!Arena.ego.trapezi) return this;
-	if (!data.tzogosPrev) return this;
-	Arena.ego.trapezi.tzogosPrev = data.tzogosPrev.string2xartosia();
 
 	return this;
 };
