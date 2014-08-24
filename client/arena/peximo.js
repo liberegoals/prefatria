@@ -36,9 +36,9 @@ Arena.partida.bazaRefreshDOM = function(prev) {
 	return Arena.partida;
 };
 
-// Στα arrays που ακολουθούν κρατάμε τα στοιχεία της τελευταίας που
-// παίχτηκε στην τσόχα μας. Συνήθως η τελευταία μπάζα εμφανίζεται με
-// βάση τα σχετικά στοιχεία που υπάρχουν στην παρτίδα, αλλά αυτά
+// Στα arrays που ακολουθούν κρατάμε τα στοιχεία της τελευταίας μπάζας
+// που παίχτηκε στην τσόχα μας. Συνήθως η τελευταία μπάζα εμφανίζεται
+// με βάση τα σχετικά στοιχεία που υπάρχουν στην παρτίδα, αλλά αυτά
 // μηδενίζονται κατά την επαναδιανομή και έτσι δεν μπορούμε να δούμε
 // την τελευταία μπάζα της τελευταίας διανομής μετά την επαναδιανομή.
 
@@ -51,7 +51,37 @@ Arena.partida.azabRefreshDOM = function() {
 	Arena.partida.azabDOM.empty().
 	css('display', Arena.partida.flags.azab ? 'block' : 'none');
 
-	if (Arena.ego.oxiTrapezi()) return Arena.partida;
+	if (Arena.ego.oxiTrapezi())
+	return Arena.partida;
+
+	// Στις αρχικές φάσεις κάθε νέας διανομής προτιμούμε στη θέση
+	// της τελευταίας μπάζας να δείχνουμε τα φύλλα του τζόγου της
+	// προηγούμενης διανομής.
+
+	switch (Arena.ego.trapezi.partidaFasiGet()) {
+	case 'ΔΗΛΩΣΗ':
+	case 'ΑΛΛΑΓΗ':
+	case 'ΣΥΜΜΕΤΟΧΗ':
+		Arena.cpanel.bpanelButtonGet('azab').pbuttonGetDOM().
+		data('what', 'τζόγου προηγούμενης διανομής');
+		Arena.partida.azabDOM.attr('title', 'Τζόγος προηγούμενης διανομής');
+		if (Arena.ego.trapezi.tzogosPrev) {
+			Arena.ego.trapezi.azabPios = [
+				3,
+				2,
+			];
+			Arena.ego.trapezi.azabFila = [
+				Arena.ego.trapezi.tzogosPrev.xartosiaFiloGet(0),
+				Arena.ego.trapezi.tzogosPrev.xartosiaFiloGet(1),
+			];
+		}
+		break;
+	default:
+		Arena.cpanel.bpanelButtonGet('azab').pbuttonGetDOM().
+		data('what', 'προηγούμενης μπάζας');
+		Arena.partida.azabDOM.attr('title', 'Προηγούμενη μπάζα');
+		break;
+	}
 
 	// Στο σημείο αυτό ελέγχουμε αν υπάρχουν στοιχεία τελευταίας
 	// μπάζας στην παρτίδα. Αν δεν υπάρχουν σημαίνει ότι δεν
