@@ -427,6 +427,7 @@ Skiniko.prototype.processKinisiTT = function(data) {
 //	kodikos		Κωδικός διανομής.
 //	trapezi		Κωδικός τραπεζιού.
 //	dealer		Θέση dealer.
+//	tzogosPrev	Φύλλα τζόγου προηγούμενης διανομής.
 
 Skiniko.prototype.processKinisiDN = function(data) {
 	var trapezi, dianomi;

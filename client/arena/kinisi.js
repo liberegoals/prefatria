@@ -1080,10 +1080,15 @@ Skiniko.prototype.processKinisiPostPD = function(data) {
 //	kodikos		Κωδικός διανομής.
 //	trapezi		Κωδικός τραπεζιού.
 //	dealer		Θέση dealer.
+//	tzogosPrev	Φύλλα τζόγου προηγούμενης διανομής.
 
 Skiniko.prototype.processKinisiPostDN = function(data) {
 	$('.tsoxaPektisPliromi').finish().fadeOut(600);
 	Arena.partida.flags.telepli = false;
+
+	if (!Arena.ego.trapezi) return this;
+	if (!data.tzogosPrev) return this;
+	Arena.ego.trapezi.tzogosPrev = data.tzogosPrev.string2xartosia();
 
 	return this;
 };

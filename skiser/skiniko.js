@@ -589,6 +589,13 @@ Trapezi.prototype.trapeziNeaDianomi3 = function(conn, dianomi, energia, callback
 		},
 	});
 
+	// Αν υφίσταται τζόγος τρέχουσας διανομής, τον στέλνουμε με τα δεδομένα
+	// της νέας διανομής ώστε να μπορούν να τον δουν οι παίκτες.
+
+	tzogosPrev = this.partidaTzogosGet();
+	if (tzogosPrev && (tzogosPrev.xartosiaMikos() === 2))
+	kinisiDianomi.data.tzogosPrev = tzogosPrev.xartosia2string();
+
 	kinisiEnergia = new Kinisi({
 		idos: 'EG',
 		data: {
@@ -600,10 +607,6 @@ Trapezi.prototype.trapeziNeaDianomi3 = function(conn, dianomi, energia, callback
 			data: energia.energiaDataGet(),
 		},
 	});
-
-	tzogosPrev = this.partidaTzogosGet();
-	if (tzogosPrev && (tzogosPrev.xartosiaMikos() === 2))
-	kinisiEnergia.data.tzogosPrev = tzogosPrev.xartosia2string();
 
 	callback.call(this, conn, kinisiDianomi, kinisiEnergia);
 	return this;
