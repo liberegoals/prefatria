@@ -1399,11 +1399,12 @@ cursor: auto;
 
 .tsoxaAzabTzogos {
 	position: absolute;
-	bottom: 26px;
+	bottom: 20px;
+	width: 80px;
 }
 
 #tsoxaAzabTzogos0 {
-	left: 10px;
+	left: 4px;
 
 	transform: rotate(-10deg);
 	-ms-transform: rotate(-10deg);
@@ -1411,7 +1412,7 @@ cursor: auto;
 }
 
 #tsoxaAzabTzogos1 {
-	left: 30px;
+	left: 24px;
 
 	transform: rotate(10deg);
 	-ms-transform: rotate(10deg);
