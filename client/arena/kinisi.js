@@ -1077,11 +1077,14 @@ Skiniko.prototype.processKinisiPostPD = function(data) {
 //
 // Δεδομένα
 //
-// Προς το παρόν δεν χρησιμοποιούμε τα δεδομένα της διανομής.
+//	kodikos		Κωδικός διανομής.
+//	trapezi		Κωδικός τραπεζιού.
+//	dealer		Θέση dealer.
 
 Skiniko.prototype.processKinisiPostDN = function(data) {
 	$('.tsoxaPektisPliromi').finish().fadeOut(600);
 	Arena.partida.flags.telepli = false;
+
 	return this;
 };
 
