@@ -109,9 +109,7 @@ Arena.partida.setup = function() {
 		id: 'tsoxaTzogos',
 		title: 'Τζόγος',
 	})).
-	append(Arena.partida.azabDOM = $('<div>').addClass('tsoxaAzab').attr({
-		title: 'Τελευταία μπάζα',
-	})).
+	append(Arena.partida.azabDOM = $('<div>').addClass('tsoxaAzab')).
 	append(Arena.partida.filaPrevDOM = $('<div>').attr({
 		id: 'tsoxaFilaPrev',
 		title: 'Προηγούμενη χαρτωσιά',
