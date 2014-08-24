@@ -587,15 +587,36 @@ Service.trapezi.arxiothetisi = function(lista, lista2) {
 	Service.trapezi.arxiothetisiTelos(lista2);
 };
 
-Service.trapezi.arxiothetisiTrapezi = function(trapezi, lista, lista2) {
-	var conn, query;
+Service.trapezi.arxiothetisiTrapezi = function(trapeziKodikos, lista, lista2) {
+	var trapezi, conn, query;
+
+	trapezi = Server.skiniko.skinikoTrapeziGet(trapeziKodikos);
+	if (!trapezi) return;
 
 	conn = DB.connection();
-	query = 'UPDATE `trapezi` SET `arxio` = NOW() WHERE `kodikos` = ' + trapezi;
+	query = 'UPDATE `trapezi` SET `arxio` = NOW()';
+
+	// Επιχειρούμε να «πληρώσουμε» τις κενές θέσεις του τραπεζιού
+	// με τα ονόματα των παικτών που κάθισαν τελευταίοι σ' αυτές.
+
+	trapezi.trapeziThesiWalk(function(thesi) {
+		var pektis;
+
+		pektis = this.trapeziPektisGet(thesi);
+		if (pektis) return;
+
+		pektis = this.trapeziTelefteosGet(thesi);
+		if (!pektis) return;
+
+		query += ', `pektis' + thesi + '` = ' + pektis.json();
+	});
+
+	query += ' WHERE `kodikos` = ' + trapeziKodikos;
+
 	conn.connection.query(query, function(err, res) {
 		if (err || (res.affectedRows != 1)) {
 			conn.free();
-			console.error(trapezi + ': απέτυχε η αρχειοθέτηση του τραπεζιού');
+			console.error(trapeziKodikos + ': απέτυχε η αρχειοθέτηση του τραπεζιού');
 			Service.trapezi.arxiothetisi(lista, lista2);
 			return;
 		}
@@ -606,8 +627,8 @@ Service.trapezi.arxiothetisiTrapezi = function(trapezi, lista, lista2) {
 		// δεν πειράζει και να αποτύχουν οι διαγραφές, οπότε αποφεύγουμε
 		// τη διαδικασία λογικής transaction.
 
-		lista2[trapezi] = true;
-		Service.trapezi.arxiothetisiProsklisi(conn, trapezi, lista, lista2);
+		lista2[trapeziKodikos] = true;
+		Service.trapezi.arxiothetisiProsklisi(conn, trapeziKodikos, lista, lista2);
 	});
 };
 
