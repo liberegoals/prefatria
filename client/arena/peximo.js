@@ -36,6 +36,8 @@ Arena.partida.bazaRefreshDOM = function(prev) {
 	return Arena.partida;
 };
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
+
 // Στα arrays που ακολουθούν κρατάμε τα στοιχεία της τελευταίας μπάζας
 // που παίχτηκε στην τσόχα μας. Συνήθως η τελευταία μπάζα εμφανίζεται
 // με βάση τα σχετικά στοιχεία που υπάρχουν στην παρτίδα, αλλά αυτά
@@ -46,16 +48,14 @@ Arena.partida.azabPios = [];
 Arena.partida.azabFila = [];
 
 Arena.partida.azabRefreshDOM = function() {
-	var pios, fila, torini, i, iseht;
-
 	Arena.partida.azabDOM.empty().
 	css('display', Arena.partida.flags.azab ? 'block' : 'none');
 
 	if (Arena.ego.oxiTrapezi())
 	return Arena.partida;
 
-	// Στις αρχικές φάσεις κάθε νέας διανομής προτιμούμε στη θέση
-	// της τελευταίας μπάζας να δείχνουμε τα φύλλα του τζόγου της
+	// Στις αρχικές και στις τελικές φάσεις κάθε νέας διανομής προτιμούμε
+	// στη θέση της τελευταίας μπάζας να δείχνουμε τα φύλλα του τζόγου τής
 	// προηγούμενης διανομής.
 
 	switch (Arena.ego.trapezi.partidaFasiGet()) {
@@ -64,32 +64,40 @@ Arena.partida.azabRefreshDOM = function() {
 	case 'ΑΛΛΑΓΗ':
 	case 'ΣΥΜΜΕΤΟΧΗ':
 	case 'ΠΛΗΡΩΜΗ':
-		Arena.cpanel.bpanelButtonGet('azab').pbuttonGetDOM().
-		data('what', 'τζόγου προηγούμενης διανομής');
-		Arena.partida.azabDOM.attr('title', 'Τζόγος προηγούμενης διανομής');
-		if (Arena.ego.trapezi.tzogosPrev) {
-			Arena.ego.trapezi.azabPios = [
-				3,
-				2,
-			];
-			Arena.ego.trapezi.azabFila = [
-				Arena.ego.trapezi.tzogosPrev.xartosiaFiloGet(0),
-				Arena.ego.trapezi.tzogosPrev.xartosiaFiloGet(1),
-			];
-		}
+		Arena.partida.azabRefreshTzogosDOM();
 		break;
 	default:
-		Arena.cpanel.bpanelButtonGet('azab').pbuttonGetDOM().
-		data('what', 'προηγούμενης μπάζας');
-		Arena.partida.azabDOM.attr('title', 'Προηγούμενη μπάζα');
+		Arena.partida.azabRefreshBazaDOM();
 		break;
 	}
 
-	// Στο σημείο αυτό ελέγχουμε αν υπάρχουν στοιχεία τελευταίας
-	// μπάζας στην παρτίδα. Αν δεν υπάρχουν σημαίνει ότι δεν
-	// εμφανίσαμε καμία μπάζα γι' αυτή την παρτίδα, οπότε θα
-	// πρέπει να καταφύγουμε σε τυχόν κρατημένη τελευταία μπάζα
-	// της τσόχας μας.
+	return Arena.partida;
+};
+
+Arena.partida.azabRefreshTzogosDOM = function() {
+	var i, filo;
+
+	if (!Arena.ego.trapezi.tzogosPrev)
+	return Arena.partida;
+
+	Arena.cpanel.bpanelButtonGet('azab').pbuttonGetDOM().
+	data('what', 'τζόγου προηγούμενης διανομής');
+	Arena.partida.azabDOM.attr('title', 'Τζόγος προηγούμενης διανομής');
+
+	for (i = 0; i < 2; i++) {
+		filo = Arena.ego.trapezi.tzogosPrev.xartosiaFiloGet(i),
+		Arena.partida.azabDOM.
+		append($('<img>').addClass('tsoxaAzabTzogos').attr({
+			id: 'tsoxaAzabTzogos' + i,
+			src: 'ikona/trapoula/' + filo.filoXromaGet() + filo.filoAxiaGet() + '.png',
+		}));
+	}
+
+	return Arena.partida;
+};
+
+Arena.partida.azabRefreshBazaDOM = function() {
+	var pios, fila, torini, i, iseht;
 
 	pios = Arena.ego.trapezi.azabPios;
 	if (pios.length) {
@@ -120,6 +128,8 @@ Arena.partida.azabRefreshDOM = function() {
 
 	return Arena.partida;
 };
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
 
 Arena.partida.claimRefreshDOM = function() {
 	var filaDom;
