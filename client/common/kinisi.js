@@ -434,6 +434,17 @@ Skiniko.prototype.processKinisiDN = function(data) {
 	trapezi = this.skinikoTrapeziGet(data.trapezi);
 	if (!trapezi) return this;
 
+	// Εφόσον έχουμε διανομή στο τραπέζι, την καθαρίζουμε από
+	// τις ενέργειές της.
+
+	dianomi = trapezi.trapeziTelefteaDianomi();
+	if (dianomi) {
+		delete dianomi.energiaArray;
+		delete dianomi.energia;
+	}
+
+	// Δημιουργούμε τη νέα διανομή και την εντάσσουμε στο τραπέζι.
+
 	dianomi = new Dianomi({
 		kodikos: data.kodikos,
 		trapezi: data.trapezi,
