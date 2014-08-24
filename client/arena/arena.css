@@ -1397,6 +1397,27 @@ cursor: auto;
 	left: 30px;
 }
 
+.tsoxaAzabTzogos {
+	position: absolute;
+	bottom: 26px;
+}
+
+#tsoxaAzabTzogos0 {
+	left: 10px;
+
+	transform: rotate(-10deg);
+	-ms-transform: rotate(-10deg);
+	-webkit-transform: rotate(-10deg);
+}
+
+#tsoxaAzabTzogos1 {
+	left: 30px;
+
+	transform: rotate(10deg);
+	-ms-transform: rotate(10deg);
+	-webkit-transform: rotate(10deg);
+}
+
 /**********************************************************************************************************************/
 
 .tsoxaTelosIcon {
