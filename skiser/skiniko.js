@@ -573,7 +573,7 @@ Trapezi.prototype.trapeziNeaDianomi2 = function(conn, dianomi, success, fail) {
 };
 
 Trapezi.prototype.trapeziNeaDianomi3 = function(conn, dianomi, energia, callback) {
-	var trapeziKodikos, dianomiKodikos, dealer, fila, kinisiDianomi, kinisiEnergia;
+	var trapeziKodikos, dianomiKodikos, dealer, fila, tzogosPrev, kinisiDianomi, kinisiEnergia;
 
 	trapeziKodikos = this.trapeziKodikosGet();
 	dianomiKodikos = dianomi.dianomiKodikosGet();
@@ -600,6 +600,10 @@ Trapezi.prototype.trapeziNeaDianomi3 = function(conn, dianomi, energia, callback
 			data: energia.energiaDataGet(),
 		},
 	});
+
+	tzogosPrev = this.partidaTzogosGet();
+	if (tzogosPrev && (tzogosPrev.xartosiaMikos() === 2))
+	kinisiEnergia.data.tzogosPrev = tzogosPrev.xartosia2string();
 
 	callback.call(this, conn, kinisiDianomi, kinisiEnergia);
 	return this;
