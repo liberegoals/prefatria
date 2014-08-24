@@ -431,7 +431,23 @@ Service.trapezi.dianomi = function(trapezi, fail) {
 };
 
 Service.trapezi.dianomiSeLigo = function(trapezi, delay) {
-	if (delay === undefined) delay = 3000;
+	var tzogos, kinisi;
+
+	// Αν υφίσταται τζόγος τρέχουσας διανομής, τον στέλνουμε με τα δεδομένα
+	// της νέας διανομής ώστε να μπορούν να τον δουν οι παίκτες.
+
+	tzogos = trapezi.partidaTzogosGet();
+	if (tzogos && (tzogos.xartosiaMikos() === 2)) {
+		kinisi = new Kinisi({
+			idos: 'ZP',
+			data: {
+				trapezi: trapezi.trapeziKodikosGet(),
+				fila: tzogos.xartosia2string(),
+			},
+		});
+		Server.skiniko.
+		kinisiAdd(kinisi);
+	}
 
 	// Πρόκειται να μοιραστεί νέα διανομή. Έχουμε κρατημένα τα φύλλα της
 	// τρέχουσας διανομής (όπως αυτά διαμορφώθηκαν μετά τη φάση της αγοράς)
@@ -439,6 +455,9 @@ Service.trapezi.dianomiSeLigo = function(trapezi, delay) {
 	// την οποία αντλούνται για επίδειξη.
 
 	trapezi.trapeziFilaPrevSet();
+
+	if (delay === undefined)
+	delay = 3000;
 
 	setTimeout(function() {
 		Service.trapezi.dianomi(trapezi);

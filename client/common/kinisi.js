@@ -505,7 +505,6 @@ Skiniko.prototype.processKinisiEG = function(data) {
 //	metrita2	Μετρητά παίκτη θέσης 2.
 //	kasa3		Ποσό κάσας παίκτη θέσης 3.
 //	metrita3	Μετρητά παίκτη θέσης 3.
-//	tzogosPrev	Φύλλα τζόγου προηγούμενης διανομής.
 
 Skiniko.prototype.processKinisiPD = function(data) {
 	var trapezi, dianomi, energia;
