@@ -1380,6 +1380,16 @@ Arena.ego.oxiThesi = function(thesi) {
 	return !Arena.ego.isThesi(thesi);
 };
 
+Arena.ego.isVip = function() {
+	if (!Arena.ego.pektis) return false;
+	return Arena.ego.pektis.pektisIsVip();
+};
+
+Arena.ego.oxiVip = function() {
+	if (!Arena.ego.pektis) return true;
+	return Arena.ego.pektis.pektisOxiVip();
+};
+
 Arena.ego.isDiaxiristis = function() {
 	if (!Arena.ego.pektis) return false;
 	return Arena.ego.pektis.pektisIsDiaxiristis();

@@ -826,6 +826,7 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 	title: 'Απόκρυψη τραπεζιού',
 	check: function() {
 		if (Arena.trapeziOxiRithmisi(true)) return false;
+		if (Arena.ego.oxiVip()) return false;
 		return Arena.ego.trapezi.trapeziIsOrato();
 	},
 	click: function(e) {
@@ -852,6 +853,7 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 	title: 'Αποκάλυψη τραπεζιού',
 	check: function() {
 		if (Arena.trapeziOxiRithmisi(true)) return false;
+		if (Arena.ego.oxiVip()) return false;
 		return Arena.ego.trapezi.trapeziIsAorato();
 	},
 	click: function(e) {
