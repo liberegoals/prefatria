@@ -288,12 +288,14 @@ Service.sizitisi.diagrafi = function(nodereq) {
 };
 
 Service.sizitisi.clearKafenio = function(nodereq) {
-	var trapezi, sxolio, kritirio, conn, query;
+	var pektis, conn, query;
 
 	if (nodereq.isvoli()) return;
 	if (nodereq.pektisGet().pektisOxiDiaxiristis())
 	return nodereq.error('Δεν είστε διαχειριστής');
 
+	pektis = nodereq.loginGet();
+	console.log('Εκκαθάριση δημόσιας συζήτησης από τον χρήστη "' + pektis + '"');
 	conn = DB.connection();
 	query = 'DELETE FROM `sizitisi` WHERE `trapezi` IS NULL';
 	conn.connection.query(query, function(err, res) {
@@ -306,7 +308,7 @@ Service.sizitisi.clearKafenio = function(nodereq) {
 		kinisi = new Kinisi({
 			idos: 'ZS',
 			data: {
-				pektis: nodereq.loginGet(),
+				pektis: pektis,
 			},
 		});
 
