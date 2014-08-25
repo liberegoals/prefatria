@@ -286,3 +286,53 @@ Service.sizitisi.diagrafi = function(nodereq) {
 		kinisiAdd(kinisi);
 	});
 };
+
+Service.sizitisi.clearKafenio = function(nodereq) {
+	var trapezi, sxolio, kritirio, conn, query;
+
+	if (nodereq.isvoli()) return;
+	if (nodereq.perastike('kafenio'))
+	return Service.sizitisi.diagrafiKafenio(nodereq);
+
+	trapezi = nodereq.trapeziGet();
+	if (!trapezi) return nodereq.error('Δεν επιτρέπεται διαγραφή στη δημόσια συζήτηση');
+
+	if (nodereq.oxiPektis()) return;
+
+	sxolio = parseInt(nodereq.url.sxolio);
+
+	if (!sxolio)
+	kritirio = '`trapezi` = ' + trapezi.trapeziKodikosGet();
+
+	else if (parseInt(sxolio) != sxolio)
+	return nodereq.error('Λανθασμένος κωδικός σχολίου');
+
+	else
+	kritirio = '`kodikos` = ' + sxolio;
+
+	conn = DB.connection();
+	query = 'DELETE FROM `sizitisi` WHERE ' + kritirio;
+	conn.connection.query(query, function(err, res) {
+		var kinisi;
+
+		conn.free();
+		if ((!res) || (sxolio && (res.affectedRows < 1)))
+		return nodereq.end();	// δεν πρέπει να επιστρέψουμε μήνυμα λάθους
+
+		kinisi = new Kinisi({
+			idos: 'ZS',
+			data: {
+				trapezi: trapezi.trapeziKodikosGet(),
+				pektis: nodereq.loginGet(),
+			},
+		});
+
+		if (sxolio)
+		kinisi.data.sxolio = sxolio;
+
+		nodereq.end();
+		Server.skiniko.
+		processKinisi(kinisi).
+		kinisiAdd(kinisi);
+	});
+};

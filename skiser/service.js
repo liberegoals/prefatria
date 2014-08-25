@@ -33,6 +33,7 @@ Log.level.pop();
 // επεξεργασία που υφίσταται από τον server.
 
 Server.router = {
+	'/sizitisiClearKafenio': Service.sizitisi.clearKafenio,
 	'/sizitisiDiagrafi': Service.sizitisi.diagrafi,
 	'/moliviAkirosi': Service.sizitisi.moliviAkirosi,
 	'/moliviEkinisi': Service.sizitisi.moliviEkinisi,
