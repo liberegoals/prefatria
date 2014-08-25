@@ -109,6 +109,10 @@ Pektis.prototype.pektisIsDiaxiristis = function() {
 	return(this.pektisAxiomaRankGet() >= Peparam.axiomaRank['ΔΙΑΧΕΙΡΙΣΤΗΣ']);
 };
 
+Pektis.prototype.pektisOxiDiaxiristis = function() {
+	return !this.pektisIsDiaxiristis();
+};
+
 Pektis.prototype.pektisPlatiGet = function() {
 	var plati = this.pektisPeparamGet('ΠΛΑΤΗ');
 	return(plati != 'ΚΟΚΚΙΝΟ' ? 'ΜΠΛΕ' : plati);

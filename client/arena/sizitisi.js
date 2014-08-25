@@ -170,8 +170,19 @@ Arena.sizitisi.panel.bpanelButtonPush(new PButton({
 		var sxolio;
 
 		if (Arena.kafenioMode()) {
-			Client.sound.beep();
-			Client.fyi.ekatoDexia('Δεν επιτρέπεται διαγραφή σχολίων δημόσιας συζήτησης');
+			if (Arena.ego.oxiDiaxiristis()) {
+				Client.sound.beep();
+				Client.fyi.ekatoDexia('Δεν επιτρέπεται διαγραφή σχολίων δημόσιας συζήτησης');
+				return;
+			}
+
+			Client.skiserService('sizitisiClearKafenio').
+			done(function(rsp) {
+				Client.fyi.pano(rsp);
+			}).
+			fail(function(err) {
+				Client.skiserFail(err);
+			});
 			return;
 		}
 
