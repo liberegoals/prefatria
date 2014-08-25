@@ -291,44 +291,24 @@ Service.sizitisi.clearKafenio = function(nodereq) {
 	var trapezi, sxolio, kritirio, conn, query;
 
 	if (nodereq.isvoli()) return;
-	if (nodereq.perastike('kafenio'))
-	return Service.sizitisi.diagrafiKafenio(nodereq);
-
-	trapezi = nodereq.trapeziGet();
-	if (!trapezi) return nodereq.error('Δεν επιτρέπεται διαγραφή στη δημόσια συζήτηση');
-
-	if (nodereq.oxiPektis()) return;
-
-	sxolio = parseInt(nodereq.url.sxolio);
-
-	if (!sxolio)
-	kritirio = '`trapezi` = ' + trapezi.trapeziKodikosGet();
-
-	else if (parseInt(sxolio) != sxolio)
-	return nodereq.error('Λανθασμένος κωδικός σχολίου');
-
-	else
-	kritirio = '`kodikos` = ' + sxolio;
+	if (nodereq.pektisGet().pektisOxiDiaxiristis())
+	return nodereq.error('Δεν είστε διαχειριστής');
 
 	conn = DB.connection();
-	query = 'DELETE FROM `sizitisi` WHERE ' + kritirio;
+	query = 'DELETE FROM `sizitisi` WHERE `trapezi` IS NULL';
 	conn.connection.query(query, function(err, res) {
 		var kinisi;
 
 		conn.free();
-		if ((!res) || (sxolio && (res.affectedRows < 1)))
-		return nodereq.end();	// δεν πρέπει να επιστρέψουμε μήνυμα λάθους
+		if ((!res) || (res.affectedRows < 1))
+		return nodereq.error('Δεν έγινε καθαρισμός δημόσιας συζήτησης');
 
 		kinisi = new Kinisi({
 			idos: 'ZS',
 			data: {
-				trapezi: trapezi.trapeziKodikosGet(),
 				pektis: nodereq.loginGet(),
 			},
 		});
-
-		if (sxolio)
-		kinisi.data.sxolio = sxolio;
 
 		nodereq.end();
 		Server.skiniko.
