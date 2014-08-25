@@ -1362,6 +1362,8 @@ Skiniko.prototype.processKinisiPostAT = function(data) {
 // Δεδομένα
 //
 //	trapezi		Κωδικός τραπεζιού στο οποίο διεξάγεται η συζήτηση.
+//			Αν δεν έχει καθοριστεί τραπέζι, τότε πρόκειται για
+//			καθαρισμό της δημόσιας συζήτησης.
 //	sxolio		Κωδικός αριθμός σχολίου προς διαγραφή. Αν δεν έχει
 //			καθοριστεί σημαίνει μαζική διαγραφή.
 //	pektis		Login name του παίκτη που διαγράφει το σχόλιο.
@@ -1400,10 +1402,17 @@ Skiniko.prototype.processKinisiAnteZS = function(data) {
 Skiniko.prototype.processKinisiPostZS = function(data) {
 	var fyi, sxolio, dom, domLast;
 
+	if (!data.trapezi) {
+		Arena.sizitisi.kafenioDOM.empty();
+		Client.fyi.epano('Έγινε εκκαθάριση της δημόσιας συζήτησης');
+		return this;
+	}
+
 	if (!data.dom)
 	return this;
 
 	data.dom.remove();
+
 	if (Arena.ego.oxiTrapezi(data.trapezi))
 	return this;
 
