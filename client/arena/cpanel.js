@@ -957,7 +957,7 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 	img: 'kasaKato.png',
 	title: 'Μείωση κάσας',
 	check: function() {
-		if (Arena.trapeziOxiRithmisi(false)) return false;
+		if (Arena.trapeziOxiRithmisi()) return false;
 		return Arena.ego.trapezi.trapeziIsDianomi();
 	},
 	click: function(e) {
