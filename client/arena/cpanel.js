@@ -128,7 +128,7 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 	img: 'kasa.png',
 	title: 'Κάσα 50/30',
 	check: function() {
-		return Arena.trapeziRithmisi(false);
+		return Arena.trapeziRithmisi();
 	},
 	click: function(e) {
 		var img, kasa;
@@ -773,7 +773,7 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 	img: 'prive.png',
 	title: 'Πριβέ τραπέζι',
 	check: function() {
-		if (Arena.trapeziOxiRithmisi(false)) return false;
+		if (Arena.trapeziOxiRithmisi(true)) return false;
 		return Arena.ego.trapezi.trapeziIsDimosio();
 	},
 	click: function(e) {
@@ -799,7 +799,7 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 	img: 'dimosio.png',
 	title: 'Δημόσιο τραπέζι',
 	check: function() {
-		if (Arena.trapeziOxiRithmisi(false)) return false;
+		if (Arena.trapeziOxiRithmisi(true)) return false;
 		return Arena.ego.trapezi.trapeziIsPrive();
 	},
 	click: function(e) {
@@ -825,7 +825,7 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 	img: 'aorato.png',
 	title: 'Απόκρυψη τραπεζιού',
 	check: function() {
-		if (Arena.trapeziOxiRithmisi()) return false;
+		if (Arena.trapeziOxiRithmisi(true)) return false;
 		return Arena.ego.trapezi.trapeziIsOrato();
 	},
 	click: function(e) {
@@ -851,7 +851,7 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 	img: 'orato.png',
 	title: 'Αποκάλυψη τραπεζιού',
 	check: function() {
-		if (Arena.trapeziOxiRithmisi()) return false;
+		if (Arena.trapeziOxiRithmisi(true)) return false;
 		return Arena.ego.trapezi.trapeziIsAorato();
 	},
 	click: function(e) {
@@ -877,7 +877,7 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 	img: 'klisto.png',
 	title: 'Κλείσιμο φύλλων για τους θεατές',
 	check: function() {
-		if (Arena.trapeziOxiRithmisi(false)) return false;
+		if (Arena.trapeziOxiRithmisi(true)) return false;
 		return Arena.ego.trapezi.trapeziIsAnikto();
 	},
 	click: function(e) {
@@ -903,7 +903,7 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 	img: 'anikto.png',
 	title: 'Άνοιγμα φύλλων για τους θεατές',
 	check: function() {
-		if (Arena.trapeziOxiRithmisi(false)) return false;
+		if (Arena.trapeziOxiRithmisi(true)) return false;
 		return Arena.ego.trapezi.trapeziIsKlisto();
 	},
 	click: function(e) {
@@ -929,7 +929,7 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 	img: 'kasaPano.png',
 	title: 'Αύξηση κάσας',
 	check: function() {
-		if (Arena.trapeziOxiRithmisi(false)) return false;
+		if (Arena.trapeziOxiRithmisi(true)) return false;
 		return Arena.ego.trapezi.trapeziIsDianomi();
 	},
 	click: function(e) {
@@ -957,7 +957,7 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 	img: 'kasaKato.png',
 	title: 'Μείωση κάσας',
 	check: function() {
-		if (Arena.trapeziOxiRithmisi(false)) return false;
+		if (Arena.trapeziOxiRithmisi(true)) return false;
 		return Arena.ego.trapezi.trapeziIsDianomi();
 	},
 	click: function(e) {
