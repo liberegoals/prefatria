@@ -213,11 +213,13 @@ table td {
 	width: 36px;
 	text-align: center;
 	font-size: 14px;
+	font-weight: bold;
 }
 
 .kitapiKapikiaDiagrafi {
 	text-decoration:line-through;
 	color: #6B7A8A;
+	font-weight: normal;
 }
 
 .kitapiEmfanesPoso {
