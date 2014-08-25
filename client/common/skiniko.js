@@ -101,6 +101,10 @@ Pektis.prototype.pektisIsVip = function() {
 	return(this.pektisAxiomaRankGet() >= Peparam.axiomaRank['VIP']);
 };
 
+Pektis.prototype.pektisOxiVip = function() {
+	return !this.pektisIsVip();
+};
+
 Pektis.prototype.pektisIsEpoptis = function() {
 	return(this.pektisAxiomaRankGet() >= Peparam.axiomaRank['ΕΠΟΠΤΗΣ']);
 };
