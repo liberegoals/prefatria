@@ -462,10 +462,18 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 	},
 	click: function(e) {
 		Arena.partida.flags.azab = !Arena.partida.flags.azab;
-		if (Arena.partida.flags.azab) Arena.partida.azabDOM.finish().fadeIn(100);
+
+		if (Arena.partida.flags.azab)
+		Arena.partida.azabDOM.finish().fadeIn(100);
+
 		else Arena.partida.azabDOM.finish().fadeOut(200, function() {
+			// Υπάρχει περίπτωση να έχουμε εμφανίσει τον τζόγο,
+			// οπότε ξαναγυρνάμε στην τελευταία μπάζα.
+
+			if (Arena.partida.azabDOM.data('tzogos'))
 			Arena.partida.azabRefreshBazaDOM();
 		});
+
 		Arena.cpanel.bpanelRefresh();
 	},
 }));
