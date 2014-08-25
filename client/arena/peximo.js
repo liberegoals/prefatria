@@ -51,53 +51,22 @@ Arena.partida.azabRefreshDOM = function() {
 	Arena.partida.azabDOM.empty().
 	css('display', Arena.partida.flags.azab ? 'block' : 'none');
 
-	if (Arena.ego.oxiTrapezi())
-	return Arena.partida;
-
-	// Στις αρχικές και στις τελικές φάσεις κάθε νέας διανομής προτιμούμε
-	// στη θέση της τελευταίας μπάζας να δείχνουμε τα φύλλα του τζόγου τής
-	// προηγούμενης διανομής.
-
-	switch (Arena.ego.trapezi.partidaFasiGet()) {
-	case 'ΔΙΑΝΟΜΗ':
-	case 'ΔΗΛΩΣΗ':
-	case 'ΑΛΛΑΓΗ':
-	case 'ΣΥΜΜΕΤΟΧΗ':
-	case 'ΠΛΗΡΩΜΗ':
-		Arena.partida.azabRefreshTzogosDOM();
-		break;
-	default:
-		Arena.partida.azabRefreshBazaDOM();
-		break;
-	}
-
-	return Arena.partida;
-};
-
-Arena.partida.azabRefreshTzogosDOM = function() {
-	var i, filo;
-
-	if (!Arena.ego.trapezi.tzogosPrev)
-	return Arena.partida;
-
-	Arena.cpanel.bpanelButtonGet('azab').pbuttonGetDOM().
-	data('what', 'τζόγου προηγούμενης διανομής');
-	Arena.partida.azabDOM.attr('title', 'Τζόγος προηγούμενης διανομής');
-
-	for (i = 0; i < 2; i++) {
-		filo = Arena.ego.trapezi.tzogosPrev.xartosiaFiloGet(i),
-		Arena.partida.azabDOM.
-		append($('<img>').addClass('tsoxaAzabTzogos').attr({
-			id: 'tsoxaAzabTzogos' + i,
-			src: 'ikona/trapoula/' + filo.filoXromaGet() + filo.filoAxiaGet() + '.png',
-		}));
-	}
+	if (Arena.ego.isTrapezi())
+	Arena.partida.azabRefreshBazaDOM();
 
 	return Arena.partida;
 };
 
 Arena.partida.azabRefreshBazaDOM = function() {
 	var pios, fila, torini, i, iseht;
+
+	Arena.partida.azabDOM.removeData('tzogos').
+	empty().attr('title', 'Τελευταία μπάζα');
+
+	if (Arena.ego.trapezi.trapeziOxiDianomi()) {
+		Arena.partida.flags.azab = false;
+		return Arena.partida;
+	}
 
 	pios = Arena.ego.trapezi.azabPios;
 	if (pios.length) {
@@ -111,7 +80,6 @@ Arena.partida.azabRefreshBazaDOM = function() {
 		fila = Arena.partida.azabFila;
 		torini = false;
 	}
-
 	for (i = 0; i < pios.length; i++) {
 		if (torini) {
 			Arena.partida.azabPios.push(pios[i]);
@@ -123,6 +91,26 @@ Arena.partida.azabRefreshBazaDOM = function() {
 		append($('<img>').addClass('tsoxaAzabFilo').attr({
 			id: 'tsoxaAzabFilo' + iseht,
 			src: 'ikona/trapoula/' + fila[i].filoXromaGet() + fila[i].filoAxiaGet() + '.png',
+		}));
+	}
+
+	return Arena.partida;
+};
+
+Arena.partida.azabRefreshTzogosDOM = function() {
+	var i, filo;
+
+	Arena.partida.azabDOM.data('tzogos', true);
+	if (!Arena.ego.trapezi.tzogosPrev)
+	return Arena.partida;
+
+	Arena.partida.azabDOM.empty().attr('title', 'Τζόγος προηγούμενης διανομής');
+	for (i = 0; i < 2; i++) {
+		filo = Arena.ego.trapezi.tzogosPrev.xartosiaFiloGet(i),
+		Arena.partida.azabDOM.
+		append($('<img>').addClass('tsoxaAzabTzogos').attr({
+			id: 'tsoxaAzabTzogos' + i,
+			src: 'ikona/trapoula/' + filo.filoXromaGet() + filo.filoAxiaGet() + '.png',
 		}));
 	}
 

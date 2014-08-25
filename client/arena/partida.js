@@ -105,10 +105,7 @@ Arena.partida.setup = function() {
 	Arena.partida.tsoxaDOM.
 	append(Arena.partida.dataPanoDOM = $('<div>').attr('id', 'tsoxaDataPano').addClass('tsoxaData')).
 	append(Arena.partida.dataKatoDOM = $('<div>').attr('id', 'tsoxaDataKato').addClass('tsoxaData')).
-	append(Arena.partida.tzogosDOM = $('<div>').attr({
-		id: 'tsoxaTzogos',
-		title: 'Τζόγος',
-	})).
+	append(Arena.partida.tzogosDOM = $('<div>').attr('id', 'tsoxaTzogos')).
 	append(Arena.partida.azabDOM = $('<div>').addClass('tsoxaAzab')).
 	append(Arena.partida.filaPrevDOM = $('<div>').attr({
 		id: 'tsoxaFilaPrev',
@@ -124,6 +121,40 @@ Arena.partida.setup = function() {
 	Arena.partida.soloEndixiDOM = null;
 	Arena.kitapi.setup();
 	Arena.partida.setupPliromi();
+	Arena.partida.setupTzogos();
+
+	return Arena;
+};
+
+Arena.partida.setupTzogos = function() {
+	Arena.partida.tzogosDOM.
+	attr('title', 'Τζόγος').
+	on('click', function(e) {
+		var azabKlisto, azabTzogos, cpanelButton;
+
+		azabKlisto = !Arena.partida.flags.azab;
+		azabTzogos = Arena.partida.azabDOM.data('tzogos');
+		cpanelButton = Arena.cpanel.bpanelButtonGet('azab').pbuttonGetDOM();
+
+		if (azabKlisto) {
+			Arena.partida.azabRefreshTzogosDOM();
+			cpanelButton.trigger('click');
+			return;
+		}
+
+		if (azabTzogos) {
+			cpanelButton.trigger('click');
+			return;
+		}
+
+		Arena.partida.azabRefreshTzogosDOM();
+	}).
+	on('mouseenter', function() {
+		Arena.partida.azabDOM.addClass('tsoxaAzabEmfanis');
+	}).
+	on('mouseleave', function() {
+		Arena.partida.azabDOM.removeClass('tsoxaAzabEmfanis');
+	});
 
 	return Arena;
 };
