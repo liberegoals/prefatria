@@ -128,7 +128,7 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 	img: 'kasa.png',
 	title: 'Κάσα 50/30',
 	check: function() {
-		return Arena.trapeziRithmisi();
+		return Arena.trapeziRithmisi(false);
 	},
 	click: function(e) {
 		var img, kasa;
@@ -448,30 +448,24 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 		return Arena.ego.trapezi.trapeziIsDianomi();
 	},
 	refresh: function() {
-		var img, what;
+		var img;
 
-		// Το πλήκτρο σχεδιάστηκε για να δείχνει τα φύλλα της τελευταίας
-		// μπάζας που παίχτηκε στο τραπέζι. Με τον καιρό φάνηκε ότι στις
-		// αρχικές φάσεις της διανομής είναι χρησιμότερο να δείχνει τα
-		// φύλλα του τζόγου της προηγούμενης διανομής. Το data item "what"
-		// περιέχει περιγραφή τού τι θα δείχνει το πλήκτρο στη δεδομένη
-		// χρονική στιγμή.
-
-		what = this.pbuttonGetDOM().data('what');
 		img = this.pbuttonIconGetDOM();
 		if (Arena.partida.flags.azab) img.attr({
 			src: 'ikona/panel/bazaPrevOff.png',
-			title: 'Απόκρυψη ' + what,
+			title: 'Απόκρυψη προηγούμενης μπάζας',
 		});
 		else img.attr({
 			src: 'ikona/panel/bazaPrevOn.png',
-			title: 'Εμφάνιση ' + what,
+			title: 'Εμφάνιση προηγούμενης μπάζας',
 		});
 	},
 	click: function(e) {
 		Arena.partida.flags.azab = !Arena.partida.flags.azab;
 		if (Arena.partida.flags.azab) Arena.partida.azabDOM.finish().fadeIn(100);
-		else Arena.partida.azabDOM.finish().fadeOut(200);
+		else Arena.partida.azabDOM.finish().fadeOut(200, function() {
+			Arena.partida.azabRefreshBazaDOM();
+		});
 		Arena.cpanel.bpanelRefresh();
 	},
 }));

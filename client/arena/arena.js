@@ -424,7 +424,7 @@ Arena.kafenioScrollTop = function() {
 // Η function "trapeziRithmisi" επιστρέφει true εφόσον ο χρήστης ανήκει σε κάποιο
 // τραπέζι και το τραπέζι βρίσκεται σε φάση ρυθμίσεων, δηλαδή πριν παιχτεί οποιαδήποτε
 // διανομή. Αν θέλουμε μπορούμε αγνοήσουμε το αν υπάρχουν ή όχι διανομές περνώτας
-// literal false.
+// literal true.
 //
 // Η function χρησιμποιείται κατά κόρον στο control panel, μπορεί όμως να χρησιμοποιηθεί
 // και οπουδήποτε αλλού.
@@ -433,9 +433,10 @@ Arena.trapeziRithmisi = function(dianomi) {
 	if (Arena.ego.oxiTrapezi()) return false;
 	if (Arena.ego.oxiPektis()) return false;
 	if (Arena.ego.trapezi.trapeziIsIdioktito() && Arena.ego.oxiThesi(1)) return false;
-	if (Debug.flagGet('rithmisiPanta')) return true;
 
-	if (dianomi === false) return true;
+	if (dianomi === undefined) dianomi = Debug.flagGet('rithmisiPanta');
+	if (dianomi) return true;
+
 	return Arena.ego.trapezi.trapeziOxiDianomi();
 };
 
