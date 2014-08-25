@@ -825,7 +825,7 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 	img: 'aorato.png',
 	title: 'Απόκρυψη τραπεζιού',
 	check: function() {
-		if (Arena.trapeziOxiRithmisi(false)) return false;
+		if (Arena.trapeziOxiRithmisi()) return false;
 		return Arena.ego.trapezi.trapeziIsOrato();
 	},
 	click: function(e) {
@@ -851,7 +851,7 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 	img: 'orato.png',
 	title: 'Αποκάλυψη τραπεζιού',
 	check: function() {
-		if (Arena.trapeziOxiRithmisi(false)) return false;
+		if (Arena.trapeziOxiRithmisi()) return false;
 		return Arena.ego.trapezi.trapeziIsAorato();
 	},
 	click: function(e) {
@@ -957,7 +957,7 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 	img: 'kasaKato.png',
 	title: 'Μείωση κάσας',
 	check: function() {
-		if (Arena.trapeziOxiRithmisi()) return false;
+		if (Arena.trapeziOxiRithmisi(false)) return false;
 		return Arena.ego.trapezi.trapeziIsDianomi();
 	},
 	click: function(e) {
