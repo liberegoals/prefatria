@@ -686,11 +686,12 @@ Arena.alagiSxesis = function(e, login, sxesi) {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 Sinedria.prototype.sinedriaCreateDOM = function() {
-	var skiniko, pektis, trapezi;
+	var skiniko, pektis, trapezi, jql;
 
 	skiniko = this.sinedriaSkinikoGet();
 	if (!skiniko) return this;
 	pektis = skiniko.skinikoPektisGet(this.sinedriaPektisGet());
+	jql = $();
 
 	if (this.hasOwnProperty('rebelosDOM')) this.rebelosDOM.remove();
 	this.rebelosDOM = $('<div>').addClass('pektis rebelos').data('pektis', pektis).
@@ -698,6 +699,7 @@ Sinedria.prototype.sinedriaCreateDOM = function() {
 		pektis.pektisFormaPopupDOM(e);
 	});
 	this.sinedriaRebelosRefreshDOM();
+	jql = jql.add(this.rebelosDOM);
 
 	if (this.hasOwnProperty('theatisDOM')) this.theatisDOM.remove();
 	this.theatisDOM = $('<div>').addClass('pektis theatis').data('pektis', pektis).
@@ -710,6 +712,8 @@ Sinedria.prototype.sinedriaCreateDOM = function() {
 		pektis.pektisFormaPopupDOM(e);
 	});
 	this.sinedriaTheatisRefreshDOM();
+	jql = jql.add(this.theatisDOM);
+	jql = jql.add(this.tsoxaTheatisDOM);
 
 	if (this.hasOwnProperty('niofertosDOM')) this.niofertosDOM.remove();
 	this.niofertosDOM = $('<div>').addClass('pektis niofertos').data('pektis', pektis).
@@ -719,6 +723,9 @@ Sinedria.prototype.sinedriaCreateDOM = function() {
 	this.
 	sinedriaNiofertosRefreshDOM().
 	sinedriaNiofertosPushDOM();
+	jql = jql.add(this.niofertosDOM);
+
+	jql.pektisAxiomaDOM(pektis);
 
 	trapezi = this.sinedriaTrapeziGet();
 	if (!trapezi) {
@@ -734,6 +741,45 @@ Sinedria.prototype.sinedriaCreateDOM = function() {
 
 	trapezi.trapeziTheatisPushDOM(this);
 	return this;
+};
+
+jQuery.fn.pektisAxiomaDOM = function(pektis) {
+	var ikonidio, titlos;
+
+	return this.each(function() {
+		$(this).children('.pektisAxiomaIcon').remove();
+		if (!pektis) return;
+
+		switch (pektis.pektisAxiomaGet()) {
+		case 'ΠΡΟΕΔΡΟΣ':
+			ikonidio = 'proedros.png';
+			titlos = 'Πρόεδρος';
+			break;
+		case 'ADMINISTRATOR':
+			ikonidio = 'administrator.png';
+			titlos = 'Administrator';
+			break;
+		case 'ΔΙΑΧΕΙΡΙΣΤΗΣ':
+			ikonidio = 'diaxiristis.png';
+			titlos = 'Διαχειριστής';
+			break;
+		case 'ΕΠΟΠΤΗΣ':
+			ikonidio = 'epoptis.png';
+			titlos = 'Επόπτης';
+			break;
+		case 'VIP':
+			ikonidio = 'vip.png';
+			titlos = 'VIP';
+			break;
+		default:
+			return;
+		}
+
+		$(this).append($('<img>').addClass('pektisAxiomaIcon').attr({
+			src: 'ikona/axioma/' + ikonidio,
+			title: titlos,
+		}));
+	});
 };
 
 Sinedria.prototype.sinedriaNiofertosRefreshDOM = function() {
@@ -960,8 +1006,10 @@ Trapezi.prototype.trapeziThesiRefreshDOM = function(thesi) {
 	dom.addClass(this.trapeziIsApodoxi(thesi) ? 'apodoxi' : 'xapodoxi');
 
 	login = this.trapeziPektisGet(thesi);
+	pektis = (login ? Arena.skiniko.skinikoPektisGet(login) : null);
+
 	if (login) {
-		dom.text(login);
+		dom.text(login).pektisAxiomaDOM(pektis);
 		sinedria = Arena.skiniko.skinikoSinedriaGet(login);
 		if (!sinedria) dom.addClass('offline');
 		if (login.isEgo()) dom.addClass('ego');
@@ -974,7 +1022,6 @@ Trapezi.prototype.trapeziThesiRefreshDOM = function(thesi) {
 		else dom.html('&mdash;');
 	}
 
-	pektis = (login ? Arena.skiniko.skinikoPektisGet(login) : null);
 	if (pektis) dom.on('click', function(e) {
 		pektis.pektisFormaPopupDOM(e);
 	});
