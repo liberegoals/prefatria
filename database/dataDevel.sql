@@ -21,6 +21,7 @@ DELETE FROM `sinedria`;
 DELETE FROM `trapezi`;
 DELETE FROM `sizitisi`;
 DELETE FROM `pektis`;
+DELETE FROM `peparam`;
 
 INSERT INTO `pektis` (`login`, `egrafi`, `onoma`, `email`, `kodikos`, `poll`) VALUES
 ('akis', '2014-01-13 10:27:01', 'Akis Sotakis', NULL, '', '2014-01-13 10:27:01'),
@@ -42,6 +43,16 @@ INSERT INTO `pektis` (`login`, `egrafi`, `onoma`, `email`, `kodikos`, `poll`) VA
 ('zoi', '2014-01-13 10:27:01', 'Zoi Fitousi', NULL, '', '2014-01-13 10:27:01');
 
 UPDATE `pektis` SET `kodikos` = SHA1('xxx');
+
+INSERT INTO `peparam` (`pektis`, `param`, `timi`) VALUES
+('panos', 'DEVELOPER', 'ΝΑΙ'),
+('panos', 'ΑΞΙΩΜΑ', 'ADMINISTRATOR'),
+('maria', 'ΑΞΙΩΜΑ', 'ΔΙΑΧΕΙΡΙΣΤΗΣ'),
+('akis', 'ΑΞΙΩΜΑ', 'ΕΠΟΠΤΗΣ'),
+('lakis', 'ΑΞΙΩΜΑ', 'VIP'),
+('manos', 'ΑΞΙΩΜΑ', 'VIP'),
+('lefas', 'ΑΞΙΩΜΑ', 'VIP'),
+('sakis', 'ΑΞΙΩΜΑ', 'ΠΡΟΕΔΡΟΣ');
 
 INSERT INTO `trapezi` (`kodikos`, `stisimo`, `pektis1`, `apodoxi1`, `pektis2`,
 	`apodoxi2`, `pektis3`, `apodoxi3`, `poll`, `arxio`) VALUES
