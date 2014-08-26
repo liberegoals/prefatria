@@ -774,6 +774,7 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 	title: 'Πριβέ τραπέζι',
 	check: function() {
 		if (Arena.trapeziOxiRithmisi(true)) return false;
+		if (Arena.ego.oxiVip()) return false;
 		return Arena.ego.trapezi.trapeziIsDimosio();
 	},
 	click: function(e) {
@@ -800,6 +801,7 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 	title: 'Δημόσιο τραπέζι',
 	check: function() {
 		if (Arena.trapeziOxiRithmisi(true)) return false;
+		if (Arena.ego.oxiVip()) return false;
 		return Arena.ego.trapezi.trapeziIsPrive();
 	},
 	click: function(e) {
@@ -880,6 +882,7 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 	title: 'Κλείσιμο φύλλων για τους θεατές',
 	check: function() {
 		if (Arena.trapeziOxiRithmisi(true)) return false;
+		if (Arena.ego.oxiVip()) return false;
 		return Arena.ego.trapezi.trapeziIsAnikto();
 	},
 	click: function(e) {
@@ -906,6 +909,7 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 	title: 'Άνοιγμα φύλλων για τους θεατές',
 	check: function() {
 		if (Arena.trapeziOxiRithmisi(true)) return false;
+		if (Arena.ego.oxiVip()) return false;
 		return Arena.ego.trapezi.trapeziIsKlisto();
 	},
 	click: function(e) {
