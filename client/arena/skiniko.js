@@ -87,6 +87,7 @@ Skiniko.prototype.processFreskaData = function(rsp) {
 	// Καθαρίζουμε τις βασικές λίστες αντικειμένων του σκηνικού δημιουργώντας
 	// ουσιαστικά ένα κενό σκηνικό.
 
+	this.skinikoResetDOM();
 	this.skinikoReset();
 
 	// Φορτώνουμε τους παίκτες και τις παραμέτρους τους.
@@ -455,12 +456,7 @@ Skiniko.prototype.feredataError = function(err, rsp) {
 Skiniko.prototype.skinikoCreateDOM = function(data) {
 	var skiniko = this;
 
-	Arena.rebelosDOM.empty();
-	Arena.trapeziDOM.empty();
-	Arena.prosklisi.areaDOM.empty();
-	Arena.anazitisi.areaDOM.empty();
-	Arena.sizitisi.kafenioDOM.empty();
-	Arena.partida.niofertosDOM.empty();
+	this.skinikoResetDOM();
 
 	Globals.awalk(data.trapezi.sort(function(t1, t2) {
 		if (t1.kodikos < t2.kodikos) return -1;
@@ -519,6 +515,29 @@ Skiniko.prototype.skinikoCreateDOM = function(data) {
 
 	Arena.panelRefresh();
 	return this;
+};
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
+
+Skiniko.prototype.skinikoResetDOM = function() {
+	this.skinikoSinedriaWalk(function() {
+		Client.removeDOM(this);
+	});
+	this.skinikoPektisWalk(function() {
+		Client.removeDOM(this);
+	});
+	this.skinikoTrapeziWalk(function() {
+		Client.removeDOM(this);
+	});
+	Arena.rebelosDOM.empty();
+	Arena.trapeziDOM.empty();
+	Arena.prosklisi.areaDOM.empty();
+	Arena.anazitisi.areaDOM.empty();
+	Arena.sizitisi.kafenioDOM.empty();
+	Arena.sizitisi.trapeziDOM.empty();
+
+	Arena.partida.niofertosDOM.empty();
+	Arena.partida.theatisDOM.empty();
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

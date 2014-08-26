@@ -73,6 +73,29 @@ Client.provlima = function(msg, fatal) {
 	return provlimaDom;
 };
 
+// Η function "removeDOM" δέχεται ένα αντικείμενο και διαγράφει τυχόν DOM
+// elements στα οποία δείχνουν properties του αντικειμένου.
+
+Client.removeDOM = function(obj) {
+	var i, prop;
+
+	for (i in obj) {
+		prop = obj[i];
+
+		if (typeof prop !== 'object')
+		continue;
+
+		if (typeof prop['remove'] !== 'function')
+		continue;
+
+		if (!i.match(/DOM$/))
+		continue;
+
+		prop['remove']();
+		delete prop;
+	}
+};
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 Client.fyi = {};
