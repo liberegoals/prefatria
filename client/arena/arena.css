@@ -168,6 +168,7 @@ body {
 /***********************************************************************************************************************/
 
 .pektis {
+	position: relative;
 	display: inline-block;
 	padding: 2px 0;
 	width: 110px;
@@ -200,6 +201,13 @@ body {
 	border-width: 2px;
 	border-radius: 3px;
 	box-shadow: 1px 1px 3px #353535;
+}
+
+.pektisAxiomaIcon {
+	position: absolute;
+	right: 0px;
+	bottom: 0px;
+	width: 24px;
 }
 
 /***********************************************************************************************************************/
