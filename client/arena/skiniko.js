@@ -691,7 +691,7 @@ Sinedria.prototype.sinedriaCreateDOM = function() {
 	skiniko = this.sinedriaSkinikoGet();
 	if (!skiniko) return this;
 	pektis = skiniko.skinikoPektisGet(this.sinedriaPektisGet());
-	jql = $();
+	//jql = $();
 
 	if (this.hasOwnProperty('rebelosDOM')) this.rebelosDOM.remove();
 	this.rebelosDOM = $('<div>').addClass('pektis rebelos').data('pektis', pektis).
@@ -699,7 +699,7 @@ Sinedria.prototype.sinedriaCreateDOM = function() {
 		pektis.pektisFormaPopupDOM(e);
 	});
 	this.sinedriaRebelosRefreshDOM();
-	jql = jql.add(this.rebelosDOM);
+	//jql = jql.add(this.rebelosDOM);
 
 	if (this.hasOwnProperty('theatisDOM')) this.theatisDOM.remove();
 	this.theatisDOM = $('<div>').addClass('pektis theatis').data('pektis', pektis).
@@ -712,8 +712,8 @@ Sinedria.prototype.sinedriaCreateDOM = function() {
 		pektis.pektisFormaPopupDOM(e);
 	});
 	this.sinedriaTheatisRefreshDOM();
-	jql = jql.add(this.theatisDOM);
-	jql = jql.add(this.tsoxaTheatisDOM);
+	//jql = jql.add(this.theatisDOM);
+	//jql = jql.add(this.tsoxaTheatisDOM);
 
 	if (this.hasOwnProperty('niofertosDOM')) this.niofertosDOM.remove();
 	this.niofertosDOM = $('<div>').addClass('pektis niofertos').data('pektis', pektis).
@@ -723,9 +723,9 @@ Sinedria.prototype.sinedriaCreateDOM = function() {
 	this.
 	sinedriaNiofertosRefreshDOM().
 	sinedriaNiofertosPushDOM();
-	jql = jql.add(this.niofertosDOM);
+	//jql = jql.add(this.niofertosDOM);
 
-	jql.pektisAxiomaDOM(pektis);
+	//jql.pektisAxiomaDOM(pektis);
 
 	trapezi = this.sinedriaTrapeziGet();
 	if (!trapezi) {
@@ -1009,7 +1009,8 @@ Trapezi.prototype.trapeziThesiRefreshDOM = function(thesi) {
 	pektis = (login ? Arena.skiniko.skinikoPektisGet(login) : null);
 
 	if (login) {
-		dom.text(login).pektisAxiomaDOM(pektis);
+		//dom.text(login).pektisAxiomaDOM(pektis);
+		dom.text(login);
 		sinedria = Arena.skiniko.skinikoSinedriaGet(login);
 		if (!sinedria) dom.addClass('offline');
 		if (login.isEgo()) dom.addClass('ego');
