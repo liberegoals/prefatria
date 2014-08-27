@@ -720,12 +720,15 @@ Sinedria.prototype.sinedriaCreateDOM = function() {
 	sinedriaNiofertosRefreshDOM().
 	sinedriaNiofertosPushDOM();
 
+	/*
+	TODO
 	jql = $();
 	jql = jql.add(this.rebelosDOM);
 	jql = jql.add(this.theatisDOM);
 	jql = jql.add(this.tsoxaTheatisDOM);
 	jql = jql.add(this.niofertosDOM);
 	jql.pektisAxiomaDOM(pektis);
+	*/
 
 	trapezi = this.sinedriaTrapeziGet();
 	if (!trapezi) {
@@ -1010,7 +1013,10 @@ Trapezi.prototype.trapeziThesiRefreshDOM = function(thesi) {
 
 	if (login) {
 		dom.text(login);
+		/*
+		TODO
 		dom.pektisAxiomaDOM(pektis);
+		*/
 		sinedria = Arena.skiniko.skinikoSinedriaGet(login);
 		if (!sinedria) dom.addClass('offline');
 		if (login.isEgo()) dom.addClass('ego');
