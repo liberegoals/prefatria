@@ -530,7 +530,7 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 		Client.fyi.pano('Εναλλαγή παίκτη/θεατή. Παρακαλώ περιμένετε…', 0);
 		Client.skiserService('pektisTheatis').
 		done(function(rsp) {
-			Client.fyi.pano(rsp);
+			Client.fyi.epano(rsp);
 			img.working(false);
 		}).
 		fail(function(err) {

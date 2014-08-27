@@ -188,6 +188,11 @@ Service.prosklisi.apodoxi = function(nodereq) {
 	});
 
 	// Δεν βρέθηκε κενή θέση, επομένως θα εντάξουμε τον παίκτη ως θεατή στο τραπέζι.
+	// Αν ο παίκτης είναι ήδη ενταγμένος στο τραπέζι της πρόσκλησης, δεν προβαίνουμε
+	// σε περαιτέρω ενέργειες.
+
+	if (trapezi.trapeziIsTrapezi(nodereq.trapeziGet()))
+	return nodereq.error('Η παρτίδα έχει τελειώσει!');
 
 	Service.prosklisi.apodoxiTheatis(nodereq, trapeziKodikos, trapezi);
 };
