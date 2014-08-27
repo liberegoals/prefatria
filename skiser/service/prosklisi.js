@@ -198,8 +198,9 @@ Service.prosklisi.apodoxiEpanodos = function(nodereq, trapeziKodikos, thesi) {
 };
 
 Service.prosklisi.apodoxiPektis = function(nodereq, conn, trapeziKodikos, thesi) {
-	var query, simetoxi = 'ΠΑΙΚΤΗΣ';
+	var query, simetoxi;
 
+	simetoxi = 'ΠΑΙΚΤΗΣ';
 	query = 'UPDATE `sinedria` SET `trapezi` = ' + trapeziKodikos + ', `thesi` = ' + thesi +
 		', `simetoxi` = ' + simetoxi.json() + ' WHERE `pektis` = ' + nodereq.login.json();
 	conn.connection.query(query, function(err, res) {
