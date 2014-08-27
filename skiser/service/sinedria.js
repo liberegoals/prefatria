@@ -314,7 +314,11 @@ Service.sinedria.pektisTheatisPektis = function(nodereq) {
 	if ((!thesi) || trapezi.trapeziOxiKeniThesi(thesi)) thesi = trapezi.trapeziKeniThesi();
 	if (!thesi) return nodereq.error('Δεν υπάρχει κενή θέση στο τραπέζι');
 
-	if (trapezi.trapeziOxiProsklisi(nodereq.login)) return nodereq.error('Δεν βρέθηκε πρόσκληση');
+	if (trapezi.trapeziOxiProsklisi(nodereq.login))
+	return nodereq.error('Δεν βρέθηκε πρόσκληση');
+
+	if (trapezi.parisaktosPektis(nodereq.login, thesi))
+	return nodereq.error('Η παρτίδα έχει τελειώσει!');
 
 	return DB.connection().transaction(function(conn) {
 		Service.prosklisi.apodoxiPektis(nodereq, conn, trapezi.trapeziKodikosGet(), thesi);

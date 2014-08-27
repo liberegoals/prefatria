@@ -145,7 +145,7 @@ Service.prosklisi.diagrafi3 = function(data) {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
 
 Service.prosklisi.apodoxi = function(nodereq) {
-	var skiniko = nodereq.skiniko, prosklisi, sinderia, trapezi, trapeziKodikos, thesi;
+	var skiniko = nodereq.skiniko, prosklisi, trapezi, trapeziKodikos, pektis, thesi;
 
 	if (nodereq.isvoli()) return;
 	if (nodereq.denPerastike('prosklisi', true)) return;
@@ -158,10 +158,12 @@ Service.prosklisi.apodoxi = function(nodereq) {
 	if (!trapezi) return node.error('Δεν βρέθηκε το τραπέζι');
 	trapeziKodikos = trapezi.trapeziKodikosGet();
 
+	pektis = nodereq.loginGet();
+
 	// Εξετάζουμε πρώτα την περίπτωση κατά την οποία ο παίκτης είναι ήδη ενταγμένος
 	// ως παίκτης στο τραπέζι της πρόσκλησης.
 
-	thesi = trapezi.trapeziThesiPekti(nodereq.login);
+	thesi = trapezi.trapeziThesiPekti(pektis);
 	if (thesi) return Service.prosklisi.apodoxiEpanodos(nodereq, trapeziKodikos, thesi);
 
 	// Δοκιμάζουμε τη θέση που κατείχε/παρακολουθούσε ο παίκτης παλιότερα
@@ -171,8 +173,15 @@ Service.prosklisi.apodoxi = function(nodereq) {
 	thesi = trapezi.trapeziSimetoxiGet(nodereq.login);
 	if (trapezi.trapeziOxiKeniThesi(thesi)) thesi = trapezi.trapeziKeniThesi();
 
-	// Αν έχει βρεθεί κενή θέση στο τραπέζι, τότε εντάσσουμε τον παίκτη
-	// ως παίκτη στη συγκεκριμένη θέση του τραπεζιού.
+	// Εφόσον βρέθηκε κενή θέση, θα πρέπει να ελεγχθεί για κατάσταση «κούκου»,
+	// όπου η παρτίδα έχει τελειώσει και ο παίκτης δεν είναι αυτός που κατείχε
+	// τη θέση κατά τη διάρκεια του παιχνιδιού.
+
+	if (trapezi.parisaktosPektis(pektis, thesi))
+	thesi = null;
+
+	// Αν, τελικώς, έχει βρεθεί κενή θέση στο τραπέζι, τότε εντάσσουμε τον
+	// παίκτη ως παίκτη στη συγκεκριμένη θέση του τραπεζιού.
 
 	if (thesi) return DB.connection().transaction(function(conn) {
 		Service.prosklisi.apodoxiPektis(nodereq, conn, trapeziKodikos, thesi);
