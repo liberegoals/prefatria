@@ -1184,6 +1184,7 @@ Prosklisi.prototype.prosklisiCreateDOM = function() {
 			Client.skiserService('prosklisiApodoxi', 'prosklisi=' + kodikos).
 			done(function(rsp) {
 				del.working(false);
+				Client.fyi.epano(rsp);
 			}).
 			fail(function(err) {
 				del.working(false);
