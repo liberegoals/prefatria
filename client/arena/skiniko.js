@@ -720,15 +720,18 @@ Sinedria.prototype.sinedriaCreateDOM = function() {
 	sinedriaNiofertosRefreshDOM().
 	sinedriaNiofertosPushDOM();
 
-	/*
-	TODO
-	jql = $();
-	jql = jql.add(this.rebelosDOM);
-	jql = jql.add(this.theatisDOM);
-	jql = jql.add(this.tsoxaTheatisDOM);
-	jql = jql.add(this.niofertosDOM);
-	jql.pektisAxiomaDOM(pektis);
-	*/
+	// Τα διακριτικά των αξιωμάτων είναι εμφανή μόνο στους διαχειριστές
+	// και σε ανώτερα αξιώματα. Αυτό το κάνουμε για να αποφεύγουμε τις
+	// διακρίσεις και τις συνεχείς ερωτήσεις.
+
+	if (Arena.ego.isDiaxiristis()) {
+		jql = $();
+		jql = jql.add(this.rebelosDOM);
+		jql = jql.add(this.theatisDOM);
+		jql = jql.add(this.tsoxaTheatisDOM);
+		jql = jql.add(this.niofertosDOM);
+		jql.pektisAxiomaDOM(pektis);
+	}
 
 	trapezi = this.sinedriaTrapeziGet();
 	if (!trapezi) {
@@ -1013,10 +1016,9 @@ Trapezi.prototype.trapeziThesiRefreshDOM = function(thesi) {
 
 	if (login) {
 		dom.text(login);
-		/*
-		TODO
+		if (Arena.ego.isDiaxiristis())
 		dom.pektisAxiomaDOM(pektis);
-		*/
+
 		sinedria = Arena.skiniko.skinikoSinedriaGet(login);
 		if (!sinedria) dom.addClass('offline');
 		if (login.isEgo()) dom.addClass('ego');
