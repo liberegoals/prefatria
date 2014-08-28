@@ -749,6 +749,10 @@ Sinedria.prototype.sinedriaCreateDOM = function() {
 	return this;
 };
 
+// Η μέθοδος "pektisAxiomaDOM" εφαρμόζεται σε κουτάκια παικτών και σκοπό
+// έχει την προσάρτηση διακριτικού εικονιδίου σχετικού με το αξίωμα του
+// παίκτη.
+ 
 jQuery.fn.pektisAxiomaDOM = function(pektis) {
 	var ikonidio, titlos;
 

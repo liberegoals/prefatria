@@ -637,6 +637,15 @@ body {
 	z-index: 1;
 }
 
+.tsoxaProfinfoIcon {
+	display: none;
+	position: absolute;
+	right: -14px;
+	top: -4px;
+	width: 44px;
+	cursor: pointer;
+}
+
 /********************************************************************************************************************/
 
 #tsoxaKitapiIcon {
