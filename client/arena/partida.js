@@ -609,7 +609,8 @@ Arena.partida.pektisRefreshDOM = function(thesi) {
 		title: 'Παραιτήθηκε από τις υπόλοιπες μπάζες',
 	}));
 
-	if (Arena.partida.isEpomenos(thesi)) domMain.addClass('tsoxaPektisEpomenos');
+	if (Arena.partida.isEpomenos(thesi))
+	domMain.addClass('tsoxaPektisEpomenos');
 
 	switch (Arena.ego.trapezi.partidaFasiGet()) {
 	case 'ΠΑΙΧΝΙΔΙ':
@@ -629,8 +630,18 @@ Arena.partida.pektisRefreshDOM = function(thesi) {
 		break;
 	}
 
-	if (Arena.ego.trapezi.simetoxi[thesi] === 'ΠΑΣΟ') var x = 1;
-	if (Arena.ego.isPektis()) return Arena.partida;
+	domMain.
+	on('mouseenter', function(e) {
+		e.stopPropagation();
+		$(this).children('.tsoxaProfinfoIcon').finish().fadeIn(100);
+	}).
+	on('mouseleave', function(e) {
+		e.stopPropagation();
+		$(this).children('.tsoxaProfinfoIcon').finish().fadeOut(200);
+	});
+
+	if (Arena.ego.isPektis())
+	return Arena.partida;
 
 	// Αλλαγή θέσης θέασης
 
@@ -672,6 +683,7 @@ Arena.partida.pektisDataRefreshDOM = function(thesi, iseht, domMain, domOnoma) {
 	domOnoma.removeClass('fantasma tsoxaSxesiFilos tsoxaSxesiApoklismenos');
 
 	domMain.addClass(Arena.ego.trapezi.trapeziIsApodoxi(thesi) ? 'apodoxi' : 'xapodoxi');
+	domMain.children('.tsoxaProfinfoIcon').remove();
 
 	login = Arena.ego.trapezi.trapeziPektisGet(thesi);
 	if (!login) {
@@ -688,6 +700,51 @@ Arena.partida.pektisDataRefreshDOM = function(thesi, iseht, domMain, domOnoma) {
 	if (Arena.ego.isFilos(login)) domOnoma.addClass('tsoxaSxesiFilos');
 	else if (Arena.ego.isApoklismenos(login)) domOnoma.addClass('tsoxaSxesiApoklismenos');
 
+	Arena.partida.profinfoIconRefreshDOM(login, domMain);
+	return Arena.partida;
+};
+
+Arena.partida.profinfoIconRefreshDOM = function(login, dom) {
+	var pektis, ikonidio, titlos, profinfoDom;
+
+	pektis = Arena.skiniko.skinikoPektisGet(login);
+	if (!pektis) return Arena.partida;
+
+	ikonidio = 'thamonas.png';
+	titlos = null;
+
+	if (Arena.ego.isDiaxiristis()) {
+		switch (titlos = pektis.pektisAxiomaGet()) {
+		case 'ΠΡΟΕΔΡΟΣ':
+			ikonidio = 'proedros.png';
+			break;
+		case 'ADMINISTRATOR':
+			ikonidio = 'administrator.png';
+			break;
+		case 'ΔΙΑΧΕΙΡΙΣΤΗΣ':
+			ikonidio = 'diaxiristis.png';
+			break;
+		case 'ΕΠΟΠΤΗΣ':
+			ikonidio = 'epoptis.png';
+			break;
+		case 'VIP':
+			ikonidio = 'vip.png';
+			break;
+		}
+	}
+
+	if (titlos) titlos += ' (κλικ για πληροφορίες προφίλ)';
+	else titlos = 'Πληροφορίες προφίλ';
+
+	profinfoDom = $('<img>').addClass('tsoxaProfinfoIcon').attr({
+		src: 'ikona/axioma/' + ikonidio,
+		title: titlos,
+	}).
+	on('click', function(e) {
+		pektis.pektisFormaPopupDOM(e);
+	});
+
+	dom.append(profinfoDom);
 	return Arena.partida;
 };
 
