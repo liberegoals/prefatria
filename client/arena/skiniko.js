@@ -555,7 +555,10 @@ Pektis.prototype.pektisFormaPopupDOM = function(e) {
 		Arena.inputRefocus(e);
 	}));
 	Arena.pektisPanelRefreshDOM();
-	Arena.pektisFormaDOM.anadisi().finish().fadeIn('fast');
+	Arena.pektisFormaDOM.anadisi().finish().fadeIn('fast').
+	find('.klisimoIcon').on('mousedown', function(e) {
+		e.stopPropagation();
+	});
 	return this;
 };
 
