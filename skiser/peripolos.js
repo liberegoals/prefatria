@@ -23,16 +23,10 @@ Peripolos.setup = function() {
 	Log.print('Calculating session timeouts');
 	Log.level.push();
 
-	// Αν κάποιο αίτημα feredata δεν απαντηθεί σε εύλογο χρονικό διάστημα, ο skiser
-	// το κλείνει με απάντηση μη αλλαγής.
-
-	Peripolos.feredataTimeout = 2 * parseInt(Peripolos.ergasia.feredata.period / 1000) - 1;
-	Log.print('timeout for "feredata" set to ' + Peripolos.feredataTimeout + ' seconds');
-
 	// Αν κάποια συνεδρία δεν έχει υποβάλει αίτημα feredata μέσα σε εύλογο χρονικό
 	// διάστημα, ο skiser θεωρεί ότι η συνεδρία έχει διακοπεί και την καταργεί.
 
-	Peripolos.sinedriaTimeout = Peripolos.feredataTimeout + parseInt(Peripolos.ergasia.feredata.period / 1000) - 1;
+	Peripolos.sinedriaTimeout = Service.feredata.timeout + parseInt(Peripolos.ergasia.feredata.period / 1000) + 2;
 	Log.print('timeout for "sinedria" set to ' + Peripolos.sinedriaTimeout + ' seconds');
 
 	// Αν κάποια συνεδρία δεν έχει υποβάλει κάποιο άλλο αίτημα πλην των αυτόματων

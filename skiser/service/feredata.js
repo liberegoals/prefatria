@@ -48,6 +48,9 @@ Service.feredata.alages = function(nodereq) {
 // ανεξέλεγκτο κλείσιμο λόγω ajax call timeout και, δεύτερον, να εντοπίσουμε
 // clients που έχουν διακόψει την επαφή τους με τον server.
 
+Service.feredata.timeout = 20;
+Log.print('timeout for "feredata" set to ' + Service.feredata.timeout + ' seconds');
+
 Service.feredata.check = function() {
 	var tora;
 
@@ -64,7 +67,7 @@ Service.feredata.check = function() {
 		// Αν ο χρόνος που έχει παρέλθει από την υποβολή του αιτήματος δεν
 		// είναι μεγάλος, δεν προβαίνουμε σε περαιτέρω ενέργειες.
 
-		if ((tora - this.feredataPollGet()) < Peripolos.feredataTimeout)
+		if ((tora - this.feredataPollGet()) < Service.feredata.timeout)
 		return;
 
 		// Παρήλθε μεγάλο χρονικό διάστημα κατά το οποίο το συγκεκριμένο
@@ -373,9 +376,6 @@ Sinedria.prototype.feredataFreska = function() {
 		nodereq.write(',\n');
 	});
 	nodereq.write('],\n');
-
-	nodereq.write('feredataAnoxi: ' + (parseInt(Peripolos.ergasia.feredata.period / 1000) +
-		Peripolos.feredataTimeout) + ',\n');
 
 	this.
 	tsoxaReset().
