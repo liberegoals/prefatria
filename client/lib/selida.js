@@ -85,6 +85,9 @@ Client.removeDOM = function(obj) {
 		if (typeof prop !== 'object')
 		continue;
 
+		if (prop === null)
+		continue;
+
 		if (typeof prop['remove'] !== 'function')
 		continue;
 
