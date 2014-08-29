@@ -11,30 +11,6 @@ Arena.skiniko = new Skiniko();
 
 Arena.feredataID = 0;
 
-// Ο κώδικας που ακολουθεί αφορά στο «κρέμασμα» του προγράμματος το οποίο
-// παρουσιάζεται χωρίς να μπορώ να προσδιορίσω το λόγο. Πράγματι, κάποιες
-// φορές το πρόγραμμα «κρεμάει» με την έννοια της διακοπής του κανονικού
-// κύκλου ενημέρωσης μέσω αιτημάτων feredata.
-
-Arena.feredataIpovoliTS = 0;
-Arena.feredataAnoxi = null;
-
-setInterval(function() {
-	var t;
-
-	if (!Arena.feredataAnoxi)
-	return;
-
-	t = Globals.torams() - Arena.feredataIpovoliTS;
-
-	if (t < Arena.feredataAnoxi)
-	return;
-
-	Client.fyi.pano('Εξαναγκασμένη ανανέωση σκηνικού');
-	console.error('εξαναγκασμένη ανανέωση σκηνικού (' + t + ' ms)');
-	Arena.skiniko.stisimo();
-}, 2000);
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
 
 // Το στήσιμο του σκηνικού στον client γίνεται μέσω αιτήματος feredata για πλήρη
@@ -47,7 +23,6 @@ Skiniko.prototype.stisimo = function(callback) {
 	if (Debug.flagGet('feredata'))
 	console.log('Ζητήθηκαν πλήρη σκηνικά δεδομένα (id = ' + Arena.feredataID + ')');
 
-	Arena.feredataIpovoliTS = Globals.torams();
 	Client.skiserService('fereFreska', 'id=' + Arena.feredataID).
 	done(function(rsp) {
 		skiniko.processFreskaData(rsp);
@@ -93,26 +68,6 @@ Skiniko.prototype.processFreskaData = function(rsp) {
 	if (!data.hasOwnProperty('id')) {
 		this.feredataError('Ακαθόριστο ID πακέτου σκηνικών δεδομένων', rsp);
 		return this;
-	}
-
-	// Αν υπάρχει property "feredataAnoxi" πρόκειται για τον μέγιστο χρόνο ζωής
-	// αιτήματος feredata. Ο χρόνος αυτός είναι το άθροισμα της περιόδου ελέγχου
-	// αιτημάτων feredata συν τον μέγιστο χρόνο αναμονής του αιτήματος εφόσον δεν
-	// υπάρχουν μεταβολές.
-
-	Arena.feredataAnoxi = parseInt(data.feredataAnoxi);
-
-	if (isNaN(Arena.feredataAnoxi))
-	Arena.feredataAnoxi = null;
-
-	// Εφόσον καθορίστηκε ο ζητούμενος χρόνος προσθέτουμε ένα μικρό αβάντσο για
-	// τις καθυστερήσεις και μετατρέπουμε σε ms.
-
-	else {
-		Arena.feredataAnoxi += 3;
-		console.log('Μέγιστος επιτρεπτός χρόνος μεταξύ διαδοχικών αιτημάτων: ' +
-			Arena.feredataAnoxi + ' sec');
-		Arena.feredataAnoxi *= 1000;
 	}
 
 	// Τα δεδομένα μας διαθέτουν id παραλαβής. Για να διαχειριστούμε τα δεδομένα πρέπει
@@ -310,7 +265,6 @@ Skiniko.prototype.anamoniAlages = function() {
 	if (Debug.flagGet('feredata'))
 	console.log('Αναμένονται μεταβολές (id = ' + Arena.feredataID + ')');
 
-	Arena.feredataIpovoliTS = Globals.torams();
 	Client.skiserService('fereAlages', 'id=' + Arena.feredataID).
 	done(function(rsp) {
 		skiniko.processAlages(rsp);
