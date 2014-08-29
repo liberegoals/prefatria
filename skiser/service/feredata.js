@@ -55,8 +55,17 @@ Service.feredata.check = function() {
 	if (Debug.flagGet('feredataCheck')) console.log('περίπολος: feredata.check: ', tora);
 
 	Server.skiniko.skinikoSinedriaWalk(function() {
-		if (this.oxiFeredata()) return;
-		if ((tora - this.feredataPollGet()) < Peripolos.feredataTimeout) return;
+		// Αν δεν βρούμε κανάλι feredata για την ανά χείρας συνεδρία, δεν
+		// προβαίνουμε σε περαιτέρω ενέργειες.
+
+		if (this.oxiFeredata())
+		return;
+
+		// Αν ο χρόνος που έχει παρέλθει από την υποβολή του αιτήματος δεν
+		// είναι μεγάλος, δεν προβαίνουμε σε περαιτέρω ενέργειες.
+
+		if ((tora - this.feredataPollGet()) < Peripolos.feredataTimeout)
+		return;
 
 		// Παρήλθε μεγάλο χρονικό διάστημα κατά το οποίο το συγκεκριμένο
 		// ανοικτό αίτημα feredata της ανά χείρας συνεδρίας δεν έχει λάβει
@@ -364,6 +373,9 @@ Sinedria.prototype.feredataFreska = function() {
 		nodereq.write(',\n');
 	});
 	nodereq.write('],\n');
+
+	nodereq.write('feredataAnoxi: ' + (parseInt(Peripolos.ergasia.feredata.period / 1000) +
+		Peripolos.feredataTimeout) + ',\n');
 
 	this.
 	tsoxaReset().
