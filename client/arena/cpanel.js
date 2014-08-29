@@ -66,6 +66,14 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 		return Arena.ego.oxiTrapezi();
 	},
 	click: function(e) {
+		var tora, dom, klikTS;
+
+		tora = Globals.torams();
+		dom = this.pbuttonGetDOM();
+		klikTS = parseInt(dom.data('klikTS'));
+		if (isNaN(klikTS)) dom.data('klikTS', tora);
+		else if (tora - klikTS < 1000) return;
+
 		Client.fyi.pano('Δημιουργία νέου τραπεζιού. Παρακαλώ περιμένετε…');
 		Client.skiserService('miaPrefa').
 		done(function(rsp) {
