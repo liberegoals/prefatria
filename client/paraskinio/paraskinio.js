@@ -26,7 +26,7 @@ Paraskinio.unload = function() {
 	if (!Paraskinio.opener) return;
 
 	$(Paraskinio.opener.document.body).css({backgroundImage:Paraskinio.openerBI});
-	Paraskinio.opener.Arena.paraskinio.close();
+	Paraskinio.opener.Arena.paraskinio.klisimo();
 }
 
 $(window).on('beforeunload', function() {

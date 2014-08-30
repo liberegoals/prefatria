@@ -151,8 +151,10 @@ Arena.unload = function() {
 	if (Arena.unloaded) return;
 	Arena.unloaded = true;
 
-	Arena.paraskinio.close();
-	Arena.kitapi.klisimo();
+	Arena.
+	paraskinio.klisimo().
+	kitapi.klisimo().
+	funchat.klisimo();
 };
 
 $(window).
@@ -452,26 +454,55 @@ Arena.paraskinio = {
 };
 
 Arena.paraskinio.open = function() {
-	if (Arena.paraskinio.win)
-	return Arena.paraskinio.close();
-
-	Arena.paraskinio.close(button);
+	Arena.paraskinio.klisimo();
 	Arena.paraskinio.win = window.open(Client.server + 'paraskinio',
 		'_blank', 'top=80,left=80,width=820,height=400,scrollbars=1');
 	Arena.paraskinio.button.addClass('panelButtonEkremes');
-	return Arena.paraskinio;
+	return Arena;
 };
 
-Arena.paraskinio.close = function() {
+Arena.paraskinio.klisimo = function() {
 	if (!Arena.paraskinio.win)
-	return Arena.paraskinio;
+	return Arena;
 
 	Arena.paraskinio.win.close();
 	delete Arena.paraskinio.win;
 	Arena.paraskinio.button.removeClass('panelButtonEkremes');
-	return Arena.paraskinio;
+	return Arena;
 };
 
 Arena.paraskinioAlagi = function(img) {
 	$(document.body).css({backgroundImage:img});
+};
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+Arena.funchat = {
+	win: null,
+};
+
+Arena.funchat.isAnikto = function() {
+	return Arena.funchat.win;
+};
+
+Arena.funchat.isKlisto = function() {
+	return !Arena.funchat.isAnikto();
+};
+
+Arena.funchat.anigma = function() {
+	if (Arena.funchat.isAnikto())
+	Arena.funchat.klisimo();
+
+	Arena.funchat.win = window.open('funchat', '_blank', 'top=100,left=100,width=800,height=500')
+
+	Arena.cpanel.bpanelRefresh();
+	return Arena.funchat;
+};
+
+Arena.funchat.klisimo = function() {
+	Arena.funchat.win.close();
+	Arena.funchat.win = null;
+
+	Arena.cpanel.bpanelRefresh();
+	return Arena.funchat;
 };

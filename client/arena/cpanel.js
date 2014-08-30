@@ -1006,6 +1006,39 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
 
 Arena.cpanel.bpanelButtonPush(new PButton({
+	id: 'funchatOn',
+	omada: 3,
+	img: 'ikona/panel/funchatOn.png',
+	title: 'Ενεργοποίηση funchat',
+	check: function() {
+		if (!Arena) return false;
+		if (!Arena.funchat) return false;
+		if (Arena.ego.oxiPektis()) return false;
+		return !Arena.funchat.win;
+	},
+	click: function(e) {
+		Arena.funchat.anigma();
+	},
+}));
+
+Arena.cpanel.bpanelButtonPush(new PButton({
+	id: 'funchatOff',
+	omada: 3,
+	img: 'ikona/panel/funchatOff.png',
+	title: 'Απενεργοποίηση funchat',
+	check: function() {
+		if (!Arena) return false;
+		if (!Arena.funchat) return false;
+		return Arena.funchat.win;
+	},
+	click: function(e) {
+		Arena.funchat.klisimo();
+	},
+}));
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
+
+Arena.cpanel.bpanelButtonPush(new PButton({
 	id: 'diafimisi',
 	omada: Arena.cpanel.omadaMax,
 	refresh: function() {
