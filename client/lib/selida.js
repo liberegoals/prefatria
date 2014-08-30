@@ -670,7 +670,7 @@ Client.sound = {
 	},
 
 	play: function(sound, vol, delay) {
-		var entasi, ixos;
+		var entasi, ixos, src;
 
 		if (!Client.sound.entasi.hasOwnProperty(Client.session.entasi)) Client.session.entasi = 'ΚΑΝΟΝΙΚΗ';
 		entasi = Client.sound.entasi[Client.session.entasi];
@@ -683,7 +683,8 @@ Client.sound = {
 		if (Client.sound.miosi.hasOwnProperty(sound)) vol *= Client.sound.miosi[sound];
 
 		ixos = $('#ixos');
-		$('<audio src="' + Client.server + 'sounds/' + sound + '" />').appendTo(ixos).each(function() {
+		src = sound.match(/\//) ? sound : Client.server + 'sounds/' + sound;
+		$('<audio src="' + src + '" />').appendTo(ixos).each(function() {
 			var audio = this;
 			audio.volume = (entasi / Client.sound.entasi['ΔΥΝΑΤΗ']) * (vol / Client.sound.entasi['ΔΥΝΑΤΗ']);
 			setTimeout(function() { audio.play(); }, delay ? delay : 1);
