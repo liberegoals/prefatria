@@ -479,6 +479,7 @@ Arena.paraskinioAlagi = function(img) {
 
 Arena.funchat = {
 	win: null,
+	server: 'http://www.opasopa.net/prefadorosFC/',
 };
 
 Arena.funchat.isAnikto = function() {
@@ -493,7 +494,7 @@ Arena.funchat.anigma = function() {
 	if (Arena.funchat.isAnikto())
 	Arena.funchat.klisimo();
 
-	Arena.funchat.win = window.open('funchat', '_blank', 'top=100,left=100,width=800,height=500');
+	Arena.funchat.win = window.open('funchat', '_blank', 'width=800,height=500,top=100,left=300');
 
 	Arena.cpanel.bpanelRefresh();
 	return Arena.funchat;

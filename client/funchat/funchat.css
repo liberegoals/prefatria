@@ -1,0 +1,27 @@
+body {
+	margin: 4px;
+}
+
+#ofelimo {
+	min-height: 0;
+}
+
+.funchatItem {
+	display: inline-block;
+	position: relative;
+	margin: 0 4px 4px 0;
+	width: 100px;
+	height: 100px;
+	overflow: hidden;
+
+	border-style: solid;
+	border-width: 1px;
+	border-color: red;
+
+	cursor: pointer;
+
+background-color: teal;
+}
+
+.funchatIkona {
+}
