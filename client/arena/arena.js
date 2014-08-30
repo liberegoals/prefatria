@@ -174,8 +174,8 @@ Arena.setup = function() {
 	$('#arena td').addClass('stili').
 	find('.stiliPeriexomeno').css('height', Client.ofelimoDOM.innerHeight() + 'px');
 	Client.ofelimoDOM.append(Arena.pektisFormaDOM = $('<div>').attr('id', 'pektisForma').siromeno({
-		top: '100px',
-		left: '100px',
+		top: '197px',
+		left: '636px',
 	}));
 
 	Arena.
