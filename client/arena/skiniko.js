@@ -545,12 +545,28 @@ Skiniko.prototype.skinikoResetDOM = function() {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 Pektis.prototype.pektisFormaPopupDOM = function(e) {
+	var pektis;
+
 	Arena.inputRefocus(e);
 
-	Arena.pektisFormaDOM.empty().
-	data('pektis', this.pektisLoginGet()).
-	append(Client.klisimo(function() {
+	pektis = this.pektisLoginGet();
+	if (!pektis) return this;
+
+	// Αν κάνουμε απόπειρα να ξανανοίξουμε το προφίλ του παίκτη του
+	// οποίου ήδη έχουμε ανοικτό το προφίλ, τότε κλείνει το ανοικτό
+	// προφίλ. Αυτό βοηθά στο να κάνουμε κλικ στο προφίλ του παίκτη,
+	// να δούμε ό,τι θέλουμε να δούμε εκεί και να ξανακάνουμε κλικ
+	// για να το κλείσουμε.
+
+	if (Arena.pektisFormaDOM.data('pektis') === pektis) {
 		Arena.pektisFormaKlisimo(200);
+		return this;
+	}
+
+	Arena.pektisFormaDOM.empty().
+	data('pektis', pektis).
+	append(Client.klisimo(function() {
+		Arena.pektisFormaKlisimo();
 	})).
 	append(Arena.pektisPanelDOM = $('<div>').attr('id', 'pektisPanel').
 	on('mousedown', function(e) {
@@ -565,9 +581,12 @@ Pektis.prototype.pektisFormaPopupDOM = function(e) {
 };
 
 Arena.pektisFormaKlisimo = function(delay) {
-	if (delay === undefined) delay = 200;
+	if (delay === undefined)
+	delay = 200;
+
 	Arena.pektisFormaDOM.finish().fadeOut(delay, function() {
-		Arena.pektisFormaDOM.empty();
+		Arena.pektisFormaDOM.empty().
+		removeData('pektis');
 		delete Arena.pektisPanelDOM;
 	});
 
