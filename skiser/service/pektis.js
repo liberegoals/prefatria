@@ -36,11 +36,31 @@ Service.pektis.fetch = function(nodereq) {
 Service.pektis.timeout = 12 * 60 * 60;
 
 Service.pektis.check = function() {
-	var tora;
+	var trapezi, tora;
+
+	// Μαζεύουμε όλους τους παίκτες που εμφανίζονται σε ενεργά τραπέζια, καθώς
+	// αυτούς τους παίκτες θα πρέπει να τους έχουμε πρόχειρους στο σκηνικό.
+
+	trapezi = {};
+	Server.skiniko.skinikoTrapeziWalk(function() {
+		var thesi, pektis;
+
+		for (thesi = 1; thesi <= Prefadoros.thesiMax; thesi++) {
+			pektis = this.trapeziPektisGet(thesi);
+			if (pektis) trapezi[pektis] = true;
+		}
+	});
 
 	tora = Globals.tora();
 	Server.skiniko.skinikoPektisWalk(function() {
 		var poll, login;
+
+		// Αν ο παίκτης υπάρχει ως παίκτης σε ενεργό τραπέζι δεν τον
+		// αποκαθηλώνουμε από το σκηνικό.
+
+		login = this.pektisLoginGet();
+		if (trapezi.hasOwnProperty(login))
+		return;
 
 		// Υπενθυμίζουμε ότι το poll timestamp του παίκτη ΔΕΝ είναι
 		// η χρονική στιγμή κατά την οποία ο παίκτης είχε επαφή μέσω
@@ -53,10 +73,9 @@ Service.pektis.check = function() {
 
 		// Ο παίκτης δεν φαίνεται να έχει προσπελαστεί το τελευταίο
 		// διάστημα, επομένως είναι υποψήφιος για αποκαθήλωση. Πριν
-		// προχωρήσουμε στο επόμεν ο βήμα, ελέγχουμε αν υπάρχει στο
+		// προχωρήσουμε στο επόμενο βήμα, ελέγχουμε αν υπάρχει στο
 		// σκηνικό συνεδρία για τον εν λόγω παίκτη.
 
-		login = this.pektisLoginGet();
 		if (Server.skiniko.skinikoSinedriaGet(login))
 		return;
 
