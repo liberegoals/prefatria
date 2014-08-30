@@ -53,13 +53,21 @@ class Selida {
 	}
 
 	public static function stylesheet($css) {
-		?><link rel="stylesheet" type="text/css" href="<?php Globals::url($css); ?>.css" /><?php
+		$file = Globals::$www . "client/" . $css . ".css";
+		if (!file_exists($file)) return;
+
+		$mtime = filemtime($file);
+		?><link rel="stylesheet" type="text/css" href="<?php Globals::url($css); ?>.css?t=<?php
+			print $mtime; ?>" /><?php
 	}
 
 	public static function javascript($script) {
 		$file = Globals::$www . "client/" . $script . ".js";
 		if (!file_exists($file)) return;
-		?><script type="text/javascript" src="<?php Globals::url($script); ?>.js"></script><?php
+
+		$mtime = filemtime($file);
+		?><script type="text/javascript" src="<?php Globals::url($script); ?>.js?t=<?php
+			print $mtime; ?>"></script><?php
 	}
 
 	public static function javascript_begin() {
