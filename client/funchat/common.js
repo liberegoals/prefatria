@@ -190,6 +190,7 @@ Funchat.listaPush(new Funchat({
 }));
 
 Funchat.listaPush(new Funchat({
+	id: 'tsimbousi',
 	img: 'pipaKaroto.gif',
 	platos: 120,
 	txt: 'Πω, πω, πω, τι τσιμπούσι ήταν αυτό!',
