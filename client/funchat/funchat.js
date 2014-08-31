@@ -56,6 +56,7 @@ on('unload', function() {
 });
 
 Funchat.diastasiSave = function() {
+return;
 	Client.ajaxService('asdasda').
 	done(function(rsp) {
 		Client.fyi.pano(rsp);
