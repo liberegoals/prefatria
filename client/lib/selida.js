@@ -669,28 +669,61 @@ Client.sound = {
 		'tsalakoma.ogg': 0.4,
 	},
 
-	play: function(sound, vol, delay) {
-		var entasi, ixos, src;
+	play: function(sound, opts) {
+		var entasi, src, jql, dom;
 
-		if (!Client.sound.entasi.hasOwnProperty(Client.session.entasi)) Client.session.entasi = 'ΚΑΝΟΝΙΚΗ';
+		if (!Client.sound.entasi.hasOwnProperty(Client.session.entasi))
+		Client.session.entasi = 'ΚΑΝΟΝΙΚΗ';
+
 		entasi = Client.sound.entasi[Client.session.entasi];
-		if (entasi < 1) return;
+		if (entasi < 1) return null;
 
-		if (vol === undefined) vol = Client.sound.entasi['ΚΑΝΟΝΙΚΗ'];
-		else if (vol === null) vol = Client.sound.entasi['ΚΑΝΟΝΙΚΗ'];
-		else if (vol <= 0) return;
-		else if (vol > Client.sound.entasi['ΔΥΝΑΤΗ']) vol = Client.sound.entasi['ΔΥΝΑΤΗ'];
-		if (Client.sound.miosi.hasOwnProperty(sound)) vol *= Client.sound.miosi[sound];
+		if (opts === undefined)
+		opts = null;
 
-		ixos = $('#ixos');
+		if (opts === null) opts = {
+			entasi: Client.sound.entasi['ΚΑΝΟΝΙΚΗ'],
+		}
+		else if (typeof opts === 'object') {
+			opts.entasi = parseInt(opts.entasi);
+			opts.delay = parseInt(opts.delay);
+		}
+		else opts = {
+			entasi: parseInt(opts),
+		}
+
+		if (isNaN(opts.entasi))
+		opts.entasi = Client.sound.entasi['ΚΑΝΟΝΙΚΗ'];
+
+		else if (opts.entasi > Client.sound.entasi['ΔΥΝΑΤΗ'])
+		opts.entasi = Client.sound.entasi['ΔΥΝΑΤΗ'];
+
+		else if (opts.entasi <= 0)
+		return null;
+
+		if (Client.sound.miosi.hasOwnProperty(sound))
+		opts.entasi *= Client.sound.miosi[sound];
+
 		src = sound.match(/\//) ? sound : Client.server + 'sounds/' + sound;
-		$('<audio src="' + src + '" />').appendTo(ixos).each(function() {
-			var audio = this;
-			audio.volume = (entasi / Client.sound.entasi['ΔΥΝΑΤΗ']) * (vol / Client.sound.entasi['ΔΥΝΑΤΗ']);
-			setTimeout(function() { audio.play(); }, delay ? delay : 1);
+		jql = $('<audio src="' + src + '" />').on('ended', function() {
+			if (opts.hasOwnProperty('callback'))
+			opts.callback();
+
+			$(this).remove();
 		});
 
-		if (ixos.children().size() > 100) ixos.children(':lt(30)').remove();
+		dom = jql.get(0);
+		dom.volume = (entasi / Client.sound.entasi['ΔΥΝΑΤΗ']) * (opts.entasi / Client.sound.entasi['ΔΥΝΑΤΗ']);
+
+		if (isNaN(opts.delay) || (opts.delay <= 0))
+		dom.play();
+
+		else
+		setTimeout(function() {
+			dom.play();
+		}, opts.delay);
+
+		return jql;
 	},
 
 	errorLast: 0,

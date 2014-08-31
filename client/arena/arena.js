@@ -479,7 +479,6 @@ Arena.paraskinioAlagi = function(img) {
 
 Arena.funchat = {
 	win: null,
-	server: 'http://www.opasopa.net/prefadorosFC/',
 };
 
 Arena.funchat.isAnikto = function() {

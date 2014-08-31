@@ -235,13 +235,33 @@ Arena.sizitisi.panel.bpanelButtonPush(new PButton({
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
 
-Arena.sizitisi.panel.bpanelButtonPush(new PButton({
+// Ο τελευταίος ήχος που παίχτηκε από funchat κρατείται στο "funchatIxosLast"
+// ως jQuery list (με ένα στοιχείο).
+
+Arena.sizitisi.funchatIxosLast = null;
+
+Arena.sizitisi.panel.bpanelButtonPush(Arena.sizitisi.sigasiFunchatButton = new PButton({
 	id: 'sigasi',
 	img: 'sigasi.png',
 	title: 'Σίγαση funchat',
 	click: function(e) {
+		var ixos;
+
+		if (!Arena.sizitisi.funchatIxosLast)
+		return;
+
+		ixos = Arena.sizitisi.funchatIxosLast.get(0);
+		Arena.sizitisi.funchatIxosLast.remove();
+		Arena.sizitisi.funchatIxosLast = null;
+
+		if (!ixos) return;
+		if (!ixos.pause) return;
+
+		ixos.pause();
 	},
 }));
+
+Arena.sizitisi.sigasiFunchatButton = Arena.sizitisi.sigasiFunchatButton.pbuttonGetDOM();
 
 Arena.sizitisi.panel.bpanelButtonPush(new PButton({
 	id: 'korna',
@@ -421,7 +441,9 @@ Arena.sizitisi.keyup = function(e) {
 		pektis: Client.session.pektis,
 		sxolio: sxolio,
 		pote: Globals.toraServer(),
-	}).sizitisiCreateDOM(true);
+	}).sizitisiCreateDOM({
+		proepiskopisi: true,
+	});
 
 	Arena.sizitisi.moliviEkinisi();
 
@@ -596,7 +618,7 @@ Sizitisi.prototype.sizitisiGetDOM = function() {
 	return this.DOM;
 };
 
-Sizitisi.prototype.sizitisiCreateDOM = function(pro) {
+Sizitisi.prototype.sizitisiCreateDOM = function(opts) {
 	var pektis, klasi, xroma, dom, sxolioDOM;
 
 	pektis = this.sizitisiPektisGet();
@@ -613,15 +635,17 @@ Sizitisi.prototype.sizitisiCreateDOM = function(pro) {
 		}
 	}
 
-	dom = pro ? Arena.sizitisi.proepiskopisiDOM.empty() : this.DOM = $('<div>');
+	if (opts === undefined) opts = {};
+
+	dom = opts.proepiskopisi ? Arena.sizitisi.proepiskopisiDOM.empty() : this.DOM = $('<div>');
 
 	dom.addClass('sizitisi').
 	append($('<div>').addClass(klasi).css('color', xroma).text(pektis)).
 	append(sxolioDOM = $('<div>').addClass('sizitisiSxolio'));
 
-	this.sizitisiSxolioCreateDOM(sxolioDOM);
+	this.sizitisiSxolioCreateDOM(sxolioDOM, opts.online);
 
-	if (pro) {
+	if (opts.proepiskopisi) {
 		Arena.sizitisi.scrollKato(true);
 		return this;
 	}
@@ -656,7 +680,7 @@ Sizitisi.prototype.sizitisiCreateDOM = function(pro) {
 	return this;
 };
 
-Sizitisi.prototype.sizitisiSxolioCreateDOM = function(dom) {
+Sizitisi.prototype.sizitisiSxolioCreateDOM = function(dom, online) {
 	var sxolio, tmima, dom, html, i, lexi, j;
 
 	sxolio = this.sizitisiSxolioGet();
@@ -680,6 +704,14 @@ Sizitisi.prototype.sizitisiSxolioCreateDOM = function(dom) {
 	case 'MVT':
 	case 'MVK':
 		Arena.sizitisi.moliviEnarxi(this, dom);
+		return this;
+
+	// Αν το πρώτο πεδίο του σχολίου είναι "FC" τότε πρόκειται για funchat
+	// σχόλιο και σ' αυτή την περίπτωση το δεύτερο πεδίο πρέπει να είναι
+	// το id του funchat item.
+
+	case 'FC':
+		Sizitisi.funchatAppend(dom, tmima[1], online);
 		return this;
 
 	// Αν το πρώτο πεδίο του σχολίου είναι "KN" τότε πρόκειται για κόρνα από
@@ -731,6 +763,38 @@ Sizitisi.prototype.sizitisiSxolioCreateDOM = function(dom) {
 	}
 
 	return this;
+};
+
+Sizitisi.funchatAppend = function(dom, id, online) {
+	var item, ikona, platos, kimeno, ixos;
+
+	item = Funchat.listaGet(id);
+	if (!item)
+	return;
+
+	ikona = item.funchatIkonaGet();
+	if (ikona) {
+		ikona = $('<img>').addClass('sizitisiFunchatIkona').attr('src', Funchat.server + ikona);
+		platos = item.funchatPlatosGet();
+		if (platos) ikona.css('width', platos + 'px');
+		dom.append(ikona);
+	}
+
+	kimeno = item.funchatKimenoGet();
+	if (kimeno)
+	dom.append(kimeno);
+
+	if (!online)
+	return;
+
+	// Αν υπάρχει συσχετισμένος ήχος, τελειώνουμε τυχόν προηγούμενο ήχο
+	// και εκκινούμε τον ήχο από το νέο funchat item.
+
+	ixos = item.funchatIxosGet();
+	if (ixos) {
+		Arena.sizitisi.sigasiFunchatButton.trigger('click');
+		Arena.sizitisi.funchatIxosLast = item.funchatIxosPlay();
+	}
 };
 
 Sizitisi.kornaAppend = function(dom) {
