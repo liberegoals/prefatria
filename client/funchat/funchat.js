@@ -1,7 +1,3 @@
-Funchat = function(props) {
-	Globals.initObject(this, props);
-};
-
 $(document).ready(function() {
 	// Χρειαζόμαστε πρόσβαση στη βασική σελίδα του «Πρεφαδόρου», από
 	// την οποία εκκίνησε το funchat. Σ' αυτή τη σελίδα υπάρχει global
@@ -11,12 +7,22 @@ $(document).ready(function() {
 	// ανεξάρτητα σε δική του σελίδα.
 
 	Arena = (window.opener && window.opener.Arena ? window.opener.Arena : null);
-	Funchat.server = (Arena ? Arena.funchat.server : 'http://www.opasopa.net/prefadorosFC/');
 
 	Funchat.ofelimoDOM = $('#ofelimo');
-	Funchat.listaWalk(function() {
+	Funchat.listaArrayWalk(function() {
 		this.funchatCreateDOM();
 	});
+
+	return;
+	setInterval(function() {
+		var count;
+
+		count = 0;
+		for (i in $.cache)
+		count++;
+
+		console.log('jQuery cache size: ' + count);
+	}, 10000);
 });
 
 Funchat.isArena = function() {
@@ -61,29 +67,8 @@ Funchat.diastasiSave = function() {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
 
-Funchat.prototype.funchatKimenoGet = function() {
-	return this.txt;
-};
-
-Funchat.prototype.funchatIxosGet = function() {
-	return this.ixos;
-};
-
-Funchat.prototype.funchatEntasiGet = function() {
-	return this.entasi;
-};
-
-Funchat.prototype.funchatIxosPlay = function() {
-	var ixos;
-
-	ixos = this.funchatIxosGet();
-	if (!ixos) return this;
-
-	Client.sound.play(Funchat.server + ixos, this.funchatEntasiGet());
-};
-
 Funchat.prototype.funchatCreateDOM = function() {
-	var kimeno;
+	var kimeno, ixos;
 
 	if (this.hasOwnProperty('dom'))
 	return this;
@@ -91,12 +76,25 @@ Funchat.prototype.funchatCreateDOM = function() {
 	this.dom = $('<div>').addClass('funchatItem').appendTo(Funchat.ofelimoDOM).
 	data('item', this).
 	on('click', function(e) {
-		var item, ixos;
+		var item, id, sxolio;
+
+		e.stopPropagation();
+
+		if (Funchat.oxiArena())
+		return;
+
+		if (Arena.ego.oxiPektis())
+		return;
 
 		item = $(this).data('item');
 		if (!item) return;
 
-		item.funchatIxosPlay();
+		id = item.funchatIdGet();
+		if (!id) return;
+
+		sxolio = 'FC^' + id;
+		self.opener.Client.skiserService('sizitisiPartida', 'sxolio=' + sxolio.uri());
+		Arena.inputRefocus();
 	});
 
 	kimeno = this.funchatKimenoGet();
@@ -104,61 +102,72 @@ Funchat.prototype.funchatCreateDOM = function() {
 
 	if (this.hasOwnProperty('img'))
 	$('<img>').addClass('funchatIkona').attr('src', Funchat.server + this.img).appendTo(this.dom);
+
+	ixos = this.funchatIxosGet();
+	if (!ixos) return this;
+
+	$('<img>').addClass('funchatIxosIcon').attr({
+		src: '../ikona/panel/entasi.png',
+		title: 'Δοκιμή ηχητικού εφέ',
+	}).
+	on('click', function(e) {
+		var item, pezi, sigasiIcon;
+
+		e.stopPropagation();
+
+		item = $(this).parent().data('item');
+		if (!item) return;
+
+		pezi = item.funchatIxosPeziGet();
+		if (pezi) {
+			item.funchatIxosPeziDelete(pezi);
+			$(this).attr({
+				src: '../ikona/panel/entasi.png',
+				title: 'Δοκιμή ηχητικού εφέ',
+			});
+
+			return;
+		}
+
+		$(this).attr({
+			src: '../ikona/panel/sigasi.png',
+			title: 'Σίγαση δοκιμής ηχητικού εφέ',
+		});
+
+		sigasiIcon = $(this);
+		pezi = item.funchatIxosPlay({
+			callback: function() {
+				sigasiIcon.trigger('click');
+			},
+		});
+		item.funchatIxosPeziSet(pezi);
+	}).
+	appendTo(this.dom);
+
+	return this;
 };
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
-
-Funchat.lista = [];
-
-Funchat.listaWalk = function(callback) {
-	var i;
-
-	for (i = 0; i < Funchat.lista.length; i++) {
-		callback.call(Funchat.lista[i]);
-	}
+Funchat.prototype.funchatIxosPeziSet = function(pezi) {
+	this.ixosPezi = pezi;
+	return this;
 };
 
-Funchat.lista.push(new Funchat({
-	img: 'etsi.gif',
-	txt: 'Έεεεεετσι!',
-}));
+Funchat.prototype.funchatIxosPeziGet = function() {
+	return this.ixosPezi;
+};
 
-Funchat.lista.push(new Funchat({
-	img: 'elaStoThio.gif',
-	txt: 'Έλα στο θείο!',
-}));
+Funchat.prototype.funchatIxosPeziDelete = function(pezi) {
+	var dom;
 
-Funchat.lista.push(new Funchat({
-	img: 'egiptiakosXoros.gif',
-	txt: 'Έλα στο θείο!',
-}));
+	if (pezi === undefined)
+	pezi = this.funchatIxosPeziGet();
 
-Funchat.lista.push(new Funchat({
-	img: 'xipna.gif',
-	txt: 'Ξύπνα ρεεε!',
-}));
+	delete this.ixosPezi;
+	if (!pezi) return this;
 
-Funchat.lista.push(new Funchat({
-	img: 'pouVadizoume.jpg',
-	txt: 'Πού βαδίζουμε κύριοι!',
-	ixos: 'pouVadizoume.mp3',
-	entasi: 10,
-}));
+	dom = pezi.get(0);
+	if (dom) dom.pause();
+	pezi.remove();
 
-Funchat.lista.push(new Funchat({
-	img: 'staExigoOrea.jpg',
-	txt: 'Στα εξηγώ ωραία;',
-	ixos: 'alefantos.mp3',
-}));
-
-Funchat.lista.push(new Funchat({
-	img: 'pipaKaroto.gif',
-	txt: 'Πω, πω, πω, τι τσιμπούσι ήταν αυτό!',
-	ixos: 'tsibousiMale.mp3',
-}));
-
-Funchat.lista.push(new Funchat({
-	img: 'tonIpiame.gif',
-	txt: 'Πω, πω, πω, τι τσιμπούσι ήταν αυτό!',
-	ixos: 'tsibousiFemale.mp3',
-}));
+	return this;
+};

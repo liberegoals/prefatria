@@ -416,7 +416,9 @@ Skiniko.prototype.processAlagesPartida = function(data, trapeziPrin) {
 			Arena.sizitisi.proepiskopisiDOM.empty();
 
 			Arena.sizitisi.moliviTelos(pektis);
-			sizitisi.sizitisiCreateDOM();
+			sizitisi.sizitisiCreateDOM({
+				online: true,
+			});
 		});
 
 		Arena.sizitisi.scrollKato();
@@ -500,7 +502,7 @@ Skiniko.prototype.skinikoCreateDOM = function(data) {
 
 	Arena.partida.refreshDOM(true);
 
-	// Η συζήτηση του καφενείου και το τραπεζιού εμφανίζεται στον ίδιο χώρο.
+	// Η συζήτηση του καφενείου και του τραπεζιού εμφανίζεται στον ίδιο χώρο.
 	// Έχουν ήδη προστεθεί τα σχετικά DOM elements και κανονίζουμε τώρα την
 	// εμφάνιση των τελευταίων σχολίων.
 
