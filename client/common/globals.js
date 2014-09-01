@@ -140,7 +140,8 @@ Globals.poteOra = function(pote, full) {
 // Μπορούμε να δώσουμε και συγκεκριμένη ώρα ως παράμετρο.
 
 Globals.mera = function(d, full) {
-	if (d === undefined) d = new Date;
+	if (!d) d = new Date;
+
 	var s = '';
 
 	var x = d.getDate();
@@ -168,7 +169,8 @@ Globals.mera = function(d, full) {
 // Μπορούμε να δώσουμε και συγκεκριμένη ώρα ως παράμετρο.
 
 Globals.ora = function(d, seconds) {
-	if (d === undefined) d = new Date;
+	if (!d) d = new Date;
+
 	var s = '';
 
 	var x = d.getHours();
