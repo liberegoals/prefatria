@@ -1013,7 +1013,7 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 	check: function() {
 		if (!Arena) return false;
 		if (!Arena.funchat) return false;
-		if (Arena.ego.oxiPektis()) return false;
+		if (Arena.ego.oxiTrapezi()) return false;
 		return !Arena.funchat.win;
 	},
 	click: function(e) {
