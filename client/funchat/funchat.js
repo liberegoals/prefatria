@@ -84,8 +84,11 @@ Funchat.prototype.funchatCreateDOM = function() {
 		if (Funchat.oxiArena())
 		return;
 
-		if (Arena.ego.oxiPektis())
-		return;
+		if (Arena.kafenioMode())
+		return Client.sound.beep();
+
+		if (Arena.ego.oxiTrapezi())
+		return Client.sound.beep();
 
 		item = $(this).data('item');
 		if (!item) return;

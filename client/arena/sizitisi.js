@@ -247,6 +247,9 @@ Arena.sizitisi.panel.bpanelButtonPush(Arena.sizitisi.sigasiFunchatButton = new P
 	click: function(e) {
 		var ixos;
 
+		Arena.sizitisi.sigasiFunchatButton.
+		removeClass('panelButtonEkremes');
+
 		if (!Arena.sizitisi.funchatIxosLast)
 		return;
 
@@ -792,8 +795,14 @@ Sizitisi.funchatAppend = function(dom, id, online) {
 
 	ixos = item.funchatIxosGet();
 	if (ixos) {
-		Arena.sizitisi.sigasiFunchatButton.trigger('click');
-		Arena.sizitisi.funchatIxosLast = item.funchatIxosPlay();
+		Arena.sizitisi.sigasiFunchatButton.
+		trigger('click').addClass('panelButtonEkremes');
+		Arena.sizitisi.funchatIxosLast = item.funchatIxosPlay({
+			callback: function() {
+				Arena.sizitisi.sigasiFunchatButton.
+				removeClass('panelButtonEkremes');
+			},
+		});
 	}
 };
 
