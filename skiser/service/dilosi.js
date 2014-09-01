@@ -54,8 +54,8 @@ Service.dilosi.dilosi2 = function(data) {
 	query = 'INSERT INTO `energia` (`dianomi`, `pektis`, `idos`, `data`) VALUES (' +
 		data.kinisiDilosi.data.dianomi + ', ' + data.kinisiDilosi.data.pektis + ', ' +
 		data.kinisiDilosi.data.idos.json() + ', ' + data.kinisiDilosi.data.data.json() + ')';
-	data.conn.connection.query(query, function(err, res) {
-		if (err || (res.affectedRows != 1))
+	data.conn.query(query, function(conn, res) {
+		if (res.affectedRows != 1)
 		return Service.dilosi.apotixia(data, 'Απέτυχε η ένταξη της δήλωσης στην database');
 
 		data.kinisiDilosi.data.kodikos = res.insertId;
@@ -104,10 +104,10 @@ Service.dilosi.flop = function(data) {
 	query = 'INSERT INTO `energia` (`dianomi`, `pektis`, `idos`, `data`) VALUES (' +
 		kinisiFlop.data.dianomi + ', ' + kinisiFlop.data.pektis + ', ' +
 		kinisiFlop.data.idos.json() + ', ' + kinisiFlop.data.data.json() + ')';
-	conn.connection.query(query, function(err, res) {
+	conn.query(query, function(conn, res) {
 		conn.free();
 
-		if (res && (res.affectedRows == 1)) {
+		if (res.affectedRows == 1) {
 			kinisiFlop.data.kodikos = res.insertId;
 			Server.skiniko.
 			processKinisi(kinisiFlop).
@@ -142,9 +142,9 @@ Service.dilosi.alagi = function(data) {
 	query = 'INSERT INTO `energia` (`dianomi`, `pektis`, `idos`, `data`) VALUES (' +
 		kinisiTzogos.data.dianomi + ', ' + kinisiTzogos.data.pektis + ', ' +
 		kinisiTzogos.data.idos.json() + ', ' + kinisiTzogos.data.data.json() + ')';
-	conn.connection.query(query, function(err, res) {
+	conn.query(query, function(conn, res) {
 		conn.free();
-		if (res && (res.affectedRows == 1)) {
+		if (res.affectedRows == 1) {
 			kinisiTzogos.data.kodikos = res.insertId;
 			Server.skiniko.
 			processKinisi(kinisiTzogos).

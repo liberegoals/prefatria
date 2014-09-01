@@ -258,8 +258,9 @@ Service.sinedria.pektisTheatisTheatis2 = function(nodereq, conn, thesi) {
 
 	query = 'UPDATE `trapezi` SET `pektis' + thesi + '` = NULL WHERE `kodikos` = ' +
 		nodereq.trapezi.trapeziKodikosGet();
-	conn.connection.query(query, function(err, res) {
-		if (res && (res.affectedRows === 1)) return Service.sinedria.pektisTheatisTheatis3(nodereq, conn, thesi);
+	conn.query(query, function(conn, res) {
+		if (res.affectedRows === 1)
+		return Service.sinedria.pektisTheatisTheatis3(nodereq, conn, thesi);
 
 		conn.rollback();
 		return nodereq.error('Απέτυχε η ενημέρωση του τραπεζιού');
@@ -270,8 +271,9 @@ Service.sinedria.pektisTheatisTheatis3 = function(nodereq, conn, thesi) {
 	var query;
 
 	query = "UPDATE `sinedria` SET `simetoxi` = 'ΠΑΙΚΤΗΣ' WHERE `pektis` = " + nodereq.login.json();
-	conn.connection.query(query, function(err, res) {
-		if (res && (res.affectedRows === 1)) return Service.sinedria.pektisTheatisTheatis4(nodereq, conn, thesi);
+	conn.query(query, function(conn, res) {
+		if (res.affectedRows === 1)
+		return Service.sinedria.pektisTheatisTheatis4(nodereq, conn, thesi);
 
 		conn.rollback();
 		return nodereq.error('Απέτυχε η ενημέρωση της συνεδρίας');
@@ -403,9 +405,11 @@ Service.sinedria.thesiTheasis2 = function(nodereq) {
 	query = 'UPDATE `sinedria` SET `thesi` = ' + nodereq.url.thesi +
 		' WHERE `pektis` = ' + nodereq.loginGet().json();
 	conn = DB.connection();
-	conn.connection.query(query, function(err, res) {
+	conn.query(query, function(conn, res) {
 		conn.free();
-		if (res && (res.affectedRows === 1)) return Service.sinedria.thesiTheasis3(nodereq);
+		if (res.affectedRows === 1)
+		return Service.sinedria.thesiTheasis3(nodereq);
+
 		nodereq.error('Απέτυχε η αλλαγή θέσης θέασης');
 	});
 };
@@ -520,8 +524,8 @@ Service.sinedria.arxiothetisi = function(lista) {
 Service.sinedria.arxiothetisi2 = function(pektis, sinedria, lista, conn) {
 	var query = 'INSERT INTO `istoriko` (`pektis`, `ip`, `isodos`, `exodos`) VALUES (' + pektis.json() + ', ' +
 		sinedria.sinedriaIpGet().json() + ', FROM_UNIXTIME(' + sinedria.sinedriaIsodosGet() + '), NOW())';
-	conn.connection.query(query, function(err, res) {
-		if ((!err) && (res.affectedRows == 1))
+	conn.query(query, function(conn, res) {
+		if (res.affectedRows == 1)
 		return Service.sinedria.arxiothetisi3(pektis, lista, conn);
 
 		conn.rollback(function(conn) {
@@ -535,15 +539,17 @@ Service.sinedria.arxiothetisi2 = function(pektis, sinedria, lista, conn) {
 
 Service.sinedria.arxiothetisi3 = function(pektis, lista, conn) {
 	var query = 'DELETE FROM `sinedria` WHERE `pektis` LIKE ' + pektis.json();
-	conn.connection.query(query, function(err, res) {
-		if (err || (res.affectedRows != 1)) return conn.rollback(function(conn) {
+	conn.query(query, function(conn, res) {
+		if (res.affectedRows == 1)
+		conn.commit(function(conn) {
 			conn.free();
-			console.error(pektis + ': απέτυχε η διαγραφή παλαιάς συνεδρίας');
 			Service.sinedria.arxiothetisi(lista);
 		});
 
-		conn.commit(function(conn) {
+		else
+		conn.rollback(function(conn) {
 			conn.free();
+			console.error(pektis + ': απέτυχε η διαγραφή παλαιάς συνεδρίας');
 			Service.sinedria.arxiothetisi(lista);
 		});
 	});

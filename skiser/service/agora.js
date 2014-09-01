@@ -64,8 +64,8 @@ Service.agora.agora2 = function(data) {
 	query = 'INSERT INTO `energia` (`dianomi`, `pektis`, `idos`, `data`) VALUES (' +
 		data.kinisiAgora.data.dianomi + ', ' + data.kinisiAgora.data.pektis + ', ' +
 		data.kinisiAgora.data.idos.json() + ', ' + data.kinisiAgora.data.data.json() + ')';
-	data.conn.connection.query(query, function(err, res) {
-		if (err || (res.affectedRows != 1))
+	data.conn.query(query, function(conn, res) {
+		if (res.affectedRows != 1)
 		return Service.dilosi.apotixia(data, 'Απέτυχε η ένταξη της δήλωσης στην database');
 
 		data.kinisiAgora.data.kodikos = res.insertId;
@@ -100,8 +100,8 @@ Service.agora.solo = function(data) {
 	query = 'INSERT INTO `energia` (`dianomi`, `pektis`, `idos`, `data`) VALUES (' +
 		data.kinisiSolo.data.dianomi + ', ' + data.kinisiSolo.data.pektis + ', ' +
 		data.kinisiSolo.data.idos.json() + ', ' + data.kinisiSolo.data.data.json() + ')';
-	data.conn.connection.query(query, function(err, res) {
-		if (err || (res.affectedRows != 1))
+	data.conn.query(query, function(conn, res) {
+		if (res.affectedRows != 1)
 		return Service.dilosi.apotixia(data, 'Απέτυχε η ένταξη της σολαρίας στην database');
 
 		data.kinisiSolo.data.kodikos = res.insertId;
@@ -115,8 +115,8 @@ Service.agora.solo2 = function(data) {
 	kinisiAdd(data.kinisiSolo, false);
 
 	query = data.dianomi.queryPliromi();
-	data.conn.connection.query(query, function(err, res) {
-		if (err || (res.affectedRows != 1))
+	data.conn.query(query, function(conn, res) {
+		if (res.affectedRows != 1)
 		return Service.dilosi.apotixia(data, 'Απέτυχε η ενημέρωση πληρωμής σολαρίας στην database');
 
 		Service.agora.solo3(data);

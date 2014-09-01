@@ -74,8 +74,8 @@ Service.akirosi.start = function(nodereq) {
 Service.akirosi.start2 = function(data) {
 	var query = 'DELETE FROM `energia` WHERE `dianomi` = ' + data.dianomiKodikos +
 		' AND `kodikos` >= ' + data.energiaKodikos;
-	data.conn.connection.query(query, function(err, res) {
-		if (err || (res.affectedRows < 1))
+	data.conn.query(query, function(conn, res) {
+		if (res.affectedRows < 1)
 		return Service.akirosi.apotixia(data, 'Αποτυχία διαγραφής ενέργειας από την database');
 
 		Service.akirosi.start3(data);

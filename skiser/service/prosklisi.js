@@ -20,9 +20,11 @@ Service.prosklisi.apostoli = function(nodereq) {
 	query = 'REPLACE INTO `prosklisi` (`trapezi`, `apo`, `pros`, `epidosi`) VALUES (' +
 		(trapezi = sinedria.sinedriaTrapeziGet()) + ', ' + nodereq.login.json() + ', ' +
 		nodereq.url.pros.json() + ', NOW())';
-	conn.connection.query(query, function(err, res) {
+	conn.query(query, function(conn, res) {
 		conn.free();
-		if ((!res) || (res.affectedRows < 1)) return nodereq.error('Απέτυχε η καταχώρηση της προσκλήσεως');
+		if (res.affectedRows < 1)
+		return nodereq.error('Απέτυχε η καταχώρηση της προσκλήσεως');
+
 		Service.prosklisi.apostoli2(nodereq, res.insertId, trapezi);
 	});
 };
@@ -69,9 +71,11 @@ Service.prosklisi.diagrafi = function(nodereq) {
 
 	conn = DB.connection();
 	query = 'DELETE FROM `prosklisi` WHERE `kodikos` = ' + nodereq.url.prosklisi;
-	conn.connection.query(query, function(err, res) {
+	conn.query(query, function(conn, res) {
 		conn.free();
-		if ((!res) || (res.affectedRows != 1)) return nodereq.error('Απέτυχε η διαγραφή της προσκλήσεως');
+		if (res.affectedRows != 1)
+		return nodereq.error('Απέτυχε η διαγραφή της προσκλήσεως');
+
 		Service.prosklisi.diagrafi2(data);
 	});
 };
@@ -117,7 +121,7 @@ Service.prosklisi.diagrafi3 = function(data) {
 	conn = DB.connection();
 	query = 'UPDATE `sinedria` SET `trapezi` = NULL, `thesi` = NULL, `simetoxi` = NULL ' +
 		'WHERE `pektis` = ' + data.pros.json();
-	conn.connection.query(query, function(err, res) {
+	conn.query(query, function(conn, res) {
 		var kinisi;
 
 		conn.free();
@@ -126,7 +130,7 @@ Service.prosklisi.diagrafi3 = function(data) {
 		// τραπέζι ώστε οι κλειδοκράτορες να γνωρίζουν ότι αυτός
 		// παραμένει.
 
-		if ((!res) || (res.affectedRows < 1))
+		if (res.affectedRows < 1)
 		return;
 
 		kinisi = new Kinisi({
@@ -204,9 +208,11 @@ Service.prosklisi.apodoxiEpanodos = function(nodereq, trapeziKodikos, thesi) {
 	query = 'UPDATE `sinedria` SET `trapezi` = ' + trapeziKodikos + ', `thesi` = ' + thesi +
 		', `simetoxi` = ' + simetoxi.json() + ' WHERE `pektis` = ' + nodereq.login.json();
 	conn = DB.connection();
-	conn.connection.query(query, function(err, res) {
+	conn.query(query, function(conn, res) {
 		conn.free();
-		if ((!res) || (res.affectedRows != 1)) return nodereq.error('Απέτυχε η επάνοδος παίκτη');
+		if (res.affectedRows != 1)
+		return nodereq.error('Απέτυχε η επάνοδος παίκτη');
+
 		Service.prosklisi.apodoxi2(nodereq, trapeziKodikos, thesi, simetoxi);
 	});
 };
@@ -217,8 +223,8 @@ Service.prosklisi.apodoxiPektis = function(nodereq, conn, trapeziKodikos, thesi)
 	simetoxi = 'ΠΑΙΚΤΗΣ';
 	query = 'UPDATE `sinedria` SET `trapezi` = ' + trapeziKodikos + ', `thesi` = ' + thesi +
 		', `simetoxi` = ' + simetoxi.json() + ' WHERE `pektis` = ' + nodereq.login.json();
-	conn.connection.query(query, function(err, res) {
-		if ((!res) || (res.affectedRows != 1)) {
+	conn.query(query, function(conn, res) {
+		if (res.affectedRows != 1) {
 			conn.rollback();
 			return nodereq.error('Απέτυχε η ενημέρωση της συνεδρίας');
 		}
@@ -232,8 +238,8 @@ Service.prosklisi.apodoxiPektis2 = function(nodereq, conn, trapeziKodikos, thesi
 
 	query = 'UPDATE `trapezi` SET `pektis' + thesi + '` = ' + nodereq.login.json() +
 		' WHERE `kodikos` = ' + trapeziKodikos;
-	conn.connection.query(query, function(err, res) {
-		if ((!res) || (res.affectedRows != 1)) {
+	conn.query(query, function(conn, res) {
+		if (res.affectedRows != 1) {
 			conn.rollback();
 			return nodereq.error('Απέτυχε η ενημέρωση του τραπεζιού');
 		}
@@ -251,9 +257,11 @@ Service.prosklisi.apodoxiTheatis = function(nodereq, trapeziKodikos, trapezi) {
 	query = 'UPDATE `sinedria` SET `trapezi` = ' + trapeziKodikos + ', `thesi` = ' + thesi +
 		', `simetoxi` = ' + simetoxi.json() + ' WHERE `pektis` = ' + nodereq.login.json();
 	conn = DB.connection();
-	conn.connection.query(query, function(err, res) {
+	conn.query(query, function(conn, res) {
 		conn.free();
-		if ((!res) || (res.affectedRows != 1)) return nodereq.error('Απέτυχε η αποδοχή ως θεατής');
+		if (res.affectedRows != 1)
+		return nodereq.error('Απέτυχε η αποδοχή ως θεατής');
+
 		Service.prosklisi.apodoxi2(nodereq, trapeziKodikos, thesi, simetoxi);
 	});
 };

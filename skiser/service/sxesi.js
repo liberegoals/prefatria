@@ -26,8 +26,8 @@ Service.sxesi.sxesi1 = function(nodereq, conn) {
 	:
 		'DELETE FROM `sxesi` WHERE `pektis` = ' + nodereq.login.json() + ' AND `sxetizomenos` = ' + pektis.json()
 	;
-	conn.connection.query(query, function(err, res) {
-		if (res && (res.affectedRows > 0))
+	conn.query(query, function(conn, res) {
+		if (res.affectedRows > 0)
 		return Service.sxesi.sxesi2(nodereq, conn, pektis, sxesi);
 
 		conn.rollback();

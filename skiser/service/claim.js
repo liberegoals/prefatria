@@ -55,8 +55,8 @@ Service.claim.protasi2 = function(data) {
 	query = 'INSERT INTO `energia` (`dianomi`, `pektis`, `idos`, `data`) VALUES (' +
 		data.dianomiKodikos + ', ' + data.pektis + ', ' + data.kinisiClaim.data.idos.json() + ', ' +
 		data.kinisiClaim.data.data.json() + ')';
-	data.conn.connection.query(query, function(err, res) {
-		if (err || (res.affectedRows != 1))
+	data.conn.query(query, function(conn, res) {
+		if (res.affectedRows != 1)
 		return Service.claim.apotixia(data, 'Απέτυχε η ένταξη του αιτήματος claim στην database');
 
 		data.conn.commit();
@@ -126,8 +126,8 @@ Service.claim.apantisi2 = function(data) {
 	query = 'INSERT INTO `energia` (`dianomi`, `pektis`, `idos`, `data`) VALUES (' +
 		data.dianomiKodikos + ', ' + data.pektis + ', ' + data.kinisiParetisi.data.idos.json() + ', ' +
 		data.kinisiParetisi.data.data.json() + ')';
-	data.conn.connection.query(query, function(err, res) {
-		if (err || (res.affectedRows != 1))
+	data.conn.query(query, function(conn, res) {
+		if (res.affectedRows != 1)
 		return Service.claim.apotixia(data, 'Απέτυχε η ένταξη απάντησης σε αίτημα claim στην database');
 
 		data.energiaParetisiKodikos = res.insertId;
@@ -167,8 +167,8 @@ Service.claim.apantisi3 = function(data) {
 
 	query = 'DELETE FROM `energia` WHERE `dianomi` = ' + data.dianomiKodikos +
 		' AND `kodikos` >= ' + energiaArray[i].energiaKodikosGet();
-	data.conn.connection.query(query, function(err, res) {
-		if (err || (res.affectedRows < 1))
+	data.conn.query(query, function(conn, res) {
+		if (res.affectedRows < 1)
 		return Service.claim.apotixia(data, 'Απέτυχε η διαγραφή ενεργειών από την database');
 
 		data.energiaCount = i;
@@ -206,8 +206,8 @@ Service.claim.pliromi = function(data) {
 	var query;
 
 	query = data.dianomi.queryPliromi();
-	data.conn.connection.query(query, function(err, res) {
-		if ((!err) && (res.affectedRows == 1)) 
+	data.conn.query(query, function(conn, res) {
+		if (res.affectedRows == 1) 
 		return Service.claim.pliromi2(data);
 
 		data.conn.rollback();

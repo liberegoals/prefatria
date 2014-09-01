@@ -16,8 +16,8 @@ Service.trapezi.miaPrefa = function(nodereq) {
 
 Service.trapezi.miaPrefa1 = function(nodereq, conn) {
 	var query = 'INSERT INTO `trapezi` (`pektis1`, `poll`) VALUES (' + nodereq.login.json() + ', NOW())';
-	conn.connection.query(query, function(err, res) {
-		if (res && (res.affectedRows == 1))
+	conn.query(query, function(conn, res) {
+		if (res.affectedRows == 1)
 		return Service.trapezi.miaPrefa2(nodereq, conn, res.insertId);
 
 		conn.rollback();
@@ -30,8 +30,8 @@ Service.trapezi.miaPrefa2 = function(nodereq, conn, trapezi) {
 
 	query = "UPDATE `sinedria` SET `trapezi` = " + trapezi + ", `thesi` = 1, " +
 		"`simetoxi` = 'ΠΑΙΚΤΗΣ' WHERE `pektis` LIKE " + nodereq.login.json();
-	conn.connection.query(query, function(err, res) {
-		if (res && (res.affectedRows > 0))
+	conn.query(query, function(conn, res) {
+		if (res.affectedRows > 0)
 		return Service.trapezi.miaPrefa3(nodereq, conn, trapezi);
 
 		conn.rollback();
@@ -42,8 +42,8 @@ Service.trapezi.miaPrefa2 = function(nodereq, conn, trapezi) {
 Service.trapezi.miaPrefa3 = function(nodereq, conn, trapezi) {
 	var query = 'REPLACE INTO `prosklisi` (`trapezi`, `apo`, `pros`) VALUES (' +
 		trapezi + ', ' + nodereq.login.json() + ', ' + nodereq.login.json() + ')';
-	conn.connection.query(query, function(err, res) {
-		if (res && (res.affectedRows > 0))
+	conn.query(query, function(conn, res) {
+		if (res.affectedRows > 0)
 		return Service.trapezi.miaPrefa4(nodereq, conn, trapezi, res.insertId);
 
 		conn.rollback();
@@ -143,8 +143,8 @@ Service.trapezi.exodosPektis = function(nodereq, conn, trapezi, thesi) {
 	var query;
 
 	query = 'UPDATE `trapezi` SET `pektis' + thesi + '` = NULL WHERE `kodikos` = ' + trapezi;
-	conn.connection.query(query, function(err, res) {
-		if ((!res) || (res.affectedRows < 1)) {
+	conn.query(query, function(conn, res) {
+		if (res.affectedRows < 1) {
 			conn.rollback();
 			return nodereq.error('Απέτυχε η έξοδος παίκτη από το τραπέζι');
 		}
@@ -162,8 +162,8 @@ Service.trapezi.exodosPektis2 = function(nodereq, conn, trapezi, thesi) {
 
 	query = 'REPLACE INTO `telefteos` (`trapezi`, `thesi`, `pektis`) VALUES (' +
 		trapezi + ', ' + thesi + ', ' + nodereq.login.json() + ')';
-	conn.connection.query(query, function(err, res) {
-		if ((!res) || (res.affectedRows < 1)) {
+	conn.query(query, function(conn, res) {
+		if (res.affectedRows < 1) {
 			conn.rollback();
 			return nodereq.error('Απέτυχε η ενημέρωση τελευταίου παίκτη');
 		}
@@ -180,8 +180,8 @@ Service.trapezi.exodosPektis3 = function(nodereq, conn, trapezi, thesi) {
 
 	query = 'REPLACE INTO `simetoxi` (`trapezi`, `pektis`, `thesi`) VALUES (' +
 		trapezi + ', ' + nodereq.login.json() + ', ' + thesi + ')';
-	conn.connection.query(query, function(err, res) {
-		if ((!res) || (res.affectedRows < 1)) {
+	conn.query(query, function(conn, res) {
+		if (res.affectedRows < 1) {
 			conn.rollback();
 			return nodereq.error('Απέτυχε η ενημέρωση συμμετοχής');
 		}
@@ -205,9 +205,11 @@ Service.trapezi.exodosTheatis = function(nodereq) {
 	query = 'UPDATE `sinedria` SET `trapezi` = NULL, `thesi` = NULL, `simetoxi` = NULL ' +
 		'WHERE `pektis` = ' + nodereq.login.json();
 	conn = DB.connection();
-	conn.connection.query(query, function(err, res) {
+	conn.query(query, function(conn, res) {
 		conn.free();
-		if ((!res) || (res.affectedRows < 1)) return nodereq.error('Απέτυχε η ενημέρωση της σνεδρίας');
+		if (res.affectedRows < 1)
+		return nodereq.error('Απέτυχε η ενημέρωση της σνεδρίας');
+
 		Service.trapezi.exodos2(nodereq);
 	});
 };
@@ -264,9 +266,11 @@ Service.trapezi.diataxi2 = function(nodereq, trapezi, h1, h2) {
 	query = 'UPDATE `trapezi` SET `pektis' + h1 + '` = ' + (p2 ? p2.json() : 'NULL') +
 		', `pektis' + h2 + '` = ' + (p1 ? p1.json() : 'NULL') + ' WHERE `kodikos` = ' + kodikos;
 	conn = DB.connection();
-	conn.connection.query(query, function(err, res) {
+	conn.query(query, function(conn, res) {
 		conn.free();
-		if ((!res) || (res.affectedRows != 1)) return nodereq.error('Δεν άλλαξε η διάταξη των παικτών');
+		if (res.affectedRows != 1)
+		return nodereq.error('Δεν άλλαξε η διάταξη των παικτών');
+
 		Service.trapezi.diataxi3(nodereq, kodikos, h1, p2, h2, p1);
 	});
 };
@@ -323,9 +327,11 @@ Service.trapezi.roloi = function(nodereq) {
 		'`pektis3` = ' + (p2 ? p2.json() : 'NULL') + ', `apodoxi3` = ' + a2.json() + ' ' +
 		'WHERE `kodikos` = ' + kodikos;
 	conn = DB.connection();
-	conn.connection.query(query, function(err, res) {
+	conn.query(query, function(conn, res) {
 		conn.free();
-		if ((!res) || (res.affectedRows != 1)) return nodereq.error('Δεν άλλαξε η διάταξη των παικτών');
+		if (res.affectedRows != 1)
+		return nodereq.error('Δεν άλλαξε η διάταξη των παικτών');
+
 		Service.trapezi.roloi2(nodereq, kodikos, p3, a3, p1, a1, p2, a2);
 	});
 };
@@ -382,9 +388,9 @@ Service.trapezi.apodoxi = function(nodereq) {
 	query = 'UPDATE `trapezi` SET `apodoxi' + thesi + '` = ' + ixodopa.json() +
 		' WHERE `kodikos` = ' + trapezi.trapeziKodikosGet();
 	conn = DB.connection();
-	conn.connection.query(query, function(err, res) {
+	conn.query(query, function(conn, res) {
 		conn.free();
-		if (res && (res.affectedRows == 1))
+		if (res.affectedRows == 1)
 		return Service.trapezi.apodoxi2(nodereq, trapezi, thesi, ixodopa);
 
 		trapezi.trapeziXeklidoma();
@@ -632,8 +638,8 @@ Service.trapezi.arxiothetisiTrapezi = function(trapeziKodikos, lista, lista2) {
 
 	query += ' WHERE `kodikos` = ' + trapeziKodikos;
 
-	conn.connection.query(query, function(err, res) {
-		if (err || (res.affectedRows != 1)) {
+	conn.query(query, function(conn, res) {
+		if (res.affectedRows != 1) {
 			conn.free();
 			console.error(trapeziKodikos + ': απέτυχε η αρχειοθέτηση του τραπεζιού');
 			Service.trapezi.arxiothetisi(lista, lista2);
@@ -655,13 +661,16 @@ Service.trapezi.arxiothetisiProsklisi = function(conn, trapezi, lista, lista2) {
 	var query;
 
 	query = 'DELETE FROM `prosklisi` WHERE `trapezi` = ' + trapezi;
-	conn.connection.query(query, function(err, res) {
-		if (err) {
+	conn.query(query, function(conn) {
+		/*
+		TODO
+		if (!res) {
 			conn.free();
 			console.error(trapezi + ': απέτυχε η διαγραφή προσκλήσεων κατά την αρχειοθέτηση');
 			Service.trapezi.arxiothetisi(lista, lista2);
 			return;
 		}
+		*/
 
 		Service.trapezi.arxiothetisiSizitisi(conn, trapezi, lista, lista2);
 	});
@@ -671,10 +680,13 @@ Service.trapezi.arxiothetisiSizitisi = function(conn, trapezi, lista, lista2) {
 	var query;
 
 	query = 'DELETE FROM `sizitisi` WHERE `trapezi` = ' + trapezi;
-	conn.connection.query(query, function(err, res) {
+	conn.query(query, function(conn) {
 		conn.free();
-		if (err)
+		/*
+		TODO
+		if (!res)
 		console.error(trapezi + ': απέτυχε η διαγραφή συζήτησης κατά την αρχειοθέτηση');
+		*/
 
 		Service.trapezi.arxiothetisi(lista, lista2);
 	});
