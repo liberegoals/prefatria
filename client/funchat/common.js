@@ -137,12 +137,26 @@ Funchat.listaPush(new Funchat({
 	platos: 120,
 }));
 
+Funchat.listaPush(new Funchat({
+	img: 'gelia.gif',
+	platos: 120,
+}));
+
+Funchat.listaPush(new Funchat({
+	img: 'xekardismenoEmoticon.gif',
+}));
+
 Funchat.omada++;
 
 Funchat.listaPush(new Funchat({
 	img: 'mesa.gif',
 	platos: 240,
 	txt: 'Το θέμα είναι απλά ή σόλο;',
+}));
+
+Funchat.listaPush(new Funchat({
+	img: 'gunFail.gif',
+	platos: 240,
 }));
 
 Funchat.listaPush(new Funchat({
@@ -163,7 +177,30 @@ Funchat.listaPush(new Funchat({
 	txt: 'Γάμησες την παρτίδα!',
 }));
 
+Funchat.listaPush(new Funchat({
+	img: 'nop.gif',
+}));
+
+Funchat.listaPush(new Funchat({
+	img: 'kokiniKarta.jpg',
+	ixos: Client.server + 'sounds/sfirixtra.ogg',
+	platos: 120,
+}));
+
 Funchat.omada++;
+
+Funchat.listaPush(new Funchat({
+	img: 'mrBean.gif',
+	platos: 140,
+}));
+
+Funchat.listaPush(new Funchat({
+	img: 'mavrosGourlomatis.gif',
+}));
+
+Funchat.listaPush(new Funchat({
+	img: 'kinezos.gif',
+}));
 
 Funchat.listaPush(new Funchat({
 	img: 'egiptiakosXoros.gif',
@@ -174,6 +211,46 @@ Funchat.listaPush(new Funchat({
 	platos: 80,
 	ixos: 'clarinetitis.mp3',
 }));
+
+Funchat.listaPush(new Funchat({
+	img: 'gunPenis.gif',
+	platos: 300,
+}));
+
+Funchat.omada++;
+
+Funchat.listaPush(new Funchat({
+	img: 'cheersEmoticon.gif',
+	platos: 120,
+}));
+
+Funchat.listaPush(new Funchat({
+	img: 'axtipitoDidimo.gif',
+	txt: 'Είμαστε αχτύπητο δίδυμο!',
+}));
+
+Funchat.listaPush(new Funchat({
+	img: 'kalaPouMePires.gif',
+}));
+
+Funchat.listaPush(new Funchat({
+	img: 'iseTromeros.gif',
+}));
+
+Funchat.listaPush(new Funchat({
+	img: 'bingoPokemon.gif',
+	txt: 'Σωστόοοστ!',
+}));
+
+Funchat.listaPush(new Funchat({
+	img: 'bravoEmoticon.gif',
+}));
+
+Funchat.listaPush(new Funchat({
+	img: 'kino.gif',
+}));
+
+Funchat.omada++;
 
 Funchat.listaPush(new Funchat({
 	img: 'pouVadizoume.jpg',
@@ -217,13 +294,13 @@ Funchat.listaPush(new Funchat({
 }));
 
 Funchat.listaPush(new Funchat({
-	img: 'ImBack.gif',
+	img: 'misoLepto.gif',
+	txt: 'Μισό…',
 	platos: 80,
 }));
 
 Funchat.listaPush(new Funchat({
-	img: 'misoLepto.gif',
-	txt: 'Μισό…',
+	img: 'ImBack.gif',
 	platos: 80,
 }));
 
