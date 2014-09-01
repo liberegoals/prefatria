@@ -21,9 +21,11 @@ Service.trparam.set = function(nodereq) {
 	query = 'REPLACE INTO `trparam` (`trapezi`, `param`, `timi`) VALUES (' +
 		(trapezi = sinedria.sinedriaTrapeziGet()) + ', ' + nodereq.url.param.json() + ', ' +
 		nodereq.url.timi.json() + ')';
-	conn.connection.query(query, function(err, res) {
+	conn.query(query, function(conn, res) {
 		conn.free();
-		if ((!res) || (res.affectedRows < 1)) return nodereq.error('Απέτυχε η αλλαγή παραμέτρου τραπεζιού');
+		if (res.affectedRows < 1)
+		return nodereq.error('Απέτυχε η αλλαγή παραμέτρου τραπεζιού');
+
 		Service.trparam.set2(nodereq, trapezi);
 	});
 };
@@ -101,7 +103,7 @@ Service.trparam.exoTheatis = function(apovoli) {
 		conn = DB.connection();
 		query = 'UPDATE `sinedria` SET `trapezi` = NULL, `thesi` = NULL, `simetoxi` = NULL ' +
 			'WHERE `pektis` = ' + login.json();
-		conn.connection.query(query, function(err, res) {
+		conn.query(query, function(conn, res) {
 			var kinisi;
 
 			conn.free();
@@ -110,7 +112,7 @@ Service.trparam.exoTheatis = function(apovoli) {
 			// τραπέζι ώστε οι κλειδοκράτορες να γνωρίζουν ότι αυτός
 			// παραμένει.
 
-			if ((!res) || (res.affectedRows < 1))
+			if (res.affectedRows < 1)
 			return;
 
 			// Αλλιώς προβαίνουμε σε δημιουργία κίνησης εξόδου του

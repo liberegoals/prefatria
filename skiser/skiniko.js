@@ -530,8 +530,8 @@ Trapezi.prototype.trapeziNeaDianomi = function(conn, success, fail) {
 	telefteaDianomi = this.trapeziTelefteaDianomi();
 	dealer = telefteaDianomi ? telefteaDianomi.dianomiDealerGet().epomeniThesi() : 1;
 	query = 'INSERT INTO `dianomi` (`trapezi`, `dealer`) VALUES (' + trapeziKodikos + ', ' + dealer + ')';
-	conn.connection.query(query, function(err, res) {
-		if (err || (res.affectedRows != 1)) {
+	conn.query(query, function(conn, res) {
+		if (res.affectedRows != 1) {
 			console.error('αποτυχία εισαγωγής διανομής στην database');
 			return fail.call(trapezi, conn);
 		}
@@ -555,8 +555,8 @@ Trapezi.prototype.trapeziNeaDianomi2 = function(conn, dianomi, success, fail) {
 	query = "INSERT INTO `energia` (`dianomi`, `pektis`, `idos`, `data`) VALUES (" +
 		dianomiKodikos + ", " + dianomi.dianomiDealerGet() + ", " +
 		idos.json() + ", " + data.json() + ")";
-	conn.connection.query(query, function(err, res) {
-		if (err || (res.affectedRows != 1)) {
+	conn.query(query, function(conn, res) {
+		if (res.affectedRows != 1) {
 			console.error('αποτυχία εισαγωγής ενέργειας διανομής στην database');
 			return fail.call(trapezi, conn);
 		}

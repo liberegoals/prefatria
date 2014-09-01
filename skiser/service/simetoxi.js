@@ -54,8 +54,8 @@ Service.simetoxi.dilosi2 = function(data) {
 	query = 'INSERT INTO `energia` (`dianomi`, `pektis`, `idos`, `data`) VALUES (' +
 		data.kinisiSimetoxi.data.dianomi + ', ' + data.kinisiSimetoxi.data.pektis + ', ' +
 		data.kinisiSimetoxi.data.idos.json() + ', ' + data.kinisiSimetoxi.data.data.json() + ')';
-	data.conn.connection.query(query, function(err, res) {
-		if (err || (res.affectedRows != 1))
+	data.conn.query(query, function(conn, res) {
+		if (res.affectedRows != 1)
 		return Service.simetoxi.apotixia(data, 'Απέτυχε η ένταξη της δήλωσης συμμετοχής στην database');
 
 		data.energiaSimetoxiKodikos = res.insertId;
@@ -79,10 +79,10 @@ Service.simetoxi.dilosi3 = function(data) {
 	var query;
 
 	query = data.dianomi.queryPliromi();
-	data.conn.connection.query(query, function(err, res) {
+	data.conn.query(query, function(conn, res) {
 		var kinisiPliromi;
 
-		if (err || (res.affectedRows != 1))
+		if (res.affectedRows != 1)
 		return Service.simetoxi.dilosi4(data);
 
 		data.conn.commit();

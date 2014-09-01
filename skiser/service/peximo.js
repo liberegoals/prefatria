@@ -60,8 +60,8 @@ Service.peximo.peximo2 = function(data) {
 	query = 'INSERT INTO `energia` (`dianomi`, `pektis`, `idos`, `data`) VALUES (' +
 		data.kinisiPeximo.data.dianomi + ', ' + data.kinisiPeximo.data.pektis + ', ' +
 		data.kinisiPeximo.data.idos.json() + ', ' + data.kinisiPeximo.data.data.json() + ')';
-	data.conn.connection.query(query, function(err, res) {
-		if (err || (res.affectedRows != 1))
+	data.conn.query(query, function(conn, res) {
+		if (res.affectedRows != 1)
 		return Service.peximo.apotixia(data, 'Απέτυχε η ένταξη παιξίματος φύλλου στην database');
 
 
@@ -91,8 +91,8 @@ Service.peximo.pliromi = function(data) {
 	var query;
 
 	query = data.dianomi.queryPliromi();
-	data.conn.connection.query(query, function(err, res) {
-		if ((!err) && (res.affectedRows == 1)) 
+	data.conn.query(query, function(conn, res) {
+		if (res.affectedRows == 1) 
 		return Service.peximo.pliromi2(data);
 
 		data.conn.rollback();

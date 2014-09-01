@@ -121,9 +121,14 @@ DB.check = function() {
 		// μεγάλο χρονικό διάστημα.
 
 		if (tora - conn.action > DB.timeout) {
-			// console.log('SQL connection timeout: ' + conn.index);
+			if (Debug.flagGet('database'))
+			console.log('SQL connection timeout: ' + conn.index);
+
 			conn.action = tora;
-			conn.connection.query('SELECT 1');
+			conn.connection.query('SELECT 1', function(err, res) {
+				if (err) throw err;
+				if (!res) throw new Error('refresh failed for database connection ' + conn.index);
+			});
 		}
 
 		// Απελευθερώνονται συνδέσεις που πιθανότατα δεν απελευθερώθηκαν από
@@ -263,6 +268,7 @@ DBSindesi.prototype.query = function(query, callback) {
 	this.realAction = (this.action = Globals.torams());
 	this.connection.query(query, function(err, res) {
 		if (err) throw err;
+		if (!res) throw new Error('null database query result');
 
 		conn.affectedRows = res.affectedRows;
 		conn.insertId = res.insertId;

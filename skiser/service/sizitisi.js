@@ -15,9 +15,11 @@ Service.sizitisi.kafenio = function(nodereq) {
 	conn = DB.connection();
 	query = 'INSERT INTO `sizitisi` (`pektis`, `sxolio`) VALUES (' + nodereq.login.json() +
 		', ' + nodereq.url.sxolio.json() + ')';
-	conn.connection.query(query, function(err, res) {
+	conn.query(query, function(conn, res) {
 		conn.free();
-		if ((!res) || (res.affectedRows != 1)) return nodereq.error('Απέτυχε η καταχώρηση δημόσιου σχολίου');
+		if (res.affectedRows != 1)
+		return nodereq.error('Απέτυχε η καταχώρηση δημόσιου σχολίου');
+
 		Service.sizitisi.klisimo(nodereq, res.insertId);
 	});
 };
@@ -35,9 +37,11 @@ Service.sizitisi.partida = function(nodereq) {
 	conn = DB.connection();
 	query = 'INSERT INTO `sizitisi` (`trapezi`, `pektis`, `sxolio`) VALUES (' +
 		trapezi + ', ' + nodereq.login.json() + ', ' + nodereq.url.sxolio.json() + ')';
-	conn.connection.query(query, function(err, res) {
+	conn.query(query, function(conn, res) {
 		conn.free();
-		if ((!res) || (res.affectedRows != 1)) return nodereq.error('Απέτυχε η καταχώρηση σχολίου');
+		if (res.affectedRows != 1)
+		return nodereq.error('Απέτυχε η καταχώρηση σχολίου');
+
 		Service.sizitisi.klisimo(nodereq, res.insertId, trapezi);
 	});
 };
@@ -124,9 +128,11 @@ Service.sizitisi.kontema = function() {
 	console.log('Κόντεμα δημόσιας συζήτησης κατά ' + count);
 	conn = DB.connection();
 	query = 'DELETE FROM `sizitisi` WHERE `trapezi` IS NULL AND `kodikos` < ' + sizitisi[i];
-	conn.connection.query(query, function(err, res) {
+	conn.query(query, function(conn, res) {
 		conn.free();
-		if ((!err) && (res.affectedRows >= count)) return;
+		if (res.affectedRows >= count)
+		return;
+
 		console.error('Απέτυχε το κόντεμα της δημόσιας συζήτησης');
 	});
 };
@@ -156,9 +162,11 @@ Service.sizitisi.kontemaTrapezi = function(trapezi) {
 	console.log('Κόντεμα συζήτησης τραπεζιού ' + trapeziKodikos + ' κατά ' + count);
 	conn = DB.connection();
 	query = 'DELETE FROM `sizitisi` WHERE `trapezi` = ' + trapeziKodikos + ' AND `kodikos` < ' + sizitisi[i];
-	conn.connection.query(query, function(err, res) {
+	conn.query(query, function(conn, res) {
 		conn.free();
-		if ((!err) && (res.affectedRows >= count)) return;
+		if (res.affectedRows >= count)
+		return;
+
 		console.error('Απέτυχε το κόντεμα της συζήτησης για το τραπέζι ' + trapeziKodikos);
 	});
 };
@@ -262,11 +270,11 @@ Service.sizitisi.diagrafi = function(nodereq) {
 
 	conn = DB.connection();
 	query = 'DELETE FROM `sizitisi` WHERE ' + kritirio;
-	conn.connection.query(query, function(err, res) {
+	conn.query(query, function(conn, res) {
 		var kinisi;
 
 		conn.free();
-		if ((!res) || (sxolio && (res.affectedRows < 1)))
+		if (sxolio && (res.affectedRows < 1))
 		return nodereq.end();	// δεν πρέπει να επιστρέψουμε μήνυμα λάθους
 
 		kinisi = new Kinisi({
@@ -298,11 +306,11 @@ Service.sizitisi.clearKafenio = function(nodereq) {
 	console.log('Εκκαθάριση δημόσιας συζήτησης από τον χρήστη "' + pektis + '"');
 	conn = DB.connection();
 	query = 'DELETE FROM `sizitisi` WHERE `trapezi` IS NULL';
-	conn.connection.query(query, function(err, res) {
+	conn.query(query, function(conn, res) {
 		var kinisi;
 
 		conn.free();
-		if ((!res) || (res.affectedRows < 1))
+		if (res.affectedRows < 1)
 		return nodereq.error('Δεν έγινε καθαρισμός δημόσιας συζήτησης');
 
 		kinisi = new Kinisi({
