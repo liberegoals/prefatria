@@ -100,7 +100,7 @@ DB.zombie = 1800000;	// 30 minutes X 60 seconds X 1000 = μισή ώρα σε mi
 // επανεργοποίηση ανενεργών συνδέσεων προκειμένου αυτές να μην κλείσουν από τον database
 // server. Ο έλεγχος αφορά σε όλες τις συνδέσεις και όχι μόνο σ' αυτές που έχουν κλείσει
 // τον κύκλο τους και έχουν τοποθετηθεί στο free stack. Βέβαια, οι συνδέσεις που είναι
-// ενεργές και εκτελούν κάποια queries είναι μάλλον απίθανο να επανεργοποιηθούν, καθώς
+// ενεργές και εκτελούν κάποια queries είναι μάλλον απίθανο να επανενεργοποιηθούν, καθώς
 // δεν θα υπερβαίνουν το χρονικό όριο απενεργοποίησης. Όλες οι χρονικές τιμές είναι σε
 // milliseconds.
 
@@ -266,7 +266,8 @@ DBSindesi.prototype.query = function(query, callback) {
 // stack ώστε να μπορεί να ξαναχρησιμοποιηθεί.
 
 DBSindesi.prototype.free = function() {
-	if (this.oxiActive()) Globals.fatal('inactive database connection pushed free');
+	if (this.oxiActive())
+	Globals.fatal('inactive database connection pushed free');
 
 	this.activeSet(false);
 	DB.freeStack.push(this.index);
