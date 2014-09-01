@@ -29,10 +29,13 @@ DB.freeStack = [];
 
 DB.connection = function() {
 	var conn;
-	if (!DB.freeStack.length) return new DBSindesi();
+
+	if (!DB.freeStack.length)
+	return new DBSindesi();
 
 	conn = DB.pool[DB.freeStack.pop()];
-	if (conn.isActive()) Globals.fatal('active database connection detected in the free stack');
+	if (conn.isActive())
+	Globals.fatal('active database connection detected in the free stack');
 
 	conn.activeSet(true);
 	return conn;
@@ -107,7 +110,9 @@ DB.zombie = 1800000;	// 30 minutes X 60 seconds X 1000 = μισή ώρα σε mi
 DB.check = function() {
 	var tora = Globals.torams();
 
-	if (Debug.flagGet('database')) console.log('Περίπολος: DB.check (' + Globals.ora() + ')');
+	if (Debug.flagGet('database'))
+	console.log('Περίπολος: DB.check (' + Globals.ora() + ')');
+
 	Globals.walk(DB.pool, function(i, conn) {
 		// Επανενεργοποιούνται συνδέσεις που φαίνονται ανενεργές για αρκετά
 		// μεγάλο χρονικό διάστημα.
@@ -122,7 +127,7 @@ DB.check = function() {
 		// τα προγράμματα που τις έχουν δεσμεύσει (zombies).
 
 		if (conn.isActive() && (tora - conn.realAction > DB.zombie)) {
-			console.log('zombie SQL connection freed: ' + conn.index);
+			console.log('zombie SQL connection freed: ' + conn.index + ' (ts = ' + tora + ')');
 			conn.free();
 		}
 	});
@@ -245,8 +250,11 @@ DBSindesi.prototype.escape = function(s) {
 DBSindesi.prototype.query = function(query, callback) {
 	var conn;
 
-	if (Debug.flagGet('database')) console.log('connection: ' + this.index + '\n' + query);
-	if (this.oxiActive()) Globals.fatal(query + ': inactive database connection');
+	if (Debug.flagGet('database'))
+	console.log('connection: ' + this.index + '\n' + query);
+
+	if (this.oxiActive())
+	Globals.fatal(query + ': inactive database connection');
 
 	conn = this;
 	this.realAction = (this.action = Globals.torams());
