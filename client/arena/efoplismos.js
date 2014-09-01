@@ -583,10 +583,19 @@ Trapezi.prototype.efoplismosΠΑΙΧΝΙΔΙ = function() {
 		var filoDom, delay = 100;
 
 		filoDom = $(this);
+
+		// Κανονικά τα "off" που ακολουθούν θα έπρεπε να εφαρμόζονται μόνο
+		// στα φύλλα που πρόκειται να επηρεαστούν, αλλά παρατηρήθηκε το
+		// φαινόμενο να τσακάνε οι παίκτες ενώ έχουν βα πληρώσουν στο χρώμα
+		// που παίζεται και το αντίστροφο. Καλού κακού, λοιπόν, ακυρώνουμε
+		// πρώτα για όλα τα φύλλα.
+		// TODO Η διόρθωση έγινε Monday, September 1, 2014
+
+		filoDom.off('mouseenter mouseleave click');
 		if (!filoDom.data('ok')) return;
 
 		filoDom.
-		off('mouseenter').on('mouseenter', function(e) {
+		on('mouseenter', function(e) {
 			e.stopPropagation();
 			e.preventDefault();
 			if (Arena.partida.klikFilo) return;
@@ -595,7 +604,7 @@ Trapezi.prototype.efoplismosΠΑΙΧΝΙΔΙ = function() {
 			if (trapezi.partidaBazaCountGet() > 8) return;
 			filoDom.animate({bottom: pano}, delay);
 		}).
-		off('mouseleave').on('mouseleave', function(e) {
+		on('mouseleave', function(e) {
 			e.stopPropagation();
 			e.preventDefault();
 			if (Arena.partida.klikFilo) return;
@@ -604,7 +613,7 @@ Trapezi.prototype.efoplismosΠΑΙΧΝΙΔΙ = function() {
 			if (trapezi.partidaBazaCountGet() > 8) return;
 			filoDom.animate({bottom: filoDom.data('bottom')}, delay);
 		}).
-		off('click').on('click', function(e) {
+		on('click', function(e) {
 			var olif, filo = $(this);
 
 			Arena.inputRefocus(e);
