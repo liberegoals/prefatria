@@ -108,10 +108,13 @@ DB.zombie = 1800000;	// 30 minutes X 60 seconds X 1000 = μισή ώρα σε mi
 // milliseconds.
 
 DB.check = function() {
-	var tora = Globals.torams();
+	var tora, ora;
+
+	tora = Globals.torams();
+	ora = Globals.ora(null, true);
 
 	if (Debug.flagGet('database'))
-	console.log('Περίπολος: DB.check (' + Globals.ora() + ')');
+	console.log('Περίπολος: DB.check (' + ora + ')');
 
 	Globals.walk(DB.pool, function(i, conn) {
 		// Επανενεργοποιούνται συνδέσεις που φαίνονται ανενεργές για αρκετά
@@ -127,7 +130,7 @@ DB.check = function() {
 		// τα προγράμματα που τις έχουν δεσμεύσει (zombies).
 
 		if (conn.isActive() && (tora - conn.realAction > DB.zombie)) {
-			console.log('zombie SQL connection freed: ' + conn.index + ' (ts = ' + tora + ')');
+			console.log('zombie SQL connection freed: ' + conn.index + ' (' + ora + ')');
 			conn.free();
 		}
 	});
