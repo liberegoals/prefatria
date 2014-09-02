@@ -1007,8 +1007,8 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 
 Arena.cpanel.bpanelButtonPush(Arena.cpanel.diathesimosButton =  new PButton({
 	omada: 3,
-	img: 'ikona/panel/apasxolimenos.png',
-	title: 'Φαίνεσται απασχολημένος. Κλικ για αλλαγή κατάστασης σε ΔΙΑΘΕΣΙΜΟΣ',
+	img: 'ikona/panel/diathesimos.png',
+	title: 'Φαίνεσται ΑΠΑΣΧΟΛΗΜΕΝΟΣ. Κλικ για αλλαγή κατάστασης σε ΔΙΑΘΕΣΙΜΟΣ',
 	check: function() {
 		return Arena.ego.isApasxolimenos();
 	},
@@ -1036,8 +1036,8 @@ Arena.cpanel.bpanelButtonPush(Arena.cpanel.diathesimosButton =  new PButton({
 
 Arena.cpanel.bpanelButtonPush(Arena.cpanel.apasxolimenosButton =  new PButton({
 	omada: 3,
-	img: 'ikona/panel/diathesimos.png',
-	title: 'Φαίνεσται διαθέσιμος. Κλικ για αλλαγή κατάστασης σε ΑΠΑΣΧΟΛΗΜΕΝΟΣ',
+	img: 'ikona/panel/apasxolimenos.png',
+	title: 'Φαίνεσται ΔΙΑΘΕΣΙΜΟΣ. Κλικ για αλλαγή κατάστασης σε ΑΠΑΣΧΟΛΗΜΕΝΟΣ',
 	check: function() {
 		return Arena.ego.isDiathesimos();
 	},

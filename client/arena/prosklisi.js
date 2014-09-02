@@ -99,8 +99,8 @@ Arena.prosklisi.panel.bpanelButtonPush(new PButton({
 }));
 
 Arena.prosklisi.panel.bpanelButtonPush(Arena.prosklisi.panel.diathesimosButton = new PButton({
-	img: 'ikona/panel/apasxolimenos.png',
-	title: 'Φαίνεσται απασχολημένος. Κλικ για αλλαγή κατάστασης σε ΔΙΑΘΕΣΙΜΟΣ',
+	img: 'ikona/panel/diathesimos.png',
+	title: 'Φαίνεσται ΑΠΑΣΧΟΛΗΜΕΝΟΣ. Κλικ για αλλαγή κατάστασης σε ΔΙΑΘΕΣΙΜΟΣ',
 	check: function() {
 		return Arena.ego.isApasxolimenos();
 	},
@@ -110,8 +110,8 @@ Arena.prosklisi.panel.bpanelButtonPush(Arena.prosklisi.panel.diathesimosButton =
 }));
 
 Arena.prosklisi.panel.bpanelButtonPush(Arena.prosklisi.panel.apasxolimenosButton = new PButton({
-	img: 'ikona/panel/diathesimos.png',
-	title: 'Φαίνεσται διαθέσιμος. Κλικ για αλλαγή κατάστασης σε ΑΠΑΣΧΟΛΗΜΕΝΟΣ',
+	img: 'ikona/panel/apasxolimenos.png',
+	title: 'Φαίνεσται ΔΙΑΘΕΣΙΜΟΣ. Κλικ για αλλαγή κατάστασης σε ΑΠΑΣΧΟΛΗΜΕΝΟΣ',
 	check: function() {
 		return Arena.ego.isDiathesimos();
 	},
