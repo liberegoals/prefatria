@@ -747,13 +747,28 @@ Skiniko.prototype.kinisiPostPeparamSetΚΑΤΑΣΤΑΣΗ = function(data, pektis
 		if (thesi) jql = jql.add(Arena.partida['pektis' + thesi + 'DOM'].find('.tsoxaPektisMain'));
 	}
 
+	// Εφόσον ο παίκτης είναι απασχολημένος, ενημερώνουμε τα χαρακατηριστικά
+	// σε όλα τα DOM elements που πρέπει ο παίκτης να φαίνεται απασχολημένος.
+
 	if (pektis.pektisIsApasxolimenos())
 	jql.addClass('apasxolimenos');
+
+	// Αλλιώς ο παίκτης κατέστη διαθέσιμος και αφαιρούμε τα χαρακτηριστικά
+	// απασχόλησης από τα DOM elements που αφορούν το παίκτη.
 
 	else
 	jql.removeClass('apasxolimenos');
 
-	Arena.panelRefresh();
+	// Ενημερώνουμε τα σχετικά πλήκτρα του βασικού control panel.
+
+	Arena.cpanel.diathesimosButton.pbuttonDisplay();
+	Arena.cpanel.apasxolimenosButton.pbuttonDisplay();
+
+	// Ενημερώνουμε τα σχετικά πλήκτρα του control panel προσκλήσεων.
+
+	Arena.prosklisi.panel.diathesimosButton.pbuttonDisplay();
+	Arena.prosklisi.panel.apasxolimenosButton.pbuttonDisplay();
+
 	return this;
 };
 

@@ -1005,28 +1005,61 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
 
-Arena.cpanel.bpanelButtonPush(new PButton({
+Arena.cpanel.bpanelButtonPush(Arena.cpanel.diathesimosButton =  new PButton({
 	omada: 3,
 	img: 'ikona/panel/apasxolimenos.png',
-	title: 'Φαίνεσται απασχολημένος. Κλικ για αλλαγή κατάστασης',
+	title: 'Φαίνεσται απασχολημένος. Κλικ για αλλαγή κατάστασης σε ΔΙΑΘΕΣΙΜΟΣ',
 	check: function() {
 		return Arena.ego.isApasxolimenos();
 	},
 	click: function(e) {
-		Client.skiserService('peparamSet', 'param=ΚΑΤΑΣΤΑΣΗ', 'timi=ΔΙΑΘΕΣΙΜΟΣ');
+		var img;
+
+		img = this.pbuttonIconGetDOM();
+		if (img.data('klik')) return;
+		img.data('klik', true);
+		img.working(true);
+		Client.fyi.pano('Αλλαγή κατάστασης σε ΔΙΑΘΕΣΙΜΟΣ. Παρακαλώ περιμένετε…', 0);
+		Client.skiserService('peparamSet', 'param=ΚΑΤΑΣΤΑΣΗ', 'timi=ΔΙΑΘΕΣΙΜΟΣ').
+		done(function(rsp) {
+			img.removeData('klik');
+			Client.fyi.pano(rsp);
+			img.working(false);
+		}).
+		fail(function(err) {
+			img.removeData('klik');
+			Client.skiserFail(err);
+			img.working(false);
+		});
 	},
 }));
 
-Arena.cpanel.bpanelButtonPush(new PButton({
+Arena.cpanel.bpanelButtonPush(Arena.cpanel.apasxolimenosButton =  new PButton({
 	omada: 3,
 	img: 'ikona/panel/diathesimos.png',
-	title: 'Φαίνεσται διαθέσιμος. Κλικ για αλλαγή κατάστασης',
-	title: 'Απενεργοποίηση funchat',
+	title: 'Φαίνεσται διαθέσιμος. Κλικ για αλλαγή κατάστασης σε ΑΠΑΣΧΟΛΗΜΕΝΟΣ',
 	check: function() {
 		return Arena.ego.isDiathesimos();
 	},
 	click: function(e) {
-		Client.skiserService('peparamSet', 'param=ΚΑΤΑΣΤΑΣΗ', 'timi=ΑΠΑΣΧΟΛΗΜΕΝΟΣ');
+		var img;
+
+		img = this.pbuttonIconGetDOM();
+		if (img.data('klik')) return;
+		img.data('klik', true);
+		img.working(true);
+		Client.fyi.pano('Αλλαγή κατάστασης σε ΑΠΑΣΧΟΛΗΜΕΝΟΣ. Παρακαλώ περιμένετε…', 0);
+		Client.skiserService('peparamSet', 'param=ΚΑΤΑΣΤΑΣΗ', 'timi=ΑΠΑΣΧΟΛΗΜΕΝΟΣ').
+		done(function(rsp) {
+			img.removeData('klik');
+			Client.fyi.pano(rsp);
+			img.working(false);
+		}).
+		fail(function(err) {
+			img.removeData('klik');
+			Client.skiserFail(err);
+			img.working(false);
+		});
 	},
 }));
 
