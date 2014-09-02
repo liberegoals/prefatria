@@ -1758,6 +1758,10 @@ cursor: auto;
 	font-style: italic;
 }
 
+.apasxolimenos {
+	border-style: dashed;
+}
+
 .offline {
 	opacity: 0.7;
 	border-style: dotted;
