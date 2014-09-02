@@ -7,18 +7,28 @@ Service.prosklisi = {};
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
 
 Service.prosklisi.apostoli = function(nodereq) {
-	var sinedria, trapezi, conn, query;
+	var sinedria, apostoleas, pektis, trapezi, conn, query;
 
 	if (nodereq.isvoli()) return;
 	if (nodereq.oxiTrapezi()) return;
 	if (nodereq.denPerastike('pros', true)) return;
 
 	sinedria = nodereq.sinedriaGet();
-	if (sinedria.sinedriaOxiPektis()) return nodereq.error('Δεν είστε παίκτης στο τραπέζι');
+	if (sinedria.sinedriaOxiPektis())
+	return nodereq.error('Δεν είστε παίκτης στο τραπέζι');
+
+	pektis = Server.skiniko.skinikoPektisGet(nodereq.url.pros);
+	if (!pektis) return nodereq.error('pektisNotFound');
+
+	apostoleas = nodereq.loginGet();
+	if (pektis.pektisIsApasxolimenos() && pektis.pektisOxiFilos(apostoleas))
+	return nodereq.error('pektisApasxolimenos');
+
+	trapezi = sinedria.sinedriaTrapeziGet();
 
 	conn = DB.connection();
 	query = 'REPLACE INTO `prosklisi` (`trapezi`, `apo`, `pros`, `epidosi`) VALUES (' +
-		(trapezi = sinedria.sinedriaTrapeziGet()) + ', ' + nodereq.login.json() + ', ' +
+		trapezi + ', ' + apostoleas.json() + ', ' +
 		nodereq.url.pros.json() + ', NOW())';
 	conn.query(query, function(conn, res) {
 		conn.free();
