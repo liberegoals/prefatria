@@ -98,6 +98,28 @@ Arena.prosklisi.panel.bpanelButtonPush(new PButton({
 	},
 }));
 
+Arena.prosklisi.panel.bpanelButtonPush(Arena.prosklisi.panel.diathesimosButton = new PButton({
+	img: 'ikona/panel/apasxolimenos.png',
+	title: 'Φαίνεσται απασχολημένος. Κλικ για αλλαγή κατάστασης σε ΔΙΑΘΕΣΙΜΟΣ',
+	check: function() {
+		return Arena.ego.isApasxolimenos();
+	},
+	click: function(e) {
+		Arena.cpanel.diathesimosButton.pbuttonGetDOM().trigger('click');
+	},
+}));
+
+Arena.prosklisi.panel.bpanelButtonPush(Arena.prosklisi.panel.apasxolimenosButton = new PButton({
+	img: 'ikona/panel/diathesimos.png',
+	title: 'Φαίνεσται διαθέσιμος. Κλικ για αλλαγή κατάστασης σε ΑΠΑΣΧΟΛΗΜΕΝΟΣ',
+	check: function() {
+		return Arena.ego.isDiathesimos();
+	},
+	click: function(e) {
+		Arena.cpanel.apasxolimenosButton.pbuttonGetDOM().trigger('click');
+	},
+}));
+
 Arena.prosklisi.panel.bpanelButtonPush(new PButton({
 	img: 'leak.png',
 	title: 'Inspect memory leaks',
