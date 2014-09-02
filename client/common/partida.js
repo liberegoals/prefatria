@@ -820,7 +820,7 @@ Trapezi.prototype.partidaBazaFiloGet = function(i) {
 
 Trapezi.prototype.partidaBazaXromaGet = function() {
 	if (this.bazaFila.length <= 0) return null;
-	return this.bazaFila[0].filoXromaGet();
+	return this.partidaBazaFiloGet(0).filoXromaGet();
 };
 
 Trapezi.prototype.partidaBazaXromaCheck = function(filo) {
