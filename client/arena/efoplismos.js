@@ -557,7 +557,15 @@ Trapezi.prototype.efoplismosΠΑΙΧΝΙΔΙ = function() {
 	pektis = this.partidaEpomenosGet();
 	if (Debug.flagGet('epomenosCheck') && Arena.ego.oxiThesi(pektis)) return this;
 
+	// Εάν ο παίκτης είναι τζογαδόρος και παίζει το πρώτο φύλλο
+	// της μπάζας, πρέπει να δώσουμε δυνατότητα claim.
+
 	this.efoplismosPexnidiClaim(pektis);
+
+	// Θέτουμε ηχητική ειδοποίηση καθυστέρησης στον παίκτη που έχει
+	// σειρά να κάνει την επόμενη ενέργεια.
+
+	Arena.partida.xipnitiriOplismos();
 
 	iseht = Arena.ego.thesiMap(pektis);
 	if (iseht === 1) {
@@ -578,7 +586,6 @@ Trapezi.prototype.efoplismosΠΑΙΧΝΙΔΙ = function() {
 	if ((this.partidaBazaCountGet() > 8) || Arena.ego.klistaFila())
 	over = null;
 
-	Arena.partida.xipnitiriOplismos();
 	this.efoplismosPexnidiFila(iseht, over).each(function() {
 		var filoDom, delay = 100;
 
@@ -700,6 +707,7 @@ Trapezi.prototype.efoplismosPexnidiFila = function(iseht, over) {
 	}).
 	removeData('ok').
 	data('bottom', bottom);
+
 	xroma = this.partidaBazaXromaGet();
 	if (!xroma) return fila.data('ok', true);
 
