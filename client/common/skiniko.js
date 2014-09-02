@@ -117,6 +117,14 @@ Pektis.prototype.pektisOxiDiaxiristis = function() {
 	return !this.pektisIsDiaxiristis();
 };
 
+Pektis.prototype.pektisIsAdministrator = function() {
+	return(this.pektisAxiomaRankGet() >= Peparam.axiomaRank['ADMINISTRATOR']);
+};
+
+Pektis.prototype.pektisOxiAdminstrator = function() {
+	return !this.pektisIsAdminstrator();
+};
+
 Pektis.prototype.pektisPlatiGet = function() {
 	var plati = this.pektisPeparamGet('ΠΛΑΤΗ');
 	return(plati != 'ΚΟΚΚΙΝΟ' ? 'ΜΠΛΕ' : plati);
