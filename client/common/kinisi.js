@@ -291,6 +291,33 @@ Skiniko.prototype.processKinisiPT = function(data) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+// PS -- Παράμετρος παίκτη
+//
+// Θέση/αλλαγή παραμέτρου παίκτη.
+//
+// Δεδομένα
+//
+//	pektis		Login name του ενεργούντος παίκτη.
+//	param		Ονομασία παραμέτρου.
+//	timi		Τιμή παραμέτρου.
+
+Skiniko.prototype.processKinisiPS = function(data) {
+	var pektis;
+
+	pektis = this.skinikoPektisGet(data.pektis);
+	if (!pektis) return this;
+
+	pektis.
+	pektisPeparamSet(new Peparam({
+		param: data.param,
+		timi: data.timi,
+	}));
+
+	return this;
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 // TS -- Παράμετρος τραπεζιού
 //
 // Θέση/αλλαγή παραμέτρου τραπεζιού.

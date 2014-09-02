@@ -7,7 +7,7 @@ Service.trparam = {};
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
 
 Service.trparam.set = function(nodereq) {
-	var sinderia, trapezi, conn, query;
+	var sinedria, trapezi, conn, query;
 
 	if (nodereq.isvoli()) return;
 	if (nodereq.oxiTrapezi()) return;

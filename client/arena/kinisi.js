@@ -95,7 +95,7 @@ Skiniko.prototype.processKinisiPostNS = function(data) {
 //
 // Δεδομένα
 //
-//	login		Είναι το login name του παίκτη τής προς διαγραφήν συνεδρίας.
+//	login		Είναι το login name του παίκτη που εισέρχεται στο καφενείο.
 
 Skiniko.prototype.processKinisiPostSL = function(data) {
 	var sinedria, trapezi, thesi, jql;
@@ -624,7 +624,7 @@ Skiniko.prototype.processKinisiAnteAL = function(data) {
 };
 
 Skiniko.prototype.processKinisiPostAL = function(data) {
-	var sinderia, panelOmada;
+	var sinedria, panelOmada;
 
 	this.processKinisiPostET(data);
 
@@ -699,6 +699,61 @@ Skiniko.prototype.processKinisiPostPT = function(data) {
 	pektisRefreshDOM(data.thesi).
 	theatisPushDOM(sinedria);
 
+	return this;
+};
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// PS -- Παράμετρος παίκτη
+//
+// Δεδομένα
+//
+//	pektis		Login name παίκτη.
+//	param		Ονομασία παραμέτρου.
+//	timi		Τιμή παραμέτρου.
+
+Skiniko.prototype.processKinisiPostPS = function(data) {
+	var pektis, proc;
+
+	pektis = this.skinikoPektisGet(data.pektis);
+	if (!pektis) return this;
+
+	proc = 'kinisiPostPeparamSet' + data.param;
+	if (typeof this[proc] === 'function')
+	this[proc](data, pektis);
+
+	return this;
+};
+
+Skiniko.prototype.kinisiPostPeparamSetΚΑΤΑΣΤΑΣΗ = function(data, pektis) {
+	var jql, sinedria;
+
+	jql = $();
+	sinedria = this.skinikoSinedriaGet(data.pektis);
+	if (sinedria) {
+		if (sinedria.hasOwnProperty('rebelosDOM')) jql = jql.add(sinedria.rebelosDOM);
+		if (sinedria.hasOwnProperty('theatisDOM')) jql = jql.add(sinedria.theatisDOM);
+		if (sinedria.hasOwnProperty('niofertosDOM')) jql = jql.add(sinedria.niofertosDOM);
+		if (sinedria.hasOwnProperty('tsoxaTheatisDOM')) jql = jql.add(sinedria.tsoxaTheatisDOM);
+	}
+
+	this.skinikoThesiWalk(function(thesi) {
+		if (this.trapeziPektisGet(thesi) == data.pektis)
+		jql = jql.add(this.thesiDOM[thesi]);
+	});
+
+	if (Arena.ego.isTrapezi(trapezi)) {
+		thesi = Arena.ego.trapezi.trapeziThesiPekti(data.pektis);
+		if (thesi) jql = jql.add(Arena.partida['pektis' + thesi + 'DOM'].find('.tsoxaPektisMain'));
+	}
+
+	if (pektis.pektisIsApasxolimenos())
+	jql.addClass('apasxolimenos');
+
+	else
+	jql.removeClass('apasxolimenos');
+
+	Arena.panelRefresh();
 	return this;
 };
 

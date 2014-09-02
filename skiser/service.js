@@ -16,6 +16,7 @@ require('./service/simetoxi.js');
 require('./service/agora.js');
 require('./service/dilosi.js');
 require('./service/sxesi.js');
+require('./service/peparam.js');
 require('./service/trparam.js');
 require('./service/prosklisi.js');
 require('./service/sizitisi.js');
@@ -54,6 +55,7 @@ Server.router = {
 	'/apodoxi': Service.trapezi.apodoxi,
 	'/roloi': Service.trapezi.roloi,
 	'/diataxi': Service.trapezi.diataxi,
+	'/peparamSet': Service.peparam.set,
 	'/trparamSet': Service.trparam.set,
 	'/pektisTheatis': Service.sinedria.pektisTheatis,
 	'/prosklisiApodoxi': Service.prosklisi.apodoxi,

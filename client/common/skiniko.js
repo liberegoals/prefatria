@@ -125,6 +125,14 @@ Pektis.prototype.pektisOxiAdminstrator = function() {
 	return !this.pektisIsAdminstrator();
 };
 
+Pektis.prototype.pektisIsApasxolimenos = function() {
+	return(this.pektisPeparamGet('ΚΑΤΑΣΤΑΣΗ') === 'ΑΠΑΣΧΟΛΗΜΕΝΟΣ');
+};
+
+Pektis.prototype.pektisIsDiathesimos = function() {
+	return !this.pektisIsApasxolimenos();
+};
+
 Pektis.prototype.pektisPlatiGet = function() {
 	var plati = this.pektisPeparamGet('ΠΛΑΤΗ');
 	return(plati != 'ΚΟΚΚΙΝΟ' ? 'ΜΠΛΕ' : plati);

@@ -819,7 +819,9 @@ jQuery.fn.pektisAxiomaDOM = function(pektis) {
 };
 
 Sinedria.prototype.sinedriaNiofertosRefreshDOM = function() {
-	this.sinedriaSxesiRefreshDOM(this.niofertosDOM);
+	this.
+	sinedriaSxesiRefreshDOM(this.niofertosDOM).
+	sinedriaKatastasiRefreshDOM(this.niofertosDOM);
 	return this;
 };
 
@@ -834,12 +836,16 @@ Sinedria.prototype.sinedriaNiofertosPushDOM = function() {
 };
 
 Sinedria.prototype.sinedriaRebelosRefreshDOM = function() {
-	this.sinedriaSxesiRefreshDOM(this.rebelosDOM);
+	this.
+	sinedriaSxesiRefreshDOM(this.rebelosDOM).
+	sinedriaKatastasiRefreshDOM(this.rebelosDOM);
 	return this;
 };
 
 Sinedria.prototype.sinedriaTheatisRefreshDOM = function() {
-	this.sinedriaSxesiRefreshDOM(this.theatisDOM, this.tsoxaTheatisDOM);
+	this.
+	sinedriaSxesiRefreshDOM(this.theatisDOM, this.tsoxaTheatisDOM).
+	sinedriaKatastasiRefreshDOM(this.theatisDOM, this.tsoxaTheatisDOM);
 	return this;
 };
 
@@ -859,6 +865,23 @@ Sinedria.prototype.sinedriaSxesiRefreshDOM = function() {
 		if (login.isEgo()) dom.addClass('ego');
 		else if (Arena.ego.isFilos(login)) dom.addClass('filos');
 		else if (Arena.ego.isApoklismenos(login)) dom.addClass('apoklismenos');
+	}
+
+	return this;
+};
+
+Sinedria.prototype.sinedriaKatastasiRefreshDOM = function() {
+	var login, pektis, i, dom;
+
+	login = this.sinedriaPektisGet();
+	pektis = Arena.skiniko.skinikoPektisGet(login);
+
+	for (i = 0; i < arguments.length; i++) {
+		dom = arguments[i];
+		dom.removeClass('apasxolimenos');
+		if (!pektis) continue;
+		if (pektis.pektisIsDiathesimos()) continue;
+		dom.addClass('apasxolimenos');
 	}
 
 	return this;
@@ -1037,7 +1060,7 @@ Trapezi.prototype.trapeziThesiRefreshDOM = function(thesi) {
 	});
 
 	dom = this.thesiDOM[thesi];
-	dom.removeClass('offline fantasma filos apoklismenos ego apodoxi xapodoxi');
+	dom.removeClass('offline fantasma filos apoklismenos ego apodoxi xapodoxi apasxolimenos');
 
 	dom.addClass(this.trapeziIsApodoxi(thesi) ? 'apodoxi' : 'xapodoxi');
 
@@ -1054,6 +1077,7 @@ Trapezi.prototype.trapeziThesiRefreshDOM = function(thesi) {
 		if (login.isEgo()) dom.addClass('ego');
 		else if (Arena.ego.isFilos(login)) dom.addClass('filos');
 		else if (Arena.ego.isApoklismenos(login)) dom.addClass('apoklismenos');
+		if (pektis && pektis.pektisIsApasxolimenos()) dom.addClass('apasxolimenos');
 	}
 	else {
 		login = this.trapeziTelefteosGet(thesi);
@@ -1514,4 +1538,14 @@ Arena.ego.isDeveloper = function() {
 Arena.ego.oxiDeveloper = function() {
 	if (!Arena.ego.pektis) return true;
 	return Arena.ego.pektis.pektisOxiDeveloper();
+};
+
+Arena.ego.isApasxolimenos = function() {
+	if (!Arena.ego.pektis) return false;
+	return Arena.ego.pektis.pektisIsApasxolimenos();
+};
+
+Arena.ego.isDiathesimos = function() {
+	if (!Arena.ego.pektis) return false;
+	return Arena.ego.pektis.pektisIsDiathesimos();
 };

@@ -1006,6 +1006,33 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
 
 Arena.cpanel.bpanelButtonPush(new PButton({
+	omada: 3,
+	img: 'ikona/panel/apasxolimenos.png',
+	title: 'Φαίνεσται απασχολημένος. Κλικ για αλλαγή κατάστασης',
+	check: function() {
+		return Arena.ego.isApasxolimenos();
+	},
+	click: function(e) {
+		Client.skiserService('peparamSet', 'param=ΚΑΤΑΣΤΑΣΗ', 'timi=ΔΙΑΘΕΣΙΜΟΣ');
+	},
+}));
+
+Arena.cpanel.bpanelButtonPush(new PButton({
+	omada: 3,
+	img: 'ikona/panel/diathesimos.png',
+	title: 'Φαίνεσται διαθέσιμος. Κλικ για αλλαγή κατάστασης',
+	title: 'Απενεργοποίηση funchat',
+	check: function() {
+		return Arena.ego.isDiathesimos();
+	},
+	click: function(e) {
+		Client.skiserService('peparamSet', 'param=ΚΑΤΑΣΤΑΣΗ', 'timi=ΑΠΑΣΧΟΛΗΜΕΝΟΣ');
+	},
+}));
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
+
+Arena.cpanel.bpanelButtonPush(new PButton({
 	id: 'funchatOn',
 	omada: 3,
 	img: 'ikona/panel/funchatOn.png',
