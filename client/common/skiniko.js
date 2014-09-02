@@ -186,6 +186,10 @@ Pektis.prototype.pektisIsFilos = function(sxetizomenos) {
 	return(this.pektisSxesiGet(sxetizomenos) === 'ΦΙΛΟΣ');
 };
 
+Pektis.prototype.pektisOxiFilos = function(sxetizomenos) {
+	return !this.pektisIsFilos(sxetizomenos);
+};
+
 Pektis.prototype.pektisIsApoklismenos = function(sxetizomenos) {
 	return(this.pektisSxesiGet(sxetizomenos) === 'ΑΠΟΚΛΕΙΣΜΕΝΟΣ');
 };

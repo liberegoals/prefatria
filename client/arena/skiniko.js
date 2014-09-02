@@ -604,6 +604,7 @@ Arena.pektisPanelRefreshDOM = function() {
 	if (!Arena.pektisFormaDOM) return Arena;
 	login = Arena.pektisFormaDOM.data('pektis');
 	if (!login) return Arena;
+
 	pektis = Arena.skiniko.skinikoPektisGet(login);
 	if (!pektis) return Arena;
 
@@ -615,21 +616,42 @@ Arena.pektisPanelRefreshDOM = function() {
 		var button = $(this);
 
 		Arena.inputRefocus(e);
-		if ($(this).data('apostoli')) return;
 
-		if (!Arena.ego.trapezi) return Client.fyi.epano('Απροσδιόριστο τραπέζι');
-		if (Arena.ego.sinedria.sinedriaOxiPektis()) return Client.fyi.epano('Δεν είστε παίκτης στο τραπέζι');
+		// Ελέγχουμε αν ήδη βρίσκεται αποστολή παρόμοιας πρόσκλησης σε εξέλιξη.
+		// Πράγματι, με double click, ο χρήστης στέλνει δυο απανωτές προσκλήσεις,
+		// πράγμα που πρέπει να αποφύγουμε ώστε να μην σπαταλάμε πόρους.
+
+		if ($(this).data('apostoli'))
+		return;
+
+		if (Arena.ego.oxiTrapezi())
+		return Client.fyi.epano('Απροσδιόριστο τραπέζι');
+
+		if (Arena.ego.oxiPektis())
+		return Client.fyi.epano('Δεν είστε παίκτης στο τραπέζι');
 
 		Client.fyi.pano('Αποστολή πρόσκλησης. Παρακαλώ περιμένετε…');
 		Client.skiserService('prosklisiApostoli', 'pros=' + login.uri()).
 		done(function(rsp) {
-			Arena.pektisFormaKlisimo(100);
 			button.removeData('apostoli');
+			Arena.pektisFormaKlisimo(100);
 			Client.fyi.pano();
 		}).
 		fail(function(err) {
 			button.removeData('apostoli');
-			Client.skiserFail(err);
+			switch (err.responseText) {
+			case 'pektisApasxolimenos':
+				Client.fyi.epano('Ο παίκτης <span class="ble entona">' + login +
+					'</span> είναι απασχολημένος');
+				break;
+			case 'pektisNotFound':
+				Client.fyi.epano('Ο παίκτης <span class="ble entona">' + login +
+					'</span> δεν βρέθηκε στο σκηνικό');
+				break;
+			default:
+				Client.skiserFail(err);
+				break;
+			}
 		});
 	})).
 	append($('<button>').text('Μήνυμα'));
