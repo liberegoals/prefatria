@@ -950,6 +950,18 @@ Trapezi.prototype.trapeziCreateDOM = function() {
 	this.trapeziSimetoxiRefreshDOM();
 
 	this.tsoxaDOM.append(this.dataDOM = $('<div>').addClass('trapeziData').
+	on('mouseenter', function(e) {
+		var info;
+
+		e.stopPropagation();
+		info = $(this).data('info');
+		if (!info) return;
+		Client.fyi.pano(info);
+	}).
+	on('mouseleave', function(e) {
+		e.stopPropagation();
+		Client.fyi.pano();
+	}).
 	on('click', function(e) {
 		var trapeziKodikos;
 
@@ -1016,15 +1028,21 @@ Trapezi.prototype.trapeziSimetoxiRefreshDOM = function() {
 };
 
 Trapezi.prototype.trapeziDataRefreshDOM = function() {
-	var kodikos, ipolipo;
+	var kodikos, stisimo, ipolipo;
 
 	kodikos = this.trapeziKodikosGet();
+	stisimo = Globals.pote(this.trapeziStisimoGet() + Client.timeDif);
 	ipolipo = this.trapeziIpolipoGet();
 
 	this.dataDOM.empty().
+	data('info', '<div class="aristera">' +
+		'Τραπέζι <span class="prasino entona">' + kodikos + '</span>, ' +
+		'στήθηκε <span class="prasino entona">' + stisimo + '</span>, ' +
+		'υπόλοιπο κάσας: <span class="prasino entona">' + ipolipo + '</span> καπίκια' +
+		'</div>').
+	attr('title', 'Τραπέζι ' + kodikos + ', στήθηκε ' + stisimo).
 	removeClass('trapeziDataEpilogi trapeziDataProsklisi trapeziDataPrive').
-	append($('<div>').addClass('trapeziDataKodikos').
-	attr('title', 'Κωδικός τραπεζιού: ' + kodikos).text(kodikos)).
+	append($('<div>').addClass('trapeziDataKodikos').text(kodikos)).
 
 	append($('<div>').addClass('trapeziDataIpolipo').
 	attr('title', 'Τρέχον υπόλοιπο κάσας: ' + ipolipo + ' καπίκια').text(ipolipo / 10));

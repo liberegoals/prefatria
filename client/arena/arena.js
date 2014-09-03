@@ -493,7 +493,7 @@ Arena.funchat.anigma = function() {
 	if (Arena.funchat.isAnikto())
 	Arena.funchat.klisimo();
 
-	Arena.funchat.win = window.open('funchat', '_blank', 'width=700,height=700,top=100,left=900');
+	Arena.funchat.win = window.open('funchat', '_blank', 'width=700,height=800,top=100,left=900');
 
 	Arena.cpanel.bpanelRefresh();
 	return Arena.funchat;
