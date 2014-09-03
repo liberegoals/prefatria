@@ -155,6 +155,14 @@ Funchat.listaPush(new Funchat({
 }));
 
 Funchat.listaPush(new Funchat({
+	img: 'tinPatisame.jpg',
+	platos: 180,
+	txt: 'Την πατήσαμε!',
+	ixos: 'tinPatisame.mp3',
+	entasi: 2,
+}));
+
+Funchat.listaPush(new Funchat({
 	img: 'gunFail.gif',
 	platos: 240,
 }));
@@ -172,13 +180,27 @@ Funchat.listaPush(new Funchat({
 }));
 
 Funchat.listaPush(new Funchat({
+	img: 'exeteXesti.gif',
+	platos: 200,
+	txt: 'Έχετε χεστεί, ρε σεις!',
+}));
+
+Funchat.listaPush(new Funchat({
 	img: 'tiGamisesTinPartida.gif',
 	platos: 200,
 	txt: 'Γάμησες την παρτίδα!',
 }));
 
 Funchat.listaPush(new Funchat({
-	img: 'nop.gif',
+	img: 'marinikol.gif',
+	platos: 140,
+}));
+
+Funchat.listaPush(new Funchat({
+	img: 'notaraTaTheli.jpg',
+	platos: 120,
+	txt: 'Τα θέλει κι εσένα ο οργανισμός σου!',
+	ixos: 'taTheli.mp3',
 }));
 
 Funchat.listaPush(new Funchat({
@@ -199,7 +221,16 @@ Funchat.listaPush(new Funchat({
 }));
 
 Funchat.listaPush(new Funchat({
+	img: 'matia.gif',
+	platos: 80,
+}));
+
+Funchat.listaPush(new Funchat({
 	img: 'kinezos.gif',
+}));
+
+Funchat.listaPush(new Funchat({
+	img: 'vgika.gif',
 }));
 
 Funchat.listaPush(new Funchat({
@@ -283,7 +314,17 @@ Funchat.listaPush(new Funchat({
 	entasi: 4,
 }));
 
+Funchat.listaPush(new Funchat({
+	img: 'ipoklinome.gif',
+	platos: 30,
+	ixos: 'panos.mp3',
+}));
+
 Funchat.omada++;
+
+Funchat.listaPush(new Funchat({
+	img: 'nop.gif',
+}));
 
 Funchat.listaPush(new Funchat({
 	img: 'xipna.gif',

@@ -141,6 +141,7 @@ Globals.poteOra = function(pote, full) {
 
 Globals.mera = function(d, full) {
 	if (!d) d = new Date;
+	else if (typeof d === 'number') d = new Date(d * 1000);
 
 	var s = '';
 
@@ -170,6 +171,7 @@ Globals.mera = function(d, full) {
 
 Globals.ora = function(d, seconds) {
 	if (!d) d = new Date;
+	else if (typeof d === 'number') d = new Date(d * 1000);
 
 	var s = '';
 
