@@ -217,6 +217,20 @@ Funchat.listaPush(new Funchat({
 }));
 
 Funchat.listaPush(new Funchat({
+	img: 'xmEmoticon.gif',
+}));
+
+Funchat.listaPush(new Funchat({
+	img: 'ipopto.gif',
+	platos: 50,
+}));
+
+Funchat.listaPush(new Funchat({
+	img: 'lesEmoticon.gif',
+	txt: 'Λες;',
+}));
+
+Funchat.listaPush(new Funchat({
 	img: 'mavrosGourlomatis.gif',
 }));
 
@@ -349,4 +363,10 @@ Funchat.listaPush(new Funchat({
 	img: 'daffyPhone.gif',
 	txt: 'Μισό λεπτό, μιλάω στο τηλέφωνο…',
 	platos: 80,
+}));
+
+Funchat.listaPush(new Funchat({
+	img: 'dikeoma.gif',
+	platos: 180,
+	txt: 'Δικαίωμα…',
 }));
