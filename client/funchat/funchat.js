@@ -68,13 +68,20 @@ return;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
 
+// Η μεταβλητή "adamo" δείχνει την τρέχουσα ομάδα. Κάθε φορά που συναντούμε
+// νέα ομάδα, το πρώτο στοιχείο της ομάδας χρησιμοποιείται ως σημείο εισόδου
+// και τα υπόλοιπα τοποθετούνται σε div που περιέχει τα στοιχεία της εκάστοτε
+// ομάδας.
+
+Funchat.adamo = null;
+
 Funchat.prototype.funchatCreateDOM = function() {
 	var kimeno, ixos;
 
 	if (this.hasOwnProperty('dom'))
 	return this;
 
-	this.dom = $('<div>').addClass('funchatItem').appendTo(Funchat.ofelimoDOM).
+	this.dom = $('<div>').addClass('funchatItem').
 	data('item', this).
 	on('click', function(e) {
 		var item, id, sxolio;
@@ -106,6 +113,11 @@ Funchat.prototype.funchatCreateDOM = function() {
 
 	if (this.hasOwnProperty('img'))
 	$('<img>').addClass('funchatIkona').attr('src', Funchat.server + this.img).appendTo(this.dom);
+
+	// TODO
+	// Εδώ θα προστεθεί κώδικας για ομαδοποίηση των στοιχείων.
+
+	this.dom.appendTo(Funchat.ofelimoDOM);
 
 	ixos = this.funchatIxosGet();
 	if (!ixos) return this;
