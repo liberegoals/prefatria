@@ -507,7 +507,9 @@ Skiniko.prototype.skinikoCreateDOM = function(data) {
 	// εμφάνιση των τελευταίων σχολίων.
 
 	if (Arena.sizitisi.oxiPagomeni())
-	Arena.sizitisi.areaDOM.scrollKato();
+	Arena.sizitisi.areaDOM.scrollKato({
+		repeatAfter: 200,
+	});
 
 	// Όταν κάνουμε restart τον skiser οι ενεργές συνεδρίες λαμβάνουν φρέσκα σκηνικά
 	// δεδομένα στα οποία υπάρχει και attribute "reset".

@@ -317,8 +317,11 @@ Arena.partida.sizitisiRefreshDOM = function() {
 		this.sizitisiCreateDOM();
 	}, 1);
 
-	if (Arena.sizitisi.oxiPagomeni())
-	Arena.sizitisi.areaDOM.scrollKato();
+	if (Arena.sizitisi.oxiPagomeni()) {
+		Arena.sizitisi.areaDOM.scrollKato({
+			repeatAfter: 200,
+		});
+	}
 
 	return Arena.partida;
 };
