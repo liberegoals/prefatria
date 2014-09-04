@@ -109,11 +109,11 @@ Arena.sizitisi.setup = function() {
 	return Arena;
 };
 
-Arena.sizitisi.scrollKato = function() {
+Arena.sizitisi.scrollKato = function(opts) {
 	if (Arena.sizitisi.isPagomeni())
 	return Arena;
 
-	Arena.sizitisi.areaDOM.scrollKato();
+	Arena.sizitisi.areaDOM.scrollKato(opts);
 	return Arena;
 };
 
@@ -649,7 +649,7 @@ Sizitisi.prototype.sizitisiCreateDOM = function(opts) {
 	this.sizitisiSxolioCreateDOM(sxolioDOM, opts.online);
 
 	if (opts.proepiskopisi) {
-		Arena.sizitisi.scrollKato(true);
+		Arena.sizitisi.scrollKato();
 		return this;
 	}
 

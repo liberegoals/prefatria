@@ -369,17 +369,27 @@ String.prototype.oxiEgo = function() {
 // Η jQuery μέθοδος "scrollKato" εφαρμόζεται σε scrollable DOM elements και
 // προκαλεί scroll bottom στα συγκεκριμένα elements.
 
-jQuery.fn.scrollKato = function(anim, callback) {
-	var delay;
-
-	delay = (typeof anim === 'number' ? anim : 'fast');
+jQuery.fn.scrollKato = function(opts) {
+	if (opts === undefined) opts = {};
 	return this.each(function() {
+		var div = this;
+
 		try {
-			if (anim) $(this).finish().animate({scrollTop: this.scrollHeight}, delay, function() {
-				if (callback) callback();
+			if (opts.animation) $(this).finish().animate({
+				scrollTop: this.scrollHeight
+			}, opts.animation, function() {
+				if (opts.callback) opts.callback();
 			});
-			else this.scrollTop = this.scrollHeight;
-		} catch(e) {};
+
+			else
+			this.scrollTop = this.scrollHeight;
+
+			if (opts.repeatAfter)
+			setTimeout(function() {
+				div.scrollTop = div.scrollHeight;
+				if (opts.callback) opts.callback();
+			}, opts.repeatAfter);
+		} catch(e) {}
 	});
 };
 
