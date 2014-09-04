@@ -20,6 +20,12 @@ Arena.sizitisi.flags = {
 	// από τον server.
 
 	molivi: false,
+
+	// Η flag "funchatIxos" δείχνει αν τα funchat με ήχο θα ακούγονται.
+	// Πράγματι, υπάρχουν αρκετά funchat items που συνοδεύονται από
+	// ηχητικά εφέ· o χρήστης μπορεί να «σιγάσει» αυτά τα εφέ.
+
+	funchatIxos: true,
 };
 
 // Η function "isPagomeni" δείχνει αν η περιοχή συζήτησης είναι παγωμένη.
@@ -40,6 +46,16 @@ Arena.sizitisi.isMolivi = function() {
 
 Arena.sizitisi.oxiMolivi = function() {
 	return !Arena.sizitisi.isMolivi();
+};
+
+// Η function "isFunchatIxos" δείχνει αν ο χρήστης έχει ήχο στο funchat.
+
+Arena.sizitisi.isFunchatIxos = function() {
+	return Arena.sizitisi.flags.funchatIxos;
+};
+
+Arena.sizitisi.isFunchatSigasi = function() {
+	return !Arena.sizitisi.isFunchatIxos();
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
@@ -244,11 +260,22 @@ Arena.sizitisi.panel.bpanelButtonPush(Arena.sizitisi.sigasiFunchatButton = new P
 	id: 'sigasi',
 	img: 'sigasi.png',
 	title: 'Σίγαση funchat',
+	check: function() {
+		return Arena.sizitisi.isFunchatIxos();
+	},
 	click: function(e) {
-		var ixos;
+		Arena.sizitisi.funchatIxosTelos();
+		Arena.sizitisi.flags.funchatIxos = false;
+		Arena.sizitisi.sigasiFunchatButton.pbuttonDisplay();
+		Arena.sizitisi.isagisFunchatButton.pbuttonDisplay();
 
-		Arena.sizitisi.sigasiFunchatButton.
+		Arena.sizitisi.sigasiFunchatButtonDOM.
 		removeClass('panelButtonEkremes');
+	},
+}));
+
+Arena.sizitisi.funchatIxosTelos = function() {
+		var ixos;
 
 		if (!Arena.sizitisi.funchatIxosLast)
 		return;
@@ -261,10 +288,25 @@ Arena.sizitisi.panel.bpanelButtonPush(Arena.sizitisi.sigasiFunchatButton = new P
 		if (!ixos.pause) return;
 
 		ixos.pause();
+};
+
+Arena.sizitisi.sigasiFunchatButtonDOM = Arena.sizitisi.sigasiFunchatButton.pbuttonGetDOM();
+
+Arena.sizitisi.panel.bpanelButtonPush(Arena.sizitisi.isagisFunchatButton = new PButton({
+	id: 'isagis',
+	img: 'isagis.png',
+	title: 'Ήχος στο funchat',
+	check: function() {
+		return Arena.sizitisi.isFunchatSigasi();
+	},
+	click: function(e) {
+		Arena.sizitisi.flags.funchatIxos = true;
+		Arena.sizitisi.sigasiFunchatButton.pbuttonDisplay();
+		Arena.sizitisi.isagisFunchatButton.pbuttonDisplay();
 	},
 }));
 
-Arena.sizitisi.sigasiFunchatButton = Arena.sizitisi.sigasiFunchatButton.pbuttonGetDOM();
+Arena.sizitisi.isagisFunchatButtonDOM = Arena.sizitisi.isagisFunchatButton.pbuttonGetDOM();
 
 Arena.sizitisi.panel.bpanelButtonPush(new PButton({
 	id: 'korna',
@@ -796,14 +838,24 @@ Sizitisi.funchatAppend = function(dom, id, online) {
 
 	ixos = item.funchatIxosGet();
 	if (ixos) {
-		Arena.sizitisi.sigasiFunchatButton.
-		trigger('click').addClass('panelButtonEkremes');
-		Arena.sizitisi.funchatIxosLast = item.funchatIxosPlay({
-			callback: function() {
-				Arena.sizitisi.sigasiFunchatButton.
-				removeClass('panelButtonEkremes');
-			},
-		});
+		if (Arena.sizitisi.isFunchatIxos()) {
+			Arena.sizitisi.funchatIxosTelos();
+			Arena.sizitisi.sigasiFunchatButtonDOM.addClass('panelButtonEkremes');
+			Arena.sizitisi.funchatIxosLast = item.funchatIxosPlay({
+				callback: function() {
+					Arena.sizitisi.sigasiFunchatButtonDOM.
+					removeClass('panelButtonEkremes');
+				},
+			});
+		}
+		else {
+			Arena.sizitisi.isagisFunchatButtonDOM.css('borderColor', 'crimson').
+			delay(300).finish().animate({
+				borderColor: 'orange',
+			}, 1000, 'easeOutBounce', function() {
+				$(this).css('borderColor', '');
+			});
+		}
 	}
 };
 
