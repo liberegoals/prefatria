@@ -679,6 +679,7 @@ Sizitisi.prototype.sizitisiCreateDOM = function(opts) {
 		$(this).
 		children('.sizitisiPote').css('display', 'block');
 	});
+
 	this.DOM.appendTo(this.sizitisiTrapeziGet() ? Arena.sizitisi.trapeziDOM : Arena.sizitisi.kafenioDOM);
 	return this;
 };
