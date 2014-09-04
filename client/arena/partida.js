@@ -310,7 +310,8 @@ Arena.partida.theatisPushDOM = function(sinedria) {
 
 Arena.partida.sizitisiRefreshDOM = function() {
 	Arena.sizitisi.trapeziDOM.empty();
-	if (Arena.ego.oxiTrapezi()) return Arena.partida;
+	if (Arena.ego.oxiTrapezi())
+	return Arena.partida;
 
 	Arena.ego.trapezi.trapeziSizitisiWalk(function() {
 		this.sizitisiCreateDOM();
