@@ -215,7 +215,7 @@ body {
 .trapezi {
 	position: relative;
 	display: block;
-	padding: 0 0 10px 0;
+	padding: 0 0 8px 0;
 }
 
 .trapeziFraktis {
@@ -226,6 +226,7 @@ body {
 	position: relative;
 	display: block;
 	padding: 4px;
+	margin-bottom: 2px;
 	width: 520px;
 	overflow: hidden;
 
@@ -1744,13 +1745,13 @@ cursor: auto;
 /***********************************************************************************************************************/
 
 .rebelos {
-	margin: 4px 18px 4px 0;
+	margin: 4px 18px 0px 0px;
 }
 
 .theatis {
 	position: relative;
 	bottom: -3px;
-	margin: 8px 18px 0 0;
+	margin: 4px 18px 0px 0px;
 	border-color: #887945;
 	background-color: #B0A376;
 }
