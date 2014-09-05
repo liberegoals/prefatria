@@ -9,10 +9,10 @@ Peripolos.ergasia = {
 	sizitisiKontema:	{ period:  7 * 61 * 1000, action: 'Service.sizitisi.kontema' },
 	trapezi:		{ period:  1 * 31 * 1000, action: 'Service.trapezi.check' },
 	sinedria:		{ period:  1 * 21 * 1000, action: 'Service.sinedria.check' },
-	fortos:			{ period:  1 * 17 * 1000, action: 'Service.fortos.refresh' },
 	dbconn:			{ period:  1 * 13 * 1000, action: 'DB.check' },
 	feredata:		{ period:  1 * 11 * 1000, action: 'Service.feredata.check' },
 	trapeziKlidoma:		{ period:  1 *  7 * 1000, action: 'Service.trapezi.klidomaCheck' },
+	fortos:			{ period:  1 *  3 * 1000, action: 'Service.fortos.refresh' },
 };
 
 // Η μέθοδος "setup" στήνει τους βασικούς κύκλους ελέγχου.
