@@ -440,6 +440,13 @@ Skiniko.prototype.stisimoTelos = function(conn) {
 
 	this.kinisi = [];
 
+	// Ετοιμάζουμε τα πρώτα δεδομένα φόρτου CPU. Κατόπιν, αυτά τα δεδομένα
+	// θα ανανεώνονται μέσω περιπόλου.
+
+	Log.level.push('Counting CPUs');
+	Service.fortos.ananeosi(true);
+	Log.level.pop();
+
 	// Δρομολογούμε διάφορες περιοδικές εργασίες.
 
 	Peripolos.setup();
