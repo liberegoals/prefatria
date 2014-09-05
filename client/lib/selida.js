@@ -139,8 +139,8 @@ Client.fyi.print = function(s, pk, dur) {
 	return Client;
 };
 
-Client.fyi.error = function(s, pk) {
-	return Client.fyi.print('<span class="kokino">' + s + '</span>', pk);
+Client.fyi.error = function(s, pk, dur) {
+	return Client.fyi.print('<span class="kokino">' + s + '</span>', pk, dur);
 };
 
 Client.fyi.pano = function(s, dur) {
@@ -151,16 +151,16 @@ Client.fyi.kato = function(s, dur) {
 	return Client.fyi.print(s, $('#fyiKato'), dur);
 };
 
-Client.fyi.epano = function(s) {
-	return Client.fyi.error(s, $('#fyiPano'));
+Client.fyi.epano = function(s, dur) {
+	return Client.fyi.error(s, $('#fyiPano'), dur);
 };
 
-Client.fyi.ekato = function(s) {
-	return Client.fyi.error(s, $('#fyiKato'));
+Client.fyi.ekato = function(s, dur) {
+	return Client.fyi.error(s, $('#fyiKato'), dur);
 };
 
-Client.fyi.ekatoDexia = function(s) {
-	return Client.fyi.error('<div class="dexia">' + s + '</div>', $('#fyiKato'));
+Client.fyi.ekatoDexia = function(s, dur) {
+	return Client.fyi.error('<div class="dexia">' + s + '</div>', $('#fyiKato'), dur);
 };
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -326,6 +326,65 @@ Client.motd.setup = function() {
 	);
 
 	if (Client.motd.emfanes) dom.css('display', 'block');
+};
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+Client.fortos = {};
+
+Client.fortos.setup = function() {
+	var dom;
+
+	Client.fortos.DOM = $('#toolbarFortos');
+	if (!Client.fortos.DOM.length) {
+		delete Client.fortos.DOM;
+		return;
+	}
+
+	Client.fortos.pote = Globals.tora();
+	Client.fortos.refresh();
+	Client.fortos.timer = setInterval(function() {
+		Client.fortos.refresh();
+	}, 10000);
+};
+
+Client.fortos.refresh = function() {
+	var tora;
+
+	tora = Globals.tora();
+	if (tora - Client.fortos.pote < 8)
+	return;
+
+	Client.fortos.pote = tora;
+	Client.skiserService('fortosData').
+	done(function(rsp) {
+		Client.fyi.pano();
+		Client.fortos.display(rsp);
+	}).
+	fail(function(err) {
+		Client.fyi.epano('Ο server σκηνικού δεν ανταποκρίνεται', 0);
+		Client.fyi.kato();
+	});
+};
+
+Client.fortos.display = function(data) {
+	if (!Client.fortos.DOM)
+	return;
+
+	if (typeof data === 'string') {
+		try {
+			eval('data = {' + data + '};');
+		} catch (e) {}
+	}
+
+	Client.fortos.DOM.empty().
+	append('Online ').
+	append($('<span>').addClass('toolbarFortosData').text(data.pektes)).
+	append(', Τραπέζια ').
+	append($('<span>').addClass('toolbarFortosData').text(data.trapezia)).
+	append(', Φόρτος ').
+	append($('<span>').addClass('toolbarFortosData').text(data.fortos)).
+	append('%');
 };
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -884,6 +943,7 @@ Client.setup1 = function() {
 	Client.fyi.setup();
 	Client.diafimisi.setup();
 	Client.motd.setup();
+	Client.fortos.setup();
 };
 
 Client.setup2 = function() {

@@ -25,5 +25,15 @@ Service.misc.korna = function(nodereq) {
 			trapezi: nodereq.trapeziGet().trapeziKodikosGet(),
 		},
 	}));;
+};
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
+
+var aaaa = 0;
+Service.misc.fortosData = function(nodereq) {
+aaaa++;
+	nodereq.write('pektes: 102,');
+	nodereq.write('trapezia: 24,');
+	nodereq.write('fortos: ' + aaaa + ',');
+	nodereq.end();
 };

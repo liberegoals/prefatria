@@ -34,6 +34,7 @@ Log.level.pop();
 // επεξεργασία που υφίσταται από τον server.
 
 Server.router = {
+	'/fortosData': Service.misc.fortosData,
 	'/sizitisiClearKafenio': Service.sizitisi.clearKafenio,
 	'/sizitisiDiagrafi': Service.sizitisi.diagrafi,
 	'/moliviAkirosi': Service.sizitisi.moliviAkirosi,
