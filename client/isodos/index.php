@@ -12,6 +12,7 @@ Selida::ofelimo_begin();
 Isodos::forma();
 Selida::ofelimo_end();
 
+Selida::fyi_kato();
 Selida::ribbon();
 Selida::telos();
 

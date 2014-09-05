@@ -18,6 +18,7 @@ Account::display_forma();
 Account::action_frame();
 Selida::ofelimo_end();
 
+Selida::fyi_kato();
 Selida::ribbon();
 Selida::telos();
 

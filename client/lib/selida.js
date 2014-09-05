@@ -330,32 +330,32 @@ Client.motd.setup = function() {
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-Client.fortos = {};
+Client.fortos = {
+	refreshTS: 0,
+	periodos: 10000,
+};
 
 Client.fortos.setup = function() {
-	var dom;
-
 	Client.fortos.DOM = $('#toolbarFortos');
 	if (!Client.fortos.DOM.length) {
 		delete Client.fortos.DOM;
 		return;
 	}
 
-	Client.fortos.pote = Globals.tora();
 	Client.fortos.refresh();
 	Client.fortos.timer = setInterval(function() {
 		Client.fortos.refresh();
-	}, 10000);
+	}, Client.fortos.periodos);
 };
 
 Client.fortos.refresh = function() {
 	var tora;
 
-	tora = Globals.tora();
-	if (tora - Client.fortos.pote < 8)
+	tora = Globals.torams();
+	if (tora - Client.fortos.refreshTS < Client.fortos.periodos)
 	return;
 
-	Client.fortos.pote = tora;
+	Client.fortos.refreshTS = tora;
 	Client.skiserService('fortosData').
 	done(function(rsp) {
 		Client.fyi.pano();
@@ -371,19 +371,23 @@ Client.fortos.display = function(data) {
 	if (!Client.fortos.DOM)
 	return;
 
+	Client.fortos.DOM.empty();
+
 	if (typeof data === 'string') {
 		try {
 			eval('data = {' + data + '};');
-		} catch (e) {}
+		} catch (e) {
+			return;
+		}
 	}
 
-	Client.fortos.DOM.empty().
+	Client.fortos.DOM.
 	append('Online ').
 	append($('<span>').addClass('toolbarFortosData').text(data.pektes)).
 	append(', Τραπέζια ').
 	append($('<span>').addClass('toolbarFortosData').text(data.trapezia)).
 	append(', Φόρτος ').
-	append($('<span>').addClass('toolbarFortosData').text(data.fortos)).
+	append($('<span>').addClass('toolbarFortosData').text(data.cpu)).
 	append('%');
 };
 
