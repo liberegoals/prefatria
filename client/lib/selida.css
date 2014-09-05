@@ -68,17 +68,21 @@ background-color: rgba(128, 0, 97, 0.37);
 
 #toolbarCopyright {
 	white-space: nowrap;
-	background-color: magenta;
+	background-color: rgba(255, 0, 255, 0.25);
 }
 
 #toolbarEmailIcon {
 	position: relative;
-	bottom: -6px;
+	bottom: -4px;
 	width: 24px;
+	height: 18px;
 }
 
-#toolbarMonitor {
-	background-color: teal;
+#toolbarFortos {
+	background-color: rgba(0, 128, 128, 0.22);
+}
+
+.toolbarFortosData {
 }
 
 /************************************************************************************************************************/

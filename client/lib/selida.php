@@ -262,11 +262,10 @@ class Selida {
 			<div id="toolbarCopyright"> &copy;<?php print OWNER_ONOMA; ?>
 				[<a target="_blank" title="Send email to &quot;<?php print OWNER_EMAIL;
 				?>&quot;" href="mailto:<?php print OWNER_EMAIL; ?>"><img
-				id="toolbarEmailIcon" src="ikona/misc/email.png" /></a>] 2011&ndash;
+				id="toolbarEmailIcon" src="<?php
+				Globals::url("ikona/misc/email.png"); ?>" /></a>] 2011&ndash;
 			</div>
-			<div id="toolbarMonitor">
-				XXX
-			</div>
+			<div id="toolbarFortos"></div>
 			<?php
 		Selida::sinefo_span_end();
 	}
