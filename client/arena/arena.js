@@ -217,6 +217,11 @@ Arena.setupMotd = function() {
 	return Arena;
 };
 
+// Ακυρώνουμε την κλασική ανανέωση δεδομένων φόρτου, καθώς θα παίρνουμε
+// τον φόρτο της CPU με κάθε ενημέρωση σκηνικών δεδομένων από τον skiser,
+// ενώ το πλήθος των online παικτών και των ενεργών τραπεζιών θα υπολογίζεται
+// στον client από τα τοπικά σκηνικά δεδομένα.
+
 Arena.setupFortos = function() {
 	if (!Client.fortos.timer)
 	return Arena;
