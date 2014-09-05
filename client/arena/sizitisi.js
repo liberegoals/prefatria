@@ -258,7 +258,7 @@ Arena.sizitisi.funchatIxosLast = null;
 
 Arena.sizitisi.panel.bpanelButtonPush(Arena.sizitisi.sigasiFunchatButton = new PButton({
 	id: 'sigasi',
-	img: 'sigasi.png',
+	img: 'ikona/panel/funchat/ixos.png',
 	title: 'Σίγαση funchat',
 	check: function() {
 		return Arena.sizitisi.isFunchatIxos();
@@ -294,7 +294,7 @@ Arena.sizitisi.sigasiFunchatButtonDOM = Arena.sizitisi.sigasiFunchatButton.pbutt
 
 Arena.sizitisi.panel.bpanelButtonPush(Arena.sizitisi.isagisFunchatButton = new PButton({
 	id: 'isagis',
-	img: 'isagis.png',
+	img: 'ikona/panel/funchat/isagis.png',
 	title: 'Ήχος στο funchat',
 	check: function() {
 		return Arena.sizitisi.isFunchatSigasi();
@@ -840,20 +840,28 @@ Sizitisi.funchatAppend = function(dom, id, online) {
 	if (ixos) {
 		if (Arena.sizitisi.isFunchatIxos()) {
 			Arena.sizitisi.funchatIxosTelos();
+			Arena.sizitisi.sigasiFunchatButton.pbuttonIconGetDOM().
+			attr('src', 'ikona/panel/funchat/sigasi.png');
 			Arena.sizitisi.sigasiFunchatButtonDOM.addClass('panelButtonEkremes');
 			Arena.sizitisi.funchatIxosLast = item.funchatIxosPlay({
 				callback: function() {
+					Arena.sizitisi.sigasiFunchatButton.pbuttonIconGetDOM().
+					attr('src', 'ikona/panel/funchat/ixos.png');
 					Arena.sizitisi.sigasiFunchatButtonDOM.
 					removeClass('panelButtonEkremes');
 				},
 			});
 		}
 		else {
+			Arena.sizitisi.isagisFunchatButton.pbuttonIconGetDOM().
+			attr('src', 'ikona/panel/funchat/ixos.png');
 			Arena.sizitisi.isagisFunchatButtonDOM.css('borderColor', 'crimson').
 			delay(300).finish().animate({
 				borderColor: 'orange',
 			}, 1000, 'easeOutBounce', function() {
 				$(this).css('borderColor', '');
+				Arena.sizitisi.isagisFunchatButton.pbuttonIconGetDOM().
+				attr('src', 'ikona/panel/funchat/isagis.png');
 			});
 		}
 	}

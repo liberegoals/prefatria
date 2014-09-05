@@ -1068,7 +1068,7 @@ Arena.cpanel.bpanelButtonPush(Arena.cpanel.apasxolimenosButton =  new PButton({
 Arena.cpanel.bpanelButtonPush(new PButton({
 	id: 'funchatOn',
 	omada: 3,
-	img: 'ikona/panel/funchatOn.png',
+	img: 'ikona/panel/funchat/on.png',
 	title: 'Ενεργοποίηση funchat',
 	check: function() {
 		if (!Arena) return false;
@@ -1084,7 +1084,7 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 Arena.cpanel.bpanelButtonPush(new PButton({
 	id: 'funchatOff',
 	omada: 3,
-	img: 'ikona/panel/funchatOff.png',
+	img: 'ikona/panel/funchat/off.png',
 	title: 'Απενεργοποίηση funchat',
 	check: function() {
 		if (!Arena) return false;
