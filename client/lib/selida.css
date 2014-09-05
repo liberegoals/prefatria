@@ -66,6 +66,21 @@ background-color: rgba(128, 0, 97, 0.37);
 	text-align: right;
 }
 
+#toolbarCopyright {
+	white-space: nowrap;
+	background-color: magenta;
+}
+
+#toolbarEmailIcon {
+	position: relative;
+	bottom: -6px;
+	width: 24px;
+}
+
+#toolbarMonitor {
+	background-color: teal;
+}
+
 /************************************************************************************************************************/
 
 #ribbon {
