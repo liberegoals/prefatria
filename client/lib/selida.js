@@ -330,8 +330,18 @@ Client.motd.setup = function() {
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+// Ακολουθούν δομές και functions που αφορούν στην εμφάνιση του φόρτου
+// στο site. Τα σχετικά στοιχεία εμφανίζονται σε όλες τις σελίδες στο
+// κάτω δεξιά μέρος. Τα στοιχεία περιλαμβάνουν το πλήθος των online
+// παικτών, το πλήθος των τραπεζιών και μια εκτίμηση του τρέχοοντος
+// φόρτου της CPU.
+
+// Στη δομή "fortos" κρατάμε το time stamp της χρονικής στιγμής κατά
+// την οποία ενημερώθηκαν τα σχετικά στοιχεία στο DOM ("ananeosiTS")
+// και την περίοδο ανανέωσης των στοιχείων φόρτου από τον skiser.
+
 Client.fortos = {
-	refreshTS: 0,
+	ananeosiTS: 0,
 	periodos: 10000,
 };
 
@@ -342,20 +352,27 @@ Client.fortos.setup = function() {
 		return;
 	}
 
-	Client.fortos.refresh();
+	Client.fortos.ananeosi();
 	Client.fortos.timer = setInterval(function() {
-		Client.fortos.refresh();
+		Client.fortos.ananeosi();
 	}, Client.fortos.periodos);
 };
 
-Client.fortos.refresh = function() {
+Client.fortos.ananeosi = function() {
 	var tora;
 
+	// Εάν έχει γίνει ενημέρωση των στοιχείων σχετικά πρόσφατα,
+	// δεν προβαίνουμε σε νέα ενημέρωση. Αυτό το κάνουμε διότι
+	// στη βασική σελίδα του «Πρεφαδόρου» έχουμε ενημέρωση για
+	// το φόρτο και μέσω της feredata. Έτσι, αν έχουμε παραλάβει
+	// μόλις πριν από λίγο στοιχεία φόρτου μέσω της feredata
+	// είναι καλό να αποφύγουμε την υποβολή χωριστού αιτήματος.
+
 	tora = Globals.torams();
-	if (tora - Client.fortos.refreshTS < Client.fortos.periodos)
+	if (tora - Client.fortos.ananeosiTS < Client.fortos.periodos)
 	return;
 
-	Client.fortos.refreshTS = tora;
+	Client.fortos.ananeosiTS = tora;
 	Client.skiserService('fortosData').
 	done(function(rsp) {
 		Client.fyi.pano();
@@ -367,16 +384,30 @@ Client.fortos.refresh = function() {
 	});
 };
 
+// Η function "display" δέχεται τα στοιχεία φόρτου, είτε ως JSON string, είτε
+// ως αντικείμενο και τα εμφανίζει στο κάτω δεξιά μέρος της σελίδας. Τα στοιχεία
+// φόρτου πρέπει να είναι:
+//
+//	pektes		Το πλήθος των online παικτών.
+//
+//	trapezia	Το πλήθος των ενεργών τραπεζιών.
+//
+//	cpuload		Το ποσοστό χρόνου απασχόλησης της CPU.
+
 Client.fortos.display = function(data) {
 	if (!Client.fortos.DOM)
 	return;
 
 	Client.fortos.DOM.empty();
 
+	if (!data)
+	return;
+
 	if (typeof data === 'string') {
 		try {
 			eval('data = {' + data + '};');
 		} catch (e) {
+console.log(rsp);
 			return;
 		}
 	}
@@ -387,7 +418,7 @@ Client.fortos.display = function(data) {
 	append(', Τραπέζια ').
 	append($('<span>').addClass('toolbarFortosData').text(data.trapezia)).
 	append(', Φόρτος ').
-	append($('<span>').addClass('toolbarFortosData').text(data.cpu)).
+	append($('<span>').addClass('toolbarFortosData').text(data.cpuload)).
 	append('%');
 };
 

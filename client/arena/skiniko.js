@@ -144,8 +144,14 @@ Skiniko.prototype.processFreskaData = function(rsp) {
 	egoDataSet(data).
 	processPartidaData(data).
 	skinikoCreateDOM(data).
+	fortosRefreshDOM(data).
 	anamoniAlages();
 
+	return this;
+};
+
+Skiniko.prototype.fortosRefreshDOM = function(data) {
+	Client.fortos.display(data.fortos);
 	return this;
 };
 
@@ -381,7 +387,10 @@ Skiniko.prototype.processAlages = function(rsp) {
 
 	this.processAlagesPartida(data, trapeziPrin);
 
-	this.anamoniAlages();
+	this.
+	fortosRefreshDOM(data).
+	anamoniAlages();
+
 	return this;
 };
 

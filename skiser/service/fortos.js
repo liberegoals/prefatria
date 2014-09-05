@@ -40,13 +40,13 @@ Service.fortos.cputimes = function(info) {
 	};
 };
 
-// Η function "refresh" τρέχει μέσω περιπόλου σε τακτά χρονικά διαστήματα
+// Η function "ananeosi" τρέχει μέσω περιπόλου σε τακτά χρονικά διαστήματα
 // και ενημερώνει τα στοιχεία φόρτου της CPU. Ουσιαστικά, κρατάει τα μέχρι
 // τούδε στοιχεία ως στοιχεία εκκίνησης και θέτει εκ νέου τρέχοντα στοιχεία
 // χρόνου της CPU. Κατόπιν υπολογίζει τις διαφορές μεταξύ των καταμετρήσεων
 // και κρατάει τον φόρτο που προκύπτει στο property "cpuload".
 
-Service.fortos.refresh = function(info) {
+Service.fortos.ananeosi = function(info) {
 	var total, idle;
 
 	Service.fortos.xronos1 = Service.fortos.xronos2;
@@ -70,12 +70,14 @@ Service.fortos.xronos2 = {
 };
 
 Log.level.push('Counting CPUs');
-Service.fortos.refresh(true);
+Service.fortos.ananeosi(true);
 Log.level.pop();
 
-Service.fortos.data = function(nodereq) {
+Service.fortos.data = function(nodereq, aftonomo) {
 	nodereq.write('pektes: ' + Globals.walk(Server.skiniko.sinedria) + ',');
 	nodereq.write('trapezia: ' + Globals.walk(Server.skiniko.trapezi) + ',');
-	nodereq.write('cpu: ' + Service.fortos.cpuload + ',');
+	nodereq.write('cpuload: ' + Service.fortos.cpuload + ',');
+
+	if (aftonomo !== false)
 	nodereq.end();
 };
