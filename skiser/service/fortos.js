@@ -43,8 +43,9 @@ Service.fortos.cputimes = function(info) {
 // Η function "ananeosi" τρέχει μέσω περιπόλου σε τακτά χρονικά διαστήματα
 // και ενημερώνει τα στοιχεία φόρτου της CPU. Ουσιαστικά, κρατάει τα μέχρι
 // τούδε στοιχεία ως στοιχεία εκκίνησης και θέτει εκ νέου τρέχοντα στοιχεία
-// χρόνου της CPU. Κατόπιν υπολογίζει τις διαφορές μεταξύ των καταμετρήσεων
-// και κρατάει τον φόρτο που προκύπτει στο property "cpuload".
+// χρόνου της CPU. Κατόπιν υπολογίζει τις διαφορές μεταξύ των τελευταίων
+// καταμετρήσεων και κρατάει τον φόρτο που προκύπτει στο property "cpuload".
+// Επίσης, καταμετρά τους online παίκτες και τα ενεργά τραπέζια.
 
 Service.fortos.ananeosi = function(info) {
 	var total, idle;
@@ -70,6 +71,9 @@ Service.fortos.xronos2 = {
 	total: 0,
 	idle: 0,
 };
+
+// Η function "data" επιστρέφει τα τρέχοντα δεδομένα φόρτου ως σειρά από
+// properties σε μορφή JSON.
 
 Service.fortos.data = function(nodereq) {
 	nodereq.write('cpuload: ' + Service.fortos.cpuload + ',');

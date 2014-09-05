@@ -347,13 +347,25 @@ Client.fortos.setup = function() {
 		return;
 	}
 
+	// Ζητάμε δεδομένα φόρτου από τον skiser και τα εμφανίζουμε
+	// στη σχετική περιοχή της σελίδας (κάτω δεξιά).
+
 	Client.fortos.ananeosi();
+
+	// Αφού εμφανίσουμε τα αρχικά δεδομένα φόρτου, φροντίζουμε
+	// ώστε σε τακτά χρονικά διαστήματα να παίρνουμε νέα δεδομένα
+	// φόρτου.
+
 	Client.fortos.timer = setInterval(function() {
 		Client.fortos.ananeosi();
 	}, Client.fortos.periodos);
 };
 
+// Η function "ananeosi" ζητά από τον skiser δεδομένα φόρτου, ήτοι πλήθος
+// online παικτών, πλήθος ενεργών τραπεζιών και φόρτο CPU.
+
 Client.fortos.ananeosi = function() {
+	if (!Client.fortos.DOM) return;
 	Client.skiserService('fortosData').
 	done(function(rsp) {
 		try {
@@ -364,6 +376,7 @@ Client.fortos.ananeosi = function() {
 			append($('<span>').addClass('plagia kokino').text('Ακαθόριστος φόρτος server σκηνικού'));
 			return;
 		}
+
 		Client.fortos.display(data);
 	}).
 	fail(function(err) {
@@ -384,12 +397,8 @@ Client.fortos.ananeosi = function() {
 //	cpuload		Το ποσοστό χρόνου απασχόλησης της CPU.
 
 Client.fortos.display = function(data) {
-	if (!Client.fortos.DOM)
-	return;
-
+	if (!Client.fortos.DOM) return;
 	Client.fortos.DOM.empty();
-	if (typeof data === 'string') {
-	}
 
 	Client.fortos.DOM.
 	append('Online ').
