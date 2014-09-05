@@ -151,7 +151,12 @@ Skiniko.prototype.processFreskaData = function(rsp) {
 };
 
 Skiniko.prototype.fortosRefreshDOM = function(data) {
-	Client.fortos.display(data.fortos);
+	Client.fortos.display({
+		pektes: Globals.walk(this.sinedria),
+		trapezia: Globals.walk(this.trapezi),
+		cpuload: data.cpuload,
+	});
+
 	return this;
 };
 

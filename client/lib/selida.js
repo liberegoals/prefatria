@@ -333,16 +333,11 @@ Client.motd.setup = function() {
 // Ακολουθούν δομές και functions που αφορούν στην εμφάνιση του φόρτου
 // στο site. Τα σχετικά στοιχεία εμφανίζονται σε όλες τις σελίδες στο
 // κάτω δεξιά μέρος. Τα στοιχεία περιλαμβάνουν το πλήθος των online
-// παικτών, το πλήθος των τραπεζιών και μια εκτίμηση του τρέχοοντος
+// παικτών, το πλήθος των τραπεζιών και μια εκτίμηση του τρέχοντος
 // φόρτου της CPU.
 
-// Στη δομή "fortos" κρατάμε το time stamp της χρονικής στιγμής κατά
-// την οποία ενημερώθηκαν τα σχετικά στοιχεία στο DOM ("ananeosiTS")
-// και την περίοδο ανανέωσης των στοιχείων φόρτου από τον skiser.
-
 Client.fortos = {
-	ananeosiTS: 0,
-	periodos: 10000,
+	periodos: 30000,
 };
 
 Client.fortos.setup = function() {
@@ -359,28 +354,22 @@ Client.fortos.setup = function() {
 };
 
 Client.fortos.ananeosi = function() {
-	var tora;
-
-	// Εάν έχει γίνει ενημέρωση των στοιχείων σχετικά πρόσφατα,
-	// δεν προβαίνουμε σε νέα ενημέρωση. Αυτό το κάνουμε διότι
-	// στη βασική σελίδα του «Πρεφαδόρου» έχουμε ενημέρωση για
-	// το φόρτο και μέσω της feredata. Έτσι, αν έχουμε παραλάβει
-	// μόλις πριν από λίγο στοιχεία φόρτου μέσω της feredata
-	// είναι καλό να αποφύγουμε την υποβολή χωριστού αιτήματος.
-
-	tora = Globals.torams();
-	if (tora - Client.fortos.ananeosiTS < Client.fortos.periodos)
-	return;
-
-	Client.fortos.ananeosiTS = tora;
 	Client.skiserService('fortosData').
 	done(function(rsp) {
-		Client.fyi.pano();
-		Client.fortos.display(rsp);
+		try {
+			eval('var data = {' + rsp + '};');
+		} catch (e) {
+			if (!Client.fortos.DOM) return;
+			Client.fortos.DOM.empty().
+			append($('<span>').addClass('plagia kokino').text('Ακαθόριστος φόρτος server σκηνικού'));
+			return;
+		}
+		Client.fortos.display(data);
 	}).
 	fail(function(err) {
-		Client.fyi.epano('Ο server σκηνικού δεν ανταποκρίνεται', 0);
-		Client.fyi.kato();
+		if (!Client.fortos.DOM) return;
+		Client.fortos.DOM.empty().
+		append($('<span>').addClass('plagia kokino').text('Ο server σκηνικού δεν ανταποκρίνεται'));
 	});
 };
 
@@ -399,17 +388,7 @@ Client.fortos.display = function(data) {
 	return;
 
 	Client.fortos.DOM.empty();
-
-	if (!data)
-	return;
-
 	if (typeof data === 'string') {
-		try {
-			eval('data = {' + data + '};');
-		} catch (e) {
-console.log(rsp);
-			return;
-		}
 	}
 
 	Client.fortos.DOM.

@@ -248,9 +248,7 @@ Sinedria.prototype.feredataApostoli = function() {
 	nodereq = this.feredataGet();
 	if (!nodereq) return this;
 
-	nodereq.write('fortos: {\n');
-	Service.fortos.data(nodereq, false);
-	nodereq.write('},\n');
+	nodereq.write('cpuload: ' + Service.fortos.cpuload + ',\n');
 
 	id = nodereq.urlGet('id');
 	if (id) nodereq.write('id: ' + id);

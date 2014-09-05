@@ -56,6 +56,8 @@ Service.fortos.ananeosi = function(info) {
 	idle = Service.fortos.xronos2.idle - Service.fortos.xronos1.idle;
 
 	Service.fortos.cpuload = Math.floor(100 * ((total - idle) / total));
+	Service.fortos.pektes = Globals.walk(Server.skiniko.sinedria);
+	Service.fortos.trapezia = Globals.walk(Server.skiniko.trapezi);
 };
 
 // Κρατάμε τα properties "xronos1" και "xronos2" με τους συνολικούς χρόνους
@@ -69,15 +71,9 @@ Service.fortos.xronos2 = {
 	idle: 0,
 };
 
-Log.level.push('Counting CPUs');
-Service.fortos.ananeosi(true);
-Log.level.pop();
-
-Service.fortos.data = function(nodereq, aftonomo) {
-	nodereq.write('pektes: ' + Globals.walk(Server.skiniko.sinedria) + ',');
-	nodereq.write('trapezia: ' + Globals.walk(Server.skiniko.trapezi) + ',');
+Service.fortos.data = function(nodereq) {
 	nodereq.write('cpuload: ' + Service.fortos.cpuload + ',');
-
-	if (aftonomo !== false)
+	nodereq.write('pektes: ' + Service.fortos.pektes + ',');
+	nodereq.write('trapezia: ' + Service.fortos.trapezia + ',');
 	nodereq.end();
 };

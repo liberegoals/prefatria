@@ -183,6 +183,7 @@ Arena.setup = function() {
 	Arena.
 	setupDiafimisi().
 	setupMotd().
+	setupFortos().
 	setupKafenio().
 	partida.setup().
 	setupPss().
@@ -212,6 +213,16 @@ Arena.setupMotd = function() {
 		Client.motd.emfanes = false;
 		Arena.cpanel.bpanelButtonGet('motd').refresh();
 	};
+
+	return Arena;
+};
+
+Arena.setupFortos = function() {
+	if (!Client.fortos.timer)
+	return Arena;
+
+	clearInterval(Client.fortos.timer);
+	delete Client.fortos.timer;
 
 	return Arena;
 };
