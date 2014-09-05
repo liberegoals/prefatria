@@ -15,7 +15,7 @@ Log.level.push('reading node system modules');
 // Εμπλουτίζουμε με δομές και μεθόδους που θα μας επιτρέψουν να προσπελάσουμε
 // παραμέτρους του λειτουργικού συστήματος.
 
-Log.print('reading OS system module');
+Log.print('reading operating system module');
 OS = require('os');
 
 // Εμπλουτίζουμε με δομές και μεθόδους που θα μας επιτρέψουν να προσπελάσουμε

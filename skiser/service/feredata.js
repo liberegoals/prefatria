@@ -248,7 +248,14 @@ Sinedria.prototype.feredataApostoli = function() {
 	nodereq = this.feredataGet();
 	if (!nodereq) return this;
 
+	// Κατά την αποστολή σκηνικών δεδομένων αποστέλλουμε και τον τρέχοντα
+	// φόρτο της CPU.
+	
 	nodereq.write('cpuload: ' + Service.fortos.cpuload + ',\n');
+
+	// Κάθε έγκυρο αίτημα feredata φέρει μοναδικό (κατά client) id. Το id
+	// αιτήματος επιστρέφεται ώστε να μην μπερδεύονται πολλαπλά αιτήματα
+	// από τον ίδιο client.
 
 	id = nodereq.urlGet('id');
 	if (id) nodereq.write('id: ' + id);
