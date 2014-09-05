@@ -218,9 +218,7 @@ class Selida {
 			</td>
 			<td style="width: 40%;">
 				<div id="ribbonRight">
-				<?php Selida::sinefo_span_begin(); ?>
-					RIGHT
-				<?php Selida::sinefo_span_end(); ?>
+					<?php Selida::ribbon_right(); ?>
 				</div>
 			</td>
 			</tr>
@@ -256,6 +254,21 @@ class Selida {
 		</form>
 		</div>
 		<?php
+	}
+
+	public static function ribbon_right() {
+		Selida::sinefo_span_begin();
+			?>
+			<div id="toolbarCopyright"> &copy;<?php print OWNER_ONOMA; ?>
+				[<a target="_blank" title="Send email to &quot;<?php print OWNER_EMAIL;
+				?>&quot;" href="mailto:<?php print OWNER_EMAIL; ?>"><img
+				id="toolbarEmailIcon" src="ikona/misc/email.png" /></a>] 2011&ndash;
+			</div>
+			<div id="toolbarMonitor">
+				XXX
+			</div>
+			<?php
+		Selida::sinefo_span_end();
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////@
