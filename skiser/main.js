@@ -13,6 +13,12 @@ Log.print('reading "log" module');
 Log.level.push('reading node system modules');
 
 // Εμπλουτίζουμε με δομές και μεθόδους που θα μας επιτρέψουν να προσπελάσουμε
+// παραμέτρους του λειτουργικού συστήματος.
+
+Log.print('reading OS system module');
+OS = require('os');
+
+// Εμπλουτίζουμε με δομές και μεθόδους που θα μας επιτρέψουν να προσπελάσουμε
 // το file system προκειμένου να διαβάσουμε αρχεία ή να γράψουμε σε αυτά.
 
 Log.print('reading file system module');

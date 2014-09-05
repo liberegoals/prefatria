@@ -26,14 +26,3 @@ Service.misc.korna = function(nodereq) {
 		},
 	}));;
 };
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
-
-var aaaa = 0;
-Service.misc.fortosData = function(nodereq) {
-aaaa++;
-	nodereq.write('pektes: 102,');
-	nodereq.write('trapezia: 24,');
-	nodereq.write('fortos: ' + aaaa + ',');
-	nodereq.end();
-};

@@ -8,6 +8,7 @@
 Service = {};
 
 Log.level.push();
+require('./service/fortos.js');
 require('./service/misc.js');
 require('./service/claim.js');
 require('./service/akirosi.js');
@@ -34,7 +35,7 @@ Log.level.pop();
 // επεξεργασία που υφίσταται από τον server.
 
 Server.router = {
-	'/fortosData': Service.misc.fortosData,
+	'/fortosData': Service.fortos.data,
 	'/sizitisiClearKafenio': Service.sizitisi.clearKafenio,
 	'/sizitisiDiagrafi': Service.sizitisi.diagrafi,
 	'/moliviAkirosi': Service.sizitisi.moliviAkirosi,
