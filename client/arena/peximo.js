@@ -178,7 +178,7 @@ Arena.partida.kinisiFilo = function(pektis, filo, callback) {
 
 	olif.
 	removeClass('tsoxaXartosiaFiloOmioxromo').
-	animate(css, delay, 'easeInSine', callback);
+	animate(css, delay, callback);
 
 	return Arena.partida;
 };
