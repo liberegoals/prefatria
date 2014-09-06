@@ -224,6 +224,11 @@ Arena.partida.kinisiBaza = function() {
 	return Arena.partida;
 };
 
+// Το πρόγραμμα παρέχει 5 ταχύτητες που αφορούν στην κίνηση των φύλλων.
+// Οι ταχύτητα κίνησης των φύλλων αλλάζει με πλήκτρο από το control panel
+// και κυμαίνεται από 1 (πολύ αργά) μέχρι 5 (πολύ γρήγορα), με μέση
+// (default) ταχύτητα το 3.
+
 Arena.partida.taxititaLista = {
 	1: { delay: 650, title: 'Grave' },
 	2: { delay: 500, title: 'Andante' },
@@ -233,17 +238,21 @@ Arena.partida.taxititaLista = {
 };
 
 Arena.partida.taxititaDelayGet = function() {
-	if (!Arena.partida.taxititaLista.hasOwnProperty(Client.session.taxitita))
-	Client.session.taxitita = 3;
-
-	return Arena.partida.taxititaLista[parseInt(Client.session.taxitita)].delay;
+	try {
+		return Arena.partida.taxititaLista[Client.session.taxitita].delay;
+	} catch (e) {
+		Client.session.taxitita = 3;
+		return Arena.partida.taxititaLista[3].delay;
+	}
 };
 
 Arena.partida.taxititaTitlosGet = function() {
-	if (!Arena.partida.taxititaLista.hasOwnProperty(Client.session.taxitita))
-	Client.session.taxitita = 3;
-
-	return Arena.partida.taxititaLista[parseInt(Client.session.taxitita)].title;
+	try {
+		return Arena.partida.taxititaLista[Client.session.taxitita].title;
+	} catch (e) {
+		Client.session.taxitita = 3;
+		return Arena.partida.taxititaLista[3].title;
+	}
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
