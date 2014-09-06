@@ -178,7 +178,7 @@ Arena.partida.kinisiFilo = function(pektis, filo, callback) {
 
 	olif.
 	removeClass('tsoxaXartosiaFiloOmioxromo').
-	animate(css, delay, callback);
+	animate(css, delay, 'easeInSine', callback);
 
 	return Arena.partida;
 };
@@ -218,7 +218,7 @@ Arena.partida.kinisiBaza = function() {
 	$('.tsoxaVelosFilo').delay(400).fadeOut();
 
 	delay = Arena.partida.taxititaDelayGet();
-	$('.tsoxaBazaFilo').delay(600).animate(css, delay, function() {
+	$('.tsoxaBazaFilo').delay(600).animate(css, delay, 'easeInSine', function() {
 		bazaDom.attr('src', bazaDom.data('src'));
 	});
 	return Arena.partida;
