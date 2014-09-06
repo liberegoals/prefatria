@@ -174,8 +174,7 @@ Arena.partida.kinisiFilo = function(pektis, filo, callback) {
 	css.left = css.left + 'px';
 	
 	filo.css('visibility', 'hidden');
-	//delay = 350;
-	delay = 400;
+	delay = Arena.partida.taxititaDelayGet();
 
 	olif.
 	removeClass('tsoxaXartosiaFiloOmioxromo').
@@ -218,13 +217,33 @@ Arena.partida.kinisiBaza = function() {
 	attr('src', 'ikona/endixi/baza.gif');
 	$('.tsoxaVelosFilo').delay(400).fadeOut();
 
-	//delay = 350;
-	delay = 400;
-
+	delay = Arena.partida.taxititaDelayGet();
 	$('.tsoxaBazaFilo').delay(600).animate(css, delay, function() {
 		bazaDom.attr('src', bazaDom.data('src'));
 	});
 	return Arena.partida;
+};
+
+Arena.partida.taxititaLista = {
+	1: { delay: 650, title: 'Grave' },
+	2: { delay: 500, title: 'Andante' },
+	3: { delay: 400, title: 'Allegro' },
+	4: { delay: 350, title: 'Vivace' },
+	5: { delay: 250, title: 'Presto' },
+};
+
+Arena.partida.taxititaDelayGet = function() {
+	if (!Arena.partida.taxititaLista.hasOwnProperty(Client.session.taxitita))
+	Client.session.taxitita = 3;
+
+	return Arena.partida.taxititaLista[parseInt(Client.session.taxitita)].delay;
+};
+
+Arena.partida.taxititaTitlosGet = function() {
+	if (!Arena.partida.taxititaLista.hasOwnProperty(Client.session.taxitita))
+	Client.session.taxitita = 3;
+
+	return Arena.partida.taxititaLista[parseInt(Client.session.taxitita)].title;
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@

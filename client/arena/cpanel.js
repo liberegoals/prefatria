@@ -1240,6 +1240,38 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 	},
 }));
 
+Arena.cpanel.bpanelButtonPush(new PButton({
+	omada: 3,
+	refresh: function() {
+		var taxitita;
+
+		taxitita = parseInt(Client.session.taxitita);
+		if (isNaN(taxitita)) taxitita = 3;
+		else if (taxitita > 5) taxitita = 5;
+		else if (taxitita < 1) taxitita = 1;
+
+		img = this.pbuttonIconGetDOM();
+		img.attr({
+			src: 'ikona/panel/taxitita/speed' + taxitita + '.png',
+			title: Arena.partida.taxititaTitlosGet(taxitita),
+		});
+	},
+	click: function(e) {
+		var taxitita;
+
+		taxitita = parseInt(Client.session.taxitita);
+		if (isNaN(taxitita)) taxitita = 3;
+		else if (taxitita > 5) taxitita = 5;
+		else if (taxitita < 1) taxitita = 1;
+		if (++taxitita > 5) taxitita = 1;
+		Client.session.taxitita = taxitita;
+		this.pbuttonPanelGet().bpanelRefresh();
+		Client.ajaxService('misc/setCookie.php', 'tag=taxitita', 'val=' + Client.session.taxitita);
+		Client.fyi.pano('Ταχύτητα κίνησης φύλλων: <span class="ble entona">' +
+			Arena.partida.taxititaTitlosGet(taxitita) + '</span>');
+	},
+}));
+
 Arena.cpanel.bpanelButtonPush(Arena.paraskinio.button = new PButton({
 	omada: Arena.cpanel.omadaMax,
 	img: 'paraskinio.png',
