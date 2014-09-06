@@ -1267,7 +1267,7 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 		Client.session.taxitita = taxitita;
 		this.pbuttonPanelGet().bpanelRefresh();
 		Client.ajaxService('misc/setCookie.php', 'tag=taxitita', 'val=' + Client.session.taxitita);
-		Client.fyi.pano('Ταχύτητα κίνησης φύλλων: <span class="ble entona">' +
+		Client.fyi.kato('Ταχύτητα κίνησης φύλλων: <span class="ble entona">' +
 			Arena.partida.taxititaTitlosGet(taxitita) + '</span>');
 	},
 }));
