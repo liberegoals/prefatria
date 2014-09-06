@@ -175,7 +175,7 @@ Arena.partida.kinisiFilo = function(pektis, filo, callback) {
 	
 	filo.css('visibility', 'hidden');
 	//delay = 350;
-	delay = 450;
+	delay = 400;
 
 	olif.
 	removeClass('tsoxaXartosiaFiloOmioxromo').
@@ -219,7 +219,7 @@ Arena.partida.kinisiBaza = function() {
 	$('.tsoxaVelosFilo').delay(400).fadeOut();
 
 	//delay = 350;
-	delay = 450;
+	delay = 400;
 
 	$('.tsoxaBazaFilo').delay(600).animate(css, delay, function() {
 		bazaDom.attr('src', bazaDom.data('src'));
