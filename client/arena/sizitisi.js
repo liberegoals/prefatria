@@ -930,7 +930,18 @@ Sizitisi.sindesmosAppend = function(dom, s) {
 };
 
 Sizitisi.ikonaAppend = function(dom, s) {
-	var sinPlin, img, width;
+	var wmax, img, sinPlin, i;
+
+	wmax = Arena.sizitisi.areaDOM.innerWidth();
+	wmax = parseInt(wmax * 0.8);
+
+	dom.
+	append(img = $('<img>').addClass('sizitisiIkona').attr({
+		src: s.replace(/[-+]*$/, ''),
+	}).
+	css({
+		maxWidth: wmax + 'px',
+	}));
 
 	sinPlin = [];
 	for (i = 0; i < s.length; i++) {
@@ -947,18 +958,16 @@ Sizitisi.ikonaAppend = function(dom, s) {
 		}
 	}
 
-	dom.
-	append(img = $('<img>').addClass('sizitisiIkona').attr({
-		src: s.replace(/[-+]*$/, ''),
-	}));
-
 	if (!sinPlin.length)
 	return;
 
-	width = 80;
-	for (i = 0; i < sinPlin.length; i++) {
-		width *= sinPlin[i];
-		if (width > 80) width = 80;
-	}
-	img.css('width', width + '%');
+	img.on('load', function() {
+		var width, i;
+
+		width = img.outerWidth();
+		for (i = 0; i < sinPlin.length; i++) {
+			width *= sinPlin[i];
+		}
+		img.css('width', width + 'px');
+	});
 };
