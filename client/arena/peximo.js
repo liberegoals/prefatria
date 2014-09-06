@@ -141,8 +141,8 @@ Arena.partida.claimRefreshDOM = function() {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
 
-Arena.partida.kinisiFilo = function(pektis, filo, callback, delay) {
-	var css = {width: '88px'}, tsoxaPos, filoPos, olif;
+Arena.partida.kinisiFilo = function(pektis, filo, callback) {
+	var css = {width: '88px'}, tsoxaPos, filoPos, olif, delay;
 
 	switch (Arena.ego.thesiMap(pektis)) {
 	case 3:
@@ -174,7 +174,8 @@ Arena.partida.kinisiFilo = function(pektis, filo, callback, delay) {
 	css.left = css.left + 'px';
 	
 	filo.css('visibility', 'hidden');
-	if (delay === undefined) delay = 350;
+	//delay = 350;
+	delay = 450;
 
 	olif.
 	removeClass('tsoxaXartosiaFiloOmioxromo').
@@ -184,7 +185,7 @@ Arena.partida.kinisiFilo = function(pektis, filo, callback, delay) {
 };
 
 Arena.partida.kinisiBaza = function() {
-	var trapezi, pios, iseht, css = {width: 0}, bazaDom;
+	var trapezi, pios, iseht, css = {width: 0}, bazaDom, delay;
 
 	if (Arena.ego.oxiTrapezi()) return Arena.partida;
 	if (!Arena.ego.trapezi.bazaFila) return Arena.partida;
@@ -216,7 +217,11 @@ Arena.partida.kinisiBaza = function() {
 	bazaDom.data('src', bazaDom.attr('src')).
 	attr('src', 'ikona/endixi/baza.gif');
 	$('.tsoxaVelosFilo').delay(400).fadeOut();
-	$('.tsoxaBazaFilo').delay(600).animate(css, 350, function() {
+
+	//delay = 350;
+	delay = 450;
+
+	$('.tsoxaBazaFilo').delay(600).animate(css, delay, function() {
 		bazaDom.attr('src', bazaDom.data('src'));
 	});
 	return Arena.partida;
