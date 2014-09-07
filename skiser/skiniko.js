@@ -440,12 +440,10 @@ Skiniko.prototype.stisimoTelos = function(conn) {
 
 	this.kinisi = [];
 
-	// Ετοιμάζουμε τα πρώτα δεδομένα φόρτου CPU. Κατόπιν, αυτά τα δεδομένα
-	// θα ανανεώνονται μέσω περιπόλου.
+	// Κάνουμε μια πρώτη εκτίμηση του φόρτου με τα μέχρι στιγμής δεδομένα
+	// πριν εκκινήσουμε τις τακτικές εκτιμήσεις φόρτου μέσω περιπόλου.
 
-	Log.level.push('Counting CPUs');
-	Service.fortos.ananeosi(true);
-	Log.level.pop();
+	Service.fortos.ananeosi();
 
 	// Δρομολογούμε διάφορες περιοδικές εργασίες.
 
@@ -732,6 +730,62 @@ Dianomi.prototype.queryPliromi = function() {
 	query += '`telos` = NOW() WHERE `kodikos` = ' + this.dianomiKodikosGet();
 
 	return query;
+};
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// Η κλάση "CPUtimes" περιγράφει αντικείμενο με τον συνολικό χρόνο λειτουργίας
+// της CPU ("total") και τον συνολικό χρόνο αδρανείας της CPU ("idle"). Μπορούμε
+// να περάσουμε και παράμετρο με την οποία θα εκτυπωθούν στοιχεία για τους πυρήνες
+// της CPU κατά τη στιγμή της καταμέτρησης.
+
+CPUtimes = function(print) {
+	var obj = this;
+
+	obj.total = 0;
+	obj.idle = 0;
+
+	Globals.awalk(OS.cpus(), function(i, cpu) {
+		var t;
+
+		if (print)
+		Log.print(cpu.model);
+
+		// Στο property "idle" αθροίζουμε τα idle times όλων
+		// των πυρήνων της CPU.
+
+		obj.idle += cpu.times.idle;
+
+		// Στο property "total" αθροίζουμε όλους τους χρόνους
+		// κάθε πυρήνα της CPU, συμπεριλαμβανομένων και των
+		// χρόνων αδρανείας.
+
+		for (t in cpu.times) {
+			obj.total += cpu.times[t];
+		}
+	});
+};
+
+CPUtimes.prototype.CPUtimesTotalGet = function() {
+	return this.total;
+};
+
+CPUtimes.prototype.CPUtimesIdleGet = function() {
+	return this.idle;
+};
+
+// Η μέθοδος "CPUtimesLoadCalc" υπολογίζει τον φόρτο της CPU ως ποσοστό τού
+// ενεργού χρόνου προς τον συνολικού χρόνο, συγκρίνοντας τα ανά χείρας data
+// με data προηγούμενης καταμέτρησης την οποία περνάμε ως παράμετρο.
+
+CPUtimes.prototype.CPUtimesLoadCalc = function(prev) {
+	var total, idle;
+
+	total = this.CPUtimesTotalGet() - prev.CPUtimesTotalGet();
+	if (total <= 0) return 100;
+
+	idle = this.CPUtimesIdleGet() - prev.CPUtimesIdleGet();
+	return Math.floor(100 * ((total - idle) / total));
 };
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

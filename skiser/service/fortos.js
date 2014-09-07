@@ -6,39 +6,15 @@ Service.fortos = {};
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
 
-// Η function "cputimes" επιστρέφει αντικείμενο με τον συνολικό χρόνο
-// λειτουργίας της CPU ("total") και τον συνολικό χρόνο αδρανείας της
-// CPU ("idle"). Μπορούμε να περάσουμε και παράμετρο με την οποία θα
-// εκτυπωθούν στοιχεία για τους πυρήνες της CPU.
+// Κρατάμε τα properties "xronos1" και "xronos2" με τα δεδομένα φόρτου CPU
+// που αφορούν σε δύο διαδοχικές καταμετρήσεις. Αρχικά δουλεύουμε με τους
+// συνολικούς χρόνους από την έναρξη λειτουργίας της CPU, αλλά σε κάθε
+// νέα καταμέτρηση λογίζονται οι χρόνοι για το διάστημα που μεσολάβησε
+// μεταξύ των δύο καταμετρήσεων.
 
-Service.fortos.cputimes = function(info) {
-	var total = 0, idle = 0;
-
-	Globals.awalk(OS.cpus(), function(i, cpu) {
-		var t;
-
-		if (info)
-		Log.print(cpu.model);
-
-		// Στη μεταβλητή "idle" αθροίζουμε τα idle times όλων
-		// των πυρήνων της CPU.
-
-		idle += cpu.times.idle;
-
-		// Στη μεταβλητή "total" αθροίζουμε όλους τους χρόνους
-		// κάθε πυρήνα της CPU, συμπεριλαμβανομένων και των
-		// χρόνων αδρανείας.
-
-		for (t in cpu.times) {
-			total += cpu.times[t];
-		}
-	});
-
-	return {
-		total: total,
-		idle: idle,
-	};
-};
+Log.level.push('Counting CPUs');
+Service.fortos.xronos2 = new CPUtimes(true);
+Log.level.pop();
 
 // Η function "ananeosi" τρέχει μέσω περιπόλου σε τακτά χρονικά διαστήματα
 // και ενημερώνει τα στοιχεία φόρτου της CPU. Ουσιαστικά, κρατάει τα μέχρι
@@ -47,9 +23,9 @@ Service.fortos.cputimes = function(info) {
 // καταμετρήσεων και κρατάει τον φόρτο που προκύπτει στο property "cpuload".
 // Επίσης, καταμετρά τους online παίκτες και τα ενεργά τραπέζια.
 
-Service.fortos.ananeosi = function(info) {
+Service.fortos.ananeosi = function() {
 	Service.fortos.xronos1 = Service.fortos.xronos2;
-	Service.fortos.ananeosiCPU(info);
+	Service.fortos.ananeosiCPU();
 	Service.fortos.pektes = Globals.walk(Server.skiniko.sinedria);
 	Service.fortos.trapezia = Globals.walk(Server.skiniko.trapezi);
 };
@@ -59,32 +35,9 @@ Service.fortos.ananeosi = function(info) {
 // περιπόλου σε πολύ συχνότερα διαστήματα από την βασική function ανανέωσης
 // στοιχείων φόρτου "ananeosi".
 
-Service.fortos.ananeosiCPU = function(info) {
-	var total, idle;
-
-	Service.fortos.xronos2 = Service.fortos.cputimes(info);
-	total = Service.fortos.xronos2.total - Service.fortos.xronos1.total;
-
-	// Υπάρχει περίπτωση οι δύο χρόνοι να είναι πολύ κοντινοί. Σ' αυτήν
-	// την περίπτωση δεν ανανεώνουμε τον φόρτο CPU σε τούτο το πέρασμα,
-	// αλλά θα ανανεωθεί στο αμέσως επόμενο πέρασμα.
-
-	if (total <= 0)
-	return;
-
-	idle = Service.fortos.xronos2.idle - Service.fortos.xronos1.idle;
-	Service.fortos.cpuload = Math.floor(100 * ((total - idle) / total));
-};
-
-// Κρατάμε τα properties "xronos1" και "xronos2" με τους συνολικούς χρόνους
-// που αφορούν σε δύο διαδοχικές καταμετρήσεις. Αρχικά δουλεύουμε με τους
-// συνολικούς χρόνους από την έναρξη λειτουργίας της CPU, αλλά σε κάθε
-// νέα καταμέτρηση λογίζονται οι χρόνοι για το διάστημα που μεσολάβησε
-// μεταξύ των δύο καταμετρήσεων.
-
-Service.fortos.xronos2 = {
-	total: 0,
-	idle: 0,
+Service.fortos.ananeosiCPU = function() {
+	Service.fortos.xronos2 = new CPUtimes();
+	Service.fortos.cpuload = Service.fortos.xronos2.CPUtimesLoadCalc(Service.fortos.xronos1);
 };
 
 // Η function "data" επιστρέφει τα τρέχοντα δεδομένα φόρτου ως σειρά από
