@@ -223,12 +223,7 @@ Arena.setupMotd = function() {
 // στον client από τα τοπικά σκηνικά δεδομένα.
 
 Arena.setupFortos = function() {
-	if (!Client.fortos.timer)
-	return Arena;
-
-	clearInterval(Client.fortos.timer);
-	delete Client.fortos.timer;
-
+	Client.fortos.clearTimer();
 	return Arena;
 };
 

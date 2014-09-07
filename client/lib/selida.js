@@ -337,6 +337,10 @@ Client.motd.setup = function() {
 // φόρτου της CPU.
 
 Client.fortos = {
+	// Η ανανέωση των στοιχείων φόρτου στο DOM επιχειρείται σε
+	// τακτά χρονικά διαστήματα. Η περίοδος ανανέωσης ορίζεται
+	// από το property "periodos" σε milliseconds.
+
 	periodos: 30000,
 };
 
@@ -359,6 +363,12 @@ Client.fortos.setup = function() {
 	Client.fortos.timer = setInterval(function() {
 		Client.fortos.ananeosi();
 	}, Client.fortos.periodos);
+};
+
+Client.fortos.clearTimer = function() {
+	if (!Client.fortos.timer) return;
+	clearInterval(Client.fortos.timer);
+	delete Client.fortos.timer;
 };
 
 // Η function "ananeosi" ζητά από τον skiser δεδομένα φόρτου, ήτοι πλήθος
@@ -397,16 +407,23 @@ Client.fortos.ananeosi = function() {
 //	cpuload		Το ποσοστό χρόνου απασχόλησης της CPU.
 
 Client.fortos.display = function(data) {
-	if (!Client.fortos.DOM) return;
-	Client.fortos.DOM.empty();
+	var xromaCPU;
 
-	Client.fortos.DOM.
+	if (!Client.fortos.DOM)
+	return;
+
+	if (data.cpuload > 80) xromaCPU = '#CC0000';
+	else if (data.cpuload > 50) xromaCPU = '#8A00B8';
+	else if (data.cpuload > 30) xromaCPU = '#003366';
+	else xromaCPU = '#006600';
+
+	Client.fortos.DOM.empty().
 	append('Online ').
 	append($('<span>').addClass('toolbarFortosData').text(data.pektes)).
 	append(', Τραπέζια ').
 	append($('<span>').addClass('toolbarFortosData').text(data.trapezia)).
 	append(', Φόρτος ').
-	append($('<span>').addClass('toolbarFortosData').text(data.cpuload)).
+	append($('<span>').addClass('toolbarFortosData').css('color', xromaCPU).text(data.cpuload)).
 	append('%');
 };
 
