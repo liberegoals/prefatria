@@ -408,6 +408,12 @@ Arena.partida.dataPanoRefreshDOM = function() {
 		title: 'Παίζεται το πάσο',
 	}));
 
+	if (Arena.ego.isEpidotisi())
+	Arena.partida.optionsDOM.append($('<img>').addClass('tsoxaOption').attr({
+		src: 'ikona/panel/epidotisiOff.png',
+		title: 'Επίδομα ανεργίας',
+	}));
+
 	Arena.partida.
 	dianomiRefreshDOM(dianomiDOM).
 	kasaRefreshDOM(kasaDOM).

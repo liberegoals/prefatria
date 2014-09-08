@@ -772,6 +772,15 @@ Skiniko.prototype.kinisiPostPeparamSetΚΑΤΑΣΤΑΣΗ = function(data, pektis
 	return this;
 };
 
+Skiniko.prototype.kinisiPostPeparamSetΕΠΙΔΟΤΗΣΗ = function(data, pektis) {
+	Arena.cpanel.bpanelButtonGet('epidotisiOn').pbuttonDisplay();
+	Arena.cpanel.bpanelButtonGet('epidotisiOff').pbuttonDisplay();
+	if (Arena.ego.oxiTrapezi()) return this;
+
+	Arena.partida.dataPanoRefreshDOM();
+	return this;
+};
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // TS -- Παράμετρος τραπεζιού

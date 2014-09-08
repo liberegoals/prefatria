@@ -1596,6 +1596,26 @@ Arena.ego.oxiDeveloper = function() {
 	return Arena.ego.pektis.pektisOxiDeveloper();
 };
 
+Arena.ego.isAnergos = function() {
+	if (!Arena.ego.pektis) return false;
+	return Arena.ego.pektis.pektisIsAnergos();
+};
+
+Arena.ego.isErgazomenos = function() {
+	if (!Arena.ego.pektis) return true;
+	return Arena.ego.pektis.pektisIsErgazomenos();
+};
+
+Arena.ego.isEpidotisi = function() {
+	if (!Arena.ego.pektis) return false;
+	return Arena.ego.pektis.pektisIsEpidotisi();
+};
+
+Arena.ego.oxiEpidotisi = function() {
+	if (!Arena.ego.pektis) return true;
+	return Arena.ego.pektis.pektisOxiEpidotisi();
+};
+
 Arena.ego.isApasxolimenos = function() {
 	if (!Arena.ego.pektis) return false;
 	return Arena.ego.pektis.pektisIsApasxolimenos();
