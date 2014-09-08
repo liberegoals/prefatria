@@ -292,6 +292,27 @@ Xartosia.prototype.xartosiaMikos = function() {
 	return this.fila.length;
 };
 
+Xartosia.prototype.xartosiaEnalagiFila = function(n, m) {
+	var len, filo;
+
+	n = parseInt(n);
+	if (n < 0) return this;
+
+	m = parseInt(m);
+	if (m < 0) return this;
+
+	if (n === m) return this;
+	len = this.xartosiaMikos();
+	if (n >= len) return this;
+	if (m >= len) return this;
+
+	filo = this.xartosiaFiloGet(n);
+	this.xartosiaFiloSet(n, this.xartosiaFiloGet(m));
+	this.xartosiaFiloSet(m, filo);
+
+	return this;
+};
+
 Xartosia.prototype.xartosiaXartosia = function(apo, cnt) {
 	return new Xartosia(this.fila.slice(apo, apo + cnt));
 }
