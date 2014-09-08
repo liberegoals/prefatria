@@ -210,6 +210,13 @@ body {
 	width: 24px;
 }
 
+.pektisEpidotisiIcon {
+	position: absolute;
+	left: 0px;
+	bottom: 0px;
+	width: 20px;
+}
+
 /***********************************************************************************************************************/
 
 .trapezi {

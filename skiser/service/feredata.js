@@ -308,10 +308,14 @@ Sinedria.prototype.feredataResetCheck = function() {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 Sinedria.prototype.feredataFreska = function() {
-	var skiniko = Server.skiniko, nodereq;
+	var skiniko = Server.skiniko, nodereq, paraliptis, anarmodios;
 
 	nodereq = this.feredataGet();
 	if (!nodereq) return this;
+
+	paraliptis = nodereq.pektisGet();
+	if (!paraliptis) return this;
+	anarmodios = paraliptis.pektisOxiDiaxiristis();
 
 	nodereq.write('pektis: [\n');
 	skiniko.skinikoPektisWalk(function() {
@@ -329,7 +333,8 @@ Sinedria.prototype.feredataFreska = function() {
 		xenos = (nodereq.loginGet() != pektis);
 		hdr = '\t' + pektis.json() + ': {\n\t\t';
 		this.pektisPeparamWalk(function(param, timi) {
-			if (xenos && Prefadoros.peparamIsPrivate(param)) return;
+			if (Prefadoros.peparamIsPrivate(param) && xenos) return;
+			if (Prefadoros.peparamIsKrifi(param) && xenos && anarmodios) return;
 			nodereq.write(hdr + param.json() + ':' + timi.json() + ',\n');
 			hdr = '\t\t';
 		});
