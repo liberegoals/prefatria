@@ -157,6 +157,29 @@ Pektis.prototype.pektisOxiDeveloper = function() {
 	return !this.pektisIsDeveloper();
 };
 
+// Άνεργος είναι ο χρήστης που δικαιούται επιδότηση.
+
+Pektis.prototype.pektisIsAnergos = function() {
+	var anergos = this.pektisPeparamGet('ΑΝΕΡΓΟΣ');
+	if (!anergos) return false;
+	return anergos.isNai();
+};
+
+Pektis.prototype.pektisIsErgazomenos = function() {
+	return !this.pektisIsAnergos();
+};
+
+Pektis.prototype.pektisIsEpidotisi = function() {
+	var epidotosi = this.pektisPeparamGet('ΕΠΙΔΟΤΗΣΗ');
+	if (!epidotosi) return false;
+	if (this.pektisIsErgazomenos()) return false;
+	return epidotosi.isNai();
+};
+
+Pektis.prototype.pektisOxiEpidotisi = function() {
+	return !this.pektisIsEpidotisi();
+};
+
 Pektis.prototype.pektisSxesiSet = function(sxetizomenos, sxesi) {
 	if (sxesi) this.sxesi[sxetizomenos] = sxesi;
 	else this.pektisSxesiSetAsxetos(sxetizomenos);

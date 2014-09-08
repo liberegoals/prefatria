@@ -7,7 +7,7 @@
 // διεξάγεται τόσο στο καφενείο, όσο και στο τρπαπέζι.
 
 Arena.cpanel = new BPanel();
-Arena.cpanel.omadaMax = 3;
+Arena.cpanel.omadaMax = 4;
 
 // Ακυρώνουμε κάποιους mouse event listeners για να μην έχουμε ανεπιθύμητα φαινόμενα
 // στα κλικ που κάνουμε σε πλήκτρα του control panel.
@@ -1099,6 +1099,172 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
 
 Arena.cpanel.bpanelButtonPush(new PButton({
+	omada: 3,
+	refresh: function() {
+		var taxitita;
+
+		taxitita = parseInt(Client.session.taxitita);
+		if (isNaN(taxitita)) taxitita = 3;
+		else if (taxitita > 5) taxitita = 5;
+		else if (taxitita < 1) taxitita = 1;
+
+		img = this.pbuttonIconGetDOM();
+		img.attr({
+			src: 'ikona/panel/taxitita/speed' + taxitita + '.png',
+			title: Arena.partida.taxititaTitlosGet(taxitita),
+		});
+	},
+	click: function(e) {
+		var taxitita;
+
+		taxitita = parseInt(Client.session.taxitita);
+		if (isNaN(taxitita)) taxitita = 3;
+		else if (taxitita > 5) taxitita = 5;
+		else if (taxitita < 1) taxitita = 1;
+		if (++taxitita > 5) taxitita = 1;
+		Client.session.taxitita = taxitita;
+		this.pbuttonPanelGet().bpanelRefresh();
+		Client.ajaxService('misc/setCookie.php', 'tag=taxitita', 'val=' + Client.session.taxitita);
+		Client.fyi.kato('Ταχύτητα κίνησης φύλλων: <span class="ble entona">' +
+			Arena.partida.taxititaTitlosGet(taxitita) + '</span>');
+	},
+}));
+
+Arena.cpanel.bpanelButtonPush(Arena.paraskinio.button = new PButton({
+	omada: 3,
+	img: 'paraskinio.png',
+	title: 'Αλλαγή παρασκηνίου',
+	click: function(e) {
+		Arena.paraskinio.open();
+	},
+}));
+Arena.paraskinio.button = Arena.paraskinio.button.pbuttonGetDOM();
+
+Arena.cpanel.bpanelButtonPush(new PButton({
+	omada: 3,
+	img: 'kinito.png',
+	refresh: function() {
+		var img;
+
+		img = this.pbuttonIconGetDOM();
+		if (Client.session.kinito) img.css('opacity', 0.5).attr({
+			title: 'Ενεργοποίηση πληκτρολογίου αφής',
+		});
+		else img.css('opacity', '').attr({
+			title: 'Απενεργοποίηση πληκτρολογίου αφής',
+		});
+	},
+	click: function(e) {
+		if (Client.session.kinito) {
+			delete Client.session.kinito;
+			params = '';
+		}
+		else {
+			Client.session.kinito = 1;
+			params = 'energo=1';
+		}
+
+		this.refresh();
+		Client.ajaxService('misc/kinito.php', params).
+		done(function(rsp) {
+			Client.fyi.epano(rsp);
+		}).
+		fail(function(err) {
+			Client.skiserFail(err);
+		});
+	},
+}));
+
+Arena.cpanel.bpanelButtonPush(new PButton({
+	omada: 3,
+	img: 'entasi.png',
+	title: 'Ένταση ήχου: ' + Client.session.entasi,
+	click: function(e) {
+		switch (Client.session.entasi) {
+		case 'ΚΑΝΟΝΙΚΗ':
+			Client.session.entasi = 'ΔΥΝΑΤΗ';
+			break;
+		case 'ΔΥΝΑΤΗ':
+			Client.session.entasi = 'ΣΙΩΠΗΛΟ';
+			break;
+		case 'ΣΙΩΠΗΛΟ':
+			Client.session.entasi = 'ΧΑΜΗΛΗ';
+			break;
+		default:
+			Client.session.entasi = 'ΚΑΝΟΝΙΚΗ';
+			break;
+		}
+		this.pbuttonGetDOM().attr('title', 'Ένταση ήχου: ' + Client.session.entasi);
+		Client.fyi.pano('Ένταση ήχου: ' + Client.session.entasi);
+		Client.sound.beep();
+		Client.ajaxService('misc/setCookie.php', 'tag=entasi', 'val=' + Client.session.entasi);
+	},
+}));
+
+Arena.cpanel.bpanelButtonPush(new PButton({
+	id: 'epidotisiOn',
+	omada: 3,
+	img: 'epidotisiOn.png',
+	title: 'Επιδότηση',
+	check: function() {
+		if (Arena.ego.isErgazomenos()) return false;
+		return Arena.ego.oxiEpidotisi();
+	},
+	click: function(e) {
+		var img;
+
+		img = this.pbuttonIconGetDOM();
+		if (img.data('klik')) return;
+		img.data('klik', true);
+		img.working(true);
+		Client.fyi.pano('Αίτηση επιδότησης. Παρακαλώ περιμένετε…', 0);
+		Client.skiserService('peparamSet', 'param=ΕΠΙΔΟΤΗΣΗ', 'timi=ΝΑΙ').
+		done(function(rsp) {
+			img.removeData('klik');
+			Client.fyi.pano(rsp);
+			img.working(false);
+		}).
+		fail(function(err) {
+			img.removeData('klik');
+			Client.skiserFail(err);
+			img.working(false);
+		});
+	},
+}));
+
+Arena.cpanel.bpanelButtonPush(new PButton({
+	id: 'epidotisiOff',
+	omada: 3,
+	img: 'epidotisiOff.png',
+	title: 'Διακοπή επιδότησης',
+	check: function() {
+		return Arena.ego.isEpidotisi();
+	},
+	click: function(e) {
+		var img;
+
+		img = this.pbuttonIconGetDOM();
+		if (img.data('klik')) return;
+		img.data('klik', true);
+		img.working(true);
+		Client.fyi.pano('Αίτημα διακοπής επιδότησης. Παρακαλώ περιμένετε…', 0);
+		Client.skiserService('peparamSet', 'param=ΕΠΙΔΟΤΗΣΗ', 'timi=ΟΧΙ').
+		done(function(rsp) {
+			img.removeData('klik');
+			Client.fyi.pano(rsp);
+			img.working(false);
+		}).
+		fail(function(err) {
+			img.removeData('klik');
+			Client.skiserFail(err);
+			img.working(false);
+		});
+	},
+}));
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
+
+Arena.cpanel.bpanelButtonPush(new PButton({
 	id: 'diafimisi',
 	omada: Arena.cpanel.omadaMax,
 	refresh: function() {
@@ -1237,108 +1403,5 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 		Client.fyi.kato('Η τσόχα επανατοθετήθηκε σε σταθερή θέση!');
 		Arena.partida.flags.amolimeni = 0;
 		this.pbuttonPanelGet().bpanelRefresh();
-	},
-}));
-
-Arena.cpanel.bpanelButtonPush(new PButton({
-	omada: 3,
-	refresh: function() {
-		var taxitita;
-
-		taxitita = parseInt(Client.session.taxitita);
-		if (isNaN(taxitita)) taxitita = 3;
-		else if (taxitita > 5) taxitita = 5;
-		else if (taxitita < 1) taxitita = 1;
-
-		img = this.pbuttonIconGetDOM();
-		img.attr({
-			src: 'ikona/panel/taxitita/speed' + taxitita + '.png',
-			title: Arena.partida.taxititaTitlosGet(taxitita),
-		});
-	},
-	click: function(e) {
-		var taxitita;
-
-		taxitita = parseInt(Client.session.taxitita);
-		if (isNaN(taxitita)) taxitita = 3;
-		else if (taxitita > 5) taxitita = 5;
-		else if (taxitita < 1) taxitita = 1;
-		if (++taxitita > 5) taxitita = 1;
-		Client.session.taxitita = taxitita;
-		this.pbuttonPanelGet().bpanelRefresh();
-		Client.ajaxService('misc/setCookie.php', 'tag=taxitita', 'val=' + Client.session.taxitita);
-		Client.fyi.kato('Ταχύτητα κίνησης φύλλων: <span class="ble entona">' +
-			Arena.partida.taxititaTitlosGet(taxitita) + '</span>');
-	},
-}));
-
-Arena.cpanel.bpanelButtonPush(Arena.paraskinio.button = new PButton({
-	omada: Arena.cpanel.omadaMax,
-	img: 'paraskinio.png',
-	title: 'Αλλαγή παρασκηνίου',
-	click: function(e) {
-		Arena.paraskinio.open();
-	},
-}));
-Arena.paraskinio.button = Arena.paraskinio.button.pbuttonGetDOM();
-
-Arena.cpanel.bpanelButtonPush(new PButton({
-	omada: Arena.cpanel.omadaMax,
-	img: 'kinito.png',
-	refresh: function() {
-		var img;
-
-		img = this.pbuttonIconGetDOM();
-		if (Client.session.kinito) img.css('opacity', 0.5).attr({
-			title: 'Ενεργοποίηση πληκτρολογίου αφής',
-		});
-		else img.css('opacity', '').attr({
-			title: 'Απενεργοποίηση πληκτρολογίου αφής',
-		});
-	},
-	click: function(e) {
-		if (Client.session.kinito) {
-			delete Client.session.kinito;
-			params = '';
-		}
-		else {
-			Client.session.kinito = 1;
-			params = 'energo=1';
-		}
-
-		this.refresh();
-		Client.ajaxService('misc/kinito.php', params).
-		done(function(rsp) {
-			Client.fyi.epano(rsp);
-		}).
-		fail(function(err) {
-			Client.skiserFail(err);
-		});
-	},
-}));
-
-Arena.cpanel.bpanelButtonPush(new PButton({
-	omada: Arena.cpanel.omadaMax,
-	img: 'entasi.png',
-	title: 'Ένταση ήχου: ' + Client.session.entasi,
-	click: function(e) {
-		switch (Client.session.entasi) {
-		case 'ΚΑΝΟΝΙΚΗ':
-			Client.session.entasi = 'ΔΥΝΑΤΗ';
-			break;
-		case 'ΔΥΝΑΤΗ':
-			Client.session.entasi = 'ΣΙΩΠΗΛΟ';
-			break;
-		case 'ΣΙΩΠΗΛΟ':
-			Client.session.entasi = 'ΧΑΜΗΛΗ';
-			break;
-		default:
-			Client.session.entasi = 'ΚΑΝΟΝΙΚΗ';
-			break;
-		}
-		this.pbuttonGetDOM().attr('title', 'Ένταση ήχου: ' + Client.session.entasi);
-		Client.fyi.pano('Ένταση ήχου: ' + Client.session.entasi);
-		Client.sound.beep();
-		Client.ajaxService('misc/setCookie.php', 'tag=entasi', 'val=' + Client.session.entasi);
 	},
 }));
