@@ -551,11 +551,13 @@ Trapezi.prototype.trapeziNeaDianomi = function(conn, success, fail) {
 };
 
 Trapezi.prototype.trapeziNeaDianomi2 = function(conn, dianomi, success, fail) {
-	var trapezi = this, dianomiKodikos, idos, data, query;
+	var trapezi = this, dianomiKodikos, idos, trapoula, data, query;
 
 	dianomiKodikos = dianomi.dianomiKodikosGet();
 	idos = 'ΔΙΑΝΟΜΗ';
-	data = (new Trapoula()).trapoulaAnakatema().trapoulaXartosiaGet().xartosia2string();
+	trapoula = (new Trapoula()).trapoulaAnakatema().trapoulaXartosiaGet();
+	this.trapeziEpidotisi(trapoula);
+	data = trapoula.xartosia2string();
 
 	query = "INSERT INTO `energia` (`dianomi`, `pektis`, `idos`, `data`) VALUES (" +
 		dianomiKodikos + ", " + dianomi.dianomiDealerGet() + ", " +
@@ -575,6 +577,160 @@ Trapezi.prototype.trapeziNeaDianomi2 = function(conn, dianomi, success, fail) {
 	});
 
 	return this;
+};
+
+Trapezi.prototype.trapeziEpidotisi = function(trapoula) {
+	var tixeros, pektis, asos, asosCount, rigas, rigasCount, xromaCount,
+		fila, i, filo, xroma, makriCount, makriXroma,
+		apo, eos, limo, orio, alagi, vima;
+
+	// Επιλέγουμε στην τύχη έναν από τους παίκτες του τραπεζιού.
+
+	tixeros = (Globals.random() % Prefadoros.thesiMax) + 1;
+	pektis = this.trapeziPektisGet(tixeros);
+	if (!pektis) return;
+
+	// Εντοπίζουμε τον παίκτη στο σκηνικό και αν δεν είναι επιδοτούμενος
+	// αφήνουμε τα φύλλα ως έχουν.
+
+	pektis = Server.skiniko.skinikoPektisGet(pektis);
+	if (!pektis) return;
+	if (pektis.pektisOxiEpidotisi()) return;
+
+	// Θα καταμετρήσουμε τους άσους, τους ρηγάδες και τη χρωματική κατανομή
+	// των φύλλων του επιδοτουμένου.
+
+	asos = {};
+	asosCount = 0;
+
+	rigas = {};
+	rigasCount = 0;
+
+	xromaCount = {
+		'S': 0,
+		'C': 0,
+		'D': 0,
+		'H': 0,
+	};
+
+	fila = trapoula.xartosiaXartosia((tixeros - 1) * 10, 10).xartosiaFilaGet();
+	for (i = 0; i < fila.length; i++) {
+		filo = fila[i];
+
+		xroma = filo.filoXromaGet();
+		xromaCount[xroma]++;
+
+		switch (filo.filoAxiaGet()) {
+		case 'A':
+			asos[xroma] = true;
+			asosCount++;
+			break;
+		case 'K':
+			rigas[xroma] = true;
+			rigasCount++;
+			break;
+		}
+	}
+
+	// Εντοπίζουμε το μακρύ χρώμα του επιδοτουμένου με σκοπό να το ενισχύσουμε
+	// περαιτέρω αργότερα.
+
+	makriCount = 0;
+
+	for (xroma in xromaCount) {
+		if (xromaCount[xroma] <= makriCount)
+		continue;
+
+		makriXroma = xroma;
+		makriCount = xromaCount[xroma];
+	}
+
+	// Θα διατρέξουμε όλα τα φύλλα της τράπουλας και θα επιχειρήσουμε εναλλαγές
+	// με βολικά φύλλα.
+
+	fila = trapoula.xartosiaFilaGet();
+
+	// Τα όρια "apo" και "eos" είναι το πρώτο φύλλο του επιδοτουμένου και το φύλλο
+	// μετά το τελευταίο του επιδοτουμένου.
+
+	apo = (tixeros - 1) * 10;
+	eos = apo + 10;
+
+	// Στο array "limo" θα τοποθετήσουμε δείκτες από τα λιμά φύλλα του επιδοτουμένου
+	// τα οποία αργότερα θα αλλάξουμε με βολικότερα φύλλα. Ωστόσο, περιορίζουμε το
+	// πλήθος των φύλλων που θα αλλαχθούν σε κάποιο τυχαίο νούμερο από 2 έως 4 φύλλα,
+	// προκειμένου η επιδότηση να μην είναι υπερβολική.
+
+	limo = [];
+	orio = Globals.random(2, 4);
+
+	for (i = apo; i < eos; i++) {
+		filo = fila[i];
+
+		// Εξαιρούμε τα φύλλα από το μακρύ χρώμα ώστε να μην τα αλλάξουμε.
+
+		if (filo.filoXromaGet() === makriXroma)
+		continue;
+
+		// Εξαιρούμε, επίσης, άσους και ρηγάδες.
+
+		switch (filo.filoAxiaGet()) {
+		case 'A':
+		case 'K':
+			continue;
+		}
+
+		// Αν τα λιμά που έχουμε ήδη επιλέξει είναι αρκετά διακόπτουμε τη
+		// διαδικασία επιλογής περαιτέρω λιμών φύλλων.
+
+		if (limo.push(i) >= orio)
+		break;
+	}
+
+	// Θα διατρέξουμε τώρα τα φύλλα της τράπουλας εκτός των φύλλων του επιδοτουμένου
+	// προκειμένου να αλλάξουμε με βολικότερα φύλλα τα λιμά που έχουμε επιλέξει.
+	// Η φορά με την οποία θα διατρέξουμε τα φύλλα επιλέγεται στην τύχη, ώστε να
+	// μην αδικείται περισσότερο ένας εκ των δύο ήδη αδικημένων παικτών.
+
+	if (Globals.random() % 2) {
+		alagi = 0;
+		vima = 1;
+	}
+	else {
+		alagi = fila.length - 1;
+		vima = -1;
+	}
+
+	for (i = 0; (i < fila.length) && (limo.length > 0); i++, alagi += vima) {
+		if ((alagi >= apo) && (alagi < eos))
+		continue;
+
+		filo = fila[alagi];
+		xroma = filo.filoXromaGet();
+
+		if ((xroma === makriXroma) && (makriCount < 6)) {
+			trapoula.xartosiaEnalagiFila(limo.pop(), alagi);
+			makriCount++;
+			continue;
+		}
+
+		switch (filo.filoAxiaGet()) {
+		case 'A':
+			if (asosCount < 3) {
+				trapoula.xartosiaEnalagiFila(limo.pop(), alagi);
+				asosCount++;
+			}
+			break;
+		case 'K':
+			if (rigasCount < 3) {
+				trapoula.xartosiaEnalagiFila(limo.pop(), alagi);
+				rigasCount++;
+			}
+			break;
+		}
+	}
+
+	console.log(pektis.pektisLoginGet() + ': επιδότηση: ' + orio + ' φύλλα');
 };
 
 Trapezi.prototype.trapeziNeaDianomi3 = function(conn, dianomi, energia, callback) {

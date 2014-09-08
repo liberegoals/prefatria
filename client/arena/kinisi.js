@@ -773,11 +773,16 @@ Skiniko.prototype.kinisiPostPeparamSetΚΑΤΑΣΤΑΣΗ = function(data, pektis
 };
 
 Skiniko.prototype.kinisiPostPeparamSetΕΠΙΔΟΤΗΣΗ = function(data, pektis) {
+	var thesi;
+
 	Arena.cpanel.bpanelButtonGet('epidotisiOn').pbuttonDisplay();
 	Arena.cpanel.bpanelButtonGet('epidotisiOff').pbuttonDisplay();
-	if (Arena.ego.oxiTrapezi()) return this;
+	if (Arena.ego.oxiPektis()) return this;
 
 	Arena.partida.dataPanoRefreshDOM();
+	thesi = Arena.ego.trapezi.trapeziThesiPekti(data.pektis);
+	if (thesi) Arena.partida.pektisRefreshDOM(thesi);
+
 	return this;
 };
 

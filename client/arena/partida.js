@@ -408,7 +408,7 @@ Arena.partida.dataPanoRefreshDOM = function() {
 		title: 'Παίζεται το πάσο',
 	}));
 
-	if (Arena.ego.isEpidotisi())
+	if (Arena.ego.isEpidotisi() && Arena.ego.isPektis())
 	Arena.partida.optionsDOM.append($('<img>').addClass('tsoxaOption').attr({
 		src: 'ikona/panel/epidotisiOff.png',
 		title: 'Επίδομα ανεργίας',
@@ -720,26 +720,33 @@ Arena.partida.profinfoIconRefreshDOM = function(login, dom) {
 	pektis = Arena.skiniko.skinikoPektisGet(login);
 	if (!pektis) return Arena.partida;
 
-	ikonidio = 'thamonas.png';
+	ikonidio = 'ikona/axioma/thamonas.png';
 	titlos = null;
 
 	if (Arena.ego.isDiaxiristis()) {
-		switch (titlos = pektis.pektisAxiomaGet()) {
-		case 'ΠΡΟΕΔΡΟΣ':
-			ikonidio = 'proedros.png';
-			break;
-		case 'ADMINISTRATOR':
-			ikonidio = 'administrator.png';
-			break;
-		case 'ΔΙΑΧΕΙΡΙΣΤΗΣ':
-			ikonidio = 'diaxiristis.png';
-			break;
-		case 'ΕΠΟΠΤΗΣ':
-			ikonidio = 'epoptis.png';
-			break;
-		case 'VIP':
-			ikonidio = 'vip.png';
-			break;
+		if (pektis.pektisIsEpidotisi()) {
+			ikonidio = 'ikona/panel/epidotisiOff.png';
+			titlos = 'Επιδοτούμενος';
+		}
+
+		else {
+			switch (titlos = pektis.pektisAxiomaGet()) {
+			case 'ΠΡΟΕΔΡΟΣ':
+				ikonidio = 'ikona/axioma/proedros.png';
+				break;
+			case 'ADMINISTRATOR':
+				ikonidio = 'ikona/axioma/administrator.png';
+				break;
+			case 'ΔΙΑΧΕΙΡΙΣΤΗΣ':
+				ikonidio = 'ikona/axioma/diaxiristis.png';
+				break;
+			case 'ΕΠΟΠΤΗΣ':
+				ikonidio = 'ikona/axioma/epoptis.png';
+				break;
+			case 'VIP':
+				ikonidio = 'ikona/axioma/vip.png';
+				break;
+			}
 		}
 	}
 
@@ -747,7 +754,7 @@ Arena.partida.profinfoIconRefreshDOM = function(login, dom) {
 	else titlos = 'Πληροφορίες προφίλ';
 
 	profinfoDom = $('<img>').addClass('tsoxaProfinfoIcon').attr({
-		src: 'ikona/axioma/' + ikonidio,
+		src: ikonidio,
 		title: titlos,
 	}).
 	on('click', function(e) {
