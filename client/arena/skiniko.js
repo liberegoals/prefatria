@@ -824,6 +824,13 @@ jQuery.fn.pektisAxiomaDOM = function(pektis) {
 		$(this).children('.pektisAxiomaIcon').remove();
 		if (!pektis) return;
 
+		if (pektis.pektisIsEpidotisi()) {
+			$(this).append($('<img>').addClass('pektisEpidotisiIcon').attr({
+				src: 'ikona/panel/epidotisiOff.png',
+				title: 'Επιδοτούμενος',
+			}));
+		}
+
 		switch (pektis.pektisAxiomaGet()) {
 		case 'ΠΡΟΕΔΡΟΣ':
 			ikonidio = 'proedros.png';

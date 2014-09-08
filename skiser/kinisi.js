@@ -271,3 +271,17 @@ Kinisi.prototype.isAdiaforiVM = function(sinedria) {
 Kinisi.prototype.isAdiaforiZP = function(sinedria) {
 	return sinedria.sinedriaOxiTrapezi(this.data.trapezi);
 };
+
+Kinisi.prototype.isAdiaforiPS = function(sinedria) {
+	var paraliptis;
+
+	if (Prefadoros.peparamIsPrivate())
+	return(sinedria.sinedriaPektisGet() != this.data.pektis)
+
+	if (Prefadoros.peparamOxiKrifi())
+	return false;
+
+	paraliptis = Server.skiniko.skinikoPektisGet(sinedria.sinedria.PektisGet());
+	if (!paraliptis) return true;
+	return(paraliptis.pektisOxiDiaxiristis());
+};

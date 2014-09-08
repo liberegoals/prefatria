@@ -29,14 +29,34 @@ Prefadoros = {
 		return !Prefadoros.isThesi(thesi);
 	},
 
+	// Οι παράμετροι στη λίστα "peparamPrivate" αφορούν μόνο τον παίκτη τής
+	// παραμέτρου και κοινοποιούνται μόνο στον συγκεκριμένο παίκτη.
+
 	peparamPrivate: {
-		'ΠΑΡΑΣΚΗΝΙΟ':	true,
-		'ΑΞΙΩΜΑ':	false,
-		'ΚΑΤΑΣΤΑΣΗ':	false,
+		'ΠΑΡΑΣΚΗΝΙΟ': true,
 	},
 
 	peparamIsPrivate: function(param) {
 		return Prefadoros.peparamPrivate[param];
+	},
+
+	// Οι παράμετροι στη λίστα "peparamKrifi" αφορούν τον παίκτης τής παραμέτρου
+	// και κοινοποιούνται μόνο στον συγκεκριμένο παίκτη και σε βαθμοφόρους από
+	// διαχειριστές και άνω.
+
+	peparamKrifi: {
+		'ΑΞΙΩΜΑ': true,
+		'DEVELOPER': true,
+		'ΑΝΕΡΓΟΣ': true,
+		'ΕΠΙΔΟΤΗΣΗ': true,
+	},
+
+	peparamIsKrifi: function(param) {
+		return Prefadoros.peparamKrifi[param];
+	},
+
+	peparamOxiKrifi: function(param) {
+		return !Prefadoros.peparamIsKrifi(param);
 	},
 };
 
