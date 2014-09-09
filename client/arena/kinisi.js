@@ -802,11 +802,21 @@ Skiniko.prototype.kinisiPostPeparamSetΕΠΙΔΟΤΗΣΗ = function(data, pektis
 
 	jql.pektisDiakritikaDOM(pektis);
 
-	Arena.cpanel.bpanelButtonGet('epidotisiOn').pbuttonDisplay();
-	Arena.cpanel.bpanelButtonGet('epidotisiOff').pbuttonDisplay();
-	if (Arena.ego.oxiPektis()) return this;
+	if (data.pektis.isEgo()) {
+		Arena.cpanel.bpanelButtonGet('epidotisiOn').pbuttonDisplay();
+		Arena.cpanel.bpanelButtonGet('epidotisiOff').pbuttonDisplay();
+	}
 
+	if (Arena.ego.oxiTrapezi())
+	return this;
+
+	// Εφόσον είμαι εγώ που αλλάζω καθεστώς επιδότησης και συμμετέχω ως παίκτης
+	// στο τραπέζι, πρέπει να ενημερώσω τη σχετική υπενθύμιση στο επάνω μέρος
+	// τής τσόχας.
+
+	if (Arena.ego.isPektis())
 	Arena.partida.dataPanoRefreshDOM();
+
 	thesi = Arena.ego.trapezi.trapeziThesiPekti(data.pektis);
 	if (thesi) Arena.partida.pektisRefreshDOM(thesi);
 
