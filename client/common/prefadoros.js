@@ -29,15 +29,15 @@ Prefadoros = {
 		return !Prefadoros.isThesi(thesi);
 	},
 
-	// Οι παράμετροι στη λίστα "peparamPrivate" αφορούν μόνο τον παίκτη τής
+	// Οι παράμετροι στη λίστα "peparamProsopiki" αφορούν μόνο τον παίκτη τής
 	// παραμέτρου και κοινοποιούνται μόνο στον συγκεκριμένο παίκτη.
 
-	peparamPrivate: {
+	peparamProsopiki: {
 		'ΠΑΡΑΣΚΗΝΙΟ': true,
 	},
 
-	peparamIsPrivate: function(param) {
-		return Prefadoros.peparamPrivate[param];
+	peparamIsProsopiki: function(param) {
+		return Prefadoros.peparamProsopiki[param];
 	},
 
 	// Οι παράμετροι στη λίστα "peparamKrifi" αφορούν τον παίκτης τής παραμέτρου

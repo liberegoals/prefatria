@@ -786,8 +786,8 @@ Sinedria.prototype.sinedriaCreateDOM = function() {
 
 	// Τα διακριτικά των αξιωμάτων είναι εμφανή μόνο στους διαχειριστές
 	// και σε ανώτερα αξιώματα. Αυτό το κάνουμε για να αποφεύγουμε τις
-	// διακρίσεις και τις συνεχείς ερωτήσεις. Δίνουμε πρόσβαση, επίσης,
-	// και σε επιδοτούμενους.
+	// διακρίσεις και τις σχετικές ερωτήσεις και παρεξηγήσεις. Δίνουμε
+	// κάποια περιορισμένη πρόσβαση, επίσης, και σε επιδοτούμενους.
 
 	if (Arena.ego.isDiaxiristis() || Arena.ego.isEpidotisi()) {
 		jql = $();
@@ -795,7 +795,7 @@ Sinedria.prototype.sinedriaCreateDOM = function() {
 		jql = jql.add(this.theatisDOM);
 		jql = jql.add(this.tsoxaTheatisDOM);
 		jql = jql.add(this.niofertosDOM);
-		jql.pektisAxiomaDOM(pektis);
+		jql.pektisDiakritikaDOM(pektis);
 	}
 
 	trapezi = this.sinedriaTrapeziGet();
@@ -814,14 +814,17 @@ Sinedria.prototype.sinedriaCreateDOM = function() {
 	return this;
 };
 
-// Η μέθοδος "pektisAxiomaDOM" εφαρμόζεται σε κουτάκια παικτών και σκοπό
+// Η μέθοδος "pektisDiakritikaDOM" εφαρμόζεται σε κουτάκια παικτών και σκοπό
 // έχει την προσάρτηση διακριτικού εικονιδίου σχετικού με το αξίωμα του
-// παίκτη.
+// παίκτη και, δευτερευόντως, άλλου εικονιδίου που αφορά στην επιδότηση.
  
-jQuery.fn.pektisAxiomaDOM = function(pektis) {
-	var ikonidio, titlos;
-
+jQuery.fn.pektisDiakritikaDOM = function(pektis) {
 	return this.each(function() {
+		var ikonidio, titlos;
+
+		// Αρχικά αφαιρούμε τα διακριτικά εικονίδια που αφορούν
+		// στο αξίωμα και σε τυχόν επιδότηση.
+
 		$(this).children('.pektisAxiomaIcon,.pektisEpidotisiIcon').remove();
 		if (!pektis) return;
 
@@ -1137,7 +1140,7 @@ Trapezi.prototype.trapeziThesiRefreshDOM = function(thesi) {
 	if (login) {
 		dom.text(login);
 		if (Arena.ego.isDiaxiristis() || Arena.ego.isEpidotisi())
-		dom.pektisAxiomaDOM(pektis);
+		dom.pektisDiakritikaDOM(pektis);
 
 		sinedria = Arena.skiniko.skinikoSinedriaGet(login);
 		if (!sinedria) dom.addClass('offline');
