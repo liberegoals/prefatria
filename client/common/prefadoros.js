@@ -58,6 +58,18 @@ Prefadoros = {
 	peparamOxiKrifi: function(param) {
 		return !Prefadoros.peparamIsKrifi(param);
 	},
+
+	// Οι παράμετροι στη λίστα "peparamAnergos" κοινοποιούνται μεταξύ των
+	// ανέργων.
+
+	peparamAnergos: {
+		'ΑΝΕΡΓΟΣ': true,
+		'ΕΠΙΔΟΤΗΣΗ': true,
+	},
+
+	peparamIsAnergos: function(param) {
+		return Prefadoros.peparamAnergos[param];
+	},
 };
 
 Prefadoros.thesiWalk = function(callback) {

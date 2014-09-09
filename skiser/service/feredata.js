@@ -41,6 +41,53 @@ Service.feredata.alages = function(nodereq) {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
 
+// Η function "feredata.peparamExeresi" δέχεται το είδος παραμέτρου παίκτη, το αν
+// ο παραλήπτης είναι ο παίκτης τής παραμέτρου, αν ο παραλήπτης είναι διαχειριστής,
+// και αν ο παραλήπτης είναι άνεργος, και επιστρέφει true εφόσον η παράμετρος πρέπει
+// να εξαιρεθεί, αλλιώς επιστρέφει false.
+
+Service.feredata.peparamExeresi = function(param, idios, diaxiristis, anergos) {
+	// Αν ο παραλήπτης είναι ο παίκτης της παραμέτρου, τότε η παράμετρος
+	// ΔΕΝ εξαιρείται.
+
+	if (idios)
+	return false;
+
+	// Ο παραλήπτης ΔΕΝ είναι ο παίκτης της παραμέτρου. Σ' αυτή την περίπτωση
+	// εξαιρούνται οι προσωπικές παράμετροι.
+
+	if (Prefadoros.peparamIsProsopiki(param))
+	return true;
+
+	// Αν ο παραλήπτης είναι διαχειριστής, δεν εξαιρείται καμία από τις μη
+	// προσωπικές παραμέτρους.
+
+	if (diaxiristis)
+	return false;
+
+	// Ο παραλήπτης δεν είναι διαχειριστής, επομένως πρέπει να φιλτράρουμε
+	// κάποιες παραμέτρους. Οι παράμετροι που δεν είναι κρυφές ΔΕΝ εξαιρούνται.
+
+	if (Prefadoros.peparamOxiKrifi(param))
+	return false;
+
+	// Πρόκειται για κρυφή παράμετρο και εδώ πρέπει να ελέγξουμε κάποιες
+	// ειδικές περιπτώσεις.
+
+	// Αν η παράμετρος είναι παράμετρος ανέργου, τότε η παράμετρος εξαιρείται
+	// όταν ο παραλήπτης δεν είναι άνεργος, αλλιώς είναι δεκτή.
+
+	if (Prefadoros.peparamIsAnergos(param))
+	return (!anergos);
+
+	// Δεν έχουμε άλλες ειδικές περιπτώσεις, επομένως η παράμετρος πρέπει
+	// να εξαιρεθεί.
+
+	return true;
+};
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
+
 // Η function "feredata.check" είναι function περιπόλου, δηλαδή καλείται σε
 // τακτά χρονικά διαστήματα και σκοπό έχει το κλείσιμο ανοικτών καναλιών
 // επικοινωνίας feredata μετά την παρέλευση εύλογου χρονικού διαστήματος,
@@ -308,14 +355,16 @@ Sinedria.prototype.feredataResetCheck = function() {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 Sinedria.prototype.feredataFreska = function() {
-	var skiniko = Server.skiniko, nodereq, paraliptis, anarmodios;
+	var skiniko = Server.skiniko, nodereq, paraliptis, diaxiristis, anergos;
 
 	nodereq = this.feredataGet();
 	if (!nodereq) return this;
 
 	paraliptis = nodereq.pektisGet();
 	if (!paraliptis) return this;
-	anarmodios = paraliptis.pektisOxiDiaxiristis();
+
+	diaxiristis = paraliptis.pektisIsDiaxiristis();
+	anergos = paraliptis.pektisIsAnergos();
 
 	nodereq.write('pektis: [\n');
 	skiniko.skinikoPektisWalk(function() {
@@ -327,14 +376,15 @@ Sinedria.prototype.feredataFreska = function() {
 
 	nodereq.write('peparam: {\n');
 	skiniko.skinikoPektisWalk(function() {
-		var pektis, xenos, hdr;
+		var pektis, idios, hdr;
 
 		pektis = this.pektisLoginGet();
-		xenos = (nodereq.loginGet() != pektis);
+		idios = (nodereq.loginGet() == pektis);
 		hdr = '\t' + pektis.json() + ': {\n\t\t';
 		this.pektisPeparamWalk(function(param, timi) {
-			if (Prefadoros.peparamIsProsopiki(param) && xenos) return;
-			if (Prefadoros.peparamIsKrifi(param) && xenos && anarmodios) return;
+			if (Service.feredata.peparamExeresi(param, idios, diaxiristis, anergos))
+			return;
+
 			nodereq.write(hdr + param.json() + ':' + timi.json() + ',\n');
 			hdr = '\t\t';
 		});

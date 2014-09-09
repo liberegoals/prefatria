@@ -204,39 +204,36 @@ Kinisi.prototype.isAdiaforiKN = function(sinedria) {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 Kinisi.prototype.prosarmogiPK = function(sinedria) {
-	var pektis, oxiDiaxiristis, data = this.data, atad;
+	var pektis;
 
-	// Αν οπαραλήπτης είναι ο ίδιος ο παίκτης, τότε δεν
-	// απαιτείται καμία προσαρμογή.
+	// Αν ο παραλήπτης είναι ο ίδιος ο παίκτης, τότε δεν απαιτείται
+	// καμία προσαρμογή.
 
 	pektis = sinedria.sinedriaPektisGet();
 	if (pektis === data.login) return false;
 
-	// Θα πρέπει να γίνει προσαρμογή ανάλογα με το αν ο
-	// παραλήπτης είναι διαχειριστής και άνω, ή όχι.
+	// Θα πρέπει να γίνει προσαρμογή ανάλογα με το αν ο παραλήπτης
+	// είναι ανώτερος αξιωαμτούχος, επιδοτούμενος κλπ.
 
 	pektis = Server.skiniko.skinikoPektisGet(pektis);
-	oxiDiaxiristis = pektis.pektisOxiDiaxiristis();
+	if (!pektis) return false;
 
-	// Αρχικά ελέγχουμε αν έχουμε ήδη προσαρμόσει τα δεδομένα
-	// της ανά χείρας κίνησης για την κατηγορία του παραλήπτη.
+	if (pektis.pektisIsDiaxiristis())
+	return this.prosarmogiPKdiaxiristis(sinedria);
 
-	if (oxiDiaxiristis) {
-		if (this.hasOwnProperty('dataThamonas')) {
-			this.dataProsarmosmena = this.dataThamonas;
-			return true;
-		}
+	if (pektis.pektisIsAnergos())
+	return this.prosarmogiPKanergos(sinedria);
+
+	return this.prosarmogiPKxenos(sinedria);
+};
+
+Kinisi.prototype.prosarmogiPKdiaxiristis = function(sinedria) {
+	var data = this.data, atad;
+
+	if (this.hasOwnProperty('dataDiaxiristis')) {
+		this.dataProsarmosmena = this.dataDiaxiristis;
+		return true;
 	}
-	else {
-		if (this.hasOwnProperty('dataDiaxiristis')) {
-			this.dataProsarmosmena = this.dataDiaxiristis;
-			return true;
-		}
-	}
-
-	// Δεν βρέθηκαν έτοιμα προσαρμοσμένα δεδομένα, επομένως είναι
-	// ώρα να κάνουμε την προσαρμογή για την κατηγορία του εν λόγω
-	// παραλήπτη.
 
 	atad = {
 		login: data.login,
@@ -244,34 +241,76 @@ Kinisi.prototype.prosarmogiPK = function(sinedria) {
 		peparam: {},
 	};
 
-	// Το πρόβλημα έχει να κάνει κυρίως με τις προσωπικές παραμέτρους
-	// του παίκτη. Κάποιες από αυτές είναι προσωπικές, ενώ κάποιες
-	// άλλες είναι κρυφές.
-
 	Globals.walk(data.peparam, function(param, timi) {
-		// Οι προσωπικές παράμετροι είναι αυτές που δεν κοινοποιούνται
-		// ούτε στους ανώτερους αξιωματούχους, παρά μόνο στον ίδιο τον
-		// παίκτη.
-
-		if (Prefadoros.peparamIsProsopiki(param))
-		return;
-
-		// Υπάρχουν κάποιες παράμετροι που είναι κρυφές και αυτές οι
-		// παράμετροι κοινοποιούνται στον ίδιο τον παίκτη και σε
-		// ανώτερους αξιωματούχους.
-
-		if (Prefadoros.peparamIsKrifi(param) && oxiDiaxiristis)
-		return;
-
+		if (Prefadoros.peparamIsProsopiki(param)) return;
 		atad.peparam[param] = timi;
 	});
 
 	this.dataProsarmosmena = JSON.stringify(atad);
-	if (oxiDiaxiristis) this.dataThamonas = this.dataProsarmosmena;
-	else this.dataDiaxiristis = this.dataProsarmosmena;
-
+	this.dataDiaxiristis = this.dataProsarmosmena;
 	return true;
 };
+
+Kinisi.prototype.prosarmogiPKanergos = function(sinedria) {
+	var data = this.data, atad;
+
+	if (this.hasOwnProperty('dataAnergos')) {
+		this.dataProsarmosmena = this.dataAnergos;
+		return true;
+	}
+
+	atad = {
+		login: data.login,
+		onoma: data.onoma,
+		peparam: {},
+	};
+
+	Globals.walk(data.peparam, function(param, timi) {
+		if (Prefadoros.peparamIsProsopiki(param))
+		return;
+
+		if (Prefadoros.peparamOxiKrifi(param)) {
+			atad.peparam[param] = timi;
+			return;
+		}
+
+		if (Prefadoros.peparamIsAnergos(param)) {
+			atad.peparam[param] = timi;
+			return;
+		}
+	});
+
+	this.dataProsarmosmena = JSON.stringify(atad);
+	this.dataAnergos = this.dataProsarmosmena;
+	return true;
+};
+
+Kinisi.prototype.prosarmogiPKxenos = function(sinedria) {
+	var data = this.data, atad;
+
+	if (this.hasOwnProperty('dataXenos')) {
+		this.dataProsarmosmena = this.dataXenos;
+		return true;
+	}
+
+	atad = {
+		login: data.login,
+		onoma: data.onoma,
+		peparam: {},
+	};
+
+	Globals.walk(data.peparam, function(param, timi) {
+		if (Prefadoros.peparamIsProsopiki(param)) return;
+		if (Prefadoros.peparamISKrifi(param)) return;
+		atad.peparam[param] = timi;
+	});
+
+	this.dataProsarmosmena = JSON.stringify(atad);
+	this.dataXenos = this.dataProsarmosmena;
+	return true;
+};
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 Kinisi.prototype.isAdiaforiMV = function(sinedria) {
 	// Δεν βγάζουμε μολύβι για τον ίδιο τον παίκτη που
@@ -311,5 +350,6 @@ Kinisi.prototype.isAdiaforiPS = function(sinedria) {
 
 	paraliptis = Server.skiniko.skinikoPektisGet(sinedria.sinedria.PektisGet());
 	if (!paraliptis) return true;
+
 	return(paraliptis.pektisOxiDiaxiristis());
 };
