@@ -176,7 +176,7 @@ Funchat.listaPush(new Funchat({
 Funchat.listaPush(new Funchat({
 	img: 'anteGamithiteRe.gif',
 	platos: 200,
-	txt: 'Ε, άντε γαμηθείτε, ρε κουφάλες…',
+	txt: 'Ε, άντε γ…, ρε κουφάλες…',
 }));
 
 Funchat.listaPush(new Funchat({
@@ -188,7 +188,7 @@ Funchat.listaPush(new Funchat({
 Funchat.listaPush(new Funchat({
 	img: 'tiGamisesTinPartida.gif',
 	platos: 200,
-	txt: 'Γάμησες την παρτίδα!',
+	txt: 'Γ@μησες την παρτίδα!',
 }));
 
 Funchat.listaPush(new Funchat({

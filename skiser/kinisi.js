@@ -210,7 +210,7 @@ Kinisi.prototype.prosarmogiPK = function(sinedria) {
 	// καμία προσαρμογή.
 
 	pektis = sinedria.sinedriaPektisGet();
-	if (pektis === data.login) return false;
+	if (pektis === this.data.login) return false;
 
 	// Θα πρέπει να γίνει προσαρμογή ανάλογα με το αν ο παραλήπτης
 	// είναι ανώτερος αξιωαμτούχος, επιδοτούμενος κλπ.
