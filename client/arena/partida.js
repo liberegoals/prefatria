@@ -411,7 +411,7 @@ Arena.partida.dataPanoRefreshDOM = function() {
 	if (Arena.ego.isEpidotisi() && Arena.ego.isPektis())
 	Arena.partida.optionsDOM.append($('<img>').addClass('tsoxaOption').attr({
 		src: 'ikona/panel/epidotisiOff.png',
-		title: 'Επίδομα ανεργίας',
+		title: 'Επιδοτούμενος',
 	}));
 
 	Arena.partida.
@@ -643,11 +643,17 @@ Arena.partida.pektisRefreshDOM = function(thesi) {
 	domMain.
 	on('mouseenter', function(e) {
 		e.stopPropagation();
-		$(this).children('.tsoxaProfinfoIcon').finish().fadeIn(100);
+		$(this).children('.tsoxaProfinfoIcon').finish().fadeIn(200);
 	}).
 	on('mouseleave', function(e) {
+		var profinfoIcon;
+
 		e.stopPropagation();
-		$(this).children('.tsoxaProfinfoIcon').finish().fadeOut(200);
+		profinfoIcon = $(this).children('.tsoxaProfinfoIcon');
+		if (!profinfoIcon.length) return;
+		if (profinfoIcon.data('emfanes')) return;
+
+		profinfoIcon.finish().fadeOut(100);
 	});
 
 	if (Arena.ego.isPektis())
@@ -720,21 +726,24 @@ Arena.partida.pektisDataRefreshDOM = function(thesi, iseht, domMain, domOnoma) {
 };
 
 Arena.partida.profinfoIconRefreshDOM = function(login, dom) {
-	var pektis, ikonidio, titlos, profinfoDom;
+	var pektis, ikonidio, titlos, emfanes, profinfoDom;
 
+	dom.children('.tsoxaProfinfoIcon').remove();
 	pektis = Arena.skiniko.skinikoPektisGet(login);
 	if (!pektis) return Arena.partida;
 
 	ikonidio = 'ikona/axioma/thamonas.png';
 	titlos = null;
 
-	if (Arena.ego.isDiaxiristis()) {
+	emfanes = false;
+	if (Arena.ego.isDiaxiristis() || Arena.ego.isAnergos()) {
 		if (pektis.pektisIsEpidotisi()) {
 			ikonidio = 'ikona/panel/epidotisiOff.png';
 			titlos = 'Επιδοτούμενος';
+			emfanes = true;
 		}
 
-		else {
+		else if (Arena.ego.isDiaxiristis()) {
 			switch (titlos = pektis.pektisAxiomaGet()) {
 			case 'ΠΡΟΕΔΡΟΣ':
 				ikonidio = 'ikona/axioma/proedros.png';
@@ -765,6 +774,9 @@ Arena.partida.profinfoIconRefreshDOM = function(login, dom) {
 	on('click', function(e) {
 		pektis.pektisFormaPopupDOM(e);
 	});
+
+	if (emfanes)
+	profinfoDom.css('display', 'block').data('emfanes', true);
 
 	dom.append(profinfoDom);
 	return Arena.partida;

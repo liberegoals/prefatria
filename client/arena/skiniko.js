@@ -787,9 +787,9 @@ Sinedria.prototype.sinedriaCreateDOM = function() {
 	// Τα διακριτικά των αξιωμάτων είναι εμφανή μόνο στους διαχειριστές
 	// και σε ανώτερα αξιώματα. Αυτό το κάνουμε για να αποφεύγουμε τις
 	// διακρίσεις και τις σχετικές ερωτήσεις και παρεξηγήσεις. Δίνουμε
-	// κάποια περιορισμένη πρόσβαση, επίσης, και σε επιδοτούμενους.
+	// κάποια περιορισμένη πρόσβαση και στους ανέργους.
 
-	if (Arena.ego.isDiaxiristis() || Arena.ego.isEpidotisi()) {
+	if (Arena.ego.isDiaxiristis() || Arena.ego.isAnergos()) {
 		jql = $();
 		jql = jql.add(this.rebelosDOM);
 		jql = jql.add(this.theatisDOM);
@@ -1139,7 +1139,7 @@ Trapezi.prototype.trapeziThesiRefreshDOM = function(thesi) {
 
 	if (login) {
 		dom.text(login);
-		if (Arena.ego.isDiaxiristis() || Arena.ego.isEpidotisi())
+		if (Arena.ego.isDiaxiristis() || Arena.ego.isAnergos())
 		dom.pektisDiakritikaDOM(pektis);
 
 		sinedria = Arena.skiniko.skinikoSinedriaGet(login);
