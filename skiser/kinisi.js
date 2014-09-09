@@ -204,11 +204,39 @@ Kinisi.prototype.isAdiaforiKN = function(sinedria) {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 Kinisi.prototype.prosarmogiPK = function(sinedria) {
-	var skiniko = Server.skiniko, data = this.data, atad;
+	var pektis, oxiDiaxiristis, data = this.data, atad;
 
-	if (sinedria.sinedriaPektisGet() === this.data.login) return false;
+	// Αν οπαραλήπτης είναι ο ίδιος ο παίκτης, τότε δεν
+	// απαιτείται καμία προσαρμογή.
 
-	if (this.hasOwnProperty('dataProsarmosmena')) return true;
+	pektis = sinedria.sinedriaPektisGet();
+	if (pektis === data.login) return false;
+
+	// Θα πρέπει να γίνει προσαρμογή ανάλογα με το αν ο
+	// παραλήπτης είναι διαχειριστής και άνω, ή όχι.
+
+	pektis = Server.skiniko.skinikoPektisGet(pektis);
+	oxiDiaxiristis = pektis.pektisOxiDiaxiristis();
+
+	// Αρχικά ελέγχουμε αν έχουμε ήδη προσαρμόσει τα δεδομένα
+	// της ανά χείρας κίνησης για την κατηγορία του παραλήπτη.
+
+	if (oxiDiaxiristis) {
+		if (this.hasOwnProperty('dataThamonas')) {
+			this.dataProsarmosmena = this.dataThamonas;
+			return true;
+		}
+	}
+	else {
+		if (this.hasOwnProperty('dataDiaxiristis')) {
+			this.dataProsarmosmena = this.dataDiaxiristis;
+			return true;
+		}
+	}
+
+	// Δεν βρέθηκαν έτοιμα προσαρμοσμένα δεδομένα, επομένως είναι
+	// ώρα να κάνουμε την προσαρμογή για την κατηγορία του εν λόγω
+	// παραλήπτη.
 
 	atad = {
 		login: data.login,
@@ -216,31 +244,31 @@ Kinisi.prototype.prosarmogiPK = function(sinedria) {
 		peparam: {},
 	};
 
+	// Το πρόβλημα έχει να κάνει κυρίως με τις προσωπικές παραμέτρους
+	// του παίκτη. Κάποιες από αυτές είναι προσωπικές, ενώ κάποιες
+	// άλλες είναι κρυφές.
+
 	Globals.walk(data.peparam, function(param, timi) {
-		if (Prefadoros.peparamIsPrivate(param)) return;
+		// Οι προσωπικές παράμετροι είναι αυτές που δεν κοινοποιούνται
+		// ούτε στους ανώτερους αξιωματούχους, παρά μόνο στον ίδιο τον
+		// παίκτη.
+
+		if (Prefadoros.peparamIsProsopiki(param))
+		return;
+
+		// Υπάρχουν κάποιες παράμετροι που είναι κρυφές και αυτές οι
+		// παράμετροι κοινοποιούνται στον ίδιο τον παίκτη και σε
+		// ανώτερους αξιωματούχους.
+
+		if (Prefadoros.peparamIsKrifi(param) && oxiDiaxiristis)
+		return;
+
 		atad.peparam[param] = timi;
 	});
 
 	this.dataProsarmosmena = JSON.stringify(atad);
-	return true;
-};
-
-Kinisi.prototype.prosarmogiSN = function(sinedria) {
-	var skiniko = Server.skiniko, pektis;
-
-return false;
-	if (sinedria.sinedriaPektisGet() === this.data.sinedria.pektis) return false;
-
-	pektis = skiniko.skinikoPektisGet(sinedria.sinedriaPektisGet());
-	if (pektis && pektis.pektisIsEpoptis()) return false;
-
-	if (this.hasOwnProperty('dataProsarmosmena')) return true;
-
-	this.dataProsarmosmena = JSON.stringify({
-		sinedria: {
-			pektis: this.data.sinedria.pektis,
-		},
-	});
+	if (oxiDiaxiristis) this.dataThamonas = this.dataProsarmosmena;
+	else this.dataDiaxiristis = this.dataProsarmosmena;
 
 	return true;
 };
@@ -275,7 +303,7 @@ Kinisi.prototype.isAdiaforiZP = function(sinedria) {
 Kinisi.prototype.isAdiaforiPS = function(sinedria) {
 	var paraliptis;
 
-	if (Prefadoros.peparamIsPrivate())
+	if (Prefadoros.peparamIsProsopiki())
 	return(sinedria.sinedriaPektisGet() != this.data.pektis)
 
 	if (Prefadoros.peparamOxiKrifi())

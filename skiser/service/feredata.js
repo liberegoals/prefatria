@@ -333,7 +333,7 @@ Sinedria.prototype.feredataFreska = function() {
 		xenos = (nodereq.loginGet() != pektis);
 		hdr = '\t' + pektis.json() + ': {\n\t\t';
 		this.pektisPeparamWalk(function(param, timi) {
-			if (Prefadoros.peparamIsPrivate(param) && xenos) return;
+			if (Prefadoros.peparamIsProsopiki(param) && xenos) return;
 			if (Prefadoros.peparamIsKrifi(param) && xenos && anarmodios) return;
 			nodereq.write(hdr + param.json() + ':' + timi.json() + ',\n');
 			hdr = '\t\t';

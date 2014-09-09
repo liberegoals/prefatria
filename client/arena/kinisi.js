@@ -726,7 +726,7 @@ Skiniko.prototype.processKinisiPostPS = function(data) {
 };
 
 Skiniko.prototype.kinisiPostPeparamSetΚΑΤΑΣΤΑΣΗ = function(data, pektis) {
-	var jql, sinedria;
+	var jql, sinedria, trapezi, thesi;
 
 	jql = $();
 	sinedria = this.skinikoSinedriaGet(data.pektis);
@@ -742,9 +742,14 @@ Skiniko.prototype.kinisiPostPeparamSetΚΑΤΑΣΤΑΣΗ = function(data, pektis
 		jql = jql.add(this.thesiDOM[thesi]);
 	});
 
-	if (Arena.ego.isTrapezi(trapezi)) {
+	// Αν είμαστε σε κάποιο τραπέζι και ο παίκτης που αλλάζει κατάσταση
+	// συμμετέχει ως παίκτης σ' αυτό το τραπέζι, τότε πρέπει να δείξουμε
+	// την νέα κατάσταση στην περιοχή τού συγκεκριμένου παίκτη.
+
+	if (Arena.ego.isTrapezi()) {
 		thesi = Arena.ego.trapezi.trapeziThesiPekti(data.pektis);
-		if (thesi) jql = jql.add(Arena.partida['pektis' + thesi + 'DOM'].find('.tsoxaPektisMain'));
+		if (thesi)
+		jql = jql.add(Arena.partida['pektis' + Arena.ego.thesiMap(thesi) + 'DOM'].find('.tsoxaPektisMain'));
 	}
 
 	// Εφόσον ο παίκτης είναι απασχολημένος, ενημερώνουμε τα χαρακατηριστικά
@@ -758,6 +763,9 @@ Skiniko.prototype.kinisiPostPeparamSetΚΑΤΑΣΤΑΣΗ = function(data, pektis
 
 	else
 	jql.removeClass('apasxolimenos');
+
+	if (data.pektis.oxiEgo())
+	return;
 
 	// Ενημερώνουμε τα σχετικά πλήκτρα του βασικού control panel.
 
@@ -789,7 +797,7 @@ Skiniko.prototype.kinisiPostPeparamSetΕΠΙΔΟΤΗΣΗ = function(data, pektis
 		jql = jql.add(this.thesiDOM[thesi]);
 	});
 
-	jql.pektisAxiomaDOM(pektis);
+	jql.pektisDiakritikaDOM(pektis);
 
 	Arena.cpanel.bpanelButtonGet('epidotisiOn').pbuttonDisplay();
 	Arena.cpanel.bpanelButtonGet('epidotisiOff').pbuttonDisplay();

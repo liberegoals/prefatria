@@ -678,7 +678,7 @@ Arena.partida.pektisRefreshDOM = function(thesi) {
 // για τους τρεις παίκτες του τραπεζιού.
 
 Arena.partida.pektisDataRefreshDOM = function(thesi, iseht, domMain, domOnoma) {
-	var login, sinedria;
+	var login, sinedria, pektis;
 
 	if (thesi === undefined) return Arena.partida.thesiWalk(function(thesi) {
 		Arena.partida.pektisDataRefreshDOM(thesi);
@@ -689,7 +689,7 @@ Arena.partida.pektisDataRefreshDOM = function(thesi, iseht, domMain, domOnoma) {
 	if (domMain === undefined) domMain = Arena.partida['pektisMain' + iseht + 'DOM'];
 	if (domOnoma === undefined) domOnoma = Arena.partida['pektisOnoma' + iseht + 'DOM'];
 
-	domMain.removeClass('apodoxi xapodoxi offline fevgatos');
+	domMain.removeClass('apodoxi xapodoxi offline fevgatos apasxolimenos');
 	domOnoma.removeClass('fantasma tsoxaSxesiFilos tsoxaSxesiApoklismenos');
 
 	domMain.addClass(Arena.ego.trapezi.trapeziIsApodoxi(thesi) ? 'apodoxi' : 'xapodoxi');
@@ -711,6 +711,11 @@ Arena.partida.pektisDataRefreshDOM = function(thesi, iseht, domMain, domOnoma) {
 	else if (Arena.ego.isApoklismenos(login)) domOnoma.addClass('tsoxaSxesiApoklismenos');
 
 	Arena.partida.profinfoIconRefreshDOM(login, domMain);
+
+	pektis = Arena.skiniko.skinikoPektisGet(login);
+	if (!pektis) return Arena.partida;
+
+	if (pektis.pektisIsApasxolimenos()) domMain.addClass('apasxolimenos');
 	return Arena.partida;
 };
 
