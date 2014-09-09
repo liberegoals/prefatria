@@ -172,11 +172,11 @@ Pektis.prototype.pektisIsErgazomenos = function() {
 };
 
 Pektis.prototype.pektisIsEpidotisi = function() {
-	var epidotosi;
+	var epidotisi;
 
 	epidotisi = this.pektisPeparamGet('ΕΠΙΔΟΤΗΣΗ');
-	if (!epidotosi) return false;
-	return epidotosi.isNai();
+	if (!epidotisi) return false;
+	return epidotisi.isNai();
 };
 
 Pektis.prototype.pektisOxiEpidotisi = function() {
