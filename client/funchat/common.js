@@ -146,6 +146,12 @@ Funchat.listaPush(new Funchat({
 	img: 'xekardismenoEmoticon.gif',
 }));
 
+Funchat.listaPush(new Funchat({
+	img: 'gelioEmoticon.gif',
+	platos: 42,
+	txt: 'Πλάκα έχετε…',
+}));
+
 Funchat.omada++;
 
 Funchat.listaPush(new Funchat({
@@ -245,6 +251,12 @@ Funchat.listaPush(new Funchat({
 
 Funchat.listaPush(new Funchat({
 	img: 'vgika.gif',
+}));
+
+Funchat.listaPush(new Funchat({
+	img: 'snoopy.gif',
+	platos: 70,
+	txt: 'Τρέλα!',
 }));
 
 Funchat.listaPush(new Funchat({
