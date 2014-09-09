@@ -773,8 +773,7 @@ Skiniko.prototype.kinisiPostPeparamSetΚΑΤΑΣΤΑΣΗ = function(data, pektis
 };
 
 Skiniko.prototype.kinisiPostPeparamSetΕΠΙΔΟΤΗΣΗ = function(data, pektis) {
-	var thesi;
-	var jql, sinedria;
+	var jql, sinedria, thesi;
 
 	jql = $();
 	sinedria = this.skinikoSinedriaGet(data.pektis);
