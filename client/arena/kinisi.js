@@ -774,6 +774,23 @@ Skiniko.prototype.kinisiPostPeparamSetΚΑΤΑΣΤΑΣΗ = function(data, pektis
 
 Skiniko.prototype.kinisiPostPeparamSetΕΠΙΔΟΤΗΣΗ = function(data, pektis) {
 	var thesi;
+	var jql, sinedria;
+
+	jql = $();
+	sinedria = this.skinikoSinedriaGet(data.pektis);
+	if (sinedria) {
+		if (sinedria.hasOwnProperty('rebelosDOM')) jql = jql.add(sinedria.rebelosDOM);
+		if (sinedria.hasOwnProperty('theatisDOM')) jql = jql.add(sinedria.theatisDOM);
+		if (sinedria.hasOwnProperty('niofertosDOM')) jql = jql.add(sinedria.niofertosDOM);
+		if (sinedria.hasOwnProperty('tsoxaTheatisDOM')) jql = jql.add(sinedria.tsoxaTheatisDOM);
+	}
+
+	this.skinikoThesiWalk(function(thesi) {
+		if (this.trapeziPektisGet(thesi) == data.pektis)
+		jql = jql.add(this.thesiDOM[thesi]);
+	});
+
+	jql.pektisAxiomaDOM(pektis);
 
 	Arena.cpanel.bpanelButtonGet('epidotisiOn').pbuttonDisplay();
 	Arena.cpanel.bpanelButtonGet('epidotisiOff').pbuttonDisplay();

@@ -786,9 +786,10 @@ Sinedria.prototype.sinedriaCreateDOM = function() {
 
 	// Τα διακριτικά των αξιωμάτων είναι εμφανή μόνο στους διαχειριστές
 	// και σε ανώτερα αξιώματα. Αυτό το κάνουμε για να αποφεύγουμε τις
-	// διακρίσεις και τις συνεχείς ερωτήσεις.
+	// διακρίσεις και τις συνεχείς ερωτήσεις. Δίνουμε πρόσβαση, επίσης,
+	// και σε επιδοτούμενους.
 
-	if (Arena.ego.isDiaxiristis()) {
+	if (Arena.ego.isDiaxiristis() || Arena.ego.isEpidotisi()) {
 		jql = $();
 		jql = jql.add(this.rebelosDOM);
 		jql = jql.add(this.theatisDOM);
@@ -821,7 +822,7 @@ jQuery.fn.pektisAxiomaDOM = function(pektis) {
 	var ikonidio, titlos;
 
 	return this.each(function() {
-		$(this).children('.pektisAxiomaIcon').remove();
+		$(this).children('.pektisAxiomaIcon,.pektisEpidotisiIcon').remove();
 		if (!pektis) return;
 
 		if (pektis.pektisIsEpidotisi()) {
@@ -830,6 +831,9 @@ jQuery.fn.pektisAxiomaDOM = function(pektis) {
 				title: 'Επιδοτούμενος',
 			}));
 		}
+
+		if (Arena.ego.oxiDiaxiristis())
+		return;
 
 		switch (pektis.pektisAxiomaGet()) {
 		case 'ΠΡΟΕΔΡΟΣ':
@@ -1132,7 +1136,7 @@ Trapezi.prototype.trapeziThesiRefreshDOM = function(thesi) {
 
 	if (login) {
 		dom.text(login);
-		if (Arena.ego.isDiaxiristis())
+		if (Arena.ego.isDiaxiristis() || Arena.ego.isEpidotisi())
 		dom.pektisAxiomaDOM(pektis);
 
 		sinedria = Arena.skiniko.skinikoSinedriaGet(login);

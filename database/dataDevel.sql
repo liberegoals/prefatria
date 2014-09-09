@@ -46,6 +46,7 @@ UPDATE `pektis` SET `kodikos` = SHA1('xxx');
 
 INSERT INTO `peparam` (`pektis`, `param`, `timi`) VALUES
 ('aris', 'ΑΝΕΡΓΟΣ', 'ΝΑΙ'),
+('aris', 'ΕΠΙΔΟΤΗΣΗ', 'ΝΑΙ'),
 ('panos', 'ΑΝΕΡΓΟΣ', 'ΝΑΙ'),
 ('panos', 'DEVELOPER', 'ΝΑΙ'),
 ('panos', 'ΑΞΙΩΜΑ', 'ADMINISTRATOR'),
