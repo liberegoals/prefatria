@@ -301,7 +301,7 @@ Kinisi.prototype.prosarmogiPKxenos = function(sinedria) {
 
 	Globals.walk(data.peparam, function(param, timi) {
 		if (Prefadoros.peparamIsProsopiki(param)) return;
-		if (Prefadoros.peparamISKrifi(param)) return;
+		if (Prefadoros.peparamIsKrifi(param)) return;
 		atad.peparam[param] = timi;
 	});
 
