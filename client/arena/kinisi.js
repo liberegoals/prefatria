@@ -764,10 +764,13 @@ Skiniko.prototype.kinisiPostPeparamSetΚΑΤΑΣΤΑΣΗ = function(data, pektis
 	else
 	jql.removeClass('apasxolimenos');
 
+	// Αν η αλλαγή κατάστασης δεν αφορά κάποιον άλλον παίκτη, έχουμε τελειώσει.
+
 	if (data.pektis.oxiEgo())
 	return;
 
-	// Ενημερώνουμε τα σχετικά πλήκτρα του βασικού control panel.
+	// Η αλλαγή κατάστασης αφορά σε μένα, επομένως πρέπει να ενημερώσουμε
+	// τα σχετικά πλήκτρα του βασικού control panel.
 
 	Arena.cpanel.diathesimosButton.pbuttonDisplay();
 	Arena.cpanel.apasxolimenosButton.pbuttonDisplay();
