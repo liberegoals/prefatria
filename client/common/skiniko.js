@@ -157,7 +157,8 @@ Pektis.prototype.pektisOxiDeveloper = function() {
 	return !this.pektisIsDeveloper();
 };
 
-// Άνεργος είναι ο χρήστης που δικαιούται επιδότηση.
+// Άνεργος είναι ο χρήστης που δικαιούται επιδότηση. Οι άνεργοι παίκτες
+// έχουν δικαίωμα να ζητήσουν επιδότηση, ενώ οι εργαζόμενοι όχι.
 
 Pektis.prototype.pektisIsAnergos = function() {
 	var anergos;
