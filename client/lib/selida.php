@@ -211,9 +211,7 @@ class Selida {
 			</td>
 			<td style="width: 20%;">
 				<div id="ribbonCenter">
-				<?php Selida::sinefo_span_begin(); ?>
-					CENTER
-				<?php Selida::sinefo_span_end(); ?>
+					<?php Selida::ribbon_center(); ?>
 				</div>
 			</td>
 			<td style="width: 40%;">
@@ -240,6 +238,13 @@ class Selida {
 		<a target="_blank" href="https://www.facebook.com/groups/prefadoros"><img class="ribbonIcon"
 			src="<?php Globals::url("ikona/external/facebook.jpg"); ?>" /></a>
 		<?php
+	}
+
+	public static function ribbon_center() {
+		self::tab_begin();
+		?><a target="_blank" href="<?php Globals::url("copyright/index.php");
+			?>">Copyright</a><?php
+		self::tab_end();
 	}
 
 	public static function donate() {
