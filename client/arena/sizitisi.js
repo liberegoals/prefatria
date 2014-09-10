@@ -158,7 +158,7 @@ on('keyup', function(e) {
 }));
 Arena.inputTrexon = Arena.sizitisi.inputDOM;
 
-Arena.sizitisi.panel.bpanelButtonPush(new PButton({
+Arena.sizitisi.panel.bpanelButtonPush(Arena.sizitisi.panel.apostoliButton = new PButton({
 	id: 'apostoli',
 	img: 'talk.png',
 	title: 'Υποβολή σχολίου',
@@ -178,7 +178,7 @@ Arena.sizitisi.panel.bpanelButtonPush(new PButton({
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
 
-Arena.sizitisi.panel.bpanelButtonPush(new PButton({
+Arena.sizitisi.panel.bpanelButtonPush(Arena.sizitisi.panel.diagrafiButton = new PButton({
 	id: 'diagrafi',
 	img: 'ikona/misc/Xred.png',
 	title: 'Διαγραφή σχολίου',
@@ -192,12 +192,15 @@ Arena.sizitisi.panel.bpanelButtonPush(new PButton({
 				return;
 			}
 
+			Arena.sizitisi.panel.diagrafiButton.pbuttonLock();
 			Client.skiserService('sizitisiClearKafenio').
 			done(function(rsp) {
 				Client.fyi.pano(rsp);
+				Arena.sizitisi.panel.diagrafiButton.pbuttonRelease();
 			}).
 			fail(function(err) {
 				Client.skiserFail(err);
+				Arena.sizitisi.panel.diagrafiButton.pbuttonRelease();
 			});
 			return;
 		}
@@ -239,12 +242,15 @@ Arena.sizitisi.panel.bpanelButtonPush(new PButton({
 			return;
 		}
 
+		Arena.sizitisi.panel.diagrafiButton.pbuttonLock();
 		Client.skiserService('sizitisiDiagrafi', 'sxolio=' + sxolio).
 		done(function(rsp) {
 			Client.fyi.pano(rsp);
+			Arena.sizitisi.panel.diagrafiButton.pbuttonRelease();
 		}).
 		fail(function(err) {
 			Client.skiserFail(err);
+			Arena.sizitisi.panel.diagrafiButton.pbuttonRelease();
 		});
 	},
 }));
@@ -514,13 +520,16 @@ Arena.sizitisi.apostoli = function() {
 
 	Arena.sizitisi.flags.molivi = false;
 
+	Arena.sizitisi.panel.apostoliButton.pbuttonLock();
 	Client.skiserService((Arena.partidaMode() && Arena.ego.isTrapezi()) ?
 		'sizitisiPartida' : 'sizitisiKafenio', 'sxolio=' + sxolio.uri()).
 	done(function(rsp) {
 		Arena.sizitisi.inputDOM.val('');
+		Arena.sizitisi.panel.apostoliButton.pbuttonRelease();
 	}).
 	fail(function(err) {
 		Client.skiserFail(err);
+		Arena.sizitisi.panel.apostoliButton.pbuttonRelease();
 	});
 
 	return Arena;
