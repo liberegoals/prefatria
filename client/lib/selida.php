@@ -242,8 +242,8 @@ class Selida {
 
 	public static function ribbon_center() {
 		self::tab_begin();
-		?><a target="_blank" href="<?php Globals::url("copyright/index.php");
-			?>">Copyright</a><?php
+		?><a target="<?php print defined("COPYRIGHT_PAGE") ? "_self" : "_blank"; ?>"
+		href="<?php Globals::url("copyright/index.php"); ?>">Copyright</a><?php
 		self::tab_end();
 		self::tab_begin();
 		?><a target="_blank" href="https://prefablog.wordpress.com">Ιστολόγιο</a><?php
