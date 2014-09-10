@@ -135,7 +135,7 @@ PButton = function(props) {
 		panel = button.pbuttonPanelGet();
 
 		if (typeof panel.clickCommon === 'function')
-		panel.clickCommon(e);
+		panel.clickCommon(e, button);
 
 		if (typeof button.click === 'function')
 		button.click.call(button, e);
@@ -219,6 +219,29 @@ PButton.prototype.pbuttonShow = function() {
 
 PButton.prototype.pbuttonDexia = function() {
 	this.pbuttonGetDOM().addClass('panelButtonDexia');
+	return this;
+};
+
+PButton.prototype.pbuttonLock = function() {
+	var img;
+
+	if (this.lock) return this;
+	this.lock = true;
+
+	img = this.pbuttonIconGetDOM();
+	if (img) img.working(true);
+
+	return this;
+};
+
+PButton.prototype.pbuttonRelease = function() {
+	var img;
+
+	delete this.lock;
+
+	img = this.pbuttonIconGetDOM();
+	if (img) img.working(false);
+
 	return this;
 };
 
