@@ -340,16 +340,28 @@ Kinisi.prototype.isAdiaforiZP = function(sinedria) {
 };
 
 Kinisi.prototype.isAdiaforiPS = function(sinedria) {
-	var paraliptis;
+	var param, paraliptis;
 
-	if (Prefadoros.peparamIsProsopiki())
+	if (!this.data)
+	return true;
+
+	param = this.data.param;
+	if (!param) return true;
+
+	if (Prefadoros.peparamIsProsopiki(param))
 	return(sinedria.sinedriaPektisGet() != this.data.pektis)
 
-	if (Prefadoros.peparamOxiKrifi())
+	if (Prefadoros.peparamOxiKrifi(param))
 	return false;
 
-	paraliptis = Server.skiniko.skinikoPektisGet(sinedria.sinedria.PektisGet());
+	paraliptis = Server.skiniko.skinikoPektisGet(sinedria.sinedriaPektisGet());
 	if (!paraliptis) return true;
 
-	return(paraliptis.pektisOxiDiaxiristis());
+	if (paraliptis.pektisIsDiaxiristis())
+	return false;
+
+	if (Prefadoros.peparamIsAnergos(param) && paraliptis.pektisIsAnergos())
+	return false;
+
+	return true;
 };
