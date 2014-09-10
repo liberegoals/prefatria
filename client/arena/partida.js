@@ -628,7 +628,7 @@ Arena.partida.pektisRefreshDOM = function(thesi) {
 	case 'ΠΛΗΡΩΜΗ':
 		if (Arena.ego.trapezi.sdilosi[thesi]) {
 			if (Arena.ego.trapezi.sdilosi[thesi].simetoxiIsPaso())
-			domMain.addClass('tsoxaPektisEktos');
+			domMain.addClass('apoxi');
 
 			else if (Arena.ego.trapezi.sdilosi[thesi].simetoxiIsMazi())
 			domMain.append($('<img>').

@@ -632,11 +632,6 @@ body {
 	border-color: #FFD700 !important;
 }
 
-.tsoxaPektisEktos {
-	background-image: url('../ikona/endixi/ektos.png');
-	background-repeat: repeat;
-}
-
 .tsoxaPektisOptionIcon {
 	position: absolute;
 	top: -14px;
@@ -1769,6 +1764,11 @@ cursor: auto;
 
 .apasxolimenos {
 	background-image: url('../ikona/endixi/apasxolimenos.png');
+	background-repeat: repeat;
+}
+
+.apoxi {
+	background-image: url('../ikona/endixi/ektos.png');
 	background-repeat: repeat;
 }
 
