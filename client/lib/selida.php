@@ -92,7 +92,6 @@ class Selida {
 		?>
 		</head>
 		<body>
-		<div id="ixos"></div>
 		<?php
 	}
 
