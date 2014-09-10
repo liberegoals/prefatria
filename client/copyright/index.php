@@ -1,4 +1,5 @@
 <?php
+define("COPYRIGHT_PAGE", TRUE);
 require_once "../lib/selida.php";
 
 Selida::head();
