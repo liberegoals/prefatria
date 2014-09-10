@@ -245,6 +245,9 @@ class Selida {
 		?><a target="_blank" href="<?php Globals::url("copyright/index.php");
 			?>">Copyright</a><?php
 		self::tab_end();
+		self::tab_begin();
+		?><a target="_blank" href="https://prefablog.wordpress.com">Ιστολόγιο</a><?php
+		self::tab_end();
 	}
 
 	public static function donate() {
