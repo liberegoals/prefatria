@@ -16,7 +16,7 @@ body {
 }
 
 #kimeno1 {
-	top: 20px;
+	top: 24px;
 	font-size: 30px;
 	font-weight: bold;
 	color: rgb(22, 77, 66);
@@ -30,14 +30,15 @@ body {
 }
 
 #kimeno3 {
-	top: 42px;
+	top: 46px;
 	font-size: 20px;
 	font-weight: bold;
 	color: rgb(255, 223, 139)
 }
 
 #kimeno4 {
-	top: 18px;
+	top: 13px;
+	line-height: 156%;
 	font-size: 20px;
 	font-weight: bold;
 	color: rgb(255, 223, 139)

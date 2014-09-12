@@ -17,7 +17,7 @@ Diafimisi.display1 = function() {
 Diafimisi.display2 = function() {
 	Diafimisi.kimeno1DOM.finish().fadeOut(40);
 	Diafimisi.kimeno2DOM.finish().css({
-		top: '20px',
+		top: '24px',
 		left: 0,
 		opacity: 1,
 	}).fadeIn(600).animate({
