@@ -11,7 +11,7 @@ $(document).ready(function() {
 Diafimisi.display1 = function() {
 	Diafimisi.kimeno4DOM.finish().fadeOut(200);
 	Diafimisi.kimeno1DOM.finish().fadeIn();
-	setTimeout(Diafimisi.display2, 2000);
+	setTimeout(Diafimisi.display2, 3000);
 };
 
 Diafimisi.display2 = function() {
