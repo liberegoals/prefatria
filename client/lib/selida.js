@@ -993,9 +993,7 @@ Client.setup2 = function() {
 $(document).ready(function() {
 	Client.setup1();
 	Client.setup2();
-$('#fyiPano').text('pano');
-$('#fyiKato').text('kato');
-$('.fyi').css('visibility', 'visible');
+
 	// Κάθε 5 λεπτά ανανεώνουμε το session, ώστε ακόμη και αν ο παίκτης
 	// δεν κάνει καμία ενέργεια, να μην χάνεται το session cookie.
 
