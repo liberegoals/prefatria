@@ -15,11 +15,15 @@ Diafimisi.display1 = function() {
 };
 
 Diafimisi.display2 = function() {
-	Diafimisi.kimeno1DOM.finish().fadeOut(200);
+	Diafimisi.kimeno1DOM.finish().fadeOut(40);
 	Diafimisi.kimeno2DOM.finish().css({
+		top: '20px',
 		left: 0,
 		opacity: 1,
-	}).fadeIn();
+	}).fadeIn(600).animate({
+		top: '6px',
+		fontSize: '30px',
+	}, 1600);
 	setTimeout(Diafimisi.display3, 1600);
 };
 
