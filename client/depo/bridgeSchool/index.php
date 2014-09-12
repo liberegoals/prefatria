@@ -4,6 +4,7 @@
 <meta name="description" content="Μπρίτζ -- Ενημερωθείτε!" />
 <meta name="author" content="Panos I. Papadopoulos" />
 <meta name="copyright" content="Copyright by Panos Papadopoulos. All Rights Reserved." />
+<title>Μπρίτζ &mdash; Ενημερωθείτε!</title>
 <link rel="icon" type="image/png" href="favicon.ico" />
 <link rel="shortcut icon" type="image/vnd.microsoft.icon" href="favicon.ico" />
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
