@@ -1,6 +1,11 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="description" content="Μπρίτζ -- Ενημερωθείτε!" />
+<meta name="author" content="Panos I. Papadopoulos" />
+<meta name="copyright" content="Copyright by Panos Papadopoulos. All Rights Reserved." />
+<link rel="icon" type="image/png" href="favicon.ico" />
+<link rel="shortcut icon" type="image/vnd.microsoft.icon" href="favicon.ico" />
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/themes/smoothness/jquery-ui.css" />
 <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
