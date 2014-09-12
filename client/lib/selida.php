@@ -27,9 +27,9 @@ class Selida {
 		<link rel="shortcut icon" type="image/vnd.microsoft.icon" href="<?php print Globals::url("favicon.ico"); ?>" />
 		<link rel="canonical" href="http://www.prefadoros.gr" />
 		<title><?php print $titlos; ?></title>
-		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-		<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css" />
-		<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+		<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/themes/smoothness/jquery-ui.css" />
+		<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
 		<?php
 		self::stylesheet('lib/selida');
 		self::javascript('common/globals');
