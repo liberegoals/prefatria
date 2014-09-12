@@ -19,6 +19,7 @@
 </div>
 <div id="kimeno4" class="kimeno">
 Τον Οκτώβριο μαθήματα εκμάθησης σε 55 ομίλους σε όλη την Ελλάδα.
+<br />
 Ενημερωθείτε για το Μπριτζ στο
 <a target="_blank" href="http://learn.hellasbridge.org/">http://learn.hellasbridge.org</a>
 </div>
