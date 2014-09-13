@@ -63,12 +63,24 @@ Pektis.prototype.pektisOnomaGet = function() {
 	return this.onoma;
 };
 
+// Η μέθοδος "pektisPhotoSet" δέχεται ένα αρχείο εικόνας που αφορά τον παίκτη
+// και το timestamp της τροποποίησης αυτού του αρχείου εικόνας, και δημιουργεί
+// τα poperties "photo" και "photoSrc". Το όνομα του αρχείου εικόνας πρέπει να
+// είναι της μορφής "l/file", όπου "l" είναι το πρώτο γράμμα από το login name
+// του παίκτη, και "file" είναι το όνομα του αρχείου αποτελούμενο από το login
+// name του παίκτη και παρέκταμα "png", ή ".jpg", ή ".gif". Το modification
+// timestamp είναι σε seconds.
+
 Pektis.prototype.pektisPhotoSet = function(photo, mtime) {
 	delete this.photo;
-	delete this.photoTS;
+	delete this.photoSrc;
 
-	if (photo) this.photo = photo;
-	if (mtime) this.photoTS = mtime;
+	if (!photo)
+	return this;
+
+	this.photo = photo;
+	this.photoSrc = photo;
+	if (mtime) this.photoSrc += '?mt=' + mtime;
 
 	return this;
 };
@@ -78,15 +90,7 @@ Pektis.prototype.pektisPhotoGet = function() {
 };
 
 Pektis.prototype.pektisPhotoSrcGet = function() {
-	var src;
-
-	src = this.pektisPhotoGet();
-	if (!src) return null;
-
-	if (this.photoTS)
-	src += '?mt=' + this.photoTS;
-
-	return src;
+	return this.photoSrc;
 };
 
 Pektis.prototype.pektisPollSet = function(ts) {

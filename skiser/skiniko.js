@@ -415,14 +415,20 @@ Skiniko.prototype.stisimoSxesi = function(conn) {
 		return this;
 	}
 
-	delete this.sitkep;
 	conn.free();
+	delete this.sitkep;
+
+	Log.print('Φωτογραφίες παικτών');
 	this.stisimoPhoto();
+
 	return this;
 };
 
+// Η function "stisimoPhoto" εμπλουτίζει τους παίκτες με τυχόν αρχεία εικόνας
+// που τους αφορούν ως φωτογραφίες προφίλ που έχουν ανεβάσει οι ίδιοι.
+
 Skiniko.prototype.stisimoPhoto = function() {
-	var skiniko = this, pektis;
+	var login, skiniko = this, pektis;
 
 	for (login in this.sitkep2) {
 		delete this.sitkep2[login];
@@ -477,9 +483,21 @@ Skiniko.prototype.stisimoTelos = function() {
 };
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Η μέθοδος "pektisSeekPhoto" εντοπίζει τυχόν αρχείο εικόνας προφίλ του ανά
+// χείρας παίκτη και θέτει ανάλογα τα σχετικά properties. Η διαδικασία είναι
+// ασύγχρονη, μπορούμε όμως τελειώνοντας να καλέσουμε callback function που
+// περνάμε ως παράμετρο.
 
 Pektis.prototype.pektisSeekPhoto = function(callback) {
-	this.pektisSeekPhoto2(this.pektisLoginGet(), callback, {
+	var login;
+
+	login = this.pektisLoginGet();
+	if (!login) {
+		this.pektisPhotoSet();
+		return this;
+	}
+
+	this.pektisSeekPhoto2(login.substr(0, 1) + '/' + login + '.', callback, {
 		png: true,
 		jpg: true,
 		gif: true,
@@ -488,17 +506,17 @@ Pektis.prototype.pektisSeekPhoto = function(callback) {
 	return this;
 }
 
-Pektis.prototype.pektisSeekPhoto2 = function(login, callback, tlist) {
-	var pektis = this, tipos, candi;
+Pektis.prototype.pektisSeekPhoto2 = function(basi, callback, tlist) {
+	var pektis = this, tipos, photo;
 
 	for (tipos in tlist) {
 		delete tlist[tipos];
-		candi = login.substr(0, 1) + '/' + login + '.' + tipos;
-		FS.stat('../client/photo/' + candi, function(err, stats) {
+		photo = basi + tipos;
+		FS.stat('../client/photo/' + photo, function(err, stats) {
 			if (err)
-			return pektis.pektisSeekPhoto2(login, callback, tlist);
+			return pektis.pektisSeekPhoto2(basi, callback, tlist);
 
-			pektis.pektisPhotoSet(candi, parseInt(stats.mtime.getTime() / 1000));
+			pektis.pektisPhotoSet(photo, parseInt(stats.mtime.getTime() / 1000));
 			if (callback) callback();
 		});
 
