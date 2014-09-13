@@ -511,6 +511,9 @@ Arena.funchat.anigma = function() {
 };
 
 Arena.funchat.klisimo = function() {
+	if (Arena.funchat.isKlisto())
+	return Arena.funchat;
+
 	Arena.funchat.win.close();
 	Arena.funchat.win = null;
 

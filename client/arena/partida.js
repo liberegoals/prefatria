@@ -647,24 +647,16 @@ Arena.partida.pektisRefreshDOM = function(thesi) {
 	on('mouseenter', function(e) {
 		e.stopPropagation();
 		Arena.partida.thesiCandi = thesi;
-		$(this).children('.tsoxaProfinfoIcon').finish().fadeIn(200);
 		$(this).children('.tsoxaPektisPhoto').finish().animate({
 			opacity: 1,
 		}, 200);
 	}).
 	on('mouseleave', function(e) {
-		var profinfoIcon;
-
 		e.stopPropagation();
 		delete Arena.partida.thesiCandi;
 		$(this).children('.tsoxaPektisPhoto').finish().animate({
 			opacity: Arena.partida.pektisPhotoOpacity,
 		}, 100);
-		profinfoIcon = $(this).children('.tsoxaProfinfoIcon');
-		if (!profinfoIcon.length) return;
-		if (profinfoIcon.data('emfanes')) return;
-
-		profinfoIcon.finish().fadeOut(100);
 	});
 
 	if (Arena.ego.isPektis())
@@ -786,12 +778,20 @@ Arena.partida.profinfoIconRefreshDOM = function(login, dom) {
 		src: ikonidio,
 		title: titlos,
 	}).
+	on('mouseenter', function() {
+		if ($(this).data('emfanes')) return;
+		$(this).finish().fadeTo(100, 1.0);
+	}).
+	on('mouseleave', function() {
+		if ($(this).data('emfanes')) return;
+		$(this).finish().fadeTo(100, 0.01);
+	}).
 	on('click', function(e) {
 		pektis.pektisFormaPopupDOM(e);
 	});
 
 	if (emfanes)
-	profinfoDom.css('display', 'block').data('emfanes', true);
+	profinfoDom.css('opacity', 1).data('emfanes', true);
 
 	dom.append(profinfoDom);
 	return Arena.partida;
