@@ -416,21 +416,34 @@ Skiniko.prototype.stisimoSxesi = function(conn) {
 	}
 
 	delete this.sitkep;
-	this.stisimoTelos(conn);
+	conn.free();
+	this.stisimoPhoto();
+	return this;
+};
+
+Skiniko.prototype.stisimoPhoto = function() {
+	var skiniko = this, pektis;
+
+	for (login in this.sitkep2) {
+		delete this.sitkep2[login];
+		pektis = this.skinikoPektisGet(login);
+		if (!pektis) continue;
+
+		pektis.pektisSeekPhoto(function() {
+			skiniko.stisimoPhoto();
+		});
+		return;
+
+	}
+
+	delete this.sitkep2
+	this.stisimoTelos();
 	return this;
 };
 
 // Ακολουθεί η τελευταία μέθοδος που καλείται κατά το στήσιμο του σκηνικού.
 
-Skiniko.prototype.stisimoTelos = function(conn) {
-	// Δεν χρειαζόμαστε πλέον τη σύνδεσή μας με την database.
-
-	conn.free();
-
-	// Φορτώνουμε στοιχεία φωτογραφιών για τους παίκτες.
-
-	this.stisimoPhoto();
-
+Skiniko.prototype.stisimoTelos = function() {
 	// Κάνουμε replay όλες τις παρτίδες με βάση τα στοιχεία που έχουμε
 	// ήδη φορτώσει.
 
@@ -463,45 +476,37 @@ Skiniko.prototype.stisimoTelos = function(conn) {
 	return this;
 };
 
-Skiniko.photoTipos = {
-	png: true,
-	jpg: true,
-	gif: true,
-};
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-Skiniko.prototype.stisimoPhoto = function() {
-	var basi, pdir, login, pektis, tipos, candi, stats;
+Pektis.prototype.pektisSeekPhoto = function(callback) {
+	this.pektisSeekPhoto2(this.pektisLoginGet(), callback, {
+		png: true,
+		jpg: true,
+		gif: true,
+	});
 
-	basi = '../client/';
-	pdir = 'photo';
-	Log.print('Loading photo data');
-	try {
-		FS.statSync(basi + pdir);
-	} catch (e) {
-		console.error(pdir + ':photo directory not found');
-		delete this.sitkep2;
+	return this;
+}
+
+Pektis.prototype.pektisSeekPhoto2 = function(login, callback, tlist) {
+	var pektis = this, tipos, candi;
+
+	for (tipos in tlist) {
+		delete tlist[tipos];
+		candi = login.substr(0, 1) + '/' + login + '.' + tipos;
+		FS.stat('../client/photo/' + candi, function(err, stats) {
+			if (err)
+			return pektis.pektisSeekPhoto2(login, callback, tlist);
+
+			pektis.pektisPhotoSet(candi, parseInt(stats.mtime.getTime() / 1000));
+			if (callback) callback();
+		});
+
 		return this;
 	}
 
-	for (login in this.sitkep2) {
-		pektis = this.skinikoPektisGet(login);
-		if (!pektis) continue;
-
-		for (tipos in Skiniko.photoTipos) {
-			candi = login.substr(0, 1) + '/' + login + '.' + tipos;
-			try {
-				stats = FS.statSync(basi + pdir + '/' + candi);
-			} catch (e) {
-				continue;
-			}
-
-			pektis.pektisPhotoSet(candi + '?mt=' + parseInt(stats.mtime.getTime() / 1000));
-			break;
-		}
-
-	}
-
-	delete this.sitkep2
+	this.pektisPhotoSet();
+	if (callback) callback();
 	return this;
 };
 

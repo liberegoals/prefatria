@@ -41,36 +41,12 @@ Service.sinedria.checkin = function(nodereq) {
 
 		// Εντοπίζουμε τυχόν φωτογραφία του παίκτη και εντάσσουμε το όνομα του
 		// σχετικού image file μαζί με τον χρόνο τελευταίας τροποποίησης, ως
-		// property στον παίκτη.
+		// properties του παίκτη.
 
-		Service.sinedria.pektisPhoto(nodereq, conn, pektis);
-	});
-};
-
-Service.sinedria.pektisPhoto = function(nodereq, conn, pektis, tlist) {
-	var basiko, tipos, candi, stats, photo;
-
-	if (tlist === undefined) tlist = {
-		png: true,
-		jpg: true,
-		gif: true,
-	};
-
-	basiko = 'photo/' + nodereq.login.substr(0, 1) + '/' + nodereq.login;
-	for (tipos in tlist) {
-		delete tlist[tipos];
-		candi = basiko + '.' + tipos;
-		FS.stat(candi, function(err, stats) {
-			if (err)
-			return Service.sinedria.pektisPhoto(nodereq, conn, pektis, tlist);
-
-			pektis.pektisPhotoSet(candi + '?mt=' + parseInt(stats.mtime.getTime() / 1000));
+		pektis.pektisSeekPhoto(function() {
 			Service.sinedria.peparam(nodereq, conn, pektis);
 		});
-		return;
-	}
-
-	Service.sinedria.peparam(nodereq, conn, pektis);
+	});
 };
 
 Service.sinedria.peparam = function(nodereq, conn, pektis) {
@@ -87,7 +63,7 @@ Service.sinedria.peparam = function(nodereq, conn, pektis) {
 };
 
 Service.sinedria.sxesi = function(nodereq, conn, pektis) {
-	var query, login = pektis.pektisLoginGet();
+	var query, login = pektis.pektisLoginGet(), photo;
 
 	query = 'SELECT ' + Sxesi.projection + ' FROM `sxesi` WHERE `pektis` = ' + login.json();
 	conn.query(query, function(conn, rows) {
@@ -104,7 +80,9 @@ Service.sinedria.sxesi = function(nodereq, conn, pektis) {
 			peparam: pektis.peparam,
 			sxesi: pektis.sxesi,
 		};
-// TODO
+
+		photo = pektis.pektisPhotoSrcGet();
+		if (photo) kinisi.data.photo = photo;
 
 		Server.skiniko.
 		processKinisi(kinisi).
