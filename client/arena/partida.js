@@ -1,4 +1,6 @@
-Arena.partida = {};
+Arena.partida = {
+	pektisPhotoOpacity: 0.1,
+};
 
 Arena.partida.flags = {
 	// Η flag "amolimeni" δείχνει αν το DOM element της παρτίδας είναι
@@ -644,11 +646,17 @@ Arena.partida.pektisRefreshDOM = function(thesi) {
 	on('mouseenter', function(e) {
 		e.stopPropagation();
 		$(this).children('.tsoxaProfinfoIcon').finish().fadeIn(200);
+		$(this).children('.tsoxaPektisPhoto').finish().animate({
+			opacity: 1,
+		}, 200);
 	}).
 	on('mouseleave', function(e) {
 		var profinfoIcon;
 
 		e.stopPropagation();
+		$(this).children('.tsoxaPektisPhoto').finish().animate({
+			opacity: Arena.partida.pektisPhotoOpacity,
+		}, 100);
 		profinfoIcon = $(this).children('.tsoxaProfinfoIcon');
 		if (!profinfoIcon.length) return;
 		if (profinfoIcon.data('emfanes')) return;
@@ -722,7 +730,10 @@ Arena.partida.pektisDataRefreshDOM = function(thesi, iseht, domMain, domOnoma) {
 	if (!pektis) return Arena.partida;
 
 	photo = pektis.pektisPhotoGet();
-	if (photo) domMain.append($('<img>').addClass('tsoxaPektisPhoto').attr('src', 'photo/' + photo));
+	if (photo) domMain.append($('<img>').
+	addClass('tsoxaPektisPhoto').
+	css('opacity', Arena.partida.pektisPhotoOpacity).
+	attr('src', 'photo/' + photo));
 
 	Arena.partida.profinfoIconRefreshDOM(login, domMain);
 
