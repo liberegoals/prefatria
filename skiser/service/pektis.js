@@ -19,7 +19,8 @@ Service.pektis.fetch = function(nodereq) {
 	query = 'SELECT * FROM `pektis` WHERE `login` = ' + nodereq.url.login.json();
 	DB.connection().query(query, function(conn, rows) {
 		conn.free();
-		if (rows.length != 1) return nodereq.error('Δεν βρέθηκε ο παίκτης στην database');
+		if (rows.length != 1)
+		return nodereq.error('Δεν βρέθηκε ο παίκτης στην database');
 
 		pektis = new Pektis(row);
 		skiniko.skinikoPektisSet(pektis);
