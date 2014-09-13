@@ -704,6 +704,7 @@ Pektis.prototype.pektisFeredata = function() {
 	return Server.feredataFormat.call(this, {
 		login: null,
 		onoma: null,
+		photo: null,
 	});
 };
 
