@@ -646,6 +646,7 @@ Arena.partida.pektisRefreshDOM = function(thesi) {
 	domMain.
 	on('mouseenter', function(e) {
 		e.stopPropagation();
+		Arena.partida.thesiCandi = thesi;
 		$(this).children('.tsoxaProfinfoIcon').finish().fadeIn(200);
 		$(this).children('.tsoxaPektisPhoto').finish().animate({
 			opacity: 1,
@@ -655,6 +656,7 @@ Arena.partida.pektisRefreshDOM = function(thesi) {
 		var profinfoIcon;
 
 		e.stopPropagation();
+		delete Arena.partida.thesiCandi;
 		$(this).children('.tsoxaPektisPhoto').finish().animate({
 			opacity: Arena.partida.pektisPhotoOpacity,
 		}, 100);
@@ -821,7 +823,7 @@ Arena.partida.pektisPhotoRefreshDOM = function(thesi, iseht, domMain) {
 
 	domMain.append($('<img>').
 	addClass('tsoxaPektisPhoto').
-	css('opacity', Arena.partida.pektisPhotoOpacity).
+	css('opacity', thesi == Arena.partida.thesiCandi ? 1 : Arena.partida.pektisPhotoOpacity).
 	attr('src', 'photo/' + photoSrc));
 
 	return Arena.partida;
