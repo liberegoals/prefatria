@@ -641,12 +641,12 @@ body {
 }
 
 .tsoxaProfinfoIcon {
-	display: none;
 	position: absolute;
 	right: -14px;
 	top: -4px;
 	width: 44px;
 	cursor: pointer;
+	opacity: 0;
 }
 
 .tsoxaPektisPhoto {
