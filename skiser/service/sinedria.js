@@ -63,7 +63,7 @@ Service.sinedria.peparam = function(nodereq, conn, pektis) {
 };
 
 Service.sinedria.sxesi = function(nodereq, conn, pektis) {
-	var query, login = pektis.pektisLoginGet(), photo;
+	var query, login = pektis.pektisLoginGet(), photoSrc;
 
 	query = 'SELECT ' + Sxesi.projection + ' FROM `sxesi` WHERE `pektis` = ' + login.json();
 	conn.query(query, function(conn, rows) {
@@ -81,8 +81,8 @@ Service.sinedria.sxesi = function(nodereq, conn, pektis) {
 			sxesi: pektis.sxesi,
 		};
 
-		photo = pektis.pektisPhotoSrcGet();
-		if (photo) kinisi.data.photo = photo;
+		photoSrc = pektis.pektisPhotoSrcGet();
+		if (photoSrc) kinisi.data.photoSrc = photoSrc;
 
 		Server.skiniko.
 		processKinisi(kinisi).

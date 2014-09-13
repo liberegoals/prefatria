@@ -238,6 +238,7 @@ Kinisi.prototype.prosarmogiPKdiaxiristis = function(sinedria) {
 	atad = {
 		login: data.login,
 		onoma: data.onoma,
+		photoSrc: data.photoSrc,
 		peparam: {},
 	};
 
@@ -262,6 +263,7 @@ Kinisi.prototype.prosarmogiPKanergos = function(sinedria) {
 	atad = {
 		login: data.login,
 		onoma: data.onoma,
+		photoSrc: data.photoSrc,
 		peparam: {},
 	};
 
@@ -296,6 +298,7 @@ Kinisi.prototype.prosarmogiPKxenos = function(sinedria) {
 	atad = {
 		login: data.login,
 		onoma: data.onoma,
+		photoSrc: data.photoSrc,
 		peparam: {},
 	};
 

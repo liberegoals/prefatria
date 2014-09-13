@@ -796,7 +796,7 @@ Arena.partida.profinfoIconRefreshDOM = function(login, dom) {
 };
 
 Arena.partida.pektisPhotoRefreshDOM = function(thesi, iseht, domMain) {
-	var login, pektis, photo;
+	var login, pektis, photoSrc;
 
 	if (Arena.ego.oxiTrapezi())
 	return Arena.partida;
@@ -816,13 +816,13 @@ Arena.partida.pektisPhotoRefreshDOM = function(thesi, iseht, domMain) {
 	pektis = Arena.skiniko.skinikoPektisGet(login);
 	if (!pektis) return Arena.partida;
 
-	photo = pektis.pektisPhotoSrcGet();
-	if (!photo) return Arena.partida;
+	photoSrc = pektis.pektisPhotoSrcGet();
+	if (!photoSrc) return Arena.partida;
 
 	domMain.append($('<img>').
 	addClass('tsoxaPektisPhoto').
 	css('opacity', Arena.partida.pektisPhotoOpacity).
-	attr('src', 'photo/' + photo));
+	attr('src', 'photo/' + photoSrc));
 
 	return Arena.partida;
 };
