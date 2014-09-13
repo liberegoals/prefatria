@@ -596,6 +596,7 @@ Arena.partida.pektisRefreshDOM = function(thesi) {
 	Arena.partida['pektisBazes' + iseht + 'DOM'] = domBazes;
 
 	Arena.partida.
+	pektisPhotoRefreshDOM(thesi, iseht, domMain).
 	pektisDataRefreshDOM(thesi, iseht, domMain, domOnoma).
 	pektisKapikiaRefreshDOM(thesi, iseht, domKapikia).
 	pektisAgoraRefreshDOM(thesi, iseht, domAgora).
@@ -692,14 +693,14 @@ Arena.partida.pektisRefreshDOM = function(thesi) {
 // για τους τρεις παίκτες του τραπεζιού.
 
 Arena.partida.pektisDataRefreshDOM = function(thesi, iseht, domMain, domOnoma) {
-	var login, sinedria, pektis, photo;
+	var login, sinedria, pektis;
+
+	if (Arena.ego.oxiTrapezi())
+	return Arena.partida;
 
 	if (thesi === undefined) return Arena.partida.thesiWalk(function(thesi) {
 		Arena.partida.pektisDataRefreshDOM(thesi);
 	});
-
-	if (Arena.ego.oxiTrapezi())
-	return Arena.partida;
 
 	if (iseht === undefined) iseht = Arena.ego.thesiMap(thesi);
 	if (domMain === undefined) domMain = Arena.partida['pektisMain' + iseht + 'DOM'];
@@ -709,7 +710,7 @@ Arena.partida.pektisDataRefreshDOM = function(thesi, iseht, domMain, domOnoma) {
 	domOnoma.removeClass('fantasma tsoxaSxesiFilos tsoxaSxesiApoklismenos');
 
 	domMain.addClass(Arena.ego.trapezi.trapeziIsApodoxi(thesi) ? 'apodoxi' : 'xapodoxi');
-	domMain.children('.tsoxaProfinfoIcon,.tsoxaPektisPhoto').remove();
+	domMain.children('.tsoxaProfinfoIcon').remove();
 
 	login = Arena.ego.trapezi.trapeziPektisGet(thesi);
 	if (!login) {
@@ -728,12 +729,6 @@ Arena.partida.pektisDataRefreshDOM = function(thesi, iseht, domMain, domOnoma) {
 
 	pektis = Arena.skiniko.skinikoPektisGet(login);
 	if (!pektis) return Arena.partida;
-
-	photo = pektis.pektisPhotoGet();
-	if (photo) domMain.append($('<img>').
-	addClass('tsoxaPektisPhoto').
-	css('opacity', Arena.partida.pektisPhotoOpacity).
-	attr('src', 'photo/' + photo));
 
 	Arena.partida.profinfoIconRefreshDOM(login, domMain);
 
@@ -797,6 +792,38 @@ Arena.partida.profinfoIconRefreshDOM = function(login, dom) {
 	profinfoDom.css('display', 'block').data('emfanes', true);
 
 	dom.append(profinfoDom);
+	return Arena.partida;
+};
+
+Arena.partida.pektisPhotoRefreshDOM = function(thesi, iseht, domMain) {
+	var login, pektis, photo;
+
+	if (Arena.ego.oxiTrapezi())
+	return Arena.partida;
+
+	if (thesi === undefined) return Arena.partida.thesiWalk(function(thesi) {
+		Arena.partida.pektisPhotoRefreshDOM(thesi);
+	});
+
+	if (iseht === undefined) iseht = Arena.ego.thesiMap(thesi);
+	if (domMain === undefined) domMain = Arena.partida['pektisMain' + iseht + 'DOM'];
+
+	domMain.children('.tsoxaPektisPhoto').remove();
+
+	login = Arena.ego.trapezi.trapeziPektisGet(thesi);
+	if (!login) return Arena.partida;
+
+	pektis = Arena.skiniko.skinikoPektisGet(login);
+	if (!pektis) return Arena.partida;
+
+	photo = pektis.pektisPhotoGet();
+	if (!photo) return Arena.partida;
+
+	domMain.append($('<img>').
+	addClass('tsoxaPektisPhoto').
+	css('opacity', Arena.partida.pektisPhotoOpacity).
+	attr('src', 'photo/' + photo));
+
 	return Arena.partida;
 };
 
