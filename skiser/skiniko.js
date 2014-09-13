@@ -390,7 +390,6 @@ Skiniko.prototype.stisimoPeparam = function(conn) {
 		return this;
 	}
 
-	delete this.sitkep2;
 	Log.print('Σχέσεις');
 	this.stisimoSxesi(conn);
 	return this;
@@ -401,6 +400,7 @@ Skiniko.prototype.stisimoSxesi = function(conn) {
 
 	for (login in this.sitkep) {
 		delete skiniko.sitkep[login];
+		skiniko.sitkep2[login] = true;
 
 		pektis = this.skinikoPektisGet(login);
 		query = 'SELECT ' + Sxesi.projection + ' FROM `sxesi` WHERE `pektis` = ' + login.json();
@@ -426,6 +426,10 @@ Skiniko.prototype.stisimoTelos = function(conn) {
 	// Δεν χρειαζόμαστε πλέον τη σύνδεσή μας με την database.
 
 	conn.free();
+
+	// Φορτώνουμε στοιχεία φωτογραφιών για τους παίκτες.
+
+	this.stisimoPhoto();
 
 	// Κάνουμε replay όλες τις παρτίδες με βάση τα στοιχεία που έχουμε
 	// ήδη φορτώσει.
@@ -456,6 +460,48 @@ Skiniko.prototype.stisimoTelos = function(conn) {
 	Server.ekinisi(this);
 
 	Log.fasi.nea('Node server is up and running');
+	return this;
+};
+
+Skiniko.photoTipos = {
+	png: true,
+	jpg: true,
+	gif: true,
+};
+
+Skiniko.prototype.stisimoPhoto = function() {
+	var basi, pdir, login, pektis, tipos, candi, stats;
+
+	basi = '../client/';
+	pdir = 'photo';
+	Log.print('Loading photo data');
+	try {
+		FS.statSync(basi + pdir);
+	} catch (e) {
+		console.error(pdir + ':photo directory not found');
+		delete this.sitkep2;
+		return this;
+	}
+
+	for (login in this.sitkep2) {
+		pektis = this.skinikoPektisGet(login);
+		if (!pektis) continue;
+
+		for (tipos in Skiniko.photoTipos) {
+			candi = login.substr(0, 1) + '/' + login + '.' + tipos;
+			try {
+				stats = FS.statSync(basi + pdir + '/' + candi);
+			} catch (e) {
+				continue;
+			}
+
+			pektis.pektisPhotoSet(candi + '?mt=' + parseInt(stats.mtime.getTime() / 1000));
+			break;
+		}
+
+	}
+
+	delete this.sitkep2
 	return this;
 };
 

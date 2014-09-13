@@ -684,13 +684,15 @@ Arena.partida.pektisRefreshDOM = function(thesi) {
 // για τους τρεις παίκτες του τραπεζιού.
 
 Arena.partida.pektisDataRefreshDOM = function(thesi, iseht, domMain, domOnoma) {
-	var login, sinedria, pektis;
+	var login, sinedria, pektis, photo;
 
 	if (thesi === undefined) return Arena.partida.thesiWalk(function(thesi) {
 		Arena.partida.pektisDataRefreshDOM(thesi);
 	});
 
-	if (Arena.ego.oxiTrapezi()) return Arena.partida;
+	if (Arena.ego.oxiTrapezi())
+	return Arena.partida;
+
 	if (iseht === undefined) iseht = Arena.ego.thesiMap(thesi);
 	if (domMain === undefined) domMain = Arena.partida['pektisMain' + iseht + 'DOM'];
 	if (domOnoma === undefined) domOnoma = Arena.partida['pektisOnoma' + iseht + 'DOM'];
@@ -699,7 +701,7 @@ Arena.partida.pektisDataRefreshDOM = function(thesi, iseht, domMain, domOnoma) {
 	domOnoma.removeClass('fantasma tsoxaSxesiFilos tsoxaSxesiApoklismenos');
 
 	domMain.addClass(Arena.ego.trapezi.trapeziIsApodoxi(thesi) ? 'apodoxi' : 'xapodoxi');
-	domMain.children('.tsoxaProfinfoIcon').remove();
+	domMain.children('.tsoxaProfinfoIcon,.tsoxaPektisPhoto').remove();
 
 	login = Arena.ego.trapezi.trapeziPektisGet(thesi);
 	if (!login) {
@@ -716,12 +718,17 @@ Arena.partida.pektisDataRefreshDOM = function(thesi, iseht, domMain, domOnoma) {
 	if (Arena.ego.isFilos(login)) domOnoma.addClass('tsoxaSxesiFilos');
 	else if (Arena.ego.isApoklismenos(login)) domOnoma.addClass('tsoxaSxesiApoklismenos');
 
-	Arena.partida.profinfoIconRefreshDOM(login, domMain);
-
 	pektis = Arena.skiniko.skinikoPektisGet(login);
 	if (!pektis) return Arena.partida;
 
-	if (pektis.pektisIsApasxolimenos()) domMain.addClass('apasxolimenos');
+	photo = pektis.pektisPhotoGet();
+	if (photo) domMain.append($('<img>').addClass('tsoxaPektisPhoto').attr('src', 'photo/' + photo));
+
+	Arena.partida.profinfoIconRefreshDOM(login, domMain);
+
+	if (pektis.pektisIsApasxolimenos())
+	domMain.addClass('apasxolimenos');
+
 	return Arena.partida;
 };
 

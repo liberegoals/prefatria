@@ -63,6 +63,15 @@ Pektis.prototype.pektisOnomaGet = function() {
 	return this.onoma;
 };
 
+Pektis.prototype.pektisPhotoSet = function(photo) {
+	this.photo = photo;
+	return this;
+};
+
+Pektis.prototype.pektisPhotoGet = function() {
+	return this.photo;
+};
+
 Pektis.prototype.pektisPollSet = function(ts) {
 	if (ts === undefined) ts = Globals.toraServer();
 	this.poll = ts;
