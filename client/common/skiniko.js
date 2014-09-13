@@ -63,13 +63,30 @@ Pektis.prototype.pektisOnomaGet = function() {
 	return this.onoma;
 };
 
-Pektis.prototype.pektisPhotoSet = function(photo) {
-	this.photo = photo;
+Pektis.prototype.pektisPhotoSet = function(photo, mtime) {
+	delete this.photo;
+	delete this.photoTS;
+
+	if (photo) this.photo = photo;
+	if (mtime) this.photoTS = mtime;
+
 	return this;
 };
 
 Pektis.prototype.pektisPhotoGet = function() {
 	return this.photo;
+};
+
+Pektis.prototype.pektisPhotoSrcGet = function() {
+	var src;
+
+	src = this.pektisPhotoGet();
+	if (!src) return null;
+
+	if (this.photoTS)
+	src += '?mt=' + this.photoTS;
+
+	return src;
 };
 
 Pektis.prototype.pektisPollSet = function(ts) {

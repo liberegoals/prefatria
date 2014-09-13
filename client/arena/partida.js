@@ -816,7 +816,7 @@ Arena.partida.pektisPhotoRefreshDOM = function(thesi, iseht, domMain) {
 	pektis = Arena.skiniko.skinikoPektisGet(login);
 	if (!pektis) return Arena.partida;
 
-	photo = pektis.pektisPhotoGet();
+	photo = pektis.pektisPhotoSrcGet();
 	if (!photo) return Arena.partida;
 
 	domMain.append($('<img>').

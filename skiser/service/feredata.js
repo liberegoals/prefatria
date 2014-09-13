@@ -705,6 +705,7 @@ Pektis.prototype.pektisFeredata = function() {
 		login: null,
 		onoma: null,
 		photo: null,
+		photoTS: null,
 	});
 };
 
