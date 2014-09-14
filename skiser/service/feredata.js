@@ -86,16 +86,6 @@ Service.feredata.peparamExeresi = function(param, idios, diaxiristis, anergos) {
 	return true;
 };
 
-Service.feredata.profinfoExeresi = function(paraliptis, pektis, sxoliastis) {
-	if (pektis === sxoliastis)
-	return false;
-
-	if (sxoliastis === paraliptis)
-	return false;
-
-	return true;
-};
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
 
 // Η function "feredata.check" είναι function περιπόλου, δηλαδή καλείται σε
@@ -399,23 +389,6 @@ Sinedria.prototype.feredataFreska = function() {
 			return;
 
 			nodereq.write(hdr + param.json() + ':' + timi.json() + ',\n');
-			hdr = '\t\t';
-		});
-		if (hdr == '\t\t') nodereq.write('\t},\n');
-	});
-	nodereq.write('},\n');
-
-	nodereq.write('profinfo: {\n');
-	skiniko.skinikoPektisWalk(function() {
-		var pektis, hdr;
-
-		pektis = this.pektisLoginGet();
-		hdr = '\t' + pektis.json() + ': {\n\t\t';
-		this.pektisProfinfoWalk(function(sxoliastis, kimeno) {
-			if (Service.feredata.profinfoExeresi(paraliptisLogin, pektis, sxoliastis))
-			return;
-
-			nodereq.write(hdr + sxoliastis.json() + ':' + kimeno.json() + ',\n');
 			hdr = '\t\t';
 		});
 		if (hdr == '\t\t') nodereq.write('\t},\n');
