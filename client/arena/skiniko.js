@@ -639,7 +639,8 @@ Pektis.prototype.pektisFormaPopupFillDOM = function(login) {
 
 	Arena.pektisPanelRefreshDOM();
 	idiosDOM.append($('<div>').addClass('profinfoKimeno').html(this.profinfo[login]));
-	egoDOM.append($('<div>').addClass('profinfoKimeno').html(this.profinfo[Client.session.pektis]));
+	if (login.isEgo()) egoDOM.empty();
+	else egoDOM.append($('<div>').addClass('profinfoKimeno').html(this.profinfo[Client.session.pektis]));
 	Arena.pektisFormaDOM.anadisi().finish().fadeIn('fast').
 	find('.klisimoIcon').on('mousedown', function(e) {
 		Arena.inputRefocus(e);
