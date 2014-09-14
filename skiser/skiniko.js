@@ -415,8 +415,33 @@ Skiniko.prototype.stisimoSxesi = function(conn) {
 		return this;
 	}
 
+	Log.print('Πληροφορίες προφίλ');
+	this.stisimoProfinfo(conn);
+	return this;
+};
+
+Skiniko.prototype.stisimoProfinfo = function(conn) {
+	var skiniko = this, login, pektis, query;
+
+	for (login in this.sitkep2) {
+		delete skiniko.sitkep2[login];
+		skiniko.sitkep[login] = true;
+
+		pektis = this.skinikoPektisGet(login);
+		query = 'SELECT ' + Profinfo.projection + ' FROM `profinfo` WHERE `pektis` = ' + login.json();
+		conn.query(query, function(conn, rows) {
+			Globals.awalk(rows, function(i, profinfo) {
+				pektis.pektisProfinfoSet(profinfo['sxoliastis'], profinfo['kimeno']);
+			});
+
+			skiniko.stisimoProfinfo(conn);
+		});
+
+		return this;
+	}
+
 	conn.free();
-	delete this.sitkep;
+	delete this.sitkep2;
 
 	Log.print('Φωτογραφίες παικτών');
 	this.stisimoPhoto();
@@ -430,8 +455,8 @@ Skiniko.prototype.stisimoSxesi = function(conn) {
 Skiniko.prototype.stisimoPhoto = function() {
 	var login, skiniko = this, pektis;
 
-	for (login in this.sitkep2) {
-		delete this.sitkep2[login];
+	for (login in this.sitkep) {
+		delete this.sitkep[login];
 		pektis = this.skinikoPektisGet(login);
 		if (!pektis) continue;
 
@@ -442,7 +467,7 @@ Skiniko.prototype.stisimoPhoto = function() {
 
 	}
 
-	delete this.sitkep2
+	delete this.sitkep;
 	this.stisimoTelos();
 	return this;
 };
@@ -1086,6 +1111,10 @@ Peparam.projection =
 Sxesi.projection =
 	'`sxetizomenos`, ' +
 	'`sxesi`';
+
+Profinfo.projection =
+	'`sxoliastis`, ' +
+	'`kimeno`';
 
 Prosklisi.projection =
 	'`kodikos`, ' +

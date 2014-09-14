@@ -62,6 +62,19 @@ Service.sinedria.peparam = function(nodereq, conn, pektis) {
 	});
 };
 
+Service.sinedria.profinfo = function(nodereq, conn, pektis) {
+	var query;
+
+	query = 'SELECT ' + Profinfo.projection + ' FROM `profinfo` WHERE `pektis` = ' + pektis.pektisLoginGet().json();
+	conn.query(query, function(conn, rows) {
+		Globals.awalk(rows, function(sxoliastis, kimeno) {
+			pektis.pektisProfinfoSet(sxoliastis, kimeno);
+		});
+
+		Service.sinedria.sxesi(nodereq, conn, pektis);
+	});
+};
+
 Service.sinedria.sxesi = function(nodereq, conn, pektis) {
 	var query, login = pektis.pektisLoginGet(), photoSrc;
 

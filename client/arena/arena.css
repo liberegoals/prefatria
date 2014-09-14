@@ -49,28 +49,43 @@ body {
 
 .profinfoSxolio {
 	position: absolute;
-	left: 5px;
-	height: 120px;
-	width: 490px;
+	left: 8px;
+	width: 482px;
+	white-space: normal;
+	border-style: inset;
+	border-width: 1px;
+	overflow-x: hidden;
+	overflow-y: auto;
+	background-image: url('../ikona/pss/paraskinio.jpg');
+	background-repeat: repeat;
 }
 
 #profinfoIdios {
 	top: 40px;
+	height: 112px;
+/*
 	background-color: teal;
+*/
 }
 
 #profinfoEgo {
-	top: 184px;
+	top: 178px;
+	height: 120px;
+/*
 	background-color: olive;
+*/
 }
 
 #profinfoIsozigio {
 	position: absolute;
-	top: 162px;
-	height: 20px;
+	top: 155px;
+	height: 22px;
 	width: 100%;
-	background-color: red;
+	text-align: center;
 	cursor: ns-resize;
+/*
+	background-color: red;
+*/
 }
 
 #arena {

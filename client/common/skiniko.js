@@ -33,6 +33,7 @@
 Pektis = function(props) {
 	this.peparam = {};
 	this.sxesi = {};
+	// Η λίστα πληροφοριών προφίλ δεν πρέπει να τεθεί εδώ.
 	Globals.initObject(this, props);
 };
 
@@ -110,6 +111,13 @@ Pektis.prototype.pektisPeparamSet = function(peparam) {
 
 Pektis.prototype.pektisPeparamGet = function(param) {
 	return this.peparam[param];
+};
+
+Pektis.prototype.pektisPeparamWalk = function(callback) {
+	Globals.walk(this.peparam, function(param, timi) {
+		callback(param, timi);
+	});
+	return this;
 };
 
 Pektis.prototype.pektisAxiomaGet = function() {
@@ -239,6 +247,13 @@ Pektis.prototype.pektisSxesiGet = function(sxetizomenos) {
 	return this.sxesi[sxetizomenos];
 };
 
+Pektis.prototype.pektisSxesiWalk = function(callback) {
+	Globals.walk(this.sxesi, function(sxetizomenos, sxesi) {
+		callback(sxetizomenos, sxesi);
+	});
+	return this;
+};
+
 Pektis.prototype.pektisIsFilos = function(sxetizomenos) {
 	return(this.pektisSxesiGet(sxetizomenos) === 'ΦΙΛΟΣ');
 };
@@ -251,16 +266,18 @@ Pektis.prototype.pektisIsApoklismenos = function(sxetizomenos) {
 	return(this.pektisSxesiGet(sxetizomenos) === 'ΑΠΟΚΛΕΙΣΜΕΝΟΣ');
 };
 
-Pektis.prototype.pektisPeparamWalk = function(callback) {
-	Globals.walk(this.peparam, function(param, timi) {
-		callback(param, timi);
-	});
+Pektis.prototype.pektisProfinfoSet = function(sxoliastis, kimeno) {
+	if (!this.hasOwnProperty('profinfo'))
+	this.profinfo = {};
+
+	if (kimeno) this.profinfo[sxoliastis] = kimeno;
+	else delete this.profinfo[sxoliastis];
 	return this;
 };
 
-Pektis.prototype.pektisSxesiWalk = function(callback) {
-	Globals.walk(this.sxesi, function(sxetizomenos, sxesi) {
-		callback(sxetizomenos, sxesi);
+Pektis.prototype.pektisProfinfoWalk = function(callback) {
+	Globals.walk(this.profinfo, function(sxoliastis, kimeno) {
+		callback(sxoliastis, kimeno)
 	});
 	return this;
 };
@@ -295,6 +312,12 @@ Peparam.axiomaRank = {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 Sxesi = function(props) {
+	Globals.initObject(this, props);
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+Profinfo = function(props) {
 	Globals.initObject(this, props);
 };
 

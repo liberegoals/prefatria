@@ -44,6 +44,17 @@ INSERT INTO `pektis` (`login`, `egrafi`, `onoma`, `email`, `kodikos`, `poll`) VA
 
 UPDATE `pektis` SET `kodikos` = SHA1('xxx');
 
+INSERT INTO `profinfo` (`pektis`, `sxoliastis`, `kimeno`) VALUES
+('panos', 'panos', 'asdasdas das dasdas dasd asdas dasd asdas das das das das das das dasd asd asda sdadada'),
+('panos', 'zoi', 'AAA SHGDF SD SDS DSD SDS DSDS DSDSDSD DSDSDSD'),
+('panos', 'akis', 'AAA SHGDF SD SDS DSD SDS DSDS DSDSDSD DSDSDSD'),
+('zoi', 'zoi', 'asdasdas das dasdas dasd asdas dasd asdas das das das das das das dasd asd asda sdadada'),
+('zoi', 'panos', 'AAA SHGDF SD SDS DSD SDS DSDS DSDSDSD DSDSDSD'),
+('maria', 'maria', 'asd asdas dasdasda sdasds dsdasd adasdas dasdasd asdasdasdasd'),
+('maria', 'panos', 'asdas das dasd asdas dasd asdas dasd asda sdas dad asd asdasdasdasd asdasdasdas dasasdasdasdad asddasdas');
+
+UPDATE `pektis` SET `kodikos` = SHA1('xxx');
+
 INSERT INTO `peparam` (`pektis`, `param`, `timi`) VALUES
 ('aris', 'ΑΞΙΩΜΑ', 'VIP'),
 ('aris', 'ΑΝΕΡΓΟΣ', 'ΝΑΙ'),
