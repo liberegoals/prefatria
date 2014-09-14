@@ -287,8 +287,6 @@ Skiniko.prototype.processPartidaEnergiaData = function(energiaData, online) {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
 
 Skiniko.prototype.anamoniAlages = function() {
-	var skiniko = this;
-
 	Arena.feredataTimerClear();
 	Arena.feredataTimer = setTimeout(function() {
 		Arena.feredataID++;
@@ -297,10 +295,10 @@ Skiniko.prototype.anamoniAlages = function() {
 
 		Client.skiserService('fereAlages', 'id=' + Arena.feredataID).
 		done(function(rsp) {
-			skiniko.processAlages(rsp);
+			Arena.skiniko.processAlages(rsp);
 		}).
 		fail(function(err) {
-			skiniko.feredataError(err);
+			Arena.skiniko.feredataError(err);
 		});
 	}, Arena.feredataDelay);
 
@@ -308,7 +306,7 @@ Skiniko.prototype.anamoniAlages = function() {
 };
 
 Skiniko.prototype.processAlages = function(rsp) {
-	var skiniko = this, data, trapeziPrin;
+	var data, trapeziPrin;
 
 	switch (rsp) {
 
@@ -407,7 +405,7 @@ Skiniko.prototype.processAlages = function(rsp) {
 
 	if (data.kinisi) Globals.awalk(data.kinisi, function(i, kinisi) {
 		data.kinisi[i] = new Kinisi(kinisi);
-		skiniko.processKinisi(kinisi);
+		Arena.skiniko.processKinisi(kinisi);
 	});
 
 	this.processAlagesPartida(data, trapeziPrin);
@@ -469,7 +467,7 @@ Skiniko.prototype.processAlagesPartida = function(data, trapeziPrin) {
 // πρόγραμμα.
 
 Skiniko.prototype.feredataError = function(err, rsp) {
-	var skiniko = this, delay;
+	var delay;
 
 	console.error(rsp);
 	if (!this.hasOwnProperty('feredataErrorCount')) {
@@ -485,15 +483,13 @@ Skiniko.prototype.feredataError = function(err, rsp) {
 	'Επαναφόρτωση</a></div>', true);
 
 	setTimeout(function() {
-		skiniko.stisimo();
+		Arena.skiniko.stisimo();
 	}, delay);
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 Skiniko.prototype.skinikoCreateDOM = function(data) {
-	var skiniko = this;
-
 	this.skinikoResetDOM();
 
 	Globals.awalk(data.trapezi.sort(function(t1, t2) {
@@ -501,7 +497,7 @@ Skiniko.prototype.skinikoCreateDOM = function(data) {
 		if (t1.kodikos > t2.kodikos) return 1;
 		return 0;
 	}), function(i, trapezi) {
-		trapezi = skiniko.skinikoTrapeziGet(trapezi.kodikos);
+		trapezi = Arena.skiniko.skinikoTrapeziGet(trapezi.kodikos);
 		if (trapezi) trapezi.trapeziCreateDOM();
 	});
 
@@ -510,7 +506,7 @@ Skiniko.prototype.skinikoCreateDOM = function(data) {
 		if (s1.isodos > s2.isodos) return 1;
 		return 0;
 	}), function(i, sinedria) {
-		sinedria = skiniko.skinikoSinedriaGet(sinedria.pektis);
+		sinedria = Arena.skiniko.skinikoSinedriaGet(sinedria.pektis);
 		if (sinedria) sinedria.sinedriaCreateDOM();
 	});
 
@@ -519,7 +515,7 @@ Skiniko.prototype.skinikoCreateDOM = function(data) {
 		if (p1.kodikos > p2.kodikos) return 1;
 		return 0;
 	}), function(i, prosklisi) {
-		prosklisi = skiniko.skinikoProsklisiGet(prosklisi.kodikos);
+		prosklisi = Arena.skiniko.skinikoProsklisiGet(prosklisi.kodikos);
 		if (prosklisi) prosklisi.prosklisiCreateDOM();
 	});
 
@@ -528,7 +524,7 @@ Skiniko.prototype.skinikoCreateDOM = function(data) {
 		if (s1.kodikos > s2.kodikos) return 1;
 		return 0;
 	}), function(i, sizitisi) {
-		sizitisi = skiniko.skinikoSizitisiGet(sizitisi.kodikos);
+		sizitisi = Arena.skiniko.skinikoSizitisiGet(sizitisi.kodikos);
 		if (sizitisi) sizitisi.sizitisiCreateDOM();
 	});
 
