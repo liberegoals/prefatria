@@ -1029,7 +1029,7 @@ Arena.cpanel.bpanelButtonPush(Arena.cpanel.apasxolimenosButton =  new PButton({
 		var button1, button2;
 
 		button1 = this.pbuttonLock();
-		button2 = Arena.prosklisi.panel.diathesimosButton.pbuttonLock();
+		button2 = Arena.prosklisi.panel.apasxolimenosButton.pbuttonLock();
 		Client.fyi.pano('Αλλαγή κατάστασης σε ΑΠΑΣΧΟΛΗΜΕΝΟΣ. Παρακαλώ περιμένετε…', 0);
 		Client.skiserService('peparamSet', 'param=ΚΑΤΑΣΤΑΣΗ', 'timi=ΑΠΑΣΧΟΛΗΜΕΝΟΣ').
 		done(function(rsp) {
