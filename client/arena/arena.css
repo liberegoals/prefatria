@@ -79,6 +79,13 @@ body {
 */
 }
 
+.profinfoKimeno {
+	padding: 4px;
+	font-size: 14px;
+	font-family: "Tahoma", sans-serif;
+	line-height: 120%;
+}
+
 #profinfoIsozigio {
 	position: absolute;
 	top: 155px;
@@ -95,10 +102,6 @@ body {
 	position: relative;
 	bottom: 1px;
 	height: 22px;
-}
-
-.profinfoKimeno {
-	padding: 4px;
 }
 
 /***********************************************************************************************************************/
