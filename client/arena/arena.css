@@ -65,15 +65,15 @@ body {
 
 #profinfoIdios {
 	top: 40px;
-	height: 112px;
+	height: 108px;
 /*
 	background-color: teal;
 */
 }
 
 #profinfoEgo {
-	top: 178px;
-	height: 120px;
+	top: 174px;
+	height: 124px;
 /*
 	background-color: olive;
 */
@@ -88,7 +88,7 @@ body {
 
 #profinfoIsozigio {
 	position: absolute;
-	top: 155px;
+	top: 151px;
 	height: 22px;
 	width: 100%;
 	text-align: center;

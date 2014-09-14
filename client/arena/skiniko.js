@@ -16,7 +16,7 @@ Arena.feredataID = 0;
 // κάποια καθυστέρηση, ανάλογα με την τιμή της μεταβλητής "feredataDelay".
 
 Arena.feredataTimer = null;
-Arena.feredataDelay = 200;
+Arena.feredataDelay = 300;
 
 Arena.feredataTimerClear = function() {
 	if (!Arena.feredataTimer)
