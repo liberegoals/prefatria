@@ -267,9 +267,6 @@ Pektis.prototype.pektisIsApoklismenos = function(sxetizomenos) {
 };
 
 Pektis.prototype.pektisProfinfoSet = function(sxoliastis, kimeno) {
-	if (!this.hasOwnProperty('profinfo'))
-	this.profinfo = {};
-
 	if (kimeno) this.profinfo[sxoliastis] = kimeno;
 	else delete this.profinfo[sxoliastis];
 	return this;
