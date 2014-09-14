@@ -11,6 +11,22 @@ Arena.skiniko = new Skiniko();
 
 Arena.feredataID = 0;
 
+// Ο timer "feredataTimer" αφορά σε δρομολογημένο αίτημα αποστολής αλλαγών.
+// Πράγματι, τα αιτήματα αποστολής μεταβολών σκηνικού τα αποστέλλονται με
+// κάποια καθυστέρηση, ανάλογα με την τιμή της μεταβλητής "feredataDelay".
+
+Arena.feredataTimer = null;
+Arena.feredataDelay = 200;
+
+Arena.feredataTimerClear = function() {
+	if (!Arena.feredataTimer)
+	return Arena;
+
+	clearTimeout(Arena.feredataTimer);
+	Arena.feredataTimer = null;
+	return Arena;
+};
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
 
 // Το στήσιμο του σκηνικού στον client γίνεται μέσω αιτήματος feredata για πλήρη
@@ -19,8 +35,9 @@ Arena.feredataID = 0;
 Skiniko.prototype.stisimo = function(callback) {
 	var skiniko = this;
 
+	Arena.feredataTimerClear();
 	Arena.feredataID++;
-	if (Debug.flagGet('feredata'))
+	if (Debug.flagGet('feredata') && Arena.ego.isDeveloper())
 	console.log('Ζητήθηκαν πλήρη σκηνικά δεδομένα (id = ' + Arena.feredataID + ')');
 
 	Client.skiserService('fereFreska', 'id=' + Arena.feredataID).
@@ -40,7 +57,7 @@ Skiniko.prototype.processFreskaData = function(rsp) {
 
 	// Εκτυπώνουμε διάφορα μηνύματα ελέγχου στην κονσόλα του browser.
 
-	if (Debug.flagGet('feredata')) {
+	if (Debug.flagGet('feredata') && Arena.ego.isDeveloper()) {
 		try {
 			console.groupCollapsed('Παρελήφθησαν πλήρη σκηνικά δεδομένα');
 		} catch (e) {
@@ -272,17 +289,20 @@ Skiniko.prototype.processPartidaEnergiaData = function(energiaData, online) {
 Skiniko.prototype.anamoniAlages = function() {
 	var skiniko = this;
 
-	Arena.feredataID++;
-	if (Debug.flagGet('feredata'))
-	console.log('Αναμένονται μεταβολές (id = ' + Arena.feredataID + ')');
+	Arena.feredataTimerClear();
+	Arena.feredataTimer = setTimeout(function() {
+		Arena.feredataID++;
+		if (Debug.flagGet('feredata') && Arena.ego.isDeveloper())
+		console.log('Αναμένονται μεταβολές (id = ' + Arena.feredataID + ')');
 
-	Client.skiserService('fereAlages', 'id=' + Arena.feredataID).
-	done(function(rsp) {
-		skiniko.processAlages(rsp);
-	}).
-	fail(function(err) {
-		skiniko.feredataError(err);
-	});
+		Client.skiserService('fereAlages', 'id=' + Arena.feredataID).
+		done(function(rsp) {
+			skiniko.processAlages(rsp);
+		}).
+		fail(function(err) {
+			skiniko.feredataError(err);
+		});
+	}, Arena.feredataDelay);
 
 	return this;
 };
@@ -340,7 +360,7 @@ Skiniko.prototype.processAlages = function(rsp) {
 
 	// Έχουν επιστραφεί δεδομένα. Αρχικά ενημερώνουμε την κονσόλα του browser.
 
-	if (Debug.flagGet('feredata')) {
+	if (Debug.flagGet('feredata') && Arena.ego.isDeveloper()) {
 		try {
 			console.groupCollapsed('Παρελήφθησαν μεταβολές');
 		} catch(e) {
