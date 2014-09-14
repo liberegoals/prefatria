@@ -633,20 +633,20 @@ Pektis.prototype.pektisFormaPopupFillDOM = function(login) {
 	on('mousedown', function(e) {
 		Arena.inputRefocus(e);
 	})).
-	append(idiosDOM = $('<div>').attr('id', 'profinfoIdios').addClass('profinfoSxolio')).
-	append(egoDOM = $('<div>').attr('id', 'profinfoEgo').addClass('profinfoSxolio')).
+	append(idiosDOM = $('<div>').attr('id', 'profinfoIdios').addClass('profinfoArea')).
+	append(egoDOM = $('<div>').attr('id', 'profinfoEgo').addClass('profinfoArea')).
 	append(baraDOM = $('<div>').attr('id', 'profinfoIsozigio'));
 
 	Arena.pektisPanelRefreshDOM();
-	idiosDOM.append(this.profinfo[login]);
-	egoDOM.append(this.profinfo[Client.session.pektis]);
+	idiosDOM.append($('<div>').addClass('profinfoKimeno').html(this.profinfo[login]));
+	egoDOM.append($('<div>').addClass('profinfoKimeno').html(this.profinfo[Client.session.pektis]));
 	Arena.pektisFormaDOM.anadisi().finish().fadeIn('fast').
 	find('.klisimoIcon').on('mousedown', function(e) {
 		Arena.inputRefocus(e);
 	});
 
 	baraDOM.
-	append($('<img>').addClass('panelIconH').attr('src', 'ikona/misc/bara.png')).
+	append($('<img>').attr('id', 'profinfoIsozigioIcon').attr('src', 'ikona/misc/bara.png')).
 	on('mousedown', function(e) {
 		var y0;
 
