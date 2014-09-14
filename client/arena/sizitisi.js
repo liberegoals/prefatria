@@ -118,7 +118,7 @@ Arena.sizitisi.setup = function() {
 
 	Arena.sizitisi.panel.bpanelButtonGet('metakinisi').pbuttonGetDOM().
 	on('mouseenter', function(e) {
-		$(this).css('cursor', 'move');
+		$(this).css('cursor', 'ns-resize');
 	});
 
 	Arena.sizitisi.panel.bpanelButtonGet('kouskous').pbuttonDexia();
@@ -399,7 +399,7 @@ Arena.sizitisi.panelSetup = function() {
 
 		Arena.flags.epanadiataxiPss = true;
 		Arena.prosklisi.panel.bpanelButtonGet('epanadiataxiPss').pbuttonDisplay();
-		Arena.sizitisi.panelDOM.css('cursor', 'move');
+		Arena.sizitisi.panelDOM.css('cursor', 'ns-resize');
 		Arena.sizitisi.panel.bpanelButtonGet('metakinisi').
 		pbuttonGetDOM().addClass('panelButtonCandi');
 		$(document).off('mousemove mouseup').

@@ -297,7 +297,7 @@ display: none;
 }
 
 .panelSiromeno {
-	cursor: move;
+	cursor: ns-resize;
 }
 
 .panelButton {

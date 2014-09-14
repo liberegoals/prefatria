@@ -11,7 +11,7 @@ Arena.anazitisi.setup = function() {
 
 	Arena.anazitisi.panel.bpanelButtonGet('metakinisi').pbuttonGetDOM().
 	on('mouseenter', function(e) {
-		$(this).css('cursor', 'move');
+		$(this).css('cursor', 'ns-resize');
 	});
 
 	return Arena;
@@ -83,7 +83,7 @@ Arena.anazitisi.panelSetup = function() {
 
 		Arena.flags.epanadiataxiPss = true;
 		Arena.prosklisi.panel.bpanelButtonGet('epanadiataxiPss').pbuttonDisplay();
-		Arena.anazitisi.panelDOM.css('cursor', 'move');
+		Arena.anazitisi.panelDOM.css('cursor', 'ns-resize');
 		Arena.anazitisi.panel.bpanelButtonGet('metakinisi').
 		pbuttonGetDOM().addClass('panelButtonCandi');
 		$(document).off('mousemove mouseup').
