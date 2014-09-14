@@ -589,11 +589,35 @@ Pektis.prototype.pektisFormaPopupDOM = function(e) {
 	append(Arena.pektisPanelDOM = $('<div>').attr('id', 'pektisPanel').
 	on('mousedown', function(e) {
 		Arena.inputRefocus(e);
-	}));
+	})).
+	append($('<div>').attr('id', 'profinfoIdios').addClass('profinfoSxolio').text('idios')).
+	append(baraDOM = $('<div>').attr('id', 'profinfoIsozigio').text('BARA')).
+	append($('<div>').attr('id', 'profinfoEgo').addClass('profinfoSxolio').text('ego'));
+
 	Arena.pektisPanelRefreshDOM();
 	Arena.pektisFormaDOM.anadisi().finish().fadeIn('fast').
 	find('.klisimoIcon').on('mousedown', function(e) {
-		e.stopPropagation();
+		Arena.inputRefocus(e);
+	});
+
+	baraDOM.
+	on('mousedown', function(e) {
+var aaa = 0;
+		Arena.inputRefocus(e);
+		$(document).
+		off('mousemove').
+		on('mousemove', function(e) {
+			console.log(++aaa);
+		}).
+		off('mouseup').
+		on('mouseup', function(e) {
+			$(document).
+			off('mousemove').
+			off('mouseup');
+		});
+	}).
+	on('mouseup', function(e) {
+		$(document).off('mousemove');
 	});
 	return this;
 };

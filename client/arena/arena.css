@@ -47,6 +47,32 @@ body {
 	cursor: pointer;
 }
 
+.profinfoSxolio {
+	position: absolute;
+	left: 5px;
+	height: 120px;
+	width: 490px;
+}
+
+#profinfoIdios {
+	top: 40px;
+	background-color: teal;
+}
+
+#profinfoEgo {
+	top: 184px;
+	background-color: olive;
+}
+
+#profinfoIsozigio {
+	position: absolute;
+	top: 162px;
+	height: 20px;
+	width: 100%;
+	background-color: red;
+	cursor: ns-resize;
+}
+
 #arena {
 	width: 100%;
 	border-collapse: collapse;
