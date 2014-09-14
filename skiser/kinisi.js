@@ -213,7 +213,7 @@ Kinisi.prototype.prosarmogiPK = function(sinedria) {
 	if (pektis === this.data.login) return false;
 
 	// Θα πρέπει να γίνει προσαρμογή ανάλογα με το αν ο παραλήπτης
-	// είναι ανώτερος αξιωαμτούχος, επιδοτούμενος κλπ.
+	// είναι ανώτερος αξιωματούχος, επιδοτούμενος κλπ.
 
 	pektis = Server.skiniko.skinikoPektisGet(pektis);
 	if (!pektis) return false;

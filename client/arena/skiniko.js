@@ -563,12 +563,12 @@ Skiniko.prototype.skinikoResetDOM = function() {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 Pektis.prototype.pektisFormaPopupDOM = function(e) {
-	var pektis;
+	var pektis = this, login;
 
 	Arena.inputRefocus(e);
 
-	pektis = this.pektisLoginGet();
-	if (!pektis) return this;
+	login = this.pektisLoginGet();
+	if (!login) return this;
 
 	// Αν κάνουμε απόπειρα να ξανανοίξουμε το προφίλ του παίκτη του
 	// οποίου ήδη έχουμε ανοικτό το προφίλ, τότε κλείνει το ανοικτό
@@ -576,13 +576,56 @@ Pektis.prototype.pektisFormaPopupDOM = function(e) {
 	// να δούμε ό,τι θέλουμε να δούμε εκεί και να ξανακάνουμε κλικ
 	// για να το κλείσουμε.
 
-	if (Arena.pektisFormaDOM.data('pektis') === pektis) {
+	if (Arena.pektisFormaDOM.data('pektis') === login) {
 		Arena.pektisFormaKlisimo(200);
 		return this;
 	}
 
+	// Οι πληροφορίες προφίλ των παικτών δεν έρχονται με το αρχικό πακέτο
+	// σκηνικών δεδομένων, ούτε υπάρχει αρχικά property "profinfo" στους
+	// παίκτες, παρά αυτό το συγκεκριμένο property συμπληρώνεται την πρώτη
+	// φορά που θα παραλάβουμε πληροφορίες προφίλ για τον παίκτη. Αν, λοιπόν,
+	// δεν βρεθεί property "profinfo" για τον παίκτη, τότε είναι η ώρα να
+	// ζητηθούν οι πληροφορίες προφίλ από τον skiser, αλλιώς οι πληροφορίες
+	// προφίλ έχουν ήδη παραληφθεί και προχωρούμε άμεσα στο άνοιγμα της φόρμας
+	// προφίλ του παίκτη.
+
+	if (this.hasOwnProperty('profinfo')) {
+		pektis.pektisFormaPopupFillDOM(login);
+		return this;
+	}
+
+	Client.fyi.pano('Ζητήθηκαν πληροφορίες προφίλ για τον παίκτη <span class="entona ble">' +
+		login + '</span>. Παρακαλώ περιμένετε…');
+	Client.skiserService('profinfoGet', 'pektis=' + login).
+	done(function(rsp) {
+		try {
+			eval('pektis.profinfo = {' + rsp + '};');
+		} catch (e) {
+			Client.fyi.epano('Παρελήφθησαν ακαθόριστες πληροφορίες προφίλ για τον παίκτη ' +
+				'<span class="entona ble">' + login + '</span>');
+			Client.sound.beep();
+			Arena.pektisFormaKlisimo(10);
+			return;
+		}
+
+		Client.fyi.pano();
+		pektis.pektisFormaPopupFillDOM(login);
+	}).
+	fail(function(err) {
+		Client.skiserFail(err);
+		Client.sound.beep();
+		Arena.pektisFormaKlisimo(10);
+	});
+
+	return this;
+};
+
+Pektis.prototype.pektisFormaPopupFillDOM = function(login) {
+	var egoDOM, idiosDOM, baraDOM;
+
 	Arena.pektisFormaDOM.empty().
-	data('pektis', pektis).
+	data('pektis', login).
 	append(Client.klisimo(function() {
 		Arena.pektisFormaKlisimo();
 	})).
@@ -590,24 +633,53 @@ Pektis.prototype.pektisFormaPopupDOM = function(e) {
 	on('mousedown', function(e) {
 		Arena.inputRefocus(e);
 	})).
-	append($('<div>').attr('id', 'profinfoIdios').addClass('profinfoSxolio').text('idios')).
-	append(baraDOM = $('<div>').attr('id', 'profinfoIsozigio').text('BARA')).
-	append($('<div>').attr('id', 'profinfoEgo').addClass('profinfoSxolio').text('ego'));
+	append(idiosDOM = $('<div>').attr('id', 'profinfoIdios').addClass('profinfoSxolio')).
+	append(egoDOM = $('<div>').attr('id', 'profinfoEgo').addClass('profinfoSxolio')).
+	append(baraDOM = $('<div>').attr('id', 'profinfoIsozigio'));
 
 	Arena.pektisPanelRefreshDOM();
+	idiosDOM.append(this.profinfo[login]);
+	egoDOM.append(this.profinfo[Client.session.pektis]);
 	Arena.pektisFormaDOM.anadisi().finish().fadeIn('fast').
 	find('.klisimoIcon').on('mousedown', function(e) {
 		Arena.inputRefocus(e);
 	});
 
 	baraDOM.
+	append($('<img>').addClass('panelIconH').attr('src', 'ikona/misc/bara.png')).
 	on('mousedown', function(e) {
-var aaa = 0;
+		var y0;
+
+		y0 = e.pageY;
 		Arena.inputRefocus(e);
 		$(document).
 		off('mousemove').
 		on('mousemove', function(e) {
-			console.log(++aaa);
+			var y, dy, egoH, egoY, idiosH, h, baraY;
+
+			y = e.pageY;
+			dy = y - y0;
+			if (dy === 0) return;
+			y0 = y;
+
+			egoH = parseInt(egoDOM.css('height'));
+			if (egoH - dy < 0) dy = egoH;
+
+			idiosH = parseInt(idiosDOM.css('height'));
+			if (idiosH + dy < 0) dy = -idiosH;
+
+			egoY = parseInt(egoDOM.css('top'));
+			egoY += dy;
+
+			baraY = parseInt(baraDOM.css('top'));
+			baraY += dy;
+
+			baraDOM.css('top', baraY + 'px');
+			idiosDOM.css('height', (idiosH + dy) + 'px');
+			egoDOM.css({
+				height: (egoH - dy) + 'px',
+				top: egoY + 'px',
+			});
 		}).
 		off('mouseup').
 		on('mouseup', function(e) {
@@ -615,10 +687,8 @@ var aaa = 0;
 			off('mousemove').
 			off('mouseup');
 		});
-	}).
-	on('mouseup', function(e) {
-		$(document).off('mousemove');
 	});
+
 	return this;
 };
 
