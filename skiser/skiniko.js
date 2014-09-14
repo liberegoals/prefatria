@@ -428,6 +428,7 @@ Skiniko.prototype.stisimoProfinfo = function(conn) {
 		skiniko.sitkep[login] = true;
 
 		pektis = this.skinikoPektisGet(login);
+		pektis.profinfo = {};
 		query = 'SELECT ' + Profinfo.projection + ' FROM `profinfo` WHERE `pektis` = ' + login.json();
 		conn.query(query, function(conn, rows) {
 			Globals.awalk(rows, function(i, profinfo) {

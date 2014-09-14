@@ -58,17 +58,18 @@ Service.sinedria.peparam = function(nodereq, conn, pektis) {
 			pektis.pektisPeparamSet(new Peparam(peparam));
 		});
 
-		Service.sinedria.sxesi(nodereq, conn, pektis);
+		Service.sinedria.profinfo(nodereq, conn, pektis);
 	});
 };
 
 Service.sinedria.profinfo = function(nodereq, conn, pektis) {
 	var query;
 
+	pektis.profinfo = {};
 	query = 'SELECT ' + Profinfo.projection + ' FROM `profinfo` WHERE `pektis` = ' + pektis.pektisLoginGet().json();
 	conn.query(query, function(conn, rows) {
-		Globals.awalk(rows, function(sxoliastis, kimeno) {
-			pektis.pektisProfinfoSet(sxoliastis, kimeno);
+		Globals.awalk(rows, function(i, profinfo) {
+			pektis.pektisProfinfoSet(profinfo['sxoliastis'], profinfo['kimeno']);
 		});
 
 		Service.sinedria.sxesi(nodereq, conn, pektis);
@@ -92,15 +93,23 @@ Service.sinedria.sxesi = function(nodereq, conn, pektis) {
 			onoma: pektis.pektisOnomaGet(),
 			peparam: pektis.peparam,
 			sxesi: pektis.sxesi,
+			profinfo: pektis.profinfo,
 		};
 
 		photoSrc = pektis.pektisPhotoSrcGet();
 		if (photoSrc) kinisi.data.photoSrc = photoSrc;
 
 		Server.skiniko.
-		processKinisi(kinisi).
-		kinisiAdd(kinisi);
+		processKinisi(kinisi);
 		console.log(login + ': ενετάχθη παίκτης στο σκηνικό');
+
+		// Οι πληροφορίες προφίλ δεν θα αποσταλούν στους clients,
+		// για λόγους οικονομίας και ιδιωτικότητας. Αυτός ήταν
+		// και ο λόγος που σπάσαμε τη διαδικασία σε δύο κομμάτια.
+
+		delete kinisi.data.profinfo;
+		Server.skiniko.
+		kinisiAdd(kinisi);
 
 		conn.transaction(function(conn) {
 			Service.sinedria.checkin2(nodereq, conn, pektis);
