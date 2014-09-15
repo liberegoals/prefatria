@@ -58,7 +58,7 @@ Skiniko.prototype.stisimo = function(callback) {
 
 	Arena.feredataTimerClear();
 	Arena.feredataID++;
-	if (Debug.flagGet('feredata') && Arena.ego.isDeveloper())
+	if (Arena.ego.isDeveloper())
 	console.log('Ζητήθηκαν πλήρη σκηνικά δεδομένα (id = ' + Arena.feredataID + ')');
 
 	Arena.feredataAlagesCount = 0;
