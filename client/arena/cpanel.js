@@ -373,7 +373,7 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 	},
 }));
 
-Arena.cpanel.bpanelButtonPush(new PButton({
+Arena.cpanel.bpanelButtonPush(Arena.cpanel.freskarismaButton = new PButton({
 	omada: 1,
 	img: 'bugFix.png',
 	title: 'Ανανέωση σκηνικού',
