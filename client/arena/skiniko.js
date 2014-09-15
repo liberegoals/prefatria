@@ -471,14 +471,18 @@ Skiniko.prototype.skinikoFreskarisma = function() {
 	// Ελέγχουμε αν έχουμε κάνει πολλά αιτήματα παραλαβής μεταβολών σκηνικού
 	// χωρίς να έχει μεσολαβήσει παραλαβή πλήρων σκηνικών δεδομένων.
 
-	if (++Arena.feredataAlagesCount > Arena.feredataAlagesCountMax)
-	return true;
+	if (++Arena.feredataAlagesCount > Arena.feredataAlagesCountMax) {
+		console.log('Φρεσκάρισμα σκηνικού λόγω πληθώρας μεταβολών (>' + Arena.feredataAlagesCountMax + ')');
+		return true;
+	}
 
 	// Ελέγχουμε αν έχει περάσει αρκετή ώρα από την τελευταία φορά που παραλάβαμε
 	// πλήρη σκηνικά δεδομένα.
 
-	if (Globals.tora() - Arena.feredataFreskaTS > Arena.feredataFreskaXronosMax)
-	return true;
+	if (Globals.tora() - Arena.feredataFreskaTS > Arena.feredataFreskaXronosMax) {
+		console.log('Φρεσκάρισμα σκηνικού λόγω παρέλευσης χρόνου (>' + Arena.feredataFreskaXronosMax + 's)');
+		return true;
+	}
 
 	return false;
 };
