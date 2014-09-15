@@ -628,7 +628,7 @@ jQuery.fn.siromeno = function(css) {
 			if (isNaN(siromeno_r)) obj.css({left: 0});
 		}
 
-		$(this).find("input").on('mousedown', function(e) {
+		$(this).find('input').on('mousedown', function(e) {
 			e.stopPropagation();
 		});
 
@@ -640,7 +640,7 @@ jQuery.fn.siromeno = function(css) {
 			e.stopPropagation();
 		}).off('mouseenter').on('mouseenter', function(e) {
 			e.stopPropagation();
-			obj.css({cursor: 'crosshair'});
+			obj.css({cursor: 'move'});
 		}).off('mouseleave').on('mouseleave', function(e) {
 			obj.css({cursor: cursor ? cursor : 'auto'});
 		}).off('mousedown').on('mousedown', function(e) {
@@ -692,9 +692,9 @@ jQuery.fn.siromeno = function(css) {
 			var winW = $(window).width();
 			var winH = $(window).height();
 
-			obj.find('*').not('marquee').on('scroll', function(e) {
+			obj.find('*').not('marquee').off('scroll').on('scroll', function(e) {
 				e.stopPropagation();
-				obj.trigger('mouseup');
+				if (moving) doc.trigger('mouseup');
 			});
 
 			doc.on('mousemove', function(e) {
@@ -727,7 +727,7 @@ jQuery.fn.siromeno = function(css) {
 				text.prop({disabled: false}).off('mousemove');
 
 				var css = {};
-				css.cursor = 'crosshair';
+				css.cursor = 'move';
 				if (opacity !== false) css.opacity = opacity;
 				obj.stop().css(css);
 			}).on('contextmenu', function(e) {
