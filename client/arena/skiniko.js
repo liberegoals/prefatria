@@ -313,6 +313,7 @@ Skiniko.prototype.processPartidaEnergiaData = function(energiaData, online) {
 Skiniko.prototype.anamoniAlages = function() {
 	if ((++Arena.feredataAlagesCount > Arena.feredataAlagesCountMax) ||
 		(Globals.tora() - Arena.feredataFreskaTS > Arena.feredataFreskaXronosMax)) {
+		Client.fyi.kato('Δρομολογήθηκε φρεσκάρισμα σκηνικού…');
 		Arena.cpanel.freskarismaButton.pbuttonGetDOM().trigger('click');
 		return this;
 	}
