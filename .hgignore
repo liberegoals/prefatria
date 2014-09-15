@@ -1,0 +1,10 @@
+glob:misc/.mistiko
+glob:*.swp
+glob:*.zip
+glob:rcLocal.js
+glob:client/site/motd.php
+glob:client/site/diafimisi.php
+glob:*~
+glob:*.gz
+glob:database/ananeosi/*.data
+glob:client/photo/?/*
