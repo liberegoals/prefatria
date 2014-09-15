@@ -311,13 +311,6 @@ Skiniko.prototype.processPartidaEnergiaData = function(energiaData, online) {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
 
 Skiniko.prototype.anamoniAlages = function() {
-	if ((++Arena.feredataAlagesCount > Arena.feredataAlagesCountMax) ||
-		(Globals.tora() - Arena.feredataFreskaTS > Arena.feredataFreskaXronosMax)) {
-		Client.fyi.kato('Δρομολογήθηκε φρεσκάρισμα σκηνικού…');
-		Arena.cpanel.freskarismaButton.pbuttonGetDOM().trigger('click');
-		return this;
-	}
-
 	Arena.feredataTimerClear();
 	Arena.feredataTimer = setTimeout(function() {
 		Arena.feredataID++;
@@ -401,6 +394,18 @@ Skiniko.prototype.processAlages = function(rsp) {
 		} catch(e) {}
 	}
 
+	// Πριν επεξεργαστούμε τις μεταβολές σκηνικών δεδομένων που παραλάβαμε,
+	// ελέγχουμε αν είναι κατάλληλη στιγμή να «φρεσκάρουμε» το σκηνικό.
+	// Αν είναι, πράγματι, κατάλληλη η στιγμή να φρεσκάρουμε το σκηνικό,
+	// αγνοούμε τις μεταβολές που μόλις παραλάβαμε και ζητάμε πλήρη
+	// σκηνικά δεδομένα.
+
+	if (this.skinikoFreskarisma()) {
+		Client.fyi.kato('Δρομολογήθηκε φρεσκάρισμα σκηνικού…');
+		Arena.cpanel.freskarismaButton.pbuttonGetDOM().trigger('click');
+		return this;
+	}
+
 	// Μεταφράζουμε τα δεδομένα ως json data και αν αποτύχουμε ζητάμε πλήρη
 	// σκηνικά δεδομένα.
 
@@ -446,6 +451,36 @@ Skiniko.prototype.processAlages = function(rsp) {
 	anamoniAlages();
 
 	return this;
+};
+
+Skiniko.prototype.skinikoFreskarisma = function() {
+	// Αν είμαστε σε τραπέζι και η παρτίδα είναι σε φάση παιχνιδιού δεν κάνουμε
+	// φρεσκάρισμα ώστε να αποφύγουμε τις απότομες μεταβολές σε κινήσεις φύλλων,
+	// μπαζών κλπ.
+
+	if (Arena.ego.isTrapezi()) {
+		switch (Arena.ego.trapezi.partidaFasiGet()) {
+		case 'ΔΙΑΝΟΜΗ':
+		case 'ΣΥΜΜΕΤΟΧΗ':
+			break;
+		default:
+			return false;
+		}
+	}
+
+	// Ελέγχουμε αν έχουμε κάνει πολλά αιτήματα παραλαβής μεταβολών σκηνικού
+	// χωρίς να έχει μεσολαβήσει παραλαβή πλήρων σκηνικών δεδομένων.
+
+	if (++Arena.feredataAlagesCount > Arena.feredataAlagesCountMax)
+	return true;
+
+	// Ελέγχουμε αν έχει περάσει αρκετή ώρα από την τελευταία φορά που παραλάβαμε
+	// πλήρη σκηνικά δεδομένα.
+
+	if (Globals.tora() - Arena.feredataFreskaTS > Arena.feredataFreskaXronosMax)
+	return true;
+
+	return false;
 };
 
 Skiniko.prototype.processAlagesPartida = function(data, trapeziPrin) {
