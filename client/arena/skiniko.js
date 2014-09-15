@@ -11,6 +11,27 @@ Arena.skiniko = new Skiniko();
 
 Arena.feredataID = 0;
 
+// Ο μετρητής "feredataAlagesCount" μετράει το πλήθος των αιτημάτων παραλαβής
+// μεταβολών από το τελευταίο «φρεσκάρισμα» του σκηνικού μέσω αιτήματος παραλαβής
+// πλήρων σκηνικών δεδομένων.
+
+Arena.feredataAlagesCount = 0;
+
+// Η σταθερά "feredataAlagesCountMax" δείχνει το πλήθος των αιτημάτων παραλαβής
+// μεταβολών που θα σηματοδοτήσει αυτόματο «φρεσκάρισμα» του σκηνικού.
+
+Arena.feredataAlagesCountMax = 500;
+
+// Η μεταβλητή "Arena.feredataFreskaTS" δείχνει το timestamp του τελευταίου
+// «φρεσκαρίσματος» του σκηνικού.
+
+Arena.feredataFreskaTS = 0;
+
+// Η σταθερά "feredataFreskaXronosMax" δείχνει τον μέγιστο επιτρεπτό χρόνο μεταξύ
+// δύο «φρεσκαρισμάτων» του σκηνικού.
+
+Arena.feredataFreskaXronosMax = 300;	// 5 λεπτά
+
 // Ο timer "feredataTimer" αφορά σε δρομολογημένο αίτημα αποστολής αλλαγών.
 // Πράγματι, τα αιτήματα αποστολής μεταβολών σκηνικού τα αποστέλλονται με
 // κάποια καθυστέρηση, ανάλογα με την τιμή της μεταβλητής "feredataDelay".
@@ -39,6 +60,9 @@ Skiniko.prototype.stisimo = function(callback) {
 	Arena.feredataID++;
 	if (Debug.flagGet('feredata') && Arena.ego.isDeveloper())
 	console.log('Ζητήθηκαν πλήρη σκηνικά δεδομένα (id = ' + Arena.feredataID + ')');
+
+	Arena.feredataAlagesCount = 0;
+	Arena.feredataFreskaTS = Globals.tora();
 
 	Client.skiserService('fereFreska', 'id=' + Arena.feredataID).
 	done(function(rsp) {
@@ -287,6 +311,12 @@ Skiniko.prototype.processPartidaEnergiaData = function(energiaData, online) {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
 
 Skiniko.prototype.anamoniAlages = function() {
+	if ((++Arena.feredataAlagesCount > Arena.feredataAlagesCountMax) ||
+		(Globals.tora() - Arena.feredataFreskaTS > Arena.feredataFreskaXronosMax)) {
+		Arena.cpanel.freskarismaButton.pbuttonGetDOM().trigger('click');
+		return this;
+	}
+
 	Arena.feredataTimerClear();
 	Arena.feredataTimer = setTimeout(function() {
 		Arena.feredataID++;
@@ -723,7 +753,7 @@ Arena.pektisFormaKlisimo = function(delay) {
 };
 
 Arena.pektisPanelRefreshDOM = function() {
-	var login, pektis, prosklisiButton;
+	var login, pektis, photoSrc, prosklisiButton, photoDOM;
 
 	if (!Arena.pektisPanelDOM) return Arena;
 	Arena.pektisPanelDOM.empty();
@@ -738,7 +768,27 @@ Arena.pektisPanelRefreshDOM = function() {
 	Arena.pektisPanelDOM.
 	on('mousedown', function(e) {
 		Arena.inputRefocus(e);
-	}).
+	});
+
+	photoSrc = pektis.pektisPhotoSrcGet();
+	if (photoSrc) Arena.pektisPanelDOM.
+	append($('<img>').addClass('pektisPanelIcon').
+	css('marginLeft', '0px').attr({
+		src: Client.server + 'ikona/pektis/photo.png',
+		title: 'Φωτογραφία προφίλ',
+	}).on('mouseenter', function(e) {
+		if (photoDOM.data('emfanis')) return;
+		photoDOM.finish().fadeIn(100);
+	}).on('mouseleave', function(e) {
+		if (photoDOM.data('emfanis')) return;
+		photoDOM.finish().fadeOut(100);
+	}).on('click', function(e) {
+		Arena.inputRefocus(e);
+		if (photoDOM.data('emfanis')) photoDOM.finish().fadeOut(100).removeData('emfanis');
+		else photoDOM.finish().fadeIn(100).data('emfanis', true);
+	}));
+
+	Arena.pektisPanelDOM.
 	append(prosklisiButton = $('<button>').text('Πρόσκληση').on('click', function(e) {
 		var button = $(this);
 
@@ -790,7 +840,7 @@ Arena.pektisPanelRefreshDOM = function() {
 		Arena.alagiSxesis(e, login);
 	}));
 	else Arena.pektisPanelDOM.append($('<img>').addClass('pektisPanelIcon').attr({
-		src: Client.server + 'ikona/misc/filos.png',
+		src: Client.server + 'ikona/pektis/filos.png',
 		title: 'Φίλος',
 	}).on('click', function(e) {
 		Arena.alagiSxesis(e, login, 'ΦΙΛΟΣ');
@@ -803,10 +853,18 @@ Arena.pektisPanelRefreshDOM = function() {
 		Arena.alagiSxesis(e, login);
 	}));
 	else Arena.pektisPanelDOM.append($('<img>').addClass('pektisPanelIcon').attr({
-		src: Client.server + 'ikona/misc/apoklismos.png',
+		src: Client.server + 'ikona/pektis/apoklismos.png',
 		title: 'Αποκλεισμός',
 	}).on('click', function(e) {
 		Arena.alagiSxesis(e, login, 'ΑΠΟΚΛΕΙΣΜΕΝΟΣ');
+	}));
+
+	if (photoSrc) Arena.pektisFormaDOM.append(photoDOM = $('<img>').attr({
+		id: 'pektisPhoto',
+		src: 'photo/' + photoSrc,
+	}).siromeno({
+		top: '40px',
+		left: '8px',
 	}));
 
 	prosklisiButton.css('display', Arena.dikeomaProsklisis() ? 'inline-block' : 'none');

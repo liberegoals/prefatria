@@ -40,6 +40,14 @@ body {
 	color: #1B2F3A;
 }
 
+#pektisPhoto {
+	display: none;
+	position: absolute;
+	top: 40px;
+	left: 8px;
+	height: 110px;
+}
+
 .pektisPanelIcon {
 	position: relative;
 	bottom: -6px;
