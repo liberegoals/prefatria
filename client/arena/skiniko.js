@@ -743,6 +743,7 @@ Pektis.prototype.pektisFormaPopupFillDOM = function(login) {
 	append(Client.klisimo(function() {
 		Arena.pektisFormaKlisimo();
 	})).
+	append(Arena.pektisFormaLoginDOM = $('<div>').attr('id', 'pektisFormaLogin').addClass('pektisFormaOnoma')).
 	append(Arena.pektisPanelDOM = $('<div>').attr('id', 'pektisPanel').
 	on('mousedown', function(e) {
 		Arena.inputRefocus(e);
@@ -761,6 +762,7 @@ Pektis.prototype.pektisFormaPopupFillDOM = function(login) {
 	});
 
 	baraDOM.
+	append($('<div>').addClass('pektisFormaOnoma').text(this.pektisOnomaGet())).
 	append($('<img>').attr('id', 'profinfoIsozigioIcon').attr('src', 'ikona/misc/bara.png')).
 	on('mousedown', function(e) {
 		var y0;
@@ -825,6 +827,9 @@ Arena.pektisPanelRefreshDOM = function() {
 
 	if (!Arena.pektisPanelDOM) return Arena;
 	Arena.pektisPanelDOM.empty();
+
+	if (!Arena.pektisFormaLoginDOM) return Arena;
+	Arena.pektisFormaLoginDOM.removeClass('tsoxaPektisFilos tsoxaPektisApoklismenos').empty();
 
 	if (!Arena.pektisFormaDOM) return Arena;
 	login = Arena.pektisFormaDOM.data('pektis');
@@ -899,7 +904,8 @@ Arena.pektisPanelRefreshDOM = function() {
 			}
 		});
 	})).
-	append($('<button>').text('Μήνυμα'));
+	append($('<button>').text('Μήνυμα')).
+	append($('<button>').text('Σχόλιο'));
 
 	if (Arena.ego.isFilos(login)) Arena.pektisPanelDOM.append($('<img>').addClass('pektisPanelIcon').attr({
 		src: Client.server + 'ikona/misc/Xgreen.png',
@@ -936,7 +942,9 @@ Arena.pektisPanelRefreshDOM = function() {
 	}));
 
 	prosklisiButton.css('display', Arena.dikeomaProsklisis() ? 'inline-block' : 'none');
-	Arena.pektisPanelDOM.append($('<div>').attr('id', 'pektisFormaOnoma').text(login));
+	Arena.pektisFormaLoginDOM.text(login);
+	if (Arena.ego.isFilos(login)) Arena.pektisFormaLoginDOM.addClass('tsoxaSxesiFilos');
+	else if (Arena.ego.isApoklismenos(login)) Arena.pektisFormaLoginDOM.addClass('tsoxaSxesiApoklismenos');
 	return Arena;
 };
 

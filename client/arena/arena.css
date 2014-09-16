@@ -21,23 +21,30 @@ body {
 
 #pektisPanel {
 	position: absolute;
-	top: -6px;
 	left: 0;
-	padding: 4px;
+/*
+background-color: rgba(0, 128, 128, 0.18);
+*/
 }
 
 #pektisPanel button {
-	margin-left: 4px;
+	margin-left: 10px;
 	cursor: pointer;
 }
 
-#pektisFormaOnoma {
-	display: inline-block;
-	margin: 0 0 0 10px;
+.pektisFormaOnoma {
+	position: absolute;
+	right: 40px;
+
 	font-size: 16px;
 	font-weight: bold;
 	font-style: italic;
 	color: #1B2F3A;
+}
+
+#pektisFormaLogin {
+	top: 8px;
+	bottom: 8px;
 }
 
 #pektisPhoto {
@@ -99,7 +106,7 @@ body {
 	top: 151px;
 	height: 22px;
 	width: 100%;
-	text-align: center;
+	text-align: right;
 	cursor: ns-resize;
 /*
 	background-color: red;
@@ -109,6 +116,7 @@ body {
 #profinfoIsozigioIcon {
 	position: relative;
 	bottom: 1px;
+	right: 7px;
 	height: 22px;
 }
 
