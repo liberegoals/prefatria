@@ -146,7 +146,7 @@ Funchat.prototype.funchatCreateDOM = function() {
 		}
 
 		$(this).attr({
-			src: '../ikona/panel/sigasi.png',
+			src: '../ikona/panel/funchat/sigasi.png',
 			title: 'Σίγαση δοκιμής ηχητικού εφέ',
 		});
 
