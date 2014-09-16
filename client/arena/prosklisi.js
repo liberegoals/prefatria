@@ -121,7 +121,7 @@ Arena.prosklisi.panel.bpanelButtonPush(Arena.prosklisi.panel.apasxolimenosButton
 }));
 
 Arena.prosklisi.panel.bpanelButtonPush(new PButton({
-	img: 'leak.png',
+	img: 'leakThin.png',
 	title: 'Inspect memory leaks',
 	check: function() {
 		if (Debug.flagGet('developer')) return true;

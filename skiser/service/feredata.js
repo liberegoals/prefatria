@@ -409,15 +409,52 @@ Sinedria.prototype.feredataFreska = function() {
 	});
 	nodereq.write('],\n');
 
-	nodereq.write('dianomi: [\n');
-	skiniko.skinikoTrapeziWalk(function() {
-		this.trapeziDianomiWalk(function() {
+	// Τα δεδομένα διανομών είναι πάρα πολλά, π.χ. 50 τραπέζια Χ 20 διανομές = 1000 διανομές.
+	// Για το λόγο αυτό μπορούμε να επιλέξουμε αν θα αποστείλουμε αναλυτικά ή «οικονομικά»
+	// δεδομένα για τις διανομές.
+
+	if (nodereq.url.ikonomika) {
+		nodereq.write('dianomiEco: {\n');
+		skiniko.skinikoTrapeziWalk(function() {
+			if (this.dianomiArray.length < 1)
+			return;
+
 			nodereq.write('\t');
-			nodereq.write(this.dianomiFeredata());
-			nodereq.write(',\n');
+			nodereq.write(this.trapeziKodikosGet());
+			nodereq.write(': [\n');
+			this.trapeziDianomiWalk(function() {
+				var dianomi;
+
+				dianomi = this;
+				nodereq.write('\t\t{');
+				nodereq.write('k:' + this.kodikos + ',');
+				nodereq.write('d:' + this.dealer);
+				Prefadoros.thesiWalk(function(thesi) {
+					nodereq.write(',k' + thesi + ':' + dianomi['kasa' + thesi] + ',');
+					nodereq.write('m' + thesi + ':' + dianomi['metrita' + thesi]);
+				});
+				nodereq.write('},\n');
+			});
+			nodereq.write('\t],\n');
 		});
-	});
-	nodereq.write('],\n');
+		nodereq.write('},\n');
+	}
+
+	// Τα δεδομένα διανομών είναι πάρα πολλά, π.χ. 50 τραπέζια Χ 20 διανομές = 1000 διανομές.
+	// Για το λόγο αυτό προτιμούμε να αποστείλουμε «οικονομικά» δεδομένα.
+
+	else {
+		console.log(paraliptisLogin + ': feredata economy off');
+		nodereq.write('dianomi: [\n');
+		skiniko.skinikoTrapeziWalk(function() {
+			this.trapeziDianomiWalk(function() {
+				nodereq.write('\t');
+				nodereq.write(this.dianomiFeredata());
+				nodereq.write(',\n');
+			});
+		});
+		nodereq.write('],\n');
+	}
 
 	nodereq.write('sizitisi: [\n');
 	skiniko.skinikoSizitisiWalk(function() {
@@ -695,9 +732,23 @@ Server.feredataFormat = function(attrs) {
 	var i;
 
 	for (i in attrs) {
-		if (!this.hasOwnProperty(i)) delete attrs[i];
-		else if (this[i] === null) delete attrs[i];
-		else attrs[i] = this[i];
+		if (!this.hasOwnProperty(i)) {
+			delete attrs[i];
+			continue;
+		}
+
+		if (this[i] === null) {
+			delete attrs[i];
+			continue;
+		}
+
+		if (attrs[i] === null) {
+			attrs[i] = this[i];
+			continue;
+		}
+
+		attrs[attrs[i]] = this[i];
+		delete attrs[i];
 	}
 
 	return JSON.stringify(attrs);
@@ -741,6 +792,19 @@ Dianomi.prototype.dianomiFeredata = function() {
 		metrita2: null,
 		kasa3: null,
 		metrita3: null,
+	});
+};
+
+Dianomi.prototype.dianomiFeredataEco = function() {
+	return Server.feredataFormat.call(this, {
+		kodikos: 'k',
+		dealer: 'd',
+		kasa1: 'k1',
+		metrita1: 'm1',
+		kasa2: 'k2',
+		metrita2: 'm2',
+		kasa3: 'k3',
+		metrita3: 'm3',
 	});
 };
 
