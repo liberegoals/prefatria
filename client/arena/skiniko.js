@@ -64,7 +64,7 @@ Skiniko.prototype.stisimo = function(callback) {
 	Arena.feredataAlagesCount = 0;
 	Arena.feredataFreskaTS = Globals.tora();
 
-	Client.skiserService('fereFreska', 'id=' + Arena.feredataID).
+	Client.skiserService('fereFreska', 'id=' + Arena.feredataID, 'ikonomika=1').
 	done(function(rsp) {
 		skiniko.processFreskaData(rsp);
 		if (callback) callback.call(skiniko);
@@ -148,16 +148,43 @@ Skiniko.prototype.processFreskaData = function(rsp) {
 		skiniko.skinikoTrapeziSet(new Trapezi(trapezi));
 	});
 
-	Globals.awalk(data.dianomi, function(i, dianomi) {
-		var trapezi;
+	// Οι διανομές παραλαμβάνονται είτε ως «οικονομική» λίστα ανά τραπέζι,
+	// είτε ως array αναλυτικών δεδομένων όλων των διανομών.
 
-		dianomi = new Dianomi(dianomi);
-		trapezi = skiniko.skinikoTrapeziGet(dianomi.dianomiTrapeziGet());
-		if (!trapezi) return;
+	if (data.hasOwnProperty('dianomiEco')) {
+		Globals.walk(data.dianomiEco, function(trapezi, dianomiArray) {
+			trapezi = skiniko.skinikoTrapeziGet(trapezi);
+			if (!trapezi) return;
 
-		trapezi.trapeziDianomiSet(dianomi);
-		trapezi.dianomiArray.push(dianomi);
-	});
+			Globals.awalk(dianomiArray, function(i, dianomi) {
+				dianomi = new Dianomi({
+					kodikos: dianomi.k,
+					dealer: dianomi.d,
+					kasa1: dianomi.k1,
+					metrita1: dianomi.m1,
+					kasa2: dianomi.k2,
+					kasa2: dianomi.k2,
+					metrita3: dianomi.m3,
+					metrita3: dianomi.m3,
+				});
+
+				trapezi.trapeziDianomiSet(dianomi);
+				trapezi.dianomiArray.push(dianomi);
+			});
+		});
+	}
+	else if (data.hasOwnProperty('dianomi')) {
+		Globals.awalk(data.dianomi, function(i, dianomi) {
+			var trapezi;
+
+			dianomi = new Dianomi(dianomi);
+			trapezi = skiniko.skinikoTrapeziGet(dianomi.dianomiTrapeziGet());
+			if (!trapezi) return;
+
+			trapezi.trapeziDianomiSet(dianomi);
+			trapezi.dianomiArray.push(dianomi);
+		});
+	}
 
 	// Φορτώνουμε τις προσκλήσεις που μας αφορούν.
 

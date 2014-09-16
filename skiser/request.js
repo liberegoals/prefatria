@@ -92,7 +92,7 @@ NodeRequest.prototype.error = function(msg, code) {
 NodeRequest.prototype.write = function(s) {
 	this.headerCheck();
 	if (s === undefined) return this;
-	else if (typeof s === 'number') this.response.write(s);
+	else if (typeof s === 'number') this.response.write(s.toString());
 	else if (typeof s !== 'string') Globals.fatal('response.write: invalid data type');
 	else if (s !== '') this.response.write(s);
 	return this;
