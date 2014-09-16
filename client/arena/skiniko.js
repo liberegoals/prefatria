@@ -152,19 +152,20 @@ Skiniko.prototype.processFreskaData = function(rsp) {
 	// είτε ως array αναλυτικών δεδομένων όλων των διανομών.
 
 	if (data.hasOwnProperty('dianomiEco')) {
-		Globals.walk(data.dianomiEco, function(trapezi, dianomiArray) {
-			trapezi = skiniko.skinikoTrapeziGet(trapezi);
+		Globals.walk(data.dianomiEco, function(trapeziKodikos, dianomiArray) {
+			trapezi = skiniko.skinikoTrapeziGet(trapeziKodikos);
 			if (!trapezi) return;
 
 			Globals.awalk(dianomiArray, function(i, dianomi) {
 				dianomi = new Dianomi({
 					kodikos: dianomi.k,
+					trapezi: trapeziKodikos,
 					dealer: dianomi.d,
 					kasa1: dianomi.k1,
 					metrita1: dianomi.m1,
 					kasa2: dianomi.k2,
-					kasa2: dianomi.k2,
-					metrita3: dianomi.m3,
+					metrita2: dianomi.m2,
+					kasa3: dianomi.k3,
 					metrita3: dianomi.m3,
 				});
 
