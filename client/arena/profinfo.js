@@ -117,7 +117,7 @@ Pektis.prototype.pektisFormaPopupFillDOM = function(login) {
 	append(Arena.pektisFormaBaraDOM = $('<div>').attr('id', 'profinfoIsozigio')).
 	append(Arena.pektisFormaEditDOM = $('<textarea>').attr('id', 'pektisFormaEdit').text('asdasd').
 	on('mousedown', function(e) {
-		Arena.inputRefocus(e);
+		e.stopPropagation();
 		Arena.pektisFormaEditDOM.focus();
 	}));
 
@@ -329,7 +329,7 @@ Arena.pektisPanelRefreshDOM = function() {
 		Arena.pektisFormaEditOff();
 	})).
 
-	append(Arena.pektisFormaSxolioDOM = $('<button>').text('Σχόλιο').
+	append(Arena.pektisFormaSxolioDOM = $('<button>').text('Πληροφορίες').
 	css('display', Arena.pektisFormaEditing ? 'none' : 'inline-block').
 	on('click', function(e) {
 		Arena.inputRefocus(e);
