@@ -967,6 +967,10 @@ Client.sound = {
 	applause: function() {
 		Client.sound.play('applause.ogg', Client.sound.entasi['ΚΑΝΟΝΙΚΗ']);
 	},
+
+	hiThere: function() {
+		Client.sound.play('hiThere.ogg', Client.sound.entasi['ΚΑΝΟΝΙΚΗ']);
+	},
 };
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
