@@ -1080,10 +1080,10 @@ Trapezi.prototype.trapeziThesiRefreshDOM = function(thesi) {
 		else dom.html('&mdash;');
 	}
 
+	dom.off('click');
 	if (pektis) dom.on('click', function(e) {
 		pektis.pektisFormaPopupDOM(e);
 	});
-	else dom.off('click');
 
 	return this;
 };
