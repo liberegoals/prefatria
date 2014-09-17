@@ -116,7 +116,6 @@ Pektis.prototype.pektisFormaPopupFillDOM = function(login) {
 	append(Arena.pektisFormaEgoDOM = $('<div>').attr('id', 'profinfoEgo').addClass('profinfoArea')).
 	append(Arena.pektisFormaBaraDOM = $('<div>').attr('id', 'profinfoIsozigio')).
 	append(Arena.pektisFormaEditDOM = $('<textarea>').attr('id', 'pektisFormaEdit').
-	html(this.pektisProfinfoGet(Client.session.pektis)).
 	on('mousedown', function(e) {
 		e.stopPropagation();
 		Arena.pektisFormaEditDOM.focus();
@@ -348,6 +347,8 @@ Arena.pektisPanelRefreshDOM = function() {
 	}).css('display', Arena.pektisFormaEditing ? 'none' : 'inline-block').
 	on('click', function(e) {
 		Arena.inputRefocus(e);
+		Arena.pektisFormaEditDOM.
+		val(pektis.pektisProfinfoGet(Client.session.pektis));
 		Arena.pektisFormaEditOn('sxolio');
 		Arena.pektisFormaEditDOM.focus();
 	})).
@@ -359,6 +360,12 @@ Arena.pektisPanelRefreshDOM = function() {
 
 		Arena.inputRefocus(e);
 		kimeno = Arena.pektisFormaEditDOM.val().trim();
+
+		// Αν το κείμενο που επιχειρεί να καταχωρήσει ο συντάκτης είναι το
+		// ίδιο με αυτό που ήδη υπάρχει ως πληροφορία προφίλ του συντάκτη
+		// για τον εν λόγω παίκτη, δεν χρειάζεται να γίνει αποστολή στον
+		// skiser και συνακόλουθη κοινοποίηση στους clients.
+
 		if (pektis.pektisProfinfoGet(Client.session.pektis) == kimeno) {
 			pektis.pektisProfinfoRefreshDOM(login);
 			Arena.pektisFormaEditOff();
@@ -369,6 +376,11 @@ Arena.pektisPanelRefreshDOM = function() {
 		Client.skiserService('profinfoPut', 'pektis=' + login, 'kimeno=' + kimeno).
 		done(function(rsp) {
 			Client.fyi.pano(rsp);
+
+			// Ο ίδιος ο συντάκτης κάνει επί τόπου την αλλαγή της πληροφορίας
+			// στο σκηνικό του και δεν περιμένει να την παραλάβει από τον
+			// skiser.
+
 			pektis.
 			pektisProfinfoSet(Client.session.pektis, kimeno).
 			pektisProfinfoRefreshDOM(login);
