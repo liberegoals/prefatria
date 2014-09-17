@@ -118,6 +118,7 @@ Pektis.prototype.pektisFormaPopupFillDOM = function(login) {
 	append(Arena.pektisFormaEditDOM = $('<textarea>').attr('id', 'pektisFormaEdit').text('asdasd').
 	on('mousedown', function(e) {
 		Arena.inputRefocus(e);
+		Arena.pektisFormaEditDOM.focus();
 	}));
 
 	Arena.pektisPanelRefreshDOM();
@@ -318,6 +319,7 @@ Arena.pektisPanelRefreshDOM = function() {
 	on('click', function(e) {
 		Arena.inputRefocus(e);
 		Arena.pektisFormaEditOn('minima');
+		Arena.pektisFormaEditDOM.focus();
 	})).
 
 	append(Arena.pektisFormaApostoliDOM = $('<button>').text('Αποστολή').
@@ -332,6 +334,7 @@ Arena.pektisPanelRefreshDOM = function() {
 	on('click', function(e) {
 		Arena.inputRefocus(e);
 		Arena.pektisFormaEditOn('sxolio');
+		Arena.pektisFormaEditDOM.focus();
 	})).
 
 	append(Arena.pektisFormaKataxorisiDOM = $('<button>').text('Καταχώρηση').
