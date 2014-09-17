@@ -193,8 +193,8 @@ Arena.pektisFormaEditOn = function(edit) {
 
 	Arena.pektisFormaMinimaDOM.css('display', 'none');
 	Arena.pektisFormaSxolioDOM.css('display', 'none');
-	Arena.pektisFormaApostoliDOM.css(edit === 'minima' ? 'display' : 'none');
-	Arena.pektisFormaKataxorisiDOM.css(edit === 'sxolio' ? 'display' : 'none');
+	Arena.pektisFormaApostoliDOM.css('display', edit === 'minima' ? 'inline-block' : 'none');
+	Arena.pektisFormaKataxorisiDOM.css('display', edit === 'sxolio' ? 'inline-block' : 'none');
 	Arena.pektisFormaAkiroDOM.css('display', 'inline-block');
 
 	Arena.pektisFormaEditing = edit;
@@ -317,7 +317,7 @@ Arena.pektisPanelRefreshDOM = function() {
 	css('display', Arena.pektisFormaEditing ? 'none' : 'inline-block').
 	on('click', function(e) {
 		Arena.inputRefocus(e);
-		Arena.pektisFormaEditOn(Arena.pektisFormaApostoliDOM);
+		Arena.pektisFormaEditOn('minima');
 	})).
 
 	append(Arena.pektisFormaApostoliDOM = $('<button>').text('Αποστολή').
@@ -331,7 +331,7 @@ Arena.pektisPanelRefreshDOM = function() {
 	css('display', Arena.pektisFormaEditing ? 'none' : 'inline-block').
 	on('click', function(e) {
 		Arena.inputRefocus(e);
-		Arena.pektisFormaEditOn(Arena.pektisFormaKataxorisiDOM);
+		Arena.pektisFormaEditOn('sxolio');
 	})).
 
 	append(Arena.pektisFormaKataxorisiDOM = $('<button>').text('Καταχώρηση').
