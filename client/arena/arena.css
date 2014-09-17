@@ -28,6 +28,7 @@ background-color: rgba(0, 128, 128, 0.18);
 }
 
 #pektisPanel button {
+	display: inline-block;
 	margin-left: 10px;
 	cursor: pointer;
 }
@@ -61,6 +62,17 @@ background-color: rgba(0, 128, 128, 0.18);
 	width: 26px;
 	margin-left: 14px;
 	cursor: pointer;
+}
+
+#pektisFormaEdit {
+	display: none;
+	position: absolute;
+	top: 39px;
+	left: 8px;
+	width: 478px;
+	height: 255px;
+
+background-color: teal;
 }
 
 /***********************************************************************************************************************/
@@ -624,16 +636,6 @@ background-color: rgba(0, 128, 128, 0.18);
 	font-size: 24px;
 	font-weight: bold;
 	color: #323232;
-}
-
-.tsoxaSxesiFilos {
-	color: #185C18;
-	text-shadow: 1px 1px #000000;
-}
-
-.tsoxaSxesiApoklismenos {
-	color: #991717;
-	text-shadow: 1px 1px #022C02;
 }
 
 .tsoxaPektisKapikia {
@@ -1873,6 +1875,16 @@ cursor: auto;
 
 .apoklismenos {
 	color: #970101;
+}
+
+.sxesiFilos {
+	color: #185C18;
+	text-shadow: 1px 1px #000000;
+}
+
+.sxesiApoklismenos {
+	color: #991717;
+	text-shadow: 1px 1px #022C02;
 }
 
 .ego {

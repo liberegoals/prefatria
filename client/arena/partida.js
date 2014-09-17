@@ -701,7 +701,7 @@ Arena.partida.pektisDataRefreshDOM = function(thesi, iseht, domMain, domOnoma) {
 	if (domOnoma === undefined) domOnoma = Arena.partida['pektisOnoma' + iseht + 'DOM'];
 
 	domMain.removeClass('apodoxi xapodoxi offline fevgatos apasxolimenos');
-	domOnoma.removeClass('fantasma tsoxaSxesiFilos tsoxaSxesiApoklismenos');
+	domOnoma.removeClass('fantasma sxesiFilos sxesiApoklismenos');
 
 	domMain.addClass(Arena.ego.trapezi.trapeziIsApodoxi(thesi) ? 'apodoxi' : 'xapodoxi');
 	domMain.children('.tsoxaProfinfoIcon').remove();
@@ -718,8 +718,8 @@ Arena.partida.pektisDataRefreshDOM = function(thesi, iseht, domMain, domOnoma) {
 	if (!sinedria) domMain.addClass('offline');
 
 	domOnoma.html(login);
-	if (Arena.ego.isFilos(login)) domOnoma.addClass('tsoxaSxesiFilos');
-	else if (Arena.ego.isApoklismenos(login)) domOnoma.addClass('tsoxaSxesiApoklismenos');
+	if (Arena.ego.isFilos(login)) domOnoma.addClass('sxesiFilos');
+	else if (Arena.ego.isApoklismenos(login)) domOnoma.addClass('sxesiApoklismenos');
 
 	pektis = Arena.skiniko.skinikoPektisGet(login);
 	if (!pektis) return Arena.partida;

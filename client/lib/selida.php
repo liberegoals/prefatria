@@ -57,7 +57,7 @@ class Selida {
 		if (!file_exists($file)) return;
 
 		$mtime = filemtime($file);
-		?><link rel="stylesheet" type="text/css" href="<?php Globals::url($css); ?>.css?t=<?php
+		?><link rel="stylesheet" type="text/css" href="<?php Globals::url($css); ?>.css?mt=<?php
 			print $mtime; ?>" /><?php
 	}
 
@@ -66,7 +66,7 @@ class Selida {
 		if (!file_exists($file)) return;
 
 		$mtime = filemtime($file);
-		?><script type="text/javascript" src="<?php Globals::url($script); ?>.js?t=<?php
+		?><script type="text/javascript" src="<?php Globals::url($script); ?>.js?mt=<?php
 			print $mtime; ?>"></script><?php
 	}
 
