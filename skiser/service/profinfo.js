@@ -52,3 +52,49 @@ Service.profinfo.get2 = function(nodereq, pektis) {
 	});
 	nodereq.end();
 };
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
+
+Service.profinfo.put = function(nodereq) {
+	var login, pektis, sxoliastis, kimeno, query;
+
+	if (nodereq.isvoli()) return;
+	if (nodereq.denPerastike('pektis', true)) return;
+	if (nodereq.denPerastike('kimeno', true)) return;
+
+	login = nodereq.url.pektis;
+	pektis = Server.skiniko.skinikoPektisGet(login);
+	if (!pektis) return nodereq.error('Δεν βρέθηκε ο παίκτης στο σκηνικό');
+
+	if (!pektis.hasOwnProperty('profinfo'))
+	return nodereq.error('Δεν βρέθηκαν πληροφορίες προφίλ στο σκηνικό');
+
+	sxoliastis = nodereq.loginGet();
+	kimeno = nodereq.url.kimeno.trim();
+	query = 'REPLACE INTO `profinfo` (`pektis`, `sxoliastis`, `kimeno`) VALUES (' +
+		login.json() + ', ' + sxoliastis.json() + ', ' + kimeno.json() + ')';
+	DB.connection().query(query, function(conn, rows) {
+		var kinisi;
+
+		conn.free();
+		if (conn.affectedRows < 1)
+		return nodereq.error('Απέτυχε η καταχώρηση του προφίλ στην database');
+
+		nodereq.end();
+		pektis.pektisProfinfoSet(sxoliastis, kimeno);
+		if (login != sxoliastis) return;
+
+		kinisi = new Kinisi({
+			idos: 'PI',
+			data: {
+				pektis: login,
+				sxoliastis: sxoliastis,
+				kimeno: kimeno,
+			}
+		});
+
+		Server.skiniko.
+		processKinisi(kinisi).
+		kinisiAdd(kinisi);
+	});
+};

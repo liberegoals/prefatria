@@ -697,3 +697,33 @@ Skiniko.prototype.processKinisiZS = function(data) {
 
 	return this;
 };
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// PI -- Πληροφορίες προφίλ παίκτη
+//
+// Ενημέρωση πληροφοριών προφίλ παίκτη.
+//
+// Δεδομένα
+//
+//	pektis		Το login name του παίκτη στον οποίον αναφέρεται το
+//			κείμενο του προφίλ.
+//
+//	sxoliastis	Το login name του συντάκτη του κειμένου προφίλ.
+//
+//	kimeno		Το κείμενο του προφίλ.
+
+Skiniko.prototype.processKinisiPI = function(data) {
+	var pektis;
+
+	pektis = this.skinikoPektisGet(data.pektis);
+	if (!pektis) return this;
+
+	if (!pektis.profinfo)
+	pektis.profinfo = {};
+
+	if (data.kimeno) pektis.pektisProfinfoSet(data.sxoliastis, data.kimeno);
+	else delete pektis.profinfo[sxoliastis];
+
+	return this;
+};

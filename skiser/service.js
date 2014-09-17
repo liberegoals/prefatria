@@ -36,6 +36,7 @@ Log.level.pop();
 // επεξεργασία που υφίσταται από τον server.
 
 Server.router = {
+	'/profinfoPut': Service.profinfo.put,
 	'/profinfoGet': Service.profinfo.get,
 	'/fortosData': Service.fortos.data,
 	'/sizitisiClearKafenio': Service.sizitisi.clearKafenio,
