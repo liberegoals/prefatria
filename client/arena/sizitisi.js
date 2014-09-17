@@ -150,8 +150,8 @@ Arena.sizitisi.panel.bpanelButtonPush(new PButton({
 Arena.sizitisi.panel.bpanelGetDOM().
 append(Arena.sizitisi.inputDOM = $('<input>').addClass('panelInput').
 on('click', function(e) {
-	Arena.inputTrexon = $(this);
-	Arena.inputRefocus();
+	e.stopPropagation();
+	Arena.inputTrexon = $(this).focus();
 }).
 on('keyup', function(e) {
 	Arena.sizitisi.keyup(e);
