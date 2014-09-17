@@ -274,6 +274,11 @@ Skiniko.prototype.processPartidaSizitisiData = function(sizitisiData, online) {
 		return 0;
 	});
 
+	// Στην περίπτωση των online σχολίων ίσως χρειαστεί να δώσουμε
+	// ηχητικό σήμα, εφόσον έχει περάσει αρκετός χρόνος από την
+	// τελευταία φορά που παραλάβαμε σχόλιο συζήτησης για το
+	// τραπέζι.
+
 	if (online) {
 		tora = Globals.tora();
 		notice = this.sizitisiNotice ? (tora - this.sizitisiNotice > 60) : false;
