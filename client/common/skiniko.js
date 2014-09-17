@@ -272,6 +272,10 @@ Pektis.prototype.pektisProfinfoSet = function(sxoliastis, kimeno) {
 	return this;
 };
 
+Pektis.prototype.pektisProfinfoGet = function(sxoliastis) {
+	return this.profinfo[sxoliastis];
+};
+
 Pektis.prototype.pektisProfinfoWalk = function(callback) {
 	Globals.walk(this.profinfo, function(sxoliastis, kimeno) {
 		callback(sxoliastis, kimeno)

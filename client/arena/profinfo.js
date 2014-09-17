@@ -115,16 +115,15 @@ Pektis.prototype.pektisFormaPopupFillDOM = function(login) {
 	append(Arena.pektisFormaIdiosDOM = $('<div>').attr('id', 'profinfoIdios').addClass('profinfoArea')).
 	append(Arena.pektisFormaEgoDOM = $('<div>').attr('id', 'profinfoEgo').addClass('profinfoArea')).
 	append(Arena.pektisFormaBaraDOM = $('<div>').attr('id', 'profinfoIsozigio')).
-	append(Arena.pektisFormaEditDOM = $('<textarea>').attr('id', 'pektisFormaEdit').text('asdasd').
+	append(Arena.pektisFormaEditDOM = $('<textarea>').attr('id', 'pektisFormaEdit').
+	html(this.pektisProfinfoGet(Client.session.pektis)).
 	on('mousedown', function(e) {
 		e.stopPropagation();
 		Arena.pektisFormaEditDOM.focus();
 	}));
 
 	Arena.pektisPanelRefreshDOM();
-	Arena.pektisFormaIdiosDOM.append($('<div>').addClass('profinfoKimeno').html(this.profinfo[login]));
-	if (login.isEgo()) Arena.pektisFormaEgoDOM.empty();
-	else Arena.pektisFormaEgoDOM.append($('<div>').addClass('profinfoKimeno').html(this.profinfo[Client.session.pektis]));
+	this.pektisProfinfoRefreshDOM(login);
 
 	Arena.pektisFormaDOM.anadisi().finish().fadeIn('fast').
 	find('.klisimoIcon').on('mousedown', function(e) {
@@ -183,6 +182,16 @@ Pektis.prototype.pektisFormaPopupFillDOM = function(login) {
 		});
 	});
 
+	return this;
+};
+
+Pektis.prototype.pektisProfinfoRefreshDOM = function(login) {
+	Arena.pektisFormaIdiosDOM.empty().
+	append($('<div>').addClass('profinfoKimeno').html(this.profinfo[login]));
+
+	Arena.pektisFormaEgoDOM.empty();
+	if (login.oxiEgo())
+	Arena.pektisFormaEgoDOM.append($('<div>').addClass('profinfoKimeno').html(this.profinfo[Client.session.pektis]));
 	return this;
 };
 
@@ -346,8 +355,28 @@ Arena.pektisPanelRefreshDOM = function() {
 	append(Arena.pektisFormaKataxorisiDOM = $('<button>').text('Καταχώρηση').
 	css('display', Arena.pektisFormaEditing === 'sxolio' ? 'inline-block' : 'none').
 	on('click', function(e) {
+		var kimeno;
+
 		Arena.inputRefocus(e);
-		Arena.pektisFormaEditOff();
+		kimeno = Arena.pektisFormaEditDOM.val().trim();
+		if (pektis.pektisProfinfoGet(Client.session.pektis) == kimeno) {
+			pektis.pektisProfinfoRefreshDOM(login);
+			Arena.pektisFormaEditOff();
+			return;
+		}
+
+		Client.fyi.pano('Αποστολή προφίλ. Παρακαλώ περιμένετε…');
+		Client.skiserService('profinfoPut', 'pektis=' + login, 'kimeno=' + kimeno).
+		done(function(rsp) {
+			Client.fyi.pano(rsp);
+			pektis.
+			pektisProfinfoSet(Client.session.pektis, kimeno).
+			pektisProfinfoRefreshDOM(login);
+			Arena.pektisFormaEditOff();
+		}).
+		fail(function(err) {
+			Client.skiserFail(err);
+		});
 	})).
 
 	append(Arena.pektisFormaAkiroDOM = $('<button>').text('Άκυρο').

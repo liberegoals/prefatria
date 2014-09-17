@@ -368,3 +368,23 @@ Kinisi.prototype.isAdiaforiPS = function(sinedria) {
 
 	return true;
 };
+
+// PI		Πληροφορίες προφίλ
+
+Kinisi.prototype.isAdiaforiPI = function(sinedria) {
+	if (!this.data)
+	return true;
+
+	// Αν ο σχολιαστής είναι άλλος από τον παίκτη στον οποίον
+	// αναφέρεται το κείμενο του προφίλ, τότε δεν ενδιαφέρει
+	// κανέναν.
+
+	if (this.data.pektis != this.data.sxoliastis)
+	return true;
+
+	// Το κείμενο προφίλ συντάχθηκε από τον ίδιο τον παίκτη, επομένως
+	// αφορά τους πάντες. Ωστόσο, εξαιρούμε τον συντατη, καθώς αυτός
+	// έχει ήδη παραλάβει το κείμενο κατά τη σύνταξή του.
+
+	return(sinedria.sinedriaPektisGet() == this.data.pektis)
+};

@@ -271,6 +271,9 @@ DBSindesi.prototype.query = function(query, callback) {
 		if (!res) throw new Error('null database query result');
 
 		conn.affectedRows = res.affectedRows;
+		if (isNaN(conn.affectedRows))
+		conn.affectedRows = 0;
+
 		conn.insertId = res.insertId;
 		if (callback) callback(conn, res);
 	});
