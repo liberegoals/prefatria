@@ -263,7 +263,7 @@ Skiniko.prototype.processPartidaData = function(data, online) {
 };
 
 Skiniko.prototype.processPartidaSizitisiData = function(sizitisiData, online) {
-	var trapeziKodikos;
+	var skiniko = this, trapeziKodikos, tora, notice;
 
 	if (!sizitisiData) return this;
 	if (!sizitisiData.length) return this;
@@ -274,11 +274,23 @@ Skiniko.prototype.processPartidaSizitisiData = function(sizitisiData, online) {
 		return 0;
 	});
 
+	if (online) {
+		tora = Globals.tora();
+		notice = this.sizitisiNotice ? (tora - this.sizitisiNotice > 60) : false;
+		this.sizitisiNotice = tora;
+	}
+
 	trapeziKodikos = Arena.ego.trapezi.trapeziKodikosGet();
 	Globals.awalk(sizitisiData, function(i, sizitisi) {
 		sizitisi.trapezi = trapeziKodikos;
 		sizitisiData[i] = new Sizitisi(sizitisi);
 		Arena.ego.trapezi.trapeziSizitisiSet(sizitisiData[i]);
+
+		if (!online) return;
+		if (!notice) return;
+		if (sizitisiData[i].sizitisiPektisGet().isEgo()) return;
+		Client.sound.hiThere();
+		notice = false;
 	});
 
 	return this;
