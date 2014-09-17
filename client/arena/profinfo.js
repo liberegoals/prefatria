@@ -192,6 +192,7 @@ Arena.pektisFormaEditOn = function(edit) {
 	Arena.pektisFormaEgoDOM.css('display', 'none');
 	Arena.pektisFormaEditDOM.css('display', 'block');
 
+	Arena.pektisFormaProsklisiDOM.css('display', 'none');
 	Arena.pektisFormaMinimaDOM.css('display', 'none');
 	Arena.pektisFormaSxolioDOM.css('display', 'none');
 	Arena.pektisFormaApostoliDOM.css('display', edit === 'minima' ? 'inline-block' : 'none');
@@ -208,6 +209,7 @@ Arena.pektisFormaEditOff = function() {
 	Arena.pektisFormaEgoDOM.css('display', 'block');
 	Arena.pektisFormaEditDOM.css('display', 'none');
 
+	Arena.pektisFormaProsklisiDOM.css('display', 'inline-block');
 	Arena.pektisFormaMinimaDOM.css('display', 'inline-block');
 	Arena.pektisFormaSxolioDOM.css('display', 'inline-block');
 	Arena.pektisFormaApostoliDOM.css('display', 'none');
@@ -232,7 +234,7 @@ Arena.pektisFormaKlisimo = function(delay) {
 };
 
 Arena.pektisPanelRefreshDOM = function() {
-	var login, pektis, photoSrc, prosklisiButton, photoDOM;
+	var login, pektis, photoSrc, photoDOM;
 
 	if (!Arena.pektisPanelDOM) return Arena;
 	Arena.pektisPanelDOM.empty();
@@ -271,7 +273,9 @@ Arena.pektisPanelRefreshDOM = function() {
 	}));
 
 	Arena.pektisPanelDOM.
-	append(prosklisiButton = $('<button>').text('Πρόσκληση').on('click', function(e) {
+	append(Arena.pektisFormaProsklisiDOM = $('<button>').text('Πρόσκληση').
+	css('display', Arena.pektisFormaEditing ? 'none' : 'inline-block').
+	on('click', function(e) {
 		var button = $(this);
 
 		Arena.inputRefocus(e);
@@ -329,8 +333,10 @@ Arena.pektisPanelRefreshDOM = function() {
 		Arena.pektisFormaEditOff();
 	})).
 
-	append(Arena.pektisFormaSxolioDOM = $('<button>').text('Πληροφορίες').
-	css('display', Arena.pektisFormaEditing ? 'none' : 'inline-block').
+	append(Arena.pektisFormaSxolioDOM = $('<img>').addClass('pektisPanelIcon').attr({
+		src: 'ikona/pektis/edit.png',
+		title: 'Ενημέρωση πληροφοριών προφίλ',
+	}).css('display', Arena.pektisFormaEditing ? 'none' : 'inline-block').
 	on('click', function(e) {
 		Arena.inputRefocus(e);
 		Arena.pektisFormaEditOn('sxolio');
@@ -385,7 +391,7 @@ Arena.pektisPanelRefreshDOM = function() {
 		left: '8px',
 	}));
 
-	prosklisiButton.css('display', Arena.dikeomaProsklisis() ? 'inline-block' : 'none');
+	Arena.pektisFormaProsklisiDOM.css('display', Arena.dikeomaProsklisis() ? 'inline-block' : 'none');
 	Arena.pektisFormaLoginDOM.text(login);
 	if (Arena.ego.isFilos(login)) Arena.pektisFormaLoginDOM.addClass('sxesiFilos');
 	else if (Arena.ego.isApoklismenos(login)) Arena.pektisFormaLoginDOM.addClass('sxesiApoklismenos');
