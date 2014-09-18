@@ -298,6 +298,7 @@ Arena.pektisPanelRefreshDOM = function() {
 			var href;
 
 			href = 'http://www.infosniper.net?ip_address=' + rsp;
+			href = 'iplocator?ip=' + rsp;
 			window.open(href, '_blank', 'width=1200,height=740,top=100,left=100');
 		}).
 		fail(function(err) {
