@@ -31,7 +31,9 @@
 // Η φόρμα προφίλ μπορεί να μετακινηθεί με χειρισμό drag/drop σε βολικότερη θέση, ενώ
 // ο χρήστης μπορεί να αλλάζει παίκτη χωρίς προηγουμένως να κλείσει τη φόρμα, πράγμα
 // που σημαίνει ότι δεν μπορούμε να έχουμε ταυτόχρονα ανοικτές popup φόρμες προφίλ
-// γιαπερισσότερους από έναν παίκτη.
+// για περισσότερους από έναν παίκτη.
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
 
 // Η μέθοδος "pektisFormaPopupDOM" καλείται όταν κάνουμε κλικ στο κουτάκι οποιουδήποτε
 // παίκτη, η στο σχετικό εικονίδιο την περιοχή παίκτη της τσόχας. Η μέθοδος ζητά τις
@@ -265,7 +267,7 @@ Arena.pektisPanelRefreshDOM = function() {
 	photoSrc = pektis.pektisPhotoSrcGet();
 	if (photoSrc) Arena.pektisPanelDOM.
 	append($('<img>').addClass('pektisPanelIcon').
-	css('marginLeft', '0px').attr({
+	attr({
 		src: Client.server + 'ikona/pektis/photo.png',
 		title: 'Φωτογραφία προφίλ',
 	}).on('mouseenter', function(e) {
@@ -278,6 +280,26 @@ Arena.pektisPanelRefreshDOM = function() {
 		Arena.inputRefocus(e);
 		if (photoDOM.data('emfanis')) photoDOM.finish().fadeOut(100).removeData('emfanis');
 		else photoDOM.finish().fadeIn(100).data('emfanis', true);
+	}));
+
+	if (Arena.ego.isEpoptis()) Arena.pektisPanelDOM.
+	append(Arena.pektisFormaSxolioDOM = $('<img>').addClass('pektisPanelIcon').
+	css('display', Arena.pektisFormaEditing ? 'none' : 'inline-block').
+	attr({
+		src: 'ikona/external/iplocator.png',
+		title: 'Εντοπισμός μηχανής',
+	}).on('click', function(e) {
+		var href;
+
+		Arena.inputRefocus(e);
+		//href = 'http://www.infosniper.net?ip_address=' + '195.167.102.98';
+		href = 'http://www.prefadoros.gr';
+		if (Arena.iplocator.win) Arena.iplocator.win.location = href;
+		else Arena.iplocator.win = window.open(href, '_blank');
+		Arena.iplocator.win.focus();
+		$(Arena.iplocator.win).on('close', function() {
+console.log('asdasda');
+		});
 	}));
 
 	Arena.pektisPanelDOM.
