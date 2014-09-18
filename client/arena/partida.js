@@ -567,16 +567,20 @@ Arena.partida.pektisClearDOM = function(thesi) {
 };
 
 Arena.partida.pektisRefreshDOM = function(thesi) {
-	var dom, domMain, domOnoma, domKapikia, domAgora, domDilosi, domBazes, iseht;
+	var login, pektis, iseht, dom, domMain, domOnoma, domKapikia, domAgora, domDilosi, domBazes;
 
 	if (thesi === undefined) return Arena.partida.thesiWalk(function(thesi) {
 		Arena.partida.pektisRefreshDOM(thesi);
 	});
 
 	Arena.partida.pektisClearDOM(thesi);
-	iseht = Arena.ego.thesiMap(thesi);
-	if (Arena.ego.oxiTrapezi()) return Arena.partida;
+	if (Arena.ego.oxiTrapezi())
+	return Arena.partida;
 
+	login = Arena.ego.trapezi.trapeziPektisGet(thesi);
+	pektis = Arena.skiniko.skinikoPektisGet(login);
+
+	iseht = Arena.ego.thesiMap(thesi);
 	dom = Arena.partida['pektis' + iseht + 'DOM'].
 	append(domMain = Arena.partida['pektisMain' + iseht + 'DOM'] = $('<div>').
 		attr('id', 'tsoxaPektisMain' + iseht).addClass('tsoxaPektisMain').
@@ -647,6 +651,7 @@ Arena.partida.pektisRefreshDOM = function(thesi) {
 	on('mouseenter', function(e) {
 		e.stopPropagation();
 		Arena.partida.thesiCandi = thesi;
+		if (pektis) pektis.pektisFyiInfo();
 		$(this).children('.tsoxaPektisPhoto').finish().animate({
 			opacity: 1,
 		}, 200);
@@ -654,6 +659,7 @@ Arena.partida.pektisRefreshDOM = function(thesi) {
 	on('mouseleave', function(e) {
 		e.stopPropagation();
 		delete Arena.partida.thesiCandi;
+		if (pektis) Client.fyi.kato();
 		$(this).children('.tsoxaPektisPhoto').finish().animate({
 			opacity: Arena.partida.pektisPhotoOpacity,
 		}, 100);

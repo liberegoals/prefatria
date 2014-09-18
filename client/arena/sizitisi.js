@@ -81,7 +81,7 @@ Arena.sizitisi.setup = function() {
 	Arena.sizitisi.diagrafiAllDOM = $('<img>').attr({
 		id: 'sizitisiDiagrafiAllIcon',
 		src: 'ikona/misc/Xred.png',
-		title: 'Διαγραφή συζήτησης',
+		title: 'Tabula rasa',
 	}).
 	on('click', function(e) {
 		Arena.inputRefocus(e);
