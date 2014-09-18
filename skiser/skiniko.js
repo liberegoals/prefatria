@@ -523,7 +523,7 @@ Pektis.prototype.pektisSeekPhoto = function(callback) {
 		return this;
 	}
 
-	this.pektisSeekPhoto2(login.substr(0, 1) + '/' + login + '.', callback, {
+	this.pektisSeekPhoto2(login.substr(0, 1).toLowerCase() + '/' + login + '.', callback, {
 		png: true,
 		jpg: true,
 		gif: true,
