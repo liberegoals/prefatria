@@ -95,7 +95,9 @@ Pektis.prototype.pektisPhotoSrcGet = function(paraliptis) {
 };
 
 Pektis.privatePhotoSrc = {
-	'marinikol2/marinikol2': 'magio.gif',
+	'panos/panos': 'magio.gif',
+	'panos/lalaridi': 'magio.gif',
+	'panos/Giannisp': 'magio.gif',
 };
 
 Pektis.prototype.pektisPrivatePhotoSrcGet = function(paraliptis) {
