@@ -1532,6 +1532,16 @@ Arena.ego.oxiVip = function() {
 	return Arena.ego.pektis.pektisOxiVip();
 };
 
+Arena.ego.isEpoptis = function() {
+	if (!Arena.ego.pektis) return false;
+	return Arena.ego.pektis.pektisIsEpoptis();
+};
+
+Arena.ego.oxiEpoptis = function() {
+	if (!Arena.ego.pektis) return true;
+	return Arena.ego.pektis.pektisOxiEpoptis();
+};
+
 Arena.ego.isDiaxiristis = function() {
 	if (!Arena.ego.pektis) return false;
 	return Arena.ego.pektis.pektisIsDiaxiristis();

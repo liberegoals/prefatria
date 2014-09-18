@@ -21,9 +21,9 @@ body {
 
 #pektisPanel {
 	position: absolute;
-	left: 0;
-/*
+	left: 2px;
 background-color: rgba(0, 128, 128, 0.18);
+/*
 */
 }
 
@@ -31,7 +31,7 @@ background-color: rgba(0, 128, 128, 0.18);
 	display: inline-block;
 	position: relative;
 	bottom: 2px;
-	margin: 0 0 0 10px;
+	margin: 0 6px;
 	cursor: pointer;
 }
 
@@ -62,7 +62,7 @@ background-color: rgba(0, 128, 128, 0.18);
 	position: relative;
 	bottom: -6px;
 	width: 26px;
-	margin-left: 14px;
+	margin: 0 4px;
 	cursor: pointer;
 }
 
