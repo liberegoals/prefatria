@@ -64,7 +64,7 @@ NodeRequest.prototype.headerCheck = function() {
 
 	this.response.writeHead(200, {
 		'Access-Control-Allow-Origin': '*',
-		'Content-type': 'text/' + this.redaeh,
+		'Content-type': 'text/' + this.redaeh + '; charset=utf-8',
 	});
 	this.redaeh = null;
 	return this;
@@ -75,7 +75,7 @@ NodeRequest.prototype.error = function(msg, code) {
 	if (this.redaeh === null) globals.fatal('header data already sent');
 	this.response.writeHead(code, {
 		'Access-Control-Allow-Origin': '*',
-		'Content-type': 'text/plain',
+		'Content-type': 'text/plain; charset=utf-8',
 	});
 	this.redaeh = null;
 	if (msg === undefined) msg = 'skiser error';
