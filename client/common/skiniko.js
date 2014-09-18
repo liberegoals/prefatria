@@ -90,8 +90,17 @@ Pektis.prototype.pektisPhotoGet = function() {
 	return this.photo;
 };
 
-Pektis.prototype.pektisPhotoSrcGet = function() {
+Pektis.prototype.pektisPhotoSrcGet = function(paraliptis) {
 	return this.photoSrc;
+};
+
+Pektis.privatePhotoSrc = {
+	//'marinikol2/antonis244': 'zoi.jpg?mt=1',
+	'panos/marinikol2': 'clooney.jpg',
+};
+
+Pektis.prototype.pektisPrivatePhotoSrcGet = function(paraliptis) {
+	return Pektis.privatePhotoSrc[this.pektisLoginGet() + '/' + paraliptis];
 };
 
 Pektis.prototype.pektisPollSet = function(ts) {
