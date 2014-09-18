@@ -284,6 +284,9 @@ Arena.pektisPanelRefreshDOM = function() {
 		else photoDOM.finish().fadeIn(100).data('emfanis', true);
 	}));
 
+	// Οι βαθμοφόροι από επόπτες και άνω έχουν δικαίωμα να δουν το IP οποιουδήποτε
+	// online παίκτη κάνοντας κλικ στο σχετικό εικονίδιο (σταυρόνημα).
+
 	if (Arena.ego.isEpoptis())
 	Arena.pektisPanelDOM.
 	append(Arena.pektisFormaIplocatorDOM = $('<img>').addClass('pektisPanelIcon').
@@ -297,7 +300,6 @@ Arena.pektisPanelRefreshDOM = function() {
 		done(function(rsp) {
 			var href;
 
-			href = 'http://www.infosniper.net?ip_address=' + rsp;
 			href = 'iplocator?ip=' + rsp;
 			window.open(href, '_blank', 'width=1200,height=740,top=100,left=100');
 		}).
