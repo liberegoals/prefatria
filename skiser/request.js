@@ -50,7 +50,9 @@ NodeRequest = function(request, response, skiniko) {
 // το κανάλι απάντησης.
 
 NodeRequest.prototype.header = function(tipos) {
-	if (this.redaeh === null) globals.fatal('header data already sent');
+	if (this.redaeh === null)
+	Globals.fatal('header data already sent');
+
 	this.redaeh = tipos;
 	return this;
 };
@@ -72,7 +74,9 @@ NodeRequest.prototype.headerCheck = function() {
 
 NodeRequest.prototype.error = function(msg, code) {
 	if (code === undefined) code = 500;
-	if (this.redaeh === null) globals.fatal('header data already sent');
+	if (this.redaeh === null)
+	Globals.fatal('header data already sent');
+
 	this.response.writeHead(code, {
 		'Access-Control-Allow-Origin': '*',
 		'Content-type': 'text/plain; charset=utf-8',
@@ -104,11 +108,22 @@ NodeRequest.prototype.write = function(s) {
 
 NodeRequest.prototype.end = function(s) {
 	this.headerCheck();
-	if (s === undefined) this.response.end();
-	else if (typeof s === 'number') this.response.end(s.toString());
-	else if (typeof s !== 'string') globals.fatal('response.end: invalid data type');
-	else if (s !== '') this.response.end(s);
-	else this.response.end();
+
+	if (s === undefined)
+	this.response.end();
+
+	else if (typeof s === 'number')
+	this.response.end(s.toString());
+
+	else if (typeof s !== 'string')
+	Globals.fatal('response.end: invalid data type');
+
+	else if (s !== '')
+	this.response.end(s);
+
+	else
+	this.response.end();
+
 	return this;
 };
 
@@ -206,7 +221,7 @@ NodeRequest.prototype.skinikoGet = function() {
 NodeRequest.prototype.skinikoFetch = function() {
 	var skiniko = this.skiniko;
 	if (skiniko) return skiniko;
-	globals.fatal('ακαθόριστο σκηνικό αιτήματος');
+	Globals.fatal('ακαθόριστο σκηνικό αιτήματος');
 };
 
 NodeRequest.prototype.loginGet = function() {
