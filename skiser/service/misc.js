@@ -24,5 +24,23 @@ Service.misc.korna = function(nodereq) {
 			pektis: nodereq.loginGet(),
 			trapezi: nodereq.trapeziGet().trapeziKodikosGet(),
 		},
-	}));;
+	}));
+};
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
+
+Service.misc.ipGet = function(nodereq) {
+	var pektis, sinedria;
+
+	if (nodereq.isvoli()) return;
+	if (nodereq.denPerastike('login', true)) return;
+
+	pektis = nodereq.pektisGet();
+	if (pektis.pektisAxiomaRankGet() < Peparam.axiomaRank['ΕΠΟΠΤΗΣ'])
+	return nodereq.error('Δεν έχετε πρόσβαση για το IP');
+
+	sinedria = Server.skiniko.skinikoSinedriaGet(nodereq.url.login);
+	if (!sinedria) return nodereq.error('Ο παίκτης δεν είναι online');
+
+	nodereq.end(sinedria.sinedriaIpGet());
 };

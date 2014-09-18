@@ -202,6 +202,7 @@ Arena.pektisFormaEditOn = function(edit) {
 	Arena.pektisFormaEgoDOM.css('display', 'none');
 	Arena.pektisFormaEditDOM.css('display', 'block');
 
+	Arena.pektisFormaIplocatorDOM.css('display', 'none');
 	Arena.pektisFormaProsklisiDOM.css('display', 'none');
 	Arena.pektisFormaMinimaDOM.css('display', 'none');
 	Arena.pektisFormaSxolioDOM.css('display', 'none');
@@ -219,6 +220,7 @@ Arena.pektisFormaEditOff = function() {
 	Arena.pektisFormaEgoDOM.css('display', 'block');
 	Arena.pektisFormaEditDOM.css('display', 'none');
 
+	Arena.pektisFormaIplocatorDOM.css('display', 'inline-block');
 	Arena.pektisFormaProsklisiDOM.css('display', 'inline-block');
 	Arena.pektisFormaMinimaDOM.css('display', 'inline-block');
 	Arena.pektisFormaSxolioDOM.css('display', 'inline-block');
@@ -282,23 +284,24 @@ Arena.pektisPanelRefreshDOM = function() {
 		else photoDOM.finish().fadeIn(100).data('emfanis', true);
 	}));
 
-	if (Arena.ego.isEpoptis()) Arena.pektisPanelDOM.
-	append(Arena.pektisFormaSxolioDOM = $('<img>').addClass('pektisPanelIcon').
+	if (Arena.ego.isEpoptis())
+	Arena.pektisPanelDOM.
+	append(Arena.pektisFormaIplocatorDOM = $('<img>').addClass('pektisPanelIcon').
 	css('display', Arena.pektisFormaEditing ? 'none' : 'inline-block').
 	attr({
 		src: 'ikona/external/iplocator.png',
-		title: 'Εντοπισμός μηχανής',
+		title: 'Εντοπισμός συνεδρίας παίκτη',
 	}).on('click', function(e) {
-		var href;
-
 		Arena.inputRefocus(e);
-		//href = 'http://www.infosniper.net?ip_address=' + '195.167.102.98';
-		href = 'http://www.prefadoros.gr';
-		if (Arena.iplocator.win) Arena.iplocator.win.location = href;
-		else Arena.iplocator.win = window.open(href, '_blank');
-		Arena.iplocator.win.focus();
-		$(Arena.iplocator.win).on('close', function() {
-console.log('asdasda');
+		Client.skiserService('ipGet', 'login=' + login).
+		done(function(rsp) {
+			var href;
+
+			href = 'http://www.infosniper.net?ip_address=' + rsp;
+			window.open(href, '_blank', 'width=1200,height=740,top=100,left=100');
+		}).
+		fail(function(err) {
+			Client.skiserFail(err);
 		});
 	}));
 
