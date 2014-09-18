@@ -338,6 +338,7 @@ Arena.pektisPanelRefreshDOM = function() {
 		}).
 		fail(function(err) {
 			button.removeData('apostoli');
+			Client.sound.beep();
 			switch (err.responseText) {
 			case 'pektisApasxolimenos':
 				Client.fyi.epano('Ο παίκτης <span class="ble entona">' + login +

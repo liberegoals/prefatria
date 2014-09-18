@@ -691,34 +691,67 @@ Skiniko.prototype.skinikoResetDOM = function() {
 	Arena.partida.theatisDOM.empty();
 };
 
+Pektis.prototype.pektisFyiInfo = function() {
+	Client.fyi.kato('Login: <span class="entona ble">' + this.pektisLoginGet() +
+		'</span>, Ονοματεπώνυμο: <span class="entona ble">' +
+		this.pektisOnomaGet() + '</span>');
+	return this;
+};
+
 Sinedria.prototype.sinedriaCreateDOM = function() {
-	var skiniko, pektis, trapezi, jql;
+	var skiniko, login, pektis, trapezi, jql;
 
 	skiniko = this.sinedriaSkinikoGet();
 	if (!skiniko) return this;
-	pektis = skiniko.skinikoPektisGet(this.sinedriaPektisGet());
+
+	login = this.sinedriaPektisGet();
+	pektis = skiniko.skinikoPektisGet(login);
 
 	if (this.hasOwnProperty('rebelosDOM')) this.rebelosDOM.remove();
-	this.rebelosDOM = $('<div>').addClass('pektis rebelos').data('pektis', pektis).
+	this.rebelosDOM = $('<div>').addClass('pektis rebelos').
+	on('mouseenter', function(e) {
+		pektis.pektisFyiInfo();
+	}).
+	on('mouseleave', function(e) {
+		Client.fyi.kato();
+	}).
 	on('click', function(e) {
 		pektis.pektisFormaPopupDOM(e);
 	});
 	this.sinedriaRebelosRefreshDOM();
 
 	if (this.hasOwnProperty('theatisDOM')) this.theatisDOM.remove();
-	this.theatisDOM = $('<div>').addClass('pektis theatis').data('pektis', pektis).
+	this.theatisDOM = $('<div>').addClass('pektis theatis').
+	on('mouseenter', function(e) {
+		pektis.pektisFyiInfo();
+	}).
+	on('mouseleave', function(e) {
+		Client.fyi.kato();
+	}).
 	on('click', function(e) {
 		pektis.pektisFormaPopupDOM(e);
 	});
 	if (this.hasOwnProperty('tsoxaTheatisDOM')) this.tsoxaTheatisDOM.remove();
-	this.tsoxaTheatisDOM = $('<div>').addClass('pektis tsoxaTheatis').data('pektis', pektis).
+	this.tsoxaTheatisDOM = $('<div>').addClass('pektis tsoxaTheatis').
+	on('mouseenter', function(e) {
+		pektis.pektisFyiInfo();
+	}).
+	on('mouseleave', function(e) {
+		Client.fyi.kato();
+	}).
 	on('click', function(e) {
 		pektis.pektisFormaPopupDOM(e);
 	});
 	this.sinedriaTheatisRefreshDOM();
 
 	if (this.hasOwnProperty('niofertosDOM')) this.niofertosDOM.remove();
-	this.niofertosDOM = $('<div>').addClass('pektis niofertos').data('pektis', pektis).
+	this.niofertosDOM = $('<div>').addClass('pektis niofertos').
+	on('mouseenter', function(e) {
+		pektis.pektisFyiInfo();
+	}).
+	on('mouseleave', function(e) {
+		Client.fyi.kato();
+	}).
 	on('click', function(e) {
 		pektis.pektisFormaPopupDOM(e);
 	});
@@ -1098,7 +1131,14 @@ Trapezi.prototype.trapeziThesiRefreshDOM = function(thesi) {
 	}
 
 	dom.off('click');
-	if (pektis) dom.on('click', function(e) {
+	if (pektis) dom.
+	on('mouseenter', function(e) {
+		pektis.pektisFyiInfo();
+	}).
+	on('mouseleave', function(e) {
+		Client.fyi.kato();
+	}).
+	on('click', function(e) {
 		pektis.pektisFormaPopupDOM(e);
 	});
 
