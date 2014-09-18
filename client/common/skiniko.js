@@ -97,6 +97,7 @@ Pektis.prototype.pektisPhotoSrcGet = function(paraliptis) {
 Pektis.privatePhotoSrc = {
 	'panos/panos': 'magio.gif',
 	'panos/lalaridi': 'magio.gif',
+	'panos/WOLF': 'magio.gif',
 	'panos/Giannisp': 'magio.gif',
 };
 
