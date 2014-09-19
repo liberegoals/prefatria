@@ -196,6 +196,20 @@ Arena.setup = function() {
 	if (!Client.session.kinito)
 	Arena.inputTrexon.focus();
 
+	Client.ofelimoDOM.
+	on('mouseenter', '.pektis', function(e) {
+		var pektis = $(this).data('pektis');
+		if (pektis) pektis.pektisFyiInfo();
+	}).
+	on('mouseleave', '.pektis', function(e) {
+		if ($(this).data('pektis'))
+		Client.fyi.kato();
+	}).
+	on('click', '.pektis', function(e) {
+		var pektis = $(this).data('pektis');
+		if (pektis) pektis.pektisFormaPopupDOM(e);
+	});
+
 	return Arena;
 };
 
