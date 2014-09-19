@@ -210,8 +210,10 @@ Service.sinedria.checkin3 = function(nodereq, conn, pektis) {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 Service.sinedria.exodos = function(nodereq) {
+console.log('exodos0:', nodereq.login);
 	if (nodereq.nosinedria())
 	return;
+console.log('exodos1:', nodereq.login);
 
 	nodereq.end();
 	nodereq.sinedria.feredataExodos();
