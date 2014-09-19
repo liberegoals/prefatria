@@ -824,20 +824,13 @@ Arena.partida.pektisPhotoRefreshDOM = function(thesi, iseht, domMain) {
 	pektis = Arena.skiniko.skinikoPektisGet(login);
 	if (!pektis) return Arena.partida;
 
-	photoSrc = pektis.pektisPrivatePhotoSrcGet(Client.session.pektis);
-	if (photoSrc)
-	photoSrc = 'privatePhoto/' + login + '/' + photoSrc;
-
-	else {
-		photoSrc = pektis.pektisPhotoSrcGet();
-		if (!photoSrc) return Arena.partida;
-		photoSrc = 'photo/' + photoSrc;
-	}
+	photoSrc = pektis.pektisPhotoSrcGet();
+	if (!photoSrc) return Arena.partida;
 
 	domMain.append($('<img>').
 	addClass('tsoxaPektisPhoto').
 	css('opacity', thesi == Arena.partida.thesiCandi ? 1 : Arena.partida.pektisPhotoOpacity).
-	attr('src', photoSrc));
+	attr('src', 'photo/' + photoSrc));
 
 	return Arena.partida;
 };
