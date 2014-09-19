@@ -220,34 +220,31 @@ Arena.pektisFormaZigisma = function() {
 	egoK = egoDOM.text() ? egoDOM.find('.profinfoKimeno').outerHeight() : 0;
 	egoM = egoH - egoK;
 
-	if ((idiosM >= 0) && (egoM >= 0))
+	if ((idiosM <= 0) && (egoM <= 0))
 	return this;
 
-	if ((idiosM < 0) && (egoM < 0))
-	return this;
-
-	if (idiosM > 0) {
-		idiosDOM.css({
-			height: '-=' + idiosM + 'px',
-		});
+	if (egoM > 0) {
 		egoDOM.css({
-			top: '-=' + idiosM + 'px',
-			height: '+=' + idiosM + 'px',
+			height: '-=' + egoM + 'px',
+			top: '+=' + egoM + 'px',
 		});
 		Arena.pektisFormaBaraDOM.css({
-			top: '-=' + idiosM + 'px',
-		});
-	}
-	else  {
-		egoDOM.css({
 			top: '+=' + egoM + 'px',
-			height: '-=' + egoM + 'px',
 		});
 		idiosDOM.css({
 			height: '+=' + egoM + 'px',
 		});
+	}
+	else  {
+		idiosDOM.css({
+			height: '-=' + idiosM + 'px',
+		});
 		Arena.pektisFormaBaraDOM.css({
-			top: '+=' + egoM + 'px',
+			top: '-=' + idiosM + 'px',
+		});
+		egoDOM.css({
+			top: '-=' + idiosM + 'px',
+			height: '+=' + idiosM + 'px',
 		});
 	}
 
