@@ -232,7 +232,7 @@ Service.sinedria.exodos2 = function(nodereq, conn) {
 		return Service.sinedria.exodos3(nodereq, conn, spektis);
 
 		conn.free();
-		Service.sinedria.exodos5(nodereq);
+		Service.sinedria.exodos4(nodereq);
 	});
 };
 
@@ -241,19 +241,14 @@ Service.sinedria.exodos3 = function(nodereq, conn, spektis) {
 
 	query = 'DELETE FROM `sinedria` WHERE `pektis` = ' + spektis;
 	conn.query(query, function(conn) {
-		if (conn.affectedRows)
-		return Service.sinedria.exodos4(nodereq, conn);
+		if (conn.affectedRows) conn.commit();
+		else conn.rollback();
 
-		conn.rollback();
+		Service.sinedria.exodos4(nodereq);
 	});
 };
 
-Service.sinedria.exodos4 = function(nodereq, conn) {
-	conn.commit();
-	Service.sinedria.exodos5(nodereq);
-};
-
-Service.sinedria.exodos5 = function(nodereq) {
+Service.sinedria.exodos4 = function(nodereq) {
 	var skiniko = nodereq.skinikoGet(), kinisi;
 
 	kinisi = new Kinisi({
