@@ -210,10 +210,8 @@ Service.sinedria.checkin3 = function(nodereq, conn, pektis) {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 Service.sinedria.exodos = function(nodereq) {
-console.log('exodos0:', nodereq.login);
 	if (nodereq.nosinedria())
 	return;
-console.log('exodos1:', nodereq.login);
 
 	nodereq.end();
 	nodereq.sinedria.feredataExodos();
@@ -227,7 +225,6 @@ console.log('exodos1:', nodereq.login);
 Service.sinedria.exodos2 = function(nodereq, conn) {
 	var query, spektis = nodereq.login.json();
 
-console.log('exodos2:', nodereq.login);
 	query = 'INSERT INTO `istoriko` (`pektis`, `ip`, `isodos`, `exodos`) ' +
 		'SELECT `pektis`, `ip`, `isodos`, NOW() FROM `sinedria` WHERE `pektis` = ' + spektis;
 	conn.query(query, function(conn) {
@@ -242,7 +239,6 @@ console.log('exodos2:', nodereq.login);
 Service.sinedria.exodos3 = function(nodereq, conn, spektis) {
 	var query;
 
-console.log('exodos3:', nodereq.login);
 	query = 'DELETE FROM `sinedria` WHERE `pektis` = ' + spektis;
 	conn.query(query, function(conn) {
 		if (conn.affectedRows) conn.commit();
@@ -255,7 +251,6 @@ console.log('exodos3:', nodereq.login);
 Service.sinedria.exodos4 = function(nodereq) {
 	var skiniko = nodereq.skinikoGet(), kinisi;
 
-console.log('exodos4:', nodereq.login);
 	kinisi = new Kinisi({
 		idos: 'NS',
 		data: {
