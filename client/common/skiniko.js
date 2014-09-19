@@ -94,17 +94,6 @@ Pektis.prototype.pektisPhotoSrcGet = function(paraliptis) {
 	return this.photoSrc;
 };
 
-Pektis.privatePhotoSrc = {
-	'panos/panos': 'magio.gif',
-	'panos/lalaridi': 'magio.gif',
-	'panos/WOLF': 'magio.gif',
-	'panos/Giannisp': 'magio.gif',
-};
-
-Pektis.prototype.pektisPrivatePhotoSrcGet = function(paraliptis) {
-	return Pektis.privatePhotoSrc[this.pektisLoginGet() + '/' + paraliptis];
-};
-
 Pektis.prototype.pektisPollSet = function(ts) {
 	if (ts === undefined) ts = Globals.toraServer();
 	this.poll = ts;
