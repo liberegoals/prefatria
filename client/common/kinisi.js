@@ -723,7 +723,7 @@ Skiniko.prototype.processKinisiPI = function(data) {
 	pektis.profinfo = {};
 
 	if (data.kimeno) pektis.pektisProfinfoSet(data.sxoliastis, data.kimeno);
-	else delete pektis.profinfo[sxoliastis];
+	else delete pektis.profinfo[data.sxoliastis];
 
 	return this;
 };
