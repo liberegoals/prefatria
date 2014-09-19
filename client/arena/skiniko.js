@@ -708,53 +708,17 @@ Sinedria.prototype.sinedriaCreateDOM = function() {
 	pektis = skiniko.skinikoPektisGet(login);
 
 	if (this.hasOwnProperty('rebelosDOM')) this.rebelosDOM.remove();
-	this.rebelosDOM = $('<div>').addClass('pektis rebelos').
-	on('mouseenter', function(e) {
-		pektis.pektisFyiInfo();
-	}).
-	on('mouseleave', function(e) {
-		Client.fyi.kato();
-	}).
-	on('click', function(e) {
-		pektis.pektisFormaPopupDOM(e);
-	});
+	this.rebelosDOM = $('<div>').addClass('pektis rebelos').data('pektis', pektis);
 	this.sinedriaRebelosRefreshDOM();
 
 	if (this.hasOwnProperty('theatisDOM')) this.theatisDOM.remove();
-	this.theatisDOM = $('<div>').addClass('pektis theatis').
-	on('mouseenter', function(e) {
-		pektis.pektisFyiInfo();
-	}).
-	on('mouseleave', function(e) {
-		Client.fyi.kato();
-	}).
-	on('click', function(e) {
-		pektis.pektisFormaPopupDOM(e);
-	});
+	this.theatisDOM = $('<div>').addClass('pektis theatis').data('pektis', pektis);
 	if (this.hasOwnProperty('tsoxaTheatisDOM')) this.tsoxaTheatisDOM.remove();
-	this.tsoxaTheatisDOM = $('<div>').addClass('pektis tsoxaTheatis').
-	on('mouseenter', function(e) {
-		pektis.pektisFyiInfo();
-	}).
-	on('mouseleave', function(e) {
-		Client.fyi.kato();
-	}).
-	on('click', function(e) {
-		pektis.pektisFormaPopupDOM(e);
-	});
+	this.tsoxaTheatisDOM = $('<div>').addClass('pektis tsoxaTheatis').data('pektis', pektis);
 	this.sinedriaTheatisRefreshDOM();
 
 	if (this.hasOwnProperty('niofertosDOM')) this.niofertosDOM.remove();
-	this.niofertosDOM = $('<div>').addClass('pektis niofertos').
-	on('mouseenter', function(e) {
-		pektis.pektisFyiInfo();
-	}).
-	on('mouseleave', function(e) {
-		Client.fyi.kato();
-	}).
-	on('click', function(e) {
-		pektis.pektisFormaPopupDOM(e);
-	});
+	this.niofertosDOM = $('<div>').addClass('pektis niofertos').data('pektis', pektis);
 	this.
 	sinedriaNiofertosRefreshDOM().
 	sinedriaNiofertosPushDOM();
@@ -1130,17 +1094,8 @@ Trapezi.prototype.trapeziThesiRefreshDOM = function(thesi) {
 		else dom.html('&mdash;');
 	}
 
-	dom.off('click');
-	if (pektis) dom.
-	on('mouseenter', function(e) {
-		pektis.pektisFyiInfo();
-	}).
-	on('mouseleave', function(e) {
-		Client.fyi.kato();
-	}).
-	on('click', function(e) {
-		pektis.pektisFormaPopupDOM(e);
-	});
+	if (pektis) dom.data('pektis', pektis);
+	else dom.removeData('pektis');
 
 	return this;
 };
