@@ -30,7 +30,7 @@ Client.ajaxFail = function(rsp) {
 };
 
 Client.skiserService = function() {
-	var service, i;
+	var service, i, opts;
 
 	Client.antiCache++;
 	service = Client.skiser + arguments[0] + '?TS=' + Globals.tora() + '&AC=' + Client.antiCache;
@@ -38,11 +38,15 @@ Client.skiserService = function() {
 		service += '&PK=' + Client.session.pektis.uri() + '&KL=' + Client.session.klidi.uri();
 	} catch (e) {}
 
+	opts = {};
 	for (i = 1; i < arguments.length; i++) {
 		if (typeof arguments[i] === 'string')
 		service += '&' + arguments[i];
+
+		else
+		opts = arguments[i];
 	}
-	return $.ajax(service);
+	return $.ajax(service, opts);
 };
 
 Client.skiserFail = function(rsp) {
@@ -244,7 +248,7 @@ Client.tabPektis = function(x) {
 };
 
 Client.exodos = function() {
-	Client.skiserService('exodos');
+	Client.skiserService('exodos', {async:false});
 	self.location = Client.server + 'exodos?url=' + Client.server;
 };
 
