@@ -187,12 +187,70 @@ Pektis.prototype.pektisFormaPopupFillDOM = function(login) {
 };
 
 Pektis.prototype.pektisProfinfoRefreshDOM = function(login) {
+	if (Arena.pektisFormaZigismaTimer) {
+		clearTimeout(Arena.pektisFormaZigismaTimer);
+		delete Arena.pektisFormaZigismaTimer;
+	}
+
 	Arena.pektisFormaIdiosDOM.empty().
 	append($('<div>').addClass('profinfoKimeno').html(this.profinfo[login]));
 
 	Arena.pektisFormaEgoDOM.empty();
 	if (login.oxiEgo())
-	Arena.pektisFormaEgoDOM.append($('<div>').addClass('profinfoKimeno').html(this.profinfo[Client.session.pektis]));
+	Arena.pektisFormaEgoDOM.append($('<div>').addClass('profinfoKimeno').
+	html(this.profinfo[Client.session.pektis]));
+
+	Arena.pektisFormaZigismaTimer = setTimeout(function() {
+		Arena.pektisFormaZigisma(),
+		delete Arena.pektisFormaZigismaTimer;
+	}, 0);
+	return this;
+};
+
+Arena.pektisFormaZigisma = function() {
+	var idiosDOM, idiosH, idiosK, idiosM, egoDOM, egoH, egoK, egoM;
+
+	idiosDOM = Arena.pektisFormaIdiosDOM;
+	idiosH = idiosDOM.height();
+	idiosK = idiosDOM.text() ? idiosDOM.find('.profinfoKimeno').outerHeight() : 0;
+	idiosM = idiosH - idiosK;
+
+	egoDOM = Arena.pektisFormaEgoDOM;
+	egoH = egoDOM.height();
+	egoK = egoDOM.text() ? egoDOM.find('.profinfoKimeno').outerHeight() : 0;
+	egoM = egoH - egoK;
+
+	if ((idiosM >= 0) && (egoM >= 0))
+	return this;
+
+	if ((idiosM < 0) && (egoM < 0))
+	return this;
+
+	if (idiosM > 0) {
+		idiosDOM.css({
+			height: '-=' + idiosM + 'px',
+		});
+		egoDOM.css({
+			top: '-=' + idiosM + 'px',
+			height: '+=' + idiosM + 'px',
+		});
+		Arena.pektisFormaBaraDOM.css({
+			top: '-=' + idiosM + 'px',
+		});
+	}
+	else  {
+		egoDOM.css({
+			top: '+=' + egoM + 'px',
+			height: '-=' + egoM + 'px',
+		});
+		idiosDOM.css({
+			height: '+=' + egoM + 'px',
+		});
+		Arena.pektisFormaBaraDOM.css({
+			top: '+=' + egoM + 'px',
+		});
+	}
+
 	return this;
 };
 
@@ -307,6 +365,7 @@ Arena.pektisPanelRefreshDOM = function() {
 			Client.skiserFail(err);
 		});
 	}));
+	else Arena.pektisFormaIplocatorDOM = $();
 
 	Arena.pektisPanelDOM.
 	append(Arena.pektisFormaProsklisiDOM = $('<button>').text('Πρόσκληση').
@@ -407,12 +466,12 @@ Arena.pektisPanelRefreshDOM = function() {
 			Client.fyi.pano(rsp);
 
 			// Ο ίδιος ο συντάκτης κάνει επί τόπου την αλλαγή της πληροφορίας
-			// στο σκηνικό του και δεν περιμένει να την παραλάβει από τον
-			// skiser.
+			// στο σκηνικό του και δεν χρειάζεται να περιμένει την παραλαβή της
+			// από τον skiser.
 
 			pektis.
 			pektisProfinfoSet(Client.session.pektis, kimeno).
-			pektisProfinfoRefreshDOM(login);
+			pektisFormaPopupFillDOM(login);
 			Arena.pektisFormaEditOff();
 		}).
 		fail(function(err) {
