@@ -244,13 +244,8 @@ Client.tabPektis = function(x) {
 };
 
 Client.exodos = function() {
-	Client.skiserService('exodos').
-	done(function(rsp) {
-		$.ajax('account/exodos.php', {async: false});
-	}).
-	fail(function(rsp) {
-		$.ajax('account/exodos.php', {async: false});
-	});
+	Client.skiserService('exodos');
+	self.location = Client.server + 'exodos?url=' + Client.server;
 };
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
