@@ -602,25 +602,25 @@ Trapezi.prototype.efoplismosΠΑΙΧΝΙΔΙ = function() {
 		if (!filoDom.data('ok')) return;
 
 		filoDom.
-		on('mouseenter', function(e) {
+		off('mouseenter').on('mouseenter', function(e) {
 			e.stopPropagation();
 			e.preventDefault();
 			if (Arena.partida.klikFilo) return;
 
 			filoDom.finish().css('cursor', 'pointer');
 			if (trapezi.partidaBazaCountGet() > 8) return;
-			filoDom.animate({bottom: pano}, delay);
+			filoDom.finish().animate({bottom: pano}, delay);
 		}).
-		on('mouseleave', function(e) {
+		off('mouseleave').on('mouseleave', function(e) {
 			e.stopPropagation();
 			e.preventDefault();
 			if (Arena.partida.klikFilo) return;
 
 			filoDom.finish().css('cursor', 'auto');
 			if (trapezi.partidaBazaCountGet() > 8) return;
-			filoDom.animate({bottom: filoDom.data('bottom')}, delay);
+			filoDom.finish().animate({bottom: filoDom.data('bottom')}, delay);
 		}).
-		on('click', function(e) {
+		off('click').on('click', function(e) {
 			var olif, filo = $(this);
 
 			Arena.inputRefocus(e);
@@ -697,7 +697,7 @@ Trapezi.prototype.efoplismosPexnidiClaim = function(pektis) {
 Trapezi.prototype.efoplismosPexnidiFila = function(iseht, over) {
 	var fila, bottom, xroma, found, agora, delay = 100;
 
-	bottom = (iseht == 1 ? '30px' : 'auto');
+	bottom = (iseht == 1 ? '30px' : '26px');
 	fila = Arena.partida['fila' + iseht + 'DOM'].find('.tsoxaXartosiaFilo').
 	// Ο επόμενος mouse event listener κρίθηκε απαραίτητος στην περίπτωση
 	// χειραφετημένης τσόχας όπου δεν θέλουμε να κινείται η τσόχα όταν

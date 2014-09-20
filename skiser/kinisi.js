@@ -1,4 +1,12 @@
-Kinisi.maxLength = 1000;
+// Η μέθοδος "kinisiAdd" εισάγει κίνηση στο transaction log με σκοπό αυτή
+// να κοινοποιηθεί στους clients στον αμέσως επόμενο κύκλο ενημέρωσης.
+// By default, η μέθοδος επιχειρεί και την ενημέρωση των clients, εκτός
+// και αν έχουμε περάσει false δεύτερη παράμετρο.
+//
+// Πράγματι, όταν θέλουμε να περάσουμε ένα «πακέτο» κινήσεων, καλούμε την
+// "kinisiAdd" για όλες αυτές τις κινήσεις με false δεύτερη παράμετρο και
+// στο τέλος την καλούμε χωρίς καθόλου παραμέτρους που σημαίνει απλώς
+// ενημέρωση των clients.
 
 Skiniko.prototype.kinisiAdd = function(kinisi, dose) {
 	if (kinisi !== undefined)
@@ -7,12 +15,81 @@ Skiniko.prototype.kinisiAdd = function(kinisi, dose) {
 	if (dose === undefined) dose = true;
 	if (!dose) return this;
 
+	this.skinikoKinisiEnimerosi();
+	return this;
+};
+
+// Προσπαθούμε να αποφύγουμε τις απανωτές ενημερώσεις κινήσεων προς τους
+// clients. Πράγματι, κάθε φορά που εισάγονται νέες κινήσεις στο transaction
+// log, επιχειρούμε ενημέρωση των clients με τις νέες κινήσεις. Αυτό μπορεί
+// να καταλήξει σε συνεχείς ενημερώσεις, πράγμα που θα προσπαθήσουμε να
+// αποφύγουμε.
+
+Skiniko.prototype.skinikoKinisiEnimerosi = function() {
+	var tora, prevEnimerosiTS, dt;
+
+	// Αν υπάρχει ήδη δρομολογημένη ενημέρωση νέων κινήσεων προς
+	// τους clients δεν κάνουμε κάτι αλλά αναμένουμε να εκτελεστεί
+	// η δρομολογημένη ενημέρωση στο άμεσο μέλλον.
+
+	if (this.kinisiEnimerosiTimer)
+	return this;
+
+	// Δεν υπάρχει ήδη δρομολογημένη ενημέρωση, επομένως θα προβούμε
+	// είτε σε άμεση ενημέρωση, εφόσον έχει περάσει αρκετός χρόνος
+	// από την προηγούμενη ενημέρωση, είτε θα δρομολογήσουμε ενημέρωση
+	// στο πολύ εγγύς μέλλον, εφόσον έχουμε πολύ πρόσφατα επιτελέσει
+	// ενημέρωση των clients με τις νέες κινήσεις.
+
+	tora = Globals.torams();
+	prevEnimerosiTS = this.kinisiEnimerosiTS;
+
+	// Αν δεν έχει γίνει καμία προηγούμενη ενημέρωση (είναι πρώτη φορά),
+	// θεωρούμε ότι έγινε ενημέρωση πριν από 300 ms.
+
+	if (!prevEnimerosiTS) prevEnimerosiTS = tora - 300;
+
+	// Υπολογίζουμε το χρονικό διάστημα που έχει περάσει από την
+	// προηγούμενη ενημέρωση.
+
+	dt  = tora - prevEnimerosiTS;
+
+	// Αν δεν έχει περάσει αρκετός χρόνος από την προηγούμενη ενημέρωση
+	// δρομολογούμε την ενημέρωση για λίγο αργότερα.
+
+	if (dt < 500)
+	this.kinisiEnimerosiTimer = setTimeout(function() {
+		Server.skiniko.skinikoKinisiEnimerosiTora();
+	}, 500 - dt);
+
+	// Έχει περάσει αρκετός χρόνος από την προηγούμενη ενημέρωση, επομένως
+	// δεν είναι κακό να κάνουμε άμεσα ενημέρωση.
+
+	else
+	this.skinikoKinisiEnimerosiTora();
+
+	return this;
+};
+
+Skiniko.prototype.skinikoKinisiEnimerosiTora = function() {
+	var tora = Globals.torams();
+
+	if (this.kinisiEnimerosiTimer) {
+		clearTimeout(this.kinisiEnimerosiTimer);
+		delete this.kinisiEnimerosiTimer;
+	}
+
+	this.kinisiEnimerosiTS = tora;
 	this.skinikoSinedriaWalk(function() {
 		this.feredataAlages();
 	});
 
 	return this;
 };
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
+
+Kinisi.maxLength = 1000;
 
 Skiniko.prototype.kinisiKontema = function() {
 	var min, count;
