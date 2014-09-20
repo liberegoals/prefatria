@@ -218,7 +218,7 @@ DBSindesi = function() {
 	// "index".
 
 	this.indexSet(DB.pool.push(this) - 1);
-	console.log('new database connection: ' + this.indexGet());
+	console.log('new database connection: ' + this.indexGet() + ' (' + Globals.meraOra() + ')');
 }
 
 DBSindesi.prototype.indexSet = function(idx) {
