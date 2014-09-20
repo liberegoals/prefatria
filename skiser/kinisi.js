@@ -15,8 +15,7 @@ Skiniko.prototype.kinisiAdd = function(kinisi, dose) {
 	if (dose === undefined) dose = true;
 	if (!dose) return this;
 
-	//this.skinikoKinisiEnimerosi();
-	this.skinikoKinisiEnimerosiTora();
+	this.skinikoKinisiEnimerosi();
 	return this;
 };
 
@@ -46,28 +45,40 @@ Skiniko.prototype.skinikoKinisiEnimerosi = function() {
 	prevEnimerosiTS = this.kinisiEnimerosiTS;
 
 	// Αν δεν έχει γίνει καμία προηγούμενη ενημέρωση (είναι πρώτη φορά),
-	// θεωρούμε ότι έγινε ενημέρωση πριν από 300 ms.
+	// θεωρούμε ότι έγινε ενημέρωση πριν από 100 ms.
 
-	if (!prevEnimerosiTS) prevEnimerosiTS = tora - 50;
+	if (!prevEnimerosiTS) prevEnimerosiTS = tora - 100;
 
 	// Υπολογίζουμε το χρονικό διάστημα που έχει περάσει από την
 	// προηγούμενη ενημέρωση.
 
 	dt  = tora - prevEnimerosiTS;
 
-	// Αν δεν έχει περάσει αρκετός χρόνος από την προηγούμενη ενημέρωση
-	// δρομολογούμε την ενημέρωση για λίγο αργότερα.
-
-	if (dt < 200)
-	this.kinisiEnimerosiTimer = setTimeout(function() {
-		Server.skiniko.skinikoKinisiEnimerosiTora();
-	}, 200 - dt);
-
-	// Έχει περάσει αρκετός χρόνος από την προηγούμενη ενημέρωση, επομένως
+	// Άν έχει περάσει αρκετός χρόνος από την προηγούμενη ενημέρωση,
 	// δεν είναι κακό να κάνουμε άμεσα ενημέρωση.
 
-	else
-	this.skinikoKinisiEnimerosiTora();
+	if (dt > 300) {
+		this.skinikoKinisiEnimerosiTora();
+		return this;
+	}
+
+	// Δεν έχει περάσει αρκετός χρόνος από την προηγούμενη ενημέρωση,
+	// επομένως θα δρομολογήσουμε την ενημέρωση για λίγο αργότερα.
+
+	dt = 300 - dt;
+
+	// Αν αυτό το «αργότερα» είναι αρκετά κοντά κάνουμε πάλι άμεση
+	// ενημέρωση, δεν έχει νόημα η δρομολόγηση για ελάχιστο χρόνο
+	// αργότερα.
+
+	if (dt < 10) {
+		this.skinikoKinisiEnimerosiTora();
+		return this;
+	}
+
+	this.kinisiEnimerosiTimer = setTimeout(function() {
+		Server.skiniko.skinikoKinisiEnimerosiTora();
+	}, dt);
 
 	return this;
 };
