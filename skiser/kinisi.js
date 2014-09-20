@@ -15,7 +15,8 @@ Skiniko.prototype.kinisiAdd = function(kinisi, dose) {
 	if (dose === undefined) dose = true;
 	if (!dose) return this;
 
-	this.skinikoKinisiEnimerosi();
+	//this.skinikoKinisiEnimerosi();
+	this.skinikoKinisiEnimerosiTora();
 	return this;
 };
 
