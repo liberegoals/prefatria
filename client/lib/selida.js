@@ -232,12 +232,12 @@ Client.tabIsodos = function(x) {
 };
 
 Client.tabExodos = function(x) {
-	return Client.tab($('<a>').attr({href: Client.server}).
+	return Client.tab($('<a>').attr({href: Client.server + 'exodos?url=' + Client.server}).
 	append(Client.sinefo('Έξοδος').
 	on('click', function(e) {
 		e.stopPropagation();
-		Client.exodos();
-		return false;
+		Client.skiserService('exodos', {async:false});
+		return true;
 	})), x === undefined ? $('#toolbarRight') : x);
 };
 
@@ -245,11 +245,6 @@ Client.tabPektis = function(x) {
 	if (x === undefined) x = $('#toolbarRight');
 	Client.tab($('<a target="_blank" href="' + Client.server + 'account">' +
 		'<span class="sinefo entona">' + Client.session.pektis + '</span>'), x);
-};
-
-Client.exodos = function() {
-	Client.skiserService('exodos', {async:false});
-	self.location = Client.server + 'exodos?url=' + Client.server;
 };
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

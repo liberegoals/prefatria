@@ -261,6 +261,7 @@ Service.sinedria.exodos4 = function(nodereq) {
 	skiniko.
 	processKinisi(kinisi).
 	kinisiAdd(kinisi);
+	console.log(kinisi.data.login + ': bye (' + Globals.meraOra() + ')');
 };
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -369,7 +370,7 @@ Service.sinedria.pektisTheatisPektis = function(nodereq) {
 Service.sinedria.salute = function(nodereq) {
 	if (nodereq.isvoli()) return;
 
-	console.log(nodereq.sinedria.pektis + ': salute');
+	console.log(nodereq.sinedria.pektis + ': salute (' + Globals.meraOra() + ')');
 	nodereq.sinedria.feredataClose();
 	Server.skiniko.kinisiAdd(new Kinisi({
 		idos: 'SL',

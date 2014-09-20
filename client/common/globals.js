@@ -196,6 +196,12 @@ Globals.ora = function(d, seconds) {
 	return s;
 };
 
+Globals.meraOra = function() {
+	var tora = new Date;
+
+	return Globals.mera(tora) + ', ' + Globals.ora(tora, true);
+};
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
 
 String.prototype.trim = function() {
