@@ -41,6 +41,13 @@ Service.feredata.alages = function(nodereq) {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
 
+// Η function "feredata.peparamTrivial" δέχεται το είδος και την τιμή παραμέτρου
+// παίκτη, και επιστρέφει true εφόσον ο συνδυασμός είναι default.
+
+Service.feredata.peparamTrivial = function(param, timi) {
+	return (timi === Prefadoros.peparamDefault[param])
+};
+
 // Η function "feredata.peparamExeresi" δέχεται το είδος παραμέτρου παίκτη, το αν
 // ο παραλήπτης είναι ο παίκτης τής παραμέτρου, αν ο παραλήπτης είναι διαχειριστής,
 // και αν ο παραλήπτης είναι άνεργος, και επιστρέφει true εφόσον η παράμετρος πρέπει
@@ -385,6 +392,9 @@ Sinedria.prototype.feredataFreska = function() {
 		idios = (nodereq.loginGet() == pektis);
 		hdr = '\t' + pektis.json() + ': {\n\t\t';
 		this.pektisPeparamWalk(function(param, timi) {
+			if (Service.feredata.peparamTrivial(param, timi))
+			return;
+
 			if (Service.feredata.peparamExeresi(param, idios, diaxiristis, anergos))
 			return;
 

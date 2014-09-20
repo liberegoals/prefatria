@@ -70,6 +70,24 @@ Prefadoros = {
 	peparamIsAnergos: function(param) {
 		return Prefadoros.peparamAnergos[param];
 	},
+
+	// Ακολουθεί λίστα με τις default τιμές των παραμέτρων παίκτη.
+
+	peparamDefault: {
+		'ΑΞΙΩΜΑ': 'ΘΑΜΩΝΑΣ',
+		'ΚΑΤΑΣΤΑΣΗ': 'ΔΙΑΘΕΣΙΜΟΣ',
+		'ΠΛΑΤΗ': 'ΜΠΛΕ',
+		'ΠΑΡΑΣΚΗΝΙΟ': 'standard.png',
+		'BLOCKIMAGE': 'ΟΧΙ',
+		'MOVIETIME': 'ΜΕΤΡΟΝΟΜΟΣ',
+		'MOVIESCALE': '1000',
+		'ΑΣΟΙ': 'ΝΑΙ',
+		'ΠΑΣΟ': 'ΟΧΙ',
+		'ΤΕΛΕΙΩΜΑ': 'ΚΑΝΟΝΙΚΟ',
+		'DEVELOPER': 'ΟΧΙ',
+		'ΑΝΕΡΓΟΣ': 'ΟΧΙ',
+		'ΕΠΙΔΟΤΗΣΗ': 'ΟΧΙ',
+	},
 };
 
 Prefadoros.thesiWalk = function(callback) {
