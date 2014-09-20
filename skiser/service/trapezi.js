@@ -695,6 +695,7 @@ Service.trapezi.arxiothetisiSizitisi = function(conn, trapezi, lista, lista2) {
 Service.trapezi.arxiothetisiTelos = function(lista) {
 	var trapezi, kinisi;
 
+	kinisi = null;
 	for (trapezi in lista) {
 		kinisi = new Kinisi({
 			idos: 'AT',
@@ -708,5 +709,6 @@ Service.trapezi.arxiothetisiTelos = function(lista) {
 		kinisiAdd(kinisi, false);
 	}
 
+	if (kinisi)
 	Server.skiniko.kinisiAdd();
 };
