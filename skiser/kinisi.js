@@ -47,7 +47,7 @@ Skiniko.prototype.skinikoKinisiEnimerosi = function() {
 	// Αν δεν έχει γίνει καμία προηγούμενη ενημέρωση (είναι πρώτη φορά),
 	// θεωρούμε ότι έγινε ενημέρωση πριν από 300 ms.
 
-	if (!prevEnimerosiTS) prevEnimerosiTS = tora - 300;
+	if (!prevEnimerosiTS) prevEnimerosiTS = tora - 50;
 
 	// Υπολογίζουμε το χρονικό διάστημα που έχει περάσει από την
 	// προηγούμενη ενημέρωση.
@@ -57,10 +57,10 @@ Skiniko.prototype.skinikoKinisiEnimerosi = function() {
 	// Αν δεν έχει περάσει αρκετός χρόνος από την προηγούμενη ενημέρωση
 	// δρομολογούμε την ενημέρωση για λίγο αργότερα.
 
-	if (dt < 500)
+	if (dt < 200)
 	this.kinisiEnimerosiTimer = setTimeout(function() {
 		Server.skiniko.skinikoKinisiEnimerosiTora();
-	}, 500 - dt);
+	}, 200 - dt);
 
 	// Έχει περάσει αρκετός χρόνος από την προηγούμενη ενημέρωση, επομένως
 	// δεν είναι κακό να κάνουμε άμεσα ενημέρωση.
