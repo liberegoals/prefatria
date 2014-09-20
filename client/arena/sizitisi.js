@@ -973,10 +973,10 @@ Sizitisi.ikonaAppend = function(dom, s) {
 	img.on('load', function() {
 		var width, i;
 
-		width = img.outerWidth();
+		width = $(this).outerWidth();
 		for (i = 0; i < sinPlin.length; i++) {
 			width *= sinPlin[i];
 		}
-		img.css('width', width + 'px');
+		$(this).css('width', width + 'px');
 	});
 };
