@@ -7,18 +7,18 @@ Service.minima = {};
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
 
 Service.minima.send = function(nodereq) {
-	var pektis, query;
+	var paraliptis, apostoleas, kimeno, query;
 
 	if (nodereq.isvoli()) return;
 	if (nodereq.denPerastike('pektis', true)) return;
 	if (nodereq.denPerastike('kimeno', true)) return;
 
-	pektis = Server.skiniko.skinikoPektisGet(nodereq.url.pektis);
-	if (!pektis) return nodereq.error('Δεν βρέθηκε ο παίκτης στο σκηνικό');
+	apostoleas = nodereq.loginGet();
+	paraliptis = nodereq.url.pektis;
+	kimeno = nodereq.url.kimeno;
 
 	query = 'INSERT INTO `minima` (`apostoleas`, `paraliptis`, `kimeno`) VALUES (' +
-		nodereq.loginGet().json() + ', ' + nodereq.url.pektis.json() + ', ' +
-		nodereq.url.kimeno.json() + ')';
+		apostoleas.json() + ', ' + paraliptis.json() + ', ' + kimeno.json() + ')';
 	DB.connection().query(query, function(conn, rows) {
 		var minimaId, kinisi;
 
@@ -33,7 +33,8 @@ Service.minima.send = function(nodereq) {
 			idos: 'ML',
 			data: {
 				id: minimaId,
-				paraliptis: nodereq.url.pektis,
+				apostoleas: apostoleas,
+				paraliptis: paraliptis,
 			}
 		});
 

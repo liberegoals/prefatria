@@ -1617,6 +1617,8 @@ Skiniko.prototype.processKinisiPostML = function(data) {
 		easing: 'easeInElastic',
 	}).
 	html('&nbsp;!&nbsp;').attr('title', 'Παραλάβατε μήνυμα με κωδικό αριθμό ' + data.id);
+	Client.fyi.pano('<div class="aristera">Έχετε μήνυμα από τον παίκτη ' +
+		'<span class="entona ble">' + data.apostoleas + '</span></div>', 8000);
 	Client.sound.psit();
 	return this;
 }

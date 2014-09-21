@@ -426,7 +426,8 @@ Arena.pektisPanelRefreshDOM = function() {
 		var kimeno;
 
 		Arena.inputRefocus(e);
-		kimeno = Arena.pektisFormaEditDOM.val().trim();
+		kimeno = Arena.pektisFormaEditDOM.val().
+		trim().replace(/\r?\n/g, '<br />');
 		if (!kimeno) return Arena.pektisFormaEditOff();
 
 		Client.fyi.pano('Αποστολή μηνύματος. Παρακαλώ περιμένετε…');
@@ -459,7 +460,8 @@ Arena.pektisPanelRefreshDOM = function() {
 		var kimeno;
 
 		Arena.inputRefocus(e);
-		kimeno = Arena.pektisFormaEditDOM.val().trim();
+		kimeno = Arena.pektisFormaEditDOM.val().
+		trim().replace(/\r?\n/g, '<br />');
 
 		// Αν το κείμενο που επιχειρεί να καταχωρήσει ο συντάκτης είναι το
 		// ίδιο με αυτό που ήδη υπάρχει ως πληροφορία προφίλ του συντάκτη
