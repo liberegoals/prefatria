@@ -481,3 +481,10 @@ Kinisi.prototype.isAdiaforiPI = function(sinedria) {
 
 	return(sinedria.sinedriaPektisGet() == this.data.pektis)
 };
+
+// ML		Προσωπικό μήνυμα
+
+Kinisi.prototype.isAdiaforiML = function(sinedria) {
+	if (!this.data) return true;
+	return(sinedria.sinedriaPektisGet() != this.data.paraliptis)
+};

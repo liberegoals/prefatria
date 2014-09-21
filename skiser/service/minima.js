@@ -16,21 +16,24 @@ Service.minima.send = function(nodereq) {
 	pektis = Server.skiniko.skinikoPektisGet(nodereq.url.pektis);
 	if (!pektis) return nodereq.error('Δεν βρέθηκε ο παίκτης στο σκηνικό');
 
-	query = 'INSERT INTO `minima (`apostoleas`, `paraliptis`, `kimeno`) VALUES (' +
+	query = 'INSERT INTO `minima` (`apostoleas`, `paraliptis`, `kimeno`) VALUES (' +
 		nodereq.loginGet().json() + ', ' + nodereq.url.pektis.json() + ', ' +
 		nodereq.url.kimeno.json() + ')';
 	DB.connection().query(query, function(conn, rows) {
-		var kinisi;
+		var minimaId, kinisi;
 
 		conn.free();
 		if (conn.affectedRows != 1)
 		return nodereq.error('Απέτυχε η αποστολή του μηνύματος');
 
+		minimaId = conn.insertId;
+		nodereq.end(minimaId);
+
 		kinisi = new Kinisi({
 			idos: 'ML',
 			data: {
 				id: minimaId,
-				pektis: nodereq.url.pektis,
+				paraliptis: nodereq.url.pektis,
 			}
 		});
 
