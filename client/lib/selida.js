@@ -965,6 +965,10 @@ Client.sound = {
 	hiThere: function() {
 		Client.sound.play('hiThere.ogg', Client.sound.entasi['ΚΑΝΟΝΙΚΗ']);
 	},
+
+	fiouit: function() {
+		Client.sound.play('fiouit.ogg');
+	},
 };
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
