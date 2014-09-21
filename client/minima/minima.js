@@ -29,11 +29,10 @@ Minima.setupMinimata = function() {
 Minima.zebraSetup = function() {
 	var count = 0;
 
-	Minima.minimataDOM.find('tr').each(function() {
-		var i, td;
+	Minima.minimataDOM.find('.minimaMinima').each(function() {
+		var i;
 
 		i = count++ % 2;
-		td = $(this).children('td');
-		td.removeClass('minimaZebra0 minimaZebra1').addClass('minimaZebra' + i);
+		$(this).removeClass('minimaZebra0 minimaZebra1').addClass('minimaZebra' + i);
 	});
 };
