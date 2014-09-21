@@ -252,12 +252,19 @@ Arena.setupMinima = function() {
 	append(Arena.minimaEndixiDOM = $('<div>').addClass('minimaEndixi'));
 	Client.ajaxService('minima/check.php').
 	done(function(rsp) {
+		var count, msg;
+
 		if (!rsp) return;
+		count = parseInt(rsp);
+		if (isNaN(count)) return;
+		if (count <= 0) return;
+
+		msg = 'Έχετε ' + rsp + ' ' + (count === 1 ? 'αδιάβαστο μήνυμα' : 'αδιάβαστα μηνύματα');
 		Arena.minimaEndixiDOM.finish().fadeIn({
 			duration: 1000,
 			easing: 'easeInExpo',
 		}).
-		text(rsp).attr('title', 'Έχετε ' + rsp + ' αδιάβαστα μηνύματα');
+		text(rsp).attr('title', msg);
 	}).
 	fail(function(err) {
 		var msg;
