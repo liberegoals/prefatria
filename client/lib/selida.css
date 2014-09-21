@@ -467,12 +467,12 @@ border-color: red !important;
 	border-color: #9BB37C;
 }
 
-.redirectMinima {
+.redirectInfo {
 	font-weight: bold;
 	margin-bottom: 20px;
 }
 
-.redirectMinima:before {
+.redirectInfo:before {
 	content: 'ERROR:';
 	margin-right: 4px;
 	font-weight: normal;

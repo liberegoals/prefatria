@@ -279,20 +279,20 @@ class Selida {
 
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////@
 
-	public static function fyi($klasi, $minima) {
+	public static function fyi($klasi, $msg) {
 		?>
 		<div id="fyi<?php print $klasi; ?>" class="fyi">
-			<?php print $minima; ?>
+			<?php print $msg; ?>
 		</div>
 		<?php
 	}
 
-	public static function fyi_pano($minima = "&nbsp;") {
-		self::fyi("Pano", $minima);
+	public static function fyi_pano($msg = "&nbsp;") {
+		self::fyi("Pano", $msg);
 	}
 
-	public static function fyi_kato($minima = "&nbsp;") {
-		self::fyi("Kato", $minima);
+	public static function fyi_kato($msg = "&nbsp;") {
+		self::fyi("Kato", $msg);
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////@
@@ -330,12 +330,12 @@ class Selida {
 	// Η μέθοδος "redirect" καλείται στο head section και σκοπό έχει τη μετάβαση
 	// του χρήστη σε άλλη σελίδα.
 
-	public static function redirect($minima, $delay = 10) {
+	public static function redirect($msg, $delay = 10) {
 		?>
 		<meta http-equiv="refresh" content="<?php print $delay; ?>; url=<?php Globals::url(); ?>" />
 		<?php Selida::body(); ?>
 		<div class="redirect">
-		<div class="redirectMinima"><?php print $minima; ?></div>
+		<div class="redirectInfo"><?php print $msg; ?></div>
 			Θα μεταφερθείτε σύντομα στην αρχική σελίδα της εφαρμογής.
 		<div class="redirectSimiosi">
 			Αν μέσα σε <?php print $delay; ?> δευτερόλεπτα δεν έχετε
