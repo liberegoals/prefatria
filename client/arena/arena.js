@@ -245,7 +245,7 @@ Arena.setupMinima = function() {
 	on('click', function(e) {
 		Arena.inputRefocus();
 		Arena.minimaEndixiDOM.finish().fadeOut().
-		emtpy().removeAttr('title');
+		empty().removeAttr('title');
 	});
 
 	dom.css('position', 'relative').
