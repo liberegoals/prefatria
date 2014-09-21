@@ -199,7 +199,6 @@ Client.tabKlisimo = function(x) {
 		self.close();
 		return false;
 	}).append(Client.sinefo('Κλείσιμο')), x === undefined ? $('#toolbarLeft') : x);
-
 };
 
 Client.tabEpistrofi = function(lektiko, url, x) {

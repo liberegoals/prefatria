@@ -5,6 +5,8 @@ $(document).ready(function() {
 });
 
 Minima.setupMinimata = function() {
+	Client.tabPektis();
+	Client.tabKlisimo($('#toolbarRight'));
 	Minima.minimataDOM = $('#minimata');
 	Minima.minimataDOM.find('td.minimaPanel').
 	append($('<div>').addClass('minimaPanelButton').
