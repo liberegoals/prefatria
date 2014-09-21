@@ -134,7 +134,7 @@ Arena.partida.claimRefreshDOM = function() {
 
 	filaDom = Arena.ego.trapezi.claimFila.xartosiaDOM(1);
 	Arena.partida.tsoxaDOM.append($('<div>').attr('id', 'tsoxaClaimXartosia').
-	append($('<div>').attr('id', 'tsoxaClaimMinima').text('Δεν δίνω άλλη μπάζα!')).
+	append($('<div>').attr('id', 'tsoxaClaimMessage').text('Δεν δίνω άλλη μπάζα!')).
 	append(filaDom));
 	return Arena.partida;
 };

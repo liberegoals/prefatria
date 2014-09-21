@@ -122,7 +122,7 @@ Service.akirosi.stop = function(nodereq) {
 	Service.akirosi.stop2(data);
 };
 
-Service.akirosi.stop2 = function(data, minima) {
+Service.akirosi.stop2 = function(data, msg) {
 	var kinisi = new Kinisi({
 		idos: 'AK',
 		data: {
@@ -133,7 +133,7 @@ Service.akirosi.stop2 = function(data, minima) {
 	Server.skiniko.
 	processKinisi(kinisi).
 	kinisiAdd(kinisi);
-	data.nodereq.end(minima);
+	data.nodereq.end(msg);
 	data.trapezi.trapeziXeklidoma();
 };
 
