@@ -1598,3 +1598,24 @@ Skiniko.prototype.processKinisiPostZP = function(data) {
 	Arena.partida.azabRefreshDOM();
 	return this;
 }
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// ML -- Έλευση μηνύματος αλληλογραφίας
+//
+// Δεδομένα
+//
+//	paraliptis	Login name παραλήπτη
+//	id		Κωδικός μηνύματος
+
+Skiniko.prototype.processKinisiPostML = function(data) {
+	if (!Arena.minimaEndixiDOM) return this;
+	Arena.minimaEndixiDOM.finish().
+	css('display', 'none').
+	fadeIn({
+		duration: 500,
+		easing: 'easeInElastic',
+	}).
+	html('&nbsp;!&nbsp;').attr('title', 'Παραλάβατε μήνυμα με κωδικό αριθμό ' + data.id);
+	return this;
+}

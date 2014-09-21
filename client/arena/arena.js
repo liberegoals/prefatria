@@ -184,6 +184,7 @@ Arena.setup = function() {
 	setupDiafimisi().
 	setupMotd().
 	setupFortos().
+	setupMinima().
 	setupKafenio().
 	partida.setup().
 	setupPss().
@@ -228,6 +229,46 @@ Arena.setupMotd = function() {
 		Arena.cpanel.bpanelButtonGet('motd').refresh();
 	};
 
+	return Arena;
+};
+
+Arena.setupMinima = function() {
+	var tbr, dom;
+
+	tbr = $('#toolbarLeft');
+	if (!tbr.length) return;
+
+	Client.tab($('<a>').attr({
+		target: '_blank',
+		href: 'minima/index.php',
+	}).append(dom = Client.sinefo('PM')), tbr).
+	on('click', function(e) {
+		Arena.inputRefocus();
+		Arena.minimaEndixiDOM.finish().fadeOut().
+		emtpy().removeAttr('title');
+	});
+
+	dom.css('position', 'relative').
+	append(Arena.minimaEndixiDOM = $('<div>').addClass('minimaEndixi'));
+	Client.ajaxService('minima/check.php').
+	done(function(rsp) {
+		Arena.minimaEndixiDOM.finish().fadeIn({
+			duration: 1000,
+			easing: 'easeInExpo',
+		}).
+		text(rsp).attr('title', 'Έχετε ' + rsp + ' αδιάβαστα μηνύματα');
+	}).
+	fail(function(err) {
+		var msg;
+
+		if (err.hasOwnProperty('responseText') && (err.responseText !== ''))
+		msg = err.responseText;
+
+		else if (typeof err === 'string')
+		msg = err;
+
+		Arena.minimaEndixiDOM.text('?').attr('title', msg);
+	});
 	return Arena;
 };
 

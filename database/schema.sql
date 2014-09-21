@@ -193,11 +193,11 @@ CREATE TABLE `minima` (
 	) USING BTREE,
 
 	INDEX USING BTREE (
-		`apostoleas`,
+		`apostoleas`
 	),
 
 	INDEX USING BTREE (
-		`paraliptis`,
+		`paraliptis`
 	)
 )
 
