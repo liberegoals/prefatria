@@ -26,11 +26,12 @@ Selida::ribbon();
 Selida::telos();
 
 Class Minima {
+	private static $time_dif;
 	private static $pektis;
 
 	public static function setupView() {
-		?>
-		<?php
+		self::$time_dif = $_REQUEST["timeDif"];
+		if (is_nan(self::$time_dif)) self::$time_dif = 0;
 	}
 
 	public static function pektisSet() {
@@ -50,7 +51,7 @@ Class Minima {
 	}
 
 	public static function minimata() {
-		$query = "SELECT `kodikos`, `pote`, `apostoleas`, `paraliptis`, `kimeno` " .
+		$query = "SELECT `kodikos`, UNIX_TIMESTAMP(`pote`), `apostoleas`, `paraliptis`, `kimeno` " .
 			"FROM `minima` WHERE " .
 			"(`apostoleas` = " . Globals::asfales_sql(self::$pektis) . ") OR " .
 			"(`paraliptis` = " . Globals::asfales_sql(self::$pektis) . ") " .
@@ -60,7 +61,8 @@ Class Minima {
 			?>
 			<tr>
 			<td class="minimaKodikos"><?php print $row[0]; ?></td>
-			<td class="minimaImerominia"><?php print $row[1]; ?></td>
+			<td class="minimaImerominia"><?php print date("d/m/Y<b\\r />H:i",
+				$row[1] + self::$time_dif); ?></td>
 			<td class="minimaPios"><?php print $row[2]; ?></td>
 			<td class="minimaMinima"><?php print $row[4]; ?></td>
 			<td class="minimaPanel"></td>

@@ -1833,8 +1833,8 @@ cursor: auto;
 .minimaEndixi {
 	display: none;
 	position: absolute;
-	bottom: -16px;
-	left: 8px;
+	bottom: -12px;
+	left: 20px;
 
 	padding: 0px 6px;
 	font-family: "Arial Black", Gadget, sans-serif;

@@ -240,7 +240,7 @@ Arena.setupMinima = function() {
 
 	Client.tab($('<a>').attr({
 		target: '_blank',
-		href: 'minima/index.php',
+		href: 'minima/index.php?timeDif=' + Client.timeDif,
 	}).append(dom = Client.sinefo('PM')), tbr).
 	on('click', function(e) {
 		Arena.inputRefocus();
