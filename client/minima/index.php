@@ -32,6 +32,7 @@ Class Minima {
 	public static function setupView() {
 		self::$time_dif = $_REQUEST["timeDif"];
 		if (is_nan(self::$time_dif)) self::$time_dif = 0;
+		else self::$time_dif *= 3600;
 	}
 
 	public static function pektisSet() {
