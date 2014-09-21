@@ -1,0 +1,87 @@
+body {
+	max-width: none;
+}
+
+#minimata {
+	border-spacing: 2px 6px;
+}
+
+#minimata td {
+	vertical-align: top;
+}
+
+.minimaKodikos {
+	display: none;
+	width: 0px;
+	padding: 4px 10px;
+	text-align: right;
+}
+
+.minimaImerominia {
+	width: 1px;
+	padding: 4px 10px;
+	text-align: right;
+	white-space: nowrap;
+	border-radius: 4px;
+}
+
+.minimaPios {
+	width: 1px;
+	padding: 4px 10px;
+	font-size: 16px;
+	font-weight: bold;
+	text-align: right;
+	white-space: nowrap;
+	border-radius: 4px;
+/*
+	background-color: olive;
+*/
+}
+
+.minimaMinima {
+	padding: 4px 10px;
+	text-align: left;
+	border-style: solid;
+	border-width: 1px;
+	border-color: rgb(204, 255, 0);
+	border-radius: 4px;
+/*
+	background-color: orange;
+*/
+}
+
+.minimaPanel {
+	width: 1px;
+	padding: 4px 10px;
+	text-align: left;
+	background-color: #FFF !important;
+}
+
+.minimaPanelButton {
+	display: inline-block;
+	width: 24px;
+	height: 24px;
+	padding: 2px;
+	background-color: transparent;
+	border-style: outset;
+	border-width: 2px;
+	border-color: transparent;
+}
+
+.minimaPanelButton:hover {
+	background-color: rgb(255, 253, 216);
+	border-color: rgb(255, 232, 190);
+	cursor: pointer;
+}
+
+.minimaPanelIcon {
+	width: 100%;
+}
+
+.minimaZebra0 {
+	background-color: rgba(243, 243, 243, 1);
+}
+
+.minimaZebra1 {
+	background-color: rgba(240, 237, 229, 1);
+}
