@@ -252,6 +252,7 @@ Arena.setupMinima = function() {
 	append(Arena.minimaEndixiDOM = $('<div>').addClass('minimaEndixi'));
 	Client.ajaxService('minima/check.php').
 	done(function(rsp) {
+		if (!rsp) return;
 		Arena.minimaEndixiDOM.finish().fadeIn({
 			duration: 1000,
 			easing: 'easeInExpo',
