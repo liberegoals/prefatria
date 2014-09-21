@@ -8,6 +8,7 @@
 Service = {};
 
 Log.level.push();
+require('./service/minima.js');
 require('./service/profinfo.js');
 require('./service/fortos.js');
 require('./service/misc.js');
@@ -36,6 +37,7 @@ Log.level.pop();
 // επεξεργασία που υφίσταται από τον server.
 
 Server.router = {
+	'/minimaSend': Service.minima.send,
 	'/ipGet': Service.misc.ipGet,
 	'/profinfoPut': Service.profinfo.put,
 	'/profinfoGet': Service.profinfo.get,

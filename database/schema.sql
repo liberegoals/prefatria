@@ -172,6 +172,39 @@ ENGINE = InnoDB
 COMMENT = 'Πίνακας σχέσεων'
 ;
 
+-- Ο πίνακας "minima" περιέχει την αλληλογραφία των παικτών. Πράγματι, οι παίκτες,
+-- εκτός από την άμεση επικοινωνία μέσω του chat, μπορούν να επικοινωνούν και με
+-- προσωπικά μηνύματα τα οποία αποστέλλουν ο ένας στον άλλον.
+
+CREATE TABLE `minima` (
+	`kodikos`	INTEGER(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Primary key',
+	`apostoleas`	VARCHAR(64) NOT NULL COMMENT 'Αποστολέας',
+	`paraliptis`	VARCHAR(64) NOT NULL COMMENT 'Παραλήπτης',
+	`kimeno`	VARCHAR(32768) NOT NULL COMMENT 'Κείμενο μηνύματος',
+	`pote`		TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Ημερομηνία αποστολής',
+	`status`	ENUM (
+		'ΑΔΙΑΒΑΣΤΟ',
+		'ΔΙΑΒΑΣΜΕΝΟ',
+		'ΚΡΑΤΗΜΕΝΟ'
+	) NOT NULL DEFAULT 'ΑΔΙΑΒΑΣΤΟ' COMMENT 'Κατάσταση μηνύματος',
+
+	PRIMARY KEY (
+		`kodikos`
+	) USING BTREE,
+
+	INDEX USING BTREE (
+		`apostoleas`,
+	),
+
+	INDEX USING BTREE (
+		`paraliptis`,
+	)
+)
+
+ENGINE = InnoDB
+COMMENT = 'Πίνακας μηνυμάτων αλληλογραφίας'
+;
+
 -- Ο πίνακας "trapezi" είναι ο σημαντικότερος πίνακας της εφαρμογής μετά τον πίνακα
 -- "pektis". Ο πίνακας περιέχει όλα τα ενεργά τραπέζια καθώς και όλα τα τραπέζια που
 -- δημιουργήθηκαν κατά καιρούς και στα οποία μοιράστηκε έστω μια διανομή. Το πεδίο
@@ -752,6 +785,22 @@ ALTER TABLE `sxesi` ADD FOREIGN KEY (
 
 ALTER TABLE `sxesi` ADD FOREIGN KEY (
 	`sxetizomenos`
+) REFERENCES `pektis` (
+	`login`
+) ON UPDATE CASCADE ON DELETE CASCADE
+;
+
+-- Πίνακας μηνυμάτων ("minima")
+
+ALTER TABLE `minima` ADD FOREIGN KEY (
+	`apostoleas`
+) REFERENCES `pektis` (
+	`login`
+) ON UPDATE CASCADE ON DELETE CASCADE
+;
+
+ALTER TABLE `minima` ADD FOREIGN KEY (
+	`paraliptis`
 ) REFERENCES `pektis` (
 	`login`
 ) ON UPDATE CASCADE ON DELETE CASCADE

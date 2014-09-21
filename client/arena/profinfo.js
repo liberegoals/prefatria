@@ -415,6 +415,7 @@ Arena.pektisPanelRefreshDOM = function() {
 	css('display', Arena.pektisFormaEditing ? 'none' : 'inline-block').
 	on('click', function(e) {
 		Arena.inputRefocus(e);
+		Arena.pektisFormaEditDOM.val('');
 		Arena.pektisFormaEditOn('minima');
 		Arena.pektisFormaEditDOM.focus();
 	})).
@@ -422,8 +423,21 @@ Arena.pektisPanelRefreshDOM = function() {
 	append(Arena.pektisFormaApostoliDOM = $('<button>').text('Αποστολή').
 	css('display', Arena.pektisFormaEditing === 'minima' ? 'inline-block' : 'none').
 	on('click', function(e) {
+		var kimeno;
+
 		Arena.inputRefocus(e);
-		Arena.pektisFormaEditOff();
+		kimeno = Arena.pektisFormaEditDOM.val().trim();
+
+		Client.fyi.pano('Αποστολή μηνύματος. Παρακαλώ περιμένετε…');
+		Client.skiserService('minimaSend', 'pektis=' + login, 'kimeno=' + kimeno).
+		done(function(rsp) {
+			Client.fyi.pano(rsp);
+			Arena.pektisFormaEditOff();
+		}).
+		fail(function(err) {
+			Arena.pektisFormaEditDOM.focus();
+			Client.skiserFail(err);
+		});
 	})).
 
 	append(Arena.pektisFormaSxolioDOM = $('<img>').addClass('pektisPanelIcon').attr({
@@ -457,7 +471,7 @@ Arena.pektisPanelRefreshDOM = function() {
 			return;
 		}
 
-		Client.fyi.pano('Αποστολή προφίλ. Παρακαλώ περιμένετε…');
+		Client.fyi.pano('Καταχώρηση προφίλ. Παρακαλώ περιμένετε…');
 		Client.skiserService('profinfoPut', 'pektis=' + login, 'kimeno=' + kimeno).
 		done(function(rsp) {
 			Client.fyi.pano(rsp);
@@ -472,6 +486,7 @@ Arena.pektisPanelRefreshDOM = function() {
 			Arena.pektisFormaEditOff();
 		}).
 		fail(function(err) {
+			Arena.pektisFormaEditDOM.focus();
 			Client.skiserFail(err);
 		});
 	})).
