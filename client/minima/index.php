@@ -54,7 +54,7 @@ Class Minima {
 			"FROM `minima` WHERE " .
 			"(`apostoleas` = " . Globals::asfales_sql(self::$pektis) . ") OR " .
 			"(`paraliptis` = " . Globals::asfales_sql(self::$pektis) . ") " .
-			"ORDER BY `kodikos`";
+			"ORDER BY `kodikos` DESC";
 		$result = Globals::query($query);
 		while ($row = $result->fetch_array(MYSQL_NUM)) {
 			?>
