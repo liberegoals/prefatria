@@ -63,7 +63,7 @@ Class Minima {
 			<tr>
 			<td class="minimaKodikos"><?php print $row[0]; ?></td>
 			<td class="minimaImerominia"><?php print date("d/m/Y<b\\r />H:i",
-				$row[1] + self::$time_dif); ?></td>
+				$row[1] - self::$time_dif); ?></td>
 			<td class="minimaPios"><?php print $row[2]; ?></td>
 			<td class="minimaMinima"><?php print $row[4]; ?></td>
 			<td class="minimaPanel"></td>
