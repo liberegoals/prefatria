@@ -570,7 +570,7 @@ Skiniko.prototype.processKinisiPostPL = function(data) {
 	apo = prosklisi.prosklisiApoGet();
 	if (apo.isEgo()) Client.sound.klak();
 	else if (Arena.ego.isFilos(apo)) Client.sound.sfirigma();
-	else Client.sound.psit();
+	else Client.sound.fiouit();
 
 	Arena.panelRefresh();
 	prosklisi.prosklisiCreateDOM();
@@ -1617,5 +1617,6 @@ Skiniko.prototype.processKinisiPostML = function(data) {
 		easing: 'easeInElastic',
 	}).
 	html('&nbsp;!&nbsp;').attr('title', 'Παραλάβατε μήνυμα με κωδικό αριθμό ' + data.id);
+	Client.sound.psit();
 	return this;
 }
