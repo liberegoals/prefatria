@@ -23,13 +23,20 @@ Minima.setupMinimata = function() {
 		src: '../ikona/minima/kratimeno.png',
 	})));
 
+	Minima.minimataDOM.
+	on('mouseenter', '.minima', function(e) {
+		$(this).addClass('minimaTrexon');
+	}).
+	on('mouseleave', '.minima', function(e) {
+		$(this).removeClass('minimaTrexon');
+	});
 	Minima.zebraSetup();
 };
 
 Minima.zebraSetup = function() {
 	var count = 0;
 
-	Minima.minimataDOM.find('.minimaMinima').each(function() {
+	Minima.minimataDOM.find('tr').each(function() {
 		var i;
 
 		i = count++ % 2;
