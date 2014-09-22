@@ -30,26 +30,26 @@ class Isodos {
 				<div class="formaTitlos">
 					Φόρμα εισόδου
 				</div>
-			<table>
-			<tr>
-				<td class="formaPrompt">
-					Login
-				</td>
-				<td>
-					<input name="login" class="formaPedio" type="text" value=""
-						maxlength="64" size="16" />
-				</td>
-			</tr>
-			<tr>
-				<td class="formaPrompt">
-					Κωδικός
-				</td>
-				<td>
-					<input name="kodikos" class="formaPedio" type="password" value=""
-						maxlength="16" size="16" />
-				</td>
-			</tr>
-			</table>
+				<table>
+				<tr>
+					<td class="formaPrompt">
+						Login
+					</td>
+					<td>
+						<input name="login" class="formaPedio" type="text" value=""
+							maxlength="64" size="16" />
+					</td>
+				</tr>
+				<tr>
+					<td class="formaPrompt">
+						Κωδικός
+					</td>
+					<td>
+						<input name="kodikos" class="formaPedio" type="password" value=""
+							maxlength="16" size="16" />
+					</td>
+				</tr>
+				</table>
 			</div>
 			<div class="formaPanel">
 				<input class="formaButton" type="submit" value="Είσοδος" />

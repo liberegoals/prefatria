@@ -603,7 +603,7 @@ jQuery.fn.siromeno = function(css) {
 		// που είναι χρήσιμα στη μετακίνηση.
 		obj.addClass('siromeno');
 		if (!css) css = {};
-		css.position = 'absolute';
+		if (!css.position) css.position = 'absolute';
 		if (!obj.css('whiteSpace')) css.whiteSpace = 'nowrap';
 		obj.css(css);
 
@@ -621,7 +621,7 @@ jQuery.fn.siromeno = function(css) {
 			if (isNaN(siromeno_r)) obj.css({left: 0});
 		}
 
-		$(this).find('input').on('mousedown', function(e) {
+		$(this).find('input,textarea').on('mousedown', function(e) {
 			e.stopPropagation();
 		});
 
@@ -885,6 +885,11 @@ Client.sound = {
 	tik: function(vol) {
 		if (vol === undefined) vol = Client.sound.entasi['ΚΑΝΟΝΙΚΗ'];
 		Client.sound.play('tik.wav', vol);
+	},
+
+	tak: function(vol) {
+		if (vol === undefined) vol = Client.sound.entasi['ΚΑΝΟΝΙΚΗ'];
+		Client.sound.play('tak.ogg', vol);
 	},
 
 	trapeziNeo: function(vol) {

@@ -120,10 +120,29 @@ body {
 
 #minimaEditForma {
 	display: none;
+	position: fixed;
+	top: 80px;
+	left: 240px;
+	width: 700px;
+	height: 433px;
+}
+
+#minimaEditFormaPros {
 	position: absolute;
-	top: 10px;
+	top: 12px;
 	left: 10px;
-	width: 600px;
-	height: 400px;
-	background-color: teal;
+}
+
+#minimaEditFormaKimeno {
+	position: absolute;
+	top: 50px;
+	left: 12px;
+	width: 698px;
+	height: 392px;
+}
+
+#minimaEditFormaPanel {
+	position: absolute;
+	top: 12px;
+	left: 300px;
 }
