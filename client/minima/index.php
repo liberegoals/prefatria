@@ -53,12 +53,6 @@ Class Minima {
 		<?php
 	}
 
-	public static function klisimo() {
-		?>
-		</table>
-		<?php
-	}
-
 	public static function minimata() {
 		$query = "SELECT `kodikos`, UNIX_TIMESTAMP(`pote`), `apostoleas`, `paraliptis`, `kimeno`, `status` " .
 			"FROM `minima` WHERE " .
@@ -89,9 +83,9 @@ Class Minima {
 			?>
 			<tr class="minima <?php print $klasi; ?>">
 			<td class="minimaKodikos"><?php print $row[0]; ?></td>
-			<td class="minimaImerominia"><?php
-				print date("d/m/Y<b\\r />H:i", $row[1] - self::$time_dif);
-			?></td>
+			<td class="minimaImerominia">
+				<?php print date("d/m/Y<b\\r />H:i", $row[1] - self::$time_dif); ?>
+			</td>
 			<td class="minimaPios">
 				<div class="minimaPiosOnoma"><?php print $pios; ?></div>
 				<img class="minimaIdosIcon" src="../ikona/minima/<?php print $idos; ?>.png" />
@@ -103,6 +97,13 @@ Class Minima {
 			<?php
 		}
 		$result->free();
+	}
+
+	public static function klisimo() {
+		?>
+		</table>
+		<div id="minimaEditForma"></div>
+		<?php
 	}
 }
 ?>

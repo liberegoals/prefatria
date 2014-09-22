@@ -7,7 +7,11 @@ $(document).ready(function() {
 Minima.setupMinimata = function() {
 	Client.tabPektis();
 	Client.tabKlisimo($('#toolbarRight'));
+
 	Minima.minimataDOM = $('#minimata');
+	Minima.editFormaDOM = $('#minimaEditForma');
+	Minima.editFormaDOM.siromeno();
+
 	Minima.minimataDOM.find('td.minimaPanel').
 	append($('<div>').addClass('minimaPanelButton').
 	append($('<img>').addClass('minimaPanelIcon').attr({
@@ -25,11 +29,17 @@ Minima.setupMinimata = function() {
 
 	Minima.minimataDOM.
 	on('mouseenter', '.minima', function(e) {
-		$(this).addClass('minimaTrexon');
+		$(this).addClass('minimaTrexon').
+		children('.minimaPios').attr('title', 'Απάντηση');
 	}).
 	on('mouseleave', '.minima', function(e) {
-		$(this).removeClass('minimaTrexon');
+		$(this).removeClass('minimaTrexon').
+		children('.minimaPios').removeAttr('title');
+	}).
+	on('click', '.minima', function(e) {
+		//Minima.editFormaDOM.finish().fadeIn(100);
 	});
+
 	Minima.zebraSetup();
 };
 
