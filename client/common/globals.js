@@ -259,8 +259,8 @@ String.prototype.validLogin = function() {
 
 // Η μέθοδος "json" επιστρέφει json safe μορφή του ανά χείρας string.
 
-String.prototype.json = function() {
-	return Globals.json(this.valueOf());
+String.prototype.json = function(nl) {
+	return Globals.json(this.valueOf(), nl);
 };
 
 // Η μέθοδος "uri το μετατρέπει ένα string σε μορφή ασφαλή
@@ -276,8 +276,15 @@ String.prototype.uri = function() {
 // μορφή ασφαλή ώστε να χρησιμοποιηθεί ως rvalue σε δομές json.
 // Η function δεν δίδεται ως string method ώστε να δύναται να
 // χρησιμοποιηθεί σε οποιαδήποτε μεταβλητή και όχι μόνο σε strings.
+//
+// Μπορούμε να περάσουμε και δεύτερη παράμετρο με την οποία λέμε
+// αν θέλουμε αντικατάσταση των control χαρακτήρων μέσα στα strings.
+// Control χαρακτήρες είναι τα newlines, τα carriage returns, τα
+// tabs κλπ. By default αυτή η παράμετρος λογίζεται true, επομένως
+// όταν δεν θέλουμε αντικατάσταση των control χαρακτήρων, περνάμε
+// παράμετρο με τιμή false.
 
-Globals.json = function(s) {
+Globals.json = function(s, nl) {
 	var err = false;
 	if (s === undefined) err = 'undefined data';
 	else if (s === null) err = 'null data';
@@ -287,7 +294,8 @@ Globals.json = function(s) {
 			return s;
 		case 'string':
 			var x = s.replace(/\\/g, '\\\\');
-			x = x.replace(/[\n\r\f\v\b\t]/g, ' ');
+			if (nl === undefined) nl = true;
+			if (nl) x = x.replace(/[\n\r\f\v\b\t]/g, ' ');
 			return "'" + x.replace(/'/g, '\\\'') + "'";
 		default:
 			err = s + ': invalid data type';

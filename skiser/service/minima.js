@@ -18,7 +18,7 @@ Service.minima.send = function(nodereq) {
 	kimeno = nodereq.url.kimeno;
 
 	query = 'INSERT INTO `minima` (`apostoleas`, `paraliptis`, `kimeno`) VALUES (' +
-		apostoleas.json() + ', ' + paraliptis.json() + ', ' + kimeno.json() + ')';
+		apostoleas.json() + ', ' + paraliptis.json() + ', ' + kimeno.json(false) + ')';
 	DB.connection().query(query, function(conn, rows) {
 		var minimaId, kinisi;
 

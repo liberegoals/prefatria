@@ -426,12 +426,11 @@ Arena.pektisPanelRefreshDOM = function() {
 		var kimeno;
 
 		Arena.inputRefocus(e);
-		kimeno = Arena.pektisFormaEditDOM.val().
-		trim().replace(/\r?\n/g, '<br />');
+		kimeno = Arena.pektisFormaEditDOM.val().trim();
 		if (!kimeno) return Arena.pektisFormaEditOff();
 
 		Client.fyi.pano('Αποστολή μηνύματος. Παρακαλώ περιμένετε…');
-		Client.skiserService('minimaSend', 'pektis=' + login, 'kimeno=' + kimeno).
+		Client.skiserService('minimaSend', 'pektis=' + login, 'kimeno=' + kimeno.uri()).
 		done(function(rsp) {
 			Client.fyi.pano(rsp);
 			Arena.pektisFormaEditOff();
@@ -460,8 +459,7 @@ Arena.pektisPanelRefreshDOM = function() {
 		var kimeno;
 
 		Arena.inputRefocus(e);
-		kimeno = Arena.pektisFormaEditDOM.val().
-		trim().replace(/\r?\n/g, '<br />');
+		kimeno = Arena.pektisFormaEditDOM.val().trim();
 
 		// Αν το κείμενο που επιχειρεί να καταχωρήσει ο συντάκτης είναι το
 		// ίδιο με αυτό που ήδη υπάρχει ως πληροφορία προφίλ του συντάκτη
@@ -475,7 +473,7 @@ Arena.pektisPanelRefreshDOM = function() {
 		}
 
 		Client.fyi.pano('Καταχώρηση προφίλ. Παρακαλώ περιμένετε…');
-		Client.skiserService('profinfoPut', 'pektis=' + login, 'kimeno=' + kimeno).
+		Client.skiserService('profinfoPut', 'pektis=' + login, 'kimeno=' + kimeno.uri()).
 		done(function(rsp) {
 			Client.fyi.pano(rsp);
 
