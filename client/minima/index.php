@@ -1,4 +1,6 @@
 <?php
+print "SKDJHSJKDHKSD";
+exit(0);
 require_once "../lib/standard.php";
 Globals::diavase("lib/selida.php");
 
