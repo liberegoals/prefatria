@@ -48,7 +48,8 @@ Service.profinfo.get2 = function(nodereq, pektis) {
 		if ((sxoliastis != login) && (sxoliastis != paraliptis))
 		return;
 
-		nodereq.write(sxoliastis.json() + ':' + kimeno.json() + ',');
+		kimeno = kimeno.json(false).replace(/\n/g, '\\n');
+		nodereq.write(sxoliastis.json() + ':' + kimeno + ',');
 	});
 	nodereq.end();
 };
