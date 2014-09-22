@@ -1843,6 +1843,7 @@ cursor: auto;
 	color: #FFFF62;
 	background-color: #F11818;
 	text-shadow: none;
+	box-shadow: 1px 1px 4px rgba(94, 74, 74, 0.8);
 
 	border-radius: 4px;
 	z-index: 1;
