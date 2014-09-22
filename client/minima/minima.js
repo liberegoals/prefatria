@@ -9,8 +9,6 @@ Minima.setupMinimata = function() {
 	Client.tabKlisimo($('#toolbarRight'));
 
 	Minima.minimataDOM = $('#minimata');
-	Minima.editFormaDOM = $('#minimaEditForma');
-	Minima.editFormaDOM.siromeno();
 
 	Minima.minimataDOM.find('td.minimaPanel').
 	append($('<div>').addClass('minimaPanelButton').
@@ -29,12 +27,14 @@ Minima.setupMinimata = function() {
 		Client.skiserService('minimaDelete', 'minima=' + kodikos).
 		done(function(rsp) {
 			Client.fyi.pano(rsp);
+			Client.sound.skisimo();
 			minimaDOM.addClass('minimaDiagrafi').
 			fadeOut(function() {
 				$(this).remove();
 			});
 		}).
 		fail(function(err) {
+			Client.sound.beep();
 			Client.skiserFail(err);
 		});
 	}))).
@@ -53,6 +53,7 @@ Minima.setupMinimata = function() {
 		Client.skiserService('minimaDiavasma', 'minima=' + kodikos).
 		done(function(rsp) {
 			Client.fyi.pano(rsp);
+			Client.sound.tak();
 			if (rsp === 'ΔΙΑΒΑΣΜΕΝΟ')
 			minimaDOM.addClass('minimaDiavasmeno').removeClass('minimaTrexon');
 
@@ -60,6 +61,7 @@ Minima.setupMinimata = function() {
 			minimaDOM.addClass('minimaTrexon').removeClass('minimaDiavasmeno');
 		}).
 		fail(function(err) {
+			Client.sound.beep();
 			Client.skiserFail(err);
 		});
 	}))).
@@ -84,6 +86,18 @@ Minima.setupMinimata = function() {
 	});
 
 	Minima.zebraSetup();
+	Minima.editFormaSetup();
+};
+
+Minima.editFormaSetup = function() {
+	Minima.editFormaDOM = $('#minimaEditForma');
+	Minima.editFormaDOM.addClass('formaSoma').siromeno({
+		position: 'fixed',
+	}).
+	append(Client.klisimo(function() {
+		Minima.editFormaDOM.finish().fadeOut(100);
+	})).
+	css('display', 'none');
 };
 
 Minima.zebraSetup = function() {
