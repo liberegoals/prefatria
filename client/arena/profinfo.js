@@ -187,18 +187,27 @@ Pektis.prototype.pektisFormaPopupFillDOM = function(login) {
 };
 
 Pektis.prototype.pektisProfinfoRefreshDOM = function(login) {
+	var kimeno;
+
 	if (Arena.pektisFormaZigismaTimer) {
 		clearTimeout(Arena.pektisFormaZigismaTimer);
 		delete Arena.pektisFormaZigismaTimer;
 	}
 
-	Arena.pektisFormaIdiosDOM.empty().
-	append($('<div>').addClass('profinfoKimeno').html(this.profinfo[login]));
+	Arena.pektisFormaIdiosDOM.empty();
+	kimeno = this.profinfo[login];
+	if (kimeno) {
+		kimeno = kimeno.replace(/\r?\n/g, '<br />');
+		Arena.pektisFormaIdiosDOM.
+		append($('<div>').addClass('profinfoKimeno').html(kimeno));
+	}
 
 	Arena.pektisFormaEgoDOM.empty();
-	if (login.oxiEgo())
-	Arena.pektisFormaEgoDOM.append($('<div>').addClass('profinfoKimeno').
-	html(this.profinfo[Client.session.pektis]));
+	if (login.oxiEgo()) {
+		kimeno = this.profinfo[Client.session.pektis];
+		if (kimeno) kimeno = kimeno.replace(/\r?\n/g, '<br />');
+		Arena.pektisFormaEgoDOM.append($('<div>').addClass('profinfoKimeno').html(kimeno));
+	}
 
 	Arena.pektisFormaZigismaTimer = setTimeout(function() {
 		Arena.pektisFormaZigisma(),
