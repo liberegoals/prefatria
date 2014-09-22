@@ -39,6 +39,14 @@ Class Minima {
 		self::$pektis = $_SESSION["pektis"];
 	}
 
+	public static function isEgo($pektis) {
+		return($pektis == self::$pektis);
+	}
+
+	public static function oxiEgo($pektis) {
+		return !self::isEgo($pektis);
+	}
+
 	public static function epikefalida() {
 		?>
 		<table id="minimata" style="width: 100%;">
@@ -52,20 +60,43 @@ Class Minima {
 	}
 
 	public static function minimata() {
-		$query = "SELECT `kodikos`, UNIX_TIMESTAMP(`pote`), `apostoleas`, `paraliptis`, `kimeno` " .
+		$query = "SELECT `kodikos`, UNIX_TIMESTAMP(`pote`), `apostoleas`, `paraliptis`, `kimeno`, `status` " .
 			"FROM `minima` WHERE " .
 			"(`apostoleas` = " . Globals::asfales_sql(self::$pektis) . ") OR " .
 			"(`paraliptis` = " . Globals::asfales_sql(self::$pektis) . ") " .
 			"ORDER BY `kodikos` DESC";
 		$result = Globals::query($query);
 		while ($row = $result->fetch_array(MYSQL_NUM)) {
+			$apostoleas = $row[2];
+			$paraliptis = $row[3];
+
+			if (self::oxiEgo($apostoleas)) {
+				$idos = "iserxomeno";
+				$klasi = "minimaIserxomeno";
+				$pios = $apostoleas;
+			}
+			else if (self::oxiEgo($paraliptis)) {
+				$idos = "exerxomeno";
+				$klasi = "minimaExerxomeno";
+				$pios = $paraliptis;
+			}
+			else {
+				$idos = "ikothen";
+				$klasi = "minimaIkothen";
+				$pios = $apostoleas;
+			}
+
 			?>
-			<tr>
+			<tr class="minima <?php print $klasi; ?>">
 			<td class="minimaKodikos"><?php print $row[0]; ?></td>
-			<td class="minimaImerominia"><?php print date("d/m/Y<b\\r />H:i",
-				$row[1] - self::$time_dif); ?></td>
-			<td class="minimaPios"><?php print $row[2]; ?></td>
-			<td class="minimaMinima"><?php print str_replace(array("\r\n", "\n", "\r"),
+			<td class="minimaImerominia"><?php
+				print date("d/m/Y<b\\r />H:i", $row[1] - self::$time_dif);
+			?></td>
+			<td class="minimaPios">
+				<div class="minimaPiosOnoma"><?php print $pios; ?></div>
+				<img class="minimaIdosIcon" src="../ikona/minima/<?php print $idos; ?>.png" />
+			</td>
+			<td class="minimaKimeno"><?php print str_replace(array("\r\n", "\n", "\r"),
 				"<br />", $row[4]); ?></td>
 			<td class="minimaPanel"></td>
 			</tr>

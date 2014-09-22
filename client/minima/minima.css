@@ -14,6 +14,31 @@ body {
 	border-color: rgb(190, 190, 190);
 }
 
+.minimaZebra0 {
+	background-color: rgba(242, 255, 255, 1);
+}
+
+.minimaZebra1 {
+	background-color: rgba(255, 252, 213, 1);
+}
+
+.minimaExerxomeno {
+	opacity: 0.5;
+}
+
+.minimaIserxomeno {
+	opacity: 1;
+}
+
+.minimaIkothen {
+	opacity: 0.5;
+}
+
+.minimaTrexon {
+	opacity: 1;
+	background-color: rgb(213, 252, 213);
+}
+
 .minimaKodikos {
 	display: none;
 	width: 0px;
@@ -34,13 +59,28 @@ body {
 	font-size: 16px;
 	font-weight: bold;
 	text-align: right;
+/*
+	background-color: olive;
+*/
+}
+
+.minimaPiosOnoma {
+	display: block;
+	font-size: 16px;
+	font-weight: bold;
 	white-space: nowrap;
 /*
 	background-color: olive;
 */
 }
 
-.minimaMinima {
+.minimaIdosIcon {
+	display: block;
+	height: 40px;
+	float: right;
+}
+
+.minimaKimeno {
 	padding: 4px 10px;
 	text-align: left;
 	border-style: solid;
@@ -55,7 +95,6 @@ body {
 	width: 1px;
 	padding: 4px 10px;
 	text-align: left;
-	background-color: #FFF !important;
 }
 
 .minimaPanelButton {
@@ -77,12 +116,4 @@ body {
 
 .minimaPanelIcon {
 	width: 100%;
-}
-
-.minimaZebra0 {
-	background-color: rgba(242, 255, 255, 1);
-}
-
-.minimaZebra1 {
-	background-color: rgba(255, 252, 213, 1);
 }
