@@ -35,9 +35,17 @@ body {
 	opacity: 0.5;
 }
 
+.minimaDiavasmeno {
+	opacity: 0.5;
+}
+
 .minimaTrexon {
 	opacity: 1;
 	background-color: rgb(213, 252, 213);
+}
+
+.minimaDiagrafi {
+	background-color: rgb(241, 170, 170);
 }
 
 .minimaKodikos {
@@ -86,6 +94,7 @@ body {
 	width: 1px;
 	padding: 4px 10px;
 	text-align: left;
+	opacity: 0;
 }
 
 .minimaPanelButton {

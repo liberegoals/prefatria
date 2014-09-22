@@ -66,19 +66,25 @@ Class Minima {
 
 			if (self::oxiEgo($apostoleas)) {
 				$idos = "iserxomeno";
+				$idosDesc = "Εισερχόμενο";
 				$klasi = "minimaIserxomeno";
 				$pios = $apostoleas;
 			}
 			else if (self::oxiEgo($paraliptis)) {
 				$idos = "exerxomeno";
+				$idosDesc = "Εξερχόμενο";
 				$klasi = "minimaExerxomeno";
 				$pios = $paraliptis;
 			}
 			else {
 				$idos = "ikothen";
+				$idosDesc = "Οίκοθεν";
 				$klasi = "minimaIkothen";
 				$pios = $apostoleas;
 			}
+
+			if ($row[5] === 'ΔΙΑΒΑΣΜΕΝΟ')
+			$klasi .= " minimaDiavasmeno";
 
 			?>
 			<tr class="minima <?php print $klasi; ?>">
@@ -88,7 +94,8 @@ Class Minima {
 			</td>
 			<td class="minimaPios">
 				<div class="minimaPiosOnoma"><?php print $pios; ?></div>
-				<img class="minimaIdosIcon" src="../ikona/minima/<?php print $idos; ?>.png" />
+				<img class="minimaIdosIcon" src="../ikona/minima/<?php print $idos;
+					?>.png" title="<?php print $idosDesc; ?>" />
 			</td>
 			<td class="minimaKimeno"><?php print str_replace(array("\r\n", "\n", "\r"),
 				"<br />", $row[4]); ?></td>

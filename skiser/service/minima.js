@@ -42,3 +42,85 @@ Service.minima.send = function(nodereq) {
 		kinisiAdd(kinisi);
 	});
 };
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
+
+Service.minima.diagrafi = function(nodereq) {
+	var login, query;
+
+	if (nodereq.isvoli()) return;
+	if (nodereq.denPerastike('minima', true)) return;
+
+	login = nodereq.loginGet();
+
+	query = 'SELECT `apostoleas`, `paraliptis` FROM `minima` WHERE `kodikos` = ' + nodereq.url.minima;
+	DB.connection().query(query, function(conn, rows) {
+		conn.free();
+		if (rows.length != 1)
+		return nodereq.error('Δεν βρέθηκε το μήνυμα');
+
+		if ((rows[0].apostoleas != login) && (rows[0].paraliptis != login))
+		return nodereq.error('Δεν έχετε πρόσβαση');
+
+		Service.minima.diagrafi2(nodereq);
+	});
+};
+
+Service.minima.diagrafi2 = function(nodereq) {
+	var query;
+
+	query = 'DELETE FROM `minima` WHERE `kodikos` = ' + nodereq.url.minima;
+	DB.connection().query(query, function(conn, rows) {
+		var kinisi;
+
+		conn.free();
+		if (conn.affectedRows != 1)
+		return nodereq.error('Απέτυχε η διαγραφή του μηνύματος');
+
+		nodereq.end();
+	});
+};
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
+
+Service.minima.diavasma = function(nodereq) {
+	var login, query;
+
+	if (nodereq.isvoli()) return;
+	if (nodereq.denPerastike('minima', true)) return;
+
+	login = nodereq.loginGet();
+
+	query = 'SELECT `apostoleas`, `paraliptis`, `status` FROM `minima` ' +
+		'WHERE `kodikos` = ' + nodereq.url.minima;
+	DB.connection().query(query, function(conn, rows) {
+		conn.free();
+		if (rows.length != 1)
+		return nodereq.error('Δεν βρέθηκε το μήνυμα');
+
+		if (rows[0].apostoleas == login)
+		return nodereq.error('Το μήνυμα είναι δικό σας');
+
+		if (rows[0].paraliptis != login)
+		return nodereq.error('Δεν έχετε πρόσβαση');
+
+		Service.minima.diavasma2(nodereq, rows[0]['status']);
+	});
+};
+
+Service.minima.diavasma2 = function(nodereq, katastasi) {
+	var query;
+
+	katastasi = (katastasi === 'ΔΙΑΒΑΣΜΕΝΟ' ? 'ΑΔΙΑΒΑΣΤΟ' : 'ΔΙΑΒΑΣΜΕΝΟ');
+	query = 'UPDATE `minima` SET `status` = ' + katastasi.json() +
+		' WHERE `kodikos` = ' + nodereq.url.minima;
+	DB.connection().query(query, function(conn, rows) {
+		var kinisi;
+
+		conn.free();
+		if (conn.affectedRows != 1)
+		return nodereq.error('Απέτυχε η αλλαγή κατάστασης του μηνύματος');
+
+		nodereq.end(katastasi);
+	});
+};

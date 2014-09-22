@@ -37,6 +37,8 @@ Log.level.pop();
 // επεξεργασία που υφίσταται από τον server.
 
 Server.router = {
+	'/minimaDiavasma': Service.minima.diavasma,
+	'/minimaDelete': Service.minima.diagrafi,
 	'/minimaSend': Service.minima.send,
 	'/ipGet': Service.misc.ipGet,
 	'/profinfoPut': Service.profinfo.put,
