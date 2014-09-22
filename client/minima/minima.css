@@ -7,7 +7,8 @@ body {
 	border-collapse: collapse;
 }
 
-#minimata td {
+.minima {
+	position: relative;
 	vertical-align: top;
 	border-style: none none solid none;
 	border-width: 1px;
@@ -47,6 +48,7 @@ body {
 }
 
 .minimaImerominia {
+	position: relative;
 	width: 1px;
 	padding: 4px 10px;
 	text-align: right;
@@ -59,9 +61,7 @@ body {
 	font-size: 16px;
 	font-weight: bold;
 	text-align: right;
-/*
-	background-color: olive;
-*/
+	cursor: pointer;
 }
 
 .minimaPiosOnoma {
@@ -69,9 +69,6 @@ body {
 	font-size: 16px;
 	font-weight: bold;
 	white-space: nowrap;
-/*
-	background-color: olive;
-*/
 }
 
 .minimaIdosIcon {
@@ -83,12 +80,6 @@ body {
 .minimaKimeno {
 	padding: 4px 10px;
 	text-align: left;
-	border-style: solid;
-	border-width: 1px;
-	border-color: rgb(204, 255, 0);
-/*
-	background-color: orange;
-*/
 }
 
 .minimaPanel {
@@ -116,4 +107,14 @@ body {
 
 .minimaPanelIcon {
 	width: 100%;
+}
+
+#minimaEditForma {
+	display: none;
+	position: absolute;
+	top: 10px;
+	left: 10px;
+	width: 600px;
+	height: 400px;
+	background-color: teal;
 }
