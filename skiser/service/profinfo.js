@@ -72,7 +72,7 @@ Service.profinfo.put = function(nodereq) {
 	sxoliastis = nodereq.loginGet();
 	kimeno = nodereq.url.kimeno.trim();
 	query = 'REPLACE INTO `profinfo` (`pektis`, `sxoliastis`, `kimeno`) VALUES (' +
-		login.json() + ', ' + sxoliastis.json() + ', ' + kimeno.json() + ')';
+		login.json() + ', ' + sxoliastis.json() + ', ' + kimeno.json(false) + ')';
 	DB.connection().query(query, function(conn, rows) {
 		var kinisi;
 
