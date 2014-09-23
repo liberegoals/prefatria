@@ -1286,7 +1286,7 @@ Sinedria.prototype.sinedriaPlatiRBGet = function() {
 };
 
 Sinedria.prototype.sinedriaEntopismos = function(skiniko) {
-	var sinedria  = this, pektis;
+	var sinedria = this, pektis;
 
 	this.sinedriaSetRebelos()
 	if (skiniko === undefined) skiniko = this.sinedriaSkinikoGet();
@@ -1390,6 +1390,45 @@ Prosklisi.prototype.prosklisiIsSxetiki = function(pektis) {
 
 Prosklisi.prototype.prosklisiIsAdiafori = function(pektis) {
 	return !this.prosklisiIsSxetiki(pektis);
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+Minima = function(props) {
+	Globals.initObject(this, props);
+};
+
+Minima.prototype.kodikosGet = function() {
+	return this.kodikos;
+};
+
+Minima.prototype.apostoleasGet = function() {
+	return this.apostoleas;
+};
+
+Minima.prototype.paraliptisGet = function() {
+	return this.paraliptis;
+};
+
+Minima.prototype.piosGet = function() {
+	return(this.paraliptis != Client.session.pektis ? this.paraliptis : this.apostoleas);
+};
+
+Minima.prototype.kimenoGet = function() {
+	return this.kimeno;
+};
+
+Minima.prototype.kimenoGetHTML = function() {
+	var kimeno = this.kimenoGet();
+	return(kimeno ? kimeno.replace(/\r?\n/g, '<br />') : '');
+};
+
+Minima.prototype.poteGet = function() {
+	return this.pote;
+};
+
+Minima.prototype.stausGet = function() {
+	return this.staus;
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

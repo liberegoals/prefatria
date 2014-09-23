@@ -1,60 +1,3 @@
-Minima = function(props) {
-	Globals.initObject(this, props);
-};
-
-Minima.prototype.kodikosGet = function() {
-	return this.kodikos;
-};
-
-Minima.prototype.poteGet = function() {
-	return this.pote;
-};
-
-Minima.prototype.apostoleasGet = function() {
-	return this.apostoleas;
-};
-
-Minima.prototype.paraliptisGet = function() {
-	return this.paraliptis;
-};
-
-Minima.prototype.piosGet = function() {
-	return(this.paraliptis != Client.session.pektis ?  this.paraliptis : this.apostoleas);
-};
-
-Minima.prototype.kimenoGet = function() {
-	return this.kimeno;
-};
-
-Minima.prototype.kimenoGetHTML = function() {
-	var kimeno = this.kimenoGet();
-	return(kimeno ? kimeno.replace(/\r?\n/g, '<br />') : '');
-};
-
-Minima.prototype.poteGet = function() {
-	return this.pote;
-};
-
-Minima.prototype.pushDOM = function() {
-	var pios, kimeno;
-
-	$('<tr>').addClass('minima').
-	append($('<td>').addClass('minimaKodikos').text(this.kodikosGet())).
-	append($('<td>').addClass('minimaImerominia').text(this.poteGet())).
-	append($('<td>').addClass('minimaPios').
-	append($('<div>').addClass('minimaPiosOnoma').text(this.piosGet())).
-	append($('<img>').addClass('minimaIdosIcon').attr({
-		src: 'asdasda',
-		title: 'ddd',
-	}))).
-	append($('<td>').addClass('minimaKimeno').html(this.kimenoGetHTML())).
-	prependTo(Minima.minimataDOM);
-
-	return this;
-};
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
-
 $(document).ready(function() {
 	Minima.setupMinimata();
 });
@@ -86,6 +29,7 @@ Minima.setupMinimata = function() {
 			minimaDOM.addClass('minimaDiagrafi').
 			fadeOut(function() {
 				$(this).remove();
+				Minima.zebraSetup();
 			});
 		}).
 		fail(function(err) {
@@ -127,19 +71,21 @@ Minima.setupMinimata = function() {
 
 	Minima.minimataDOM.
 	on('mouseenter', '.minima', function(e) {
-		$(this).addClass('minimaTrexon');
-		$(this).children('.minimaPios').attr('title', 'Απάντηση');
-		$(this).children('.minimaPanel').finish().fadeTo(100, 1);
+		var minimaDOM = $(this);
+		minimaDOM.addClass('minimaTrexon');
+		minimaDOM.children('.minimaPote,.minimaPios').attr('title', 'Απάντηση');
+		minimaDOM.children('.minimaPanel').finish().fadeTo(100, 1);
 	}).
 	on('mouseleave', '.minima', function(e) {
-		$(this).removeClass('minimaTrexon');
-		$(this).children('.minimaPios').removeAttr('title');
-		$(this).children('.minimaPanel').finish().fadeTo(100, 0);
+		var minimaDOM = $(this);
+		minimaDOM.removeClass('minimaTrexon');
+		minimaDOM.children('.minimaPios').removeAttr('title');
+		minimaDOM.children('.minimaPanel').finish().fadeTo(100, 0);
 	}).
-	on('click', '.minima .minimaPios', function(e) {
+	on('click', '.minimaPios,.minimaPote', function(e) {
 // TODO
-/*
 		Minima.editFormaDOM.finish().fadeIn(100);
+/*
 */
 	});
 
@@ -218,4 +164,28 @@ Minima.zebraSetup = function() {
 		i = count++ % 2;
 		$(this).removeClass('minimaZebra0 minimaZebra1').addClass('minimaZebra' + i);
 	});
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
+
+Minima.prototype.pushDOM = function() {
+	var pios, kimeno;
+
+	$('<tr>').addClass('minima').
+	append($('<td>').addClass('minimaKodikos').text(this.kodikosGet())).
+	append($('<td>').addClass('minimaPote').text(this.poteGet())).
+	append($('<td>').addClass('minimaPios').
+	append($('<div>').addClass('minimaPiosOnoma').text(this.piosGet())).
+	append($('<img>').addClass('minimaIdosIcon').attr({
+		src: 'asdasda',
+		title: 'ddd',
+	}))).
+	append($('<td>').addClass('minimaPanel')).
+	append($('<td>').addClass('minimaKimeno').html(this.kimenoGetHTML())).
+	css('display', 'none').
+	fadeIn(500).
+	prependTo(Minima.minimataDOM);
+	Minima.zebraSetup();
+
+	return this;
 };

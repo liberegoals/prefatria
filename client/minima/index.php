@@ -8,6 +8,7 @@ Minima::pektisSet();
 Globals::database();
 
 Selida::stylesheet("minima/minima");
+Selida::javascript("common/skiniko");
 Selida::javascript("minima/minima");
 Minima::setupView();
 
@@ -83,13 +84,17 @@ Class Minima {
 				$pios = $apostoleas;
 			}
 
-			if ($row[5] === 'ΔΙΑΒΑΣΜΕΝΟ')
-			$klasi .= " minimaDiavasmeno";
+			switch ($row[5]) {
+			case 'ΔΙΑΒΑΣΜΕΝΟ':
+			case 'ΚΡΑΤΗΜΕΝΟ':
+				$klasi .= " minimaDiavasmeno";
+				break;
+			}
 
 			?>
 			<tr class="minima <?php print $klasi; ?>">
 			<td class="minimaKodikos"><?php print $row[0]; ?></td>
-			<td class="minimaImerominia">
+			<td class="minimaPote">
 				<?php print date("d/m/Y<b\\r />H:i", $row[1] - self::$time_dif); ?>
 			</td>
 			<td class="minimaPios">
@@ -97,9 +102,9 @@ Class Minima {
 				<img class="minimaIdosIcon" src="../ikona/minima/<?php print $idos;
 					?>.png" title="<?php print $idosDesc; ?>" />
 			</td>
+			<td class="minimaPanel"></td>
 			<td class="minimaKimeno"><?php print str_replace(array("\r\n", "\n", "\r"),
 				"<br />", $row[4]); ?></td>
-			<td class="minimaPanel"></td>
 			</tr>
 			<?php
 		}
