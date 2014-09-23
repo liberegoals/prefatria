@@ -23,23 +23,22 @@ Minima.prototype.piosGet = function() {
 };
 
 Minima.prototype.kimenoGet = function() {
-	this.kimeno;
+	return this.kimeno;
 };
 
 Minima.prototype.kimenoGetHTML = function() {
 	var kimeno = this.kimenoGet();
-	return(kimeno ? kimeno.replace(/\r?\n/g, '') : '');
+	return(kimeno ? kimeno.replace(/\r?\n/g, '<br />') : '');
 };
 
 Minima.prototype.poteGet = function() {
-	this.pote;
+	return this.pote;
 };
 
 Minima.prototype.pushDOM = function() {
 	var pios, kimeno;
-console.log(this);
 
-	$('<tr>').
+	$('<tr>').addClass('minima').
 	append($('<td>').addClass('minimaKodikos').text(this.kodikosGet())).
 	append($('<td>').addClass('minimaImerominia').text(this.poteGet())).
 	append($('<td>').addClass('minimaPios').
@@ -50,6 +49,8 @@ console.log(this);
 	}))).
 	append($('<td>').addClass('minimaKimeno').html(this.kimenoGetHTML())).
 	prependTo(Minima.minimataDOM);
+
+	return this;
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
@@ -135,8 +136,11 @@ Minima.setupMinimata = function() {
 		$(this).children('.minimaPios').removeAttr('title');
 		$(this).children('.minimaPanel').finish().fadeTo(100, 0);
 	}).
-	on('click', '.minima', function(e) {
-		//Minima.editFormaDOM.finish().fadeIn(100);
+	on('click', '.minima .minimaPios', function(e) {
+// TODO
+/*
+		Minima.editFormaDOM.finish().fadeIn(100);
+*/
 	});
 
 	Minima.zebraSetup();
