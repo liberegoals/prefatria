@@ -1398,37 +1398,48 @@ Minima = function(props) {
 	Globals.initObject(this, props);
 };
 
-Minima.prototype.kodikosGet = function() {
+Minima.prototype.minimaKodikosGet = function() {
 	return this.kodikos;
 };
 
-Minima.prototype.apostoleasGet = function() {
+Minima.prototype.minimaApostoleasGet = function() {
 	return this.apostoleas;
 };
 
-Minima.prototype.paraliptisGet = function() {
+Minima.prototype.minimaParaliptisGet = function() {
 	return this.paraliptis;
 };
 
-Minima.prototype.piosGet = function() {
-	return(this.paraliptis != Client.session.pektis ? this.paraliptis : this.apostoleas);
-};
-
-Minima.prototype.kimenoGet = function() {
+Minima.prototype.minimaKimenoGet = function() {
 	return this.kimeno;
 };
 
-Minima.prototype.kimenoGetHTML = function() {
-	var kimeno = this.kimenoGet();
+Minima.prototype.minimaKimenoGetHTML = function() {
+	var kimeno = this.minimaKimenoGet();
 	return(kimeno ? kimeno.replace(/\r?\n/g, '<br />') : '');
 };
 
-Minima.prototype.poteGet = function() {
+Minima.prototype.minimaPoteSet = function(pote) {
+	this.pote = pote;
+	return this;
+};
+
+Minima.prototype.minimaPoteGet = function() {
 	return this.pote;
 };
 
-Minima.prototype.stausGet = function() {
-	return this.staus;
+Minima.prototype.minimaPoteAdd = function(dif) {
+	this.pote += dif;
+	return this;
+};
+
+Minima.prototype.minimaStatusSet = function(katastasi) {
+	this.status = katastasi;
+	return this;
+};
+
+Minima.prototype.minimaStatusGet = function() {
+	return this.status;
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

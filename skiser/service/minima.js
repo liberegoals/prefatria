@@ -83,11 +83,12 @@ Service.minima.diagrafi2 = function(nodereq) {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
 
-Service.minima.diavasma = function(nodereq) {
+Service.minima.katastasi = function(nodereq) {
 	var login, query;
 
 	if (nodereq.isvoli()) return;
 	if (nodereq.denPerastike('minima', true)) return;
+	if (nodereq.denPerastike('katastasi', true)) return;
 
 	login = nodereq.loginGet();
 
@@ -104,14 +105,14 @@ Service.minima.diavasma = function(nodereq) {
 		if (rows[0].paraliptis != login)
 		return nodereq.error('Δεν έχετε πρόσβαση');
 
-		Service.minima.diavasma2(nodereq, rows[0]['status']);
+		Service.minima.katastasi2(nodereq);
 	});
 };
 
-Service.minima.diavasma2 = function(nodereq, katastasi) {
+Service.minima.katastasi2 = function(nodereq) {
 	var query;
 
-	katastasi = (katastasi === 'ΔΙΑΒΑΣΜΕΝΟ' ? 'ΑΔΙΑΒΑΣΤΟ' : 'ΔΙΑΒΑΣΜΕΝΟ');
+	katastasi = nodereq.url.katastasi;
 	query = 'UPDATE `minima` SET `status` = ' + katastasi.json() +
 		' WHERE `kodikos` = ' + nodereq.url.minima;
 	DB.connection().query(query, function(conn, rows) {
@@ -122,5 +123,28 @@ Service.minima.diavasma2 = function(nodereq, katastasi) {
 		return nodereq.error('Απέτυχε η αλλαγή κατάστασης του μηνύματος');
 
 		nodereq.end(katastasi);
+	});
+};
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
+
+Service.minima.feredata = function(nodereq) {
+	var login, query;
+
+	if (nodereq.isvoli()) return;
+	login = nodereq.loginGet();
+
+	query = 'SELECT `kodikos`, `apostoleas`, `paraliptis`, `kimeno`, ' +
+		'UNIX_TIMESTAMP(`pote`) AS `pote`, `status` FROM `minima` ' +
+		'WHERE (`apostoleas` LIKE ' + login.json() +
+		') OR (`paraliptis` LIKE ' + login.json() + ') ORDER BY `kodikos`';
+	DB.connection().query(query, function(conn, rows) {
+		var i;
+
+		conn.free();
+		for (i = 0; i < rows.length; i++) {
+			nodereq.write('\t' + JSON.stringify(rows[i]) + ',\n');
+		}
+		nodereq.end();
 	});
 };
