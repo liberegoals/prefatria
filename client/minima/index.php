@@ -94,10 +94,10 @@ Class Minima {
 			?>
 			<tr class="minima <?php print $klasi; ?>">
 			<td class="minimaKodikos"><?php print $row[0]; ?></td>
-			<td class="minimaPote">
+			<td class="minimaPote" title="Απάντηση">
 				<?php print date("d/m/Y<b\\r />H:i", $row[1] - self::$time_dif); ?>
 			</td>
-			<td class="minimaPios">
+			<td class="minimaPios" title="Απάντηση">
 				<div class="minimaPiosOnoma"><?php print $pios; ?></div>
 				<img class="minimaIdosIcon" src="../ikona/minima/<?php print $idos;
 					?>.png" title="<?php print $idosDesc; ?>" />

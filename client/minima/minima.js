@@ -8,85 +8,112 @@ Minima.setupMinimata = function() {
 
 	Minima.minimataDOM = $('#minimata');
 
-	Minima.minimataDOM.find('td.minimaPanel').
-	append($('<div>').addClass('minimaPanelButton').
-	append($('<img>').addClass('minimaPanelIcon').attr({
-		src: '../ikona/minima/diagrafi.png',
-		title: 'Διαγραφή μηνύματος',
-	}).
-	on('click', function(e) {
-		var minimaDOM, kodikos;
-
-		minimaDOM = $(this).parents('.minima');
-		kodikos = minimaDOM.find('.minimaKodikos').text();
-		if (!kodikos) return;
-
-		Client.fyi.pano('Διαγραφή μηνύματος. Παρακαλώ περιμένετε…');
-		Client.skiserService('minimaDelete', 'minima=' + kodikos).
-		done(function(rsp) {
-			Client.fyi.pano(rsp);
-			Client.sound.skisimo();
-			minimaDOM.addClass('minimaDiagrafi').
-			fadeOut(function() {
-				$(this).remove();
-				Minima.zebraSetup();
-			});
-		}).
-		fail(function(err) {
-			Client.sound.beep();
-			Client.skiserFail(err);
-		});
-	}))).
-	append($('<div>').addClass('minimaPanelButton').
-	append($('<img>').addClass('minimaPanelIcon').attr({
-		src: '../ikona/minima/diavasmeno.png',
-	}).
-	on('click', function(e) {
-		var minimaDOM, kodikos;
-
-		minimaDOM = $(this).parents('.minima');
-		kodikos = minimaDOM.find('.minimaKodikos').text();
-		if (!kodikos) return;
-
-		Client.fyi.pano('Αλλαγή κατάστασης μηνύματος. Παρακαλώ περιμένετε…');
-		Client.skiserService('minimaDiavasma', 'minima=' + kodikos).
-		done(function(rsp) {
-			Client.fyi.pano(rsp);
-			Client.sound.tak();
-			if (rsp === 'ΔΙΑΒΑΣΜΕΝΟ')
-			minimaDOM.addClass('minimaDiavasmeno').removeClass('minimaTrexon');
-
-			else
-			minimaDOM.addClass('minimaTrexon').removeClass('minimaDiavasmeno');
-		}).
-		fail(function(err) {
-			Client.sound.beep();
-			Client.skiserFail(err);
-		});
-	}))).
-	append($('<div>').addClass('minimaPanelButton').
-	append($('<img>').addClass('minimaPanelIcon').attr({
-		src: '../ikona/minima/kratimeno.png',
-	})));
-
 	Minima.minimataDOM.
+
+	// Τοποθετώντας τον δείκτη του ποντικιού στον χώρο κάποιου μηνύματος
+	// φροντίζουμε να κάνουμε εμφανέστερο το μήνυμα και να το εφοπλίσουμε
+	// με το πάνελ διαχείρισης μηνυμάτων.
+
 	on('mouseenter', '.minima', function(e) {
-		var minimaDOM = $(this);
+		var minimaDOM, panelDOM;
+
+		minimaDOM = $(this);
+
+		// Καθιστούμε το μήνυμα εμφανές.
+
 		minimaDOM.addClass('minimaTrexon');
-		minimaDOM.children('.minimaPote,.minimaPios').attr('title', 'Απάντηση');
-		minimaDOM.children('.minimaPanel').finish().fadeTo(100, 1);
+
+		// Εφοπλίζουμε το πάνελ διαχείρισης μηνυμάτων ανάλογα με τα
+		// χαρακτηριστικά του μηνύματος.
+
+		panelDOM = minimaDOM.children('.minimaPanel');
+		panelDOM.empty().
+
+		// Η διαγραφή μηνύματος είναι πάντοτε μια διαθέσιμη επιλογή.
+
+		append($('<div>').addClass('minimaPanelButton').
+		append($('<img>').addClass('minimaPanelIcon').attr({
+			src: '../ikona/minima/diagrafi.png',
+			title: 'Διαγραφή μηνύματος',
+		}).
+		on('click', function(e) {
+			var minimaDOM, kodikos;
+
+			minimaDOM = $(this).parents('.minima');
+			kodikos = minimaDOM.find('.minimaKodikos').text();
+			if (!kodikos) return;
+
+			Client.fyi.pano('Διαγραφή μηνύματος. Παρακαλώ περιμένετε…');
+			Client.skiserService('minimaDelete', 'minima=' + kodikos).
+			done(function(rsp) {
+				Client.fyi.pano(rsp);
+				Client.sound.skisimo();
+				minimaDOM.addClass('minimaDiagrafi').
+				fadeOut(function() {
+					$(this).remove();
+					Minima.zebraSetup();
+				});
+			}).
+			fail(function(err) {
+				Client.sound.beep();
+				Client.skiserFail(err);
+			});
+		}))).
+
+		append($('<div>').addClass('minimaPanelButton').
+		append($('<img>').addClass('minimaPanelIcon').attr({
+			src: '../ikona/minima/diavasmeno.png',
+		}).
+		on('click', function(e) {
+			var minimaDOM, kodikos;
+
+			minimaDOM = $(this).parents('.minima');
+			kodikos = minimaDOM.find('.minimaKodikos').text();
+			if (!kodikos) return;
+
+			Client.fyi.pano('Αλλαγή κατάστασης μηνύματος. Παρακαλώ περιμένετε…');
+			Client.skiserService('minimaDiavasma', 'minima=' + kodikos).
+			done(function(rsp) {
+				Client.fyi.pano(rsp);
+				Client.sound.tak();
+				if (rsp === 'ΔΙΑΒΑΣΜΕΝΟ')
+				minimaDOM.addClass('minimaDiavasmeno').removeClass('minimaTrexon');
+
+				else
+				minimaDOM.addClass('minimaTrexon').removeClass('minimaDiavasmeno');
+			}).
+			fail(function(err) {
+				Client.sound.beep();
+				Client.skiserFail(err);
+			});
+		}))).
+
+		append($('<div>').addClass('minimaPanelButton').
+		append($('<img>').addClass('minimaPanelIcon').attr({
+			src: '../ikona/minima/kratimeno.png',
+		})));
 	}).
+
 	on('mouseleave', '.minima', function(e) {
-		var minimaDOM = $(this);
+		var minimaDOM, panelDOM;
+
+		minimaDOM = $(this);
 		minimaDOM.removeClass('minimaTrexon');
 		minimaDOM.children('.minimaPios').removeAttr('title');
-		minimaDOM.children('.minimaPanel').finish().fadeTo(100, 0);
+
+		panelDOM = minimaDOM.children('.minimaPanel');
+		panelDOM.empty();
 	}).
+
+	// Κάνοντας κλικ στην περιοχή ημερομηνίας και αποστολέα/παραλήπτη,
+	// εκκινούμε διαδικασία σύνθεσης μηνύματος απάντησης.
+
 	on('click', '.minimaPios,.minimaPote', function(e) {
-// TODO
-		Minima.editFormaDOM.finish().fadeIn(100);
-/*
-*/
+		Minima.editFormaParaliptisLoginDOM.
+		val($(this).parent().children('.minimaPios').text().trim());
+		Minima.editFormaDOM.finish().fadeIn(100, function() {
+			Minima.editFormaKimenoDOM.focus();
+		});
 	});
 
 	Minima.zebraSetup();
@@ -171,15 +198,14 @@ Minima.zebraSetup = function() {
 Minima.prototype.pushDOM = function() {
 	var pios, kimeno;
 
-	$('<tr>').addClass('minima').
+	$('<tr>').
+	data('minima', this).
+	addClass('minima').
 	append($('<td>').addClass('minimaKodikos').text(this.kodikosGet())).
 	append($('<td>').addClass('minimaPote').text(this.poteGet())).
 	append($('<td>').addClass('minimaPios').
 	append($('<div>').addClass('minimaPiosOnoma').text(this.piosGet())).
-	append($('<img>').addClass('minimaIdosIcon').attr({
-		src: 'asdasda',
-		title: 'ddd',
-	}))).
+	append($('<img>').addClass('minimaIdosIcon'))).
 	append($('<td>').addClass('minimaPanel')).
 	append($('<td>').addClass('minimaKimeno').html(this.kimenoGetHTML())).
 	css('display', 'none').
