@@ -15,9 +15,12 @@ Minima.setupMinimata = function() {
 	// με το πάνελ διαχείρισης μηνυμάτων.
 
 	on('mouseenter', '.minima', function(e) {
-		var minimaDOM, panelDOM;
+		var minimaDOM, kodikos, minima, panelDOM, apostoleas, katastasi;
 
 		minimaDOM = $(this);
+		kodikos = minimaDOM.data('minima');
+		minima = Minima.lista[kodikos];
+		if (!minima) return;
 
 		// Καθιστούμε το μήνυμα εμφανές.
 
@@ -37,12 +40,6 @@ Minima.setupMinimata = function() {
 			title: 'Διαγραφή μηνύματος',
 		}).
 		on('click', function(e) {
-			var minimaDOM, kodikos;
-
-			minimaDOM = $(this).parents('.minima');
-			kodikos = minimaDOM.find('.minimaKodikos').text();
-			if (!kodikos) return;
-
 			Client.fyi.pano('Διαγραφή μηνύματος. Παρακαλώ περιμένετε…');
 			Client.skiserService('minimaDelete', 'minima=' + kodikos).
 			done(function(rsp) {
@@ -58,39 +55,80 @@ Minima.setupMinimata = function() {
 				Client.sound.beep();
 				Client.skiserFail(err);
 			});
-		}))).
+		})));
 
-		append($('<div>').addClass('minimaPanelButton').
+		apostoleas = minima.minimaApostoleasGet();
+		if (apostoleas.isEgo()) return;
+
+		katastasi = minima.minimaStatusGet();
+
+		if ((katastasi !== 'ΔΙΑΒΑΣΜΕΝΟ') && (katastasi !== 'ΚΡΑΤΗΜΕΝΟ'))
+		panelDOM.append($('<div>').addClass('minimaPanelButton').
 		append($('<img>').addClass('minimaPanelIcon').attr({
-			src: '../ikona/minima/diavasmeno.png',
+			src: '../ikona/minima/adiavasto.png',
+			title: 'ΑΔΙΑΒΑΣΤΟ μήνυμα. Αλλαγή κατάστασης σε ΔΙΑΒΑΣΜΕΝΟ',
 		}).
 		on('click', function(e) {
-			var minimaDOM, kodikos;
-
-			minimaDOM = $(this).parents('.minima');
-			kodikos = minimaDOM.find('.minimaKodikos').text();
-			if (!kodikos) return;
+			var katastasi = 'ΔΙΑΒΑΣΜΕΝΟ';
 
 			Client.fyi.pano('Αλλαγή κατάστασης μηνύματος. Παρακαλώ περιμένετε…');
-			Client.skiserService('minimaDiavasma', 'minima=' + kodikos).
+			Client.skiserService('minimaKatastasi', 'minima=' + kodikos, 'katastasi=' + katastasi).
 			done(function(rsp) {
 				Client.fyi.pano(rsp);
 				Client.sound.tak();
-				if (rsp === 'ΔΙΑΒΑΣΜΕΝΟ')
-				minimaDOM.addClass('minimaDiavasmeno').removeClass('minimaTrexon');
-
-				else
-				minimaDOM.addClass('minimaTrexon').removeClass('minimaDiavasmeno');
+				minima.minimaStatusSet(katastasi);
+				minimaDOM.addClass('minimaDiavasmeno').trigger('mouseenter');
 			}).
 			fail(function(err) {
 				Client.sound.beep();
 				Client.skiserFail(err);
 			});
-		}))).
+		})));
 
-		append($('<div>').addClass('minimaPanelButton').
+		else
+		panelDOM.append($('<div>').addClass('minimaPanelButton').
+		append($('<img>').addClass('minimaPanelIcon').attr({
+			src: '../ikona/minima/diavasmeno.png',
+			title: 'Αλλαγή κατάστασης σε ΑΔΙΑΒΑΣΤΟ',
+		}).
+		on('click', function(e) {
+			var katastasi = 'ΑΔΙΑΒΑΣΤΟ';
+
+			Client.fyi.pano('Αλλαγή κατάστασης μηνύματος. Παρακαλώ περιμένετε…');
+			Client.skiserService('minimaKatastasi', 'minima=' + kodikos, 'katastasi=' + katastasi).
+			done(function(rsp) {
+				Client.fyi.pano(rsp);
+				Client.sound.tak();
+				minima.minimaStatusSet(katastasi);
+				minimaDOM.removeClass('minimaDiavasmeno').trigger('mouseenter');
+			}).
+			fail(function(err) {
+				Client.sound.beep();
+				Client.skiserFail(err);
+			});
+		})));
+
+		if (katastasi !== 'ΚΡΑΤΗΜΕΝΟ')
+		panelDOM.append($('<div>').addClass('minimaPanelButton').
 		append($('<img>').addClass('minimaPanelIcon').attr({
 			src: '../ikona/minima/kratimeno.png',
+			title: 'Αρχειοθέτηση μηνύματος',
+		}).
+		on('click', function(e) {
+			var katastasi = 'ΚΡΑΤΗΜΕΝΟ';
+
+			Client.fyi.pano('Αρχειοθέτηση μηνύματος. Παρακαλώ περιμένετε…');
+			Client.skiserService('minimaKatastasi', 'minima=' + kodikos, 'katastasi=' + katastasi).
+			done(function(rsp) {
+				Client.fyi.pano(rsp);
+				Client.sound.tak();
+				minima.minimaStatusSet(katastasi);
+				minimaDOM.addClass('minimaDiavasmeno').trigger('mouseenter');
+			}).
+			fail(function(err) {
+				Client.sound.beep();
+				Client.skiserFail(err);
+			});
 		})));
 	}).
 
@@ -118,6 +156,27 @@ Minima.setupMinimata = function() {
 
 	Minima.zebraSetup();
 	Minima.editFormaSetup();
+	Client.skiserService("minimaFeredata").
+	done(function(rsp) {
+		try {
+			eval('var mlist = [' + rsp + '];');
+		} catch (e) {
+			Client.sound.beep();
+			Client.fyi.epano('Παρελήφθησαν ακαθόριστα δεδομένα');
+			return;
+		}
+
+		Minima.lista = {};
+		Globals.awalk(mlist, function(i, minima) {
+			minima = new Minima(minima);
+			minima.minimaPoteAdd(Client.timeDif);
+			Minima.lista[minima.minimaKodikosGet()] = minima;
+			minima.minimaPushDOM();
+		});
+	}).
+	fail(function(err) {
+		Client.skiserFail(err);
+	});
 };
 
 Minima.editFormaSetup = function() {
@@ -157,15 +216,20 @@ Minima.editFormaPanelSetup = function() {
 		Client.fyi.pano('Αποστολή μηνύματος. Παρακαλώ περιμένετε…');
 		Client.skiserService('minimaSend', 'pektis=' + paraliptis, 'kimeno=' + kimeno.uri()).
 		done(function(rsp) {
+			var kodikos;
+
 			Client.fyi.pano();
 			Minima.editFormaKlisimo();
-			new Minima({
-				kodikos: parseInt(rsp),
+
+			kodikos = parseInt(rsp);
+			Minima.lista[kodikos] = new Minima({
+				kodikos: kodikos,
 				apostoleas: Client.session.pektis,
 				paraliptis: paraliptis,
 				kimeno: kimeno,
 				pote: Globals.tora(),
-			}).pushDOM();
+				status: 'ΑΔΙΑΒΑΣΤΟ',
+			}).minimaPushDOM();
 		}).
 		fail(function(err) {
 			Client.sound.beep();
@@ -195,23 +259,65 @@ Minima.zebraSetup = function() {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
 
-Minima.prototype.pushDOM = function() {
-	var pios, kimeno;
+Minima.prototype.minimaPushDOM = function() {
+	var kodikos, pios, pote, img;
 
-	$('<tr>').
-	data('minima', this).
+	kodikos = this.minimaKodikosGet();
+	pios = this.minimaIsIserxomeno() ? this.minimaApostoleasGet() : this.minimaParaliptisGet();
+	pote = this.minimaPoteGet();
+
+	this.DOM = $('<tr>').
+	data('minima', kodikos).
 	addClass('minima').
-	append($('<td>').addClass('minimaKodikos').text(this.kodikosGet())).
-	append($('<td>').addClass('minimaPote').text(this.poteGet())).
+	append($('<td>').addClass('minimaKodikos').text(this.minimaKodikosGet())).
+	append($('<td>').addClass('minimaPote').
+	html(Globals.mera(pote) + '<br />' + Globals.ora(pote))).
 	append($('<td>').addClass('minimaPios').
-	append($('<div>').addClass('minimaPiosOnoma').text(this.piosGet())).
-	append($('<img>').addClass('minimaIdosIcon'))).
+	append($('<div>').addClass('minimaPiosOnoma').text(pios)).
+	append(img = $('<img>').addClass('minimaIdosIcon'))).
 	append($('<td>').addClass('minimaPanel')).
-	append($('<td>').addClass('minimaKimeno').html(this.kimenoGetHTML())).
+	append($('<td>').addClass('minimaKimeno').html(this.minimaKimenoGetHTML())).
 	css('display', 'none').
 	fadeIn(500).
 	prependTo(Minima.minimataDOM);
-	Minima.zebraSetup();
 
+	if (this.minimaStatusGet() !== 'ΑΔΙΑΒΑΣΤΟ')
+	this.DOM.addClass('minimaDiavasmeno');
+
+	if (this.minimaIsIserxomeno()) img.attr({
+		src: '../ikona/minima/iserxomeno.png',
+		title: 'Εισερχόμενο',
+	});
+	else if (this.minimaIsExerxomeno()) img.attr({
+		src: '../ikona/minima/exerxomeno.png',
+		title: 'Εξερχόμενο',
+	});
+	else {
+		this.DOM.addClass('minimaIkothen');
+		img.attr({
+			src: '../ikona/minima/ikothen.png',
+			title: 'Οίκοθεν',
+		});
+	}
+
+	Minima.zebraSetup();
 	return this;
+};
+
+Minima.prototype.minimaIsIserxomeno = function() {
+	var apostoleas;
+
+	apostoleas = this.minimaApostoleasGet();
+	if (apostoleas === this.minimaParaliptisGet())
+	return false;
+
+	return(apostoleas !== Client.session.pektis);
+};
+
+Minima.prototype.minimaIsExerxomeno = function() {
+	return(this.minimaParaliptisGet() !== Client.session.pektis);
+};
+
+Minima.prototype.minimaIsIkothen = function() {
+	return(this.minimaApostoleasGet() === this.minimaParaliptisGet());
 };
