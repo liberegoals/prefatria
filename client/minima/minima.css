@@ -55,20 +55,22 @@ body {
 	text-align: right;
 }
 
-.minimaImerominia {
+.minimaPote {
 	position: relative;
 	width: 1px;
 	padding: 4px 10px;
 	text-align: right;
 	white-space: nowrap;
+	cursor: pointer;
 }
 
 .minimaPios {
+	min-width: 6em;
 	width: 1px;
 	padding: 4px 10px;
 	font-size: 16px;
 	font-weight: bold;
-	text-align: right;
+	text-align: center;
 	cursor: pointer;
 }
 
@@ -81,8 +83,8 @@ body {
 
 .minimaIdosIcon {
 	display: block;
-	height: 40px;
-	float: right;
+	margin: 6px auto;
+	height: 50px;
 }
 
 .minimaKimeno {
@@ -92,16 +94,15 @@ body {
 
 .minimaPanel {
 	width: 1px;
-	padding: 4px 10px;
-	text-align: left;
 	opacity: 0;
 }
 
 .minimaPanelButton {
 	display: inline-block;
-	width: 24px;
-	height: 24px;
+	width: 30px;
+	height: 30px;
 	padding: 2px;
+	margin: 2px;
 	background-color: transparent;
 	border-style: outset;
 	border-width: 2px;
@@ -109,8 +110,8 @@ body {
 }
 
 .minimaPanelButton:hover {
-	background-color: rgb(255, 253, 216);
-	border-color: rgb(255, 232, 190);
+	background-color: rgb(233, 248, 154);
+	border-color: rgb(229, 255, 190);
 	cursor: pointer;
 }
 

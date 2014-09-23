@@ -602,7 +602,7 @@ jQuery.fn.siromeno = function(css) {
 
 	doc = $(document);
 	return this.each(function() {
-		var obj = $(this);
+		var obj = $(this), periorismeno;
 
 		if (css === false) {
 			doc.off('mousemove mouseup contextmenu');
@@ -617,6 +617,7 @@ jQuery.fn.siromeno = function(css) {
 		if (!css.position) css.position = 'absolute';
 		if (!obj.css('whiteSpace')) css.whiteSpace = 'nowrap';
 		obj.css(css);
+		periorismeno = (obj.css('position') !== 'fixed');
 
 		// Θέτουμε το στοιχείο top/bottom εφόσον δεν υπάρχει.
 		var siromeno_t = parseInt(obj.css('top'));
@@ -707,11 +708,10 @@ jQuery.fn.siromeno = function(css) {
 
 				if (!moving) return;
 
-				var tora = Globals.torams();
-				if (tora - arot < 40) return;
-
-				if (winW - e.pageX < 10) return;
-				if (winH - e.pageY < 10) return;
+				if (periorismeno) {
+					if (winW - e.pageX < 10) return;
+					if (winH - e.pageY < 10) return;
+				}
 
 				var dy = e.pageY; if (dy < 10) dy = 10; dy -= siromeno_y;
 				var dx = e.pageX; if (dx < 10) dx = 10; dx -= siromeno_x;
