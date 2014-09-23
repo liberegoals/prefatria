@@ -16,11 +16,11 @@ body {
 }
 
 .minimaZebra0 {
-	background-color: rgba(242, 255, 255, 1);
+	background-color: #FFF9BA;
 }
 
 .minimaZebra1 {
-	background-color: rgba(255, 252, 213, 1);
+	background-color: #E6E0A7;
 }
 
 .minimaExerxomeno {
@@ -32,11 +32,11 @@ body {
 }
 
 .minimaIkothen {
-	opacity: 0.5;
+	opacity: 0.6;
 }
 
 .minimaDiavasmeno {
-	opacity: 0.5;
+	opacity: 0.6;
 }
 
 .minimaTrexon {
@@ -93,8 +93,8 @@ body {
 }
 
 .minimaPanel {
-	width: 1px;
-	opacity: 0;
+	width: 42px;
+	height: 126px;
 }
 
 .minimaPanelButton {

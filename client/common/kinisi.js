@@ -503,6 +503,7 @@ Skiniko.prototype.processKinisiEG = function(data) {
 
 	dianomi = trapezi.trapeziDianomiGet(data.dianomi);
 	if (!dianomi) return this;
+	if (!dianomi.hasOwnProperty('energia')) return this;
 
 	energia = new Energia({
 		kodikos: data.kodikos,
