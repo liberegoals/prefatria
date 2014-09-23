@@ -692,7 +692,6 @@ jQuery.fn.siromeno = function(css) {
 			if (text.length) text.prop({disabled: false});
 			text = $(this).find('input:enabled,textarea:enabled').prop({disabled: true}).off('mousemove');
 
-			var arot = Globals.torams();
 			var moving = true;
 			var winW = $(window).width();
 			var winH = $(window).height();
@@ -721,7 +720,6 @@ jQuery.fn.siromeno = function(css) {
 
 				if (siromeno_l !== null) obj.css({left: (siromeno_l + dx) + 'px'});
 				else obj.css({right: (siromeno_r - dx) + 'px'});
-				arot = tora;
 			}).on('mouseup', function(e) {
 				e.stopPropagation();
 				e.preventDefault();
