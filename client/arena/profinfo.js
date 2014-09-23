@@ -441,7 +441,7 @@ Arena.pektisPanelRefreshDOM = function() {
 		Client.fyi.pano('Αποστολή μηνύματος. Παρακαλώ περιμένετε…');
 		Client.skiserService('minimaSend', 'pektis=' + login, 'kimeno=' + kimeno.uri()).
 		done(function(rsp) {
-			Client.fyi.pano(rsp);
+			Client.fyi.pano();
 			Arena.pektisFormaEditOff();
 		}).
 		fail(function(err) {

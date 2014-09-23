@@ -267,7 +267,18 @@ DBSindesi.prototype.query = function(query, callback) {
 	conn = this;
 	this.realAction = (this.action = Globals.torams());
 	this.connection.query(query, function(err, res) {
-		if (err) throw err;
+		if (err) {
+			switch (err.code) {
+			case 'ER_NO_REFERENCED_ROW_':
+				conn.affectedRows = 0;
+				delete conn.insertId;
+				if (callback) callback(conn);
+				return;
+			default:
+				throw err;
+			}
+		}
+
 		if (!res) throw new Error('null database query result');
 
 		conn.affectedRows = res.affectedRows;
