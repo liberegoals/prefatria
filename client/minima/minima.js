@@ -1,4 +1,58 @@
-Minima = {};
+Minima = function(props) {
+	Globals.initObject(this, props);
+};
+
+Minima.prototype.kodikosGet = function() {
+	return this.kodikos;
+};
+
+Minima.prototype.poteGet = function() {
+	return this.pote;
+};
+
+Minima.prototype.apostoleasGet = function() {
+	return this.apostoleas;
+};
+
+Minima.prototype.paraliptisGet = function() {
+	return this.paraliptis;
+};
+
+Minima.prototype.piosGet = function() {
+	return(this.paraliptis != Client.session.pektis ?  this.paraliptis : this.apostoleas);
+};
+
+Minima.prototype.kimenoGet = function() {
+	this.kimeno;
+};
+
+Minima.prototype.kimenoGetHTML = function() {
+	var kimeno = this.kimenoGet();
+	return(kimeno ? kimeno.replace(/\r?\n/g, '') : '');
+};
+
+Minima.prototype.poteGet = function() {
+	this.pote;
+};
+
+Minima.prototype.pushDOM = function() {
+	var pios, kimeno;
+console.log(this);
+
+	$('<tr>').
+	append($('<td>').addClass('minimaKodikos').text(this.kodikosGet())).
+	append($('<td>').addClass('minimaImerominia').text(this.poteGet())).
+	append($('<td>').addClass('minimaPios').
+	append($('<div>').addClass('minimaPiosOnoma').text(this.piosGet())).
+	append($('<img>').addClass('minimaIdosIcon').attr({
+		src: 'asdasda',
+		title: 'ddd',
+	}))).
+	append($('<td>').addClass('minimaKimeno').html(this.kimenoGetHTML())).
+	prependTo(Minima.minimataDOM);
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
 
 $(document).ready(function() {
 	Minima.setupMinimata();
@@ -91,13 +145,64 @@ Minima.setupMinimata = function() {
 
 Minima.editFormaSetup = function() {
 	Minima.editFormaDOM = $('#minimaEditForma');
+	Minima.editFormaKimenoDOM = $('#minimaEditFormaKimeno');
+	Minima.editFormaPanelSetup();
 	Minima.editFormaDOM.addClass('formaSoma').siromeno({
 		position: 'fixed',
 	}).
 	append(Client.klisimo(function() {
-		Minima.editFormaDOM.finish().fadeOut(100);
+		Minima.editFormaKlisimo();
 	})).
 	css('display', 'none');
+};
+
+Minima.editFormaPanelSetup = function() {
+	Minima.editFormaParaliptisLoginDOM = $('#minimaEditFormaParaliptisLogin');
+	$('#minimaEditFormaPanel').
+	append($('<button>').addClass('formaButton').attr('type', 'submit').text('Αποστολή').
+	on('click', function(e) {
+		var paraliptis, kimeno;
+
+		paraliptis = Minima.editFormaParaliptisLoginDOM.val().trim();
+		if (!paraliptis) {
+			Client.fyi.epano('Ακαθόριστος παραλήπτης');
+			Client.sound.beep();
+			return;
+		}
+
+		kimeno = Minima.editFormaKimenoDOM.val().trim();
+		if (!kimeno) {
+			Client.fyi.epano('Κενό μήνυμα');
+			Client.sound.beep();
+			return;
+		}
+
+		Client.fyi.pano('Αποστολή μηνύματος. Παρακαλώ περιμένετε…');
+		Client.skiserService('minimaSend', 'pektis=' + paraliptis, 'kimeno=' + kimeno.uri()).
+		done(function(rsp) {
+			Client.fyi.pano();
+			Minima.editFormaKlisimo();
+			new Minima({
+				kodikos: parseInt(rsp),
+				apostoleas: Client.session.pektis,
+				paraliptis: paraliptis,
+				kimeno: kimeno,
+				pote: Globals.tora(),
+			}).pushDOM();
+		}).
+		fail(function(err) {
+			Client.sound.beep();
+			Client.skiserFail(err);
+		});
+	})).
+	append($('<button>').addClass('formaButton').attr('type', 'button').text('Άκυρο').
+	on('click', function(e) {
+		Minima.editFormaKlisimo();
+	}));
+};
+
+Minima.editFormaKlisimo = function() {
+	Minima.editFormaDOM.finish().fadeOut(100);
 };
 
 Minima.zebraSetup = function() {

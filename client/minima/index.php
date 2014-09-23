@@ -112,13 +112,11 @@ Class Minima {
 		<div id="minimaEditForma">
 			<div id="minimaEditFormaPros">
 				<span class="formaPrompt">Προς</span>
-				<input class="formaPedio" style="width: 200px;" />
+				<input id="minimaEditFormaParaliptisLogin"
+					class="formaPedio" style="width: 200px;" />
 			</div>
 			<textarea id="minimaEditFormaKimeno"></textarea>
-			<div id="minimaEditFormaPanel">
-				<button class="formaButton" type="submit">Αποστολή</button>
-				<button class="formaButton" type="button">Άκυρο</button>
-			</div>
+			<div id="minimaEditFormaPanel"></div>
 		</div>
 		<?php
 	}

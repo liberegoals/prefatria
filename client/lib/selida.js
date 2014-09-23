@@ -425,13 +425,24 @@ Client.fortos.display = function(data) {
 Client.klisimo = function(callback) {
 	return $('<img>').addClass('klisimoIcon').attr({
 		src: Client.server + 'ikona/misc/klisimo.png',
-	}).on('mouseenter', function(e) {
+	}).
+
+	on('mouseenter', function(e) {
 		e.stopPropagation();
 		$(this).addClass('klisimoIconEmfanes');
-	}).on('mouseleave', function(e) {
+	}).
+
+	on('mouseleave', function(e) {
 		e.stopPropagation();
 		$(this).removeClass('klisimoIconEmfanes');
-	}).on('click', function(e) {
+	}).
+
+	// Λαμβάνουμε μέριμνα για τα συρόμενα στοιχεία.
+	on('mousedown', function(e) {
+		e.stopPropagation();
+	}).
+
+	on('click', function(e) {
 		e.stopPropagation();
 		callback();
 	});
@@ -621,7 +632,7 @@ jQuery.fn.siromeno = function(css) {
 			if (isNaN(siromeno_r)) obj.css({left: 0});
 		}
 
-		$(this).find('input,textarea').on('mousedown', function(e) {
+		$(this).find('input,textarea,button').on('mousedown', function(e) {
 			e.stopPropagation();
 		});
 

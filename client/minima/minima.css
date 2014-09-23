@@ -133,6 +133,10 @@ body {
 	left: 10px;
 }
 
+#minimaEditFormaParaliptisLogin {
+	font-size: 14px;
+}
+
 #minimaEditFormaKimeno {
 	position: absolute;
 	top: 50px;
