@@ -1,11 +1,52 @@
 $(document).ready(function() {
-	Minima.setupMinimata();
-});
-
-Minima.setupMinimata = function() {
 	Client.tabPektis();
 	Client.tabKlisimo($('#toolbarRight'));
 
+	Minima.setupMinimata();
+
+	Arena = null;
+	if (!self.opener) return;
+	Arena = self.opener.Arena;
+	if (!Arena) return;
+
+	// TODO
+	return;
+
+	Client.tab($('<a>').attr({href: '#'}).on('click', function(e) {
+		try {
+			setTimeout(function() {
+				Arena.inputRefocus();
+			}, 100);
+		} catch (e) {
+			self.close();
+		}
+		return false;
+	}).append(Client.sinefo('Επιστροφή')), $('#toolbarLeft'));
+});
+
+Minima.unload = function() {
+	if (!Arena) return;
+	if (!Arena.minima) return;
+	if (!Arena.minima.win) return;
+
+	Arena.minima.win.close();
+	Arena.minima.win = null;
+};
+
+$(window).
+on('beforeunload', function() {
+	Minima.unload();
+}).
+on('unload', function() {
+	Minima.unload();
+}).
+on('focus', function() {
+	setTimeout(function() {
+		if (Arena) Arena.inputRefocus();
+	}, 100);
+});
+
+Minima.setupMinimata = function() {
 	Minima.minimataDOM = $('#minimata');
 
 	Minima.minimataDOM.
@@ -301,6 +342,24 @@ Minima.prototype.minimaPushDOM = function() {
 	}
 
 	Minima.zebraSetup();
+	return this;
+};
+
+Minima.prototype.minimaGetDOM = function() {
+	return this.DOM;
+};
+
+Minima.prototype.minimaEndixiNeo = function() {
+	var dom;
+
+	dom = this.minimaGetDOM();
+	if (!dom) return this;
+
+	if (dom.find('.minimaNeoIcon').length)
+	return this;
+
+	dom.children('.minimaPote').
+	append($('<img>').attr('src', '../ikona/minima/neo.png').addClass('minimaNeoIcon'));
 	return this;
 };
 

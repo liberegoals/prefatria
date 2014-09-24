@@ -154,7 +154,8 @@ Arena.unload = function() {
 	Arena.
 	paraskinio.klisimo().
 	kitapi.klisimo().
-	funchat.klisimo();
+	funchat.klisimo().
+	minima.klisimo();
 };
 
 $(window).
@@ -184,9 +185,9 @@ Arena.setup = function() {
 	setupDiafimisi().
 	setupMotd().
 	setupFortos().
-	setupMinima().
 	setupKafenio().
 	partida.setup().
+	minima.setup().
 	setupPss().
 	setupCpanel().
 	setupEpanel().
@@ -229,54 +230,6 @@ Arena.setupMotd = function() {
 		Arena.cpanel.bpanelButtonGet('motd').refresh();
 	};
 
-	return Arena;
-};
-
-Arena.setupMinima = function() {
-	var tbr, dom;
-
-	tbr = $('#toolbarLeft');
-	if (!tbr.length) return;
-
-	Client.tab($('<a>').attr({
-		target: '_blank',
-		href: 'minima/index.php?timeDif=' + Client.timeDif,
-	}).append(dom = Client.sinefo('PM')), tbr).
-	on('click', function(e) {
-		Arena.inputRefocus();
-		Arena.minimaEndixiDOM.finish().fadeOut().
-		empty().removeAttr('title');
-	});
-
-	dom.css('position', 'relative').
-	append(Arena.minimaEndixiDOM = $('<div>').addClass('minimaEndixi'));
-	Client.ajaxService('minima/check.php').
-	done(function(rsp) {
-		var count, msg;
-
-		if (!rsp) return;
-		count = parseInt(rsp);
-		if (isNaN(count)) return;
-		if (count <= 0) return;
-
-		msg = 'Έχετε ' + rsp + ' ' + (count === 1 ? 'αδιάβαστο μήνυμα' : 'αδιάβαστα μηνύματα');
-		Arena.minimaEndixiDOM.finish().fadeIn({
-			duration: 1000,
-			easing: 'easeInExpo',
-		}).
-		text(rsp).attr('title', msg);
-	}).
-	fail(function(err) {
-		var msg;
-
-		if (err.hasOwnProperty('responseText') && (err.responseText !== ''))
-		msg = err.responseText;
-
-		else if (typeof err === 'string')
-		msg = err;
-
-		Arena.minimaEndixiDOM.text('?').attr('title', msg);
-	});
 	return Arena;
 };
 
@@ -575,11 +528,98 @@ Arena.funchat.anigma = function() {
 
 Arena.funchat.klisimo = function() {
 	if (Arena.funchat.isKlisto())
-	return Arena.funchat;
+	return Arena;
 
 	Arena.funchat.win.close();
 	Arena.funchat.win = null;
 
 	Arena.cpanel.bpanelRefresh();
-	return Arena.funchat;
+	return Arena;
+};
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+Arena.minima = {
+	win: null,
+};
+
+Arena.minima.setup = function() {
+	var tbr, dom;
+
+	tbr = $('#toolbarLeft');
+	if (!tbr.length) return Arena;
+
+	Client.tab($('<a>').attr('href', 'minima').
+	on('click', function(e) {
+		Arena.inputRefocus();
+		Arena.minima.endixiDOM.finish().fadeOut().
+		empty().removeAttr('title');
+
+		if (Arena.minima.isAnikto())
+		Arena.minima.focus();
+
+		else
+		Arena.minima.anigma();
+
+		return false;
+	}).append(dom = Client.sinefo('PM')), tbr);
+
+	dom.css('position', 'relative').
+	append(Arena.minima.endixiDOM = $('<div>').addClass('minimaEndixi'));
+	Client.ajaxService('minima/check.php').
+	done(function(rsp) {
+		var count, msg;
+
+		if (!rsp) return;
+		count = parseInt(rsp);
+		if (isNaN(count)) return;
+		if (count <= 0) return;
+
+		msg = 'Έχετε ' + rsp + ' ' + (count === 1 ? 'αδιάβαστο μήνυμα' : 'αδιάβαστα μηνύματα');
+		Arena.minima.endixiDOM.finish().fadeIn({
+			duration: 1000,
+			easing: 'easeInExpo',
+		}).
+		text(rsp).attr('title', msg);
+	}).
+	fail(function(err) {
+		var msg;
+
+		if (err.hasOwnProperty('responseText') && (err.responseText !== ''))
+		msg = err.responseText;
+
+		else if (typeof err === 'string')
+		msg = err;
+
+		Arena.minima.endixiDOM.text('?').attr('title', msg);
+	});
+
+	return Arena;
+};
+
+Arena.minima.anigma = function() {
+	Arena.minima.win = window.open('minima', '_blank', 'top=100,left=100,width=1200,height=900');
+	return Arena.minima;
+};
+
+Arena.minima.klisimo = function() {
+	if (Arena.minima.isKlisto())
+	return Arena;
+
+	Arena.minima.win.close();
+	Arena.minima.win = null;
+
+	return Arena;
+};
+
+Arena.minima.isAnikto = function() {
+	return Arena.minima.win;
+};
+
+Arena.minima.isKlisto = function() {
+	return !Arena.minima.isAnikto();
+};
+
+Arena.minima.focus = function() {
+	return Arena.minima.win.focus();
 };

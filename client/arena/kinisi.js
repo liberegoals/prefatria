@@ -202,7 +202,7 @@ Skiniko.prototype.processKinisiAnteTR = function(data) {
 	// δημιουργήσει παρόμοιο ηχητικό σήμα.
 
 	if (data.trapezi.pektis1.oxiEgo())
-	Client.sound.trapeziNeo();
+	Client.sound.pop();
 
 	data.trapeziPrin = this.skinikoTrapeziGet(sinedria.sinedriaTrapeziGet());
 	return this;
@@ -1609,16 +1609,37 @@ Skiniko.prototype.processKinisiPostZP = function(data) {
 //	id		Κωδικός μηνύματος
 
 Skiniko.prototype.processKinisiPostML = function(data) {
-	if (!Arena.minimaEndixiDOM) return this;
-	Arena.minimaEndixiDOM.finish().
-	css('display', 'none').
-	fadeIn({
-		duration: 500,
-		easing: 'easeInElastic',
-	}).
-	html('&nbsp;!&nbsp;').attr('title', 'Παραλάβατε μήνυμα με κωδικό αριθμό ' + data.id);
-	Client.fyi.pano('<div class="aristera">Έχετε μήνυμα από τον παίκτη ' +
-		'<span class="entona ble">' + data.apostoleas + '</span></div>', 8000);
-	Client.sound.psit();
+	var mwin, mlist, minima;
+
+	if (Arena.minima.endixiDOM) {
+		Arena.minima.endixiDOM.finish().
+		css('display', 'none').
+		fadeIn({
+			duration: 500,
+			easing: 'easeInElastic',
+		}).
+		html('&nbsp;!&nbsp;').attr('title', 'Παραλάβατε μήνυμα με κωδικό αριθμό ' + data.kodikos);
+		Client.fyi.pano('<div class="aristera">Έχετε μήνυμα από τον παίκτη ' +
+			'<span class="entona ble">' + data.apostoleas + '</span></div>', 8000);
+	}
+
+	if (Arena.minima.isKlisto()) {
+		Client.sound.psit();
+		return this;
+	}
+
+	mwin = Arena.minima.win;
+	mwin.Client.sound.plop();
+
+	mlist = mwin.Minima.lista;
+	if (!mlist) return this;
+
+	minima = mlist[data.kodikos];
+	if (minima) return this;
+
+	mlist[data.kodikos] = new mwin.Minima(data).
+	minimaPoteAdd(Client.timeDif).
+	minimaPushDOM().
+	minimaEndixiNeo();
 	return this;
 }

@@ -151,3 +151,10 @@ body {
 	top: 12px;
 	left: 300px;
 }
+
+.minimaNeoIcon {
+	position: absolute;
+	top: 40px;
+	left: 3px;
+	width: 82px;
+}
