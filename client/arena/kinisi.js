@@ -1613,6 +1613,7 @@ Skiniko.prototype.processKinisiPostML = function(data) {
 
 	if (Arena.minima.endixiDOM) {
 		Arena.minima.endixiDOM.finish().
+		removeClass('minimaEndixiLow').
 		css('display', 'none').
 		fadeIn({
 			duration: 500,
