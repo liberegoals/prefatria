@@ -565,7 +565,10 @@ Arena.minima.setup = function() {
 	}).append(dom = Client.sinefo('PM')), tbr);
 
 	dom.css('position', 'relative').
-	append(Arena.minima.endixiDOM = $('<div>').addClass('minimaEndixi'));
+	append(Arena.minima.endixiDOM = $('<div>').addClass('minimaEndixi').
+	on('mouseenter', function() {
+		$(this).addClass('minimaEndixiLow');
+	}));
 	Client.ajaxService('minima/check.php').
 	done(function(rsp) {
 		var count, msg;
