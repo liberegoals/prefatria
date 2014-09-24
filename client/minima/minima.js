@@ -5,8 +5,8 @@ $(document).ready(function() {
 	Minima.setupMinimata();
 
 	Arena = null;
-	if (!self.opener) return;
-	Arena = self.opener.Arena;
+	if (!window.opener) return;
+	Arena = window.opener.Arena;
 	if (!Arena) return;
 
 	// TODO
@@ -16,9 +16,10 @@ $(document).ready(function() {
 		try {
 			setTimeout(function() {
 				Arena.inputRefocus();
+				window.opener.focus();
 			}, 100);
 		} catch (e) {
-			self.close();
+			window.close();
 		}
 		return false;
 	}).append(Client.sinefo('Επιστροφή')), $('#toolbarLeft'));
