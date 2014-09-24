@@ -867,6 +867,10 @@ Client.sound = {
 		Client.sound.play('plop.ogg', vol);
 	},
 
+	pop: function(vol) {
+		Client.sound.play('pop.ogg', vol);
+	},
+
 	sfirigma: function(vol) {
 		Client.sound.play('sfirigma.ogg', vol);
 	},
@@ -899,11 +903,6 @@ Client.sound = {
 	tak: function(vol) {
 		if (vol === undefined) vol = Client.sound.entasi['ΚΑΝΟΝΙΚΗ'];
 		Client.sound.play('tak.ogg', vol);
-	},
-
-	trapeziNeo: function(vol) {
-		if (vol === undefined) vol = Client.sound.entasi['ΚΑΝΟΝΙΚΗ'];
-		Client.sound.play('pop.ogg', vol);
 	},
 
 	trapeziDel: function(vol) {

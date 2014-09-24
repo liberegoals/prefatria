@@ -32,9 +32,12 @@ Service.minima.send = function(nodereq) {
 		kinisi = new Kinisi({
 			idos: 'ML',
 			data: {
-				id: minimaId,
+				kodikos: minimaId,
 				apostoleas: apostoleas,
 				paraliptis: paraliptis,
+				kimeno: kimeno,
+				pote: Globals.tora(),
+				status: 'ΑΔΙΑΒΑΣΤΟ',
 			}
 		});
 
