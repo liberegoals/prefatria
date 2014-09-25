@@ -2,6 +2,7 @@ $(document).ready(function() {
 	Client.tabPektis();
 	Client.tabKlisimo($('#toolbarRight'));
 
+	Minima.setupControls();
 	Minima.setupMinimata();
 
 	Arena = null;
@@ -46,6 +47,36 @@ on('focus', function() {
 		if (Arena) Arena.inputRefocus();
 	}, 100);
 });
+
+Minima.setupControls = function() {
+	Minima.controlsDOM = $('#minimaControls');
+
+	$('.minimaControlsGo').
+	on('mouseenter', function(e) {
+		$(this).children('.minimaControlsGoIcon').finish().fadeIn(100);
+	}).
+	on('mouseleave', function(e) {
+		$(this).children('.minimaControlsGoIcon').finish().fadeOut();
+	});
+
+	$('.minimaControlsGoIcon').attr({
+		src: '../ikona/misc/baresH.png',
+		title: 'Κορυφή σελίδας',
+	}).on('click', function(e) {
+		e.stopPropagation();
+		$(window.document).scrollTop(0);
+	});
+
+var aaa = 0;
+	$('#minimaNeo').on('click', function(e) {
+		e.stopPropagation();
+Client.fyi.pano(++aaa);
+		Minima.editFormaParaliptisLoginDOM.val('');
+		Minima.editFormaDOM.finish().fadeIn(100, function() {
+			Minima.editFormaParaliptisLoginDOM.focus();
+		});
+	});
+};
 
 Minima.setupMinimata = function() {
 	Minima.minimataDOM = $('#minimata');
@@ -241,6 +272,7 @@ Minima.editFormaPanelSetup = function() {
 	on('click', function(e) {
 		var paraliptis, kimeno;
 
+		Minima.editFormaParaliptisLoginDOM.focus();
 		paraliptis = Minima.editFormaParaliptisLoginDOM.val().trim();
 		if (!paraliptis) {
 			Client.fyi.epano('Ακαθόριστος παραλήπτης');
