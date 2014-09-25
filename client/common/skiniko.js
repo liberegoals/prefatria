@@ -1425,7 +1425,7 @@ Minima.prototype.minimaPoteSet = function(pote) {
 };
 
 Minima.prototype.minimaPoteGet = function() {
-	return this.pote;
+	return parseInt(this.pote);
 };
 
 Minima.prototype.minimaPoteAdd = function(dif) {
