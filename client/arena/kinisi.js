@@ -1204,8 +1204,6 @@ Skiniko.prototype.processKinisiPostPD = function(data) {
 
 Skiniko.prototype.processKinisiPostDN = function(data) {
 	$('.tsoxaPektisPliromi').finish().fadeOut(600);
-	Arena.partida.flags.telepli = false;
-
 	return this;
 };
 

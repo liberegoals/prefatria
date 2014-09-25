@@ -38,13 +38,6 @@ Arena.partida.flags = {
 	// control panel.
 
 	azab: false,
-
-	// Η flag "telepli" δείχνει αν τα καπίκια της τελευταίας πληρωμής είναι
-	// εμφανή ή έχουν αποκρυβεί. Η τιμή της flag αλλάζει είτε με κλικ στο
-	// σχετικό εικονίδιο, είτε αυτόματα εφόσον χρειαστεί να αποκρυβούν ή να
-	// εμφανιστούν τα καπίκια της τελευταίας διανομής.
-
-	telepli: false,
 };
 
 Arena.partida.niofertosView = function() {
@@ -57,14 +50,6 @@ Arena.partida.isFanera23 = function() {
 
 Arena.partida.oxiFanera23 = function() {
 	return !Arena.partida.isFanera23();
-};
-
-Arena.partida.isTelepli = function() {
-	return Arena.partida.flags.telepli;
-};
-
-Arena.partida.oxiTelepli = function() {
-	return !Arena.partida.isTelepli();
 };
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
@@ -167,16 +152,17 @@ Arena.partida.setupPliromi = function() {
 		src: 'ikona/panel/kapikia.png',
 		title: 'Καπίκια τελευταίας πληρωμής',
 	}).
+	on('mouseenter', function(e) {
+		$('.tsoxaPektisPliromi').finish().fadeIn(100);
+	}).
+	on('mouseleave', function(e) {
+		$('.tsoxaPektisPliromi').finish().fadeOut(200);
+	}).
 	on('click', function(e) {
 		Arena.inputRefocus(e);
-		Arena.partida.flags.telepli = !Arena.partida.flags.telepli;
-
-		if (Arena.partida.isTelepli())
-		$('.tsoxaPektisPliromi').finish().fadeIn(100);
-
-		else
-		$('.tsoxaPektisPliromi').finish().fadeOut(200);
-	}).appendTo(Arena.partida.tsoxaDOM);
+		Arena.kitapi.iconDOM.trigger('click');
+	}).
+	appendTo(Arena.partida.tsoxaDOM);
 
 	return Arena;
 };
