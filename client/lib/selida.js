@@ -887,6 +887,10 @@ Client.sound = {
 		Client.sound.play('doorbell.ogg', vol);
 	},
 
+	deskbell: function(vol) {
+		Client.sound.play('deskbell.ogg', vol);
+	},
+
 	bikebell: function(vol) {
 		Client.sound.play('bikebell.ogg', vol);
 	},

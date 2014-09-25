@@ -17,7 +17,7 @@ Arena.prosklisi.panel.clickCommon = function(e) {
 };
 
 Arena.prosklisi.panel.bpanelGetDOM().
-append($('<div>').addClass('panelKimeno').text('Προσκλήσεις'));
+append($('<div>').addClass('panelKimeno').append(Client.sinefo('Προσκλήσεις')));
 
 Arena.prosklisi.panel.bpanelButtonPush(new PButton({
 	id: 'delete',
