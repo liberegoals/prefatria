@@ -33,7 +33,7 @@ Class Minima {
 			<button id="minimaNeoButton" class="formaButton minimaButton" type="button">Νέο μήνυμα</button>
 		</td>
 		<td>
-			<div class="minimaCheckboxButton minimaButton">
+			<div class="minimaCheckboxButton">
 				<div class="formaPrompt minimaPrompt">
 					Όλα
 				</div>
@@ -41,19 +41,19 @@ Class Minima {
 			</div>
 		</td>
 		<td>
-			<div class="minimaCheckboxButton minimaButton">
+			<div class="minimaCheckboxButton">
 				<div class="formaPrompt minimaPrompt">
 					Εξερχόμενα
 				</div>
 				<input id="minimaExerxomenaButton" class="minimaCheckbox" type="checkbox" />
 			</div>
-			<div class="minimaCheckboxButton minimaButton">
+			<div class="minimaCheckboxButton">
 				<div class="formaPrompt minimaPrompt">
 					Εισερχόμενα
 				</div>
 				<input id="minimaIserxomenaButton" class="minimaCheckbox" type="checkbox" />
 			</div>
-			<div class="minimaCheckboxButton minimaButton">
+			<div class="minimaCheckboxButton">
 				<div class="formaPrompt minimaPrompt">
 					Οίκοθεν
 				</div>
@@ -68,19 +68,19 @@ Class Minima {
 		<td>
 		</td>
 		<td>
-			<div class="minimaCheckboxButton minimaButton">
+			<div class="minimaCheckboxButton">
 				<div class="formaPrompt minimaPrompt">
 					Διαβασμένα
 				</div>
 				<input id="minimaDiavasmenaButton" class="minimaCheckbox" type="checkbox" />
 			</div>
-			<div class="minimaCheckboxButton minimaButton">
+			<div class="minimaCheckboxButton">
 				<div class="formaPrompt minimaPrompt">
 					Αδιάβαστα
 				</div>
 				<input id="minimaAdiavastaButton" class="minimaCheckbox" type="checkbox" />
 			</div>
-			<div class="minimaCheckboxButton minimaButton">
+			<div class="minimaCheckboxButton">
 				<div class="formaPrompt minimaPrompt">
 					Κρατημένα
 				</div>
