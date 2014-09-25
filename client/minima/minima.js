@@ -5,6 +5,8 @@ $(document).ready(function() {
 	Minima.setupControls();
 	Minima.setupMinimata();
 
+	Client.fyi.pano('Καλώς ήλθατε στο ταχυδρομείο του «Πρεφαδόρου»');
+
 	Arena = null;
 	if (!window.opener) return;
 	Arena = window.opener.Arena;
@@ -67,15 +69,90 @@ Minima.setupControls = function() {
 		$(window.document).scrollTop(0);
 	});
 
-var aaa = 0;
-	$('#minimaNeo').on('click', function(e) {
+	$('#minimaNeoButton').on('click', function(e) {
 		e.stopPropagation();
-Client.fyi.pano(++aaa);
 		Minima.editFormaParaliptisLoginDOM.val('');
 		Minima.editFormaDOM.finish().fadeIn(100, function() {
 			Minima.editFormaParaliptisLoginDOM.focus();
 		});
 	});
+
+	$('.minimaCheckboxButton').
+	on('mousedown', function(e) {
+		e.stopPropagation();
+		e.preventDefault();
+	}).
+	on('click', function(e) {
+		e.stopPropagation();
+		e.preventDefault();
+		$(this).children('input').trigger('click');
+	}).
+	children('input').
+	on('click', function(e) {
+		e.stopPropagation();
+	});
+
+	Minima.buttonOlaDOM = $('#minimaOlaButton').
+	on('click', function(e) {
+		if ($(this).is(':checked')) {
+			Minima.buttonIserxomenaDOM.prop('checked', true);
+			Minima.buttonExerxomenaDOM.prop('checked', true);
+			Minima.buttonIkothenDOM.prop('checked', true);
+			Minima.buttonKratimenaDOM.prop('checked', true);
+		}
+		else {
+			Minima.buttonIserxomenaDOM.prop('checked', true);
+			Minima.buttonExerxomenaDOM.prop('checked', true);
+			Minima.buttonIkothenDOM.prop('checked', false);
+			Minima.buttonKratimenaDOM.prop('checked', false);
+		}
+	});
+
+	Minima.buttonIserxomenaDOM = $('#minimaIserxomenaButton').prop('checked', true).
+	on('click', function(e) {
+		Minima.buttonOlaDOM.prop('checked', false);
+		if ($(this).is(':checked')) {
+			Minima.buttonIserxomenaDOM.prop('checked', true);
+			Minima.buttonExerxomenaDOM.prop('checked', false);
+			Minima.buttonIkothenDOM.prop('checked', false);
+			Minima.buttonKratimenaDOM.prop('checked', false);
+		}
+	});
+
+	Minima.buttonExerxomenaDOM = $('#minimaExerxomenaButton').prop('checked', true).
+	on('click', function(e) {
+		Minima.buttonOlaDOM.prop('checked', false);
+		if ($(this).is(':checked')) {
+			Minima.buttonIserxomenaDOM.prop('checked', false);
+			Minima.buttonExerxomenaDOM.prop('checked', true);
+			Minima.buttonIkothenDOM.prop('checked', false);
+			Minima.buttonKratimenaDOM.prop('checked', false);
+		}
+	});
+
+	Minima.buttonIkothenDOM = $('#minimaIkothenButton').
+	on('click', function(e) {
+		Minima.buttonOlaDOM.prop('checked', false);
+		if ($(this).is(':checked')) {
+			Minima.buttonIserxomenaDOM.prop('checked', false);
+			Minima.buttonExerxomenaDOM.prop('checked', false);
+			Minima.buttonIkothenDOM.prop('checked', true);
+			Minima.buttonKratimenaDOM.prop('checked', false);
+		}
+	});
+
+	Minima.buttonKratimenaDOM = $('#minimaKratimenaButton').
+	on('click', function(e) {
+		Minima.buttonOlaDOM.prop('checked', false);
+		if ($(this).is(':checked')) {
+			Minima.buttonIserxomenaDOM.prop('checked', false);
+			Minima.buttonExerxomenaDOM.prop('checked', false);
+			Minima.buttonIkothenDOM.prop('checked', false);
+			Minima.buttonKratimenaDOM.prop('checked', true);
+		}
+	});
+
+
 };
 
 Minima.setupMinimata = function() {
