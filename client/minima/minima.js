@@ -311,7 +311,7 @@ Minima.setupMinimata = function() {
 				minimaDOM.addClass('minimaDiagrafi').
 				fadeOut(function() {
 					$(this).remove();
-					Minima.zebraSetup();
+					Minima.zebraRefresh();
 				});
 			}).
 			fail(function(err) {
@@ -489,10 +489,10 @@ Minima.editFormaKlisimo = function() {
 	Minima.editFormaDOM.finish().fadeOut(100);
 };
 
-Minima.zebraSetup = function() {
+Minima.zebraRefresh = function() {
 	var count = 0;
 
-	Minima.minimataDOM.find('minima').each(function() {
+	Minima.minimataDOM.find('.minima').each(function() {
 		var i;
 
 		if ($(this).css('display') === 'none')
@@ -524,8 +524,9 @@ Minima.prototype.minimaPushDOM = function(online) {
 	append($('<td>').addClass('minimaKimeno').html(this.minimaKimenoGetHTML())).
 	prependTo(Minima.minimataDOM);
 
-	if (online)
-	this.DOM.fadeIn(500);
+	if (online) this.DOM.finish().fadeIn(500, function() {
+		Minima.zebraRefresh();
+	});
 
 	if (this.minimaStatusGet() !== 'ΑΔΙΑΒΑΣΤΟ')
 	this.DOM.addClass('minimaDiavasmeno');
@@ -546,7 +547,6 @@ Minima.prototype.minimaPushDOM = function(online) {
 		});
 	}
 
-	Minima.zebraSetup();
 	return this;
 };
 
