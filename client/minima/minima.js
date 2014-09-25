@@ -69,6 +69,8 @@ Minima.setupControls = function() {
 		$(window.document).scrollTop(0);
 	});
 
+	$('.minimaCheckboxButton').addClass('minimaButton sinefo');
+
 	$('#minimaNeoButton').on('click', function(e) {
 		e.stopPropagation();
 		Minima.editFormaParaliptisLoginDOM.val('');
