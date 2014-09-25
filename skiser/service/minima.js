@@ -163,6 +163,9 @@ Service.minima.feredata = function(nodereq) {
 
 		conn.free();
 		for (i = 0; i < rows.length; i++) {
+			if ((rows[i].paraliptis != login) && (rows[i].status === 'ΚΡΑΤΗΜΕΝΟ'))
+			continue;
+
 			nodereq.write('\t' + JSON.stringify(rows[i]) + ',\n');
 		}
 		nodereq.end();
