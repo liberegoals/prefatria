@@ -56,14 +56,31 @@ Service.minima.diagrafi = function(nodereq) {
 
 	login = nodereq.loginGet();
 
-	query = 'SELECT `apostoleas`, `paraliptis` FROM `minima` WHERE `kodikos` = ' + nodereq.url.minima;
+	query = 'SELECT `apostoleas`, `paraliptis`, `status` ' +
+		'FROM `minima` WHERE `kodikos` = ' + nodereq.url.minima;
 	DB.connection().query(query, function(conn, rows) {
 		conn.free();
 		if (rows.length != 1)
 		return nodereq.error('Δεν βρέθηκε το μήνυμα');
 
-		if ((rows[0].apostoleas != login) && (rows[0].paraliptis != login))
+		// Ο παραλήπτης του μηνύματος έχει πάντοτε δικαίωμα διαγραφής.
+
+		if (rows[0].paraliptis == login)
+		return Service.minima.diagrafi2(nodereq);
+
+		// Ο μόνος που έχει δικαίωμα διαγραφής πέραν του αποστολέως
+		// είναι ο συντάκτης του μηνύματος, και αυτός μόνον υπό
+		// προϋποθέσεις.
+
+		if (rows[0].apostoleas != login)
 		return nodereq.error('Δεν έχετε πρόσβαση');
+
+		// Ο αποστολέας επιχειρεί να διαγράψει το μήνυμα, επομένως
+		// θα πρέπει να ελεγχθεί τυχόν κράτηση του μηνύματος από
+		// τον παραλήπτη.
+
+		if (rows[0].status == 'ΚΡΑΤΗΜΕΝΟ')
+		return nodereq.error('Το μήμυμα έχει κρατηθεί από τον παραλήπτη');
 
 		Service.minima.diagrafi2(nodereq);
 	});
@@ -102,8 +119,8 @@ Service.minima.katastasi = function(nodereq) {
 		if (rows.length != 1)
 		return nodereq.error('Δεν βρέθηκε το μήνυμα');
 
-		if (rows[0].apostoleas == login)
-		return nodereq.error('Το μήνυμα είναι δικό σας');
+		if (rows[0].paraliptis != login)
+		return nodereq.error('Δεν είστε παραλήπτης του μηνύματος');
 
 		if (rows[0].paraliptis != login)
 		return nodereq.error('Δεν έχετε πρόσβαση');
