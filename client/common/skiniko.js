@@ -1420,7 +1420,7 @@ Minima.prototype.minimaKimenoGetHTML = function() {
 };
 
 Minima.prototype.minimaPoteSet = function(pote) {
-	this.pote = pote;
+	this.pote = parseInt(pote);
 	return this;
 };
 
@@ -1429,7 +1429,7 @@ Minima.prototype.minimaPoteGet = function() {
 };
 
 Minima.prototype.minimaPoteAdd = function(dif) {
-	this.pote += dif;
+	this.minimaPoteSet(this.minimaPoteGet() + parseInt(dif));
 	return this;
 };
 

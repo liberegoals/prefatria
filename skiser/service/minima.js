@@ -149,15 +149,18 @@ Service.minima.katastasi2 = function(nodereq) {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
 
 Service.minima.feredata = function(nodereq) {
-	var login, query;
+	var login, last, query;
 
 	if (nodereq.isvoli()) return;
+	if (nodereq.denPerastike('last', true)) return;
 	login = nodereq.loginGet();
+	last = parseInt(nodereq.url.last);
+	if (isNaN(last)) nodereq.error('ακαθόριστος κωδικός τελευταίου ληφθέντος μηνύματος');
 
 	query = 'SELECT `kodikos`, `apostoleas`, `paraliptis`, `kimeno`, ' +
 		'UNIX_TIMESTAMP(`pote`) AS `pote`, `status` FROM `minima` ' +
-		'WHERE (`apostoleas` LIKE ' + login.json() +
-		') OR (`paraliptis` LIKE ' + login.json() + ') ORDER BY `kodikos`';
+		'WHERE (`kodikos` > ' + last + ') AND ((`apostoleas` LIKE ' + login.json() +
+		') OR (`paraliptis` LIKE ' + login.json() + ')) ORDER BY `kodikos`';
 	DB.connection().query(query, function(conn, rows) {
 		var i;
 
