@@ -89,6 +89,12 @@ Minima.setupControls = function() {
 				return;
 			}
 
+			if (Minima.lista)
+			Globals.walk(Minima.lista, function(i, minima) {
+				if (minima.hasOwnProperty('DOM'))
+				minima.DOM.remove();
+			});
+
 			Minima.lista = {};
 			Globals.awalk(mlist, function(i, minima) {
 				minima = new Minima(minima);
