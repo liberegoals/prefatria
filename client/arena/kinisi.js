@@ -1637,8 +1637,9 @@ Skiniko.prototype.processKinisiPostML = function(data) {
 	minima = mlist[data.kodikos];
 	if (minima) return this;
 
-	mlist[data.kodikos] = new mwin.Minima(data).
+	new mwin.Minima(data).
 	minimaPoteAdd(Client.timeDif).
+	minimaPushLista().
 	minimaPushDOM(true).
 	minimaEndixiNeo();
 	return this;

@@ -81,7 +81,7 @@ Minima.setupControls = function() {
 
 	Minima.ananeosiButtonDOM = $('#minimaAnaneosiButton').on('click', function(e) {
 		e.stopPropagation();
-		Client.skiserService("minimaFeredata").
+		Client.skiserService('minimaFeredata', 'last=' + Minima.kodikosMax).
 		done(function(rsp) {
 			try {
 				eval('var mlist = [' + rsp + '];');
@@ -91,18 +91,11 @@ Minima.setupControls = function() {
 				return;
 			}
 
-			if (Minima.lista)
-			Globals.walk(Minima.lista, function(i, minima) {
-				if (minima.hasOwnProperty('DOM'))
-				minima.DOM.remove();
-			});
-
-			Minima.lista = {};
 			Globals.awalk(mlist, function(i, minima) {
-				minima = new Minima(minima);
-				minima.minimaPoteAdd(Client.timeDif);
-				Minima.lista[minima.minimaKodikosGet()] = minima;
-				minima.minimaPushDOM();
+				minima = new Minima(minima).
+				minimaPoteAdd(Client.timeDif).
+				minimaPushLista().
+				minimaPushDOM();
 			});
 			Minima.filtrarisma();
 		}).
@@ -272,6 +265,8 @@ Minima.prototype.filtroCheck = function() {
 
 Minima.setupMinimata = function() {
 	Minima.minimataDOM = $('#minimata');
+	Minima.lista = {};
+	Minima.kodikosMax = 0;
 
 	Minima.minimataDOM.
 
@@ -468,14 +463,16 @@ Minima.editFormaPanelSetup = function() {
 			Minima.editFormaKlisimo();
 
 			kodikos = parseInt(rsp);
-			Minima.lista[kodikos] = new Minima({
+			new Minima({
 				kodikos: kodikos,
 				apostoleas: Client.session.pektis,
 				paraliptis: paraliptis,
 				kimeno: kimeno,
 				pote: Globals.tora(),
 				status: 'ΑΔΙΑΒΑΣΤΟ',
-			}).minimaPushDOM(true);
+			}).
+			minimaPushLista().
+			minimaPushDOM(true);
 		}).
 		fail(function(err) {
 			Client.sound.beep();
@@ -507,6 +504,17 @@ Minima.zebraRefresh = function() {
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
+
+Minima.prototype.minimaPushLista = function() {
+	var kodikos;
+
+	kodikos = this.minimaKodikosGet();
+	if (kodikos > Minima.kodikosMax)
+	Minima.kodikosMax = kodikos;
+
+	Minima.lista[kodikos] = this;
+	return this;
+};
 
 Minima.prototype.minimaPushDOM = function(online) {
 	var kodikos, pios, pote, img;

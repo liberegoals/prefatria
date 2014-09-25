@@ -30,7 +30,7 @@ Arena.feredataFreskaTS = 0;
 // Η σταθερά "feredataFreskaXronosMax" δείχνει τον μέγιστο επιτρεπτό χρόνο μεταξύ
 // δύο «φρεσκαρισμάτων» του σκηνικού.
 
-Arena.feredataFreskaXronosMax = 300;	// 5 λεπτά
+Arena.feredataFreskaXronosMax = 360;	// 6 λεπτά
 
 // Ο timer "feredataTimer" αφορά σε δρομολογημένο αίτημα αποστολής αλλαγών.
 // Πράγματι, τα αιτήματα αποστολής μεταβολών σκηνικού τα αποστέλλονται με
