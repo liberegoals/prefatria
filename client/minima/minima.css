@@ -8,6 +8,7 @@ body {
 }
 
 .minima {
+	display: none;
 	position: relative;
 	vertical-align: top;
 	border-style: none none solid none;
@@ -126,6 +127,8 @@ body {
 	left: 240px;
 	width: 700px;
 	height: 433px;
+	border-radius: 10px;
+	background-color: rgb(176, 206, 163);
 }
 
 #minimaEditFormaPros {
@@ -160,7 +163,7 @@ body {
 }
 
 #minimaControls {
-	padding: 10px 130px 20px 130px;
+	padding: 10px 130px 20px 30px;
 }
 
 .minimaControlsGo {

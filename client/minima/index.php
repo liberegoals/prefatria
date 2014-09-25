@@ -27,14 +27,20 @@ Selida::telos();
 Class Minima {
 	public static function controls() {
 		?>
-		<div id="minimaControls">
+		<table id="minimaControls">
+		<tr>
+		<td>
 			<button id="minimaNeoButton" class="formaButton minimaButton" type="button">Νέο μήνυμα</button>
+		</td>
+		<td>
 			<div class="minimaCheckboxButton minimaButton">
 				<div class="formaPrompt minimaPrompt">
 					Όλα
 				</div>
 				<input id="minimaOlaButton" class="minimaCheckbox" type="checkbox" />
 			</div>
+		</td>
+		<td>
 			<div class="minimaCheckboxButton minimaButton">
 				<div class="formaPrompt minimaPrompt">
 					Εξερχόμενα
@@ -53,13 +59,36 @@ Class Minima {
 				</div>
 				<input id="minimaIkothenButton" class="minimaCheckbox" type="checkbox" />
 			</div>
+		</td>
+		</tr>
+		<tr>
+		<td>
+			<button id="minimaAnaneosiButton" class="formaButton minimaButton" type="button">Ανανέωση</button>
+		</td>
+		<td>
+		</td>
+		<td>
+			<div class="minimaCheckboxButton minimaButton">
+				<div class="formaPrompt minimaPrompt">
+					Διαβασμένα
+				</div>
+				<input id="minimaDiavasmenaButton" class="minimaCheckbox" type="checkbox" />
+			</div>
+			<div class="minimaCheckboxButton minimaButton">
+				<div class="formaPrompt minimaPrompt">
+					Αδιάβαστα
+				</div>
+				<input id="minimaAdiavastaButton" class="minimaCheckbox" type="checkbox" />
+			</div>
 			<div class="minimaCheckboxButton minimaButton">
 				<div class="formaPrompt minimaPrompt">
 					Κρατημένα
 				</div>
 				<input id="minimaKratimenaButton" class="minimaCheckbox" type="checkbox" />
 			</div>
-		</div>
+		</td>
+		</tr>
+		</table>
 		<?php
 	}
 

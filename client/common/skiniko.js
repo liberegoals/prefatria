@@ -1442,6 +1442,38 @@ Minima.prototype.minimaStatusGet = function() {
 	return this.status;
 };
 
+Minima.prototype.minimaIsIkothen = function() {
+	return(this.minimaApostoleasGet() === this.minimaParaliptisGet());
+};
+
+Minima.prototype.minimaOxiIkothen = function() {
+	return !this.minimaIsIkothen();
+};
+
+Minima.prototype.minimaIsDiavasmeno = function() {
+	return(this.status === 'ΔΙΑΒΑΣΜΕΝΟ');
+};
+
+Minima.prototype.minimaOxiDiavasmeno = function() {
+	return !this.minimaIsDiavasmeno();
+};
+
+Minima.prototype.minimaIsAdiavasto = function() {
+	return(this.status === 'ΑΔΙΑΒΑΣΤΟ');
+};
+
+Minima.prototype.minimaOxiAdiavasto = function() {
+	return !this.minimaIsAdiavasto();
+};
+
+Minima.prototype.minimaIsKratimeno = function() {
+	return(this.status === 'ΚΡΑΤΗΜΕΝΟ');
+};
+
+Minima.prototype.minimaOxiKratimeno = function() {
+	return !this.minimaIsKratimeno();
+};
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 Skiniko = function() {

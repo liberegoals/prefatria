@@ -77,6 +77,32 @@ Minima.setupControls = function() {
 		});
 	});
 
+	Minima.ananeosiButtonDOM = $('#minimaAnaneosiButton').on('click', function(e) {
+		e.stopPropagation();
+		Client.skiserService("minimaFeredata").
+		done(function(rsp) {
+			try {
+				eval('var mlist = [' + rsp + '];');
+			} catch (e) {
+				Client.sound.beep();
+				Client.fyi.epano('Παρελήφθησαν ακαθόριστα δεδομένα');
+				return;
+			}
+
+			Minima.lista = {};
+			Globals.awalk(mlist, function(i, minima) {
+				minima = new Minima(minima);
+				minima.minimaPoteAdd(Client.timeDif);
+				Minima.lista[minima.minimaKodikosGet()] = minima;
+				minima.minimaPushDOM();
+			});
+			Minima.filtrarisma();
+		}).
+		fail(function(err) {
+			Client.skiserFail(err);
+		});
+	});
+
 	$('.minimaCheckboxButton').
 	on('mousedown', function(e) {
 		e.stopPropagation();
@@ -94,65 +120,146 @@ Minima.setupControls = function() {
 
 	Minima.buttonOlaDOM = $('#minimaOlaButton').
 	on('click', function(e) {
-		if ($(this).is(':checked')) {
+		if ($(this).prop('checked')) {
 			Minima.buttonIserxomenaDOM.prop('checked', true);
 			Minima.buttonExerxomenaDOM.prop('checked', true);
 			Minima.buttonIkothenDOM.prop('checked', true);
 			Minima.buttonKratimenaDOM.prop('checked', true);
+			Minima.buttonDiavasmenaDOM.prop('checked', true);
+			Minima.buttonAdiavastaDOM.prop('checked', true);
 		}
 		else {
 			Minima.buttonIserxomenaDOM.prop('checked', true);
 			Minima.buttonExerxomenaDOM.prop('checked', true);
 			Minima.buttonIkothenDOM.prop('checked', false);
 			Minima.buttonKratimenaDOM.prop('checked', false);
+			Minima.buttonDiavasmenaDOM.prop('checked', false);
+			Minima.buttonAdiavastaDOM.prop('checked', true);
 		}
+		Minima.filtrarisma();
 	});
 
-	Minima.buttonIserxomenaDOM = $('#minimaIserxomenaButton').prop('checked', true).
+	Minima.buttonIserxomenaDOM = $('#minimaIserxomenaButton').
+	prop('checked', true).
 	on('click', function(e) {
 		Minima.buttonOlaDOM.prop('checked', false);
-		if ($(this).is(':checked')) {
+		if ($(this).prop('checked')) {
 			Minima.buttonIserxomenaDOM.prop('checked', true);
 			Minima.buttonExerxomenaDOM.prop('checked', false);
 			Minima.buttonIkothenDOM.prop('checked', false);
 			Minima.buttonKratimenaDOM.prop('checked', false);
+			Minima.buttonDiavasmenaDOM.prop('checked', false);
+			Minima.buttonAdiavastaDOM.prop('checked', true);
 		}
+		Minima.filtrarisma();
 	});
 
-	Minima.buttonExerxomenaDOM = $('#minimaExerxomenaButton').prop('checked', true).
+	Minima.buttonExerxomenaDOM = $('#minimaExerxomenaButton').
+	prop('checked', true).
 	on('click', function(e) {
 		Minima.buttonOlaDOM.prop('checked', false);
-		if ($(this).is(':checked')) {
+		if ($(this).prop('checked')) {
 			Minima.buttonIserxomenaDOM.prop('checked', false);
 			Minima.buttonExerxomenaDOM.prop('checked', true);
 			Minima.buttonIkothenDOM.prop('checked', false);
 			Minima.buttonKratimenaDOM.prop('checked', false);
+			Minima.buttonDiavasmenaDOM.prop('checked', false);
+			Minima.buttonAdiavastaDOM.prop('checked', true);
 		}
+		Minima.filtrarisma();
 	});
 
 	Minima.buttonIkothenDOM = $('#minimaIkothenButton').
 	on('click', function(e) {
 		Minima.buttonOlaDOM.prop('checked', false);
-		if ($(this).is(':checked')) {
+		if ($(this).prop('checked')) {
 			Minima.buttonIserxomenaDOM.prop('checked', false);
 			Minima.buttonExerxomenaDOM.prop('checked', false);
 			Minima.buttonIkothenDOM.prop('checked', true);
 			Minima.buttonKratimenaDOM.prop('checked', false);
+			Minima.buttonDiavasmenaDOM.prop('checked', false);
+			Minima.buttonAdiavastaDOM.prop('checked', true);
 		}
+		Minima.filtrarisma();
 	});
 
 	Minima.buttonKratimenaDOM = $('#minimaKratimenaButton').
 	on('click', function(e) {
 		Minima.buttonOlaDOM.prop('checked', false);
-		if ($(this).is(':checked')) {
+		if ($(this).prop('checked')) {
 			Minima.buttonIserxomenaDOM.prop('checked', false);
 			Minima.buttonExerxomenaDOM.prop('checked', false);
 			Minima.buttonIkothenDOM.prop('checked', false);
 			Minima.buttonKratimenaDOM.prop('checked', true);
+			Minima.buttonDiavasmenaDOM.prop('checked', true);
+			Minima.buttonAdiavastaDOM.prop('checked', true);
 		}
+		Minima.filtrarisma();
 	});
 
+	Minima.buttonDiavasmenaDOM = $('#minimaDiavasmenaButton').
+	on('click', function(e) {
+		Minima.buttonOlaDOM.prop('checked', false);
+		if ($(this).prop('checked')) {
+			Minima.buttonDiavasmenaDOM.prop('checked', true);
+		}
+		Minima.filtrarisma();
+	});
 
+	Minima.buttonAdiavastaDOM = $('#minimaAdiavastaButton').
+	prop('checked', true).
+	on('click', function(e) {
+		Minima.buttonOlaDOM.prop('checked', false);
+		if ($(this).prop('checked')) {
+			Minima.buttonAdiavastaDOM.prop('checked', true);
+		}
+		Minima.filtrarisma();
+	});
+};
+
+Minima.filtrarisma = function() {
+	var count = 0;
+
+	Minima.minimataDOM.find('.minima').each(function() {
+		var minima;
+
+		$(this).css('display', 'none');
+		minima = Minima.lista[$(this).data('minima')];
+		if (!minima) return;
+
+		if (minima.filtroCheck())
+		$(this).removeClass('minimaZebra0 minimaZebra1').
+		addClass('minimaZebra' + (count++ % 2)).
+		css('display', 'table-row');
+	});
+};
+
+Minima.prototype.filtroCheck = function() {
+	if (Minima.buttonOlaDOM.prop('checked'))
+	return true;
+
+	if (Minima.buttonIkothenDOM.prop('checked'))
+	return this.minimaIsIkothen();
+
+	if (Minima.buttonKratimenaDOM.prop('checked'))
+	return this.minimaIsKratimeno();
+
+	if ((!Minima.buttonDiavasmenaDOM.prop('checked')) && this.minimaIsDiavasmeno())
+	return false;
+
+	if ((!Minima.buttonAdiavastaDOM.prop('checked')) && this.minimaIsAdiavasto())
+	return false;
+
+	if (this.minimaIsIkothen())
+	return false;
+
+	if ((!Minima.buttonIserxomenaDOM.prop('checked')) && this.minimaIsIserxomeno())
+	return false;
+
+	if ((!Minima.buttonExerxomenaDOM.prop('checked')) && this.minimaIsExerxomeno())
+	return false;
+
+	return true;
 };
 
 Minima.setupMinimata = function() {
@@ -207,8 +314,8 @@ Minima.setupMinimata = function() {
 			});
 		})));
 
-		apostoleas = minima.minimaApostoleasGet();
-		if (apostoleas.isEgo()) return;
+		paraliptis = minima.minimaParaliptisGet();
+		if (paraliptis.oxiEgo()) return;
 
 		katastasi = minima.minimaStatusGet();
 
@@ -304,29 +411,8 @@ Minima.setupMinimata = function() {
 		});
 	});
 
-	Minima.zebraSetup();
 	Minima.editFormaSetup();
-	Client.skiserService("minimaFeredata").
-	done(function(rsp) {
-		try {
-			eval('var mlist = [' + rsp + '];');
-		} catch (e) {
-			Client.sound.beep();
-			Client.fyi.epano('Παρελήφθησαν ακαθόριστα δεδομένα');
-			return;
-		}
-
-		Minima.lista = {};
-		Globals.awalk(mlist, function(i, minima) {
-			minima = new Minima(minima);
-			minima.minimaPoteAdd(Client.timeDif);
-			Minima.lista[minima.minimaKodikosGet()] = minima;
-			minima.minimaPushDOM();
-		});
-	}).
-	fail(function(err) {
-		Client.skiserFail(err);
-	});
+	Minima.ananeosiButtonDOM.trigger('click');
 };
 
 Minima.editFormaSetup = function() {
@@ -380,7 +466,7 @@ Minima.editFormaPanelSetup = function() {
 				kimeno: kimeno,
 				pote: Globals.tora(),
 				status: 'ΑΔΙΑΒΑΣΤΟ',
-			}).minimaPushDOM();
+			}).minimaPushDOM(true);
 		}).
 		fail(function(err) {
 			Client.sound.beep();
@@ -400,17 +486,19 @@ Minima.editFormaKlisimo = function() {
 Minima.zebraSetup = function() {
 	var count = 0;
 
-	Minima.minimataDOM.find('tr').each(function() {
+	Minima.minimataDOM.find('minima').each(function() {
 		var i;
 
-		i = count++ % 2;
-		$(this).removeClass('minimaZebra0 minimaZebra1').addClass('minimaZebra' + i);
+		if ($(this).css('display') === 'none')
+		return;
+
+		$(this).removeClass('minimaZebra0 minimaZebra1').addClass('minimaZebra' + (count++ % 2));
 	});
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
 
-Minima.prototype.minimaPushDOM = function() {
+Minima.prototype.minimaPushDOM = function(online) {
 	var kodikos, pios, pote, img;
 
 	kodikos = this.minimaKodikosGet();
@@ -428,9 +516,10 @@ Minima.prototype.minimaPushDOM = function() {
 	append(img = $('<img>').addClass('minimaIdosIcon'))).
 	append($('<td>').addClass('minimaPanel')).
 	append($('<td>').addClass('minimaKimeno').html(this.minimaKimenoGetHTML())).
-	css('display', 'none').
-	fadeIn(500).
 	prependTo(Minima.minimataDOM);
+
+	if (online)
+	this.DOM.fadeIn(500);
 
 	if (this.minimaStatusGet() !== 'ΑΔΙΑΒΑΣΤΟ')
 	this.DOM.addClass('minimaDiavasmeno');
@@ -483,10 +572,14 @@ Minima.prototype.minimaIsIserxomeno = function() {
 	return(apostoleas !== Client.session.pektis);
 };
 
+Minima.prototype.minimaOxiIserxomeno = function() {
+	return !this.minimaIsIserxomeno();
+};
+
 Minima.prototype.minimaIsExerxomeno = function() {
 	return(this.minimaParaliptisGet() !== Client.session.pektis);
 };
 
-Minima.prototype.minimaIsIkothen = function() {
-	return(this.minimaApostoleasGet() === this.minimaParaliptisGet());
+Minima.prototype.minimaOxiExerxomeno = function() {
+	return !this.minimaIsExerxomeno();
 };
