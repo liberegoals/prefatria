@@ -462,6 +462,7 @@ Minima.editFormaPanelSetup = function() {
 			var kodikos;
 
 			Client.fyi.pano();
+			Minima.editFormaKimenoDOM.val('');
 			Minima.editFormaKlisimo();
 
 			kodikos = parseInt(rsp);
@@ -481,6 +482,7 @@ Minima.editFormaPanelSetup = function() {
 	})).
 	append($('<button>').addClass('formaButton').attr('type', 'button').text('Άκυρο').
 	on('click', function(e) {
+		Minima.editFormaKimenoDOM.val('');
 		Minima.editFormaKlisimo();
 	}));
 };
