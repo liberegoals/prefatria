@@ -28,7 +28,37 @@ Class Minima {
 	public static function controls() {
 		?>
 		<div id="minimaControls">
-			<button id="minimaNeo" class="formaButton" type="button">Νέο μήνυμα</button>
+			<button id="minimaNeoButton" class="formaButton minimaButton" type="button">Νέο μήνυμα</button>
+			<div class="minimaCheckboxButton minimaButton">
+				<div class="formaPrompt minimaPrompt">
+					Όλα
+				</div>
+				<input id="minimaOlaButton" class="minimaCheckbox" type="checkbox" />
+			</div>
+			<div class="minimaCheckboxButton minimaButton">
+				<div class="formaPrompt minimaPrompt">
+					Εξερχόμενα
+				</div>
+				<input id="minimaExerxomenaButton" class="minimaCheckbox" type="checkbox" />
+			</div>
+			<div class="minimaCheckboxButton minimaButton">
+				<div class="formaPrompt minimaPrompt">
+					Εισερχόμενα
+				</div>
+				<input id="minimaIserxomenaButton" class="minimaCheckbox" type="checkbox" />
+			</div>
+			<div class="minimaCheckboxButton minimaButton">
+				<div class="formaPrompt minimaPrompt">
+					Οίκοθεν
+				</div>
+				<input id="minimaIkothenButton" class="minimaCheckbox" type="checkbox" />
+			</div>
+			<div class="minimaCheckboxButton minimaButton">
+				<div class="formaPrompt minimaPrompt">
+					Κρατημένα
+				</div>
+				<input id="minimaKratimenaButton" class="minimaCheckbox" type="checkbox" />
+			</div>
 		</div>
 		<?php
 	}
