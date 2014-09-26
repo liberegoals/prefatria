@@ -209,3 +209,17 @@ body {
 	-ms-transform: scale(1.3);
 	-webkit-transform: scale(1.3);
 }
+
+.minimaApantisiLabel {
+	position: absolute;
+	top: 38px;
+	left: 3px;
+	padding: 2px 4px;
+	font-size: 37px;
+	font-family: Impact, Charcoal, sans-serif;
+	-ms-transform: rotate(-36deg);
+	-webkit-transform: rotate(-36deg);
+	transform: rotate(-36deg);
+	color: rgb(84, 25, 148);
+	opacity: 0.1;
+}
