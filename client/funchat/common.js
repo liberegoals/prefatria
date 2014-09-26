@@ -138,6 +138,19 @@ Funchat.listaPush(new Funchat({
 }));
 
 Funchat.listaPush(new Funchat({
+	img: 'tonIpiame.gif',
+	platos: 120,
+}));
+
+Funchat.listaPush(new Funchat({
+	id: 'tsimbousi',
+	img: 'pipaKaroto.gif',
+	platos: 120,
+	ixos: 'tsibousiMale.mp3',
+	entasi: 4,
+}));
+
+Funchat.listaPush(new Funchat({
 	img: 'gelia.gif',
 	platos: 120,
 }));
@@ -149,7 +162,6 @@ Funchat.listaPush(new Funchat({
 Funchat.listaPush(new Funchat({
 	img: 'gelioEmoticon.gif',
 	platos: 42,
-	txt: 'Πλάκα έχετε…',
 }));
 
 Funchat.omada++;
@@ -157,13 +169,19 @@ Funchat.omada++;
 Funchat.listaPush(new Funchat({
 	img: 'mesa.gif',
 	platos: 240,
-	txt: 'Το θέμα είναι απλά ή σόλο;',
+}));
+
+Funchat.listaPush(new Funchat({
+	img: 'mlk.jpg',
+	platos: 120,
+	txt: 'I have a dream!',
+	ixos: 'haveDream.ogg',
+	entasi: 2,
 }));
 
 Funchat.listaPush(new Funchat({
 	img: 'tinPatisame.jpg',
 	platos: 180,
-	txt: 'Την πατήσαμε!',
 	ixos: 'tinPatisame.mp3',
 	entasi: 2,
 }));
@@ -176,25 +194,21 @@ Funchat.listaPush(new Funchat({
 Funchat.listaPush(new Funchat({
 	img: 'meSkisate.gif',
 	platos: 140,
-	txt: "Μ' έχετε ξεσκίσει, ρε!",
 }));
 
 Funchat.listaPush(new Funchat({
 	img: 'anteGamithiteRe.gif',
 	platos: 200,
-	txt: 'Ε, άντε γ…, ρε κουφάλες…',
 }));
 
 Funchat.listaPush(new Funchat({
 	img: 'exeteXesti.gif',
 	platos: 200,
-	txt: 'Έχετε χεστεί, ρε σεις!',
 }));
 
 Funchat.listaPush(new Funchat({
 	img: 'tiGamisesTinPartida.gif',
 	platos: 200,
-	txt: 'Γ@μησες την παρτίδα!',
 }));
 
 Funchat.listaPush(new Funchat({
@@ -205,7 +219,6 @@ Funchat.listaPush(new Funchat({
 Funchat.listaPush(new Funchat({
 	img: 'notaraTaTheli.jpg',
 	platos: 120,
-	txt: 'Τα θέλει κι εσένα ο οργανισμός σου!',
 	ixos: 'taTheli.mp3',
 }));
 
@@ -312,32 +325,13 @@ Funchat.omada++;
 Funchat.listaPush(new Funchat({
 	img: 'pouVadizoume.jpg',
 	platos: 140,
-	txt: 'Πού βαδίζουμε κύριοι!',
 	ixos: 'pouVadizoume.mp3',
 }));
 
 Funchat.listaPush(new Funchat({
 	img: 'staExigoOrea.jpg',
 	platos: 200,
-	txt: 'Στα εξηγώ ωραία;',
 	ixos: 'alefantos.mp3',
-}));
-
-Funchat.listaPush(new Funchat({
-	id: 'tsimbousi',
-	img: 'pipaKaroto.gif',
-	platos: 120,
-	txt: 'Πω, πω, πω, τι τσιμπούσι ήταν αυτό!',
-	ixos: 'tsibousiMale.mp3',
-	entasi: 4,
-}));
-
-Funchat.listaPush(new Funchat({
-	img: 'tonIpiame.gif',
-	platos: 120,
-	txt: 'Πω, πω, πω, τι τσιμπούσι ήταν αυτό!',
-	ixos: 'tsibousiFemale.mp3',
-	entasi: 4,
 }));
 
 Funchat.listaPush(new Funchat({
