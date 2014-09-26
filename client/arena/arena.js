@@ -552,8 +552,7 @@ Arena.minima.setup = function() {
 	Client.tab($('<a>').attr('href', 'minima').
 	on('click', function(e) {
 		Arena.inputRefocus();
-		Arena.minima.endixiDOM.finish().fadeOut().
-		empty().removeAttr('title');
+		Arena.minima.endixiClear();
 
 		if (Arena.minima.isAnikto())
 		Arena.minima.focus();
@@ -624,5 +623,14 @@ Arena.minima.isKlisto = function() {
 };
 
 Arena.minima.focus = function() {
-	return Arena.minima.win.focus();
+	Arena.minima.win.focus();
+
+	return Arena;
+};
+
+Arena.minima.endixiClear = function() {
+	Arena.minima.endixiDOM.finish().fadeOut().
+	empty().removeAttr('title');
+
+	return Arena;
 };
