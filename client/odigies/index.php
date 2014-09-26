@@ -105,35 +105,24 @@ Class Odigies {
 	Εφόσον οι φίλοι σας αποδεχθούν την πρόσκλησή σας,
 	θα βρεθείτε όλοι μαζί στο τραπέζι που έχετε δημιουργήσει.
 	Κατόπιν κάνετε κλικ στο πράσινο check αποδοχής όρων του παιχνιδιού
-	<span class="nobr">(<img src="<?php
-		print $globals->server; ?>images/controlPanel/check.png"
-		class="odigiesIconInline" alt = "" />),</span>
-	ή στο εικονίδιο εκκίνησης
-	<span class="nobr">(<img src="<?php
-		print $globals->server; ?>images/controlPanel/go.jpg"
-		class="odigiesIconInline" alt = "" />)</span>
-	και θα ξεκινήσει αμέσως μια νέα παρτίδα.
+	<span class="nobr">(<img src="../ikona/panel/apodoxi.png" class="odigiesIconInline" />),</span>
+	ή στο εικονίδιο εκκίνησης <span class="nobr">(<img src="../ikona/panel/go.jpg"
+	class="odigiesIconInline" />)</span> και θα ξεκινήσει αμέσως μια νέα παρτίδα.
 </p>
 <p class="odigiesKimeno">
 	Μπορείτε να παίξετε μέχρι να μηδενίσετε κάσα,
 	ή να συνεχίσετε ακόμη και με αρνητικό υπόλοιπο κάσας
 	(είναι σαν να έχετε προσθέσει νέα καπίκια στην κάσα).
 	Όποτε θέλετε μπορείτε να αποχωρήσετε από το τραπέζι
-	<span class="nobr">(<img src="<?php
-		print $globals->server; ?>images/controlPanel/exodos.png"
-		class="odigiesIconInline" alt = "" />),</span>
+	<span class="nobr">(<img src="../ikona/panel/exodos.png" class="odigiesIconInline" />),</span>
 	να ανοίξετε νέο τραπέζι, να επανεκκινήσετε την παρτίδα
-	<span class="nobr">(<img src="<?php
-		print $globals->server; ?>images/controlPanel/neaPartida.png"
-		class="odigiesIconInline" alt = "" />)</span>
+	<span class="nobr">(<img src="../ikona/panel/neaPartida.png" class="odigiesIconInline" />)</span>
 	κλπ, χρησιμοποιώντας τα σχετικά εικονίδια.
 	Όλα τα παραπάνω εργαλεία θα τα βρείτε στο
 	<span class="entono">control panel</span>,
 	δηλαδή στην κεντρική στήλη εργαλείων στην κορυφή της οποίας
 	υπάρχει το εικονίδιο εναλλαγής
-	<span class="nobr">εργαλείων (<img src="<?php
-		print $globals->server; ?>images/controlPanel/4Balls.png"
-		class="odigiesIconInline" alt = "" />),</span>
+	<span class="nobr">εργαλείων (<img src="../ikona/panel/4Balls.png" class="odigiesIconInline" />),</span>
 	με το οποίο εμφανίζονται διαδοχικά όλα τα διαθέσιμα εργαλεία
 	που παρέχονται σε κάθε φάση του παιχνιδιού.
 	Καλή διασκέδαση!
@@ -246,10 +235,10 @@ Class Odigies {
 	κάνοντας κλικ στα σχετικά εικονίδια
 	(<img src="<?php
 		print $globals->server; ?>images/Xred.png"
-		class="odigiesIconInline" alt = "" />,
+		class="odigiesIconInline" />,
 	<img src="<?php
 		print $globals->server; ?>images/Xgreen.png"
-		class="odigiesIconInline" alt = "" />,
+		class="odigiesIconInline" />,
 	βλ. "<a href="#Προσκλήσεις">Προσκλήσεις</a>").
 </p>
 
@@ -264,8 +253,8 @@ Class Odigies {
 	(<a href="#Control_panel">control panel</a>)
 	που φέρει στην κορυφή της ένα εικονίδιο με τέσσερις πολύχρωμες μπάλες
 	<span class="nobr">(<img src="<?php print $globals->server;
-		?>images/controlPanel/4Balls.png"
-		class="odigiesIconInline" alt = "" />),</span>
+		?>ikona/panel/4Balls.png"
+		class="odigiesIconInline" />),</span>
 	ενώ δεξιότερα υπάρχουν τρεις ενότητες που αφορούν
 	στις <a href="#Προσκλήσεις">προσκλήσεις</a>,
 	στην <a href="#Φίλοι_και_ανεπιθύμητοι">αναζήτηση παικτών</a>
@@ -277,11 +266,11 @@ Class Odigies {
 	Στο σημείο αυτό να πούμε ότι η τσόχα των τραπεζιών έχει πράσινο
 	<span class="nobr">χρώμα (<img src="<?php
 		print $globals->server; ?>images/trapeziPartida.jpg"
-		class="odigiesIconInline" alt = "" style="width: 0.45cm; height: 0.45cm;" />),</span>
+		class="odigiesIconInline" style="width: 0.45cm; height: 0.45cm;" />),</span>
 	εκτός και αν είστε θεατής σε κάποιο τραπέζι, οπότε το
 	χρώμα της τσόχας φαίνεται <span class="nobr">μπεζ (<img src="<?php
 		print $globals->server; ?>images/trapeziTheatis.jpg"
-		class="odigiesIconInline" alt = "" style="width: 0.45cm; height: 0.45cm;" />)</span>.
+		class="odigiesIconInline" style="width: 0.45cm; height: 0.45cm;" />)</span>.
 	Επίσης να πούμε ότι ενώ μπορείτε
 	να συμμετέχετε σε πολλά τραπέζια ως παίκτης, μπορείτε να είστε
 	θεατής σε ένα μόνο τραπέζι κάθε φορά. Το τραπέζι το οποίο
@@ -328,8 +317,8 @@ Class Odigies {
 	Τα εργαλεία του control panel αλλάζουν κάνοντας κλικ
 	στο εικονίδιο με τις τέσσερις πολύχρωμες μπάλες
 	<span class="nobr">(<img src="<?php print $globals->server;
-		?>images/controlPanel/4Balls.png"
-		class="odigiesIconInline" alt = "" />),</span>
+		?>ikona/panel/4Balls.png"
+		class="odigiesIconInline" />),</span>
 	πάντως το πρόγραμμα προτείνει τα πιο συχνά χρησιμοποιούμενα
 	εργαλεία ανάλογα με τη φάση του παιχνιδιού.
 	Γενικά, στο control panel εμφανίζονται τα παρακάτω εικονίδια:
@@ -339,8 +328,8 @@ Class Odigies {
 	<tr>
 	<td class="odigiesIconColumn">
 		<img src="<?php print $globals->server;
-			?>images/controlPanel/default.png"
-			class="odigiesIcon" alt="" />
+			?>ikona/panel/default.png"
+			class="odigiesIcon" />
 	</td>
 	<td class="odigiesKimeno">
 		Το control panel αποτελείται από αρκετές σειρές εργαλείων
@@ -356,8 +345,8 @@ Class Odigies {
 	<tr>
 	<td class="odigiesIconColumn">
 		<img src="<?php print $globals->server;
-			?>images/controlPanel/idioktito.png"
-			class="odigiesIcon" alt="" />
+			?>ikona/panel/idioktito.png"
+			class="odigiesIcon" />
 	</td>
 	<td class="odigiesKimeno">
 		Κάνοντας κλικ στο εικονίδιο ρυθμίσεων του τραπεζιού
@@ -374,8 +363,8 @@ Class Odigies {
 	<tr>
 	<td class="odigiesIconColumn">
 		<img src="<?php print $globals->server;
-			?>images/controlPanel/elefthero.png"
-			class="odigiesIcon" alt="" />
+			?>ikona/panel/elefthero.png"
+			class="odigiesIcon" />
 	</td>
 	<td class="odigiesKimeno">
 		Κάνοντας κλικ στο συγκεκριμένο εικονίδιο επαναφέρουμε
@@ -391,8 +380,8 @@ Class Odigies {
 	<tr>
 	<td class="odigiesIconColumn">
 		<img src="<?php print $globals->server;
-			?>images/controlPanel/diataxi.png"
-			class="odigiesIcon" alt="" />
+			?>ikona/panel/diataxi.png"
+			class="odigiesIcon" />
 	</td>
 	<td class="odigiesKimeno">
 		Κάνοντας κλικ στο συγκεκριμένο εικονίδιο
@@ -409,8 +398,8 @@ Class Odigies {
 	<tr>
 	<td class="odigiesIconColumn">
 		<img src="<?php print $globals->server;
-			?>images/controlPanel/alagiThesis.png"
-			class="odigiesIcon" alt="" />
+			?>ikona/panel/alagiThesis.png"
+			class="odigiesIcon" />
 	</td>
 	<td class="odigiesKimeno">
 		Παρόμοια λειτουργία επιτελεί και το εικονίδιο
@@ -427,8 +416,8 @@ Class Odigies {
 <table class="odigiesPara">
 	<tr>
 	<td class="odigiesIconColumn">
-		<img src="<?php print $globals->server; ?>images/controlPanel/kasa.png"
-			class="odigiesIcon" alt="" />
+		<img src="<?php print $globals->server; ?>ikona/panel/kasa.png"
+			class="odigiesIcon" />
 	</td>
 	<td class="odigiesKimeno">
 		Κάνοντας κλικ στο συγκεκριμένο εικονίδιο
@@ -443,9 +432,9 @@ Class Odigies {
 		αντίστοιχα εικονίδια
 		<span class="nobr">(<img src="<?php
 			print $globals->server; ?>images/panoKasa.png"
-			class="odigiesIconInline" alt = "" />, <img src="<?php
+			class="odigiesIconInline" />, <img src="<?php
 			print $globals->server; ?>images/katoKasa.png"
-			class="odigiesIconInline" alt = "" />)</span>
+			class="odigiesIconInline" />)</span>
 		που εμφανίζονται στην περιοχή πληροφοριών παρτίδας,
 		στο επάνω μέρος του τραπεζιού.
 	</td>
@@ -455,8 +444,8 @@ Class Odigies {
 <table class="odigiesPara">
 	<tr>
 	<td class="odigiesIconColumn">
-		<img src="<?php print $globals->server; ?>images/controlPanel/check.png"
-			class="odigiesIcon" alt="" />
+		<img src="<?php print $globals->server; ?>ikona/panel/check.png"
+			class="odigiesIcon" />
 	</td>
 	<td class="odigiesKimeno">
 		Σημαίνει αποδοχή των όρων του παιχνιδιού. Κάνοντας
@@ -470,8 +459,8 @@ Class Odigies {
 		ο τρίτος παίκτης που θα αποδεχθεί τους όρους
 		του παιχνιδιού θα δει το εικονίδιο
 		<span class="nobr"><img src="<?php
-			print $globals->server; ?>images/controlPanel/go.jpg"
-			class="odigiesIconInline" alt = "" />,</span>
+			print $globals->server; ?>ikona/panel/go.jpg"
+			class="odigiesIconInline" />,</span>
 		αντί του πράσινου check.
 	</td>
 	</tr>
@@ -480,8 +469,8 @@ Class Odigies {
 <table class="odigiesPara">
 	<tr>
 	<td class="odigiesIconColumn">
-		<img src="<?php print $globals->server; ?>images/controlPanel/uncheck.png"
-			class="odigiesIcon" alt="" />
+		<img src="<?php print $globals->server; ?>ikona/panel/uncheck.png"
+			class="odigiesIcon" />
 	</td>
 	<td class="odigiesKimeno">
 		Σημαίνει επαναδιαπραγμάτευση των όρων του παιχνιδιού. Κάνοντας
@@ -497,8 +486,8 @@ Class Odigies {
 <table class="odigiesPara">
 	<tr>
 	<td class="odigiesIconColumn">
-		<img src="<?php print $globals->server; ?>images/controlPanel/kitapi.png"
-			class="odigiesIcon" alt="" />
+		<img src="<?php print $globals->server; ?>ikona/panel/kitapi.png"
+			class="odigiesIcon" />
 	</td>
 	<td class="odigiesKimeno">
 		Κάνοντας κλικ σε αυτό το εικονίδιο εμφανίζεται το φύλλο
@@ -519,8 +508,8 @@ Class Odigies {
 <table class="odigiesPara">
 	<tr>
 	<td class="odigiesIconColumn">
-		<img src="<?php print $globals->server; ?>images/controlPanel/kapikia.png"
-			class="odigiesIcon" alt="" />
+		<img src="<?php print $globals->server; ?>ikona/panel/kapikia.png"
+			class="odigiesIcon" />
 	</td>
 	<td class="odigiesKimeno">
 		Κάνοντας κλικ σ' αυτό το εικονίδιο, δεν θα εμφανίζονται
@@ -539,8 +528,8 @@ Class Odigies {
 <table class="odigiesPara">
 	<tr>
 	<td class="odigiesIconColumn">
-		<img src="<?php print $globals->server; ?>images/controlPanel/talk.png"
-			class="odigiesIcon" alt="" />
+		<img src="<?php print $globals->server; ?>ikona/panel/talk.png"
+			class="odigiesIcon" />
 	</td>
 	<td class="odigiesKimeno">
 		Κάνοντας κλικ σε αυτό το εικονίδιο μπορούμε να ελαχιστοποιήσουμε
@@ -556,8 +545,8 @@ Class Odigies {
 <table class="odigiesPara">
 	<tr>
 	<td class="odigiesIconColumn">
-		<img src="<?php print $globals->server; ?>images/controlPanel/prefadoros.png"
-			class="odigiesIcon" alt="" />
+		<img src="<?php print $globals->server; ?>ikona/panel/prefadoros.png"
+			class="odigiesIcon" />
 	</td>
 	<td class="odigiesKimeno">
 		Αυτό το εικονίδιο εμφανίζεται εφόσον
@@ -570,8 +559,8 @@ Class Odigies {
 <table class="odigiesPara">
 	<tr>
 	<td class="odigiesIconColumn">
-		<img src="<?php print $globals->server; ?>images/controlPanel/busy.png"
-			class="odigiesIcon" alt="" />
+		<img src="<?php print $globals->server; ?>ikona/panel/busy.png"
+			class="odigiesIcon" />
 	</td>
 	<td class="odigiesKimeno">
 		Κάνοντας κλικ σε αυτό το εικονίδιο υποδηλώνουμε ότι δεν είμαστε
@@ -586,8 +575,8 @@ Class Odigies {
 <table class="odigiesPara">
 	<tr>
 	<td class="odigiesIconColumn">
-		<img src="<?php print $globals->server; ?>images/controlPanel/available.png"
-			class="odigiesIcon" alt="" />
+		<img src="<?php print $globals->server; ?>ikona/panel/available.png"
+			class="odigiesIcon" />
 	</td>
 	<td class="odigiesKimeno">
 		Κάνοντας κλικ σε αυτό το εικονίδιο δηλώνουμε ότι είμαστε διαθέσιμοι
@@ -600,8 +589,8 @@ Class Odigies {
 <table class="odigiesPara">
 	<tr>
 	<td class="odigiesIconColumn">
-		<img src="<?php print $globals->server; ?>images/controlPanel/misoLepto.gif"
-			class="odigiesIcon" alt="" />
+		<img src="<?php print $globals->server; ?>ikona/panel/misoLepto.gif"
+			class="odigiesIcon" />
 	</td>
 	<td class="odigiesKimeno">
 		Κάνοντας κλικ σε αυτό το εικονίδιο ειδοποιούμε συμπαίκτες
@@ -614,8 +603,8 @@ Class Odigies {
 <table class="odigiesPara">
 	<tr>
 	<td class="odigiesIconColumn">
-		<img src="<?php print $globals->server; ?>images/controlPanel/blockImage.png"
-			class="odigiesIcon" alt="" />
+		<img src="<?php print $globals->server; ?>ikona/panel/blockImage.png"
+			class="odigiesIcon" />
 	</td>
 	<td class="odigiesKimeno">
 		Κάνοντας κλικ σε αυτό το εικονίδιο αποκλείουμε εικόνες, βίντεο
@@ -632,7 +621,7 @@ Class Odigies {
 	<tr>
 	<td class="odigiesIconColumn">
 		<img src="<?php print $globals->server; ?>images/trapoula/xromaS.png"
-			class="odigiesIcon" alt="" />
+			class="odigiesIcon" />
 	</td>
 	<td class="odigiesKimeno">
 		Κάνοντας κλικ σε αυτό το εικονίδιο εμφανίζεται ή αποκρύπτεται
@@ -647,11 +636,11 @@ Class Odigies {
 	<tr>
 	<td class="odigiesIconColumn">
 		<img src="<?php print $globals->server; ?>images/postel/kanoniko.png"
-			class="odigiesIcon" alt="" />
+			class="odigiesIcon" />
 		<img src="<?php print $globals->server; ?>images/postel/anisoropo.png"
-			class="odigiesIcon" alt="" />
+			class="odigiesIcon" />
 		<img src="<?php print $globals->server; ?>images/postel/dikeo.png"
-			class="odigiesIcon" alt="" />
+			class="odigiesIcon" />
 	</td>
 	<td class="odigiesKimeno">
 		Κάνοντας κλικ σε αυτά τα εικονίδια αλλάζετε τον τρόπο πληρωμής της
@@ -660,7 +649,7 @@ Class Odigies {
 		Αν το τραπέζι σας σημαίνεται με το
 		<span class="nobr">εικονίδιο <img src="<?php
 			print $globals->server; ?>images/postel/anisoropo.png"
-			class="odigiesIconInline" alt = "" />,</span>
+			class="odigiesIconInline" />,</span>
 		τότε η αγορά θα πληρωθεί με βάση το υπόλοιπο της κάσας, αλλά
 		σε περίπτωση που μπει μέσα είτε ο τζογαδόρος, είτε οι αμυνόμενοι
 		παίκτες, η πληρωμή θα γίνει με την πραγματική αξία της αγοράς.
@@ -668,7 +657,7 @@ Class Odigies {
 		Αν το τραπέζι σας σημαίνεται με το
 		<span class="nobr">εικονίδιο <img src="<?php
 			print $globals->server; ?>images/postel/dikeo.png"
-			class="odigiesIconInline" alt = "" />,</span>
+			class="odigiesIconInline" />,</span>
 		τότε η αγορά θα πληρωθεί με βάση την πραγματική αξία της
 		αγοράς, είτε βγει κανονικά, είτε μπει μέσα.
 		Σ' αυτή την περίπτωση θα ενισχυθεί η κάσα με αποτέλεσμα
@@ -681,8 +670,8 @@ Class Odigies {
 <table class="odigiesPara">
 	<tr>
 	<td class="odigiesIconColumn">
-		<img src="<?php print $globals->server; ?>images/controlPanel/exodos.png"
-			class="odigiesIcon" alt="" />
+		<img src="<?php print $globals->server; ?>ikona/panel/exodos.png"
+			class="odigiesIcon" />
 	</td>
 	<td class="odigiesKimeno">
 		Σημαίνει αποχώρηση από το τραπέζι. Αν είμαστε θεατές στο
@@ -728,8 +717,8 @@ Class Odigies {
 	<tr>
 	<td class="odigiesIconColumn">
 		<img src="<?php print $globals->server;
-			?>images/controlPanel/theatis.png"
-			class="odigiesIcon" alt="" />
+			?>ikona/panel/theatis.png"
+			class="odigiesIcon" />
 	</td>
 	<td class="odigiesKimeno">
 		Το ανθρωπάκι με τα γυαλιά είναι ένα πολύ χρήσιμο
@@ -760,7 +749,7 @@ Class Odigies {
 	<td class="odigiesIconColumn">
 		<img src="<?php print $globals->server;
 			?>images/emoticons/set0/xamogelo.png"
-			class="odigiesIcon" alt="" />
+			class="odigiesIcon" />
 	</td>
 	<td class="odigiesKimeno">
 		Κάνοντας κλικ στο εικονίδιο των smilies
@@ -768,12 +757,12 @@ Class Odigies {
 		Εκεί ο παίκτης μπορεί να επιλέξει από διάφορες σειρές smilies
 		κάνοντας κλικ στο σχετικό εικονίδιο εναλλαγής
 		<span class="nobr">(<img src="<?php print $globals->server;
-			?>images/controlPanel/4Balls.png"
-			class="odigiesIconInline" alt = "" />).</span>
+			?>ikona/panel/4Balls.png"
+			class="odigiesIconInline" />).</span>
 		Ο χρήστης μπορεί να κλείσει το πάνελ των smilies κάνοντας κλικ
 		στο σχετικό εικονίδιο <span class="nobr">απόκρυψης (<img src="<?php
 		print $globals->server; ?>images/emoticons/set0/alien.png"
-		class="odigiesIconInline" alt = "" />)</span>
+		class="odigiesIconInline" />)</span>
 		του control panel.
 	</td>
 	</tr>
@@ -783,7 +772,7 @@ Class Odigies {
 	<tr>
 	<td class="odigiesIconColumn">
 		<img src="<?php print $globals->server; ?>images/emoticons/set1/xara.png"
-			class="odigiesIcon" alt="" />
+			class="odigiesIcon" />
 	</td>
 	<td class="odigiesKimeno">
 		Κάνοντας κλικ στο εικονίδιο των διασκεδαστικών μηνυμάτων
@@ -799,7 +788,7 @@ Class Odigies {
 		μηνυμάτων κάνοντας κλικ στο σχετικό εικονίδιο
 		<span class="nobr">απόκρυψης (<img src="<?php
 		print $globals->server; ?>images/emoticons/set1/glosa.png"
-		class="odigiesIconInline" alt = "" />)</span>
+		class="odigiesIconInline" />)</span>
 		του control panel.
 	</td>
 	</tr>
@@ -808,8 +797,8 @@ Class Odigies {
 <table class="odigiesPara">
 	<tr>
 	<td class="odigiesIconColumn">
-		<img src="<?php print $globals->server; ?>images/controlPanel/kafedaki.png"
-			class="odigiesIcon" alt="" />
+		<img src="<?php print $globals->server; ?>ikona/panel/kafedaki.png"
+			class="odigiesIcon" />
 	</td>
 	<td class="odigiesKimeno">
 		Κάνοντας κλικ στο συγκεκριμένο εικονίδιο, μπορείτε
@@ -822,8 +811,8 @@ Class Odigies {
 <table class="odigiesPara">
 	<tr>
 	<td class="odigiesIconColumn">
-		<img src="<?php print $globals->server; ?>images/controlPanel/paraskinio.png"
-			class="odigiesIcon" alt="" />
+		<img src="<?php print $globals->server; ?>ikona/panel/paraskinio.png"
+			class="odigiesIcon" />
 	</td>
 	<td class="odigiesKimeno">
 		Κάνοντας διαδοχικά κλικ στην παλέτα παρασκηνίων αλλάζουμε το
@@ -839,8 +828,8 @@ Class Odigies {
 <table class="odigiesPara">
 	<tr>
 	<td class="odigiesIconColumn">
-		<img src="<?php print $globals->server; ?>images/controlPanel/mobile.png"
-			class="odigiesIcon" alt="" />
+		<img src="<?php print $globals->server; ?>ikona/panel/mobile.png"
+			class="odigiesIcon" />
 	</td>
 	<td class="odigiesKimeno">
 		Αν θέλετε να παίζετε από συσκευή κινητού τηλεφώνου, iphone, ipad κλπ,
@@ -863,8 +852,8 @@ Class Odigies {
 <table class="odigiesPara">
 	<tr>
 	<td class="odigiesIconColumn">
-		<img src="<?php print $globals->server; ?>images/controlPanel/entasi.png"
-			class="odigiesIcon" alt="" />
+		<img src="<?php print $globals->server; ?>ikona/panel/entasi.png"
+			class="odigiesIcon" />
 	</td>
 	<td class="odigiesKimeno">
 		Το πρόγραμμα παράγει διάφορους ήχους
@@ -882,8 +871,8 @@ Class Odigies {
 	<tr>
 	<td class="odigiesIconColumn">
 		<img src="<?php print $globals->server;
-			?>images/controlPanel/akirosiKinisis.png"
-			class="odigiesIcon" alt="" />
+			?>ikona/panel/akirosiKinisis.png"
+			class="odigiesIcon" />
 	</td>
 	<td class="odigiesKimeno">
 		Οποιοσδήποτε παίκτης του τραπεζιού μπορεί
@@ -904,8 +893,8 @@ Class Odigies {
 	<tr>
 	<td class="odigiesIconColumn">
 		<img src="<?php print $globals->server;
-			?>images/controlPanel/anamoniAkirosis.png"
-			class="odigiesIcon" alt="" />
+			?>ikona/panel/anamoniAkirosis.png"
+			class="odigiesIcon" />
 	</td>
 	<td class="odigiesKimeno">
 		Όσο κάποιος παίκτης ακυρώνει κινήσεις, οι υπόλοιποι
@@ -926,8 +915,8 @@ Class Odigies {
 <table width="100%">
 	<tr>
 	<td class="odigiesIconColumn">
-		<img src="<?php print $globals->server; ?>images/controlPanel/bugFix.png"
-			class="odigiesIcon" alt="" />
+		<img src="<?php print $globals->server; ?>ikona/panel/bugFix.png"
+			class="odigiesIcon" />
 	</td>
 	<td class="odigiesKimeno">
 		Είναι πιθανόν το πρόγραμμα να παρουσιάζει προβλήματα.
@@ -952,7 +941,7 @@ Class Odigies {
 		στον κατασκευαστή του προγράμματος κάνοντας κλικ στο
 		<span class="nobr">φάκελο (<img src="<?php print
 			$globals->server; ?>images/email.png"
-			class="odigiesIconInline" alt = "" />)</span>
+			class="odigiesIconInline" />)</span>
 		που εμφανίζεται κάτω δεξιά σε κάθε σελίδα.
 	</td>
 	</tr>
@@ -984,7 +973,7 @@ Class Odigies {
 	<tr>
 	<td class="odigiesIconColumn">
 		<img src="<?php print $globals->server; ?>images/prosEmena.png"
-			class="odigiesIcon" alt="" />
+			class="odigiesIcon" />
 	</td>
 	<td class="odigiesKimeno">
 		Πρόκειται για πρόσκληση που μας έχουν απευθύνει
@@ -1000,7 +989,7 @@ Class Odigies {
 	<tr>
 	<td class="odigiesIconColumn">
 		<img src="<?php print $globals->server; ?>images/Xred.png"
-			class="odigiesIcon" alt="" />
+			class="odigiesIcon" />
 	</td>
 	<td class="odigiesKimeno">
 		Κάνοντας κλικ στο συγκεκριμένο εικονίδιο
@@ -1017,7 +1006,7 @@ Class Odigies {
 	<tr>
 	<td class="odigiesIconColumn">
 		<img src="<?php print $globals->server; ?>images/apoMena.png"
-			class="odigiesIcon" alt="" />
+			class="odigiesIcon" />
 	</td>
 	<td class="odigiesKimeno">
 		Πρόκειται για πρόσκληση που έχουμε απευθύνει προς
@@ -1031,7 +1020,7 @@ Class Odigies {
 	<tr>
 	<td class="odigiesIconColumn">
 		<img src="<?php print $globals->server; ?>images/Xgreen.png"
-			class="odigiesIcon" alt="" />
+			class="odigiesIcon" />
 	</td>
 	<td class="odigiesKimeno">
 		Κάνοντας κλικ στο συγκεκριμένο εικονίδιο
@@ -1062,13 +1051,13 @@ Class Odigies {
 	υπάρχει μια βούλα χρώματος
 	<span class="nobr">μπλε (<img src="<?php
 		print $globals->server; ?>images/blueBall.png"
-		class="odigiesIconInline" alt = "" />),</span>
+		class="odigiesIconInline" />),</span>
 	<span class="nobr">πράσινου (<img src="<?php
 		print $globals->server; ?>images/greenBall.png"
-		class="odigiesIconInline" alt = "" />),</span>
+		class="odigiesIconInline" />),</span>
 	ή <span class="nobr">πορτοκαλί (<img src="<?php
 		print $globals->server; ?>images/orangeBall.png"
-		class="odigiesIconInline" alt = "" />),</span>
+		class="odigiesIconInline" />),</span>
 	ανάλογα με την κατάσταση του παίκτη (offline, online διαθέσιμος,
 	ή online αγκαζέ).
 	Περνώντας το δείκτη του ποντικιού πάνω από αυτή τη βούλα εμφανίζονται
@@ -1079,7 +1068,7 @@ Class Odigies {
 	<tr>
 	<td class="odigiesIconColumn">
 		<img src="<?php print $globals->server; ?>images/addFriend.png"
-			class="odigiesIcon" alt="" />
+			class="odigiesIcon" />
 	</td>
 	<td class="odigiesKimeno">
 		Κάνοντας κλικ σε αυτό το εικονίδιο εντάσσουμε
@@ -1094,7 +1083,7 @@ Class Odigies {
 	<tr>
 	<td class="odigiesIconColumn">
 		<img src="<?php print $globals->server; ?>images/blockPektis.png"
-			class="odigiesIcon" alt="" />
+			class="odigiesIcon" />
 	</td>
 	<td class="odigiesKimeno">
 		Κάνοντας κλικ σε αυτό το εικονίδιο χαρακτηρίζουμε
@@ -1112,7 +1101,7 @@ Class Odigies {
 	<tr>
 	<td class="odigiesIconColumn">
 		<img src="<?php print $globals->server; ?>images/Xgreen.png"
-			class="odigiesIcon" alt="" />
+			class="odigiesIcon" />
 	</td>
 	<td class="odigiesKimeno">
 		Αυτό το εικονίδιο εμφανίζεται στους φίλους μας
@@ -1126,7 +1115,7 @@ Class Odigies {
 	<tr>
 	<td class="odigiesIconColumn">
 		<img src="<?php print $globals->server; ?>images/Xred.png"
-			class="odigiesIcon" alt="" />
+			class="odigiesIcon" />
 	</td>
 	<td class="odigiesKimeno">
 		Αυτό το εικονίδιο εμφανίζεται στους μπλοκαρισμένους
@@ -1141,7 +1130,7 @@ Class Odigies {
 	<tr>
 	<td class="odigiesIconColumn">
 		<img src="<?php print $globals->server; ?>images/sxetikos.png"
-			class="odigiesIcon" alt="" />
+			class="odigiesIcon" />
 	</td>
 	<td class="odigiesKimeno">
 		Αυτό το εικονίδιο εμφανίζεται δίπλα στο πεδίο
@@ -1156,7 +1145,7 @@ Class Odigies {
 	<tr>
 	<td class="odigiesIconColumn">
 		<img src="<?php print $globals->server; ?>images/blueBall.png"
-			class="odigiesIcon" alt="" />
+			class="odigiesIcon" />
 	</td>
 	<td class="odigiesKimeno">
 		Όταν υπάρχει μια μπλε βούλα δεξιά από το πεδίο
@@ -1177,7 +1166,7 @@ Class Odigies {
 	<tr>
 	<td class="odigiesIconColumn">
 		<img src="<?php print $globals->server; ?>images/greenBall.png"
-			class="odigiesIcon" alt="" />
+			class="odigiesIcon" />
 	</td>
 	<td class="odigiesKimeno">
 		Όταν η βούλα που βρίσκεται δεξιά από το πεδίο
@@ -1196,7 +1185,7 @@ Class Odigies {
 	<tr>
 	<td class="odigiesIconColumn">
 		<img src="<?php print $globals->server; ?>images/orangeBall.png"
-			class="odigiesIcon" alt="" />
+			class="odigiesIcon" />
 	</td>
 	<td class="odigiesKimeno">
 		Όταν η βούλα που βρίσκεται δεξιά από το πεδίο
@@ -1221,8 +1210,8 @@ Class Odigies {
 	τραπέζι και εντασσόμαστε στο παιχνίδι ως πρώτος παίκτης.
 	Κατόπιν μπορούμε να καθορίσουμε το ύψος της κάσας σε 500 ή 300 καπίκια
 	<span class="nobr">(<img src="<?php print $globals->server;
-		?>images/controlPanel/kasa.png"
-		class="odigiesIconInline" alt = "" />)</span>
+		?>ikona/panel/kasa.png"
+		class="odigiesIconInline" />)</span>
 	και να απευθύνουμε προσκλήσεις σε φίλους για
 	συμμετοχή στο παιχνίδι.
 </p>
@@ -1235,23 +1224,23 @@ Class Odigies {
 	δικές τους επιλογές στο παιχνίδι όσον αφορά στο
 	ύψος της κάσας
 	<span class="nobr">(<img src="<?php print $globals->server;
-		?>images/controlPanel/kasa.png"
-		class="odigiesIconInline" alt = "" />)</span>
+		?>ikona/panel/kasa.png"
+		class="odigiesIconInline" />)</span>
 	και στη διάταξη των παικτών
 	<span class="nobr">(<img src="<?php print $globals->server;
-		?>images/controlPanel/diataxi.png"
-		class="odigiesIconInline" alt = "" />).</span>
+		?>ikona/panel/diataxi.png"
+		class="odigiesIconInline" />).</span>
 	Κάθε φορά που κάποιος παίκτης συμφωνεί με τους
 	όρους του παιχνιδιού μπορεί να το δηλώσει στο
 	τραπέζι κάνοντας αποδοχή όρων με κλικ
 	στο σχετικό εικονίδιο
-	<span class="nobr">(<img src="<?php print $globals->server; ?>images/controlPanel/check.png"
-		class="odigiesIconInline" alt = "" />)</span>
+	<span class="nobr">(<img src="<?php print $globals->server; ?>ikona/panel/check.png"
+		class="odigiesIconInline" />)</span>
 	του control panel. Κατά την αποδοχή εμφανίζεται
 	γύρω μας ένα πρασινωπό περίγραμμα, ενώ αν
 	επιλέξουμε επαναδιαπραγμάτευση
-	<span class="nobr">(<img src="<?php print $globals->server; ?>images/controlPanel/uncheck.png"
-		class="odigiesIconInline" alt = "" />)</span>
+	<span class="nobr">(<img src="<?php print $globals->server; ?>ikona/panel/uncheck.png"
+		class="odigiesIconInline" />)</span>
 	το περίγραμμα αποκτά και πάλι κοκκινωπό χρώμα.
 </p>
 
@@ -1264,18 +1253,18 @@ Class Odigies {
 	Τη στιγμή κατά την οποία και ο τρίτος παίκτης αποδεχθεί τους όρους του
 	παιχνιδιού &ndash;στον οποίο, σημειωτέον, το εικονίδιο
 	αποδοχής εμφανίζεται πλέον ως
-	<span class="nobr"><img src="<?php print $globals->server; ?>images/controlPanel/go.jpg"
-		class="odigiesIconInline" alt = "" />&ndash;</span>
+	<span class="nobr"><img src="<?php print $globals->server; ?>ikona/panel/go.jpg"
+		class="odigiesIconInline" />&ndash;</span>
 	το παιχνίδι ξεκινά με τον τυχαίο
 	καθορισμό του παίκτη που μοιράζει και το συνακόλουθο μοίρασμα της
 	τράπουλας. Ο παίκτης που μοιράζει κάθε φορά
 	σημαίνεται με μια πολύχρωμη δέσμη φύλλων
 	<span class="nobr">(<img src="<?php print $globals->server; ?>images/dealer.png"
-		class="odigiesIconInline" alt = "" />)</span>
+		class="odigiesIconInline" />)</span>
 	στην περιοχή του, ενώ κατά τη διάρκεια των δηλώσεων
 	σημαίνεται και ο παίκτης που παίζει πρώτος με ένα σομόν
 	<span class="nobr">άστρο (<img src="<?php print $globals->server; ?>images/protos.png"
-		class="odigiesIconInline" alt = "" />).</span>
+		class="odigiesIconInline" />).</span>
 </p>
 
 <?php self::titlos('Θεατές και ιδιωτικότητα τραπεζιών'); ?>
@@ -1302,14 +1291,14 @@ Class Odigies {
 	Τα τραπέζια δημιουργούνται ως δημόσια και οι παίκτες μπορούν
 	να τα κάνουν πριβέ κάνοντας κλικ στο σχετικό
 	<span class="nobr">εικονίδιο (<img src="<?php print $globals->server;
-		?>images/controlPanel/prive.png"
-		class="odigiesIconInline" alt = "" />)</span>
+		?>ikona/panel/prive.png"
+		class="odigiesIconInline" />)</span>
 	του control panel.
 	Αν επιθυμούμε να ξανακάνουμε ένα τραπέζι δημόσιο, αρκεί να κάνουμε
 	κλικ στο σχετικό
 	<span class="nobr">εικονίδιο (<img src="<?php print $globals->server;
-		?>images/controlPanel/public.png"
-		class="odigiesIconInline" alt = "" />).</span>
+		?>ikona/panel/public.png"
+		class="odigiesIconInline" />).</span>
 	Στην περίπτωση που φέρνουμε το τραπέζι σε πριβέ
 	κατάσταση, όσοι θεατές δεν έχουν πρόσκληση
 	απομακρύνονται αυτόματα από το τραπέζι.
@@ -1323,8 +1312,8 @@ Class Odigies {
 	δεν θέλετε να συμμετάσχετε ως παίκτης, αλλά ως θεατής,
 	μπορείτε απλώς να κάνετε κλικ στο εικονίδιο
 	<span class="nobr">θέασης (<img src="<?php print $globals->server;
-		?>images/controlPanel/theatis.png"
-		class="odigiesIconInline" alt = "" />),</span>
+		?>ikona/panel/theatis.png"
+		class="odigiesIconInline" />),</span>
 	οπότε καθίστασθε θεατής.
 </p>
 
@@ -1347,12 +1336,12 @@ Class Odigies {
 	δεν είναι προσβάσιμα στους θεατές. Για να κλείσουμε ένα
 	τραπέζι, αρκεί να να κάνουμε κλικ στο σχετικό
 	<span class="nobr">εικονίδιο (<img src="<?php print $globals->server;
-		?>images/controlPanel/klisto.png"
-		class="odigiesIconInline" alt = "" />)</span>
+		?>ikona/panel/klisto.png"
+		class="odigiesIconInline" />)</span>
 	του control panel. Το τραπέζι «ανοίγει» με κλικ σε παρόμοιο
 	<span class="nobr">εικονίδιο (<img src="<?php print $globals->server;
-		?>images/controlPanel/anikto.png"
-		class="odigiesIconInline" alt = "" />)</span>
+		?>ikona/panel/anikto.png"
+		class="odigiesIconInline" />)</span>
 	του control panel.
 	Τα κλειστά τραπέζια μαρκάρονται με σχετικό εικονίδιο
 	στην επάνω δεξιά γωνία της τσόχας, ή στο κάτω αριστερό
@@ -1366,8 +1355,8 @@ Class Odigies {
 	κάνοντας διαδοχικά κλικ στο σχετικό εικονίδιο
 	του control
 	<span class="nobr">panel (<img src="<?php print $globals->server;
-		?>images/controlPanel/alagiThesis.png"
-		class="odigiesIconInline" alt = "" />).</span>
+		?>ikona/panel/alagiThesis.png"
+		class="odigiesIconInline" />).</span>
 </p>
 
 <?php self::titlos('Κάσα, καπίκια και φύλλο αγώνα'); ?>
@@ -1460,8 +1449,8 @@ Class Odigies {
 	για να εμφανίσουμε το φύλλο αγώνα αρκεί να κάνουμε κλικ
 	στο εικονίδιο
 	<span class="nobr">(<img src="<?php print $globals->server;
-		?>images/controlPanel/kitapi.png"
-		class="odigiesIconInline" alt = "" />)</span>
+		?>ikona/panel/kitapi.png"
+		class="odigiesIconInline" />)</span>
 	στο control panel.
 	Το φύλλο αγώνα εμφανίζεται σε ξεχωριστό παράθυρο του
 	φυλλομετρητή μας, πράγμα που σημαίνει ότι μπορούμε να
@@ -1532,14 +1521,14 @@ Class Odigies {
 	Αν κάποιος παίκτης επιθυμεί να τελειώσει την παρτίδα, μπορεί πολύ
 	απλά να αποχωρήσει
 	<span class="nobr">(<img src="<?php print $globals->server;
-		?>images/controlPanel/exodos.png"
-		class="odigiesIconInline" alt = "" />)</span>
+		?>ikona/panel/exodos.png"
+		class="odigiesIconInline" />)</span>
 	από το τραπέζι. Αν υπάρχει διάθεση εκκίνησης
 	μιας νέας παρτίδας, τότε οποιοσδήποτε από τους συμπαίκτες μπορεί
 	να κάνει κλικ στο εικονίδιο νέας παρτίδας
 	<span class="nobr">(<img src="<?php print $globals->server;
-		?>images/controlPanel/neaPartida.png"
-		class="odigiesIconInline" alt = "" />)</span>
+		?>ikona/panel/neaPartida.png"
+		class="odigiesIconInline" />)</span>
 	και οι συμπαίκτες θα λάβουν πρόσκληση για κάποιο νέο τραπέζι.
 	Αν οι συμπαίκτες έχουν χρόνο και διάθεση, μπορούν, πολύ απλά,
 	να συνεχίσουν την παρτίδα, ακόμη και αν το υπόλοιπο της κάσας
@@ -1576,8 +1565,8 @@ Class Odigies {
 	του πλήκτρου [Enter], είτε με κλικ στο εικονίδιο
 	κοινοποίησης μηνυμάτων
 	<span class="nobr">(<img src="<?php print $globals->server;
-		?>images/controlPanel/talk.png"
-		class="odigiesIconInline" alt = "" />)</span>
+		?>ikona/panel/talk.png"
+		class="odigiesIconInline" />)</span>
 	που βρίσκεται δεξιά από το πεδίο εισαγωγής μηνυμάτων.
 	Με το πλήκτρο [Escape] μπορείτε να καθαρίσετε
 	το πεδίο εισαγωγής μηνυμάτων χωρίς να κοινοποιήσετε
@@ -1591,7 +1580,7 @@ Class Odigies {
 	στο εικονίδιο εμφάνισης ή απόκρυψης της παλέτας
 	<span class="nobr">(<img src="<?php print $globals->server;
 		?>images/emoticons/set0/alien.png"
-		class="odigiesIconInline" alt = "" />).</span>
+		class="odigiesIconInline" />).</span>
 	Καθώς πληκτρολογείτε το μήνυμά σας, ή εισάγετε
 	emoticons, εμφανίζεται το μήνυμά σας στο κάτω μέρος
 	της περιοχής ανταλλαγής μηνυμάτων, αλλά οι
@@ -1599,8 +1588,8 @@ Class Odigies {
 	κοινοποιήσετε με το πλήκτρο [Enter],
 	ή κάνοντας κλικ στο σχετικό εικονίδιο
 	<span class="nobr">(<img src="<?php print $globals->server;
-		?>images/controlPanel/talk.png"
-		class="odigiesIconInline" alt = "" />).</span>
+		?>ikona/panel/talk.png"
+		class="odigiesIconInline" />).</span>
 </p>
 
 <p class="odigiesKimeno">
@@ -1609,7 +1598,7 @@ Class Odigies {
 	Πράγματι, κάνοντας κλικ στο εικονίδιο
 	<span class="nobr">(<img src="<?php print $globals->server;
 		?>images/Xred.png"
-		class="odigiesIconInline" alt = "" />),</span>
+		class="odigiesIconInline" />),</span>
 	το πρόγραμμα διαγράφει την τελευταίο σχόλιο της συζήτησης
 	του τραπεζιού. Αν κάνουμε επαναλαμβανόμενες διαγραφές,
 	το πρόγραμμα πιθανόν να μας ρωτήσει αν θέλουμε να
@@ -1645,7 +1634,7 @@ Class Odigies {
 	Στο μικροpanel που θα εμφανιστεί υπάρχει
 	<span class="nobr">εικονίδιο (<img src="<?php
 		print $globals->server; ?>images/permes.png"
-		class="odigiesIconInline" alt = "" />),</span>
+		class="odigiesIconInline" />),</span>
 	το οποίο θα μας περάσει σε φόρμα σύνταξης και αποστολής
 	προσωπικού μηνύματος.
 </p>
@@ -1683,13 +1672,13 @@ Class Odigies {
 	μαρκάρουμε τα μηνύματά μας ως διαβασμένα κάνοντα κλικ
 	στο <span class="nobr">εικονίδιο <img src="<?php
 		print $globals->server; ?>images/important.png"
-		class="odigiesIconInline" alt = "" /></span>
+		class="odigiesIconInline" /></span>
 	που εμφανίζεται δεξιά.
 	Τέλος, μπορούμε να διαγράψουμε τόσο τα εισερχόμενα,
 	όσο και τα εξερχόμενα μηνύματά μας κάνοντας κλικ
 	στο σχετικό <span class="nobr">εικονίδιο (<img src="<?php
 		print $globals->server; ?>images/Xred.png"
-		class="odigiesIconInline" alt = "" />).</span>
+		class="odigiesIconInline" />).</span>
 	Προσοχή: διαγράφοντας ένα εξερχόμενο μήνυμα, το μήνυμα αυτό
 	θα εξαφανιστεί και από το εισερχόμενα του παραλήπτη, επομένως
 	αν ο παραλήπτης δεν έχει διαβάσει το μήνυμα, δεν θα το διαβάσει
@@ -2043,7 +2032,7 @@ Class Odigies {
 	μαζί του μέσω email κάνοντας κλικ στο σχετικό
 	<span class="nobr">εικονίδιο (<img src="<?php
 		print $globals->server; ?>images/email.png"
-		class="odigiesIconInline" alt = "" />).</span>
+		class="odigiesIconInline" />).</span>
 	Στην ίδια περιοχή εμφανίζονται, επίσης, χρήσιμες
 	πληροφορίες που αφορούν στην επικοινωνία μας με τον server.
 </p>
@@ -2147,8 +2136,8 @@ Class Odigies {
 <li>
 	<p class="odigiesKimeno">
 		Κάντε κλικ στην <span class="nobr">πασχαλίτσα
-		(<img src="<?php print $globals->server; ?>images/controlPanel/bugFix.png"
-			class="odigiesIconInline" alt = "" />)</span>
+		(<img src="<?php print $globals->server; ?>ikona/panel/bugFix.png"
+			class="odigiesIconInline" />)</span>
 		στο κάτω μέρος του control panel
 		(κεντρική στήλη εργαλείων). Αν δεν αποκατασταθεί η ορθή λειτουργία,
 		προχωρήστε στο επόμενο βήμα.
@@ -2157,8 +2146,8 @@ Class Odigies {
 <li>
 	<p class="odigiesKimeno">
 		Κάντε κλικ στο κουμπάκι γρήγορης ανανέωσης <span class="nobr">σελίδας
-		(<img src="<?php print $globals->server; ?>images/controlPanel/refresh.png"
-			class="odigiesIconInline" alt = "" />)</span>
+		(<img src="<?php print $globals->server; ?>ikona/panel/refresh.png"
+			class="odigiesIconInline" />)</span>
 		που βρίσκεται πάνω από την πασχαλίτσα.
 		Αν και πάλι δεν λυθούν τα προβλήματα, προχωρήστε στο επόμενο βήμα.
 	</p>
@@ -2176,15 +2165,15 @@ Class Odigies {
 	<p class="odigiesKimeno">
 		Ακυρώστε την τελευταία κίνηση της διανομής κάνοντας κλικ στο κεραμιδί
 		αριστερό <span class="nobr">βέλος 
-		(<img src="<?php print $globals->server; ?>images/controlPanel/akirosiKinisis.png"
-			class="odigiesIconInline" alt = "" />)</span>
+		(<img src="<?php print $globals->server; ?>ikona/panel/akirosiKinisis.png"
+			class="odigiesIconInline" />)</span>
 		που βρίσκεται στο κάτω μέρος του control panel. Αν το
 		πρόβλημα επιμένει, ακυρώστε μερικές ακόμη κινήσεις.
 		Όσο γίνονται ακυρώσεις κινήσεων, το πρόγραμμα δεν δέχεται
 		νέες κινήσεις· για να δηλώσετε ότι τελειώσατε με τις ακυρώσεις
 		κάντε κλικ στο πλήκτρο τέλους <span class="nobr"> ακύρωσης
-		(<img src="<?php print $globals->server; ?>images/controlPanel/anamoniAkirosis.png"
-			class="odigiesIconInline" alt = "" />).</span>
+		(<img src="<?php print $globals->server; ?>ikona/panel/anamoniAkirosis.png"
+			class="odigiesIconInline" />).</span>
 		Αν δεν λυθούν τα προβλήματα, προχωρήστε στο επόμενο βήμα.
 	</p>
 </li>
@@ -2192,9 +2181,7 @@ Class Odigies {
 	<p class="odigiesKimeno">
 		Ακυρώστε την τρέχουσα παρτίδα κάνοντας κλικ στο κουμπί καθαρισμού και
 		επανεκκίνησης της <span class="nobr">παρτίδας
-		(<img src="<?php print $globals->server;
-			?>images/controlPanel/neaPartida.png"
-			class="odigiesIconInline" alt = "" />)</span>
+		(<img src="../ikona/panel/neaPartida.png" class="odigiesIconInline" />)</span>
 		στο επάνω μέρος του control panel. Αν πάλι αντιμετωπίζετε προβλήματα,
 		τότε δεν μένει παρά να βγείτε όλοι από το τραπέζι και να στήσετε ένα νέο τραπέζι.
 	</p>
