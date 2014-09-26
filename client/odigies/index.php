@@ -11,11 +11,11 @@ Selida::body();
 Selida::toolbar();
 
 Selida::ofelimo_begin();
-Odigies::enimerotiko();
 Odigies::anigma();
 Odigies::periexomena();
 Odigies::soma();
 Odigies::klisimo();
+Odigies::enimerotiko();
 Selida::ofelimo_end();
 
 Selida::ribbon();
@@ -51,32 +51,6 @@ Class Odigies {
 <li><?php self::periexomenaItem('Τεχνικά θέματα'); ?></li>
 <li><?php self::periexomenaItem('Αντιμετώπιση προβλημάτων'); ?></li>
 </ul>
-		<?php
-	}
-
-	public static function enimerotiko() {
-		?>
-<div id="enimerotiko" class="enimerosi">
-<div class="enimerosiTitlos">
-	<div class="enimerosiTitlosKimeno">ΣΗΜΑΝΤΙΚΟ</div>
-</div>
-Φίλοι πρεφαδόροι, μετά το τέλος κάθε παρτίδας
-<span class="enimerosiEntono">
-μην αμελείτε την έξοδό σας από το τραπέζι</span>.
-Πράγματι, κάθε ενεργό τραπέζι,
-όπως εξάλλου και κάθε ενεργός παίκτης, καταναλώνουν πόρους του server,
-επομένως όσο λιγότερα τα ενεργά τραπέζια και οι ενεργοί
-παίκτες τόσο καλύτερη η συμπεριφορά του προγράμματος
-για τις παρτίδες που βρίσκονται σε εξέλιξη.
-Επίσης,
-μην παραμένετε άσκοπα στο χώρο του καφενείου
-για μεγάλα χρονικά διαστήματα, αλλά
-<span class="enimerosiEntono">
-βγαίνετε από το πρόγραμμα</span>,
-καθώς με την παραμονή σας στον «Πρεφαδόρο» καταναλώνετε πόρους
-του server που θα ήταν προτιμότερο να διατεθούν
-στους ενεργούς παίκτες.
-</div>
 		<?php
 	}
 
@@ -2275,5 +2249,30 @@ Class Odigies {
 			print $tag; ?></a><?php
 	}
 
+	public static function enimerotiko() {
+		?>
+<div id="odigiesEnimerotiko" class="enimerosi">
+<div class="enimerosiTitlos">
+	<div class="enimerosiTitlosKimeno">ΣΗΜΑΝΤΙΚΟ</div>
+</div>
+Φίλοι πρεφαδόροι, μετά το τέλος κάθε παρτίδας
+<span class="enimerosiEntono">
+μην αμελείτε την έξοδό σας από το τραπέζι</span>.
+Πράγματι, κάθε ενεργό τραπέζι,
+όπως εξάλλου και κάθε ενεργός παίκτης, καταναλώνουν πόρους του server,
+επομένως όσο λιγότερα τα ενεργά τραπέζια και οι ενεργοί
+παίκτες τόσο καλύτερη η συμπεριφορά του προγράμματος
+για τις παρτίδες που βρίσκονται σε εξέλιξη.
+Επίσης,
+μην παραμένετε άσκοπα στο χώρο του καφενείου
+για μεγάλα χρονικά διαστήματα, αλλά
+<span class="enimerosiEntono">
+βγαίνετε από το πρόγραμμα</span>,
+καθώς με την παραμονή σας στον «Πρεφαδόρο» καταναλώνετε πόρους
+του server που θα ήταν προτιμότερο να διατεθούν
+στους ενεργούς παίκτες.
+</div>
+		<?php
+	}
 }
 ?>
