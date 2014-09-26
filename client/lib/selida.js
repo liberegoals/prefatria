@@ -241,6 +241,7 @@ Client.tabExodos = function(x) {
 };
 
 Client.tabPektis = function(x) {
+	if (Client.oxiPektis()) return;
 	if (x === undefined) x = $('#toolbarRight');
 	Client.tab($('<a target="_blank" href="' + Client.server + 'account">' +
 		'<span class="sinefo entona">' + Client.session.pektis + '</span>'), x);

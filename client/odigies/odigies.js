@@ -23,9 +23,11 @@ function kouniseTutorialVideo(div, i) {
 */
 
 $(document).ready(function() {
-	$('#enimerotiko').append(Client.klisimo()).siromeno({
+	Client.tabKlisimo();
+	Client.tabPektis();
+	$('#odigiesEnimerotiko').append(Client.klisimo()).siromeno({
 		top: '20px',
 		right: '20px',
-	});
+	}).finish().delay(1000).fadeIn(500);
 	//kouniseTutorialVideo(getelid('tutorialVideos'), 0);
 });
