@@ -888,6 +888,10 @@ Client.sound = {
 		Client.sound.play('blioup.ogg', vol);
 	},
 
+	ding: function(vol) {
+		Client.sound.play('ding.ogg', vol);
+	},
+
 	doorbell: function(vol) {
 		Client.sound.play('doorbell.ogg', vol);
 	},
