@@ -438,13 +438,17 @@ Client.klisimo = function(callback) {
 	}).
 
 	// Λαμβάνουμε μέριμνα για τα συρόμενα στοιχεία.
+
 	on('mousedown', function(e) {
 		e.stopPropagation();
 	}).
 
 	on('click', function(e) {
 		e.stopPropagation();
-		callback();
+		if (callback) callback();
+		else $(this).parent().finish().fadeOut(200, function() {
+			$(this).remove();
+		});
 	});
 }
 
