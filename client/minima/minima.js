@@ -16,14 +16,8 @@ $(document).ready(function() {
 	return;
 
 	Client.tab($('<a>').attr({href: '#'}).on('click', function(e) {
-		try {
-			setTimeout(function() {
-				Arena.inputRefocus();
-				window.opener.focus();
-			}, 100);
-		} catch (e) {
-			window.close();
-		}
+		if (Arena) Arena.minima.epistrofi();
+		else self.close();
 		return false;
 	}).append(Client.sinefo('Επιστροφή')), $('#toolbarLeft'));
 });
@@ -45,9 +39,9 @@ on('unload', function() {
 	Minima.unload();
 }).
 on('focus', function() {
-	setTimeout(function() {
-		if (Arena) Arena.inputRefocus();
-	}, 100);
+	if (!Arena) return;
+	Arena.inputRefocus();
+	Arena.minima.endixiClear();
 });
 
 Minima.setupControls = function() {
@@ -174,12 +168,7 @@ Minima.setupControls = function() {
 	on('click', function(e) {
 		Minima.buttonOlaDOM.prop('checked', false);
 		if ($(this).prop('checked')) {
-			Minima.buttonIserxomenaDOM.prop('checked', false);
-			Minima.buttonExerxomenaDOM.prop('checked', false);
 			Minima.buttonIkothenDOM.prop('checked', true);
-			Minima.buttonKratimenaDOM.prop('checked', false);
-			Minima.buttonDiavasmenaDOM.prop('checked', false);
-			Minima.buttonAdiavastaDOM.prop('checked', true);
 		}
 		Minima.filtrarisma();
 	});
@@ -188,12 +177,7 @@ Minima.setupControls = function() {
 	on('click', function(e) {
 		Minima.buttonOlaDOM.prop('checked', false);
 		if ($(this).prop('checked')) {
-			Minima.buttonIserxomenaDOM.prop('checked', false);
-			Minima.buttonExerxomenaDOM.prop('checked', false);
-			Minima.buttonIkothenDOM.prop('checked', false);
 			Minima.buttonKratimenaDOM.prop('checked', true);
-			Minima.buttonDiavasmenaDOM.prop('checked', true);
-			Minima.buttonAdiavastaDOM.prop('checked', true);
 		}
 		Minima.filtrarisma();
 	});
@@ -242,8 +226,14 @@ Minima.prototype.filtroCheck = function() {
 	if (Minima.buttonIkothenDOM.prop('checked'))
 	return this.minimaIsIkothen();
 
+	if (this.minimaIsIkothen())
+	return false;
+
 	if (Minima.buttonKratimenaDOM.prop('checked'))
 	return this.minimaIsKratimeno();
+
+	if (this.minimaIsKratimeno())
+	return false;
 
 	if ((!Minima.buttonDiavasmenaDOM.prop('checked')) && this.minimaIsDiavasmeno())
 	return false;
