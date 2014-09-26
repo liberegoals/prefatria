@@ -485,6 +485,50 @@ border-color: red !important;
 
 /************************************************************************************************************************/
 
+.enimerosi {
+	position: absolute;
+	width: 530px;
+	text-align: justify;
+	line-height: 150%;
+	padding: 10px 15px;
+
+	background-color: #FFFFCC;
+	color: #303233;
+
+	border-style: double;
+	border-width: 3px;
+	border-color: #FCBF30;
+	border-radius: 5px;
+
+	-webkit-box-shadow: 4px 4px 10px #2E2E2E;
+	-moz-box-shadow: 4px 4px 10px #2E2E2E;
+	box-shadow: 4px 4px 10px #2E2E2E;
+}
+
+.enimerosiEntono {
+	color: #FF3300;
+	text-shadow: 0px 1px 0px #A84026;
+}
+
+.enimerosiTitlos {
+	margin: 0 0 10px 0;
+	text-align: center;
+}
+
+.enimerosiTitlosKimeno {
+	display: inline-block;
+	background-color: #D44837;
+	color: #FCBF30;
+	padding: 2px 6px;
+	border-radius: 2px;
+
+	-webkit-box-shadow: 2px 2px 4px #2E2E2E;
+	-moz-box-shadow: 2px 2px 4px #2E2E2E;
+	box-shadow: 2px 2px 4px #2E2E2E;
+}
+
+/************************************************************************************************************************/
+
 .provlima {
 	position: absolute;
 	top: 60px;
