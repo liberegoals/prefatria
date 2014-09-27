@@ -888,6 +888,14 @@ Client.sound = {
 		Client.sound.play('blioup.ogg', vol);
 	},
 
+	notice: function(vol) {
+		Client.sound.play('notice.ogg', vol);
+	},
+
+	din: function(vol) {
+		Client.sound.play('din.ogg', vol);
+	},
+
 	tinkle: function(vol) {
 		Client.sound.play('tinkle.ogg', vol);
 	},
