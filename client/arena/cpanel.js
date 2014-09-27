@@ -523,6 +523,7 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 
 Arena.cpanel.bpanelButtonPush(new PButton({
 	omada: 2,
+	id: 'pektisTheatis',
 	img: 'matakias.png',
 	title: 'Παίκτης/Θεατής',
 	check: function() {

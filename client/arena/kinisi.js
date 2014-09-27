@@ -461,6 +461,13 @@ Skiniko.prototype.processKinisiPostRT = function(data) {
 			if (Arena.ego.isTrapezi(data.trapezi)) {
 				Arena.partida.pektisRefreshDOM(data.thesi);
 				if (data.pektis.oxiEgo()) Client.sound.blioup();
+
+				// Ο παίκτης δημιούργησε κενή θέση στο τραπέζι,
+				// επομένως μπορεί να πρέπει να εμφανιστεί το
+				// πλήκτρο παίκτης/θεατής.
+
+				Arena.cpanel.bpanelButtonGet('pektisTheatis').
+				pbuttonDisplay();
 			}
 		}
 	}
@@ -632,6 +639,14 @@ Skiniko.prototype.processKinisiPostAL = function(data) {
 
 	this.processKinisiPostET(data);
 
+	// Υπάρχει περίπτωση ο παίκτης που απεδέχθη την πρόσκληση να κατέστη
+	// παίκτης στο τραπέζι που είμαστε θεατές και με την κίνησή του αυτή
+	// να μην έχει μείνει άλλη κενή θέση στο τραπέζι, επομένως θα πρέπει
+	// ενδεχομένως να αποκρυβεί το πλήκτρο παίκτης/θεατής.
+
+	if (Arena.ego.isTrapezi(data.trapezi))
+	Arena.cpanel.bpanelButtonGet('pektisTheatis').pbuttonDisplay();
+
 	if (data.pektis.oxiEgo())
 	return this;
 
@@ -690,6 +705,8 @@ Skiniko.prototype.processKinisiPostPT = function(data) {
 
 	if (Arena.ego.oxiTrapezi(trapezi))
 	return this;
+
+	Client.sound.blioup();
 
 	// Εάν είμαστε εμείς που κάνουμε την αλλαγή, τότε επαναδιαμορφώνουμε
 	// εκ νέου το DOM της παρτίδας.
