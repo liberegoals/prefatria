@@ -378,8 +378,8 @@ Skiniko.prototype.processKinisiPostET = function(data) {
 	// τραπέζι, τότε πρέπει να τον εμφανίσουμε στους θεατές.
 
 	if (sinedria.sinedriaIsTheatis()) {
+		Client.sound.tinybell();
 		Arena.partida.theatisPushDOM(sinedria);
-		Client.sound.din();
 		return this;
 	}
 

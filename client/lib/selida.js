@@ -783,6 +783,7 @@ Client.sound = {
 
 	miosi: {
 		'tsalakoma.ogg': 0.4,
+		'tinybell.ogg': 0.2,
 	},
 
 	play: function(sound, opts) {
@@ -890,6 +891,10 @@ Client.sound = {
 
 	notice: function(vol) {
 		Client.sound.play('notice.ogg', vol);
+	},
+
+	tinybell: function(vol) {
+		Client.sound.play('tinybell.ogg', vol);
 	},
 
 	din: function(vol) {
