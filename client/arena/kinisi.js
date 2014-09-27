@@ -379,7 +379,7 @@ Skiniko.prototype.processKinisiPostET = function(data) {
 
 	if (sinedria.sinedriaIsTheatis()) {
 		Arena.partida.theatisPushDOM(sinedria);
-		Client.sound.ding();
+		Client.sound.tinkle();
 		return this;
 	}
 
