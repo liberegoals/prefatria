@@ -30,6 +30,9 @@ Skiniko.prototype.processKinisiPostSN = function(data) {
 	sinedria = this.skinikoSinedriaGet(data.sinedria.pektis);
 	if (!sinedria) return this;
 
+	if (Arena.ego.isFilos(data.sinedria.pektis))
+	Client.sound.deskbell();
+
 	sinedria.sinedriaCreateDOM();
 	this.pektisEntopismosDOM(data.sinedria.pektis);
 
