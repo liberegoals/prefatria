@@ -824,9 +824,6 @@ Sinedria.prototype.sinedriaNiofertosPushDOM = function() {
 
 	Arena.partida.niofertosDOM.prepend(this.niofertosDOM);
 
-	if (Arena.ego.isFilos(this.sinedriaPektisGet()))
-	Client.sound.deskbell();
-
 	return this;
 };
 
