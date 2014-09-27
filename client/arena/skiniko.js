@@ -823,6 +823,10 @@ Sinedria.prototype.sinedriaNiofertosPushDOM = function() {
 	if (dom.length > 4) dom.last().remove();
 
 	Arena.partida.niofertosDOM.prepend(this.niofertosDOM);
+
+	if (Arena.ego.isFilos(this.sinedriaPektisGet()))
+	Client.sound.deskbell();
+
 	return this;
 };
 
