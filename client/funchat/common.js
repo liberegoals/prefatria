@@ -67,7 +67,7 @@ Funchat.prototype.funchatIxosPlay = function(opts) {
 		if (entasi) opts.entasi = entasi;
 	}
 
-	if (!ixos.match(/\//)) ixos = Funchat.server + ixos;
+	if (!ixos.match(/^https?:/)) ixos = Funchat.server + ixos;
 	return Client.sound.play(ixos, opts);
 };
 
