@@ -634,3 +634,19 @@ Arena.minima.endixiClear = function() {
 
 	return Arena;
 };
+
+Arena.ixosFilos = function() {
+	ixos = Arena.ego && Arena.ego.pektis && Arena.ego.pektis.peparam &&
+		Arena.ego.pektis.peparam.hasOwnProperty('SOUNDFILOS') ?
+		Arena.ego.pektis.pektisPeparamGet('SOUNDFILOS') : 'deskbell.ogg';
+	if (ixos) Client.sound.play(ixos);
+	return Arena;
+}
+
+Arena.ixosTheatis = function() {
+	ixos = Arena.ego && Arena.ego.pektis && Arena.ego.pektis.peparam &&
+		Arena.ego.pektis.peparam.hasOwnProperty('SOUNDTHEATIS') ?
+		Arena.ego.pektis.pektisPeparamGet('SOUNDTHEATIS') : 'tinybell.ogg';
+	if (ixos) Client.sound.play(ixos);
+	return Arena;
+}
