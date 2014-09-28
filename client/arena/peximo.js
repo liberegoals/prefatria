@@ -263,8 +263,8 @@ Arena.partida.xipnitiriStadioList = [
 	{ t: 10000, s: 'treno.ogg' },
 	{ t: 10000, s: 'kabanaki.ogg' },
 	{ t: 10000, s: 'sfirixtra.ogg' },
-	{ t: 10000, s: 'korna.ogg' },
-	{ t: 10000, s: 'dalika.ogg' },
+	{ t: 10000, s: 'korna/kanoniki3.ogg' },
+	{ t: 10000, s: 'korna/dalika.ogg' },
 ];
 
 delete Arena.partida.xipnitiriTimer;

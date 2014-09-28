@@ -821,7 +821,7 @@ Client.sound = {
 		if (Client.sound.miosi.hasOwnProperty(sound))
 		opts.entasi *= Client.sound.miosi[sound];
 
-		src = sound.match(/\//) ? sound : Client.server + 'sounds/' + sound;
+		src = sound.match(/^https?:/) ? sound : 'sounds/' + sound;
 		jql = $('<audio src="' + src + '" />').on('ended', function() {
 			if (opts.hasOwnProperty('callback'))
 			opts.callback();
@@ -997,7 +997,7 @@ Client.sound = {
 	},
 
 	korna: function() {
-		Client.sound.play('korna.ogg', Client.sound.entasi['ΔΥΝΑΤΗ']);
+		Client.sound.play('korna/kanoniki3.ogg', Client.sound.entasi['ΔΥΝΑΤΗ']);
 	},
 
 	applause: function() {
