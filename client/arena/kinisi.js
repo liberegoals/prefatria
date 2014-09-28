@@ -31,7 +31,7 @@ Skiniko.prototype.processKinisiPostSN = function(data) {
 	if (!sinedria) return this;
 
 	if (Arena.ego.isFilos(data.sinedria.pektis))
-	Client.sound.deskbell();
+	Arena.ixosFilos();
 
 	sinedria.sinedriaCreateDOM();
 	this.pektisEntopismosDOM(data.sinedria.pektis);
@@ -381,7 +381,7 @@ Skiniko.prototype.processKinisiPostET = function(data) {
 	// τραπέζι, τότε πρέπει να τον εμφανίσουμε στους θεατές.
 
 	if (sinedria.sinedriaIsTheatis()) {
-		Client.sound.tinybell();
+		Arena.ixosTheatis();
 		Arena.partida.theatisPushDOM(sinedria);
 		return this;
 	}

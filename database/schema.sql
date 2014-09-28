@@ -94,6 +94,12 @@ COMMENT = 'Πίνακας παικτών'
 --			ΑΝΙΣΟΡΡΟΠΟ
 --			ΔΙΚΑΙΟ
 --
+--	SOUNDFILOS	deskbell.ogg
+--			any sound file in "sounds" directory
+--
+--	SOUNDTHEATIS	tinybell.ogg
+--			any sound file in "sounds" directory
+--
 --	DEVELOPER	ΟΧΙ
 --			ΝΑΙ
 --
