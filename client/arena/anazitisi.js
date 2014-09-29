@@ -44,6 +44,15 @@ on('click', function(e) {
 	Arena.inputRefocus(e);
 }));
 
+Arena.anazitisi.panel.bpanelButtonPush(Arena.anazitisi.anazitisiDOM = new PButton({
+	img: 'fakos.png',
+	title: 'Αναζήτηση τώρα!',
+	click: function(e) {
+		Arena.inputRefocus(e);
+		Arena.anazitisi.zitaData();
+	},
+}));
+
 Arena.anazitisi.panel.bpanelButtonPush(new PButton({
 	id: 'clear',
 	img: 'clear.png',
@@ -97,6 +106,7 @@ Arena.anazitisi.panel.bpanelButtonPush(new PButton({
 		}
 
 		this.pbuttonRefresh();
+		Arena.anazitisi.schedule();
 	},
 }));
 
@@ -125,6 +135,7 @@ Arena.anazitisi.panel.bpanelButtonPush(new PButton({
 		Arena.inputRefocus(e);
 		Arena.anazitisi.sxetikos = !Arena.anazitisi.sxetikos;
 		this.pbuttonRefresh();
+		Arena.anazitisi.schedule();
 	},
 }));
 
@@ -264,8 +275,21 @@ Arena.anazitisi.schedule = function() {
 };
 
 Arena.anazitisi.zitaData = function() {
-	var val;
+	var buttonDom;
 
-Client.fyi.pano('>>' + Arena.anazitisi.pattern + '<<');
+	if (Arena.anazitisi.timer) {
+		clearTimeout(Arena.anazitisi.timer);
+		delete Arena.anazitisi.timer;
+	}
+
+	buttonDom = Arena.anazitisi.anazitisiDOM.pbuttonIconGetDOM();
+	if (buttonDom) buttonDom.working(true);
+	Client.fyi.pano('>>' + Arena.anazitisi.pattern +
+		'<< >>' + Arena.anazitisi.katastasi + '<< >>' +
+		(Arena.anazitisi.sxetikos ? 'ΣΧΕΤΙΖΟΜΕΝΟΙ' : 'ΟΛΟΙ') + '<<');
+	setTimeout(function() {
+		buttonDom.working(false);
+	}, 1000);
+
 	return Arena;
 };
