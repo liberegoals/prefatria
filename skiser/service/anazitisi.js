@@ -7,55 +7,11 @@ Service.anazitisi = {};
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
 
 Service.anazitisi.anazitisi = function(nodereq) {
+	var pattern, sxesi, query;
+
 	if (nodereq.isvoli()) return;
 	if (nodereq.denPerastike('pattern', true)) return;
-	if (nodereq.denPerastike('katastasi', true)) return;
 	if (nodereq.denPerastike('sxesi', true)) return;
-
-	switch (nodereq.url.katastasi) {
-	case 'ONLINE':
-	case 'AVAILABLE':
-		Service.anazitisi.skiniko(nodereq);
-		break;
-	default:
-		Service.anazitisi.database(nodereq);
-		break;
-	}
-};
-
-Service.anazitisi.skiniko = function(nodereq) {
-	var zitoulas, pattern, diathesimos, sxesi;
-
-	zitoulas = nodereq.pektisGet();
-	pattern = nodereq.url.pattern;
-	if (pattern) pattern = new RegExp(pattern.replace(/%/g, '.*').replace(/_/g, '.'), "i");
-	diathesimos = (nodereq.url.katastasi === 'AVAILABLE');
-	sxesi = parseInt(nodereq.url.sxesi);
-
-	Server.skiniko.skinikoSinedriaWalk(function() {
-		var login, pektis;
-
-		login = this.sinedriaPektisGet();
-
-		if (sxesi && zitoulas.pektisOxiFilos(login))
-		return;
-
-		if (diathesimos && this.sinedriaIsPektis())
-		return;
-
-		if (pattern && (!login.match(pattern))) {
-			pektis = Server.skiniko.skinikoPektisGet(login);
-			if (!pektis) return;
-			if (!pektis.pektisOnomaGet().match(pattern)) return;
-		}
-
-		nodereq.write('{login:' + login.json() + '},');
-	});
-	nodereq.end();
-};
-
-Service.anazitisi.database = function(nodereq) {
-	var pattern, sxesi, query;
 
 	pattern = nodereq.url.pattern;
 	sxesi = parseInt(nodereq.url.sxesi);

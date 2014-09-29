@@ -81,6 +81,20 @@ Skiniko.prototype.processKinisiPostNS = function(data) {
 	var thesi;
 
 	this.pektisEntopismosDOM(data.login);
+
+	if (Arena.anazitisi.active) {
+		dom = Arena.anazitisi.lista[data.login];
+		if (dom) {
+			if (Arena.anazitisi.katastasi !== 'ALL') {
+				dom.remove();
+				delete Arena.anazitisi.lista[data.login];
+			}
+			else {
+				new Anazitisi({login:data.login}).anazitisiCreateDOM();
+			}
+		}
+	}
+
 	if (Arena.ego.oxiTrapezi()) return this;
 
 	// Ελέγχω αν ο εξελθών παίκτης κατέχει θέση παίκτη στην

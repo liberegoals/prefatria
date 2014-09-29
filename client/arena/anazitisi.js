@@ -1,7 +1,7 @@
 Arena.anazitisi = {
 	active: false,
 	pattern: '',
-	katastasi: 'ALL',
+	katastasi: 'ONLINE',
 	sxetikos: true,
 	lista: {},
 };
@@ -295,6 +295,9 @@ Arena.anazitisi.zitaData = function() {
 	}
 
 	Arena.anazitisi.active = true;
+	if (Arena.anazitisi.katastasi !== 'ALL')
+	return Arena.anazitisi.online();
+
 	msg = 'Αναζήτηση';
 	if (Arena.anazitisi.pattern)
 	msg += ', όνομα: <span class="entona ble">' + Arena.anazitisi.pattern + '</span>';
@@ -308,8 +311,9 @@ Arena.anazitisi.zitaData = function() {
 	buttonDom = Arena.anazitisi.anazitisiDOM.pbuttonIconGetDOM();
 	if (buttonDom) buttonDom.working(true);
 
-	Client.skiserService('anazitisi', 'pattern=' + Arena.anazitisi.pattern, 'katastasi=' +
-	Arena.anazitisi.katastasi, 'sxesi=' + (Arena.anazitisi.sxetikos ? 1 : 0)).
+	Client.skiserService('anazitisi',
+		'pattern=' + Arena.anazitisi.pattern,
+		'sxesi=' + (Arena.anazitisi.sxetikos ? 1 : 0)).
 	done(function(rsp) {
 		Arena.anazitisi.processData(rsp);
 		buttonDom.working(false);
@@ -318,6 +322,35 @@ Arena.anazitisi.zitaData = function() {
 		Arena.anazitisi.processData(rsp);
 		Client.skiserFail(err);
 		buttonDom.working(false);
+	});
+
+	return Arena;
+};
+
+Arena.anazitisi.online = function() {
+	var pattern, diathesimos;
+
+	pattern = Arena.anazitisi.pattern ? new RegExp(pattern.replace(/%/g, '.*').replace(/_/g, '.'), "i") : null;
+	diathesimos = (Arena.anazitisi.katastasi === 'AVAILABLE');
+
+	Arena.skiniko.skinikoSinedriaWalk(function() {
+		var login, pektis;
+
+		login = this.sinedriaPektisGet();
+
+		if (Arena.anazitisi.sxetikos && Arena.ego.pektis.pektisOxiFilos(login))
+		return;
+
+		if (diathesimos && this.sinedriaIsPektis())
+		return;
+
+		if (pattern && (!login.match(pattern))) {
+			pektis = Server.skiniko.skinikoPektisGet(login);
+			if (!pektis) return;
+			if (!pektis.pektisOnomaGet().match(pattern)) return;
+		}
+
+		new Anazitisi({login:login}).anazitisiCreateDOM();
 	});
 
 	return Arena;

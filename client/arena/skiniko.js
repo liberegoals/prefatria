@@ -665,6 +665,7 @@ Skiniko.prototype.skinikoCreateDOM = function(data) {
 	}
 
 	Arena.panelRefresh();
+	Arena.anazitisi.zitaData();
 	return this;
 };
 
