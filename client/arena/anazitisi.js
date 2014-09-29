@@ -38,6 +38,14 @@ Arena.anazitisi = {
 	lista: {},
 };
 
+Arena.anazitisi.isActive = function() {
+	return Arena.anazitisi.active;
+};
+
+Arena.anazitisi.oxiActive = function() {
+	return !Arena.anazitisi.isActive();
+};
+
 Arena.anazitisi.setup = function() {
 	Arena.anazitisi.panelDOM = $('<div>').appendTo(Arena.pssDOM);
 	Arena.anazitisi.areaDOM = $('<div>').addClass('pss').appendTo(Arena.pssDOM);
@@ -363,30 +371,12 @@ Arena.anazitisi.zitaData = function() {
 };
 
 Arena.anazitisi.online = function() {
-	var pattern, diathesimos;
+	var login;
 
-	pattern = Arena.anazitisi.pattern ? new RegExp(pattern.replace(/%/g, '.*').replace(/_/g, '.'), "i") : null;
-	diathesimos = (Arena.anazitisi.katastasi === 'AVAILABLE');
-
-	Arena.skiniko.skinikoSinedriaWalk(function() {
-		var login, pektis;
-
-		login = this.sinedriaPektisGet();
-
-		if (Arena.anazitisi.sxetikos && Arena.ego.pektis.pektisOxiFilos(login))
-		return;
-
-		if (diathesimos && this.sinedriaIsPektis())
-		return;
-
-		if (pattern && (!login.match(pattern))) {
-			pektis = Server.skiniko.skinikoPektisGet(login);
-			if (!pektis) return;
-			if (!pektis.pektisOnomaGet().match(pattern)) return;
-		}
-
+	for (login in Arena.skiniko.sinedria) {
+		if (Arena.anazitisi.loginCheck(login))
 		new Anazitisi({login:login}).anazitisiCreateDOM();
-	});
+	}
 
 	return Arena;
 };
@@ -406,6 +396,74 @@ Arena.anazitisi.processData = function(rsp) {
 		new Anazitisi(data[i]).anazitisiCreateDOM();
 	}
 	Client.fyi.pano();
+};
+
+// Η function "pektisCheck" δέχεται το login name κάποιου παίκτη και ελέγχει
+// τον συγκεκριμένο παίκτη σε σχέση με τα τρέχοντα κριτήρια αναζήτησης. Αν ο
+// παίκτης συμφωνεί με τα κριτήρια αναζήτησης πρέπει να βρίσκεται στην περιοχή
+// των αποτελεσμάτων, αλλιώς θα πρέπει να μην εμφανίζεται σ' αυτήν την περιοχή.
+// Η function "pektisCheck" φροντίζει ώστε να ισχύουν τα παραπάνω.
+//
+// Αν έχουμε πρόχειρη και τη συνεδρία του παίκτη, μπορούμε να την περάσουμε ως
+// δεύτερη παράμετρο, αλλιώς θα γίνει απόπειρα εντοπισμού της σχετικής συνεδρίας
+// από την ίδια την "pektisCheck".
+
+Arena.anazitisi.pektisCheck = function(login, sinedria) {
+	var dom;
+
+	// Αν δεν έχουμε ενεργή αναζήτηση, τότε δεν προβαίνουμε σε
+	// κανέναν έλεγχο και σε καμιά περαιτέρω ενέργεια.
+
+	if (Arena.anazitisi.oxiActive())
+	return Arena;
+
+	if (Arena.anazitisi.loginCheck(login, sinedria)) {
+		new Anazitisi({login:login}).anazitisiCreateDOM();
+		return Arena;
+	}
+
+	dom = Arena.anazitisi.lista[login];
+	if (!dom)
+	return Arena;
+
+	dom.remove();
+	delete Arena.anazitisi.lista[login];
+};
+
+// Η function "loginCheck" δέχεται το login name κάποιου παίκτη και ελέγχει
+// τον συγκεκριμένο παίκτη σε σχέση με τα τρέχοντα κριτήρια αναζήτησης. Αν ο
+// παίκτης συμφωνεί με τα κριτήρια αναζήτησης επιστρέφει true, αλλιώς επιστρέφει
+// false.
+//
+// Αν έχουμε πρόχειρη και τη συνεδρία του παίκτη, μπορούμε να την περάσουμε ως
+// δεύτερη παράμετρο, αλλιώς θα γίνει απόπειρα εντοπισμού της σχετικής συνεδρίας
+// από την ίδια την "loginCheck".
+
+Arena.anazitisi.loginCheck = function(login, sinedria) {
+	var pattern, pektis;
+
+	if (Arena.anazitisi.sxetikos && Arena.ego.pektis.pektisOxiFilos(login))
+	return false;
+
+	if (sinedria === undefined)
+	sinedria = Arena.skiniko.skinikoSinedriaGet(login);
+
+	if ((Arena.anazitisi.katastasi !== 'ALL') && (!sinedria))
+	return false;
+
+	if ((Arena.anazitisi.katastasi === 'AVAILABLE') && sinedria.sinedriaIsPektis())
+	return false;
+
+	if (!Arena.anazitisi.pattern)
+	return true;
+
+	pattern = new RegExp(Arena.anazitisi.pattern.replace(/%/g, '.*').replace(/_/g, '.'), "i");
+	if (login.match(pattern)) return true;
+
+	pektis = Server.skiniko.skinikoPektisGet(login);
+	if (!pektis) return false;
+
+	return pektis.pektisOnomaGet().match(pattern);
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
