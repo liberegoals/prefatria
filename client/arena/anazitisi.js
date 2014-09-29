@@ -1,4 +1,8 @@
-Arena.anazitisi = {};
+Arena.anazitisi = {
+	pattern: '',
+	katastasi: 'ALL',
+	sxetikos: true,
+};
 
 Arena.anazitisi.setup = function() {
 	Arena.anazitisi.panelDOM = $('<div>').appendTo(Arena.pssDOM);
@@ -30,30 +34,97 @@ Arena.anazitisi.panel.bpanelButtonPush(new PButton({
 }));
 
 Arena.anazitisi.panel.bpanelGetDOM().
-append($('<input>').addClass('panelInput').on('click', function(e) {
+append(Arena.anazitisi.inputDOM = $('<input>').
+addClass('panelInput').
+on('keyup', function(e) {
+	Arena.anazitisi.keyup(e);
+}).
+on('click', function(e) {
 	Arena.inputTrexon = $(this);
-	Arena.inputRefocus();
+	Arena.inputRefocus(e);
 }));
 
 Arena.anazitisi.panel.bpanelButtonPush(new PButton({
-	id: 'delete',
-	img: 'ikona/misc/Xred.png',
-	title: 'Διαγραφή όλων των προσκλήσεων',
+	id: 'clear',
+	img: 'clear.png',
+	title: 'Καθαρισμός πεδίου αναζήτησης',
 	click: function(e) {
+		Arena.inputRefocus(e);
+		Arena.anazitisi.inputDOM.val('');
+		Arena.anazitisi.keyup();
 	},
 }));
 
 Arena.anazitisi.panel.bpanelButtonPush(new PButton({
-	id: 'niofertos',
-	img: 'niofertos.png',
+	id: 'katastasi',
+	refresh: function () {
+		var dom, xroma, desc;
+
+		switch (Arena.anazitisi.katastasi) {
+		case 'ONLINE':
+			xroma = 'portokali';
+			desc = 'Αναζητούνται online παίκτες';
+			break;
+		case 'AVAILABLE':
+			xroma = 'prasini';
+			desc = 'Αναζητούνται διαθέσιμοι παίκτες';
+			break;
+		default:
+			xroma = 'ble';
+			desc = 'Αναζητούνται παίκτες ανεξαρτήτως κατάστασης';
+			break;
+		}
+
+		dom = this.pbuttonIconGetDOM();
+		if (dom) dom.attr('src', 'ikona/panel/balaki/' + xroma + '.png');
+
+		dom = this.pbuttonGetDOM();
+		if (dom) dom.attr('title', desc);
+	},
 	click: function(e) {
+		Arena.inputRefocus(e);
+
+		switch (Arena.anazitisi.katastasi) {
+		case 'ONLINE':
+			Arena.anazitisi.katastasi = 'AVAILABLE';
+			break;
+		case 'AVAILABLE':
+			Arena.anazitisi.katastasi = 'ALL';
+			break;
+		default:
+			Arena.anazitisi.katastasi = 'ONLINE';
+			break;
+		}
+
+		this.pbuttonRefresh();
 	},
 }));
 
 Arena.anazitisi.panel.bpanelButtonPush(new PButton({
-	id: 'theatis',
-	img: 'theatis.png',
+	id: 'sxetikos',
+	img: 'sxetikos.png',
+	refresh: function () {
+		var dom, opacity;
+
+		if (Arena.anazitisi.sxetikos) {
+			opacity = 1;
+			desc = 'Αναζητούνται μόνο σχετιζόμενοι παίκτες';
+		}
+		else {
+			opacity = 0.4;
+			desc = 'Αναζητούνται και μη σχετιζόμενοι παίκτες';
+		}
+
+		dom = this.pbuttonIconGetDOM();
+		if (dom) dom.css('opacity', opacity);
+
+		dom = this.pbuttonGetDOM();
+		if (dom) dom.attr('title', desc);
+	},
 	click: function(e) {
+		Arena.inputRefocus(e);
+		Arena.anazitisi.sxetikos = !Arena.anazitisi.sxetikos;
+		this.pbuttonRefresh();
 	},
 }));
 
@@ -147,3 +218,54 @@ Arena.anazitisi.panelSetup = function() {
 
 	return Arena;
 }
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
+
+Arena.anazitisi.keyup = function(e) {
+	var code, pat;
+
+	if (e) {
+		code = e.keyCode ? e.keyCode : e.which;
+		switch (code) {
+		case 27:	// Escape
+			Arena.anazitisi.inputDOM.val('');
+			break;
+		}
+	}
+
+	pat = Arena.anazitisi.inputDOM.val().trim();
+	if (pat === Arena.anazitisi.pattern)
+	return Arena;
+
+	Arena.anazitisi.pattern = pat;
+	Arena.anazitisi.schedule();
+
+	return Arena;
+};
+
+Arena.anazitisi.schedule = function() {
+	var len, delay;
+
+	if (Arena.anazitisi.timer)
+	clearTimeout(Arena.anazitisi.timer);
+
+	len = Arena.anazitisi.pattern.length;
+	if (len < 2) delay = 700;
+	else if (len < 3) delay = 500;
+	else if (len < 4) delay = 400;
+	else if (len < 5) delay = 300;
+	else delay = 200;
+
+	Arena.anazitisi.timer = setTimeout(function() {
+		Arena.anazitisi.zitaData();
+	}, delay);
+
+	return Arena;
+};
+
+Arena.anazitisi.zitaData = function() {
+	var val;
+
+Client.fyi.pano('>>' + Arena.anazitisi.pattern + '<<');
+	return Arena;
+};
