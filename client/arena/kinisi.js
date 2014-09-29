@@ -35,9 +35,7 @@ Skiniko.prototype.processKinisiPostSN = function(data) {
 
 	sinedria.sinedriaCreateDOM();
 	this.pektisEntopismosDOM(data.sinedria.pektis);
-
-	if (Arena.anazitisi.active)
-	new Anazitisi({login:data.sinedria.pektis}).anazitisiCreateDOM();
+	Arena.anazitisi.pektisCheck(data.sinedria.pektis, sinedria);
 
 	if (Arena.ego.oxiTrapezi())
 	return this;
@@ -81,21 +79,10 @@ Skiniko.prototype.processKinisiPostNS = function(data) {
 	var thesi;
 
 	this.pektisEntopismosDOM(data.login);
+	Arena.anazitisi.pektisCheck(data.login, null);
 
-	if (Arena.anazitisi.active) {
-		dom = Arena.anazitisi.lista[data.login];
-		if (dom) {
-			if (Arena.anazitisi.katastasi !== 'ALL') {
-				dom.remove();
-				delete Arena.anazitisi.lista[data.login];
-			}
-			else {
-				new Anazitisi({login:data.login}).anazitisiCreateDOM();
-			}
-		}
-	}
-
-	if (Arena.ego.oxiTrapezi()) return this;
+	if (Arena.ego.oxiTrapezi())
+	return this;
 
 	// Ελέγχω αν ο εξελθών παίκτης κατέχει θέση παίκτη στην
 	// τσόχα μας.
@@ -243,6 +230,7 @@ Skiniko.prototype.processKinisiPostTR = function(data) {
 	trapezi.trapeziCreateDOM();
 	pektis = data.trapezi.pektis1;
 	this.pektisEntopismosDOM(pektis);
+	Arena.anazitisi.pektisCheck(pektis);
 
 	if (pektis.isEgo()) {
 		Arena.
@@ -305,6 +293,8 @@ Skiniko.prototype.processKinisiPostET = function(data) {
 
 	sinedria = this.skinikoSinedriaGet(data.pektis);
 	if (!sinedria) return this;
+
+	Arena.anazitisi.pektisCheck(data.pektis, sinedria);
 
 	// Ενημερώνουμε το χρώμα του τραπεζιού αποχώρησης στο καφενείο,
 	// επανεμφανίζουμε την πινακίδα και αν ο παίκτης συμμετείχε ως
@@ -462,6 +452,7 @@ Skiniko.prototype.processKinisiPostRT = function(data) {
 	Arena.panelRefresh(Arena.ego.isTrapezi() ? null : 1);
 
 	sinedria = this.skinikoSinedriaGet(data.pektis);
+	Arena.anazitisi.pektisCheck(data.pektis, sinedria);
 	if (!sinedria) return this;
 
 	// Επαναδιαμορφώνουμε κάποια στοιχεία του τραπεζιού από το οποίο
@@ -719,6 +710,7 @@ Skiniko.prototype.processKinisiPostPT = function(data) {
 	trapezi.theatisDOM.prepend(sinedria.theatisDOM);
 
 	Arena.panelRefresh();
+	Arena.anazitisi.pektisCheck(data.pektis, sinedria);
 
 	if (Arena.ego.oxiTrapezi(trapezi))
 	return this;
@@ -1460,6 +1452,8 @@ Skiniko.prototype.processKinisiPostAT = function(data) {
 		sinedria.
 		sinedriaDetachRebelosDOM().
 		sinedriaDetachTheatisDOM();
+
+		Arena.anazitisi.pektisCheck(pektis, sinedria);
 
 		// Αν είμαστε εμείς που εμπλεκόμαστε με το συγκεκριμένο τραπέζι,
 		// θέτουμε τη σχετική flag.
