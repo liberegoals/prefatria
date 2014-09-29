@@ -1,8 +1,40 @@
 Arena.anazitisi = {
+	// Το flag "active" δείχνει αν υπάρχει ενεργό φίλτρο αναζήτησης
+	// στη σελίδα του χρήστη.
+
 	active: false,
+
+	// Το property "pattern" περιέχει το pattern αναζήτησης που αφορά
+	// στο login και στο όνομα των παικτών.
+
 	pattern: '',
+
+	// Το property "katastasi" αφορά στην κατάσταση των αναζητουμένων
+	// παικτών. Πιο συγκεκριμένα, μπορούμε να φιλτράρουμε παίκτες που
+	// είναι online, online και διαθέσιμοι για παιχνίδι:
+	//
+	//	ONLINE		Φιλτράρονται οι online παίκτες, ασχέτως αν
+	//			συμμετέχουν σε κάποιο τραπέζι ως παίκτες ή
+	//			όχι.
+	//
+	//	AVAILABLE	Φιλτράρονται οι online παίκτες που δεν δείχνουν
+	//			να συμμετέχουν ως παίκτες σε κάποιο τραπέζι.
+	//
+	//	ALL		Δεν φιλτράρονται οι παίκτες σε σχέση με την
+	//			κατάστασή τους.
+
 	katastasi: 'ONLINE',
+
+	// Το property "sxetikos" παίρνει τιμές true/false και δείχνει αν
+	// φιλτράρονται οι φίλοι του παίκτη που εκτελεί την αναζήτηση.
+
 	sxetikos: true,
+
+	// Η λίστα "lista" περιέχει μια εγγραφή για κάθε παίκτη που πληροί
+	// τα κριτήρια ανζήτησης. Η λίστα είναι δεικοτοδοτημένη με το login
+	// name του παίκτη και δείχνει το σχετικό DOM element στην περιοχή
+	// εμφάνισης των αποτελεσμάτων αναζήτησης.
+
 	lista: {},
 };
 
@@ -46,6 +78,9 @@ on('click', function(e) {
 	Arena.inputRefocus(e);
 }));
 
+// Όταν κάνουμε κλικ στον μεγεθυντικό φακό επιχειρούμε εκ νέου αναζήτηση
+// με τα κριτήρια που ήδη είναι καθορισμένα στη σελίδα μας.
+
 Arena.anazitisi.panel.bpanelButtonPush(Arena.anazitisi.anazitisiDOM = new PButton({
 	img: 'fakos.png',
 	title: 'Αναζήτηση τώρα!',
@@ -69,7 +104,7 @@ Arena.anazitisi.panel.bpanelButtonPush(new PButton({
 Arena.anazitisi.panel.bpanelButtonPush(new PButton({
 	id: 'katastasi',
 	refresh: function () {
-		var dom, xroma, desc;
+		var xroma, desc, dom;
 
 		switch (Arena.anazitisi.katastasi) {
 		case 'ONLINE':
@@ -116,7 +151,7 @@ Arena.anazitisi.panel.bpanelButtonPush(new PButton({
 	id: 'sxetikos',
 	img: 'sxetikos.png',
 	refresh: function () {
-		var dom, opacity;
+		var opacity, desc, dom;
 
 		if (Arena.anazitisi.sxetikos) {
 			opacity = 1;
@@ -395,7 +430,7 @@ Anazitisi.prototype.anazitisiOnomaGet = function() {
 };
 
 Anazitisi.prototype.anazitisiCreateDOM = function() {
-	var login, pektis, sinedria, katastasi, dom;
+	var login, pektis, sinedria, katastasi, dom, loginClass;
 
 	login = this.anazitisiLoginGet();
 	if (!login) return this;
@@ -418,17 +453,22 @@ Anazitisi.prototype.anazitisiCreateDOM = function() {
 	};
 	katastasi.src = 'ikona/panel/balaki/' + katastasi.src + '.png';
 
+	loginClass = 'anazitisiLogin';
+	if (Arena.ego.pektis.pektisIsFilos(login))
+	loginClass += ' anazitisiFilos'; 
+
 	dom = Arena.anazitisi.lista[login];
 	if (dom) dom.remove();
 
 	dom = $('<div>').addClass('anazitisi').
 	data('pektis', pektis).
 	append($('<img>').addClass('anazitisiKatastasiIcon').attr(katastasi)).
-	append($('<div>').addClass('anazitisiLogin').text(login)).
+	append($('<div>').addClass(loginClass).text(login)).
 	append($('<div>').addClass('anazitisiOnoma').text(this.anazitisiOnomaGet()));
 
 	Arena.anazitisi.lista[login] = dom;
 	Arena.anazitisi.areaDOM.prepend(dom);
+	Arena.anazitisi.zebraRefresh();
 
 	return this;
 };

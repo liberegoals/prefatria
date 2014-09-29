@@ -6,6 +6,23 @@ Service.anazitisi = {};
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
 
+// Το service "anazitisi" δέχεται κριτήρια αναζήτησης παικτών και αφού εντοπίσει
+// τους ζητούμενους παίκτες στην database, τους επιστρέφει στον αιτούντα client
+// με τη μορφή array από "Anazitisi" objects.
+//
+// Να σημειωθεί ότι η αναζήτηση ΔΕΝ δέχεται κριτήριο κατάστασης παικτών, ήτοι
+// ALL, ONLINE και AVAILABLE. Πράγματι, οι αναζητήσεις σε ONLINE και AVAILABLE
+// παίκτες γίνονται απευθείας στον client, επομένως το παρόν service αφορά σε
+// αναζητήσεις παικτών ανεξαρτήτως κατάστασης.
+//
+// Τα κριτήρια που περνάμε στο παρόν service είναι:
+//
+//	pattern	Είναι αλφαριθητικό και χρησιμοποιείται στον έλεγχο login name
+//		και ονόματος παίκτη.
+//
+//	sxesi	Είναι αριθμητικό και εφόσον είναι διάφορο του μηδενός φιλτράρει
+//		μόνο τους φίλους του αιτούντος παίκτη.
+
 Service.anazitisi.anazitisi = function(nodereq) {
 	var pattern, sxesi, query;
 
@@ -15,6 +32,7 @@ Service.anazitisi.anazitisi = function(nodereq) {
 
 	pattern = nodereq.url.pattern;
 	sxesi = parseInt(nodereq.url.sxesi);
+
 	if ((!pattern) && (!sxesi))
 	return nodereq.error('Δεν δόθηκαν επαρκή κριτήρια');
 
@@ -29,6 +47,7 @@ Service.anazitisi.anazitisi = function(nodereq) {
 	query += " AND (`login` IN (SELECT `sxetizomenos` FROM `sxesi` WHERE `pektis` LIKE " +
 		nodereq.loginGet().json() + " AND `sxesi` = 'ΦΙΛΟΣ'))";
 
+	query += ' ORDER BY `login` DESC';
 	DB.connection().query(query, function(conn, rows) {
 		var i;
 

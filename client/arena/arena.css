@@ -1677,6 +1677,10 @@ cursor: auto;
 	cursor: pointer;
 }
 
+.anazitisiEven {
+	background-color: #DBE6FF;
+}
+
 .anazitisi:hover {
 	font-weight: bold;
 	background-color: #B6CCFF;
@@ -1695,16 +1699,25 @@ cursor: auto;
 	font-weight: bold;
 }
 
+.anazitisiFilos {
+	color: #185C18;
+	text-shadow: 1px 0px 1px #000000;
+}
+
 .anazitisiLogin:before {
 	font-weight: normal;
 	content: '[';
 	margin-right: 4px;
+	color: #525252;
+	text-shadow: none;
 }
 
 .anazitisiLogin:after {
 	font-weight: normal;
 	content: ']';
 	margin-left: 4px;
+	color: #525252;
+	text-shadow: none;
 }
 
 .anazitisiOnoma {
