@@ -1668,20 +1668,48 @@ cursor: auto;
 /***********************************************************************************************************************/
 
 .anazitisi {
-	padding: 6px 6px 6px 6px;
-	background-color: #F7E5FC;
+	padding: 0 0 6px 2px;
+	background-color: #E5ECFC;
 
 	border-style: none none solid none;
 	border-width: 1px;
 	border-color: olive;
-}
-
-.anazitisiEven {
-	background-color: #EADCEC;
+	cursor: pointer;
 }
 
 .anazitisi:hover {
 	font-weight: bold;
+	background-color: #B6CCFF;
+}
+
+.anazitisiKatastasiIcon {
+	display: inline-block;
+	position: relative;
+	bottom: -5px;
+	width: 20px;
+}
+
+.anazitisiLogin {
+	display: inline-block;
+	margin-left: 4px;
+	font-weight: bold;
+}
+
+.anazitisiLogin:before {
+	font-weight: normal;
+	content: '[';
+	margin-right: 4px;
+}
+
+.anazitisiLogin:after {
+	font-weight: normal;
+	content: ']';
+	margin-left: 4px;
+}
+
+.anazitisiOnoma {
+	display: inline-block;
+	margin-left: 4px;
 }
 
 /***********************************************************************************************************************/
