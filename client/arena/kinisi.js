@@ -36,6 +36,9 @@ Skiniko.prototype.processKinisiPostSN = function(data) {
 	sinedria.sinedriaCreateDOM();
 	this.pektisEntopismosDOM(data.sinedria.pektis);
 
+	if (Arena.anazitisi.active)
+	new Anazitisi({login:data.sinedria.pektis}).anazitisiCreateDOM();
+
 	if (Arena.ego.oxiTrapezi())
 	return this;
 

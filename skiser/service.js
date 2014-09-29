@@ -8,6 +8,7 @@
 Service = {};
 
 Log.level.push();
+require('./service/anazitisi.js');
 require('./service/minima.js');
 require('./service/profinfo.js');
 require('./service/fortos.js');
@@ -37,6 +38,7 @@ Log.level.pop();
 // επεξεργασία που υφίσταται από τον server.
 
 Server.router = {
+	'/anazitisi': Service.anazitisi.anazitisi,
 	'/minimaFeredata': Service.minima.feredata,
 	'/minimaKatastasi': Service.minima.katastasi,
 	'/minimaDelete': Service.minima.diagrafi,

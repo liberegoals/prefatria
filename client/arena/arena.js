@@ -207,7 +207,7 @@ Arena.setup = function() {
 		if ($(this).data('pektis'))
 		Client.fyi.kato();
 	}).
-	on('click', '.pektis', function(e) {
+	on('click', '.pektis,.anazitisi', function(e) {
 		var pektis = $(this).data('pektis');
 		if (pektis) pektis.pektisFormaPopupDOM(e);
 	});
