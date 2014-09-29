@@ -1273,9 +1273,10 @@ Skiniko.prototype.processKinisiPostKN = function(data) {
 		trapezi = Arena.skiniko.skinikoTrapeziGet(data.trapezi);
 		if (!trapezi) return this;
 		if (!trapezi.trapeziThesiPekti(Client.session.pektis)) return this;
-		Client.sound.korna();
-		Client.fyi.ekato('Ο παίκτης <b>' + data.pektis +
-			'</b> αδημονεί και κορνάρει στο τραπέζι <b>' + data.trapezi + '</b>');
+		Arena.kornaPlay();
+		Client.fyi.ekato('Ο παίκτης <span class="entona ble">' + data.pektis +
+			'</span> αδημονεί και κορνάρει από το τραπέζι <span class="entona ble">' +
+			data.trapezi + '</span>');
 		return this;
 	}
 

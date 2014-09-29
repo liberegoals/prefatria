@@ -876,28 +876,15 @@ Sizitisi.funchatAppend = function(dom, id, online) {
 	}
 };
 
-Sizitisi.kornaLista = [
-	{s:'beep2.ogg',v:10},
-	{s:'beep4.ogg',v:10},
-	{s:'bop2.ogg',v:10},
-	{s:'dinati3.ogg',v:10},
-	{s:'dinati4.ogg',v:10},
-	{s:'honk.ogg',v:10},
-	{s:'honk2.ogg',v:10},
-	{s:'kanoniki3.ogg',v:10},
-];
-
 Sizitisi.kornaAppend = function(dom) {
-	var img, korna;
+	var img;
 
+	Arena.kornaPlay();
 	img = $('<img>').attr('src', 'ikona/panel/korna.png').css('width', '60px');
 	dom.append(img);
 	img.animate({
 		width: '40px',
 	}, 1000, 'easeInOutBounce');
-
-	korna = Sizitisi.kornaLista[Globals.random(1000) % Sizitisi.kornaLista.length];
-	Client.sound.play('korna/' + korna.s, korna.v);
 };
 
 Sizitisi.emoticonAppend = function(dom, s) {
