@@ -362,7 +362,6 @@ Arena.anazitisi.zitaData = function() {
 		buttonDom.working(false);
 	}).
 	fail(function(err) {
-		Arena.anazitisi.processData(rsp);
 		Client.skiserFail(err);
 		buttonDom.working(false);
 	});
@@ -460,7 +459,7 @@ Arena.anazitisi.loginCheck = function(login, sinedria) {
 	pattern = new RegExp(Arena.anazitisi.pattern.replace(/%/g, '.*').replace(/_/g, '.'), "i");
 	if (login.match(pattern)) return true;
 
-	pektis = Server.skiniko.skinikoPektisGet(login);
+	pektis = Arena.skiniko.skinikoPektisGet(login);
 	if (!pektis) return false;
 
 	return pektis.pektisOnomaGet().match(pattern);
