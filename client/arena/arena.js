@@ -650,3 +650,22 @@ Arena.ixosTheatis = function() {
 	if (ixos) Client.sound.play(ixos);
 	return Arena;
 }
+
+Arena.kornaLista = [
+	{s:'beep2.ogg'},
+	{s:'beep4.ogg'},
+	{s:'bop2.ogg'},
+	{s:'dinati3.ogg'},
+	{s:'dinati4.ogg'},
+	{s:'honk.ogg'},
+	{s:'honk2.ogg'},
+	{s:'kanoniki3.ogg'},
+];
+
+Arena.kornaPlay = function() {
+	var korna;
+
+	korna = Arena.kornaLista[Globals.random(1000) % Arena.kornaLista.length];
+	if (!korna.hasOwnProperty('v')) korna.v = 10;
+	Client.sound.play('korna/' + korna.s, korna.v);
+};
