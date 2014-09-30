@@ -291,18 +291,17 @@ Arena.setupPss = function() {
 };
 
 Arena.epanadiataxiPss = function() {
-	var hpss, h;
+	var hpss, prosklisiH = 65, anazitisiH = 185, sizitisiH;
 
 	hpss = $('#stiliPss').innerHeight();
 	hpss -= Arena.prosklisi.panelDOM.outerHeight(true);
 	hpss -= Arena.anazitisi.panelDOM.outerHeight(true);
 	hpss -= Arena.sizitisi.panelDOM.outerHeight(true);
-	h = Math.floor(hpss / 4) - 1;
 
-	Arena.prosklisi.areaDOM.css('height', h + 'px');
-	Arena.anazitisi.areaDOM.css('height', h + 'px');
-	h = hpss - h - h - 3;
-	Arena.sizitisi.areaDOM.css('height', h + 'px');
+	Arena.prosklisi.areaDOM.css('height', prosklisiH + 'px');
+	Arena.anazitisi.areaDOM.css('height', anazitisiH + 'px');
+	sizitisiH = hpss - prosklisiH - anazitisiH - 3;
+	Arena.sizitisi.areaDOM.css('height', sizitisiH + 'px');
 
 	Arena.flags.epanadiataxiPss = false;
 	Arena.prosklisi.panel.bpanelButtonGet('epanadiataxiPss').pbuttonDisplay();
