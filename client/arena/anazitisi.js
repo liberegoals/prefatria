@@ -40,7 +40,7 @@ Arena.anazitisi = {
 	// Όταν γίνονται αναζητήσεις στον skiser θέτουμε κάποιο όριο στο
 	// πλήθος των αποτελεσμάτων.
 
-	max: 10,
+	max: 30,
 };
 
 Arena.anazitisi.isActive = function() {
@@ -406,16 +406,29 @@ Arena.anazitisi.processData = function(rsp) {
 	} catch (e) {
 		Client.sound.beep();
 		Client.fyi.epano('Ακαθόριστα αποτελέσματα αναζήτησης');
-		return;
+		return Arena;
 	}
 
 	Client.fyi.pano('Επεξεργασία αποτελεσμάτων. Παρακαλώ περιμένετε…');
 	for (i = 0; i < data.length; i++) {
 		new Anazitisi(data[i]).anazitisiCreateDOM();
 	}
+	Client.fyi.pano();
 
-	if (data.length < Arena.anazitisi.max) Client.fyi.pano();
-	else Client.fyi.epano('<span class="entona ble">ΠΡΟΣΟΧΗ:</span> Ελλιπή αποτελέσματα. Περιορίστε την αναζήτηση!');
+	// Αν έχει δοθεί κριτήριο σχετικότητας, τότε δεν εφαρμόστηκε περιορισμός
+	// αποτελεσμάτων κατά την αναζήτηση στον skiser.
+
+	if (Arena.anazitisi.sxetikos)
+	return Arena;
+
+	// Δεν έχει δοθεί κριτήριο σχετικότητας, επομένως έχει εφαρμοστεί περιορισμός
+	// στο πλήθος των αποτελεσμάτων. Αν τα αποτελέσματα είναι στο όριο περικοπής,
+	// δίνουμε σχετική ειδοποίηση.
+
+	if (data.length >= Arena.anazitisi.max)
+	Client.fyi.epano('<span class="entona ble">ΠΡΟΣΟΧΗ:</span> Ελλιπή αποτελέσματα. Περιορίστε την αναζήτηση!');
+
+	return Arena;
 };
 
 // Η function "pektisCheck" δέχεται το login name κάποιου παίκτη και ελέγχει
