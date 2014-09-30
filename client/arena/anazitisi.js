@@ -99,18 +99,20 @@ Arena.anazitisi.panel.bpanelButtonPush(Arena.anazitisi.anazitisiDOM = new PButto
 }));
 
 Arena.anazitisi.panel.bpanelButtonPush(new PButton({
-	id: 'clear',
 	img: 'clear.png',
-	title: 'Καθαρισμός πεδίου αναζήτησης',
+	title: 'Καθαρισμός κριτηρίων αναζήτησης',
 	click: function(e) {
 		Arena.inputRefocus(e);
 		Arena.anazitisi.inputDOM.val('');
-		Arena.anazitisi.keyup();
+		Arena.anazitisi.katastasi = 'ONLINE';
+		Arena.anazitisi.katastasiButtonDOM.pbuttonRefresh();
+		Arena.anazitisi.sxetikos = true;
+		Arena.anazitisi.sxetikosButtonDOM.pbuttonRefresh();
+		Arena.anazitisi.schedule();
 	},
 }));
 
-Arena.anazitisi.panel.bpanelButtonPush(new PButton({
-	id: 'katastasi',
+Arena.anazitisi.panel.bpanelButtonPush(Arena.anazitisi.katastasiButtonDOM = new PButton({
 	refresh: function () {
 		var xroma, desc, dom;
 
@@ -155,8 +157,7 @@ Arena.anazitisi.panel.bpanelButtonPush(new PButton({
 	},
 }));
 
-Arena.anazitisi.panel.bpanelButtonPush(new PButton({
-	id: 'sxetikos',
+Arena.anazitisi.panel.bpanelButtonPush(Arena.anazitisi.sxetikosButtonDOM = new PButton({
 	img: 'sxetikos.png',
 	refresh: function () {
 		var opacity, desc, dom;
@@ -329,10 +330,8 @@ Arena.anazitisi.zitaData = function() {
 		delete Arena.anazitisi.timer;
 	}
 
-	Arena.anazitisi.areaDOM.empty();
-	Arena.anazitisi.lista = {};
-
 	if ((Arena.anazitisi.katastasi === 'ALL') && (!Arena.anazitisi.pattern) && (!Arena.anazitisi.sxetikos)) {
+		Arena.anazitisi.clearResults();
 		Arena.anazitisi.active = false;
 		return Arena;
 	}
@@ -358,10 +357,12 @@ Arena.anazitisi.zitaData = function() {
 		'pattern=' + Arena.anazitisi.pattern,
 		'sxesi=' + (Arena.anazitisi.sxetikos ? 1 : 0)).
 	done(function(rsp) {
+		Arena.anazitisi.clearResults();
 		Arena.anazitisi.processData(rsp);
 		buttonDom.working(false);
 	}).
 	fail(function(err) {
+		Client.sound.beep();
 		Client.skiserFail(err);
 		buttonDom.working(false);
 	});
@@ -369,13 +370,18 @@ Arena.anazitisi.zitaData = function() {
 	return Arena;
 };
 
-Arena.anazitisi.online = function() {
-	var login;
+Arena.anazitisi.clearResults = function() {
+	Arena.anazitisi.areaDOM.empty();
+	Arena.anazitisi.lista = {};
+	return Arena;
+};
 
-	for (login in Arena.skiniko.sinedria) {
-		if (Arena.anazitisi.loginCheck(login))
+Arena.anazitisi.online = function() {
+	Arena.anazitisi.clearResults();
+	Globals.walk(Arena.skiniko.sinedria, function(login, sinedria) {
+		if (Arena.anazitisi.loginCheck(login, sinedria))
 		new Anazitisi({login:login}).anazitisiCreateDOM();
-	}
+	});
 
 	return Arena;
 };
