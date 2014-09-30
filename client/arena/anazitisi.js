@@ -499,7 +499,7 @@ Anazitisi.prototype.anazitisiCreateDOM = function() {
 	if (!login) return this;
 
 	pektis = Arena.skiniko.skinikoPektisGet(login);
-	if (!pektis) Arena.skiniko.skinikoPektisSet(new Pektis(this));
+	if (!pektis) Arena.skiniko.skinikoPektisSet(pektis = new Pektis(this));
 
 	sinedria = Arena.skiniko.skinikoSinedriaGet(login);
 	if (!sinedria) katastasi = {

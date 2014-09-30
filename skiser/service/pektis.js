@@ -7,24 +7,23 @@ Service.pektis = {};
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
 
 Service.pektis.fetch = function(nodereq) {
-	var skiniko, pektis, conn, query;
+	var pektis, query;
 
-	if (nodereq.anonimo()) return;
-	if (nodereq.denPerastike('login')) return nodereq.error('Δεν περάστηκε login name παίκτη');
+	if (nodereq.isvoli()) return;
+	if (nodereq.denPerastike('login', true)) return;
 
-	skiniko = nodereq.skinikoGet();
-	pektis = skiniko.skinikoPektisGet(nodereq.url.login);
+	pektis = Server.skiniko.skinikoPektisGet(nodereq.url.login);
 	if (pektis) return nodereq.end(pektis.pektisFeredata());
 
-	query = 'SELECT * FROM `pektis` WHERE `login` = ' + nodereq.url.login.json();
+	query = 'SELECT * FROM `pektis` WHERE `login` LIKE ' + nodereq.url.login.json();
 	DB.connection().query(query, function(conn, rows) {
 		conn.free();
 		if (rows.length != 1)
 		return nodereq.error('Δεν βρέθηκε ο παίκτης στην database');
 
 		pektis = new Pektis(row);
-		skiniko.skinikoPektisSet(pektis);
-		nodereq.end(pektis.stringify);
+		Server.skiniko.skinikoPektisSet(pektis);
+		nodereq.end(pektis.pektisFeredata());
 
 	});
 };

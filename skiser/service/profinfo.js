@@ -7,42 +7,55 @@ Service.profinfo = {};
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
 
 Service.profinfo.get = function(nodereq) {
-	var pektis, query;
+	var login, pektis, query;
 
 	if (nodereq.isvoli()) return;
 	if (nodereq.denPerastike('pektis', true)) return;
 
-	pektis = Server.skiniko.skinikoPektisGet(nodereq.url.pektis);
-	if (!pektis) return nodereq.error('Δεν βρέθηκε ο παίκτης στο σκηνικό');
+	login = nodereq.url.pektis;
+	pektis = Server.skiniko.skinikoPektisGet(login);
 
-	// Εφόσον ο παίκτης βρίσκεται στο σκηνικό του skiser, πρέπει να
-	// υπάρχουν και οι πληροφορίες προφίλ, τις οποίες επιστρέφουμε
-	// άμεσα.
+	// Υπάρχει περίπτωση ο παίκτης για τον οποίον ζητούνται πληροφορίες προφίλ
+	// να μην είναι ενταγμένος στο σκηνικό, είτε επειδή δεν ενετάχθη ποτέ, είτε
+	// επειδή αποκαθηλώθηκε κάποια στιγμή. Σ' αυτήν την περίπτωση θα φορτώσουμε
+	// μια πρόχειρη εκδοχή του παίκτη στο σκηνικό όπου θα υπάρχει μόνο το login
+	// name του, προκειμένου σ' αυτήν την πρόχειρη εκδοχή του παίκτη να «κρεμάσουμε»
+	// τις πληροφορίες προφίλ, καθώς αυτές μπορεί να διορθωθούν από τον αιτούντα
+	// και θα πρέπει να υπάρχουν στο σκηνικό.
 
-	if (pektis.hasOwnProperty('profinfo'))
-	return Service.profinfo.get2(nodereq, pektis);
+	if (!pektis) Server.skiniko.skinikoPektisSet(pektis = new Pektis({
+		login: login,
+	}));
 
-	// Για κάποιο λόγο δεν βρέθηκαν στον skiser πληροφορίες προφίλ
-	// για τον παίκτη, οπότε τις φορτώνουμε τώρα από την database.
+	// Αν οι πληροφορίες προφίλ υπάρχουν ήδη στον παίκτη, τότε τις επιστρέφουμε
+	// άμεσα στον αιτούντα.
 
-	console.log(nodereq.url.pektis + ': ζητήθηκαν πληροφορίες προφίλ από την database');
+	if (pektis.profinfo)
+	return Service.profinfo.get2(nodereq, login, pektis);
+
+	// Οι πληροφορίες προφίλε δεν υπάρχουν για τον εν λόγω παίκτη, προφανώς επειδή
+	// ανεβάσαμε μόλις μια πρόχειρη εκδοχή του στο σκηνικό. Θα πρέπει, λοιπόν, να
+	// ανεβάσουμε τις πληροφορίες προφίλ από την database.
+
+	console.log(login + ': ζητήθηκαν πληροφορίες προφίλ από την database');
 	pektis.profinfo = {};
-	query = 'SELECT ' + Profinfo.projection + ' FROM `profinfo` WHERE `pektis` = ' +
-		nodereq.url.pektis.json();
+	query = 'SELECT ' + Profinfo.projection + ' FROM `profinfo` WHERE `pektis` = ' + login.json();
 	DB.connection().query(query, function(conn, rows) {
 		conn.free();
-		Globals.awalk(rows, function(i, profinfo) {
-			pektis.pektisProfinfoSet(profinfo['sxoliastis'], profinfo['kimeno']);
+		Globals.awalk(rows, function(i, row) {
+			pektis.profinfo[row['sxoliastis']] = row['kimeno'];
 		});
 
-		Service.profinfo.get2(nodereq, pektis);
+		Service.profinfo.get2(nodereq, login, pektis);
 	});
 };
 
-Service.profinfo.get2 = function(nodereq, pektis) {
-	var login, paraliptis;
+Service.profinfo.get2 = function(nodereq, login, pektis) {
+	var paraliptis;
 
-	login = pektis.pektisLoginGet();
+	if (!pektis.profinfo)
+	return nodereq.error('Δεν βρέθηκαν πληροφορίες προφίλ');
+
 	paraliptis = nodereq.loginGet();
 	Globals.walk(pektis.profinfo, function(sxoliastis, kimeno) {
 		if ((sxoliastis != login) && (sxoliastis != paraliptis))
