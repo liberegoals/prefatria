@@ -313,6 +313,7 @@ Arena.anazitisi.keyup = function(e) {
 Arena.anazitisi.schedule = function(delay) {
 	var len;
 
+	Client.fyi.pano();
 	if (Arena.anazitisi.timer)
 	clearTimeout(Arena.anazitisi.timer);
 
