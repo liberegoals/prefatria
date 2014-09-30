@@ -813,7 +813,8 @@ jQuery.fn.pektisDiakritikaDOM = function(pektis) {
 Sinedria.prototype.sinedriaNiofertosRefreshDOM = function() {
 	this.
 	sinedriaSxesiRefreshDOM(this.niofertosDOM).
-	sinedriaKatastasiRefreshDOM(this.niofertosDOM);
+	sinedriaKatastasiRefreshDOM(this.niofertosDOM).
+	sinedriaAnazitisiRefreshDOM(this.niofertosDOM);
 	return this;
 };
 
@@ -831,14 +832,16 @@ Sinedria.prototype.sinedriaNiofertosPushDOM = function() {
 Sinedria.prototype.sinedriaRebelosRefreshDOM = function() {
 	this.
 	sinedriaSxesiRefreshDOM(this.rebelosDOM).
-	sinedriaKatastasiRefreshDOM(this.rebelosDOM);
+	sinedriaKatastasiRefreshDOM(this.rebelosDOM).
+	sinedriaAnazitisiRefreshDOM(this.rebelosDOM);
 	return this;
 };
 
 Sinedria.prototype.sinedriaTheatisRefreshDOM = function() {
 	this.
 	sinedriaSxesiRefreshDOM(this.theatisDOM, this.tsoxaTheatisDOM).
-	sinedriaKatastasiRefreshDOM(this.theatisDOM, this.tsoxaTheatisDOM);
+	sinedriaKatastasiRefreshDOM(this.theatisDOM, this.tsoxaTheatisDOM).
+	sinedriaAnazitisiRefreshDOM(this.theatisDOM, this.tsoxaTheatisDOM);
 	return this;
 };
 
@@ -875,6 +878,24 @@ Sinedria.prototype.sinedriaKatastasiRefreshDOM = function() {
 		if (!pektis) continue;
 		if (pektis.pektisIsDiathesimos()) continue;
 		dom.addClass('apasxolimenos');
+	}
+
+	return this;
+};
+
+Sinedria.prototype.sinedriaAnazitisiRefreshDOM = function() {
+	var login, i, dom;
+
+	login = this.sinedriaPektisGet();
+
+	for (i = 0; i < arguments.length; i++) {
+		dom = arguments[i];
+
+		if (Arena.anazitisi.patternMatch(login))
+		dom.addClass('anazitisiAttract');
+
+		else
+		dom.removeClass('anazitisiAttract');
 	}
 
 	return this;

@@ -36,6 +36,7 @@ Skiniko.prototype.processKinisiPostSN = function(data) {
 	sinedria.sinedriaCreateDOM();
 	this.pektisEntopismosDOM(data.sinedria.pektis);
 	Arena.anazitisi.pektisCheck(data.sinedria.pektis, sinedria);
+	Arena.anazitisi.pektisRefreshDOM();
 
 	if (Arena.ego.oxiTrapezi())
 	return this;
@@ -80,6 +81,7 @@ Skiniko.prototype.processKinisiPostNS = function(data) {
 
 	this.pektisEntopismosDOM(data.login);
 	Arena.anazitisi.pektisCheck(data.login, null);
+	Arena.anazitisi.pektisRefreshDOM();
 
 	if (Arena.ego.oxiTrapezi())
 	return this;
@@ -231,6 +233,7 @@ Skiniko.prototype.processKinisiPostTR = function(data) {
 	pektis = data.trapezi.pektis1;
 	this.pektisEntopismosDOM(pektis);
 	Arena.anazitisi.pektisCheck(pektis);
+	Arena.anazitisi.pektisRefreshDOM();
 
 	if (pektis.isEgo()) {
 		Arena.
@@ -315,6 +318,7 @@ Skiniko.prototype.processKinisiPostET = function(data) {
 	trapezi = this.skinikoTrapeziGet(data.trapezi);
 	if (!trapezi) {
 		Arena.rebelosDOM.prepend(sinedria.rebelosDOM);
+		Arena.anazitisi.pektisRefreshDOM();
 		if (data.pektis.isEgo()) Arena.kitapi.klisimo();
 		return this;
 	}
@@ -344,6 +348,7 @@ Skiniko.prototype.processKinisiPostET = function(data) {
 
 	if (sinedria.sinedriaIsTheatis()) trapezi.theatisDOM.prepend(sinedria.theatisDOM);
 	else trapezi.trapeziThesiRefreshDOM(thesi);
+	Arena.anazitisi.pektisRefreshDOM();
 
 	// Αν ο χρήστης δεν είναι σε κάποιο τραπέζι δεν χρειάζεται να
 	// κάνουμε καμιά περαιτέρω ενέργεια, το DOM του καφενείου έχει
@@ -364,6 +369,7 @@ Skiniko.prototype.processKinisiPostET = function(data) {
 
 		if (data.thesiPektiPrin) {
 			Arena.partida.pektisRefreshDOM(data.thesiPektiPrin);
+			Arena.anazitisi.pektisRefreshDOM();
 			Client.sound.blioup();
 		}
 	}
@@ -379,6 +385,7 @@ Skiniko.prototype.processKinisiPostET = function(data) {
 
 	if (data.pektis.isEgo()) {
 		Arena.partida.refreshDOM(true);
+		Arena.anazitisi.pektisRefreshDOM();
 		Arena.panelRefresh();
 		Arena.partidaModeSet();
 		return this;
@@ -390,6 +397,7 @@ Skiniko.prototype.processKinisiPostET = function(data) {
 	if (sinedria.sinedriaIsTheatis()) {
 		Arena.ixosTheatis();
 		Arena.partida.theatisPushDOM(sinedria);
+		Arena.anazitisi.pektisRefreshDOM();
 		return this;
 	}
 
@@ -397,6 +405,7 @@ Skiniko.prototype.processKinisiPostET = function(data) {
 	// δικό μας τραπέζι.
 
 	Arena.partida.pektisRefreshDOM(thesi);
+	Arena.anazitisi.pektisRefreshDOM();
 	Arena.kitapi.refresh();
 	if (data.telefteos && (!data.telefteos[thesi]))
 	Client.sound.doorbell();
@@ -453,6 +462,7 @@ Skiniko.prototype.processKinisiPostRT = function(data) {
 
 	sinedria = this.skinikoSinedriaGet(data.pektis);
 	Arena.anazitisi.pektisCheck(data.pektis, sinedria);
+	Arena.anazitisi.pektisRefreshDOM();
 	if (!sinedria) return this;
 
 	// Επαναδιαμορφώνουμε κάποια στοιχεία του τραπεζιού από το οποίο
@@ -491,12 +501,14 @@ Skiniko.prototype.processKinisiPostRT = function(data) {
 			Arena.kafenioModeSet();
 			Arena.kafenioScrollTop();
 		}
+		Arena.anazitisi.pektisRefreshDOM();
 		return this;
 	}
 
 	trapezi.
 	trapeziDataRefreshDOM().
 	trapeziThesiRefreshDOM(sinedria.sinedriaThesiGet());
+	Arena.anazitisi.pektisRefreshDOM();
 
 	if (data.pektis.oxiEgo()) return this;
 
@@ -711,6 +723,7 @@ Skiniko.prototype.processKinisiPostPT = function(data) {
 
 	Arena.panelRefresh();
 	Arena.anazitisi.pektisCheck(data.pektis, sinedria);
+	Arena.anazitisi.pektisRefreshDOM();
 
 	if (Arena.ego.oxiTrapezi(trapezi))
 	return this;
@@ -1474,6 +1487,8 @@ Skiniko.prototype.processKinisiPostAT = function(data) {
 
 		Arena.rebelosDOM.prepend(sinedria.rebelosDOM);
 	});
+
+	Arena.anazitisi.pektisRefreshDOM();
 
 	// Αν δεν εμπλεκόμαστε με το τραπέζι που αρχειοθετήθηκε, τότε δεν προβαίνουμε
 	// σε περαιτέρω ενέργειες.
