@@ -36,6 +36,11 @@ Arena.anazitisi = {
 	// εμφάνισης των αποτελεσμάτων αναζήτησης.
 
 	lista: {},
+
+	// Όταν γίνονται αναζητήσεις στον skiser θέτουμε κάποιο όριο στο
+	// πλήθος των αποτελεσμάτων.
+
+	max: 10,
 };
 
 Arena.anazitisi.isActive = function() {
@@ -360,7 +365,8 @@ Arena.anazitisi.zitaData = function() {
 
 	Client.skiserService('anazitisi',
 		'pattern=' + Arena.anazitisi.pattern,
-		'sxesi=' + (Arena.anazitisi.sxetikos ? 1 : 0)).
+		'sxesi=' + (Arena.anazitisi.sxetikos ? 1 : 0),
+		'max=' + Arena.anazitisi.max).
 	done(function(rsp) {
 		Arena.anazitisi.clearResults();
 		Arena.anazitisi.processData(rsp);
@@ -401,11 +407,14 @@ Arena.anazitisi.processData = function(rsp) {
 		Client.fyi.epano('Ακαθόριστα αποτελέσματα αναζήτησης');
 		return;
 	}
+
 	Client.fyi.pano('Επεξεργασία αποτελεσμάτων. Παρακαλώ περιμένετε…');
 	for (i = 0; i < data.length; i++) {
 		new Anazitisi(data[i]).anazitisiCreateDOM();
 	}
-	Client.fyi.pano();
+
+	if (data.length < Arena.anazitisi.max) Client.fyi.pano();
+	else Client.fyi.epano('<span class="entona ble">ΠΡΟΣΟΧΗ:</span> Ελλιπή αποτελέσματα. Περιορίστε την αναζήτηση!');
 };
 
 // Η function "pektisCheck" δέχεται το login name κάποιου παίκτη και ελέγχει
@@ -458,14 +467,30 @@ Arena.anazitisi.loginCheck = function(login, sinedria) {
 	if (sinedria === undefined)
 	sinedria = Arena.skiniko.skinikoSinedriaGet(login);
 
+	// Αν η ζητούμενη κατάσταση δεν είναι "ALL", τότε αναζητούνται online παίκτες,
+	// είτε παίζοντες, είτε ελεύθεροι. Σ' αυτήν την περίπτωση πρέπει να υπάρχει
+	// συνεδρία για τον ελεγχόμενο παίκτη.
+
 	if ((Arena.anazitisi.katastasi !== 'ALL') && (!sinedria))
 	return false;
+
+	// Αν αναζητούμε online ελεύθερους παίκτες, τότε οι παίκτες που παίζουν σε
+	// κάποιο τραπέζι απορρίπτονται. Ο έλεγχος που κάνουμε εδώ δεν απόλυτα ορθός,
+	// καθώς κάποιος παίκτης που σουλατσάρει ως θεατής σε κάποιο άλλο τραπέζι θα
+	// φανεί ελεύθερος.
 
 	if ((Arena.anazitisi.katastasi === 'AVAILABLE') && sinedria.sinedriaIsPektis())
 	return false;
 
+	// Αν δεν έχει δοθεί κριτήριο ονόματος, τότε ο παίκτης είναι δεκτός.
+
 	if (!Arena.anazitisi.pattern)
 	return true;
+
+	// Έχει δοθεί κριτήριο ονόματος και θα ελέγξουμε το login name και το όνομα
+	// του παίκτη. Επειδή τα κριτήρια δίδονται, ενδεχομένως, με μεταχαρακτήρες
+	// που αφορούν σε αναζητήσεις της database, θα πρέπει να μετατρέψουμε το
+	// pattern σε JS regular expression.
 
 	pattern = new RegExp(Arena.anazitisi.pattern.replace(/%/g, '.*').replace(/_/g, '.'), "i");
 	if (login.match(pattern)) return true;

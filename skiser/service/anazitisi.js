@@ -29,6 +29,7 @@ Service.anazitisi.anazitisi = function(nodereq) {
 	if (nodereq.isvoli()) return;
 	if (nodereq.denPerastike('pattern', true)) return;
 	if (nodereq.denPerastike('sxesi', true)) return;
+	if (nodereq.denPerastike('max', true)) return;
 
 	pattern = nodereq.url.pattern;
 	sxesi = parseInt(nodereq.url.sxesi);
@@ -45,9 +46,10 @@ Service.anazitisi.anazitisi = function(nodereq) {
 
 	if (sxesi)
 	query += " AND (`login` IN (SELECT `sxetizomenos` FROM `sxesi` WHERE `pektis` LIKE " +
-		nodereq.loginGet().json() + " AND `sxesi` = 'ΦΙΛΟΣ'))";
+		nodereq.loginGet().json() + " AND `sxesi` LIKE 'ΦΙΛΟΣ'))";
 
-	query += ' ORDER BY `login` DESC';
+	query += ' ORDER BY `login` DESC LIMIT ' + nodereq.url.max;
+
 	DB.connection().query(query, function(conn, rows) {
 		var i;
 
