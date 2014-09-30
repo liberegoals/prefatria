@@ -103,11 +103,16 @@ Arena.anazitisi.panel.bpanelButtonPush(new PButton({
 	title: 'Καθαρισμός κριτηρίων αναζήτησης',
 	click: function(e) {
 		Arena.inputRefocus(e);
+
+		Arena.anazitisi.pattern = '';
 		Arena.anazitisi.inputDOM.val('');
+
 		Arena.anazitisi.katastasi = 'ONLINE';
 		Arena.anazitisi.katastasiButtonDOM.pbuttonRefresh();
+
 		Arena.anazitisi.sxetikos = true;
 		Arena.anazitisi.sxetikosButtonDOM.pbuttonRefresh();
+
 		Arena.anazitisi.schedule();
 	},
 }));
