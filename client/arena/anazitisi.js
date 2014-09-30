@@ -147,10 +147,10 @@ Arena.anazitisi.panel.bpanelButtonPush(Arena.anazitisi.katastasiButtonDOM = new 
 
 		switch (Arena.anazitisi.katastasi) {
 		case 'ONLINE':
-			Arena.anazitisi.katastasi = 'AVAILABLE';
-			break;
-		case 'AVAILABLE':
 			Arena.anazitisi.katastasi = 'ALL';
+			break;
+		case 'ALL':
+			Arena.anazitisi.katastasi = 'AVAILABLE';
 			break;
 		default:
 			Arena.anazitisi.katastasi = 'ONLINE';
