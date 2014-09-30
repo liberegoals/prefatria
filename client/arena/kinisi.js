@@ -1637,11 +1637,26 @@ Skiniko.prototype.processKinisiPostZS = function(data) {
 //	fila		Φύλλα τζόγου προηγούμενης διανομής.
 
 Skiniko.prototype.processKinisiPostZP = function(data) {
+	var simaAsos;
+
 	if (Arena.ego.oxiTrapezi(data.trapezi))
 	return this;
 
 	Arena.ego.trapezi.tzogosPrev = data.fila.string2xartosia();
 	Arena.partida.azabRefreshDOM();
+
+	if (data.fila.match(/^.A.A/))
+	Client.sound.play('daiaiaing.ogg', Client.sound.entasi['ΔΥΝΑΤΗ']);
+
+	else if (data.fila.match(/A/)) {
+		simaAsos = [
+			'elatirioBaso.ogg',
+			'elatirioPrimo.ogg',
+			'elatirioSinexes.ogg',
+		];
+		Client.sound.play(simaAsos[Globals.torams() % simaAsos.length], Client.sound.entasi['ΔΥΝΑΤΗ']);
+	}
+
 	return this;
 }
 
