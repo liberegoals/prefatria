@@ -388,6 +388,7 @@ Arena.anazitisi.clearResults = function() {
 };
 
 Arena.anazitisi.online = function() {
+	Client.fyi.pano();
 	Arena.anazitisi.clearResults();
 	Globals.walk(Arena.skiniko.sinedria, function(login, sinedria) {
 		if (Arena.anazitisi.loginCheck(login, sinedria))
