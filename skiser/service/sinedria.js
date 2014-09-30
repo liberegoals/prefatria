@@ -26,16 +26,8 @@ Service.sinedria.checkin = function(nodereq) {
 			return;
 		}
 
-		// Εφόσον εντοπίσουμε τον παίκτη στο σκηνικό, προχωρούμε κανονικά
-		// στη διαδικασία εισόδου.
-
-		pektis = Server.skiniko.skinikoPektisGet(rows[0].login);
-		if (pektis) return conn.transaction(function(conn) {
-			Service.sinedria.checkin2(nodereq, conn, pektis);
-		});
-
-		// Ο παίκτης δεν υπάρχει στο σκηνικό, επομένως θα πρέπει να τον εντάξουμε
-		// και μετά να συνεχίσουμε τη διαδικασία εισόδου.
+		// Ακόμη και αν ο παίκτης υπάρχει ήδη στο σκηνικό, θα προχωρήσουμε
+		// σε ανανέωση των στοιχείων του παίκτη.
 
 		pektis = new Pektis(rows[0]);
 
@@ -99,9 +91,10 @@ Service.sinedria.sxesi = function(nodereq, conn, pektis) {
 		photoSrc = pektis.pektisPhotoSrcGet();
 		if (photoSrc) kinisi.data.photoSrc = photoSrc;
 
+		console.log(login + ': ' + (Server.skiniko.skinikoPektisGet(login) ?
+			'ανανεώθηκαν τα σοιχεία του παίκτη' : 'ενετάχθη παίκτης') + ' στο σκηνικό');
 		Server.skiniko.
 		processKinisi(kinisi);
-		console.log(login + ': ενετάχθη παίκτης στο σκηνικό');
 
 		// Οι πληροφορίες προφίλ δεν θα αποσταλούν στους clients,
 		// για λόγους οικονομίας και ιδιωτικότητας. Αυτός ήταν
