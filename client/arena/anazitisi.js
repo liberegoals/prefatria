@@ -9,6 +9,11 @@ Arena.anazitisi = {
 
 	pattern: '',
 
+	// Το property "patternJS" είναι το ίδιο pattern αλλά σε μορφή JS
+	// regular expression.
+
+	patternJS: '',
+
 	// Το property "katastasi" αφορά στην κατάσταση των αναζητουμένων
 	// παικτών. Πιο συγκεκριμένα, μπορούμε να φιλτράρουμε παίκτες που
 	// είναι online, online και διαθέσιμοι για παιχνίδι:
@@ -110,6 +115,7 @@ Arena.anazitisi.panel.bpanelButtonPush(new PButton({
 		Arena.inputRefocus(e);
 
 		Arena.anazitisi.pattern = '';
+		Arena.anazitisi.patternJS = null;
 		Arena.anazitisi.inputDOM.val('');
 
 		Arena.anazitisi.katastasi = 'ONLINE';
@@ -305,6 +311,7 @@ Arena.anazitisi.keyup = function(e) {
 	return Arena;
 
 	Arena.anazitisi.pattern = pat;
+	Arena.anazitisi.patternJS = new RegExp(pat.replace(/%/g, '.*').replace(/_/g, '.'), "i");
 	Arena.anazitisi.schedule();
 
 	return Arena;
@@ -341,6 +348,7 @@ Arena.anazitisi.zitaData = function() {
 		delete Arena.anazitisi.timer;
 	}
 
+	Arena.anazitisi.pektisRefreshDOM();
 	if ((Arena.anazitisi.katastasi === 'ALL') && (!Arena.anazitisi.pattern) && (!Arena.anazitisi.sxetikos)) {
 		Arena.anazitisi.clearResults();
 		Arena.anazitisi.active = false;
@@ -377,6 +385,27 @@ Arena.anazitisi.zitaData = function() {
 		Client.sound.beep();
 		Client.skiserFail(err);
 		buttonDom.working(false);
+	});
+
+	return Arena;
+};
+
+// Η function "pektisRefrshDOM" είναι λίαν επιβαρυντική και σκοπό έχει να κάνει
+// εμφανή τα DOM elements των παικτών, θεατών και νεοφερμένων στα οποία το login
+// name του παίκτη ταιριάζει με το pattern που αναζητούμε.
+
+Arena.anazitisi.pektisRefreshDOM = function() {
+	$('.anazitisiAttract').removeClass('anazitisiAttract');
+	if (!Arena.anazitisi.pattern) return Arena;
+
+	$('.pektis').not('.fantasma').each(function() {
+		if (Arena.anazitisi.patternMatch($(this).text()))
+		$(this).addClass('anazitisiAttract');
+	});
+
+	$('.tsoxaPektisOnoma').not('.fantasma').each(function() {
+		if (Arena.anazitisi.patternMatch($(this).text()))
+		$(this).parent().addClass('anazitisiAttract');
 	});
 
 	return Arena;
@@ -474,7 +503,7 @@ Arena.anazitisi.pektisCheck = function(login, sinedria) {
 // από την ίδια την "loginCheck".
 
 Arena.anazitisi.loginCheck = function(login, sinedria) {
-	var pattern, pektis;
+	var pektis;
 
 	if (Arena.anazitisi.sxetikos && Arena.ego.pektis.pektisOxiFilos(login))
 	return false;
@@ -502,18 +531,19 @@ Arena.anazitisi.loginCheck = function(login, sinedria) {
 	if (!Arena.anazitisi.pattern)
 	return true;
 
-	// Έχει δοθεί κριτήριο ονόματος και θα ελέγξουμε το login name και το όνομα
-	// του παίκτη. Επειδή τα κριτήρια δίδονται, ενδεχομένως, με μεταχαρακτήρες
-	// που αφορούν σε αναζητήσεις της database, θα πρέπει να μετατρέψουμε το
-	// pattern σε JS regular expression.
-
-	pattern = new RegExp(Arena.anazitisi.pattern.replace(/%/g, '.*').replace(/_/g, '.'), "i");
-	if (login.match(pattern)) return true;
+	if (Arena.anazitisi.patternMatch(login))
+	return true;
 
 	pektis = Arena.skiniko.skinikoPektisGet(login);
 	if (!pektis) return false;
 
-	return pektis.pektisOnomaGet().match(pattern);
+	return Arena.anazitisi.patternMatch(pektis.pektisOnomaGet());
+};
+
+Arena.anazitisi.patternMatch = function(s, pattern) {
+	if (!s) return false;
+	if (!Arena.anazitisi.patternJS) return false;
+	return s.match(Arena.anazitisi.patternJS);
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@

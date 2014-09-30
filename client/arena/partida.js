@@ -692,13 +692,17 @@ Arena.partida.pektisDataRefreshDOM = function(thesi, iseht, domMain, domOnoma) {
 	if (domMain === undefined) domMain = Arena.partida['pektisMain' + iseht + 'DOM'];
 	if (domOnoma === undefined) domOnoma = Arena.partida['pektisOnoma' + iseht + 'DOM'];
 
-	domMain.removeClass('apodoxi xapodoxi offline fevgatos apasxolimenos');
+	domMain.removeClass('apodoxi xapodoxi offline fevgatos apasxolimenos anazitisiAttract');
 	domOnoma.removeClass('fantasma sxesiFilos sxesiApoklismenos');
 
 	domMain.addClass(Arena.ego.trapezi.trapeziIsApodoxi(thesi) ? 'apodoxi' : 'xapodoxi');
 	domMain.children('.tsoxaProfinfoIcon').remove();
 
 	login = Arena.ego.trapezi.trapeziPektisGet(thesi);
+
+	if (Arena.anazitisi.patternMatch(login))
+	domMain.addClass('anazitisiAttract');
+
 	if (!login) {
 		domMain.addClass('fevgatos');
 		login = Arena.ego.trapezi.trapeziTelefteosGet(thesi);

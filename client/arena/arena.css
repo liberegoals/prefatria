@@ -1958,6 +1958,10 @@ cursor: auto;
 	background-color: #FFFFA9;
 }
 
+.anazitisiAttract {
+	background-color: rgb(239, 255, 239);
+}
+
 .prive {
 	border-style: solid !important;
 	border-color: #A7A7A7 !important;
