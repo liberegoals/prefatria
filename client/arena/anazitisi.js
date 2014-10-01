@@ -207,6 +207,10 @@ Arena.anazitisi.panel.bpanelButtonPush(Arena.anazitisi.katastasiButtonDOM = new 
 	},
 }));
 
+// Με το πλήκτρο σχετικότητας φιλτράρουμε παίκτες με τους οποίους έχουμε φιλική
+// σχέση. Αν το πλήκτρο αχνοφαίνεται, δεν φιλτράρονται παίκτες ανάλογα με τη
+// σχετικότητά τους, ενώ αν φαίνεται κανονικά το φίλτρο είναι σε ισχύ.
+
 Arena.anazitisi.panel.bpanelButtonPush(Arena.anazitisi.sxetikosButtonDOM = new PButton({
 	img: 'sxetikos.png',
 	refresh: function () {
