@@ -344,3 +344,21 @@ Trapezi.prototype.processEnergiaOnlineFiloKrotosOloi = function(tzogadoros, prot
 
 	return this;
 };
+
+Trapezi.prototype.processEnergiaOnlineΔΗΛΩΣΗ = function(energia) {
+	Arena.partida.trapeziRefreshDOM();
+	return this;
+};
+
+Trapezi.prototype.processEnergiaOnlineFLOP = function(energia) {
+	var data;
+
+	Arena.partida.trapeziRefreshDOM();
+	data = energia.energiaDataGet();
+	if (!data) return this;
+
+	if (data.match(/^.A.A/)) Client.sound.play('daiaiaing.ogg');
+	else if (data.match(/A/)) Client.sound.opa();
+
+	return this;
+};
