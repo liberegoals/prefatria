@@ -127,9 +127,13 @@ Arena.anazitisi.panel.bpanelButtonPush(Arena.anazitisi.anazitisiButtonDOM = new 
 	},
 }));
 
+// Με το πλήκτρο καθαρισμού κριτηρίων αναζήτησης, επαναφέρουμε τα κριτήρια
+// στις αρχικές τους τιμές, δηλαδή καθαρίζουμε το pattern ονόματος και
+// αναζητούμε online παίκτες με τους οποίους σχετιζόμαστε φιλικά.
+
 Arena.anazitisi.panel.bpanelButtonPush(new PButton({
 	img: 'clear.png',
-	title: 'Καθαρισμός κριτηρίων αναζήτησης',
+	title: 'Επαναφορά κριτηρίων σε online φίλους',
 	click: function(e) {
 		Arena.inputRefocus(e);
 
@@ -146,6 +150,17 @@ Arena.anazitisi.panel.bpanelButtonPush(new PButton({
 		Arena.anazitisi.schedule();
 	},
 }));
+
+// Με το πλήκτρο κατάστασης επιλέγουμε παίκτες ανάλογα με το αν είναι online,
+// ελεύθεροι, ή ασχέτως κατάστασης.
+//
+//	Πορτοκαλί	Φιλτράρονται οι online παίκτες.
+//
+//	Πράσινο		Φιλτράρονται οι online παίκτες που δεν μετέχουν ως
+//			παίκτες σε κάποιο τραπέζι.
+//
+//	Μπλε		Δεν φιλτράρονται οι παίκτες σε σχέση με την κατάστασή
+//			τους.
 
 Arena.anazitisi.panel.bpanelButtonPush(Arena.anazitisi.katastasiButtonDOM = new PButton({
 	refresh: function () {
