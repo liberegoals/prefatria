@@ -1011,6 +1011,24 @@ Client.sound = {
 	fiouit: function() {
 		Client.sound.play('fiouit.ogg');
 	},
+
+	opaLista: [
+		'elatirioBaso.ogg',
+		'elatirioPrimo.ogg',
+		'elatirioSinexes.ogg',
+		'doing.ogg',
+		'bounce.ogg',
+		'firoulit.ogg',
+	],
+
+	opa: function(vol) {
+		var ixos;
+
+		ixos = Globals.random(1, 100);
+		ixos %= Client.sound.opaLista.length;
+		ixos = Client.sound.opaLista[ixos];
+		Client.sound.play(ixos, vol);
+	},
 };
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
