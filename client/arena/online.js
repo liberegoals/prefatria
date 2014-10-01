@@ -345,6 +345,12 @@ Trapezi.prototype.processEnergiaOnlineFiloKrotosOloi = function(tzogadoros, prot
 	return this;
 };
 
+// Η ενέργεια τύπου "ΔΗΛΩΣΗ" δεν είναι απαραίτητο να έχει online διαδικασία, αλλά
+// παρασύρεται από την ενέργεια τύπου "FLOP" στην οποία είναι ωραίο να βγάζουμε
+// κάποιους ήχους όταν ο τζόγος είναι ιδιαίτερος. Πράγματι, η τελευταία δήλωση
+// πάσο στην πλειοδοσία της αγοράς, σε παρτίδες χωρίς πάσο, συμπαρασύρει και
+// ενέργεια τύπου "FLOP" με το άνοιγμα του τζόγου.
+
 Trapezi.prototype.processEnergiaOnlineΔΗΛΩΣΗ = function(energia) {
 	Arena.partida.trapeziRefreshDOM();
 	return this;
@@ -357,8 +363,16 @@ Trapezi.prototype.processEnergiaOnlineFLOP = function(energia) {
 	data = energia.energiaDataGet();
 	if (!data) return this;
 
-	if (data.match(/^.A.A/)) Client.sound.play('daiaiaing.ogg');
-	else if (data.match(/A/)) Client.sound.opa();
+	// Αν έχουμε δύο άσους στα φύλλα του τζόγου κάνουμε ιδιαίτερο
+	// ήχο cartoon.
+
+	if (data.match(/^.A.A/))
+	Client.sound.play('daiaiaing.ogg');
+
+	// Αν έχουμε έναν άσο στον τζόγο, κάνουμε τυχαίο ήχο cartoon.
+
+	else if (data.match(/A/))
+	Client.sound.opa();
 
 	return this;
 };
