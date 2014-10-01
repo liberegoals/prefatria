@@ -5,12 +5,15 @@ Arena.anazitisi = {
 	active: false,
 
 	// Το property "pattern" περιέχει το pattern αναζήτησης που αφορά
-	// στο login και στο όνομα των παικτών.
+	// στο login και στο όνομα των παικτών. Το pattern μπορεί να περιέχει
+	// μεταχαρακτήρες σε στιλ SQL, π.χ. "%" για το οτιδήποτε, "_" για
+	// έναν οποιονδήποτε χαρακτήρα κλπ.
 
 	pattern: '',
 
 	// Το property "patternJS" είναι το ίδιο pattern αλλά σε μορφή JS
-	// regular expression.
+	// regular expression, επομένως το "%" θα γίνει ".*", το "_" θα
+	// γίνει "." κλπ.
 
 	patternJS: '',
 
