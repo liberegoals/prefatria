@@ -100,7 +100,9 @@ on('click', function(e) {
 }));
 
 // Όταν κάνουμε κλικ στον μεγεθυντικό φακό επιχειρούμε εκ νέου αναζήτηση
-// με τα κριτήρια που ήδη είναι καθορισμένα στη σελίδα μας.
+// με τα κριτήρια που ήδη είναι καθορισμένα στη σελίδα μας. Αυτό, συνήθως,
+// δεν είναι απαραίτητο καθώς το πρόγραμμα φροντίζει να κάνει αυτόματα τις
+// απαραίτητες ενέργειες μετά από οποιαδήποτε μεταβολή.
 
 Arena.anazitisi.panel.bpanelButtonPush(Arena.anazitisi.anazitisiDOM = new PButton({
 	img: 'fakos.png',
@@ -117,9 +119,9 @@ Arena.anazitisi.panel.bpanelButtonPush(new PButton({
 	click: function(e) {
 		Arena.inputRefocus(e);
 
+		Arena.anazitisi.inputDOM.val('');
 		Arena.anazitisi.pattern = '';
 		Arena.anazitisi.patternJS = null;
-		Arena.anazitisi.inputDOM.val('');
 
 		Arena.anazitisi.katastasi = 'ONLINE';
 		Arena.anazitisi.katastasiButtonDOM.pbuttonRefresh();
