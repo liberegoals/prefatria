@@ -311,7 +311,7 @@ Arena.anazitisi.keyup = function(e) {
 	return Arena;
 
 	Arena.anazitisi.pattern = pat;
-	Arena.anazitisi.patternJS = new RegExp(pat.replace(/%/g, '.*').replace(/_/g, '.'), "i");
+	Arena.anazitisi.patternJS = (pat ? new RegExp(pat.replace(/%/g, '.*').replace(/_/g, '.'), "i") : null);
 	Arena.anazitisi.schedule();
 
 	return Arena;
@@ -542,6 +542,7 @@ Arena.anazitisi.loginCheck = function(login, sinedria) {
 
 Arena.anazitisi.patternMatch = function(s, pattern) {
 	if (!s) return false;
+	if (!Arena.anazitisi.pattern) return false;
 	if (!Arena.anazitisi.patternJS) return false;
 	return s.match(Arena.anazitisi.patternJS);
 };
