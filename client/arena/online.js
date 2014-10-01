@@ -366,13 +366,26 @@ Trapezi.prototype.processEnergiaOnlineFLOP = function(energia) {
 	// Αν έχουμε δύο άσους στα φύλλα του τζόγου κάνουμε ιδιαίτερο
 	// ήχο cartoon.
 
-	if (data.match(/^.A.A/))
-	Client.sound.play('daiaiaing.ogg');
+	if (data.match(/^.A.A/)) {
+		Client.sound.play('daiaiaing.ogg');
+		return this;
+	}
 
-	// Αν έχουμε έναν άσο στον τζόγο, κάνουμε τυχαίο ήχο cartoon.
+	// Αν έχουμε άσο και ρήγα ιδίου χρώματος στα φύλλα του τζόγου
+	// κάνουμε ιδιαίτερο ήχο cartoon.
 
-	else if (data.match(/A/))
-	Client.sound.opa();
+	if ((data.substr(0, 1) === data.substr(2, 1)) && data.match(/A/) && data.match(/K/)) {
+		Client.sound.play('daiaiaing.ogg');
+		return this;
+	}
+
+	// Αν έχουμε έναν άσο στον τζόγο, κάνουμε κάποιον άλλον τυχαίο
+	// ήχο cartoon.
+
+	if (data.match(/A/)) {
+		Client.sound.opa();
+		return this;
+	}
 
 	return this;
 };
