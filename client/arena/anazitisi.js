@@ -59,6 +59,11 @@ Arena.anazitisi.oxiActive = function() {
 	return !Arena.anazitisi.isActive();
 };
 
+Arena.anazitisi.activeSet = function(onOff) {
+	Arena.anazitisi.active = onOff;
+	Arena.anazitisi.anazitisiButtonDOM.pbuttonRefresh();
+};
+
 Arena.anazitisi.setup = function() {
 	Arena.anazitisi.panelDOM = $('<div>').appendTo(Arena.pssDOM);
 	Arena.anazitisi.areaDOM = $('<div>').addClass('pss').appendTo(Arena.pssDOM);
@@ -104,9 +109,18 @@ on('click', function(e) {
 // δεν είναι απαραίτητο καθώς το πρόγραμμα φροντίζει να κάνει αυτόματα τις
 // απαραίτητες ενέργειες μετά από οποιαδήποτε μεταβολή.
 
-Arena.anazitisi.panel.bpanelButtonPush(Arena.anazitisi.anazitisiDOM = new PButton({
+Arena.anazitisi.panel.bpanelButtonPush(Arena.anazitisi.anazitisiButtonDOM = new PButton({
 	img: 'fakos.png',
-	title: 'Αναζήτηση τώρα!',
+	refresh: function() {
+		if (Arena.anazitisi.isActive()) {
+			this.pbuttonGetDOM().attr('title', 'Αναζήτηση τώρα!');
+			this.pbuttonIconGetDOM().css('opacity', 1);
+		}
+		else {
+			this.pbuttonGetDOM().attr('title', '');
+			this.pbuttonIconGetDOM().css('opacity', 0.5);
+		}
+	},
 	click: function(e) {
 		Arena.inputRefocus(e);
 		Arena.anazitisi.zitaData();
@@ -356,11 +370,11 @@ Arena.anazitisi.zitaData = function() {
 	Arena.anazitisi.pektisRefreshDOM();
 	if ((Arena.anazitisi.katastasi === 'ALL') && (!Arena.anazitisi.pattern) && (!Arena.anazitisi.sxetikos)) {
 		Arena.anazitisi.clearResults();
-		Arena.anazitisi.active = false;
+		Arena.anazitisi.activeSet(false);
 		return Arena;
 	}
 
-	Arena.anazitisi.active = true;
+	Arena.anazitisi.activeSet(true);
 	if (Arena.anazitisi.katastasi !== 'ALL')
 	return Arena.anazitisi.online();
 
@@ -374,7 +388,7 @@ Arena.anazitisi.zitaData = function() {
 	msg += '. Παρακαλώ περιμένετε…';
 	Client.fyi.pano(msg);
 
-	buttonDom = Arena.anazitisi.anazitisiDOM.pbuttonIconGetDOM();
+	buttonDom = Arena.anazitisi.anazitisiButtonDOM.pbuttonIconGetDOM();
 	if (buttonDom) buttonDom.working(true);
 
 	Client.skiserService('anazitisi',
