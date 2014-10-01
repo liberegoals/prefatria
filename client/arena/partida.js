@@ -109,6 +109,23 @@ Arena.partida.setup = function() {
 	Arena.kitapi.setup();
 	Arena.partida.setupPliromi();
 	Arena.partida.setupTzogos();
+	Arena.partida.setupPhoto();
+
+	return Arena;
+};
+
+Arena.partida.setupPhoto = function() {
+	// Όταν περνάμε τον δείκτη του ποντικιού πάνω από την επάνω περιοχή
+	// δεδομένων παρτίδας, ή πάνω από την κάτω περιοχή πληροφοριών παρτίδας,
+	// εμφανίζουμε τις φωτογραφίες προφίλ όλων των παικτών.
+
+	$('.tsoxaData').
+	on('mouseenter', function() {
+		$('.tsoxaPektisPhoto').finish().fadeTo(50, 1);
+	}).
+	on('mouseleave', function() {
+		$('.tsoxaPektisPhoto').finish().fadeTo(100, 0.1);
+	});
 
 	return Arena;
 };
