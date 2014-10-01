@@ -110,15 +110,14 @@ on('click', function(e) {
 // απαραίτητες ενέργειες μετά από οποιαδήποτε μεταβολή.
 
 Arena.anazitisi.panel.bpanelButtonPush(Arena.anazitisi.anazitisiButtonDOM = new PButton({
-	img: 'fakos.png',
 	refresh: function() {
 		if (Arena.anazitisi.isActive()) {
-			this.pbuttonGetDOM().attr('title', 'Αναζήτηση τώρα!');
-			this.pbuttonIconGetDOM().css('opacity', 1);
+			this.pbuttonGetDOM().attr('title', 'Επανέλεγχος τώρα!');
+			this.pbuttonIconGetDOM().attr('src', 'ikona/panel/fakos.png');
 		}
 		else {
-			this.pbuttonGetDOM().attr('title', '');
-			this.pbuttonIconGetDOM().css('opacity', 0.5);
+			this.pbuttonGetDOM().attr('title', 'Ενεργοποίηση αναζήτησης');
+			this.pbuttonIconGetDOM().attr('src', 'ikona/panel/fakosOff.png');
 		}
 	},
 	click: function(e) {
@@ -147,7 +146,13 @@ Arena.anazitisi.panel.bpanelButtonPush(new PButton({
 		Arena.anazitisi.sxetikos = true;
 		Arena.anazitisi.sxetikosButtonDOM.pbuttonRefresh();
 
-		Arena.anazitisi.schedule();
+		if (Arena.anazitisi.timer) {
+			clearTimeout(Arena.anazitisi.timer);
+			delete Arena.anazitisi.timer;
+		}
+
+		Arena.anazitisi.clearResults();
+		Arena.anazitisi.activeSet(false);
 	},
 }));
 
