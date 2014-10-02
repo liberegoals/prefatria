@@ -1,5 +1,6 @@
 $(document).ready(function() {
 	Account.init();
+	Client.fortos.setup();
 
 	if (Client.isPektis()) {
 		Client.toolbarLeft('account');

@@ -3,6 +3,7 @@ $(document).ready(function() {
 	Client.toolbarLeft('isodos');
 	Client.tabArxiki();
 	Client.tabEgrafi();
+	Client.fortos.setup();
 });
 
 $(window).ready(function() {
