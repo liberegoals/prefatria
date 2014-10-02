@@ -607,7 +607,7 @@ Arena.minima.setup = function() {
 
 Arena.minima.anigma = function() {
 	Arena.minima.win = window.open('minima', '_blank', 'top=' + (window.screenY + 100) +
-		',left=' + (window.screeX - 100) + ',width=1200,height=800,scrollbars=1');
+		',left=' + (window.screenX - 100) + ',width=1200,height=800,scrollbars=1');
 	return Arena.minima;
 };
 
