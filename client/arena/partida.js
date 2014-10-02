@@ -1,4 +1,7 @@
 Arena.partida = {
+	// Το property "pektisPhotoOpacity" δείχνει την default opacity των
+	// φωτογραφιών προφίλ παίκτη.
+
 	pektisPhotoOpacity: 0.1,
 };
 
@@ -115,16 +118,27 @@ Arena.partida.setup = function() {
 };
 
 Arena.partida.setupPhoto = function() {
-	// Όταν περνάμε τον δείκτη του ποντικιού πάνω από την επάνω περιοχή
-	// δεδομένων παρτίδας, ή πάνω από την κάτω περιοχή πληροφοριών παρτίδας,
-	// εμφανίζουμε τις φωτογραφίες προφίλ όλων των παικτών.
+	// Όταν περνάμε τον δείκτη του ποντικιού πάνω από την περιοχή
+	// εμφάνισης φάσης παρτίδας (κάτω αριστερά), αλλάζουμε το opacity
+	// των φωτογραφιών προφίλ όλων των παικτών. Αν οι φωτογραφίες
+	// είναι διαυγείς, τις κάνουμε αχνές και τούμπαλιν. Με κλικ στην
+	// ίδια περιοχή έχουμε αντιστροφή της διαδικασίας.
 
-	$('.tsoxaData').
-	on('mouseenter', function() {
-		$('.tsoxaPektisPhoto').finish().fadeTo(50, 1);
+	$(document).
+	on('mouseenter', '.tsoxaPartidaInfo', function() {
+		$('.tsoxaPektisPhoto').finish().
+		fadeTo(50, Arena.partida.pektisPhotoOpacity === 1 ? 0.1 : 1);
+		Client.fyi.kato('Κλικ για <span class="entona ' + (Arena.partida.pektisPhotoOpacity === 1 ?
+			'kokino">απόκρυψη' : 'prasino">εμφάνιση') + '</span> φωτογραφιών προφίλ', 0);
 	}).
-	on('mouseleave', function() {
-		$('.tsoxaPektisPhoto').finish().fadeTo(100, 0.1);
+	on('mouseleave', '.tsoxaPartidaInfo', function() {
+		$('.tsoxaPektisPhoto').finish().fadeTo(200, Arena.partida.pektisPhotoOpacity);
+		Client.fyi.kato();
+	}).
+	on('click', '.tsoxaPartidaInfo', function() {
+		Arena.partida.pektisPhotoOpacity = (Arena.partida.pektisPhotoOpacity === 1 ? 0.1 : 1);
+		$('.tsoxaPektisPhoto').finish().fadeTo(50, Arena.partida.pektisPhotoOpacity);
+		Client.fyi.kato();
 	});
 
 	return Arena;
@@ -439,9 +453,8 @@ Arena.partida.dataKatoRefreshDOM = function() {
 
 	Arena.partida.dataKatoDOM.
 	append($('<div>').addClass('tsoxaPartidaInfo').
-	append($('<div>').addClass('tsoxaPartidaInfoFasi').attr({
-		title: 'Φάση παρτίδας',
-	}).text(Arena.ego.trapezi.partidaFasiGet())));
+	append($('<div>').addClass('tsoxaPartidaInfoFasi').
+	text(Arena.ego.trapezi.partidaFasiGet())));
 
 	akirosi = Arena.ego.trapezi.trapeziAkirosiGet();
 	if (!akirosi) return Arena.partida;
@@ -656,8 +669,8 @@ Arena.partida.pektisRefreshDOM = function(thesi) {
 		Arena.partida.thesiCandi = thesi;
 		if (pektis) pektis.pektisFyiInfo();
 		$(this).children('.tsoxaPektisPhoto').finish().animate({
-			opacity: 1,
-		}, 200);
+			opacity: Arena.partida.pektisPhotoOpacity === 1 ? 0.1 : 1,
+		}, 50);
 	}).
 	on('mouseleave', function(e) {
 		e.stopPropagation();
@@ -665,7 +678,7 @@ Arena.partida.pektisRefreshDOM = function(thesi) {
 		if (pektis) Client.fyi.kato();
 		$(this).children('.tsoxaPektisPhoto').finish().animate({
 			opacity: Arena.partida.pektisPhotoOpacity,
-		}, 100);
+		}, 200);
 	});
 
 	if (Arena.ego.isPektis())
