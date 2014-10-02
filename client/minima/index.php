@@ -4,7 +4,6 @@ Globals::diavase("lib/selida.php");
 
 Selida::head("Αλληλογραφία");
 Globals::pektis_must();
-Globals::database();
 
 Selida::stylesheet("minima/minima");
 Selida::javascript("common/skiniko");

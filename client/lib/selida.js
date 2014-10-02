@@ -1033,7 +1033,7 @@ Client.sound = {
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-Client.setup1 = function() {
+$(document).ready(function() {
 	Client.bodyDOM = $(document.body);
 	Client.ofelimoDOM = $('#ofelimo');
 
@@ -1043,21 +1043,10 @@ Client.setup1 = function() {
 	});
 	else Client.session.paraskinio = 'standard.png';
 	Client.fyi.setup();
-	Client.diafimisi.setup();
-	Client.motd.setup();
-	Client.fortos.setup();
-};
 
-Client.setup2 = function() {
-	$('.kounima').kounima();
-};
-
-$(document).ready(function() {
-	Client.setup1();
-	Client.setup2();
-
-	// Κάθε 5 λεπτά ανανεώνουμε το session, ώστε ακόμη και αν ο παίκτης
-	// δεν κάνει καμία ενέργεια, να μην χάνεται το session cookie.
+	// Κάθε περίπου 5 λεπτά ανανεώνουμε το session, ώστε ακόμη και αν
+	// ο παίκτης δεν κάνει καμία ενέργεια, να μην χάνεται το session
+	// cookie.
 
 	Client.cookieRecharge = setInterval(function() {
 		$.ajax(Client.server + 'lib/session.php').
@@ -1067,5 +1056,5 @@ $(document).ready(function() {
 		fail(function(rsp) {
 			Client.ajaxFail(rsp);
 		});
-	}, 300000);
+	}, 333333);
 });
