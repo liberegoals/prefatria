@@ -110,6 +110,9 @@ Arena.kouskous = function() {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 $(document).ready(function() {
+	Client.diafimisi.setup();
+	Client.motd.setup();
+	Client.fortos.setup();
 	Client.toolbarLeft('pexnidi');
 	Client.toolbarRight();
 	Arena.kafenioDOM = $('<div>').addClass('stiliPeriexomeno').appendTo('#stiliKafenio');
@@ -155,6 +158,7 @@ Arena.unload = function() {
 	paraskinio.klisimo().
 	kitapi.klisimo().
 	funchat.klisimo().
+	arxio.klisimo().
 	minima.klisimo();
 };
 
@@ -187,6 +191,7 @@ Arena.setup = function() {
 	setupFortos().
 	setupKafenio().
 	partida.setup().
+	arxio.setup().
 	minima.setup().
 	setupPss().
 	setupCpanel().
@@ -482,7 +487,8 @@ Arena.paraskinio = {
 Arena.paraskinio.open = function() {
 	Arena.paraskinio.klisimo();
 	Arena.paraskinio.win = window.open(Client.server + 'paraskinio',
-		'_blank', 'top=80,left=80,width=820,height=400,scrollbars=1');
+		'_blank', 'top=' + (window.screenY + 200) + ',left=' +
+		(window.screenX + 100) + ',width=820,height=400,scrollbars=1');
 	Arena.paraskinio.button.addClass('panelButtonEkremes');
 	return Arena;
 };
@@ -519,7 +525,8 @@ Arena.funchat.anigma = function() {
 	if (Arena.funchat.isAnikto())
 	Arena.funchat.klisimo();
 
-	Arena.funchat.win = window.open('funchat', '_blank', 'width=800,height=800,top=100,left=900');
+	Arena.funchat.win = window.open('funchat', '_blank', 'top=' + (window.screenY - 100) +
+		',left=' + (window.screenX + 700) + ',width=800,height=800,scrollbars=1');
 
 	Arena.cpanel.bpanelRefresh();
 	return Arena.funchat;
@@ -599,7 +606,8 @@ Arena.minima.setup = function() {
 };
 
 Arena.minima.anigma = function() {
-	Arena.minima.win = window.open('minima', '_blank', 'top=100,left=100,width=1200,height=800');
+	Arena.minima.win = window.open('minima', '_blank', 'top=' + (window.screenY + 100) +
+		',left=' + (window.screeX - 100) + ',width=1200,height=800,scrollbars=1');
 	return Arena.minima;
 };
 
@@ -633,6 +641,70 @@ Arena.minima.endixiClear = function() {
 
 	return Arena;
 };
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+Arena.arxio = {
+	win: null,
+};
+
+Arena.arxio.setup = function() {
+	var tbr, dom;
+
+	tbr = $('#toolbarLeft');
+	if (!tbr.length) return Arena;
+
+	Client.tab($('<a>').attr('href', 'arxio').
+	on('click', function(e) {
+		Arena.inputRefocus();
+
+		if (Arena.arxio.isAnikto())
+		Arena.arxio.focus();
+
+		else
+		Arena.arxio.anigma();
+
+		return false;
+	}).append(dom = Client.sinefo('Αρχείο')), tbr);
+
+	return Arena;
+};
+
+Arena.arxio.anigma = function() {
+	var x, y;
+
+	x = window.screenX;
+	y = window.screenY;
+	Arena.arxio.win = window.open('arxio', '_blank', 'top=' + (window.screenY - 50) +
+		',left=' + (window.screenX + 50) + ',width=900,height=800');
+	return Arena.arxio;
+};
+
+Arena.arxio.klisimo = function() {
+	if (Arena.arxio.isKlisto())
+	return Arena;
+
+	Arena.arxio.win.close();
+	Arena.arxio.win = null;
+
+	return Arena;
+};
+
+Arena.arxio.isAnikto = function() {
+	return Arena.arxio.win;
+};
+
+Arena.arxio.isKlisto = function() {
+	return !Arena.arxio.isAnikto();
+};
+
+Arena.arxio.focus = function() {
+	Arena.arxio.win.focus();
+
+	return Arena;
+};
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 Arena.ixosFilos = function() {
 	ixos = Arena.ego && Arena.ego.pektis && Arena.ego.pektis.peparam &&
