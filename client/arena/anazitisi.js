@@ -153,6 +153,7 @@ Arena.anazitisi.panel.bpanelButtonPush(new PButton({
 
 		Arena.anazitisi.clearResults();
 		Arena.anazitisi.activeSet(false);
+		Arena.anazitisi.pektisRefreshDOM();
 	},
 }));
 
