@@ -3,4 +3,5 @@ $(document).ready(function() {
 	Client.fyi.kato('Καλή διασκέδαση και καλές σολαρίες!');
 	Client.toolbarLeft();
 	Client.toolbarRight();
+	Client.fortos.setup();
 });
