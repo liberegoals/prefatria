@@ -184,8 +184,13 @@ DB.resetRest = function(callback) {
 // files στο directory "misc/.mistiko", κάτω από το βασικό directory της εφαρμογής.
 
 eval('DB.nodedb = {' + Server.readFileSync('../misc/.mistiko/nodedb') + '};');
+
+if (!DB.nodedb.hasOwnProperty('database'))
 DB.nodedb.database = 'prefatria';
+
+if (!DB.nodedb.hasOwnProperty('user'))
 DB.nodedb.user = 'prefadoros';
+
 DB.nodedb.password = Server.readFileSync('../misc/.mistiko/bekadb').replace(/[^a-zA-Z0-9]/g, '');
 
 // Ακολουθεί η κλάση "DBSindesi" που παριστά συνδέσεις με την database. Πρόκειται
