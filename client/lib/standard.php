@@ -132,6 +132,9 @@ class Globals {
 		case "http://localhost/prefatria/";
 		case "http://www.opasopa.net/prefatria/":
 			break;
+		case "http://www.prefaprive.net/":
+			$dbname = "prefaprive";
+			break;
 		default:
 			if (self::$server) print self::$server . ": ";
 			self::klise_fige("unknown server (database)");	
