@@ -95,6 +95,9 @@ class Globals {
 		case "www.opasopa.net":
 			self::$server = "http://" . $server_name . "/prefatria/";
 			break;
+		case "www.prefaprive.net":
+			self::$server = "http://" . $server_name . "/";
+			break;
 		default:
 			if ($server_name) print $server_name . ": ";
 			self::klise_fige("unknown server");	
