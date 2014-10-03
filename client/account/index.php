@@ -106,7 +106,7 @@ class Account {
 				</td>
 			</tr>
 			<?php
-			if (self::$prive) {
+			if (Globals::oxi_pektis() && self::$prive) {
 				?>
 				<tr class="account_prive">
 					<td class="formaPrompt">
