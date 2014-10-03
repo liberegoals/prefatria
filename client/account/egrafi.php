@@ -28,6 +28,11 @@ class Egrafi {
 		Globals::perastike_must("onoma");
 		Globals::perastike_must("email");
 		Globals::perastike_must("kodikos1");
+		if (Globals::den_perastike("prive"))
+		return;
+
+		if (trim(file_get_contents("../../misc/.mistiko/prive")) !== sha1($_POST["prive"]))
+		Globals::klise_fige("Δεν έχετε εξουσιοδότηση εγγραφής");
 	}
 
 	public static function klisimo() {
