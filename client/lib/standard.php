@@ -66,6 +66,11 @@ class Globals {
 
 	public static $db;
 
+	// Η property "prive" δείχνει αν πρόκειται για πριβέ εκδοχή, δηλαδή για
+	// site στο οποίο η εγγραφή γίνεται μόνο από εξουσιοδοτημένους χρήστες.
+
+	private static $prive;
+
 	// Η μέθοδος "init" δίνει τιμές στα properties της κλάσης "Globals" και
 	// αρχικοποιεί τις μεθόδους της κλάσεις.
 
@@ -105,6 +110,7 @@ class Globals {
 
 		self::get_client_ip();
 		self::$www = preg_replace("/client.lib.standard.php$/", "", __FILE__);
+		self::$prive = file_exists(self::$www . "misc/.mistiko/prive");
 	}
 
 	// Με την μέθοδο "get_client_ip" βολιδοσκοπούμε την IP του client.
@@ -212,6 +218,14 @@ class Globals {
 	public static function pektis_must() {
 		if (self::is_pektis()) return;
 		Globals::klise_fige("Διαπιστώθηκε ανώνυμη χρήση");
+	}
+
+	public static function is_prive() {
+		return self::$prive;
+	}
+
+	public static function oxi_prive() {
+		return !self::is_prive();
 	}
 
 	// Η μέθοδος "url" είναι ήσσονος σημασίας και σκοπό έχει τη διευκόλυνση στη γραφή
