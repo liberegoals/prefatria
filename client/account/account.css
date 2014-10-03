@@ -6,6 +6,10 @@
 	visibility: hidden;
 }
 
+.account_prive {
+	background-color: rgb(252, 132, 132);
+}
+
 iframe[name="action"] {
 	display: none;
 	width: 800px;

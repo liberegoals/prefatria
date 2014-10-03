@@ -24,9 +24,16 @@ Selida::telos();
 
 class Account {
 	public static $pektis;
+	private static $prive;
 
 	public static function init() {
 		self::$pektis = @new Pektis($_SESSION["pektis"]);
+		if (file_exists("../../misc/.mistiko/prive")) {
+			self::$prive = TRUE;
+		}
+		else {
+			self::$prive = FALSE;
+		}
 	}
 
 	public static function display_forma() {
@@ -98,6 +105,21 @@ class Account {
 						maxlength="16" size="16" />
 				</td>
 			</tr>
+			<?php
+			if (self::$prive) {
+				?>
+				<tr class="account_prive">
+					<td class="formaPrompt">
+						Κωδικός εξουσιοδότησης
+					</td>
+					<td>
+						<input name="prive" class="formaPedio" type="password" value=""
+							maxlength="16" size="16" />
+					</td>
+				</tr>
+				<?php
+			}
+			?>
 			</table>
 			</div>
 			<div class="formaPanel">
