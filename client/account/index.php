@@ -24,16 +24,9 @@ Selida::telos();
 
 class Account {
 	public static $pektis;
-	private static $prive;
 
 	public static function init() {
 		self::$pektis = @new Pektis($_SESSION["pektis"]);
-		if (file_exists("../../misc/.mistiko/prive")) {
-			self::$prive = TRUE;
-		}
-		else {
-			self::$prive = FALSE;
-		}
 	}
 
 	public static function display_forma() {
@@ -106,7 +99,7 @@ class Account {
 				</td>
 			</tr>
 			<?php
-			if (Globals::oxi_pektis() && self::$prive) {
+			if (Globals::oxi_pektis() && Globals::is_prive()) {
 				?>
 				<tr class="account_prive">
 					<td class="formaPrompt">
