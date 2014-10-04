@@ -107,6 +107,10 @@ Client.isPrive = function() {
 	return Client.prive;
 };
 
+Client.oxiPrive = function() {
+	return !Client.isPrive();
+};
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 Client.fyi = {};
@@ -252,7 +256,10 @@ Client.tabPektis = function(x) {
 };
 
 Client.tabPrive = function(x) {
-	return $('<div>').attr('id', 'tabPrive').addClass('prive').
+	if (Client.oxiPrive())
+	return;
+
+	$('<div>').attr('id', 'tabPrive').addClass('prive').
 	append($('<a>').attr({
 		target: '_blank',
 		href: Client.server + 'prive'
@@ -281,9 +288,7 @@ Client.toolbarRight = function(exodos) {
 	var tbr = $('#toolbarRight');
 	if (!tbr.length) return;
 
-	if (Client.isPrive())
 	Client.tabPrive(tbr);
-
 	if (Client.oxiPektis()) {
 		Client.tabEgrafi(tbr);
 		Client.tabIsodos(tbr);
