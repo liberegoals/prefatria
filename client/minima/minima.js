@@ -336,13 +336,24 @@ Minima.setupMinimata = function() {
 		// Καθιστούμε το μήνυμα εμφανές.
 
 		minimaDOM.addClass('minimaTrexon');
+		minimaDOM.children('.minimaKimeno').addClass('minimaKimenoTrexon');
 
 		// Εμφανίζουμε ενημερωτική ταμπελίτσα στο σημείο που ο χρήστης
 		// μπορεί να κάνει κλικ για να απαντήσει.
 
+		if (Minima.apantisiLabelDOM)
+		Minima.apantisiLabelDOM.remove();
+
 		$(this).children('.minimaPote').
 		append(Minima.apantisiLabelDOM = $('<div>').
-		addClass('minimaApantisiLabel').text('Απάντηση'));
+		addClass('minimaApantisiLabel').text('Απάντηση').
+		on('click', function(e) {
+			Minima.editFormaParaliptisLoginDOM.
+			val($(this).parent().children('.minimaPios').text().trim());
+			Minima.editFormaDOM.finish().fadeIn(100, function() {
+				Minima.editFormaKimenoDOM.focus();
+			});
+		}));
 
 		// Εφοπλίζουμε το πάνελ διαχείρισης μηνυμάτων ανάλογα με τα
 		// χαρακτηριστικά του μηνύματος.
@@ -455,28 +466,11 @@ Minima.setupMinimata = function() {
 
 		minimaDOM = $(this);
 		minimaDOM.removeClass('minimaTrexon');
+		minimaDOM.children('.minimaKimeno').removeClass('minimaKimenoTrexon');
 		Minima.apantisiLabelDOM.remove();
+		delete Minima.apantisiLabelDOM;
 		panelDOM = minimaDOM.children('.minimaPanel');
 		panelDOM.empty();
-	}).
-
-	on('mouseenter', '.minimaPote,.minimaPios', function(e) {
-		Minima.apantisiLabelDOM.finish().fadeTo(100, 0.4);
-	}).
-
-	on('mouseleave', '.minimaPote,.minimaPios', function(e) {
-		Minima.apantisiLabelDOM.finish().fadeTo(100, 0.1);
-	}).
-
-	// Κάνοντας κλικ στην περιοχή ημερομηνίας και αποστολέα/παραλήπτη,
-	// εκκινούμε διαδικασία σύνθεσης μηνύματος απάντησης.
-
-	on('click', '.minimaPote,.minimaPios', function(e) {
-		Minima.editFormaParaliptisLoginDOM.
-		val($(this).parent().children('.minimaPios').text().trim());
-		Minima.editFormaDOM.finish().fadeIn(100, function() {
-			Minima.editFormaKimenoDOM.focus();
-		});
 	});
 
 	Minima.editFormaSetup();
@@ -641,7 +635,12 @@ Minima.prototype.minimaEndixiNeo = function() {
 	return this;
 
 	dom.children('.minimaPote').
-	append($('<img>').attr('src', '../ikona/minima/neo.png').addClass('minimaNeoIcon'));
+	append($('<img>').attr('src', '../ikona/minima/neo.png').addClass('minimaNeoIcon').
+	on('click', function() {
+		$(this).finish().fadeOut(function() {
+			$(this).remove();
+		});
+	}));
 	return this;
 };
 
