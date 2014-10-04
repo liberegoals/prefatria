@@ -842,7 +842,7 @@ Client.sound = {
 		if (Client.sound.miosi.hasOwnProperty(sound))
 		opts.entasi *= Client.sound.miosi[sound];
 
-		src = sound.match(/^https?:/) ? sound : 'sounds/' + sound;
+		src = sound.match(/^https?:/) ? sound : Client.server + 'sounds/' + sound;
 		jql = $('<audio src="' + src + '" />').on('ended', function() {
 			if (opts.hasOwnProperty('callback'))
 			opts.callback();

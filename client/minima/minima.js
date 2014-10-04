@@ -349,7 +349,7 @@ Minima.setupMinimata = function() {
 		addClass('minimaApantisiLabel').text('Απάντηση').
 		on('click', function(e) {
 			Minima.editFormaParaliptisLoginDOM.
-			val($(this).parent().children('.minimaPios').text().trim());
+			val($(this).parents('.minima').children('.minimaPios').text().trim());
 			Minima.editFormaDOM.finish().fadeIn(100, function() {
 				Minima.editFormaKimenoDOM.focus();
 			});
