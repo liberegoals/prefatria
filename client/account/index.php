@@ -101,7 +101,7 @@ class Account {
 			<?php
 			if (Globals::oxi_pektis() && Globals::is_prive()) {
 				?>
-				<tr class="account_prive">
+				<tr class="prive">
 					<td class="formaPrompt">
 						Κωδικός εξουσιοδότησης
 					</td>
