@@ -8,3 +8,4 @@ glob:*~
 glob:*.gz
 glob:database/ananeosi/*.data
 glob:client/photo/?/*
+glob:*.min.js
