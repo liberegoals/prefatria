@@ -9,13 +9,11 @@
 .welcome_prive {
 	margin-top: 10px;
 	padding: 8px 10px;
-	background-color: #587B80;
-	color: yellow;
 	border-radius: 10px;
 }
 
 .welcome_prive a {
-	color: #690A1D;
+	color: #C0FFE8;
 }
 
 .welcome_prive a:hover {

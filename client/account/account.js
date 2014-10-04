@@ -2,6 +2,7 @@ $(document).ready(function() {
 	Account.init();
 	Client.fortos.setup();
 
+	Client.tabPrive();
 	if (Client.isPektis()) {
 		Client.toolbarLeft('account');
 		Client.tabKlisimo();

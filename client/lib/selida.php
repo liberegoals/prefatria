@@ -42,6 +42,7 @@ class Selida {
 		Client.server = '<?php print Globals::$server; ?>';
 		Client.skiser = '<?php print Globals::$skiser; ?>';
 		Client.timeDif = <?php print time(); ?> - Globals.tora();
+		<?php if (Globals::is_prive()) { ?>Client.prive = true;<?php }?>
 		Client.diafimisi.emfanis = <?php print Globals::perastike("diafimisi") ? "false" : "true"; ?>;
 		Client.motd.emfanes = <?php print Globals::perastike("motd") ? "false" : "true"; ?>;
 		<?php
@@ -236,10 +237,11 @@ class Selida {
 		<?php if (Globals::is_pektis()) self::donate(); ?>
 		<br />
 		<a target="_blank" href="https://twitter.com/prefadorosTT"><img class="ribbonIcon"
-			src="<?php Globals::url("ikona/external/twitter.png"); ?>" /></a>
-		<a target="_blank" href="https://www.facebook.com/groups/prefadoros"><img class="ribbonIcon"
-			src="<?php Globals::url("ikona/external/facebook.jpg"); ?>" /></a>
-		<?php
+			src="<?php Globals::url("ikona/external/twitter.png"); ?>" /></a><?php
+		if (Globals::oxi_prive()) {
+			?><a target="_blank" href="https://www.facebook.com/groups/prefadoros"><img class="ribbonIcon"
+			src="<?php Globals::url("ikona/external/facebook.jpg"); ?>" /></a><?php
+		}
 	}
 
 	public static function ribbon_center() {
