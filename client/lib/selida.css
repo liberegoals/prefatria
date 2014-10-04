@@ -148,6 +148,25 @@ display: none;
 	margin-left: 4px;
 }
 
+#tabPrive {
+	display: inline;
+	padding: 0 6px;
+	border-width: 0px;
+	border-radius: 2px;
+}
+
+#tabPrive a:link {
+	color: #FFD700;
+}
+
+#tabPrive a:visited {
+	color: #FFD700;
+}
+
+#tabPrive a:hover {
+	color: #FF8C00;
+}
+
 /************************************************************************************************************************/
 
 .fyi {
@@ -586,6 +605,11 @@ border-color: red !important;
 
 .kokino {
 	color: #990000;
+}
+
+.prive {
+	background-color: #587B80;
+	color: #FFD700;
 }
 
 .kentro {

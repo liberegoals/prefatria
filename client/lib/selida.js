@@ -103,6 +103,10 @@ Client.removeDOM = function(obj) {
 	}
 };
 
+Client.isPrive = function() {
+	return Client.prive;
+};
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 Client.fyi = {};
@@ -247,6 +251,15 @@ Client.tabPektis = function(x) {
 		'<span class="sinefo entona">' + Client.session.pektis + '</span>'), x);
 };
 
+Client.tabPrive = function(x) {
+	return $('<div>').attr('id', 'tabPrive').addClass('prive').
+	append($('<a>').attr({
+		target: '_blank',
+		href: Client.server + 'prive'
+	}).text('Πριβέ')).
+	appendTo(x === undefined ? $('#toolbarRight') : x);
+};
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 Client.toolbarLeft = function(opts) {
@@ -267,6 +280,9 @@ Client.toolbarLeft = function(opts) {
 Client.toolbarRight = function(exodos) {
 	var tbr = $('#toolbarRight');
 	if (!tbr.length) return;
+
+	if (Client.isPrive())
+	Client.tabPrive(tbr);
 
 	if (Client.oxiPektis()) {
 		Client.tabEgrafi(tbr);

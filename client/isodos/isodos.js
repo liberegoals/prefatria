@@ -1,6 +1,7 @@
 $(document).ready(function() {
 	Isodos.init();
 	Client.toolbarLeft('isodos');
+	Client.tabPrive();
 	Client.tabArxiki();
 	Client.tabEgrafi();
 	Client.fortos.setup();
