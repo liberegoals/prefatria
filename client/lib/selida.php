@@ -65,6 +65,14 @@ class Selida {
 			print $mtime; ?>" /><?php
 	}
 
+	// Η μέθοδος "javascript" δέχεται το όνομα ενός JavaScript source file και
+	// παράγει το HTML script tag με το οποίο θα ενσωματώσουμε τον κώδικα στη
+	// σελίδα μας. Η function προσθέτει το modification timestamp ως παράμετρο
+	// στο URL του αρχείου, ώστε να αποφύγουμε το caching σε περίπτωση μεταβολής
+	// του αρχείου. Επίσης, ελέγχει αν υπάρχει νεότερη minified version αυτού
+	// του αρχείου και αν ναι, τότε προτιμά την minified version. Ως minified
+	// version του αρχείου θεωρούμε το ίδιο αρχείο με κατάληξη ".min.js"
+
 	public static function javascript($script) {
 		$file = Globals::$www . "client/" . $script . ".js";
 		if (!file_exists($file)) return;

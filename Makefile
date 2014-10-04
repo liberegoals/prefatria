@@ -1,4 +1,4 @@
 all:
-	(cd client/common && make)
-	(cd client/lib && make)
-	(cd client/arena && make)
+	@(cd client/common && make)
+	@(cd client/lib && make)
+	@(cd client/arena && make)
