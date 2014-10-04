@@ -70,6 +70,15 @@ class Selida {
 		if (!file_exists($file)) return;
 
 		$mtime = filemtime($file);
+		$file1 = Globals::$www . "client/" . $script . ".min.js";
+		if (file_exists($file1)) {
+			$mtime1 = filemtime($file1);
+			if ($mtime1 > $mtime) {
+				$script .= ".min";
+				$mtime = $mtime1;
+			}
+		}
+
 		?><script type="text/javascript" src="<?php Globals::url($script); ?>.js?mt=<?php
 			print $mtime; ?>"></script><?php
 	}
