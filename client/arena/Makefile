@@ -1,5 +1,5 @@
 %.min.js : %.js
-	mjs <$< >$@
+	JSMin <$< >$@
 
 all: \
 	anazitisi.min.js \

@@ -1,5 +1,5 @@
 %.min.js : %.js
-	mjs <$< >$@
+	JSMin <$< >$@
 
 all: \
 	panel.min.js \
