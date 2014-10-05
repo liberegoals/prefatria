@@ -71,16 +71,6 @@ $(document).ready(function() {
 	Arena = null;
 	if (!window.opener) return;
 	Arena = window.opener.Arena;
-	if (!Arena) return;
-
-	// TODO
-	return;
-
-	Client.tab($('<a>').attr({href: '#'}).on('click', function(e) {
-		if (Arena) Arena.minima.epistrofi();
-		else self.close();
-		return false;
-	}).append(Client.sinefo('Επιστροφή')), $('#toolbarLeft'));
 });
 
 Minima.unload = function() {
