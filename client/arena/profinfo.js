@@ -81,7 +81,7 @@ Pektis.prototype.pektisFormaPopupDOM = function(e) {
 	Client.skiserService('profinfoGet', 'pektis=' + login).
 	done(function(rsp) {
 		try {
-			eval('pektis.profinfo = {' + rsp + '};');
+			pektis.profinfo = ('{' + rsp + '}').evalAsfales();
 		} catch (e) {
 			Client.fyi.epano('Παρελήφθησαν ακαθόριστες πληροφορίες προφίλ για τον παίκτη ' +
 				'<span class="entona ble">' + login + '</span>');
@@ -149,7 +149,7 @@ Pektis.prototype.pektisFormaPopupFillDOM = function(login) {
 		$(document).
 		off('mousemove').
 		on('mousemove', function(e) {
-			var y, dy, egoH, egoY, idiosH, h, baraY;
+			var y, dy, egoH, egoY, idiosH, baraY;
 
 			y = e.pageY;
 			dy = y - y0;
@@ -566,7 +566,7 @@ Arena.alagiSxesis = function(e, login, sxesi) {
 	Arena.inputRefocus(e);
 	Client.skiserService('sxesi', 'pektis=' + login, 'sxesi=' + sxesi).
 	done(function(rsp) {
-		var sinedria, thesi;
+		var sinedria;
 
 		Arena.ego.pektis.pektisSxesiSet(login, sxesi);
 		Arena.pektisPanelRefreshDOM(Arena.skiniko.skinikoPektisGet(login));

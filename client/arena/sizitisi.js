@@ -736,7 +736,7 @@ Sizitisi.prototype.sizitisiCreateDOM = function(opts) {
 };
 
 Sizitisi.prototype.sizitisiSxolioCreateDOM = function(dom, online) {
-	var sxolio, tmima, dom, html, i, lexi, j;
+	var sxolio, tmima, i, lexi, j;
 
 	sxolio = this.sizitisiSxolioGet();
 	tmima = sxolio.split('^');
@@ -927,8 +927,6 @@ Sizitisi.youtubeAppend = function(dom, s) {
 };
 
 Sizitisi.sindesmosAppend = function(dom, s) {
-	var iframe;
-
 	dom.
 	append($('<a>').attr({
 		target: '_blank',

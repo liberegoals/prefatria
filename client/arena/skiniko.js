@@ -97,7 +97,7 @@ Skiniko.prototype.processFreskaData = function(rsp) {
 	// αποτύχουμε ζητάμε νέα σκηνικά δεδομένα.
 
 	try {
-		eval('data = {' + rsp + '};');
+		data = ('{' + rsp + '}').evalAsfales();
 	} catch(e) {
 		this.feredataError('Παρελήφθησαν λανθασμένα σκηνικά δεδομένα', rsp);
 		return this;
@@ -263,7 +263,7 @@ Skiniko.prototype.processPartidaData = function(data, online) {
 };
 
 Skiniko.prototype.processPartidaSizitisiData = function(sizitisiData, online) {
-	var skiniko = this, trapeziKodikos, tora, notice;
+	var trapeziKodikos, tora, notice;
 
 	if (!sizitisiData) return this;
 	if (!sizitisiData.length) return this;
@@ -455,7 +455,7 @@ Skiniko.prototype.processAlages = function(rsp) {
 	// σκηνικά δεδομένα.
 
 	try {
-		eval('data = {' + rsp + '};');
+		data = ('{' + rsp + '}').evalAsfales();
 	} catch(e) {
 		this.feredataError('Παρελήφθησαν λανθασμένες κινήσεις', rsp);
 		return this;
@@ -533,7 +533,7 @@ Skiniko.prototype.skinikoFreskarisma = function() {
 };
 
 Skiniko.prototype.processAlagesPartida = function(data, trapeziPrin) {
-	var trapeziMeta, trapezi;
+	var trapeziMeta;
 
 	trapeziMeta = Arena.ego.sinedria.sinedriaTrapeziGet();
 	if (!trapeziMeta) {
@@ -1136,7 +1136,7 @@ Trapezi.prototype.trapeziTheatisPushDOM = function(sinedria) {
 // αντίστοιχα ποσά της προτελευταίας διανομής του τραπεζιού.
 
 Trapezi.prototype.telefteaPliromiSet = function(posa) {
-	var trapezi = this, dianomiArray, dianomi, kapikia;
+	var dianomiArray, dianomi, kapikia;
 
 	this.telefteaPliromi = {
 		1: 0,
@@ -1310,7 +1310,7 @@ Prosklisi.prototype.prosklisiDeleteDOM = function() {
 // και ενημερώνει την εμφάνιση του συγκεκριμένου παίκτη στην περιοχή τραπεζιών.
 
 Skiniko.prototype.pektisEntopismosDOM = function(pektis) {
-	var sinedria, sinedriaDOM, trapeziPekti, theatis;
+	var sinedria, trapeziPekti;
 
 	// Εντοπίζουμε τη συνεδρία του παίκτη (εφόσον υπάρχει) και το τραπέζι που
 	// αναφέρεται στη συγκεκριμένη συνεδρία.

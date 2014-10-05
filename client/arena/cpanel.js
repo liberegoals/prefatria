@@ -579,7 +579,7 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 		return Arena.trapeziRithmisi();
 	},
 	refresh: function() {
-		var trapezi, img;
+		var img;
 
 		if (Arena.ego.oxiTrapezi()) return;
 

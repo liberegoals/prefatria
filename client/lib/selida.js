@@ -399,8 +399,10 @@ Client.fortos.ananeosi = function() {
 	if (!Client.fortos.DOM) return;
 	Client.skiserService('fortosData').
 	done(function(rsp) {
+		var data;
+
 		try {
-			eval('var data = {' + rsp + '};');
+			data = ('{' + rsp + '}').evalAsfales();
 		} catch (e) {
 			if (!Client.fortos.DOM) return;
 			Client.fortos.DOM.empty().
@@ -634,7 +636,8 @@ jQuery.fn.siromeno = function(css) {
 
 	doc = $(document);
 	return this.each(function() {
-		var obj = $(this), periorismeno;
+		var obj = $(this), periorismeno, siromeno_t, siromeno_l,
+			siromeno_b, siromeno_r, cursor, opacity, text;
 
 		if (css === false) {
 			doc.off('mousemove mouseup contextmenu');
@@ -652,16 +655,16 @@ jQuery.fn.siromeno = function(css) {
 		periorismeno = (obj.css('position') !== 'fixed');
 
 		// Θέτουμε το στοιχείο top/bottom εφόσον δεν υπάρχει.
-		var siromeno_t = parseInt(obj.css('top'));
+		siromeno_t = parseInt(obj.css('top'));
 		if (isNaN(siromeno_t)) {
-			var siromeno_b = parseInt(obj.css('bottom'));
+			siromeno_b = parseInt(obj.css('bottom'));
 			if (isNaN(siromeno_b)) obj.css({top: 0});
 		}
 
 		// Θέτουμε το στοιχείο left/right εφόσον δεν υπάρχει.
-		var siromeno_l = parseInt(obj.css('left'));
+		siromeno_l = parseInt(obj.css('left'));
 		if (isNaN(siromeno_l)) {
-			var siromeno_r = parseInt(obj.css('right'));
+			siromeno_r = parseInt(obj.css('right'));
 			if (isNaN(siromeno_r)) obj.css({left: 0});
 		}
 
@@ -669,9 +672,9 @@ jQuery.fn.siromeno = function(css) {
 			e.stopPropagation();
 		});
 
-		var cursor = obj.css('cursor');
-		var opacity = obj.css('opacity');
-		var text = $();
+		cursor = obj.css('cursor');
+		opacity = obj.css('opacity');
+		text = $();
 
 		obj.off('click').on('click', function(e) {
 			e.stopPropagation();
@@ -681,11 +684,13 @@ jQuery.fn.siromeno = function(css) {
 		}).off('mouseleave').on('mouseleave', function(e) {
 			obj.css({cursor: cursor ? cursor : 'auto'});
 		}).off('mousedown').on('mousedown', function(e) {
+			var siromeno_x, siromeno_y, moving, winW, winH;
+
 			e.stopPropagation();
 			e.preventDefault();
 
-			var siromeno_x = e.pageX;
-			var siromeno_y = e.pageY;
+			siromeno_x = e.pageX;
+			siromeno_y = e.pageY;
 
 			siromeno_t = parseInt(obj.css('top'));
 			if (isNaN(siromeno_t)) {
@@ -724,9 +729,9 @@ jQuery.fn.siromeno = function(css) {
 			if (text.length) text.prop({disabled: false});
 			text = $(this).find('input:enabled,textarea:enabled').prop({disabled: true}).off('mousemove');
 
-			var moving = true;
-			var winW = $(window).width();
-			var winH = $(window).height();
+			moving = true;
+			winW = $(window).width();
+			winH = $(window).height();
 
 			obj.find('*').not('marquee').off('scroll').on('scroll', function(e) {
 				e.stopPropagation();
@@ -734,6 +739,8 @@ jQuery.fn.siromeno = function(css) {
 			});
 
 			doc.on('mousemove', function(e) {
+				var dy, dx;
+
 				e.stopPropagation();
 				e.preventDefault();
 
@@ -744,8 +751,8 @@ jQuery.fn.siromeno = function(css) {
 					if (winH - e.pageY < 10) return;
 				}
 
-				var dy = e.pageY; if (dy < 10) dy = 10; dy -= siromeno_y;
-				var dx = e.pageX; if (dx < 10) dx = 10; dx -= siromeno_x;
+				dy = e.pageY; if (dy < 10) dy = 10; dy -= siromeno_y;
+				dx = e.pageX; if (dx < 10) dx = 10; dx -= siromeno_x;
 
 				if (siromeno_t !== null) obj.css({top: (siromeno_t + dy) + 'px'});
 				else obj.css({bottom: (siromeno_b - dy) + 'px'});
@@ -753,6 +760,8 @@ jQuery.fn.siromeno = function(css) {
 				if (siromeno_l !== null) obj.css({left: (siromeno_l + dx) + 'px'});
 				else obj.css({right: (siromeno_r - dx) + 'px'});
 			}).on('mouseup', function(e) {
+				var css;
+
 				e.stopPropagation();
 				e.preventDefault();
 
@@ -760,7 +769,7 @@ jQuery.fn.siromeno = function(css) {
 				doc.off('mousemove mouseup contextmenu');
 				text.prop({disabled: false}).off('mousemove');
 
-				var css = {};
+				css = {};
 				css.cursor = 'move';
 				if (opacity !== false) css.opacity = opacity;
 				obj.stop().css(css);

@@ -184,7 +184,7 @@ Arena.partida.kinisiFilo = function(pektis, filo, callback) {
 };
 
 Arena.partida.kinisiBaza = function() {
-	var trapezi, pios, iseht, css = {width: 0}, bazaDom, delay;
+	var pios, iseht, css = {width: 0}, bazaDom, delay;
 
 	if (Arena.ego.oxiTrapezi()) return Arena.partida;
 	if (!Arena.ego.trapezi.bazaFila) return Arena.partida;

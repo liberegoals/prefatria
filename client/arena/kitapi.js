@@ -124,8 +124,6 @@ Arena.kitapi.refresh = function() {
 };
 
 Arena.kitapi.pliromiPush = function(pliromi) {
-	var Kitapi;
-
 	if (Arena.kitapi.isKlisto())
 	return Arena;
 

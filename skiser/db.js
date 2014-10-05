@@ -183,7 +183,7 @@ DB.resetRest = function(callback) {
 // Για να υπάρχει ευελιξία κάποιες από τις παραπάνω παραμέτρους δίνονται σε εξωτερικά
 // files στο directory "misc/.mistiko", κάτω από το βασικό directory της εφαρμογής.
 
-eval('DB.nodedb = {' + Server.readFileSync('../misc/.mistiko/nodedb') + '};');
+DB.nodedb = ('{' + Server.readFileSync('../misc/.mistiko/nodedb') + '}').evalAsfales();
 
 if (!DB.nodedb.hasOwnProperty('database'))
 DB.nodedb.database = 'prefatria';

@@ -535,7 +535,7 @@ Skiniko.prototype.processKinisiEG = function(data) {
 //	metrita3	Μετρητά παίκτη θέσης 3.
 
 Skiniko.prototype.processKinisiPD = function(data) {
-	var trapezi, dianomi, energia;
+	var trapezi, dianomi;
 
 	trapezi = this.skinikoTrapeziGet(data.trapezi);
 	if (!trapezi) return this;

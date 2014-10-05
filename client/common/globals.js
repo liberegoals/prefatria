@@ -95,17 +95,19 @@ Globals.toraServer = function() {
 // λογίζεται με όρους της μηχανής στην οποία εκτελείται.
 
 Globals.pote = function(ts) {
-	var tora = Globals.tora();
-	var dif = tora - ts;
+	var tora, dif, x;
+
+	tora = Globals.tora();
+	dif = tora - ts;
 	if (dif < 60) return 'τώρα';
 
 	if (dif < 3600) {
-		var x = parseInt(dif / 60);
+		x = parseInt(dif / 60);
 		return 'πριν ' + x + ' λεπτ' + (x < 2 ? 'ό' : 'ά');
 	}
 
 	if (dif < 86400) {
-		var x = parseInt(dif / 3600);
+		x = parseInt(dif / 3600);
 		return 'πριν ' + x + ' ώρ' + (x < 2 ? 'α' : 'ες');
 	}
 	
@@ -140,12 +142,14 @@ Globals.poteOra = function(pote, full) {
 // Μπορούμε να δώσουμε και συγκεκριμένη ώρα ως παράμετρο.
 
 Globals.mera = function(d, full) {
+	var s, x;
+
 	if (!d) d = new Date;
 	else if (typeof d === 'number') d = new Date(d * 1000);
 
-	var s = '';
+	s = '';
 
-	var x = d.getDate();
+	x = d.getDate();
 	if (x < 10) s += '0';
 	s += x;
 	s += '/';
@@ -170,12 +174,14 @@ Globals.mera = function(d, full) {
 // Μπορούμε να δώσουμε και συγκεκριμένη ώρα ως παράμετρο.
 
 Globals.ora = function(d, seconds) {
+	var s, x;
+
 	if (!d) d = new Date;
 	else if (typeof d === 'number') d = new Date(d * 1000);
 
-	var s = '';
+	s = '';
 
-	var x = d.getHours();
+	x = d.getHours();
 	if (x < 10) s += '0';
 	s += x + ':';
 
@@ -222,6 +228,11 @@ String.prototype.isNai = function() {
 
 String.prototype.isOxi = function() {
 	return !this.isNai();
+};
+
+String.prototype.evalAsfales = function() {
+	eval('var x = ' + this.valueOf() + ';');
+	return x;
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
@@ -285,7 +296,8 @@ String.prototype.uri = function() {
 // παράμετρο με τιμή false.
 
 Globals.json = function(s, nl) {
-	var err = false;
+	var err = false, x;
+
 	if (s === undefined) err = 'undefined data';
 	else if (s === null) err = 'null data';
 	else {
@@ -293,7 +305,7 @@ Globals.json = function(s, nl) {
 		case 'number':
 			return s;
 		case 'string':
-			var x = s.replace(/\\/g, '\\\\');
+			x = s.replace(/\\/g, '\\\\');
 			if (nl === undefined) nl = true;
 			if (nl) x = x.replace(/[\n\r\f\v\b\t]/g, ' ');
 			return "'" + x.replace(/'/g, '\\\'') + "'";
