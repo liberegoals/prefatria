@@ -788,7 +788,7 @@ Sizitisi.prototype.sizitisiSxolioCreateDOM = function(dom, online) {
 			continue;
 		}
 
-		if (tmima[i].match(/^https?:\/\/.*\.(png|jpg|gif)[-+]*$/i)) {
+		if (tmima[i].match(/^https?:\/\/.*\.(png|jpg|gif|jpeg)[-+]*$/i)) {
 			Sizitisi.ikonaAppend(dom, tmima[i]);
 			continue;
 		}
