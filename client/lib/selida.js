@@ -203,7 +203,13 @@ Client.tab = function(p, x) {
 };
 
 Client.tabKlisimo = function(x) {
-	return Client.tab($('<a>').attr({href: '#'}).on('click', function(e) {
+	if (!window.opener)
+	return;
+
+	if (window.opener === window.self)
+	return;
+
+	Client.tab($('<a>').attr({href: '#'}).on('click', function(e) {
 		self.close();
 		return false;
 	}).append(Client.sinefo('Κλείσιμο')), x === undefined ? $('#toolbarLeft') : x);
