@@ -6,7 +6,7 @@
 // αφορούν στην εμφάνιση ή μη κάποιων στοιχείων της τσόχας κλπ.
 
 Arena.partida.efoplismos = function() {
-	var thesi, efoplismos;
+	var efoplismos;
 
 	// Εκκινούμε τη διαδικασία ακυρώνοντας τυχόν υπάρχοντα οπλισμό της τσόχας.
 
@@ -469,7 +469,7 @@ Trapezi.efoplismosAlagiXartosia = function(trapezi) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
 
 Trapezi.prototype.efoplismosΣΥΜΜΕΤΟΧΗ = function() {
-	var basi, pektis, simpektis, silosi, klikDilosi = false;
+	var basi, pektis, simpektis, dilosi, klikDilosi = false;
 
 	pektis = this.partidaEpomenosGet();
 	if (Debug.flagGet('epomenosCheck') && Arena.ego.oxiThesi(pektis)) return this;
@@ -621,7 +621,7 @@ Trapezi.prototype.efoplismosΠΑΙΧΝΙΔΙ = function() {
 			filoDom.finish().animate({bottom: filoDom.data('bottom')}, delay);
 		}).
 		off('click').on('click', function(e) {
-			var olif, filo = $(this);
+			var filo = $(this);
 
 			Arena.inputRefocus(e);
 

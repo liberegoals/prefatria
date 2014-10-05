@@ -128,8 +128,10 @@ Minima.setupControls = function() {
 		e.stopPropagation();
 		Client.skiserService('minimaFeredata', 'last=' + Minima.kodikosMax).
 		done(function(rsp) {
+			var mlist;
+
 			try {
-				eval('var mlist = [' + rsp + '];');
+				mlist = ('[' + rsp + ']').evalAsfales();
 			} catch (e) {
 				Client.sound.beep();
 				Client.fyi.epano('Παρελήφθησαν ακαθόριστα δεδομένα');

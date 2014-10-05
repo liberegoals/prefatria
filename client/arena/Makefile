@@ -1,5 +1,5 @@
 %.min.js : %.js
-	JSMin "JSMin: arena/"$< <$< >$@
+	yui-compressor --verbose --line-break 70 --charset UTF-8 -o $@ $<
 
 all: \
 	anazitisi.min.js \

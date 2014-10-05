@@ -611,7 +611,7 @@ Dilosi.prototype.dilosiLektiko = function() {
 };
 
 Dilosi.prototype.dilosiAxiaAgoras = function() {
-	var xroma, bazes, axia;
+	var bazes, axia;
 
 	axia = this.dilosiXromaGet().xromaAxiaGet();
 	if (!axia) return null;

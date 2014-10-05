@@ -473,10 +473,10 @@ Arena.anazitisi.online = function() {
 };
 
 Arena.anazitisi.processData = function(rsp) {
-	var i;
+	var data, i;
 
 	try {
-		eval('var data = [' + rsp + ']');
+		data = ('[' + rsp + ']').evalAsfales();
 	} catch (e) {
 		Client.sound.beep();
 		Client.fyi.epano('Ακαθόριστα αποτελέσματα αναζήτησης');

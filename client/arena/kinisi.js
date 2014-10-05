@@ -107,7 +107,7 @@ Skiniko.prototype.processKinisiPostNS = function(data) {
 //	login		Είναι το login name του παίκτη που εισέρχεται στο καφενείο.
 
 Skiniko.prototype.processKinisiPostSL = function(data) {
-	var sinedria, trapezi, thesi, jql;
+	var sinedria, thesi, jql;
 
 	sinedria = this.skinikoSinedriaGet(data.login);
 	if (!sinedria) return this;
@@ -144,7 +144,7 @@ Skiniko.prototype.processKinisiPostSL = function(data) {
 	// Συνεχίζουμε με τυχόν εμφανίσεις του παίκτη ως παίκτη στην τσόχα,
 	// στην περιοχή της παρτίδας.
 
-	if (Arena.ego.isTrapezi(trapezi)) {
+	if (Arena.ego.isTrapezi()) {
 		thesi = Arena.ego.trapezi.trapeziThesiPekti(data.login);
 		if (thesi) jql = jql.add(Arena.partida['pektis' + thesi + 'DOM'].find('.tsoxaPektisMain'));
 	}
@@ -769,7 +769,7 @@ Skiniko.prototype.processKinisiPostPS = function(data) {
 };
 
 Skiniko.prototype.kinisiPostPeparamSetΚΑΤΑΣΤΑΣΗ = function(data, pektis) {
-	var jql, sinedria, trapezi, thesi;
+	var jql, sinedria, thesi;
 
 	jql = $();
 	sinedria = this.skinikoSinedriaGet(data.pektis);
