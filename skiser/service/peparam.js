@@ -27,7 +27,7 @@ Service.peparam.set = function(nodereq) {
 };
 
 Service.peparam.set2 = function(nodereq) {
-	var kinisi, post;
+	var kinisi;
 
 	nodereq.end();
 	kinisi = new Kinisi({

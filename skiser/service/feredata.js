@@ -598,7 +598,7 @@ Sinedria.prototype.tsoxaCheck = function(trapezi) {
 // τελευταία σχετική ενημέρωση.
 
 Sinedria.prototype.tsoxaNeotera = function(freska) {
-	var sinedria = this, trapeziKodikos, tsoxa;
+	var trapeziKodikos, tsoxa;
 
 	this.tsoxaNeoteraNone = true;
 
@@ -903,7 +903,7 @@ Energia.prototype.energiaProsarmogiΔΙΑΝΟΜΗ = function(sinedria) {
 };
 
 Energia.prototype.energiaProsarmogiΤΖΟΓΟΣ = function(sinedria) {
-	var trapezi, plati, krimena, i, fila, alif, s;
+	var plati, i, fila, alif, s;
 
 	fila = this.energiaDataGet();
 

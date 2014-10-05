@@ -59,7 +59,7 @@ Service.prosklisi.apostoli2 = function(nodereq, kodikos, trapezi) {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
 
 Service.prosklisi.diagrafi = function(nodereq) {
-	var prosklisi, sinedria, data, conn, query;
+	var prosklisi, data, conn, query;
 
 	if (nodereq.isvoli()) return;
 	if (nodereq.denPerastike('prosklisi', true)) return;

@@ -525,7 +525,7 @@ Sinedria.prototype.sinedriaSeXrisi = function(tora) {
 };
 
 Service.sinedria.arxiothetisi = function(lista) {
-	var pektis, sinedria, conn;
+	var pektis, sinedria;
 
 	for (pektis in lista) {
 		sinedria = lista[pektis];

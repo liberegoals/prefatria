@@ -257,7 +257,7 @@ Service.trapezi.diataxi = function(nodereq) {
 };
 
 Service.trapezi.diataxi2 = function(nodereq, trapezi, h1, h2) {
-	var p1, p1, kodikos, query, conn;
+	var p1, p2, kodikos, query, conn;
 
 	p1 = trapezi.trapeziPektisGet(h1);
 	p2 = trapezi.trapeziPektisGet(h2);
@@ -399,7 +399,7 @@ Service.trapezi.apodoxi = function(nodereq) {
 };
 
 Service.trapezi.apodoxi2 = function(nodereq, trapezi, thesi, apodoxi) {
-	var skiniko = Server.skiniko;
+	var kinisi;
 
 	nodereq.end();
 
@@ -410,7 +410,7 @@ Service.trapezi.apodoxi2 = function(nodereq, trapezi, thesi, apodoxi) {
 		apodoxi: apodoxi,
 	};
 
-	skiniko.
+	Server.skiniko.
 	processKinisi(kinisi).
 	kinisiAdd(kinisi);
 
@@ -505,7 +505,7 @@ Service.trapezi.check = function() {
 	arxio = {};
 
 	Server.skiniko.skinikoTrapeziWalk(function() {
-		var trapezi, kinisi;
+		var trapezi;
 
 		if (this.trapeziSeXrisi(tora))
 		return;

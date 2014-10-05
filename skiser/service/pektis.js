@@ -21,7 +21,7 @@ Service.pektis.fetch = function(nodereq) {
 		if (rows.length != 1)
 		return nodereq.error('Δεν βρέθηκε ο παίκτης στην database');
 
-		pektis = new Pektis(row);
+		pektis = new Pektis(rows[0]);
 		Server.skiniko.skinikoPektisSet(pektis);
 		nodereq.end(pektis.pektisFeredata());
 
