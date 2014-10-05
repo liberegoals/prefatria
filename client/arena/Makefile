@@ -1,5 +1,5 @@
 %.min.js : %.js
-	JSMin <$< >$@
+	JSMin "JSMin: arena/"$< <$< >$@
 
 all: \
 	anazitisi.min.js \
