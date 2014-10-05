@@ -1,5 +1,5 @@
 %.min.js : %.js
-	JSMin <$< >$@
+	JSMin "JSMin: common/"$< <$< >$@
 
 all: \
 	energia.min.js \
