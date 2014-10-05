@@ -21,7 +21,8 @@ Service.prosklisi.apostoli = function(nodereq) {
 	if (!pektis) return nodereq.error('pektisNotFound');
 
 	apostoleas = nodereq.loginGet();
-	if (pektis.pektisIsApasxolimenos() && pektis.pektisOxiFilos(apostoleas))
+	if (pektis.pektisIsApasxolimenos() && pektis.pektisOxiFilos(apostoleas) &&
+		(nodereq.url.pros !== nodereq.loginGet()))
 	return nodereq.error('pektisApasxolimenos');
 
 	trapezi = sinedria.sinedriaTrapeziGet();
