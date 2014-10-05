@@ -1,5 +1,5 @@
 Funchat = function(props) {
-	var id, img;
+	var img;
 
 	Globals.initObject(this, props);
 

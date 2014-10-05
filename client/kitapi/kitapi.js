@@ -355,8 +355,6 @@ Kitapi.onomaGet = function(thesi) {
 // και να αποφύγουμε κατά το δυνατόν τα scrollbars.
 
 Kitapi.stresarisma = function() {
-	var i;
-
 	Kitapi.
 	fullData().
 	resize().

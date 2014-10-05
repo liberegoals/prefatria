@@ -91,8 +91,6 @@ Service.minima.diagrafi2 = function(nodereq) {
 
 	query = 'DELETE FROM `minima` WHERE `kodikos` = ' + nodereq.url.minima;
 	DB.connection().query(query, function(conn, rows) {
-		var kinisi;
-
 		conn.free();
 		if (conn.affectedRows != 1)
 		return nodereq.error('Απέτυχε η διαγραφή του μηνύματος');
@@ -136,8 +134,6 @@ Service.minima.katastasi2 = function(nodereq) {
 	query = 'UPDATE `minima` SET `status` = ' + katastasi.json() +
 		' WHERE `kodikos` = ' + nodereq.url.minima;
 	DB.connection().query(query, function(conn, rows) {
-		var kinisi;
-
 		conn.free();
 		if (conn.affectedRows != 1)
 		return nodereq.error('Απέτυχε η αλλαγή κατάστασης του μηνύματος');

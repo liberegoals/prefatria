@@ -12,17 +12,6 @@ $(document).ready(function() {
 	Funchat.listaArrayWalk(function() {
 		this.funchatCreateDOM();
 	});
-
-	return;
-	setInterval(function() {
-		var count;
-
-		count = 0;
-		for (i in $.cache)
-		count++;
-
-		console.log('jQuery cache size: ' + count);
-	}, 10000);
 });
 
 Funchat.isArena = function() {

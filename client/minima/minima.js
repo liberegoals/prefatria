@@ -318,7 +318,7 @@ Minima.setupMinimata = function() {
 	// με το πάνελ διαχείρισης μηνυμάτων.
 
 	on('mouseenter', '.minima', function(e) {
-		var minimaDOM, kodikos, minima, panelDOM, apostoleas, katastasi;
+		var minimaDOM, kodikos, minima, panelDOM, katastasi;
 
 		minimaDOM = $(this);
 		kodikos = minimaDOM.data('minima');
@@ -545,8 +545,6 @@ Minima.zebraRefresh = function() {
 	var count = 0;
 
 	Minima.minimataDOM.find('.minima').each(function() {
-		var i;
-
 		if ($(this).css('display') === 'none')
 		return;
 
