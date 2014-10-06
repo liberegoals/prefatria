@@ -128,17 +128,23 @@ Arena.prosklisi.panel.bpanelButtonPush(new PButton({
 		return Arena.ego.isDeveloper();
 	},
 	click: function(e) {
-		var count, max;
+		console.log($.cache);
+	},
+	enter: function(e) {
+		var count, max, i;
 
 		count = 0;
 		max = 0;
+
 		for (i in $.cache) {
 			count++;
 			if (parseInt(i) > max)
 			max = i;
 		}
 		Client.fyi.pano('cache count: ' + count + ', max: ' + max);
-		console.log($.cache);
+	},
+	leave: function(e) {
+		Client.fyi.pano();
 	},
 }));
 

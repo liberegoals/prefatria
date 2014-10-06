@@ -141,6 +141,22 @@ PButton = function(props) {
 		button.click.call(button, e);
 	});
 
+	if (typeof this.enter === 'function')
+	this.DOM.on('mouseenter', function(e) {
+		var button;
+
+		button = $(this).data('button');
+		button.enter.call(button, e);
+	});
+
+	if (typeof this.leave === 'function')
+	this.DOM.on('mouseleave', function(e) {
+		var button;
+
+		button = $(this).data('button');
+		button.leave.call(button, e);
+	});
+
 	if (this.hasOwnProperty('title')) this.DOM.attr('title', this.title);
 
 	if (this.hasOwnProperty('img')) {
