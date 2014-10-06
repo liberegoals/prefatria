@@ -41,6 +41,12 @@ Arena.partida.flags = {
 	// control panel.
 
 	azab: false,
+
+	// Η flag "skarta" δείχνει αν στη θέση που εμφανίζεται η προηγούμενη μπάζα
+	// εμφανίζονται τα σκάρτα αντί της τελευταίας μπάζας. Αυτό επιτυγχάνεται
+	// με κλικ στην περιοχή εμφάνισης της τελευταίας μπάζας.
+
+	skarta: false,
 };
 
 Arena.partida.niofertosView = function() {
@@ -112,6 +118,7 @@ Arena.partida.setup = function() {
 	Arena.kitapi.setup();
 	Arena.partida.setupPliromi();
 	Arena.partida.setupTzogos();
+	Arena.partida.setupAzab();
 	Arena.partida.setupPhoto();
 
 	return Arena;
@@ -172,6 +179,52 @@ Arena.partida.setupTzogos = function() {
 	}).
 	on('mouseleave', function() {
 		Arena.partida.azabDOM.removeClass('tsoxaAzabEmfanis');
+	});
+
+	return Arena;
+};
+
+// Με την function "setupAzab" θέτουμε mouse event listeners για την περιοχή
+// εμφάνισης της τελευταίας μπάζας.
+
+Arena.partida.setupAzab = function() {
+	Arena.partida.azabDOM.
+
+	// Οταν περνάμε τον δείκτη του ποντικιού πάνω από την περιοχή εμφάνισης
+	// της τελευταίας μπάζας, τότε αυτή η περιοχή γίνεται διαυγής.
+
+	on('mouseenter', function() {
+		Arena.partida.azabDOM.addClass('tsoxaAzabEmfanis');
+	}).
+
+	// Όταν αποσύρουμε τον δείκτη του ποντικιού από την περιοχή εμφάνισης της
+	// τελευταίας μπάζας, τότε αυτή η περιοχή γίνεται αχνή.
+
+	on('mouseleave', function() {
+		Arena.partida.azabDOM.removeClass('tsoxaAzabEmfanis');
+	}).
+
+	// Κάνοντας κλικ επάνω στην περιοχή εμφάνισης της τελευταίας μπάζας, αλλάζουμε
+	// το περιεχόμενο της περιοχής αυτής. Πράγματι, σ' αυτήν την περιοχή εμφανίζεται
+	// by default η τελευταία μπάζα. Ο τζογαδόρος μπορεί, όμως, να κάνει κλικ και
+	// να εμφανίσει τα σκάρτα στην ίδια περιοχή.
+
+	on('click', function(e) {
+		var tzogadoros;
+
+		Arena.inputRefocus(e);
+
+		if (Arena.ego.oxiTrapezi())
+		return;
+
+		if (Arena.ego.isPektis()) {
+			tzogadoros = Arena.ego.trapezi.partidaTzogadorosGet();
+			if (!tzogadoros) return;
+			if (Arena.ego.oxiThesi(tzogadoros)) return;
+		}
+
+		Arena.partida.flags.skarta = !Arena.partida.flags.skarta;
+		Arena.partida.azabRefreshDOM();
 	});
 
 	return Arena;
@@ -896,7 +949,7 @@ Arena.partida.pektisAgoraRefreshDOM = function(thesi, iseht, dom) {
 	if (!dlist.hasOwnProperty(thesi)) return Arena.partida;
 
 	// Θα ελέγξουμε τώρα αν έχει γίνει αγορά στο τραπέζι και αν ο συγκεκριμένος παίκτης
-	// είναι ο τζογαδόρος. Σ' αυτή την περίπτωησ θα εμφανίσουμε την αγορά του.
+	// είναι ο τζογαδόρος. Σ' αυτή την περίπτωση θα εμφανίσουμε την αγορά του.
 
 	tzogadoros = Arena.ego.trapezi.partidaTzogadorosGet();
 	agora = Arena.ego.trapezi.partidaAgoraGet();

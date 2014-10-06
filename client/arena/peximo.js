@@ -51,8 +51,46 @@ Arena.partida.azabRefreshDOM = function() {
 	Arena.partida.azabDOM.empty().
 	css('display', Arena.partida.flags.azab ? 'block' : 'none');
 
-	if (Arena.ego.isTrapezi())
+	if (Arena.ego.oxiTrapezi())
+	return Arena.partida;
+
+	if (Arena.partida.flags.skarta)
+	Arena.partida.azabRefreshSkartaDOM();
+
+	else
 	Arena.partida.azabRefreshBazaDOM();
+
+	return Arena.partida;
+};
+
+Arena.partida.azabRefreshSkartaDOM = function() {
+	var tzogadoros, skarta;
+
+	Arena.partida.azabDOM.removeData('tzogos').
+	empty().attr('title', 'Σκάρτα');
+
+	if (Arena.ego.trapezi.trapeziOxiDianomi()) {
+		Arena.partida.flags.azab = false;
+		Arena.partida.flags.skarta = false;
+		return Arena.partida;
+	}
+
+	tzogadoros = Arena.ego.trapezi.partidaTzogadorosGet();
+	if (!tzogadoros) return Arena.partida;
+
+	if (Arena.ego.isPektis() && Arena.ego.oxiThesi(tzogadoros))
+	return Arena.partida;
+
+	skarta = Arena.ego.trapezi.partidaSkartaGet();
+	if (!skarta) return Arena.partida;
+
+	skarta.xartosiaWalk(function(i, filo) {
+		Arena.partida.azabDOM.
+		append($('<img>').addClass('tsoxaAzabTzogos').attr({
+			id: 'tsoxaAzabTzogos' + i,
+			src: 'ikona/trapoula/' + filo.filoXromaGet() + filo.filoAxiaGet() + '.png',
+		}));
+	});
 
 	return Arena.partida;
 };
@@ -65,6 +103,7 @@ Arena.partida.azabRefreshBazaDOM = function() {
 
 	if (Arena.ego.trapezi.trapeziOxiDianomi()) {
 		Arena.partida.flags.azab = false;
+		Arena.partida.flags.skarta = false;
 		return Arena.partida;
 	}
 
@@ -80,6 +119,15 @@ Arena.partida.azabRefreshBazaDOM = function() {
 		fila = Arena.partida.azabFila;
 		torini = false;
 	}
+
+	// Αν δεν υπάρχει κρατημένη κάποια προηγούμενη μπάζα, τότε
+	// επιχειρούμε να δείξουμε τα σκάρτα.
+
+	if (pios.length <= 0) {
+		Arena.partida.azabRefreshSkartaDOM();
+		return Arena.partida;
+	}
+
 	for (i = 0; i < pios.length; i++) {
 		if (torini) {
 			Arena.partida.azabPios.push(pios[i]);
