@@ -95,7 +95,7 @@ Globals.toraServer = function() {
 // λογίζεται με όρους της μηχανής στην οποία εκτελείται.
 
 Globals.pote = function(ts) {
-	var tora, dif, x;
+	var tora, dif, x, msg;
 
 	tora = Globals.tora();
 	dif = tora - ts;
@@ -103,12 +103,17 @@ Globals.pote = function(ts) {
 
 	if (dif < 3600) {
 		x = parseInt(dif / 60);
-		return 'πριν ' + x + ' λεπτ' + (x < 2 ? 'ό' : 'ά');
+		return(isNaN(x) ? '' : 'πριν ' + x + ' λεπτ' + (x < 2 ? 'ό' : 'ά'));
 	}
 
 	if (dif < 86400) {
 		x = parseInt(dif / 3600);
-		return 'πριν ' + x + ' ώρ' + (x < 2 ? 'α' : 'ες');
+		if (isNaN(x)) return '';
+
+		msg = 'πριν ' + x + ' ώρ' + (x < 2 ? 'α' : 'ες');
+		dif -= (x * 3600);
+		x = parseInt(dif / 60);
+		return (isNaN(x) ? msg : msg + ' και ' + x + ' λεπτ' + (x < 2 ? 'ό' : 'ά'));
 	}
 	
 	// Μετατρέπουμε το timestamp σε αντικείμενο ημερομηνίας, προκειμένου
