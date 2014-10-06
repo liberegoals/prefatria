@@ -510,7 +510,11 @@ Skiniko.prototype.processKinisiPostRT = function(data) {
 	trapeziThesiRefreshDOM(sinedria.sinedriaThesiGet());
 	Arena.anazitisi.pektisRefreshDOM();
 
-	if (data.pektis.oxiEgo()) return this;
+	if (Arena.ego.isTrapezi(data.trapezi))
+	Arena.panelRefresh();
+
+	if (data.pektis.oxiEgo())
+	return this;
 
 	Arena.kitapi.refresh();
 	this.pektisTrapeziScroll(true);
