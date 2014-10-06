@@ -296,7 +296,7 @@ Arena.setupPss = function() {
 };
 
 Arena.epanadiataxiPss = function() {
-	var hpss, prosklisiH = 66, anazitisiH = 186, sizitisiH;
+	var hpss, prosklisiH = 66, anazitisiH = 120, sizitisiH;
 
 	hpss = $('#stiliPss').innerHeight();
 	hpss -= Arena.prosklisi.panelDOM.outerHeight(true);
