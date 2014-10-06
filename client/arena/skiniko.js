@@ -942,12 +942,18 @@ Trapezi.prototype.trapeziCreateDOM = function() {
 
 	this.tsoxaDOM.append(this.dataDOM = $('<div>').addClass('trapeziData').
 	on('mouseenter', function(e) {
-		var info;
+		var kodikos, stisimo, ipolipo;
 
 		e.stopPropagation();
-		info = $(this).data('info');
-		if (!info) return;
-		Client.fyi.pano(info);
+		kodikos = trapezi.trapeziKodikosGet();
+		stisimo = Globals.pote(trapezi.trapeziStisimoGet() + Client.timeDif);
+		ipolipo = trapezi.trapeziIpolipoGet();
+
+		Client.fyi.pano('<div class="aristera">' +
+		'Τραπέζι <span class="prasino entona">' + kodikos + '</span>, ' +
+		'στήθηκε <span class="prasino entona">' + stisimo + '</span>, ' +
+		'υπόλοιπο κάσας: <span class="prasino entona">' + ipolipo + '</span> καπίκια' +
+		'</div>');
 	}).
 	on('mouseleave', function(e) {
 		e.stopPropagation();
@@ -1019,19 +1025,13 @@ Trapezi.prototype.trapeziSimetoxiRefreshDOM = function() {
 };
 
 Trapezi.prototype.trapeziDataRefreshDOM = function() {
-	var kodikos, stisimo, ipolipo;
+	var kodikos, ipolipo;
 
 	kodikos = this.trapeziKodikosGet();
-	stisimo = Globals.pote(this.trapeziStisimoGet() + Client.timeDif);
 	ipolipo = this.trapeziIpolipoGet();
 
 	this.dataDOM.empty().
-	data('info', '<div class="aristera">' +
-		'Τραπέζι <span class="prasino entona">' + kodikos + '</span>, ' +
-		'στήθηκε <span class="prasino entona">' + stisimo + '</span>, ' +
-		'υπόλοιπο κάσας: <span class="prasino entona">' + ipolipo + '</span> καπίκια' +
-		'</div>').
-	attr('title', 'Τραπέζι ' + kodikos + ', στήθηκε ' + stisimo).
+	attr('title', 'Τραπέζι ' + kodikos).
 	removeClass('trapeziDataEpilogi trapeziDataProsklisi trapeziDataPrive').
 	append($('<div>').addClass('trapeziDataKodikos').text(kodikos)).
 
