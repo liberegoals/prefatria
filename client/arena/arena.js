@@ -526,7 +526,7 @@ Arena.funchat.anigma = function() {
 	Arena.funchat.klisimo();
 
 	Arena.funchat.win = window.open('funchat', '_blank', 'top=' + (window.screenY - 100) +
-		',left=' + (window.screenX + 700) + ',width=800,height=800,scrollbars=1');
+		',left=' + (window.screenX + 600) + ',width=900,height=800,scrollbars=1');
 
 	Arena.cpanel.bpanelRefresh();
 	return Arena.funchat;

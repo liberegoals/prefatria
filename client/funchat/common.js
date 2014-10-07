@@ -49,12 +49,22 @@ Funchat.prototype.funchatIxosGet = function() {
 	return this.ixos;
 };
 
+Funchat.prototype.funchatIsterisiGet = function() {
+	var isterisi;
+
+	isterisi = parseInt(this.isterisi);
+	if (isNaN(isterisi) || (isterisi < 0))
+	isterisi = 0;
+
+	return isterisi;
+};
+
 Funchat.prototype.funchatEntasiGet = function() {
 	return this.entasi;
 };
 
 Funchat.prototype.funchatIxosPlay = function(opts) {
-	var ixos, entasi;
+	var ixos, entasi, isterisi;
 
 	ixos = this.funchatIxosGet();
 	if (!ixos) return null;
@@ -68,7 +78,14 @@ Funchat.prototype.funchatIxosPlay = function(opts) {
 	}
 
 	if (!ixos.match(/^https?:/)) ixos = Funchat.server + ixos;
+	isterisi = this.funchatIsterisiGet();
+
+	if (!isterisi) 
 	return Client.sound.play(ixos, opts);
+
+	setTimeout(function() {
+		Client.sound.play(ixos, opts);
+	}, isterisi);
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
@@ -208,7 +225,19 @@ Funchat.listaPush(new Funchat({
 
 Funchat.listaPush(new Funchat({
 	img: 'tiGamisesTinPartida.gif',
-	platos: 200,
+	platos: 140,
+}));
+
+Funchat.listaPush(new Funchat({
+	img: 'sfiriEmoticon.gif',
+	platos: 70,
+}));
+
+Funchat.listaPush(new Funchat({
+	img: 'parathiro.gif',
+	platos: 70,
+	ixos: Client.server + 'sounds/tzamia.ogg',
+	isterisi: 1000,
 }));
 
 Funchat.listaPush(new Funchat({
