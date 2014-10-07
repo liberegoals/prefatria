@@ -127,6 +127,8 @@ Arena.partida.azabRefreshBazaDOM = function() {
 	// επιχειρούμε να δείξουμε τα σκάρτα.
 
 	if (pios.length <= 0) {
+		Client.fyi.ekato('Δεν υπάρχουν κρατημένα φύλλα προηγούμενης μπάζας');
+		Client.sound.beep();
 		Arena.partida.azabRefreshSkartaDOM();
 		return Arena.partida;
 	}
@@ -147,6 +149,11 @@ Arena.partida.azabRefreshBazaDOM = function() {
 
 	return Arena.partida;
 };
+
+// Όταν ο χρήστης κάνει κλικ στα φύλλα του τζόγου στο κέντρο του τραπεζιού,
+// εμφανίζονται τα φύλλα του τζόγου της προηγούμενης διανομής στην περιοχή
+// εμφάνισης τελευταίας μπάζας. Αυτό μπορεί να γίνει όσο τα φύλλα του τζόγου
+// είναι εμφανή, δηλαδή στη φάση της πλειοδοσίας της αγοράς.
 
 Arena.partida.azabRefreshTzogosDOM = function() {
 	var i, filo;
