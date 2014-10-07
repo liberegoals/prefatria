@@ -110,6 +110,31 @@ Arena.sizitisi.setup = function() {
 	Arena.sizitisi.kafenioDOM = $('<div>').addClass('sizitisiArea').appendTo(Arena.sizitisi.areaDOM);
 	Arena.sizitisi.trapeziDOM = $('<div>').addClass('sizitisiArea').appendTo(Arena.sizitisi.areaDOM);
 	Arena.sizitisi.proepiskopisiDOM = $('<div>').attr('id', 'sizitisiProepiskopisi').appendTo(Arena.sizitisi.areaDOM);
+	Arena.sizitisi.areaDOM.
+	on('mouseenter', '.sizitisi', function(e) {
+		var pote;
+
+		$(this).addClass('sizitisiEpilogi');
+
+		pote = $(this).data('pote');
+		if (!pote) return;
+
+		pote = Globals.poteOra(pote + Client.timeDif);
+		$(this).append($('<div>').addClass('sizitisiPote').text(pote));
+	}).
+	on('mouseleave', '.sizitisi', function(e) {
+		$(this).
+		removeClass('sizitisiEpilogi').
+		children('.sizitisiPote').remove();
+	}).
+	on('mousedown', '.sizitisi', function(e) {
+		$(this).
+		children('.sizitisiPote').css('display', 'none');
+	}).
+	on('mouseup', '.sizitisi', function(e) {
+		$(this).
+		children('.sizitisiPote').css('display', 'block');
+	});
 
 	Arena.sizitisi.panel.bpanelRefresh();
 	Arena.sizitisi.panelDOM.
@@ -705,31 +730,7 @@ Sizitisi.prototype.sizitisiCreateDOM = function(opts) {
 	}
 
 	dom.
-	data('pote', this.sizitisiPoteGet()).
-	on('mouseenter', function(e) {
-		var pote;
-
-		$(this).addClass('sizitisiEpilogi');
-
-		pote = $(this).data('pote');
-		if (!pote) return;
-
-		pote = Globals.poteOra(pote + Client.timeDif);
-		$(this).append($('<div>').addClass('sizitisiPote').text(pote));
-	}).
-	on('mouseleave', function(e) {
-		$(this).
-		removeClass('sizitisiEpilogi').
-		children('.sizitisiPote').remove();
-	}).
-	on('mousedown', function(e) {
-		$(this).
-		children('.sizitisiPote').css('display', 'none');
-	}).
-	on('mouseup', function(e) {
-		$(this).
-		children('.sizitisiPote').css('display', 'block');
-	});
+	data('pote', this.sizitisiPoteGet());
 
 	this.DOM.appendTo(this.sizitisiTrapeziGet() ? Arena.sizitisi.trapeziDOM : Arena.sizitisi.kafenioDOM);
 	return this;
