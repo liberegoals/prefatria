@@ -1527,6 +1527,22 @@ cursor: auto;
 	-webkit-transform: rotate(10deg);
 }
 
+.tsoxaAzabInfo {
+	position: relative;
+	bottom: -52px;
+	left: -10px;
+
+	text-align: center;
+	font-family: "Impact", "Charcoal", sans-serif;
+	font-size: 40px;
+	letter-spacing: 2px;
+	color: rgba(20, 0, 255, 0.7);
+
+	transform: rotate(-47deg);
+	-ms-transform: rotate(-47deg);
+	-webkit-transform: rotate(-47deg);
+}
+
 /**********************************************************************************************************************/
 
 .tsoxaTelosIcon {

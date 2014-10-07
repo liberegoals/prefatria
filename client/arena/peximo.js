@@ -92,6 +92,9 @@ Arena.partida.azabRefreshSkartaDOM = function() {
 		}));
 	});
 
+	Arena.partida.azabDOM.
+	append($('<div>').addClass('tsoxaAzabInfo').text('Σκάρτα'));
+
 	return Arena.partida;
 };
 
@@ -161,6 +164,9 @@ Arena.partida.azabRefreshTzogosDOM = function() {
 			src: 'ikona/trapoula/' + filo.filoXromaGet() + filo.filoAxiaGet() + '.png',
 		}));
 	}
+
+	Arena.partida.azabDOM.
+	append($('<div>').addClass('tsoxaAzabInfo').text('Τζόγος'));
 
 	return Arena.partida;
 };
