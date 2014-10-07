@@ -127,8 +127,6 @@ Arena.partida.azabRefreshBazaDOM = function() {
 	// επιχειρούμε να δείξουμε τα σκάρτα.
 
 	if (pios.length <= 0) {
-		Client.fyi.ekato('Δεν υπάρχουν κρατημένα φύλλα προηγούμενης μπάζας');
-		Client.sound.beep();
 		Arena.partida.azabRefreshSkartaDOM();
 		return Arena.partida;
 	}
