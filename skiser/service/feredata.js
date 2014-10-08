@@ -937,3 +937,29 @@ Sinedria.prototype.tsoxaNeoteraKlisimo = function(nodereq) {
 	nodereq.write('},\n');
 	return this;
 };
+
+// Οι ενέργειες τύπου "ΑΓΟΡΑ" είναι της μορφής "XXXS1S2", όπου "XXX" είναι
+// η αγορά και "S1" και "S2" είναι τα σκάρτα, π.χ. "DS7H8C9" σημαίνει επτά
+// μπαστούνια, με σκάρτα το οκτώ κούπα και το εννιά σπαθί. Η προσαρμογή αφορά
+// στα φύλλα του τζόγου, τα οποία πρέπει να αποκρυβούν από τους αμυνομένους.
+
+Energia.prototype.energiaProsarmogiΑΓΟΡΑ = function(sinedria) {
+	var krifo, data, atad, s;
+
+	if (sinedria.sinedriaOxiPektis())
+	return JSON.stringify(this);
+
+	if (sinedria.sinedriaThesiGet() === this.energiaPektisGet())
+	return JSON.stringify(this);
+
+	krifo = sinedria.sinedriaPlatiRBGet() + 'V';
+
+	data = this.energiaDataGet();
+	atad = data.substr(0, 3) + krifo + krifo;
+
+	this.data = atad;
+	s = JSON.stringify(this);
+	this.data = data;
+
+	return s;
+};
