@@ -427,16 +427,21 @@ Skiniko.prototype.processAlages = function(rsp) {
 
 	// Έχουν επιστραφεί δεδομένα. Αρχικά ενημερώνουμε την κονσόλα του browser.
 
-	if (Debug.flagGet('feredata') && Arena.ego.isDeveloper()) {
-		try {
-			console.groupCollapsed('Παρελήφθησαν μεταβολές');
-		} catch(e) {
-			console.log('Παρελήφθησαν μεταβολές');
+	if (Arena.ego.isDeveloper()) {
+		if (Debug.flagGet('feredata')) {
+			try {
+				console.groupCollapsed('Παρελήφθησαν μεταβολές');
+			} catch(e) {
+				console.log('Παρελήφθησαν μεταβολές');
+			}
+			console.log(rsp);
+			try {
+				console.groupEnd();
+			} catch(e) {}
 		}
-		console.log(rsp);
-		try {
-			console.groupEnd();
-		} catch(e) {}
+		else {
+			console.log(rsp);
+		}
 	}
 
 	// Πριν επεξεργαστούμε τις μεταβολές σκηνικών δεδομένων που παραλάβαμε,
