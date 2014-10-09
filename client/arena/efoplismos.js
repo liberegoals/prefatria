@@ -57,7 +57,7 @@ Trapezi.prototype.efoplismosΔΗΛΩΣΗ = function() {
 	if (this.anext && (this.apasoCount < 2))
 	basi.append($('<div>').addClass('tsoxaButton').data('dilosi', this.anext));
 	if (!this.alast) basi.append($('<div>').addClass('tsoxaButton').data('dilosi', new Dilosi('DS6')));
-	basi.append($('<div>').addClass('tsoxaButton').data('dilosi', new Dilosi('DPS')));
+	basi.append($('<div>').addClass('tsoxaButton').attr('id', 'pasoButton').data('dilosi', new Dilosi('DPS')));
 
 	basi.find('.tsoxaButton').each(function() {
 		$(this).append($(this).data('dilosi').dilosiDOM());
@@ -484,26 +484,26 @@ Trapezi.prototype.efoplismosΣΥΜΜΕΤΟΧΗ = function() {
 
 	if (!dilosi[simpektis]) basi.
 	append($('<div>').addClass('tsoxaButton').data('dilosi', 'ΠΑΙΖΩ')).
-	append($('<div>').addClass('tsoxaButton').data('dilosi', 'ΠΑΣΟ'));
+	append($('<div>').addClass('tsoxaButton').attr('id', 'pasoButton').data('dilosi', 'ΠΑΣΟ'));
 
 	else if (dilosi[simpektis].simetoxiIsPaso()) {
 		if (dilosi[pektis]) basi.
-		append($('<div>').addClass('tsoxaButton').data('dilosi', 'ΜΟΝΟΣ')).
+		append($('<div>').addClass('tsoxaButton').attr('id', 'pasoButton').data('dilosi', 'ΜΟΝΟΣ')).
 		append($('<div>').addClass('tsoxaButton').data('dilosi', 'ΜΑΖΙ'));
 
 		else basi.
 		append($('<div>').addClass('tsoxaButton').data('dilosi', 'ΠΑΙΖΩ')).
 		append($('<div>').addClass('tsoxaButton').data('dilosi', 'ΜΑΖΙ')).
-		append($('<div>').addClass('tsoxaButton').data('dilosi', 'ΠΑΣΟ'));
+		append($('<div>').addClass('tsoxaButton').attr('id', 'pasoButton').data('dilosi', 'ΠΑΣΟ'));
 	}
 
 	else if (dilosi[pektis]) basi.
 	append($('<div>').addClass('tsoxaButton').data('dilosi', 'ΜΑΖΙ')).
-	append($('<div>').addClass('tsoxaButton').data('dilosi', 'ΠΑΣΟ'));
+	append($('<div>').addClass('tsoxaButton').attr('id', 'pasoButton').data('dilosi', 'ΠΑΣΟ'));
 
 	else basi.
 	append($('<div>').addClass('tsoxaButton').data('dilosi', 'ΠΑΙΖΩ')).
-	append($('<div>').addClass('tsoxaButton').data('dilosi', 'ΠΑΣΟ'));
+	append($('<div>').addClass('tsoxaButton').attr('id', 'pasoButton').data('dilosi', 'ΠΑΣΟ'));
 
 	basi.find('.tsoxaButton').each(function() {
 		$(this).append($(this).data('dilosi'));

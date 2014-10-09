@@ -339,12 +339,18 @@ Arena.anazitisi.panelSetup = function() {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
 
 Arena.anazitisi.keyup = function(e) {
-	var code, pat;
+	var code, pasoButton, pat;
 
 	if (e) {
 		code = e.keyCode ? e.keyCode : e.which;
 		switch (code) {
-		case 27:	// Escape
+		case 27:
+			pasoButton = Arena.pasoButtonGet();
+			if (pasoButton) {
+				pasoButton.trigger('click');
+				return Arena;
+			}
+
 			Arena.anazitisi.inputDOM.val('');
 			break;
 		}
