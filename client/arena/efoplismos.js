@@ -762,7 +762,7 @@ Trapezi.prototype.efoplismosCLAIM = function() {
 
 	basi.
 	append($('<div>').addClass('tsoxaButton').data('apodoxi', 'ΝΑΙ').text('ΝΑΙ')).
-	append($('<div>').addClass('tsoxaButton').data('apodoxi', 'ΟΧΙ').text('ΟΧΙ'));
+	append($('<div>').addClass('tsoxaButton').attr('id', 'pasoButton').data('apodoxi', 'ΟΧΙ').text('ΟΧΙ'));
 
 	Arena.partida.xipnitiriOplismos();
 	Arena.partida.dilosiPanelDOM.find('.tsoxaButton').addClass('tsoxaDilosiButton').
