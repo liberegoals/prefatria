@@ -390,6 +390,7 @@ Arena.cpanel.bpanelButtonPush(Arena.cpanel.freskarismaButton = new PButton({
 }));
 
 Arena.cpanel.bpanelButtonPush(new PButton({
+	id: 'akirosi',
 	omada: 1,
 	img: 'akirosiStart.png',
 	title: 'Ακύρωση κινήσεων',
