@@ -203,6 +203,31 @@ Arena.setup = function() {
 	if (!Client.session.kinito)
 	Arena.inputTrexon.focus();
 
+	$(document).on('keyup', function(e) {
+		var button;
+
+		switch (e.which) {
+
+		// Κάποιες φορές δίνεται επιλογή στον παίκτη να κάνει κάποια επιλογή, π.χ.
+		// δήλωση αγοράς, συμμετοχή κλπ. Σ' αυτές τις επιλογές συμπεριλαμβάνεται
+		// συνήθως και επιλογή ΠΑΣΟ. Παρέχουμε, λοιπόν, εύκολο τρόπο να δηλωθεί
+		// το πάσο μέσω του πλήκτρου Escape.
+
+		case 27:
+			button = Arena.pasoButtonGet();
+			if (!button) return;
+
+			if (button.data('escape'))
+			return;
+
+			e.stopPropagation();
+			button.
+			data('escape', true).
+			trigger('click');
+			break;
+		}
+	});
+
 	Client.ofelimoDOM.
 	on('mouseenter', '.pektis', function(e) {
 		var pektis = $(this).data('pektis');
@@ -218,6 +243,19 @@ Arena.setup = function() {
 	});
 
 	return Arena;
+};
+
+// Στις περιπτώσεις που παρέχεται επιλογή ΠΑΣΟ μέσω σχετικού πλήκτρου, δίνουμε
+// τη δυνατότητα στον παίκτη να πατήσει το πλήκτρο Escape αντί του σχετικού
+// πλήκτρου. Προϋπόθεση γι' αυτό είναι το πλήκτρο να φέρει id "pasoButton".
+// Η μέθοδος "pasoButtonGet" επιστρέφει ακριβώς αυτό το πλήκτρο ως jQuery
+// list με ΑΚΡΙΒΩΣ ΕΝΑ dom element.
+
+Arena.pasoButtonGet = function() {
+	var pasoButton;
+
+	pasoButton = $('#pasoButton');
+	return(pasoButton.length === 1 ? pasoButton : null);
 };
 
 Arena.setupDiafimisi = function() {

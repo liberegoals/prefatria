@@ -493,16 +493,17 @@ Arena.sizitisi.panelSetup = function() {
 };
 
 Arena.sizitisi.keyup = function(e) {
-	var sxolio;
+	var pasoButton, sxolio;
 
 	if (e) {
-		e.stopPropagation();
 		switch (e.which) {
 		case 13:
 			Arena.sizitisi.apostoli();
 			return Arena;
 		case 27:
-			Arena.sizitisi.katharismos();
+			pasoButton = Arena.pasoButtonGet();
+			if (pasoButton) pasoButton.trigger('click');
+			else Arena.sizitisi.katharismos();
 			return Arena;
 		}
 	}

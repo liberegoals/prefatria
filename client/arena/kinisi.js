@@ -1223,7 +1223,7 @@ Skiniko.prototype.processKinisiPostPD = function(data) {
 	if (Arena.ego.oxiTrapezi(data.trapezi))
 	return this;
 
-	// Η φάση πληρωμής τίθεται και κατά την παραλαβή ενεργειών που
+	// Η φάση πληρωμής τίθεται ΚΑΙ κατά την παραλαβή ενεργειών που
 	// επισύρουν πληρωμή, π.χ. τελευταία μπάζα, ηθελημένο σόλο κλπ.
 
 	trapezi.
