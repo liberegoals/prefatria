@@ -1223,7 +1223,11 @@ Skiniko.prototype.processKinisiPostPD = function(data) {
 	if (Arena.ego.oxiTrapezi(data.trapezi))
 	return this;
 
-	trapezi.telefteaPliromiSet(data);
+	trapezi.
+	partidaFasiSet('ΠΛΗΡΩΜΗ').
+	telefteaPliromiSet(data);
+	Arena.cpanel.bpanelButtonGet('akirosi').pbuttonDisplay();
+
 	Arena.partida.
 	ipolipoRefreshDOM().
 	pliromiRefreshDOM().
@@ -1233,7 +1237,6 @@ Skiniko.prototype.processKinisiPostPD = function(data) {
 	if ((data.kasaPrin > 0) && (trapezi.trapeziIpolipoGet() <= 0))
 	Client.sound.applause();
 
-	Arena.partida.pliromiIconDOM.data('emfanisPlirom', true);
 	$('.tsoxaPektisPliromi').finish().fadeIn(100);
 
 	return this;

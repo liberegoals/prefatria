@@ -353,6 +353,7 @@ Trapezi.prototype.processEnergiaOnlineFiloKrotosOloi = function(tzogadoros, prot
 
 Trapezi.prototype.processEnergiaOnlineΔΗΛΩΣΗ = function(energia) {
 	Arena.partida.trapeziRefreshDOM();
+	Arena.cpanel.bpanelButtonGet('akirosi').pbuttonDisplay();
 	return this;
 };
 
