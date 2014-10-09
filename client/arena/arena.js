@@ -222,6 +222,7 @@ Arena.setup = function() {
 
 			e.stopPropagation();
 			button.
+			addClass('tsoxaButtonOplismeno').
 			data('escape', true).
 			trigger('click');
 			break;
