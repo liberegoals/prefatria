@@ -178,6 +178,11 @@ NodeRequest.prototype.nosinedria = function(s) {
 	}
 */
 
+	if (this.ip != this.sinedria.ip) {
+		console.error(this.login + ': new IP address (' + this.ip + ' <> ' + this.sinedria.ip + ')');
+		this.sinedria.sinedriaIpSet(this.ip);
+	}
+
 	this.pektis = skiniko.skinikoPektisGet(this.login);
 	if (!this.pektis) {
 		this.error(s ? s : 'ανύπαρκτος αιτών παίκτης');

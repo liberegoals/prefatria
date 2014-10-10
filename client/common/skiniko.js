@@ -1172,6 +1172,14 @@ Sinedria.prototype.sinedriaIsodosGet = function() {
 	return this.isodos;
 };
 
+Sinedria.prototype.sinedriaIpSet = function(ip) {
+	if (!ip) ip = '';
+	else ip = ip.validIp();
+
+	this.ip = ip;
+	return this;
+};
+
 Sinedria.prototype.sinedriaIpGet = function() {
 	return this.ip;
 };
