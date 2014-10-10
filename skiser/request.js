@@ -170,11 +170,13 @@ NodeRequest.prototype.nosinedria = function(s) {
 		return true;
 	}
 
+/*
 	if (this.ip != this.sinedria.ip) {
 		this.error(s ? s : 'invalid IP address (' + this.ip + ' <> ' + this.sinedria.ip + ')');
 		console.error(this.login + ': invalid IP address(' + this.ip + ' <> ' + this.sinedria.ip + ')');
 		return true;
 	}
+*/
 
 	this.pektis = skiniko.skinikoPektisGet(this.login);
 	if (!this.pektis) {
