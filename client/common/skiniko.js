@@ -374,6 +374,18 @@ Trapezi.prototype.trapeziStisimoGet = function() {
 	return this.stisimo;
 };
 
+Trapezi.prototype.trapeziArxioSet = function(ts) {
+	if (ts === undefined)
+	ts = Globals.toraServer();
+
+	this.arxio = ts;
+	return this;
+};
+
+Trapezi.prototype.trapeziArxioGet = function() {
+	return this.arxio;
+};
+
 Trapezi.prototype.trapeziIsTrapezi = function(trapezi) {
 	if (trapezi === undefined) return false;
 	if (trapezi === null) return false;

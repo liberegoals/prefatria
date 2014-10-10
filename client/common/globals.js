@@ -210,7 +210,7 @@ Globals.ora = function(d, seconds) {
 Globals.meraOra = function() {
 	var tora = new Date;
 
-	return Globals.mera(tora) + ', ' + Globals.ora(tora, true);
+	return Globals.mera(tora) + ', ' + Globals.ora(tora);
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
