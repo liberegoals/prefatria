@@ -213,14 +213,18 @@ display: none;
 }
 
 .formaPrompt {
+	display: inline-block;
 	text-align: right;
 	padding: 0 0.4em 0 0;
+	margin: 0 0 0 0.4em;
 	font-style: italic;
 }
 
 .formaPedio {
+	display: inline-block;
 	text-align: left;
-	padding-left: 0.2em;
+	padding: 0 0 0 0.2em;
+	margin: 0 0.4em 0 0;
 }
 
 .formaPanel {
