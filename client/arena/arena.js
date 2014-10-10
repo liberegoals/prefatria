@@ -714,8 +714,8 @@ Arena.arxio.anigma = function() {
 
 	x = window.screenX;
 	y = window.screenY;
-	Arena.arxio.win = window.open('arxio', '_blank', 'top=' + (window.screenY - 50) +
-		',left=' + (window.screenX + 50) + ',width=900,height=800');
+	Arena.arxio.win = window.open('arxio', '_blank', 'top=' + (window.screenY - 70) +
+		',left=' + (window.screenX + 50) + ',width=900,height=820');
 	return Arena.arxio;
 };
 

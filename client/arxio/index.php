@@ -4,8 +4,11 @@ Globals::diavase("lib/selida.php");
 
 Selida::head("Αρχείο");
 
+Selida::stylesheet("arena/arena");
 Selida::stylesheet("arxio/arxio");
+Selida::javascript("common/prefadoros");
 Selida::javascript("common/skiniko");
+Selida::javascript("common/partida");
 Selida::javascript("arxio/arxio");
 
 Selida::body();
