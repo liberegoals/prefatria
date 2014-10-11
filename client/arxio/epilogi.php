@@ -56,7 +56,7 @@ class Epilogi {
 	}
 
 	public static function queryClose() {
-		self::$query .= " ORDER BY `kodikos` LIMIT 20";
+		self::$query .= " ORDER BY `kodikos` DESC LIMIT 20";
 		return;
 	}
 
