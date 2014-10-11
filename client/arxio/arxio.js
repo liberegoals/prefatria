@@ -182,12 +182,12 @@ Trapezi.prototype.trapeziArxioDisplay = function() {
 
 		kapikia = parseInt(trapezi['kapikia' + thesi]);
 		if (isNaN(kapikia)) kapikia = 0;
-		if (!kapikia) return;
+		if (!kapikia) kapikia = '&#8203;';
 
 		kapikiaKlasi = 'arxioKapikia';
 		if (kapikia < 0) kapikiaKlasi += ' arxioKapikiaMion';
 
-		dom.append($('<div>').addClass(kapikiaKlasi).text(kapikia));
+		dom.append($('<div>').addClass(kapikiaKlasi).html(kapikia));
 	});
 
 	arxio = trapezi.trapeziArxioGet();
