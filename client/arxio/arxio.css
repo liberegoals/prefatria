@@ -8,19 +8,36 @@ body {
 
 #apotelesmata {
 	overflow-y: auto;
-	width: 755px;
+	width: 1000px;
 }
 
-.arxioTrapeziTsoxa {
-	width: 686px;
+.trapeziData {
+	width: 180px;
+}
+
+.trapeziTsoxa {
+	width: 1080px;
+	padding: 6px;
 	margin: 0 0 10px 10px;
+	opacity: 0.9;
 }
 
-.arxioTrapeziArxio {
+.trapeziTsoxa:hover {
+	opacity: 1;
+	cursor: pointer;
+}
+
+.trapeziPektis {
+	width: 180px;
+	text-align: left;
+	padding-left: 4px;
+}
+
+.trapeziArxio {
 	display: inline-block;
 	position: relative;
-	bottom: 7px;
+	bottom: 1px;
 	width: 150px;
-	text-align: center;
+	text-align: left;
 	margin-left: 20px;
 }

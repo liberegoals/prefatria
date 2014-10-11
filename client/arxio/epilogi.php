@@ -16,7 +16,10 @@ Globals::fatal("Λανθασμένα κριτήρια");
 
 Globals::header_data();
 while ($row = $result->fetch_assoc()) {
-	print json_encode($row) . ",";
+	Epilogi::checkPektis($row);
+	Epilogi::trparam($row);
+	Epilogi::dianomi($row);
+	print json_encode($row, JSON_UNESCAPED_UNICODE) . ",";
 	//Globals::asfales_sql($_REQUEST["login"]) . " AND `klidi` = BINARY " .
 }
 $result->free();
@@ -27,9 +30,9 @@ class Epilogi {
 	public static $query;
 
 	public static function queryInit() {
-		self::$query = "SELECT `kodikos`, UNIX_TIMESTAMP(`stisimo`) AS `stisimo`, " .
-			"`pektis1`, `pektis2`, `pektis3`, UNIX_TIMESTAMP(`arxio`) AS `arxio` " .
-			"FROM `trapezi` WHERE 1 = 1";
+		self::$query = "SELECT `kodikos` AS `k`, UNIX_TIMESTAMP(`stisimo`) AS `s`, " .
+			"`pektis1` AS `p1`, `pektis2` AS `p2`, `pektis3` AS `p3`, " .
+			"UNIX_TIMESTAMP(`arxio`) AS `a` FROM `trapezi` WHERE 1 = 1";
 	}
 
 	public static function queryPektis() {
@@ -59,6 +62,58 @@ class Epilogi {
 
 	public static function queryRun() {
 		return Globals::query(self::$query);
+	}
+
+	public static function checkPektis(&$trapezi) {
+		for ($thesi = 1; $thesi <= 3; $thesi++) {
+			if (!$trapezi["p" . $thesi])
+			break;
+		}
+
+		if ($thesi > 3)
+		return;
+
+		$query = "SELECT `thesi`, `pektis` FROM `telefteos` WHERE `trapezi` = " . $trapezi["k"];
+		$result = Globals::query($query);
+		while ($telefteos = $result->fetch_assoc()) {
+			if (!$telefteos["thesi"])
+			continue;
+
+			if (!$telefteos["pektis"])
+			continue;
+
+			$idx = "p" . $telefteos["thesi"];
+			if (!array_key_exists($idx, $trapezi))
+			continue;
+
+			if ($trapezi[$idx])
+			continue;
+
+			$trapezi[$idx] = $telefteos["pektis"];
+		}
+		$result->free();
+	}
+
+	public static function trparam(&$trapezi) {
+		$query = "SELECT `param`, `timi` FROM `trparam` WHERE `trapezi` = " . $trapezi["k"];
+		$result = Globals::query($query);
+		$trapezi["t"] = [];
+		while ($trparam = $result->fetch_assoc()) {
+			$trapezi["t"][$trparam["param"]] = $trparam["timi"];
+		}
+		$result->free();
+	}
+
+	public static function dianomi(&$trapezi) {
+		$query = "SELECT `kodikos` AS `k`, UNIX_TIMESTAMP(`enarxi`) AS `e`, `dealer` AS `d`, " .
+			"`kasa1` AS `k1`, `metrita1` AS `m1`, `kasa2` AS `k2`, `metrita2` AS `m2`, " .
+			"`kasa3` AS `k3`, `metrita3` AS `m3` FROM `dianomi` WHERE `trapezi` = " . $trapezi["k"];
+		$result = Globals::query($query);
+		$trapezi["d"] = [];
+		while ($dianomi = $result->fetch_assoc()) {
+			$trapezi["d"][] = $dianomi;
+		}
+		$result->free();
 	}
 }
 ?>

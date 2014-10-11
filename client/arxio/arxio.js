@@ -84,13 +84,37 @@ Arxio.kritiriaSetup = function() {
 			try {
 				tlist = ('[' + rsp + ']').evalAsfales();
 			} catch (e) {
+				console.error(rsp);
 				Client.fyi.epano('Επεστράφησαν ακαθόριστα δεδομένα');
 				Client.sound.beep();
 				return;
 			}
 
-			Globals.awalk(tlist, function(i, trapezi) {
-				new Trapezi(trapezi).trapeziArxioDisplay();
+			Globals.awalk(tlist, function(i, trapeziEco) {
+				var deco, trapezi, prop;
+
+				// Τα αποτελέσματα έχουν παραληφθεί σε «οικονομική» μορφή, δηλαδή
+				// τα ονόματα των properties του τραπεζιού είναι συντομογραφικά.
+
+				deco = {
+					k: 'kodikos',
+					e: 'enarxi',
+					p1: 'pektis1',
+					p2: 'pektis2',
+					p3: 'pektis3',
+					a: 'arxio',
+					t: 'trparam',
+					d: 'dianomi',
+				};
+
+				trapezi = {};
+				for (prop in deco) {
+					trapezi[deco[prop]] = trapeziEco[prop];
+				}
+
+				new Trapezi(trapezi).
+				trapeziArxioKapikia().
+				trapeziArxioDisplay();
 			});
 		}).
 		fail(function(err) {
@@ -107,22 +131,60 @@ Arxio.kritiriaLathos = function() {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
 
+Trapezi.prototype.trapeziArxioKapikia = function() {
+	var trapezi = this, kasa;
+
+	kasa = parseInt(this.trparam['ΚΑΣΑ']);
+	if (isNaN(kasa)) kasa = (this.trparam['ΚΑΣΑ'] = 50);
+
+	this.trapeziThesiWalk(function(thesi) {
+		this['kapikia' + thesi] = -kasa * 10;
+	});
+
+	kasa *= 30;
+	this.trapeziDianomiWalk(function() {
+		var dianomi = this;
+
+		Prefadoros.thesiWalk(function(thesi) {
+			trapezi['kapikia' + thesi] += parseInt(dianomi['k' + thesi]) + parseInt(dianomi['m' + thesi]);
+			kasa -= parseInt(dianomi['k' + thesi]);
+		});
+	});
+
+	this.ipolipo = kasa;
+	kasa = Math.floor(kasa / 3);
+
+	this['kapikia1'] += kasa;
+	this['kapikia2'] += kasa;
+	this['kapikia3'] = -this['kapikia1'] - this['kapikia2'];
+
+	return this;
+};
+
 Trapezi.prototype.trapeziArxioDisplay = function() {
 	var trapezi = this, kodikos, dom;
 
 	kodikos = this.trapeziKodikosGet();
 
 	Arxio.apotelesmataDOM.
-	append(dom = $('<div>').addClass('trapeziTsoxa arxioTrapeziTsoxa'));
+	append(dom = $('<div>').addClass('trapeziTsoxa'));
 
-	dom.append($('<div>').addClass('trapeziData').text(kodikos));
+	dom.append($('<div>').addClass('trapeziData').
+	append($('<div>').addClass('trapeziDataKodikos').text(kodikos)).
+	append($('<div>').addClass('trapeziDataIpolipo').text(this.ipolipo)));
 	Prefadoros.thesiWalk(function(thesi) {
-		dom.append($('<div>').addClass('pektis trapeziPektis').text(trapezi.trapeziPektisGet(thesi)));
+		var pektis;
+
+		pektis = trapezi.trapeziPektisGet(thesi);
+		if (!pektis) pektis = '&#8203;';
+		dom.append($('<div>').addClass('pektis trapeziPektis').html(pektis));
 	});
 
 	arxio = trapezi.trapeziArxioGet();
-	arxio = arxio ? Globals.poteOra(arxio) : '&mdash;';
-	dom.append($('<div>').addClass('arxioTrapeziArxio').html(arxio));
+	if (arxio) 
+	dom.append($('<div>').addClass('trapeziArxio').text(Globals.poteOra(arxio)));
+	else
+	dom.append($('<div>').addClass('trapeziArxio plagia').text('Σε εξέλιξη…'));
 
 	return this;
 };
