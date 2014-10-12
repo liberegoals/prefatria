@@ -59,15 +59,20 @@ class Epilogi {
 			}
 		}
 		else {
+			$open = " AND (";
+			$close = "";
 			$pektis = explode(",", $pektis);
 			for ($i = count($pektis) - 1; $i >= 0; $i--) {
 				$pat = trim($pektis[$i]);
 				if (!$pat) continue;
 
 				$pat = Globals::asfales_sql($pat);
-				self::$query .= " OR ((`pektis1` LIKE " . $pat . ") " .
-				" OR (`pektis2` LIKE " . $pat . ") OR (`pektis3` LIKE " . $pat . "))";
+				self::$query .= $open . "(`pektis1` LIKE " . $pat . ") " .
+				" OR (`pektis2` LIKE " . $pat . ") OR (`pektis3` LIKE " . $pat . ")";
+				$open = " OR ";
+				$close = ")";
 			}
+			self::$query .= $close;
 		}
 	}
 
