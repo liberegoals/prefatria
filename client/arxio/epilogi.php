@@ -1,5 +1,5 @@
 <?php
-require_once("../lib/standard.php");
+require_once "../lib/standard.php";
 Globals::session_init();
 Globals::database();
 
