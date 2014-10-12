@@ -1,6 +1,10 @@
 #!/bin/bash
 
-rm -f *.data
+rm -f \
+pektis.data \
+profinfo.data \
+sxesi.data
+
 tar xzf data.tar.gz || exit 2
 
 # rm -f data.tar.gz
