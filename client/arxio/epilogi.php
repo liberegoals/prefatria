@@ -19,7 +19,12 @@ while ($row = $result->fetch_assoc()) {
 	Epilogi::checkPektis($row);
 	Epilogi::trparam($row);
 	Epilogi::dianomi($row);
+
+	if (isset(JSON_UNESCAPED_UNICODE))
 	print json_encode($row, JSON_UNESCAPED_UNICODE) . ",";
+
+	else
+	print json_encode($row) . ",";
 	//Globals::asfales_sql($_REQUEST["login"]) . " AND `klidi` = BINARY " .
 }
 $result->free();
