@@ -160,10 +160,10 @@ Arxio.trapeziProcess = function(i, trapeziEco) {
 	}
 
 	ts = parseInt(trapezi.stisimo);
-	if (ts) trapezi.stisimo += Client.timeDif;
+	if (ts) trapezi.stisimo = ts + Client.timeDif;
 
 	ts = parseInt(trapezi.arxio);
-	if (ts) trapezi.arxio += Client.timeDif;
+	if (ts) trapezi.arxio = ts + Client.timeDif;
 
 	// Δημιουργούμε το τραπέζι ως αντικείμενο και προβαίνουμε στην
 	// επεξεργασία και στην παρουσίαση αυτού του τραπεζιού.
