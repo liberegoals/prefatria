@@ -47,11 +47,27 @@ class Epilogi {
 		$pektis = trim($_REQUEST["pektis"]);
 		if (!$pektis) return;
 
-		$pektis = explode("+", $_REQUEST["pektis"]);
-		for ($i = count($pektis) - 1; $i >= 0; $i--) {
-			$pat = Globals::asfales_sql($pektis[$i]);
-			self::$query .= " AND ((pektis1 LIKE " . $pat . ") " .
-			" OR (pektis2 LIKE " . $pat . ") OR (pektis3 LIKE " . $pat . "))";
+		if (preg_match("/\\+/", $pektis)) {
+			$pektis = explode("+", $pektis);
+			for ($i = count($pektis) - 1; $i >= 0; $i--) {
+				$pat = trim($pektis[$i]);
+				if (!$pat) continue;
+
+				$pat = Globals::asfales_sql($pat);
+				self::$query .= " AND ((`pektis1` LIKE " . $pat . ") " .
+				" OR (`pektis2` LIKE " . $pat . ") OR (`pektis3` LIKE " . $pat . "))";
+			}
+		}
+		else {
+			$pektis = explode(",", $pektis);
+			for ($i = count($pektis) - 1; $i >= 0; $i--) {
+				$pat = trim($pektis[$i]);
+				if (!$pat) continue;
+
+				$pat = Globals::asfales_sql($pat);
+				self::$query .= " OR ((`pektis1` LIKE " . $pat . ") " .
+				" OR (`pektis2` LIKE " . $pat . ") OR (`pektis3` LIKE " . $pat . "))";
+			}
 		}
 	}
 
