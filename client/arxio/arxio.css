@@ -68,3 +68,12 @@ body {
 .arxioKapikiaMion {
 	color: rgb(194, 0, 0);
 }
+
+.inputLathos {
+	color: #990000;
+	background-color: rgb(253, 253, 162);
+}
+
+.formaButton {
+	margin: 0 4px 0 16px;
+}
