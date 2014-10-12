@@ -148,7 +148,7 @@ Arxio.paralavi = function(data) {
 // λίστας τραπεζιών που επεστράφησαν από τον server.
 
 Arxio.trapeziProcess = function(i, trapeziEco) {
-	var trapezi, prop;
+	var trapezi, prop, ts;
 
 	// Δημιουργούμε αντίγραφο του προς επεξεργασία στοιχείου στο οποίο
 	// εμπεριέχονται τα πραγματικά properties του σχετικού τραπεζιού
@@ -158,6 +158,12 @@ Arxio.trapeziProcess = function(i, trapeziEco) {
 	for (prop in Arxio.trapeziEcoMap) {
 		trapezi[Arxio.trapeziEcoMap[prop]] = trapeziEco[prop];
 	}
+
+	ts = trapezi.stisimo;
+	if (ts) trapezi.stisimo += Client.timeDif;
+
+	ts = trapezi.arxio;
+	if (ts) trapezi.arxio += Client.timeDif;
 
 	// Δημιουργούμε το τραπέζι ως αντικείμενο και προβαίνουμε στην
 	// επεξεργασία και στην παρουσίαση αυτού του τραπεζιού.
