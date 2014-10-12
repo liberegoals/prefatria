@@ -38,3 +38,13 @@ REPLACE INTO TABLE `prefatria`.`sxesi` (
 	`sxetizomenos`,
 	`sxesi`
 );
+
+DELETE FROM `prefatria`.`peparam`
+;
+
+LOAD DATA LOCAL INFILE 'peparam.data'
+REPLACE INTO TABLE `prefatria`.`peparam` (
+	`pektis`,
+	`param`,
+	`timi`
+);
