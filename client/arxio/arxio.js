@@ -163,6 +163,7 @@ Arxio.trapeziProcess = function(i, trapeziEco) {
 	if (ts) trapezi.stisimo = ts - Client.timeDif;
 
 	ts = parseInt(trapezi.arxio);
+console.log(ts, Client.timeDif);
 	if (ts) trapezi.arxio = ts - Client.timeDif;
 
 	// Δημιουργούμε το τραπέζι ως αντικείμενο και προβαίνουμε στην
@@ -180,7 +181,7 @@ Arxio.trapeziProcess = function(i, trapeziEco) {
 
 Arxio.trapeziEcoMap = {
 	k: 'kodikos',
-	e: 'enarxi',
+	s: 'stisimo',
 	p1: 'pektis1',
 	p2: 'pektis2',
 	p3: 'pektis3',
