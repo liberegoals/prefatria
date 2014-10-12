@@ -159,10 +159,10 @@ Arxio.trapeziProcess = function(i, trapeziEco) {
 		trapezi[Arxio.trapeziEcoMap[prop]] = trapeziEco[prop];
 	}
 
-	ts = trapezi.stisimo;
+	ts = parseInt(trapezi.stisimo);
 	if (ts) trapezi.stisimo += Client.timeDif;
 
-	ts = trapezi.arxio;
+	ts = parseInt(trapezi.arxio);
 	if (ts) trapezi.arxio += Client.timeDif;
 
 	// Δημιουργούμε το τραπέζι ως αντικείμενο και προβαίνουμε στην
