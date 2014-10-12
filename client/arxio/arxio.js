@@ -33,17 +33,25 @@ Arxio.setup = function() {
 	append(Arxio.kritiriaDOM = $('<div>').attr('id', 'kritiria')).
 	append(Arxio.apotelesmataDOM = $('<div>').attr('id', 'apotelesmata'));
 
-	h = Client.ofelimoDOM.height();
-	h -= Arxio.kritiriaDOM.height();
+	Arxio.kritiriaSetup();
+	h = Client.ofelimoDOM.innerHeight();
+	h -= Arxio.kritiriaDOM.outerHeight(true) + 20;
 	Arxio.apotelesmataDOM.css('height', h + 'px');
 
-	Arxio.kritiriaSetup();
+	$(document).on('keyup', function(e) {
+		switch (e.which) {
+		case 27:
+			Arxio.resetButtonDOM.trigger('click');
+			break;
+		}
+	});
 };
 
 Arxio.kritiriaSetup = function() {
-	var date, mera, minas, etos;
+	var imerominia, mera, minas, etos;
 
 	Arxio.kritiriaDOM.
+	append($('<form>').
 	append($('<div>').addClass('formaPrompt').text('Παίκτης')).
 	append(Arxio.pektisInputDOM = $('<input>').addClass('formaPedio').css('width', '140px')).
 	append($('<div>').addClass('formaPrompt').text('Από')).
@@ -51,81 +59,205 @@ Arxio.kritiriaSetup = function() {
 	append($('<div>').addClass('formaPrompt').text('Έως')).
 	append(Arxio.eosInputDOM = Client.inputDate()).
 	append($('<div>').addClass('formaPrompt').text('Παρτίδα')).
-	append(Arxio.partidaInputDOM = $('<input>').addClass('formaPedio').css('width', '70px')).
-	append(Arxio.goButtonDOM = $('<button>').addClass('formaButton').text('Go!!!')).
+	append(Arxio.partidaInputDOM = $('<input>').addClass('formaPedio').css('width', '70px').
+	on('keyup', function(e) {
+		switch (e.which) {
+		case 13:
+			break;
+		default:
+			$(this).removeClass('inputLathos');
+			break;
+		}
+	})).
+	append(Arxio.goButtonDOM = $('<button>').attr('type', 'submit').addClass('formaButton').text('Go!!!')).
+	append(Arxio.resetButtonDOM = $('<button>').attr('type', 'reset').addClass('formaButton').text('Reset')).
 	append(Arxio.prevButtonDOM = $('<button>').addClass('formaButton').text('<')).
-	append(Arxio.nextButtonDOM = $('<button>').addClass('formaButton').text('>'));
-
-	if (Client.isPektis())
-	Arxio.pektisInputDOM.val(Client.session.pektis);
-
-	date = new Date();
-	mera = date.getDate();
-	minas = date.getMonth() + 1;
-	etos = date.getFullYear();
-	Arxio.eosInputDOM.val(mera + '-' + minas + '-' + etos);
-
-	date = new Date(date.getTime() - (7 * 24 * 3600 * 1000));
-	mera = date.getDate();
-	minas = date.getMonth() + 1;
-	etos = date.getFullYear();
-	Arxio.apoInputDOM.val(mera + '-' + minas + '-' + etos);
+	append(Arxio.nextButtonDOM = $('<button>').addClass('formaButton').text('>')));
 
 	Arxio.goButtonDOM.on('click', function(e) {
-		if (Arxio.kritiriaLathos())
-		return;
+		Arxio.apotelesmataDOM.empty();
 
-		Client.ajaxService('arxio/epilogi.php', 'pektis=' + Arxio.pektisInputDOM.val(),
-			'apo=' + Arxio.apoInputDOM.val(), 'eos=' + Arxio.eosInputDOM.val(),
-			'partida=' + Arxio.partidaInputDOM.val()).
+		if (!Arxio.processKritiria())
+		return false;
+
+		Client.fyi.pano('Παρακαλώ περιμένετε…');
+		Client.ajaxService('arxio/epilogi.php', 'pektis=' + Arxio.pektisInputDOM.val().uri(),
+			'apo=' + Arxio.apoInputDOM.val().uri(), 'eos=' + Arxio.eosInputDOM.val().uri(),
+			'partida=' + Arxio.partidaInputDOM.val().uri()).
 		done(function(rsp) {
-			var tlist;
-
-			try {
-				tlist = ('[' + rsp + ']').evalAsfales();
-			} catch (e) {
-				console.error(rsp);
-				Client.fyi.epano('Επεστράφησαν ακαθόριστα δεδομένα');
-				Client.sound.beep();
-				return;
-			}
-
-			Globals.awalk(tlist, function(i, trapeziEco) {
-				var deco, trapezi, prop;
-
-				// Τα αποτελέσματα έχουν παραληφθεί σε «οικονομική» μορφή, δηλαδή
-				// τα ονόματα των properties του τραπεζιού είναι συντομογραφικά.
-
-				deco = {
-					k: 'kodikos',
-					e: 'enarxi',
-					p1: 'pektis1',
-					p2: 'pektis2',
-					p3: 'pektis3',
-					a: 'arxio',
-					t: 'trparam',
-					d: 'dianomi',
-				};
-
-				trapezi = {};
-				for (prop in deco) {
-					trapezi[deco[prop]] = trapeziEco[prop];
-				}
-
-				new Trapezi(trapezi).
-				trapeziArxioKapikia().
-				trapeziArxioDisplay();
-			});
+			Client.fyi.pano();
+			Arxio.paralavi(rsp);
 		}).
 		fail(function(err) {
 			Client.ajaxFail(err);
 		});
+		return false;
 	});
 
+	Arxio.resetButtonDOM.on('click', function(e) {
+		Arxio.kritiriaReset();
+		return false;
+	});
+
+	Arxio.kritiriaReset();
+};
+
+Arxio.kritiriaReset = function() {
+	var imerominia, mera, minas, etos;
+
+	if (Client.isPektis())
+	Arxio.pektisInputDOM.val(Client.session.pektis);
+
+	imerominia = new Date();
+	mera = imerominia.getDate();
+	minas = imerominia.getMonth() + 1;
+	etos = imerominia.getFullYear();
+	Arxio.eosInputDOM.val(mera + '-' + minas + '-' + etos);
+
+	imerominia = new Date(imerominia.getTime() - (7 * 24 * 3600 * 1000));
+	mera = imerominia.getDate();
+	minas = imerominia.getMonth() + 1;
+	etos = imerominia.getFullYear();
+	Arxio.apoInputDOM.val(mera + '-' + minas + '-' + etos);
+
+	Arxio.partidaInputDOM.val('');
+
+	Arxio.apotelesmataDOM.empty();
 	Arxio.pektisInputDOM.focus();
 };
 
-Arxio.kritiriaLathos = function() {
+// Η function "paralavi" καλείται κατά την επιστροφή των αποτελεσμάτων,
+// και σκοπό έχει τη διαχείριση των αποτελεσμάτων αυτών.
+
+Arxio.paralavi = function(data) {
+	var tlist;
+
+	try {
+		tlist = ('[' + data + ']').evalAsfales();
+	} catch (e) {
+		console.error(data);
+		Client.fyi.epano('Επεστράφησαν ακαθόριστα δεδομένα');
+		Client.sound.beep();
+		return;
+	}
+
+	Globals.awalk(tlist, Arxio.trapeziProcess);
+};
+
+// Η function "trapeziProcess" διαχειρίζεται κάθε ένα από τα στοιχεία της
+// λίστας τραπεζιών που επεστράφησαν από τον server.
+
+Arxio.trapeziProcess = function(i, trapeziEco) {
+	var trapezi, prop;
+
+	// Δημιουργούμε αντίγραφο του προς επεξεργασία στοιχείου στο οποίο
+	// εμπεριέχονται τα πραγματικά properties του σχετικού τραπεζιού
+	// έναντι των οικονομικών τοιαύτων.
+
+	trapezi = {};
+	for (prop in Arxio.trapeziEcoMap) {
+		trapezi[Arxio.trapeziEcoMap[prop]] = trapeziEco[prop];
+	}
+
+	// Δημιουργούμε το τραπέζι ως αντικείμενο και προβαίνουμε στην
+	// επεξεργασία και στην παρουσίαση αυτού του τραπεζιού.
+
+	new Trapezi(trapezi).
+	trapeziArxioKapikia().
+	trapeziArxioDisplay();
+};
+
+// Τα αποτελέσματα παραλαμβάνονται σε «οικονομική» μορφή, δηλαδή
+// τα ονόματα των properties του τραπεζιού είναι συντομογραφικά.
+// Η λίστα "trapeziEcoMap" αντιστοιχεί τα οικονομικά ονόματα τών
+// properties τού τραπεζιού στα πραγαμτικά τους ονόματα.
+
+Arxio.trapeziEcoMap = {
+	k: 'kodikos',
+	e: 'enarxi',
+	p1: 'pektis1',
+	p2: 'pektis2',
+	p3: 'pektis3',
+	a: 'arxio',
+	t: 'trparam',
+	d: 'dianomi',
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
+
+Arxio.processKritiria = function() {
+	if (!Arxio.pektisCheck())
+	return false;
+
+	if (!Arxio.imerominiaCheck(Arxio.apoInputDOM))
+	return false;
+
+	if (!Arxio.imerominiaCheck(Arxio.eosInputDOM))
+	return false;
+
+	if (!Arxio.partidaCheck())
+	return false;
+
+	return true;
+};
+
+Arxio.pektisCheck = function() {
+	var pektis;
+
+	pektis = Arxio.pektisInputDOM.val();
+	pektis = pektis ? pektis.trim() : '';
+	Arxio.pektisInputDOM.val(pektis);
+
+	return true;
+};
+
+Arxio.imerominiaCheck = function(input) {
+	var val, dmy;
+
+	val = input.val();
+	val = val ? val.trim() : '';
+	input.val(val);
+	if (val === '')
+	return true;
+
+	dmy = val.split(/[^0-9]/);
+	if (dmy.length !== 3) {
+		Client.sound.beep();
+		Client.fyi.epano('Λανθασμένη ημερομηνία αρχής');
+		input.addClass('inputLathos').focus();
+		return false;
+	}
+
+	return true;
+};
+
+Arxio.partidaCheck = function() {
+	var partida;
+
+	partida = Arxio.partidaInputDOM.val();
+	partida = partida ? partida.trim() : '';
+	Arxio.partidaInputDOM.val(partida);
+	if (partida === '')
+	return true;
+
+	if (partida.match(/^[0-9]+$/))
+	return true;
+
+	if (partida.match(/^([0-9]+)-([0-9]+)$/))
+	return true;
+
+	if (partida.match(/^[<>]([0-9]+)$/))
+	return true;
+
+	if (partida.match(/^-([0-9]+)$/))
+	return true;
+
+	if (partida.match(/^([0-9]+)-$/))
+	return true;
+
+	Client.sound.beep();
+	Client.fyi.epano('Λανθασμένο κριτήριο κωδικού παρτίδας');
+	Arxio.partidaInputDOM.addClass('inputLathos').focus();
 	return false;
 };
 

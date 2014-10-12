@@ -38,6 +38,16 @@ class Epilogi {
 	public static function queryPektis() {
 		if (Globals::den_perastike("pektis"))
 		return;
+
+		$pektis = trim($_REQUEST["pektis"]);
+		if (!$pektis) return;
+
+		$pektis = explode("+", $_REQUEST["pektis"]);
+		for ($i = count($pektis) - 1; $i >= 0; $i--) {
+			$pat = Globals::asfales_sql($pektis[$i]);
+			self::$query .= " AND ((pektis1 LIKE " . $pat . ") " .
+			" OR (pektis2 LIKE " . $pat . ") OR (pektis3 LIKE " . $pat . "))";
+		}
 	}
 
 	public static function queryApo() {
