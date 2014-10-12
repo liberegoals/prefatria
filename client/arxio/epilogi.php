@@ -107,7 +107,7 @@ class Epilogi {
 	public static function trparam(&$trapezi) {
 		$query = "SELECT `param`, `timi` FROM `trparam` WHERE `trapezi` = " . $trapezi["k"];
 		$result = Globals::query($query);
-		$trapezi["t"] = [];
+		$trapezi["t"] = array();
 		while ($trparam = $result->fetch_assoc()) {
 			$trapezi["t"][$trparam["param"]] = $trparam["timi"];
 		}
@@ -119,7 +119,7 @@ class Epilogi {
 			"`kasa1` AS `k1`, `metrita1` AS `m1`, `kasa2` AS `k2`, `metrita2` AS `m2`, " .
 			"`kasa3` AS `k3`, `metrita3` AS `m3` FROM `dianomi` WHERE `trapezi` = " . $trapezi["k"];
 		$result = Globals::query($query);
-		$trapezi["d"] = [];
+		$trapezi["d"] = array();
 		while ($dianomi = $result->fetch_assoc()) {
 			$trapezi["d"][] = $dianomi;
 		}
