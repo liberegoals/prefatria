@@ -4,10 +4,11 @@ Globals::session_init();
 Globals::database();
 
 Epilogi::queryInit();
-Epilogi::queryPektis();
-Epilogi::queryApo();
-Epilogi::queryEos();
-Epilogi::queryPartida();
+if (Epilogi::queryPartida()) {
+	Epilogi::queryPektis();
+	Epilogi::queryApo();
+	Epilogi::queryEos();
+}
 Epilogi::queryClose();
 
 $result = Epilogi::queryRun();
@@ -36,7 +37,7 @@ class Epilogi {
 	public static function queryInit() {
 		self::$query = "SELECT `kodikos` AS `k`, UNIX_TIMESTAMP(`stisimo`) AS `s`, " .
 			"`pektis1` AS `p1`, `pektis2` AS `p2`, `pektis3` AS `p3`, " .
-			"UNIX_TIMESTAMP(`arxio`) AS `a` FROM `trapezi` WHERE 1 = 1";
+			"UNIX_TIMESTAMP(`arxio`) AS `a` FROM `trapezi` WHERE (1 = 1)";
 	}
 
 	public static function queryPektis() {
@@ -66,7 +67,15 @@ class Epilogi {
 
 	public static function queryPartida() {
 		if (Globals::den_perastike("partida"))
-		return;
+		return TRUE;
+
+		$partida = trim($_REQUEST["partida"]);
+		if (preg_match("/^[0-9]+$/", $partida)) {
+			self::$query .= " AND (`kodikos` = " . $partida . ")";
+			return FALSE;
+		}
+
+		return TRUE;
 	}
 
 	public static function queryClose() {
