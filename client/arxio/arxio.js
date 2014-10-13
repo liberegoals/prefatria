@@ -82,7 +82,7 @@ Arxio.kritiriaSetup = function() {
 
 		Client.fyi.pano('Παρακαλώ περιμένετε…');
 		Client.ajaxService('arxio/epilogi.php', 'pektis=' + Arxio.pektisInputDOM.val().uri(),
-			'apo=' + Arxio.apoInputDOM.val().uri(), 'eos=' + Arxio.eosInputDOM.val().uri(),
+			'apo=' + Arxio.apoInputDOM.data('timestamp'), 'eos=' + Arxio.eosInputDOM.data('timestamp'),
 			'partida=' + Arxio.partidaInputDOM.val().uri()).
 		done(function(rsp) {
 			Client.fyi.pano();
@@ -220,6 +220,8 @@ Arxio.pektisCheck = function() {
 Arxio.imerominiaCheck = function(input) {
 	var val, dmy;
 
+	input.data('timestamp', 0);
+
 	val = input.val();
 	val = val ? val.trim() : '';
 	input.val(val);
@@ -234,6 +236,7 @@ Arxio.imerominiaCheck = function(input) {
 		return false;
 	}
 
+	input.data('timestamp', parseInt(new Date(dmy[2], dmy[1] - 1, dmy[0]).getTime() / 1000));
 	return true;
 };
 
