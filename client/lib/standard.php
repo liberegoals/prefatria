@@ -100,6 +100,7 @@ class Globals {
 		case "www.opasopa.net":
 			self::$server = "http://" . $server_name . "/prefatria/";
 			break;
+		case "www.prefadoros.com":
 		case "www.prefaprive.net":
 			self::$server = "http://" . $server_name . "/";
 			break;
@@ -137,6 +138,7 @@ class Globals {
 		case "http://127.0.0.1/prefatria/";
 		case "http://localhost/prefatria/";
 		case "http://www.opasopa.net/prefatria/":
+		case "http://www.prefadoros.com/":
 			break;
 		case "http://www.prefaprive.net/":
 			$dbname = "prefaprive";
