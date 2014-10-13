@@ -79,11 +79,16 @@ class Epilogi {
 	public static function queryApo() {
 		if (Globals::den_perastike("apo"))
 		return;
+
+		self::$query .= " AND (`arxio` >= FROM_UNIXTIME(" . $_REQUEST["apo"] . "))";
 	}
 
 	public static function queryEos() {
 		if (Globals::den_perastike("eos"))
 		return;
+
+		$eos = $_REQUEST["eos"] + (24 * 3600);
+		self::$query .= " AND (`arxio` < FROM_UNIXTIME(" . $eos . "))";
 	}
 
 	public static function queryPartida() {
@@ -91,8 +96,40 @@ class Epilogi {
 		return TRUE;
 
 		$partida = trim($_REQUEST["partida"]);
+
 		if (preg_match("/^[0-9]+$/", $partida)) {
 			self::$query .= " AND (`kodikos` = " . $partida . ")";
+			return FALSE;
+		}
+
+		if (preg_match("/^([0-9]+)-([0-9]+)$/", $partida)) {
+			$partida = explode("-", $partida);
+			self::$query .= " AND (`kodikos` BETWEEN " . $partida[0] . " AND " .
+				$partida[1] . ")";
+			return FALSE;
+		}
+
+		if (preg_match("/^<([0-9]+)$/", $partida)) {
+			$partida = explode("<", $partida);
+			self::$query .= " AND (`kodikos` < " . $partida[1] . ")";
+			return FALSE;
+		}
+
+		if (preg_match("/^>([0-9]+)$/", $partida)) {
+			$partida = explode(">", $partida);
+			self::$query .= " AND (`kodikos` > " . $partida[1] . ")";
+			return FALSE;
+		}
+
+		if (preg_match("/^-([0-9]+)$/", $partida)) {
+			$partida = explode("-", $partida);
+			self::$query .= " AND (`kodikos` <= " . $partida[1] . ")";
+			return FALSE;
+		}
+
+		if (preg_match("/^([0-9]+)-$/", $partida)) {
+			$partida = explode("-", $partida);
+			self::$query .= " AND (`kodikos` >= " . $partida[0] . ")";
 			return FALSE;
 		}
 
