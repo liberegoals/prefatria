@@ -18,7 +18,7 @@ Service.claim.protasi = function(nodereq) {
 	data.trapezi = nodereq.trapeziGet();
 	if (!data.trapezi) return nodereq.error('ακαθόριστο τραπέζι');
 	if (data.trapezi.partidaFasiGet() !== 'ΠΑΙΧΝΙΔΙ') return  nodereq.error('Τραπέζι εκτός φάσης');
-	if (!data.trapezi.trapeziKlidoma()) return  nodereq.error('Το τραπέζι είναι κλειδωμένο');
+	if (!data.trapezi.trapeziKlidoma('claim.protasi')) return  nodereq.error('Το τραπέζι είναι κλειδωμένο');
 	data.trapeziKodikos = data.trapezi.trapeziKodikosGet();
 
 	data.dianomi = data.trapezi.trapeziTelefteaDianomi();
@@ -90,7 +90,7 @@ Service.claim.apantisi = function(nodereq) {
 	data.trapezi = nodereq.trapeziGet();
 	if (!data.trapezi) return nodereq.error('ακαθόριστο τραπέζι');
 	if (data.trapezi.partidaFasiGet() !== 'CLAIM') return  nodereq.error('Τραπέζι εκτός φάσης');
-	if (!data.trapezi.trapeziKlidoma()) return  nodereq.error('Το τραπέζι είναι κλειδωμένο');
+	if (!data.trapezi.trapeziKlidoma('claim.apantisi')) return  nodereq.error('Το τραπέζι είναι κλειδωμένο');
 	data.trapeziKodikos = data.trapezi.trapeziKodikosGet();
 
 	data.dianomi = data.trapezi.trapeziTelefteaDianomi();

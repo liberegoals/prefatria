@@ -561,10 +561,13 @@ Pektis.prototype.pektisSeekPhoto2 = function(basi, callback, tlist) {
 // τη χρονική στιγμή του κλειδώματος εφόσον το κλείδωμα είναι επιτυχημένο, αλλιώς
 // επιστρέφει false.
 
-Trapezi.prototype.trapeziKlidoma = function() {
+Trapezi.prototype.trapeziKlidoma = function(logos) {
 	if (this.klidoma) return false;
 
 	this.klidoma = Globals.torams();
+	if (logos) this.klidomaLogos = logos;
+	else delete this.klidomaLogos;
+
 	return this.klidoma;
 };
 
@@ -586,7 +589,8 @@ Trapezi.prototype.trapeziXeklidoma = function() {
 	if (dt <= Trapezi.xeklidomaMax) return this;
 
 	Trapezi.xeklidomaMax = dt;
-	console.log('Trapezi.xeklidomaMax = ', dt + 'ms');
+	console.log('Trapezi.xeklidomaMax = ', dt + 'ms (reason: ' +
+		(this.klidomaLogos ? this.klidomaLogos : 'unknown') + ')');
 	return this;
 };
 

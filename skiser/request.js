@@ -179,7 +179,8 @@ NodeRequest.prototype.nosinedria = function(s) {
 */
 
 	if (this.ip != this.sinedria.ip) {
-		console.error(this.login + ': new IP address (' + this.ip + ' <> ' + this.sinedria.ip + ')');
+		console.error(this.login + ': new IP address (' + this.ip + ' <> ' + this.sinedria.ip + ', ' +
+			Globals.meraOra() + ')');
 		this.sinedria.sinedriaIpSet(this.ip);
 	}
 

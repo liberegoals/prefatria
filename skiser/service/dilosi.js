@@ -21,9 +21,15 @@ Service.dilosi.dilosi = function(nodereq) {
 	};
 
 	data.trapezi = nodereq.trapeziGet();
-	if (!data.trapezi) return Service.dilosi.apotixia(data, 'ακαθόριστο τραπέζι');
-	if (!data.trapezi.trapeziKlidoma()) return  Service.dilosi.apotixia(data, 'Το τραπέζι είναι κλειδωμένο');
-	if (data.trapezi.partidaFasiGet() !== 'ΔΗΛΩΣΗ') return  Service.dilosi.apotixia(data, 'Τραπέζι εκτός φάσης');
+	if (!data.trapezi)
+	return Service.dilosi.apotixia(data, 'ακαθόριστο τραπέζι');
+
+	if (!data.trapezi.trapeziKlidoma('dilosi.dilosi'))
+	return  Service.dilosi.apotixia(data, 'Το τραπέζι είναι κλειδωμένο');
+
+	if (data.trapezi.partidaFasiGet() !== 'ΔΗΛΩΣΗ')
+	return  Service.dilosi.apotixia(data, 'Τραπέζι εκτός φάσης');
+
 	if (Debug.flagGet('epomenosCheck') && (data.trapezi.partidaEpomenosGet() !== nodereq.url.thesi))
 	return  Service.dilosi.apotixia(data, 'Παίκτης εκτός φάσης');
 
