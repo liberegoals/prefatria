@@ -38,12 +38,19 @@ Arxio.setup = function() {
 	h -= Arxio.kritiriaDOM.outerHeight(true) + 20;
 	Arxio.apotelesmataDOM.css('height', h + 'px');
 
-	$(document).on('keyup', function(e) {
+	$(document).
+	on('keyup', function(e) {
 		switch (e.which) {
 		case 27:
 			Arxio.resetButtonDOM.trigger('click');
 			break;
 		}
+	}).
+	on('mouseenter', '.trapeziTsoxa', function(e) {
+		$(this).find('.arxioKapikia').addClass('arxioKapikiaTrexon');
+	}).
+	on('mouseleave', '.trapeziTsoxa', function(e) {
+		$('.arxioKapikia').removeClass('arxioKapikiaTrexon');
 	});
 };
 
