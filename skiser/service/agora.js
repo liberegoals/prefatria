@@ -22,10 +22,14 @@ Service.agora.agora = function(nodereq) {
 	if (data.agora.dilosiOxiSolo() && nodereq.denPerastike('skarta', true)) return;
 
 	data.trapezi = nodereq.trapeziGet();
-	if (!data.trapezi) return nodereq.error('ακαθόριστο τραπέζι');
+	if (!data.trapezi)
+	return nodereq.error('ακαθόριστο τραπέζι');
 
-	if (!data.trapezi.trapeziKlidoma()) return  Service.agora.apotixia(data, 'Το τραπέζι είναι κλειδωμένο');
-	if (data.trapezi.partidaFasiGet() !== 'ΑΛΛΑΓΗ') return  Service.agora.apotixia(data, 'Τραπέζι εκτός φάσης');
+	if (!data.trapezi.trapeziKlidoma('agora.agora'))
+	return  Service.agora.apotixia(data, 'Το τραπέζι είναι κλειδωμένο');
+
+	if (data.trapezi.partidaFasiGet() !== 'ΑΛΛΑΓΗ')
+	return  Service.agora.apotixia(data, 'Τραπέζι εκτός φάσης');
 
 	if (Debug.flagGet('agoraEpomenosCheck') &&
 	(data.trapezi.partidaEpomenosGet() !== data.trapezi.partidaTzogadorosGet()))

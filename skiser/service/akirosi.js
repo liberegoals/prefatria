@@ -16,11 +16,17 @@ Service.akirosi.start = function(nodereq) {
 	};
 
 	data.trapezi = nodereq.trapeziGet();
-	if (!data.trapezi) return nodereq.error('ακαθόριστο τραπέζι');
-	if (!data.trapezi.trapeziKlidoma()) return  nodereq.error('Το τραπέζι είναι κλειδωμένο');
+	if (!data.trapezi)
+	return nodereq.error('ακαθόριστο τραπέζι');
+
+	if (!data.trapezi.trapeziKlidoma('akirosi.start'))
+	return  nodereq.error('Το τραπέζι είναι κλειδωμένο');
 
 	pektis = nodereq.sinedriaGet().sinedriaThesiGet();
-	if (!pektis) return nodereq.error('Ακαθόριστη θέση παίκτη');
+	if (!pektis) {
+		data.trapezi.trapeziXeklidoma();
+		return nodereq.error('Ακαθόριστη θέση παίκτη');
+	}
 
 	switch (data.trapezi.partidaFasiGet()) {
 	case 'ΔΗΛΩΣΗ':
@@ -116,8 +122,11 @@ Service.akirosi.stop = function(nodereq) {
 	};
 
 	data.trapezi = nodereq.trapeziGet();
-	if (!data.trapezi) return nodereq.error('ακαθόριστο τραπέζι');
-	if (!data.trapezi.trapeziKlidoma()) return  nodereq.error('Το τραπέζι είναι κλειδωμένο');
+	if (!data.trapezi)
+	return nodereq.error('ακαθόριστο τραπέζι');
+
+	if (!data.trapezi.trapeziKlidoma('akirosi.stop'))
+	return nodereq.error('Το τραπέζι είναι κλειδωμένο');
 
 	Service.akirosi.stop2(data);
 };

@@ -25,9 +25,15 @@ Service.peximo.peximo = function(nodereq) {
 	};
 
 	data.trapezi = nodereq.trapeziGet();
-	if (!data.trapezi) return Service.peximo.apotixia(data, 'ακαθόριστο τραπέζι');
-	if (!data.trapezi.trapeziKlidoma()) return  Service.peximo.apotixia(data, 'Το τραπέζι είναι κλειδωμένο');
-	if (data.trapezi.partidaFasiGet() !== 'ΠΑΙΧΝΙΔΙ') return  Service.peximo.apotixia(data, 'Τραπέζι εκτός φάσης');
+	if (!data.trapezi)
+	return Service.peximo.apotixia(data, 'ακαθόριστο τραπέζι');
+
+	if (!data.trapezi.trapeziKlidoma('peximo.peximo'))
+	return  Service.peximo.apotixia(data, 'Το τραπέζι είναι κλειδωμένο');
+
+	if (data.trapezi.partidaFasiGet() !== 'ΠΑΙΧΝΙΔΙ')
+	return  Service.peximo.apotixia(data, 'Τραπέζι εκτός φάσης');
+
 	if (Debug.flagGet('epomenosCheck') && (data.trapezi.partidaEpomenosGet() !== nodereq.url.pektis))
 	return  Service.peximo.apotixia(data, 'Παίκτης εκτός φάσης');
 
