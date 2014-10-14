@@ -661,7 +661,7 @@ CREATE TABLE `energia` (
 ENGINE = InnoDB
 ROW_FORMAT = COMPRESSED
 KEY_BLOCK_SIZE = 8
-COMMENT='Πίνακας ενεργειών'
+COMMENT ='Πίνακας ενεργειών'
 ;
 
 -- Ο πίνακας "sinedria" περιέχει τους ενεργούς παίκτες. Για κάθε χρήστη που εισέρχεται
@@ -745,7 +745,32 @@ CREATE TABLE `istoriko` (
 ENGINE = InnoDB
 ROW_FORMAT = COMPRESSED
 KEY_BLOCK_SIZE = 8
-COMMENT='Πίνακας συνεδριών (αρχείο)'
+COMMENT ='Πίνακας συνεδριών (αρχείο)'
+;
+
+-- Ο πίνακας "isfora" περιέχει τις εισφορές που κάνουν οι παίκτες για τα
+-- έξοδα του server.
+
+CREATE TABLE `isfora` (
+	`pektis`	VARCHAR(64) NOT NULL COMMENT 'Παίκτης',
+	`imerominia`	TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Ημερομηνία καταβολής',
+
+	-- Το ποσό της εισφοράς δίδεται σε λεπτά, π.χ. 50 ευρώ γράφεται 5000,
+	-- 40.50 ευρώ γράφεται 4050 κοκ.
+
+	`poso`		NUMERIC(6) NOT NULL COMMENT 'Ποσό',
+
+	INDEX USING BTREE (
+		`pektis`
+	),
+
+	INDEX USING BTREE (
+		`imerominia`
+	)
+)
+
+ENGINE = InnoDB
+COMMENT ='Πίνακας εισφορών'
 ;
 
 \! echo "tables created!"
@@ -791,6 +816,15 @@ ALTER TABLE `sxesi` ADD FOREIGN KEY (
 
 ALTER TABLE `sxesi` ADD FOREIGN KEY (
 	`sxetizomenos`
+) REFERENCES `pektis` (
+	`login`
+) ON UPDATE CASCADE ON DELETE CASCADE
+;
+
+-- Πίνακας εισφορών ("isfora")
+
+ALTER TABLE `isfora` ADD FOREIGN KEY (
+	`pektis`
 ) REFERENCES `pektis` (
 	`login`
 ) ON UPDATE CASCADE ON DELETE CASCADE
