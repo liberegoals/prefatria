@@ -994,7 +994,7 @@ ALTER TABLE `sizitisi` ADD FOREIGN KEY (
 
 \! echo "database relations created!"
 
-\! echo "creating relations…"
+\! echo "creating triggers…"
 
 -- Εδώ συμπληρώνουμε το πεδίο "poll" για τους νέους παίκτες.
 
