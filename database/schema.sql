@@ -195,7 +195,7 @@ CREATE TABLE `minima` (
 	) NOT NULL DEFAULT 'ΑΔΙΑΒΑΣΤΟ' COMMENT 'Κατάσταση μηνύματος',
 
 	PRIMARY KEY (
-		`kodikos` DESC
+		`kodikos`
 	) USING BTREE,
 
 	INDEX USING BTREE (
@@ -258,7 +258,7 @@ CREATE TABLE `trapezi` (
 	`arxio`		TIMESTAMP NULL DEFAULT NULL COMMENT 'Αρχειοθέτηση τραπεζιού',
 
 	PRIMARY KEY (
-		`kodikos` DESC
+		`kodikos`
 	) USING BTREE,
 
 	INDEX USING BTREE (
@@ -406,7 +406,7 @@ CREATE TABLE `simetoxi` (
 	`thesi`		TINYINT(1) NOT NULL COMMENT 'Αριθμός θέσης',
 
 	PRIMARY KEY (
-		`trapezi` DESC,
+		`trapezi`,
 		`pektis`
 	) USING BTREE
 )
@@ -433,7 +433,7 @@ CREATE TABLE `telefteos` (
 	`pektis`	VARCHAR(64) NULL DEFAULT NULL COMMENT 'Login name παίκτη',
 
 	PRIMARY KEY (
-		`trapezi` DESC,
+		`trapezi`,
 		`thesi`
 	) USING BTREE
 )
@@ -459,7 +459,7 @@ CREATE TABLE `prosklisi` (
 	`epidosi`	TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Πότε επιδόθηκε',
 
 	PRIMARY KEY (
-		`kodikos` DESC
+		`kodikos`
 	) USING BTREE,
 
 	UNIQUE KEY (
@@ -489,7 +489,7 @@ CREATE TABLE `sizitisi` (
 	`pote`		TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Πότε ειπώθηκε',
 
 	PRIMARY KEY (
-		`kodikos` DESC
+		`kodikos`
 	) USING BTREE
 )
 
@@ -584,7 +584,7 @@ CREATE TABLE `dianomi` (
 	`telos`		TIMESTAMP NULL DEFAULT NULL COMMENT 'Τέλος διανομής',
 
 	PRIMARY KEY (
-		`kodikos` DESC
+		`kodikos`
 	) USING BTREE
 )
 
@@ -654,7 +654,7 @@ CREATE TABLE `energia` (
 	`pote`		TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Χρονική στιγμή',
 
 	PRIMARY KEY (
-		`kodikos` DESC
+		`kodikos`
 	) USING BTREE
 )
 
@@ -738,7 +738,7 @@ CREATE TABLE `istoriko` (
 	`exodos`	TIMESTAMP NOT NULL COMMENT 'Έξοδος',
 
 	PRIMARY KEY (
-		`kodikos` DESC
+		`kodikos`
 	) USING BTREE
 )
 
@@ -765,7 +765,7 @@ CREATE TABLE `isfora` (
 	),
 
 	INDEX USING BTREE (
-		`imerominia` DESC
+		`imerominia`
 	)
 )
 
