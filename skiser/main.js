@@ -28,7 +28,11 @@ FS = require('fs');
 // με την MySQL database που αποτελεί τον πυρήνα της εφαρμογής.
 
 Log.print('reading MySQL module');
-MYSQL = require('/usr/local/lib/node_modules/mysql');
+try {
+	MYSQL = require('mysql');
+} catch (e) {
+	MYSQL = require('/usr/local/lib/node_modules/mysql');
+}
 
 // Εμπλουτίζουμε με με δομές και μεθόδους που επιτρέπουν στον node server να
 // ακούει και να απαντά σε HTTP requests.
