@@ -48,3 +48,13 @@ REPLACE INTO TABLE `prefatria`.`peparam` (
 	`param`,
 	`timi`
 );
+
+DELETE FROM `prefatria`.`isfora`
+;
+
+LOAD DATA LOCAL INFILE 'pliromi.data'
+REPLACE INTO TABLE `prefatria`.`isfora` (
+	`pektis`,
+	`imerominia`,
+	`poso`
+);

@@ -3,7 +3,8 @@
 rm -f \
 pektis.data \
 profinfo.data \
-sxesi.data
+sxesi.data \
+pliromi.data
 
 tar xzf data.tar.gz || exit 2
 
