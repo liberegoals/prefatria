@@ -1068,11 +1068,11 @@ Trapezi.prototype.trapeziOptsRefreshDOM = function() {
 	if (this.trapeziIsFiliki()) this.trapeziOptionDOM('Εκπαιδευτική/Φιλική παρτίδα', 'filiki.png');
 	if (this.trapeziIsKlisto()) this.trapeziOptionDOM('Κλειστό τραπέζι', 'klisto.png');
 	if (this.trapeziIsPrive()) {
-		this.tsoxaDOM.addClass('prive');
+		this.tsoxaDOM.addClass('priveTrapezi');
 		this.trapeziOptionDOM('Πριβέ τραπέζι', 'prive.png');
 	}
 	else {
-		this.tsoxaDOM.removeClass('prive');
+		this.tsoxaDOM.removeClass('priveTrapezi');
 	}
 	if (this.trapeziIsAorato()) this.trapeziOptionDOM('Αόρατο τραπέζι', 'aorato.png');
 	if (this.trapeziIsIdioktito()) this.trapeziOptionDOM('Ιδιόκτητο τραπέζι',

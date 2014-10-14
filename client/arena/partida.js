@@ -435,14 +435,14 @@ Arena.partida.dataPanoRefreshDOM = function() {
 	}));
 
 	if (Arena.ego.trapezi.trapeziIsPrive()) {
-		Arena.partida.tsoxaDOM.addClass('prive');
+		Arena.partida.tsoxaDOM.addClass('priveTrapezi');
 		Arena.partida.optionsDOM.append($('<img>').addClass('tsoxaOption').attr({
 			src: 'ikona/panel/prive.png',
 			title: 'Πριβέ τραπέζι',
 		}));
 	}
 	else {
-		Arena.partida.tsoxaDOM.removeClass('prive');
+		Arena.partida.tsoxaDOM.removeClass('priveTrapezi');
 	}
 
 	if (Arena.ego.trapezi.trapeziIsKlisto())
