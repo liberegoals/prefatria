@@ -1584,6 +1584,16 @@ Arena.ego.oxiDiaxiristis = function() {
 	return Arena.ego.pektis.pektisOxiDiaxiristis();
 };
 
+Arena.ego.isAdministrator = function() {
+	if (!Arena.ego.pektis) return false;
+	return Arena.ego.pektis.pektisIsAdministrator();
+};
+
+Arena.ego.oxiAdministrator = function() {
+	if (!Arena.ego.pektis) return true;
+	return Arena.ego.pektis.pektisOxiAdministrator();
+};
+
 Arena.ego.isDeveloper = function() {
 	if (!Arena.ego.pektis) return false;
 	return Arena.ego.pektis.pektisIsDeveloper();
