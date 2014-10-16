@@ -89,6 +89,10 @@ on('beforeunload', function() {
 on('unload', function() {
 	Minima.unload();
 }).
+on('blur', function() {
+	if (!Arena) return;
+	Arena.minima.endixiClear();
+}).
 on('focus', function() {
 	if (!Arena) return;
 	Arena.inputRefocus();
