@@ -4,9 +4,11 @@
 // διαβασμένα τα βασικά εργαλεία, ενεργοποιούμε by default το session.
 
 if (!class_exists('Globals')) require_once "standard.php";
+
 $sport = preg_replace("/[^0-9]/", "", file_get_contents(Globals::$www . "misc/.mistiko/sport"));
 if (!$sport) Globals::klise_fige("Αδυναμία αναγνώρισης πόρτας server σκηνικού");
 Globals::$skiser .= ":" . $sport . "/";
+
 Globals::session_init();
 
 // Η κλάση "Selida" χρησιμοποιείται ως name space και όλες οι μέθοδοι είναι static.
