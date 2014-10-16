@@ -4,6 +4,11 @@ Log.print('service module: feredata');
 
 Service.feredata = {};
 
+// Στη λίστα "freskaLog" κρατάμε ένα array για κάθε χρήστη στο οποίο
+// σωρεύονται τα αιτήματα του χρήστη για φρέσκα σκηνικά δεδομένα.
+
+Service.feredata.freskaLog = {};
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
 
 // Η function "feredata.freska" εξυπηρετεί αίτημα αποστολής πλήρων σκηνικών
@@ -13,12 +18,62 @@ Service.feredata = {};
 Service.feredata.freska = function(nodereq) {
 	if (nodereq.isvoli()) return;
 	if (nodereq.denPerastike('id', 'ακαθόριστο id σε αίτημα feredata')) return;
+	if (Service.feredata.freskaIpervasi(nodereq)) return;
 
 	nodereq.sinedriaGet().
 	feredataPollSet().
 	feredataObsolete().
 	feredataSet(nodereq).
 	feredataFreska();
+};
+
+Service.feredata.freskaIpervasi = function(nodereq) {
+	var login, tora, fstack, count, i, diastima;
+
+	login = nodereq.loginGet();
+
+	if (!Service.feredata.freskaLog.hasOwnProperty(login))
+	Service.feredata.freskaLog[login] = [];
+
+	fstack = Service.feredata.freskaLog[login];
+	tora = Globals.torams();
+	fstack.push(tora);
+
+	if (fstack.length > 100) {
+		fstack = fstack.slice(-20);
+		Service.feredata.freskaLog[login] = fstack;
+	}
+
+	count = 1;
+	for (i = fstack.length - 2; i >= 0; i--) {
+		count++;
+		diastima = tora - fstack[i];
+		if (diastima < 1) continue;
+
+		if (diastima < 2000) {
+			if (count > 2) break;
+			continue;
+		}
+
+		if (diastima < 10000) {
+			if (count > 4) break;
+			continue;
+		}
+
+		if (diastima > 20000)
+		return false;
+
+		ratio = Math.round((count / diastima) * 100000);
+		if (ratio > 20) break;
+	}
+
+	if (i < 0)
+	return false;
+
+	console.error(login + ': υπέρβαση σκηνικών ανανεώσεων (' +
+		count + 'req/' + (diastima / 1000) + 'sec)');
+	nodereq.end('!');
+	return true;
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@

@@ -93,6 +93,16 @@ Skiniko.prototype.processFreskaData = function(rsp) {
 		} catch(e) {}
 	}
 
+	switch (rsp) {
+	case '!':
+		if (Debug.flagGet('feredata')) console.log('\t' + rsp, '(υπέρβαση ανανεώσων σκηνικού)');
+		Client.provlima('<div>Παρατηρήθηκαν επαναλαμβανόμενες σκηνικές ανανεώσεις.<br />' +
+			'Δοκιμάστε επανείσοδο μετά από 30 δευτερόλεπτα.<div>' +
+			'<div style="text-align: center"><a href="' + Client.server +
+			'isodos" target="_self">Επανείσοδος</a></div>', true);
+		return this;
+	}
+
 	// Επιχειρούμε να μεταφράσουμε τα παραληφθέντα δεδομένα ως json data και αν
 	// αποτύχουμε ζητάμε νέα σκηνικά δεδομένα.
 
