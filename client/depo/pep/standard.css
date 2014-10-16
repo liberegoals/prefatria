@@ -4,8 +4,22 @@ body {
 	overflow: hidden;
 	margin: 0;
 	font-family: "Arial", sans-serif;
+	text-shadow: -1px 0px 10px #F1F1F1, 1px 0px 10px #F1F1F1, -2px 0px 8px #F1F1F1, 2px 0px 8px #F1F1F1;
 }
 
+a {
+	text-shadow: none;
+}
+
+#plesio {
+	position: absolute;
+	display: inline-block;
+	width: 726px;
+	height: 88px;
+	border-style: solid;
+	border-width: 1px;
+	border-color: rgb(235, 181, 181);
+}
 .kimeno {
 	display: none;
 	position: absolute;
@@ -26,7 +40,7 @@ body {
 	top: 20px;
 	font-size: 30px;
 	font-weight: bold;
-	color: rgb(20, 0, 100);
+	color: rgb(31, 58, 35);
 }
 
 #kimeno3 {

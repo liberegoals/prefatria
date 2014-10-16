@@ -12,6 +12,7 @@
 <script type="text/javascript" src="standard.js"></script>
 </head>
 <body>
+<div id="plesio"></div>
 <img src="fonto.png" />
 <div id="kimeno1" class="kimeno">
 	Όλα όσα θέλετε να μάθετε για την πρέφα!
