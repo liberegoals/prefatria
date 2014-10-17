@@ -342,6 +342,7 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 Arena.cpanel.claimButtonDOM = Arena.cpanel.bpanelButtonGet('claim').pbuttonGetDOM();
 
 Arena.cpanel.bpanelButtonPush(new PButton({
+	id: 'radio',
 	omada: 1,
 	refresh: function() {
 		var dom;
@@ -368,14 +369,17 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 		if (active) {
 			$(this).removeData('active');
 			active.remove();
-		}
-		else {
-			$(this).data('active', $('<iframe>').attr({
-				src: 'http://www.e-radio.gr/Active-Radio-Internet-Radio-i48/live',
-			}).appendTo(Client.ofelimoDOM));
+			this.pbuttonRefresh();
+			return;
 		}
 
-		this.pbuttonRefresh();
+		this.pbuttonIconGetDOM().attr('src', 'ikona/working/xroma.gif');
+		$(this).data('active', $('<iframe>').css('display', 'none').
+		attr('src', 'http://www.e-radio.gr/Active-Radio-Internet-Radio-i48/live').
+		on('load', function() {
+			Arena.cpanel.bpanelButtonGet('radio').pbuttonRefresh();
+		}).
+		appendTo($(document.body)));
 	},
 }));
 
