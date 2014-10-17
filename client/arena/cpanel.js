@@ -375,7 +375,9 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 
 		this.pbuttonIconGetDOM().attr('src', 'ikona/working/xroma.gif');
 		$(this).data('active', $('<iframe>').css('display', 'none').
-		attr('src', 'http://www.e-radio.gr/Active-Radio-Internet-Radio-i48/live').
+		attr('src', 'http://www.e-radio.gr/player/playerX.asp?' +
+			'sID=48&cn=activeradio&stitle=Active%20Radio&codecID=3&' +
+			'pt=2&weblink=activeradio%2Egr%3A8000%2Factivemp3').
 		on('load', function() {
 			Arena.cpanel.bpanelButtonGet('radio').pbuttonRefresh();
 		}).
