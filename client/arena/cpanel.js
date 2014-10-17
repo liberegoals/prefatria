@@ -343,6 +343,44 @@ Arena.cpanel.claimButtonDOM = Arena.cpanel.bpanelButtonGet('claim').pbuttonGetDO
 
 Arena.cpanel.bpanelButtonPush(new PButton({
 	omada: 1,
+	refresh: function() {
+		var dom;
+
+		if ($(this).data('active')) {
+			dom = this.pbuttonGetDOM();
+			dom.attr('title', 'Turn off the radio');
+
+			dom = this.pbuttonIconGetDOM();
+			dom.attr('src', 'ikona/panel/radioOff.png');
+			return;
+		}
+
+		dom = this.pbuttonGetDOM();
+		dom.attr('title', 'Turn on the radio!');
+
+		dom = this.pbuttonIconGetDOM();
+		dom.attr('src', 'ikona/panel/radioOn.png');
+	},
+	click: function(e) {
+		var active;
+
+		active = $(this).data('active');
+		if (active) {
+			$(this).removeData('active');
+			active.remove();
+		}
+		else {
+			$(this).data('active', $('<iframe>').attr({
+				src: 'http://www.e-radio.gr/Active-Radio-Internet-Radio-i48/live',
+			}).appendTo(Client.ofelimoDOM));
+		}
+
+		this.pbuttonRefresh();
+	},
+}));
+
+Arena.cpanel.bpanelButtonPush(new PButton({
+	omada: 1,
 	img: 'kafedaki.png',
 	title: 'Καφετζής',
 	click: function(e) {
