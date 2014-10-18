@@ -97,7 +97,7 @@ Arena.radiaki.setup = function() {
 	Client.ofelimoDOM.
 	append(Arena.radiaki.DOM = $('<div>').attr('id', 'radiaki').
 	siromeno({
-		top: '136px',
+		top: '104px',
 		left: '624px',
 	}).
 	on('click', '.radiofono', function(e) {
