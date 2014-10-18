@@ -74,8 +74,6 @@ Arena.radiaki = {
 };
 
 Arena.radiaki.setup = function() {
-	var i;
-
 	Client.ofelimoDOM.
 	append(Arena.radiaki.DOM = $('<div>').attr('id', 'radiaki').
 	siromeno({
