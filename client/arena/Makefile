@@ -3,6 +3,7 @@
 	yui-compressor --verbose --line-break 70 --charset UTF-8 -o $@ $<
 
 all: \
+	radiaki.min.js \
 	anazitisi.min.js \
 	arena.min.js \
 	cpanel.min.js \
