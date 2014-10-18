@@ -21,7 +21,7 @@ Radiofono.prototype.radiofonoListaAppend = function() {
 	Arena.radiaki.DOM.
 	append(this.DOM = $('<div>').addClass('radiofono').
 	data('radiofono', this).
-	text(this.radiofonoPerigrafiGet()));
+	html(this.radiofonoPerigrafiGet()));
 
 	return this;
 };
@@ -39,7 +39,7 @@ Arena.radiaki = {
 	lista: [
 		new Radiofono({
 			id: 'active',
-			perigrafi: 'Active Radio',
+			perigrafi: '&#x2606;&nbsp;Active Radio&nbsp;&#x2606;',
 			link: 'http://www.e-radio.gr/Active-Radio-Internet-Radio-i48/live',
 		}),
 
