@@ -27,6 +27,7 @@ Selida::javascript("arena/profinfo");
 Selida::javascript("arena/kinisi");
 Selida::javascript("arena/efoplismos");
 Selida::javascript("arena/kitapi");
+Selida::javascript("arena/radiaki");
 Selida::javascript("funchat/common");
 Arena::setupView();
 
