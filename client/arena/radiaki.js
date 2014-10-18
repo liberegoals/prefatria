@@ -78,11 +78,14 @@ Arena.radiaki.setup = function() {
 
 	Client.ofelimoDOM.
 	append(Arena.radiaki.DOM = $('<div>').attr('id', 'radiaki').
+	siromeno({
+		top: '136px',
+		left: '626px',
+	}).
 	on('click', '.radiofono', function(e) {
 		var radiofono;
 
 		Arena.inputRefocus(e);
-		Arena.radiaki.DOM.css('display', 'none');
 		$('.radiofonoTrexon').removeClass('radiofonoTrexon');
 
 		radiofono = $(this).data('radiofono');
@@ -95,7 +98,12 @@ Arena.radiaki.setup = function() {
 		Arena.radiaki.win.close();
 
 		delete Arena.radiaki.win;
-	}));
+	}).append(Client.klisimo(function(e) {
+		Arena.cpanel.
+		bpanelButtonGet('radiaki').
+		pbuttonGetDOM('radiaki').
+		trigger('click');
+	})));
 
 	Globals.awalk(Arena.radiaki.lista, function(i, radiofono) {
 		radiofono.radiofonoListaAppend();
