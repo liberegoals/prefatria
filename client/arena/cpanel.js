@@ -346,10 +346,23 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 	omada: 1,
 	title: 'Ράδιο «Πρεφαδόρος»',
 	img: 'ikona/panel/radioOn.png',
+	refresh: function() {
+		if (Arena.radiaki.panelAnikto())
+		this.pbuttonGetDOM().
+		addClass('panelButtonEkremes');
+
+		else
+		this.pbuttonGetDOM().
+		removeClass('panelButtonEkremes');
+	},
 	click: function(e) {
-		if (Arena.radiaki.DOM)
-		Arena.radiaki.DOM.css('display',
-		Arena.radiaki.DOM.css('display') === 'none' ? 'block' : 'none');
+		if (!Arena.radiaki.DOM)
+		return;
+
+		Arena.radiaki.DOM.css('display', Arena.radiaki.panelAnikto() ? 'none' : 'block');
+		this.
+		pbuttonRefresh().
+		pbuttonDisplay();
 	},
 }));
 

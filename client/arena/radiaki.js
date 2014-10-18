@@ -73,12 +73,26 @@ Arena.radiaki = {
 	trexon: null,
 };
 
+Arena.radiaki.panelAnikto = function() {
+	if (!Arena.radiaki.DOM)
+	return false;
+
+	return(Arena.radiaki.DOM.css('display') !== 'none');
+};
+
+Arena.radiaki.panelKlisto = function() {
+	if (!Arena.radiaki.DOM)
+	return true;
+
+	return(Arena.radiaki.DOM.css('display') === 'none');
+};
+
 Arena.radiaki.setup = function() {
 	Client.ofelimoDOM.
 	append(Arena.radiaki.DOM = $('<div>').attr('id', 'radiaki').
 	siromeno({
 		top: '136px',
-		left: '626px',
+		left: '624px',
 	}).
 	on('click', '.radiofono', function(e) {
 		var radiofono;
