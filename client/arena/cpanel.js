@@ -110,6 +110,39 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 }));
 
 Arena.cpanel.bpanelButtonPush(new PButton({
+	id: 'radiaki',
+	omada: 1,
+	title: 'Ράδιο «Πρεφαδόρος»',
+	img: 'ikona/panel/radioOn.png',
+	refresh: function() {
+		if (Arena.radiaki.panelAnikto())
+		this.pbuttonGetDOM().
+		addClass('panelButtonEkremes');
+
+		else
+		this.pbuttonGetDOM().
+		removeClass('panelButtonEkremes');
+	},
+	click: function(e) {
+		if (!Arena.radiaki.DOM)
+		return;
+
+		Arena.radiaki.DOM.css('display', Arena.radiaki.panelAnikto() ? 'none' : 'block');
+		this.
+		pbuttonRefresh().
+		pbuttonDisplay();
+	},
+}));
+
+Arena.cpanel.bpanelButtonPush(new PButton({
+	omada: 1,
+	img: 'kafedaki.png',
+	title: 'Καφετζής',
+	click: function(e) {
+	},
+}));
+
+Arena.cpanel.bpanelButtonPush(new PButton({
 	omada: 1,
 	img: 'diataxi.png',
 	title: 'Αλλαγή διάταξης παικτών',
@@ -340,39 +373,6 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 	},
 }));
 Arena.cpanel.claimButtonDOM = Arena.cpanel.bpanelButtonGet('claim').pbuttonGetDOM();
-
-Arena.cpanel.bpanelButtonPush(new PButton({
-	id: 'radiaki',
-	omada: 1,
-	title: 'Ράδιο «Πρεφαδόρος»',
-	img: 'ikona/panel/radioOn.png',
-	refresh: function() {
-		if (Arena.radiaki.panelAnikto())
-		this.pbuttonGetDOM().
-		addClass('panelButtonEkremes');
-
-		else
-		this.pbuttonGetDOM().
-		removeClass('panelButtonEkremes');
-	},
-	click: function(e) {
-		if (!Arena.radiaki.DOM)
-		return;
-
-		Arena.radiaki.DOM.css('display', Arena.radiaki.panelAnikto() ? 'none' : 'block');
-		this.
-		pbuttonRefresh().
-		pbuttonDisplay();
-	},
-}));
-
-Arena.cpanel.bpanelButtonPush(new PButton({
-	omada: 1,
-	img: 'kafedaki.png',
-	title: 'Καφετζής',
-	click: function(e) {
-	},
-}));
 
 Arena.cpanel.bpanelButtonPush(new PButton({
 	omada: 1,
