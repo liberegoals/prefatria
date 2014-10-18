@@ -4,13 +4,11 @@
 // σταθμού.
 
 // Η κλάση "radiofono" περιγράφει ραδιοφωικούς σταθμούς. Κάθε σταθμός έχει
-// κάποιο id και 
+// τα properties "perigrafi" και "link" που είναι μια περιγραφή του σταθμού
+// και το σχετικό url.
+
 Radiofono = function(props) {
 	Globals.initObject(this, props);
-};
-
-Radiofono.prototype.radiofonoIdGet = function() {
-	return this.id;
 };
 
 Radiofono.prototype.radiofonoPerigrafiGet = function() {
@@ -20,6 +18,9 @@ Radiofono.prototype.radiofonoPerigrafiGet = function() {
 Radiofono.prototype.radiofonoLinkGet = function() {
 	return this.link;
 };
+
+// Η μέθοδος "radiofonoListaAppend" προσθέτει DOM element στη λίστα σταθμών.
+// Το DOM element προστίθεται ως property στον ίδιο τον ραδιοφωνικό σταθμό.
 
 Radiofono.prototype.radiofonoListaAppend = function() {
 	if (this.DOM)
@@ -33,7 +34,13 @@ Radiofono.prototype.radiofonoListaAppend = function() {
 	return this;
 };
 
+// Η μέθοδος "radiofonoEpilogi" καλείται όταν κάνουμε κλικ στο DOM element
+// του σταθμού στο panel συντονισμού.
+
 Radiofono.prototype.radiofonoEpilogi = function() {
+	if (!this.DOM)
+	return this;
+
 	this.DOM.addClass('radiofonoTrexon');
 	Arena.radiaki.win = window.open(this.radiofonoLinkGet(), 'radiaki');
 
@@ -42,49 +49,51 @@ Radiofono.prototype.radiofonoEpilogi = function() {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
 
-Arena.radiaki = {
-	lista: [
-		new Radiofono({
-			id: 'active',
-			perigrafi: '&#x2606;&nbsp;Active Radio&nbsp;&#x2606;',
-			link: 'http://www.e-radio.gr/Active-Radio-Internet-Radio-i48/live',
-		}),
+// Το singleton "radiaki" χρησμιοποιείται ως name space για δομές και
+// functions που αφορούν στο πάνελ επιλογής, το οποίο ενίοτε καλούμε
+// και πάνελ συντονισμού.
 
-		new Radiofono({
-			id: 'rebetiko',
-			perigrafi: 'Akous.gr (ρεμπέτικο)',
-			link: 'http://www.akous.gr/player/palko/',
-		}),
+Arena.radiaki = {};
 
-		new Radiofono({
-			id: 'erotokritos',
-			perigrafi: 'Ερωτόκριτος FM 87.9',
-			link: 'http://www.easyradio.gr/erotokritos',
-		}),
+// Το array "lista" περιλαμβάνει τις επιλογές ραδιοφωνικών σταθμών που
+// προτείνονται ως πλήκτρα στο πάνελ συντονισμού.
 
-		new Radiofono({
-			id: 'MMJazz',
-			perigrafi: 'Modern Mainstream (Jazz)',
-			link: 'http://player.slipstreamradio.com/player/slipstream/' +
-				'accujazz/?channel=Channel9&sub=SubModernJazz',
-		}),
+Arena.radiaki.lista = [
+	new Radiofono({
+		perigrafi: '&#x2606;&nbsp;Active Radio&nbsp;&#x2606;',
+		link: 'http://www.e-radio.gr/Active-Radio-Internet-Radio-i48/live',
+	}),
 
-		new Radiofono({
-			id: 'SAJazz',
-			perigrafi: 'Straight Ahead (Jazz)',
-			link: 'http://player.slipstreamradio.com/player/slipstream/' +
-				'accujazz/?channel=Channel9&sub=SubStraightAhead',
-		}),
+	new Radiofono({
+		perigrafi: 'Akous.gr (ρεμπέτικο)',
+		link: 'http://www.akous.gr/player/palko/',
+	}),
 
-		new Radiofono({
-			id: 'RSC',
-			perigrafi: 'Radio Swiss Classic',
-			link: 'http://webplayer.radioswissclassic.ch',
-		}),
-	],
+	new Radiofono({
+		perigrafi: 'Ερωτόκριτος FM 87.9',
+		link: 'http://www.easyradio.gr/erotokritos',
+	}),
 
-	trexon: null,
-};
+	new Radiofono({
+		perigrafi: 'Modern Mainstream (Jazz)',
+		link: 'http://player.slipstreamradio.com/player/slipstream/' +
+			'accujazz/?channel=Channel9&sub=SubModernJazz',
+	}),
+
+	new Radiofono({
+		perigrafi: 'Straight Ahead (Jazz)',
+		link: 'http://player.slipstreamradio.com/player/slipstream/' +
+			'accujazz/?channel=Channel9&sub=SubStraightAhead',
+	}),
+
+	new Radiofono({
+		perigrafi: 'Radio Swiss Classic',
+		link: 'http://webplayer.radioswissclassic.ch',
+	}),
+];
+
+// Η function "panelAnikto" επιστρέφει true εφόσον ο χρήστης έχει ανοικτό το
+// πάνελ συντονισμού.
 
 Arena.radiaki.panelAnikto = function() {
 	if (!Arena.radiaki.DOM)
@@ -93,12 +102,9 @@ Arena.radiaki.panelAnikto = function() {
 	return(Arena.radiaki.DOM.css('display') !== 'none');
 };
 
-Arena.radiaki.panelKlisto = function() {
-	if (!Arena.radiaki.DOM)
-	return true;
-
-	return(Arena.radiaki.DOM.css('display') === 'none');
-};
+// Η function "setup" καλείται κατά το στήσιμο της αρένας και δημιουργεί το panel
+// συντονισμού ως ενιαίο div DOM element, το οποίο και εφοπλίζει με mouse event
+// listeners.
 
 Arena.radiaki.setup = function() {
 	Client.ofelimoDOM.
@@ -107,22 +113,38 @@ Arena.radiaki.setup = function() {
 		top: '104px',
 		left: '624px',
 	}).
+	on('mouseenter', '.radiofono', function(e) {
+		$(this).addClass('radiofonoCandi');
+	}).
+	on('mouseleave', '.radiofono', function(e) {
+		$(this).removeClass('radiofonoCandi');
+	}).
 	on('click', '.radiofono', function(e) {
 		var radiofono;
 
 		Arena.inputRefocus(e);
-		$('.radiofonoTrexon').removeClass('radiofonoTrexon');
+
+		// Ακυρώνουμε τυχόν ήδη επιλεγμένο ραδιοφωνικό σταθμό.
+
+		$('.radiofonoTrexon').
+		removeClass('radiofonoTrexon');
+
+		// Προσπελαύνουμε το σταθμό που αφορά στο πλήκτρο που
+		// κάναμε κλικ.
 
 		radiofono = $(this).data('radiofono');
-		if (radiofono) {
-			radiofono.radiofonoEpilogi();
-			return;
-		}
+		if (radiofono) return radiofono.radiofonoEpilogi();
+
+		// Δεν βρέθηκε συσχετισμένο ραδιόφωνο, επομένως πρόκειται
+		// για το το πλήκτρο διακοπής της ραδιοφωνικής μετάδοσης.
 
 		if (Arena.radiaki.win)
 		Arena.radiaki.win.close();
 
 		delete Arena.radiaki.win;
+
+		// Σε περίπτωση διακοπής κλείνουμε και το πάνελ συντονισμού,
+		// καθώς ο χρήστης δεν το χρειάζεται πια.
 
 		Arena.cpanel.
 		bpanelButtonGet('radiaki').
@@ -135,9 +157,13 @@ Arena.radiaki.setup = function() {
 		trigger('click');
 	})));
 
+	// Δημιουργούμε τα πλήκτρα επιλογής στο πάνελ συντονισμού.
+
 	Globals.awalk(Arena.radiaki.lista, function(i, radiofono) {
 		radiofono.radiofonoListaAppend();
 	});
+
+	// Στο τέλος προσθέτουμε πλήκτρο διακοπής της ραδιοφωνικής μετάδοσης.
 
 	Arena.radiaki.DOM.
 	append($('<div>').addClass('radiofono radiofonoOff').
