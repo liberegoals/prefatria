@@ -1931,24 +1931,47 @@ cursor: auto;
 	position: absolute;
 	top: 136px;
 	left: 626px;
-	background-color: #636363;
-	border-radius: 5px;
+	padding: 10px;
+
+	font-weight: bold;
+	background-image: url('../ikona/misc/radiaki.gif');
+	background-repeat: repeat;
+	border-radius: 10px;
 }
 
 .radiofono {
 	padding: 4px;
 	text-align: center;
-	margin: 6px;
+	margin: 10px 8px;
+
+	color: #926C3B;
 	background-color: rgba(128, 128, 0, 0.30);
+
 	border-style: solid;
 	border-width: 1px;
-	border-color: yellow;
+	border-color: olive;
 	border-radius: 5px;
 	cursor: pointer;
-};
+}
+
+.radiofono:hover {
+	color: #664D2C;
+	background-color: rgba(214, 214, 110, 0.54);
+}
 
 .radiofonoTrexon {
+	color: rgb(40, 119, 10);
+	font-weight: bold;
 	background-color: rgba(61, 128, 0, 0.30);
+	border-color: rgb(23, 126, 18);
+}
+
+.radiofonoOff {
+	color: #636363;
+}
+
+.radiofonoOff:hover {
+	color: red;
 	border-color: red;
 }
 

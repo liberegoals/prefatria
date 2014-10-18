@@ -3,7 +3,7 @@ Radiofono = function(props) {
 };
 
 Radiofono.prototype.radiofonoIdGet = function() {
-	return this.Id;
+	return this.id;
 };
 
 Radiofono.prototype.radiofonoPerigrafiGet = function() {
@@ -15,23 +15,20 @@ Radiofono.prototype.radiofonoLinkGet = function() {
 };
 
 Radiofono.prototype.radiofonoListaAppend = function() {
-	var dom;
+	if (this.DOM)
+	this.DOM.remove();
 
 	Arena.radiaki.DOM.
-	append(dom = $('<div>').addClass('radiofono').
+	append(this.DOM = $('<div>').addClass('radiofono').
 	data('radiofono', this).
 	text(this.radiofonoPerigrafiGet()));
-
-	if (this.radiofonoIdGet() === Arena.radiaki.trexon)
-	dom.addClass('radiofonoTrexon');
 
 	return this;
 };
 
 Radiofono.prototype.radiofonoEpilogi = function() {
+	this.DOM.addClass('radiofonoTrexon');
 	Arena.radiaki.win = window.open(this.radiofonoLinkGet(), 'radiaki');
-	Arena.radiaki.trexon = this.radiofonoIdGet();
-	Arena.radiaki.DOM.css('display', 'none');
 
 	return this;
 };
@@ -47,9 +44,29 @@ Arena.radiaki = {
 		}),
 
 		new Radiofono({
+			iid: 'erotokritos',
+			perigrafi: 'Ερωτόκριτος FM 87.9',
+			link: 'http://www.easyradio.gr/erotokritos',
+		}),
+
+		new Radiofono({
+			id: 'MMJazz',
+			perigrafi: 'Modern Mainstream (Jazz)',
+			link: 'http://player.slipstreamradio.com/player/slipstream/' +
+				'accujazz/?channel=Channel9&sub=SubModernJazz',
+		}),
+
+		new Radiofono({
+			id: 'SAJazz',
+			perigrafi: 'Straight Ahead (Jazz)',
+			link: 'http://player.slipstreamradio.com/player/slipstream/' +
+				'accujazz/?channel=Channel9&sub=SubStraightAhead',
+		}),
+
+		new Radiofono({
 			id: 'RSC',
 			perigrafi: 'Radio Swiss Classic',
-			link: 'http://www.radioswissclassic.ch/en/reception/internet',
+			link: 'http://webplayer.radioswissclassic.ch',
 		}),
 	],
 
@@ -57,7 +74,7 @@ Arena.radiaki = {
 };
 
 Arena.radiaki.setup = function() {
-	var i, radiofono, dom;
+	var i;
 
 	Client.ofelimoDOM.
 	append(Arena.radiaki.DOM = $('<div>').attr('id', 'radiaki').
@@ -65,6 +82,9 @@ Arena.radiaki.setup = function() {
 		var radiofono;
 
 		Arena.inputRefocus(e);
+		Arena.radiaki.DOM.css('display', 'none');
+		$('.radiofonoTrexon').removeClass('radiofonoTrexon');
+
 		radiofono = $(this).data('radiofono');
 		if (radiofono) {
 			radiofono.radiofonoEpilogi();
@@ -77,20 +97,13 @@ Arena.radiaki.setup = function() {
 		delete Arena.radiaki.win;
 	}));
 
-	for (i = 0; i < Arena.radiaki.lista.length; i++) {
-		radiofono = Arena.radiaki.lista[i];
-		Arena.radiaki.DOM.
-		append(dom = $('<div>').addClass('radiofono').
-		data('radiofono', radiofono).
-		text(radiofono.radiofonoPerigrafiGet()));
-
-		if (i === Arena.radiaki.trexon)
-		dom.addClass('radiofonoTrexon');
-	}
+	Globals.awalk(Arena.radiaki.lista, function(i, radiofono) {
+		radiofono.radiofonoListaAppend();
+	});
 
 	Arena.radiaki.DOM.
-	append($('<div>').addClass('radiofono').
-	html('Off'));
+	append($('<div>').addClass('radiofono radiofonoOff').
+	html('&mdash;&nbsp;Off&nbsp;&mdash;'));
 
 	return Arena;
 };
