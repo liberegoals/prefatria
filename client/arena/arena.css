@@ -1926,6 +1926,34 @@ cursor: auto;
 
 /***********************************************************************************************************************/
 
+#radiaki {
+	display: none;
+	position: absolute;
+	top: 136px;
+	left: 626px;
+	background-color: #636363;
+	border-radius: 5px;
+}
+
+.radiofono {
+	padding: 4px;
+	text-align: center;
+	margin: 6px;
+	background-color: rgba(128, 128, 0, 0.30);
+	border-style: solid;
+	border-width: 1px;
+	border-color: yellow;
+	border-radius: 5px;
+	cursor: pointer;
+};
+
+.radiofonoTrexon {
+	background-color: rgba(61, 128, 0, 0.30);
+	border-color: red;
+}
+
+/***********************************************************************************************************************/
+
 .rebelos {
 	margin: 6px 18px 0px 0px;
 }

@@ -181,8 +181,8 @@ Arena.setup = function() {
 	$('#arena td').addClass('stili').
 	find('.stiliPeriexomeno').css('height', Client.ofelimoDOM.innerHeight() + 'px');
 	Client.ofelimoDOM.append(Arena.pektisFormaDOM = $('<div>').attr('id', 'pektisForma').siromeno({
-		top: '197px',
-		left: '636px',
+		top: '32px',
+		left: '624px',
 	}));
 
 	Arena.
@@ -198,6 +198,7 @@ Arena.setup = function() {
 	setupEpanel().
 	setupView().
 	setupMode().
+	radiaki.setup().
 	viewRefresh();
 
 	if (!Client.session.kinito)

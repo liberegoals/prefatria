@@ -342,38 +342,14 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 Arena.cpanel.claimButtonDOM = Arena.cpanel.bpanelButtonGet('claim').pbuttonGetDOM();
 
 Arena.cpanel.bpanelButtonPush(new PButton({
-	id: 'radio',
+	id: 'radiaki',
 	omada: 1,
-	refresh: function() {
-		var dom;
-
-		if ($(this).data('active')) {
-			dom = this.pbuttonGetDOM();
-			dom.attr('title', 'Turn off the radio');
-
-			dom = this.pbuttonIconGetDOM();
-			dom.attr('src', 'ikona/panel/radioOff.png');
-			return;
-		}
-
-		dom = this.pbuttonGetDOM();
-		dom.attr('title', 'Turn on the radio!');
-
-		dom = this.pbuttonIconGetDOM();
-		dom.attr('src', 'ikona/panel/radioOn.png');
-	},
+	title: 'Ράδιο «Πρεφαδόρος»',
+	img: 'ikona/panel/radioOn.png',
 	click: function(e) {
-		var active;
-
-		active = $(this).data('active');
-		if (active) {
-			$(this).removeData('active');
-			active.remove();
-			this.pbuttonRefresh();
-			return;
-		}
-
-		window.open('http://www.e-radio.gr/Active-Radio-Internet-Radio-i48/live', 'radio');
+		if (Arena.radiaki.DOM)
+		Arena.radiaki.DOM.css('display',
+		Arena.radiaki.DOM.css('display') === 'none' ? 'block' : 'none');
 	},
 }));
 
