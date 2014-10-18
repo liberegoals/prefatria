@@ -44,7 +44,13 @@ Arena.radiaki = {
 		}),
 
 		new Radiofono({
-			iid: 'erotokritos',
+			id: 'rebetiko',
+			perigrafi: 'Akous.gr (ρεμπέτικο)',
+			link: 'http://www.akous.gr/player/palko/',
+		}),
+
+		new Radiofono({
+			id: 'erotokritos',
 			perigrafi: 'Ερωτόκριτος FM 87.9',
 			link: 'http://www.easyradio.gr/erotokritos',
 		}),
@@ -110,6 +116,11 @@ Arena.radiaki.setup = function() {
 		Arena.radiaki.win.close();
 
 		delete Arena.radiaki.win;
+
+		Arena.cpanel.
+		bpanelButtonGet('radiaki').
+		pbuttonGetDOM('radiaki').
+		trigger('click');
 	}).append(Client.klisimo(function(e) {
 		Arena.cpanel.
 		bpanelButtonGet('radiaki').
