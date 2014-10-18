@@ -1929,13 +1929,15 @@ cursor: auto;
 #radiaki {
 	display: none;
 	position: absolute;
-	top: 136px;
-	left: 626px;
 	padding: 24px;
 
 	font-weight: bold;
 	background-image: url('../ikona/misc/radiaki.gif');
 	background-repeat: repeat;
+
+	border-style: double;
+	border-width: 2px;
+	border-color: #F8BC7B;
 	border-radius: 10px;
 }
 
