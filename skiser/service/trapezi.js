@@ -524,8 +524,8 @@ Service.trapezi.check = function() {
 	Service.trapezi.arxiothetisi(arxio, arxio2);
 };
 
-Service.trapezi.kenoTimeout = 5 * 60;
-Service.trapezi.oxiKenoTimeout = 15 * 60;
+Service.trapezi.kenoTimeout = 1 * 60;
+Service.trapezi.oxiKenoTimeout = 3 * 60;
 
 // Η μέθοδος "trapeziSeXrisi" ελέγχει αν οι παίκτες του τραπεζιού έχουν αποχωρήσει
 // από το τραπέζι και το τραπέζι έχει μείνει χωρίς online επισκέπτες για μεγάλο
@@ -647,47 +647,49 @@ Service.trapezi.arxiothetisiTrapezi = function(trapeziKodikos, lista, lista2) {
 		}
 
 		// Το τραπέζι έχει αρχειοθετηθεί επιτυχώς. Ακολουθούν οι διαγραφές
-		// προσκλήσεων και συζήτησης του τραπεζιού. Κανονικά θα έπρεπε να
+		// προσκλήσεων, συζήτησης κλπ του τραπεζιού. Κανονικά θα έπρεπε να
 		// γίνουν όλα αυτά στα πλαίσια κάποιας ενιαίας transaction, αλλά
 		// δεν πειράζει και να αποτύχουν οι διαγραφές, οπότε αποφεύγουμε
 		// τη διαδικασία λογικής transaction.
 
 		lista2[trapeziKodikos] = true;
-		Service.trapezi.arxiothetisiProsklisi(conn, trapeziKodikos, lista, lista2);
+		Service.trapezi.diagrafiProsklisi(conn, trapeziKodikos, lista, lista2);
 	});
 };
 
-Service.trapezi.arxiothetisiProsklisi = function(conn, trapezi, lista, lista2) {
+Service.trapezi.diagrafiProsklisi = function(conn, trapezi, lista, lista2) {
 	var query;
 
 	query = 'DELETE FROM `prosklisi` WHERE `trapezi` = ' + trapezi;
 	conn.query(query, function(conn) {
-		/*
-		TODO
-		if (!res) {
-			conn.free();
-			console.error(trapezi + ': απέτυχε η διαγραφή προσκλήσεων κατά την αρχειοθέτηση');
-			Service.trapezi.arxiothetisi(lista, lista2);
-			return;
-		}
-		*/
-
-		Service.trapezi.arxiothetisiSizitisi(conn, trapezi, lista, lista2);
+		Service.trapezi.diagrafiSizitisi(conn, trapezi, lista, lista2);
 	});
 };
 
-Service.trapezi.arxiothetisiSizitisi = function(conn, trapezi, lista, lista2) {
+Service.trapezi.diagrafiSizitisi = function(conn, trapezi, lista, lista2) {
 	var query;
 
 	query = 'DELETE FROM `sizitisi` WHERE `trapezi` = ' + trapezi;
 	conn.query(query, function(conn) {
-		conn.free();
-		/*
-		TODO
-		if (!res)
-		console.error(trapezi + ': απέτυχε η διαγραφή συζήτησης κατά την αρχειοθέτηση');
-		*/
+		Service.trapezi.diagrafiSimetoxi(conn, trapezi, lista, lista2);
+	});
+};
 
+Service.trapezi.diagrafiSimetoxi = function(conn, trapezi, lista, lista2) {
+	var query;
+
+	query = 'DELETE FROM `simetoxi` WHERE `trapezi` = ' + trapezi;
+	conn.query(query, function(conn) {
+		Service.trapezi.diagrafiTelefteos(conn, trapezi, lista, lista2);
+	});
+};
+
+Service.trapezi.diagrafiTelefteos = function(conn, trapezi, lista, lista2) {
+	var query;
+
+	query = 'DELETE FROM `telefteos` WHERE `trapezi` = ' + trapezi;
+	conn.query(query, function(conn) {
+		conn.free();
 		Service.trapezi.arxiothetisi(lista, lista2);
 	});
 };
