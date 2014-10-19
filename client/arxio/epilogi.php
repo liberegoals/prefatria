@@ -81,14 +81,22 @@ class Epilogi {
 		if (Globals::den_perastike("apo"))
 		return;
 
-		self::$query .= " AND (`arxio` >= FROM_UNIXTIME(" . $_REQUEST["apo"] . "))";
+		$apo = (int)$_REQUEST["apo"];
+		if ($apo <= 0)
+		return;
+
+		self::$query .= " AND (`arxio` >= FROM_UNIXTIME(" . $apo . "))";
 	}
 
 	public static function queryEos() {
 		if (Globals::den_perastike("eos"))
 		return;
 
-		$eos = $_REQUEST["eos"] + (24 * 3600);
+		$eos = (int)$_REQUEST["eos"];
+		if ($eos <= 0)
+		return;
+
+		$eos = $eos + (24 * 3600);
 		self::$query .= " AND (`arxio` < FROM_UNIXTIME(" . $eos . "))";
 	}
 
