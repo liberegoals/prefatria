@@ -1043,3 +1043,16 @@ END;//
 DELIMITER ;
 
 \! echo "database triggers created!"
+
+\! echo "creating views…"
+
+-- Το view "partida" περιλαμβάνει τα ενεργά τραπέζια, δηλαδή τις παρτίδες
+-- που βρίσκονται σε εξέλιξη.
+
+CREATE VIEW `partida` AS SELECT *
+FROM `trapezi`
+WHERE `arxio` IS NULL
+ORDER BY `kodikos` DESC
+;
+
+\! echo "views created!"
