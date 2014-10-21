@@ -103,6 +103,7 @@ class Globals {
 		case "5.9.24.181":
 			self::$server = "http://" . $server_name . "/prefadoros/";
 			break;
+		case "www.prefadoros.gr":
 		case "www.prefadoros.com":
 		case "www.prefadoros.org":
 		case "www.prefaprive.net":
@@ -141,6 +142,7 @@ class Globals {
 		switch (self::$server) {
 		case "http://127.0.0.1/prefatria/";
 		case "http://localhost/prefatria/";
+		case "http://www.prefadoros.gr/":
 		case "http://www.opasopa.net/prefatria/":
 		case "http://5.9.24.181/prefadoros/":
 		case "http://www.prefadoros.com/":
