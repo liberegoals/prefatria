@@ -21,7 +21,7 @@ while ($row = $result->fetch_assoc()) {
 	Epilogi::trparam($row);
 	Epilogi::dianomi($row);
 
-	if (isset(JSON_UNESCAPED_UNICODE))
+	if (defined(JSON_UNESCAPED_UNICODE))
 	print json_encode($row, JSON_UNESCAPED_UNICODE) . ",";
 
 	else
