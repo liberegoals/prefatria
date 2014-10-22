@@ -78,13 +78,14 @@ Paraskinio.paletaDisplay = function() {
 		on('click', function(e) {
 			var img = $(this).data('paraskinio');
 			Paraskinio.openerBI = "url('" + Client.server + "ikona/paraskinio/" + img + "')";
-			$.ajax('../lib/session.php', {data:{paraskinio:img}});
+			$.ajax('../lib/session.php', {data:{paraskinio:img}}).
+			done(function() {
+				window.close();
+			});
 			if (Paraskinio.opener) {
 				if (Paraskinio.opener.hasOwnProperty('Arena'))
 				Paraskinio.opener.Arena.paraskinioAlagi(Paraskinio.openerBI);
 			}
-
-			window.close();
 		})));
 	}
 };
