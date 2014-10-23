@@ -111,12 +111,18 @@ background-color: rgba(128, 0, 97, 0.37);
 	display: inline;
 }
 
-#googleSearchIcon {
+#googleSearchIconContainer {
 	position: relative;
-	bottom: -5px;
-	display: inline;
-	margin-right: 10px;
+	display: inline-block;
 	width: 22px;
+	margin-right: 10px;
+}
+
+#googleSearchIcon {
+	position: absolute;
+	bottom: -5px;
+	right: 0;
+	width: 100%;
 	cursor: pointer;
 }
 

@@ -275,6 +275,7 @@ Client.tabPrive = function(x) {
 
 Client.tabGoogleSearch = function(x) {
 	$('<div>').attr('id', 'googleSearch').
+	append($('<div>').attr('id', 'googleSearchIconContainer').
 	append($('<img>').attr({
 		id: 'googleSearchIcon',
 		src: 'ikona/external/googleSearch.png',
@@ -292,7 +293,7 @@ Client.tabGoogleSearch = function(x) {
 				$('#googleSearchInput').focus();
 			});
 		}
-	})).
+	}))).
 	append($('<form>').attr({
 		id: 'cse-search-box',
 		target: '_blank',
