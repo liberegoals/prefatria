@@ -10,7 +10,6 @@ body {
 /************************************************************************************************************************/
 
 #diafimisi {
-	display: none;
 	position: relative;
 	padding: 10px;
 	margin: 0 0 8px 0;
@@ -21,7 +20,6 @@ background-color: #CEB566;
 }
 
 #motd {
-	display: none;
 	position: relative;
 	padding: 10px;
 	margin: 0 0 8px 0;
