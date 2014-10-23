@@ -319,8 +319,16 @@ Client.diafimisi.setup = function() {
 
 	dom.append(
 		Client.klisimo(function() {
-			dom.slideUp();
-			if (Client.diafimisi.callback) Client.diafimisi.callback();
+			if (!dom.data('ipsos'))
+			dom.data('ipsos', dom.height());
+
+			dom.animate({
+				height: 0,
+				opacity: 0,
+			});
+
+			if (Client.diafimisi.callback)
+			Client.diafimisi.callback();
 		})
 	);
 
@@ -341,8 +349,16 @@ Client.motd.setup = function() {
 
 	dom.append(
 		Client.klisimo(function() {
-			dom.slideUp();
-			if (Client.motd.callback) Client.motd.callback();
+			if (!dom.data('ipsos'))
+			dom.data('ipsos', dom.height());
+
+			dom.animate({
+				height: 0,
+				opacity: 0,
+			});
+
+			if (Client.motd.callback)
+			Client.motd.callback();
 		})
 	);
 

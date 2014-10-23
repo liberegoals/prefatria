@@ -1281,12 +1281,22 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 		return this;
 	},
 	click: function(e) {
+		var dom, ipsos;
+
+		dom = $('#diafimisi');
+		if (dom.length != 1)
+		return;
+
 		Client.diafimisi.emfanis = !Client.diafimisi.emfanis;
 		if (Client.diafimisi.emfanis) {
-			$('#diafimisi').slideDown();
+			ipsos = dom.data('ipsos');
+			dom.animate({
+				height: ipsos + 'px',
+				opacity: 1,
+			});
 		}
 		else {
-			$('#diafimisi').find('.klisimoIcon').trigger('click');
+			dom.find('.klisimoIcon').trigger('click');
 		}
 
 		this.refresh();
@@ -1309,12 +1319,22 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 		return this;
 	},
 	click: function(e) {
+		var dom, ipsos;
+
+		dom = $('#motd');
+		if (dom.length != 1)
+		return;
+
 		Client.motd.emfanes = !Client.motd.emfanes;
 		if (Client.motd.emfanes) {
-			$('#motd').slideDown();
+			ipsos = dom.data('ipsos');
+			dom.animate({
+				height: ipsos + 'px',
+				opacity: 1,
+			});
 		}
 		else {
-			$('#motd').find('.klisimoIcon').trigger('click');
+			dom.find('.klisimoIcon').trigger('click');
 		}
 
 		this.refresh();
