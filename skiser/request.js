@@ -20,6 +20,8 @@ NodeRequest = function(request, response, skiniko) {
 	// μέσω proxy server ιχνηλατούμε το αρχικό IP.
 
 	this.ip = request.headers['x-forwarded-for']; 
+if (this.ip) console.log('x-forwarded-for:', this.ip);
+else console.log('remoteAddress:', request.connection.remoteAddress);
 	this.ip = this.ip ? this.ip.split(',')[0] : request.connection.remoteAddress;
 	this.ip = this.ip.validIp();
 
