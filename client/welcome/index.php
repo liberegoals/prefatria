@@ -6,6 +6,7 @@ Selida::stylesheet("welcome/welcome");
 Selida::javascript("welcome/welcome");
 
 Selida::body();
+Selida::motd();
 Selida::toolbar();
 Selida::fyi_pano();
 

@@ -1145,6 +1145,8 @@ $(document).ready(function() {
 	});
 	else Client.session.paraskinio = 'standard.png';
 	Client.fyi.setup();
+	Client.diafimisi.setup();
+	Client.motd.setup();
 
 	// Κάθε περίπου 5 λεπτά ανανεώνουμε το session, ώστε ακόμη και αν
 	// ο παίκτης δεν κάνει καμία ενέργεια, να μην χάνεται το session

@@ -110,8 +110,6 @@ Arena.kouskous = function() {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 $(document).ready(function() {
-	Client.diafimisi.setup();
-	Client.motd.setup();
 	Client.fortos.setup();
 	Client.toolbarLeft('pexnidi');
 	Client.toolbarRight();
