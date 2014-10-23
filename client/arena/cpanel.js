@@ -1290,7 +1290,8 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 		Client.diafimisi.emfanis = !Client.diafimisi.emfanis;
 		if (Client.diafimisi.emfanis) {
 			ipsos = dom.data('ipsos');
-			dom.animate({
+			dom.finish().css('display', 'block').
+			animate({
 				height: ipsos + 'px',
 				opacity: 1,
 			});
@@ -1328,7 +1329,8 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 		Client.motd.emfanes = !Client.motd.emfanes;
 		if (Client.motd.emfanes) {
 			ipsos = dom.data('ipsos');
-			dom.animate({
+			dom.finish().css('display', 'block').
+			animate({
 				height: ipsos + 'px',
 				opacity: 1,
 			});
