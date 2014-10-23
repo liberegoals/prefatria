@@ -353,6 +353,23 @@ class Selida {
 		<?php
 	}
 
+	public static function motd_enimerosi_open($titlos = "ΕΝΗΜΕΡΩΤΙΚΟ ΣΗΜΕΙΩΜΑ") {
+		?>
+		<div class="motdEnimerosi">
+		<div class="enimerosiTitlos">
+		<div class="enimerosiTitlosKimeno">
+			<?php print $titlos; ?>
+		</div>
+		</div>
+		<?php
+	}
+
+	public static function motd_enimerosi_close() {
+		?>
+		</div>
+		<?php
+	}
+
 	// Η μέθοδος "redirect" καλείται στο head section και σκοπό έχει τη μετάβαση
 	// του χρήστη σε άλλη σελίδα.
 
