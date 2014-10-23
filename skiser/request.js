@@ -22,9 +22,6 @@ NodeRequest = function(request, response, skiniko) {
 	this.ip = request.headers['x-forwarded-for']; 
 	this.ip = this.ip ? this.ip.split(',')[0] : request.connection.remoteAddress;
 	this.ip = this.ip.validIp();
-// TODO
-if (this.ip != request.connection.remoteAddress)
-console.log('ip: ' + this.ip + ', remoteAddress: ' + request.connection.remoteAddress);
 
 	// Κατόπιν εντάσσουμε δεδομένα που αφορούν στο url του αιτήματος από όπου
 	// θα μπορέσουμε να αποσπάσουμε το είδος της ζητούμενης υπηρεσίας και τις
