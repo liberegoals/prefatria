@@ -36,6 +36,7 @@ class Selida {
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 		<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/themes/smoothness/jquery-ui.css" />
 		<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
+		<script src="http://www.google.gr/coop/cse/brand?form=cse-search-box&lang=el"></script>
 
 		<?php
 		self::stylesheet('lib/selida');

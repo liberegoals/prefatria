@@ -273,6 +273,57 @@ Client.tabPrive = function(x) {
 	appendTo(x === undefined ? $('#toolbarRight') : x);
 };
 
+Client.tabGoogleSearch = function(x) {
+	$('<div>').attr('id', 'googleSearch').
+	append($('<img>').attr({
+		id: 'googleSearchIcon',
+		src: 'ikona/external/googleSearch.png',
+	}).
+	on('click', function(e) {
+		e.stopPropagation();
+		if ($(this).data('emfanes')) {
+			$(this).removeData('emfanes');
+			$('#cse-search-box').finish().fadeOut(100);
+			if (Arena) Arena.inputTrexon.focus();
+		}
+		else {
+			$(this).data('emfanes', true);
+			$('#cse-search-box').finish().fadeIn(100, function() {
+				$('#googleSearchInput').focus();
+			});
+		}
+	})).
+	append($('<form>').attr({
+		id: 'cse-search-box',
+		target: '_blank',
+		action: 'http://www.google.gr',
+	}).
+	append($('<input>').attr({
+		type: 'hidden',
+		name: 'cx',
+		value: 'partner-pub-2140287108424127:8475141205',
+	})).
+	append($('<input>').attr({
+		type: 'hidden',
+		name: 'ie',
+		value: 'UTF-8',
+	})).
+	append($('<input>').attr({
+		id: 'googleSearchInput',
+		type: 'text',
+		name: 'q',
+	}).css({
+		display: 'inline',
+		width: '100px',
+	})).
+	append($('<input>').attr({
+		type: 'submit',
+		name: 'sa',
+		value: 'Αναζήτηση',
+	}))).
+	appendTo(x === undefined ? $('#toolbarRight') : x);
+};
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 Client.toolbarLeft = function(opts) {
@@ -294,6 +345,7 @@ Client.toolbarRight = function(exodos) {
 	var tbr = $('#toolbarRight');
 	if (!tbr.length) return;
 
+	Client.tabGoogleSearch(tbr);
 	Client.tabPrive(tbr);
 	if (Client.oxiPektis()) {
 		Client.tabEgrafi(tbr);
@@ -322,9 +374,11 @@ Client.diafimisi.setup = function() {
 			if (!dom.data('ipsos'))
 			dom.data('ipsos', dom.height());
 
-			dom.animate({
+			dom.finish().animate({
 				height: 0,
 				opacity: 0,
+			}, function() {
+				$(this).css('display', 'none');
 			});
 
 			if (Client.diafimisi.callback)
@@ -352,9 +406,11 @@ Client.motd.setup = function() {
 			if (!dom.data('ipsos'))
 			dom.data('ipsos', dom.height());
 
-			dom.animate({
+			dom.finish().animate({
 				height: 0,
 				opacity: 0,
+			}, function() {
+				$(this).css('display', 'none');
 			});
 
 			if (Client.motd.callback)

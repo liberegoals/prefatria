@@ -106,6 +106,36 @@ background-color: rgba(128, 0, 97, 0.37);
 
 /************************************************************************************************************************/
 
+#googleSearch {
+	position: relative;
+	display: inline;
+}
+
+#googleSearchIcon {
+	position: relative;
+	bottom: -5px;
+	display: inline;
+	margin-right: 10px;
+	width: 22px;
+	cursor: pointer;
+}
+
+#cse-search-box {
+	display: none;
+	position: absolute;
+	bottom: -10px;
+	left: -230px;
+
+	padding: 10px;
+	white-space: nowrap;
+
+	background-color: rgba(82, 153, 232, 0.50);
+	border-radius: 10px;
+	z-index: 1;
+}
+
+/************************************************************************************************************************/
+
 #ribbon {
 	border-style: solid none none none;
 	border-width: 2px;
