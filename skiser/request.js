@@ -24,7 +24,7 @@ NodeRequest = function(request, response, skiniko) {
 	this.ip = this.ip.validIp();
 // TODO
 if (this.ip != request.connection.remoteAddress)
-console.log('ip: ' + this.ip + ', remoteAddress: ' + request.connetcio.remoteAddress);
+console.log('ip: ' + this.ip + ', remoteAddress: ' + request.connetcion.remoteAddress);
 
 	// Κατόπιν εντάσσουμε δεδομένα που αφορούν στο url του αιτήματος από όπου
 	// θα μπορέσουμε να αποσπάσουμε το είδος της ζητούμενης υπηρεσίας και τις
