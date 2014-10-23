@@ -343,8 +343,11 @@ class Selida {
 		<?php
 	}
 
-	public static function motd() {
-		$motd = "site/motd.php";
+	public static function motd($anonimo = FALSE) {
+		if (Globals::is_pektis()) $motd = "site/motd.php";
+		else if ($anonimo) $motd = "site/welcome.php";
+		else return;
+
 		if (!file_exists(Globals::$www . "client/" . $motd)) return;
 		?>
 		<div id="motd">
@@ -356,6 +359,10 @@ class Selida {
 	public static function motd_enimerosi_open($titlos = "ΕΝΗΜΕΡΩΤΙΚΟ ΣΗΜΕΙΩΜΑ") {
 		?>
 		<div class="motdEnimerosi">
+		<?php
+		if (!$titlos) return;
+		?>
+
 		<div class="enimerosiTitlos">
 		<div class="enimerosiTitlosKimeno">
 			<?php print $titlos; ?>
