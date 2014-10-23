@@ -284,7 +284,7 @@ Client.tabGoogleSearch = function(x) {
 		if ($(this).data('emfanes')) {
 			$(this).removeData('emfanes');
 			$('#cse-search-box').finish().fadeOut(100);
-			if (Arena) Arena.inputTrexon.focus();
+			if (window.Arena) Arena.inputTrexon.focus();
 		}
 		else {
 			$(this).data('emfanes', true);
