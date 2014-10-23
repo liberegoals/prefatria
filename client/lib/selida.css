@@ -15,7 +15,6 @@ body {
 	padding: 10px;
 	margin: 0 0 8px 0;
 	text-align: center;
-	overflow: hidden;
 /*
 background-color: #CEB566;
 */
@@ -27,10 +26,27 @@ background-color: #CEB566;
 	padding: 10px;
 	margin: 0 0 8px 0;
 	text-align: center;
-	overflow: hidden;
 /*
 background-color: #9AA55F;
 */
+}
+
+.motdEnimerosi {
+	width: 704px;
+	padding: 10px;
+	margin: 0 auto;
+
+	text-align: center;
+	line-height: 150%;
+
+	border-style: dashed;
+	border-width: 2px;
+	border-color: #FCBF30;
+	border-radius: 10px;
+	box-shadow: 2px 2px 40px #888;
+
+	color: #303233;
+	background-color: #FFFFCC;
 }
 
 #ofelimo {
@@ -201,8 +217,6 @@ background-color: rgba(128, 0, 97, 0.37);
 	border-width: 1px;
 	border-color: #888888;
 
-	-webkit-box-shadow: 2px 2px 8px #B4B4B4;
-	-moz-box-shadow: 2px 2px 8px #B4B4B4;
 	box-shadow: 2px 2px 8px #B4B4B4;
 }
 
@@ -253,13 +267,7 @@ background-color: rgba(128, 0, 97, 0.37);
 	border-style: solid;
 	border-width: 1px;
 	border-color: #D6B879;
-
 	border-radius: 3px;
-	-webkit-border-radius: 3px;
-	-moz-border-radius: 3px;
-
-	-webkit-box-shadow: 4px 4px 18px #000;
-	-moz-box-shadow: 4px 4px 18px #000;
 	box-shadow: 4px 4px 18px #000;
 }
 
@@ -279,9 +287,6 @@ background-color: rgba(128, 0, 97, 0.37);
 	border-style: solid;
 	border-width: 2px;
 	border-color: #C7B48C;
-
-	-webkit-box-shadow: 2px 2px 4px #E9F0D0;
-	-moz-box-shadow: 2px 2px 4px #E9F0D0;
 	box-shadow: 2px 2px 4px #E9F0D0;
 }
 
@@ -523,8 +528,6 @@ border-color: red !important;
 	border-color: #FCBF30;
 	border-radius: 3px;
 
-	-webkit-box-shadow: 4px 4px 10px #2E2E2E;
-	-moz-box-shadow: 4px 4px 10px #2E2E2E;
 	box-shadow: 4px 4px 10px #2E2E2E;
 }
 
@@ -545,8 +548,6 @@ border-color: red !important;
 	padding: 2px 6px;
 	border-radius: 2px;
 
-	-webkit-box-shadow: 2px 2px 4px #2E2E2E;
-	-moz-box-shadow: 2px 2px 4px #2E2E2E;
 	box-shadow: 2px 2px 4px #2E2E2E;
 }
 
@@ -569,13 +570,7 @@ border-color: red !important;
 	border-style: solid;
 	border-color: #CE8A23;
 	border-width: 2px;
-
 	border-radius: 3px;
-	-webkit-border-radius: 3px;
-	-moz-border-radius: 3px;
-
-	-webkit-box-shadow: 4px 4px 18px #000;
-	-moz-box-shadow: 4px 4px 18px #000;
 	box-shadow: 4px 4px 18px #000;
 }
 

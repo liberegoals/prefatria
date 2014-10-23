@@ -33,8 +33,8 @@ Arena::setupView();
 
 Selida::body();
 Selida::javascript("arena/rcLocal");
-Selida::diafimisi();
 Selida::motd();
+Selida::diafimisi();
 Selida::toolbar();
 Selida::fyi_pano();
 
