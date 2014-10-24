@@ -159,6 +159,23 @@ Trapezi.prototype.partidaFasiGet = function() {
 	return this.fasi;
 };
 
+Trapezi.prototype.partidaIsFasiInteractive = function() {
+	switch (this.partidaFasiGet()) {
+	case 'ΔΗΛΩΣΗ':
+	case 'ΑΛΛΑΓΗ':
+	case 'ΣΥΜΜΕΤΟΧΗ':
+	case 'ΠΑΙΧΝΙΔΙ':
+	case 'CLAIM':
+		return true;
+	default:
+		return false;
+	}
+};
+
+Trapezi.prototype.partidaOxiFasiInteractive = function() {
+	return !this.partidaIsFasiInteractive();
+};
+
 Trapezi.prototype.partidaDealerSet = function(thesi) {
 	if (thesi) this.dealer = thesi;
 	else delete this.dealer;

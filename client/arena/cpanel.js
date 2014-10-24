@@ -402,13 +402,30 @@ Arena.cpanel.bpanelButtonPush(Arena.cpanel.freskarismaButton = new PButton({
 	omada: 1,
 	img: 'dianomi.png',
 	title: 'Διανομή',
+	check: function() {
+		if (Arena.ego.oxiTrapezi())
+		return false;
+
+		if (Arena.ego.oxiPektis())
+		return false;
+
+		if (Arena.ego.trapezi.partidaIsFasiInteractive())
+		return false;
+
+		return true;
+	},
 	click: function(e) {
 		var button;
 
 		button = this.pbuttonLock();
-		Client.fyi.pano('Γίνεται ενημέρωση του σκηνικού. Παρακαλώ περιμένετε…', 0);
-		Arena.skiniko.stisimo(function() {
-			Client.fyi.pano();
+		Client.fyi.pano('Δρομολογήθηκε διανομή. Παρακαλώ περιμένετε…');
+		Client.skiserService('dianomiTora').
+		done(function(rsp) {
+			Client.fyi.epano(rsp);
+			button.pbuttonRelease();
+		}).
+		fail(function(err) {
+			Client.skiserFail(err);
 			button.pbuttonRelease();
 		});
 	},

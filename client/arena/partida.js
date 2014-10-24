@@ -735,12 +735,12 @@ Arena.partida.pektisRefreshDOM = function(thesi) {
 		}, 200);
 	});
 
-	if (Arena.ego.isPektis())
-	return Arena.partida;
+	// Αλλαγή θέσης θέασης.
 
-	// Αλλαγή θέσης θέασης
+	dom.off('click');
 
-	dom.off('click').on('click', function(e) {
+	if (Arena.ego.isTheatis())
+	dom.on('click', function(e) {
 		Arena.inputRefocus(e);
 		if (Arena.ego.isThesi(thesi)) return;
 
