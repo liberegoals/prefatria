@@ -38,6 +38,7 @@ Log.level.pop();
 // επεξεργασία που υφίσταται από τον server.
 
 Server.router = {
+	'/dianomiTora': Service.trapezi.dianomiTora,
 	'/anazitisi': Service.anazitisi.anazitisi,
 	'/minimaFeredata': Service.minima.feredata,
 	'/minimaKatastasi': Service.minima.katastasi,

@@ -28,16 +28,8 @@ Service.akirosi.start = function(nodereq) {
 		return nodereq.error('Ακαθόριστη θέση παίκτη');
 	}
 
-	switch (data.trapezi.partidaFasiGet()) {
-	case 'ΔΗΛΩΣΗ':
-	case 'ΑΛΛΑΓΗ':
-	case 'ΣΥΜΜΕΤΟΧΗ':
-	case 'ΠΑΙΧΝΙΔΙ':
-	case 'CLAIM':
-		break;
-	default:
-		return Service.akirosi.apotixia(data, 'Τραπέζι εκτός φάσης');
-	}
+	if (data.trapezi.partidaOxiFasiInteractive())
+	return Service.akirosi.apotixia(data, 'Τραπέζι εκτός φάσης');
 
 	data.dianomi = data.trapezi.trapeziTelefteaDianomi();
 	if (!data.dianomi)

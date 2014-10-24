@@ -422,6 +422,51 @@ Service.trapezi.apodoxi2 = function(nodereq, trapezi, thesi, apodoxi) {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
 
+Service.trapezi.dianomiTora = function(nodereq) {
+	var trapezi, sinedria, pektis;
+
+	if (nodereq.isvoli())
+	return;
+
+	trapezi = nodereq.trapeziGet();
+	if (!trapezi)
+	return nodereq.error('ακαθόριστο τραπέζι');
+
+	sinedria = nodereq.sinedriaGet();
+	if (sinedria.sinedriaOxiPektis())
+	return  nodereq.error("Δεν είστε παίκτης σ' αυτό το τραπέζι");
+
+	if (!trapezi.trapeziKlidoma('trapezi.dianomiTora'))
+	return  nodereq.error('Το τραπέζι είναι κλειδωμένο');
+
+	if (trapezi.partidaIsFasiInteractive()) {
+		trapezi.trapeziXeklidoma();
+		return nodereq.error('Τραπέζι εκτός φάσης');
+	}
+
+	DB.connection().transaction(function(conn) {
+		trapezi.trapeziNeaDianomi(conn,
+
+		function(conn, dianomi, energia) {
+			conn.commit();
+			nodereq.end();
+
+			Server.skiniko.
+			processKinisi(dianomi).
+			processKinisi(energia).
+			kinisiAdd(dianomi, false).
+			kinisiAdd(energia);
+
+			this.trapeziXeklidoma();
+		},
+
+		function() {
+			this.trapeziXeklidoma();
+			nodereq.error('Απέτυχε η διανομή');
+		});
+	});
+};
+
 Service.trapezi.dianomi = function(trapezi, fail) {
 	DB.connection().transaction(function(conn) {
 		trapezi.trapeziNeaDianomi(conn, function(conn, dianomi, energia) {
