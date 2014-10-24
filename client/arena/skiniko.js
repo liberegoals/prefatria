@@ -70,7 +70,8 @@ Skiniko.prototype.stisimo = function(callback) {
 		if (callback) callback.call(skiniko);
 	}).
 	fail(function(err) {
-		skiniko.feredataError(err);
+		Client.skiserFail(err);
+		skiniko.feredataError('ajax call failure (fereFreska)');
 	});
 
 	return this;
@@ -109,7 +110,8 @@ Skiniko.prototype.processFreskaData = function(rsp) {
 	try {
 		data = ('{' + rsp + '}').evalAsfales();
 	} catch(e) {
-		this.feredataError('Παρελήφθησαν λανθασμένα σκηνικά δεδομένα', rsp);
+		this.feredataError('Παρελήφθησαν λανθασμένα σκηνικά δεδομένα:');
+		console.error(rsp);
 		return this;
 	}
 
@@ -117,7 +119,8 @@ Skiniko.prototype.processFreskaData = function(rsp) {
 	// θεωρούμε ότι παραλάβαμε λανθασμένα δεδομένα και επιχειρούμε εκ νέου.
 
 	if (!data.hasOwnProperty('id')) {
-		this.feredataError('Ακαθόριστο ID πακέτου σκηνικών δεδομένων', rsp);
+		this.feredataError('Ακαθόριστο ID πακέτου σκηνικών δεδομένων:');
+		console.error(rsp);
 		return this;
 	}
 
@@ -377,7 +380,8 @@ Skiniko.prototype.anamoniAlages = function() {
 			Arena.skiniko.processAlages(rsp);
 		}).
 		fail(function(err) {
-			Arena.skiniko.feredataError(err);
+			Client.skiserFail(err);
+			Arena.skiniko.feredataError('ajax call failure (fereAlages)');
 		});
 	}, Arena.feredataDelay);
 
@@ -472,7 +476,8 @@ Skiniko.prototype.processAlages = function(rsp) {
 	try {
 		data = ('{' + rsp + '}').evalAsfales();
 	} catch(e) {
-		this.feredataError('Παρελήφθησαν λανθασμένες κινήσεις', rsp);
+		this.feredataError('Παρελήφθησαν λανθασμένες κινήσεις:');
+		console.error(rsp);
 		return this;
 	}
 
@@ -480,7 +485,8 @@ Skiniko.prototype.processAlages = function(rsp) {
 	// id, ζητάμε εκ νέου πλήρη σκηνικά δεδομένα.
 
 	if (!data.hasOwnProperty('id')) {
-		this.feredataError('Ακαθόριστο ID πακέτου μεταβολών', rsp);
+		this.feredataError('Ακαθόριστο ID πακέτου μεταβολών:');
+		console.error(rsp);
 		return this;
 	}
 
@@ -596,12 +602,11 @@ Skiniko.prototype.processAlagesPartida = function(data, trapeziPrin) {
 // σιγά σιγά αυξάνει και μετά από εύλογο αριθμό επαναλήψεων προκαλεί έξοδο από το
 // πρόγραμμα.
 
-Skiniko.prototype.feredataError = function(err, rsp) {
+Skiniko.prototype.feredataError = function(msg) {
 	var delay;
 
-	console.error(rsp);
+	console.error(msg);
 	if (!this.hasOwnProperty('feredataErrorCount')) {
-		Client.skiserFail(err);
 		this.feredataErrorCount = 1;
 		delay = 100;
 	}
