@@ -400,6 +400,22 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 
 Arena.cpanel.bpanelButtonPush(Arena.cpanel.freskarismaButton = new PButton({
 	omada: 1,
+	img: 'dianomi.png',
+	title: 'Διανομή',
+	click: function(e) {
+		var button;
+
+		button = this.pbuttonLock();
+		Client.fyi.pano('Γίνεται ενημέρωση του σκηνικού. Παρακαλώ περιμένετε…', 0);
+		Arena.skiniko.stisimo(function() {
+			Client.fyi.pano();
+			button.pbuttonRelease();
+		});
+	},
+}));
+
+Arena.cpanel.bpanelButtonPush(Arena.cpanel.freskarismaButton = new PButton({
+	omada: 1,
 	img: 'bugFix.png',
 	title: 'Ανανέωση σκηνικού',
 	click: function(e) {
