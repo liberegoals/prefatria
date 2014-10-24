@@ -412,6 +412,9 @@ Arena.cpanel.bpanelButtonPush(Arena.cpanel.freskarismaButton = new PButton({
 		if (Arena.ego.trapezi.partidaIsFasiInteractive())
 		return false;
 
+		if (Arena.ego.thesiGet() != Arena.ego.trapezi.partidaDealerGet())
+		return false;
+
 		return true;
 	},
 	click: function(e) {
