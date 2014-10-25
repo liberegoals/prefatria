@@ -14,6 +14,8 @@ DEFAULT COLLATE = utf8_general_ci
 
 USE `prefatria`;
 
+SET FOREIGN_KEY_CHECKS = 0;
+
 \! echo "creating tables…"
 
 -- Ο πίνακας "pektis" είναι ο σημαντικότερος πίνακας της εφαρμογής και περιέχει
@@ -121,7 +123,7 @@ COMMENT = 'Πίνακας παικτών'
 CREATE TABLE `peparam` (
 	`pektis`	VARCHAR(64) NOT NULL COMMENT 'Παίκτης',
 	`param`		VARCHAR(32) NOT NULL COMMENT 'Παράμετρος',
-	`timi`		VARCHAR(32768) NOT NULL COMMENT 'Τιμή παραμέτρου',
+	`timi`		TEXT(32768) NOT NULL COMMENT 'Τιμή παραμέτρου',
 
 	PRIMARY KEY (
 		`pektis`,
@@ -144,7 +146,7 @@ COMMENT = 'Παράμετροι παικτών'
 CREATE TABLE `profinfo` (
 	`pektis`	VARCHAR(64) NOT NULL COMMENT 'Παίκτης',
 	`sxoliastis`	VARCHAR(64) NOT NULL COMMENT 'Σχολιαστής',
-	`kimeno`	VARCHAR(32768) NOT NULL COMMENT 'Κείμενο παρατήρησης',
+	`kimeno`	TEXT(32768) NOT NULL COMMENT 'Κείμενο παρατήρησης',
 
 	PRIMARY KEY (
 		`pektis`,
@@ -186,7 +188,7 @@ CREATE TABLE `minima` (
 	`kodikos`	INTEGER(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Primary key',
 	`apostoleas`	VARCHAR(64) NOT NULL COMMENT 'Αποστολέας',
 	`paraliptis`	VARCHAR(64) NOT NULL COMMENT 'Παραλήπτης',
-	`kimeno`	VARCHAR(32768) NOT NULL COMMENT 'Κείμενο μηνύματος',
+	`kimeno`	TEXT(32768) NOT NULL COMMENT 'Κείμενο μηνύματος',
 	`pote`		TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Ημερομηνία αποστολής',
 	`status`	ENUM (
 		'ΑΔΙΑΒΑΣΤΟ',
@@ -267,8 +269,8 @@ CREATE TABLE `trapezi` (
 )
 
 ENGINE = InnoDB
-ROW_FORMAT = COMPRESSED
-KEY_BLOCK_SIZE = 8
+-- ROW_FORMAT = COMPRESSED
+-- KEY_BLOCK_SIZE = 8
 COMMENT = 'Πίνακας τραπεζιών'
 ;
 
@@ -372,7 +374,7 @@ COMMENT = 'Πίνακας τραπεζιών'
 CREATE TABLE `trparam` (
 	`trapezi`	INTEGER(10) UNSIGNED NOT NULL COMMENT 'Τραπέζι',
 	`param`		VARCHAR(32) NOT NULL COMMENT 'Παράμετρος',
-	`timi`		VARCHAR(32768) NOT NULL COMMENT 'Τιμή παραμέτρου',
+	`timi`		TEXT(32768) NOT NULL COMMENT 'Τιμή παραμέτρου',
 
 	PRIMARY KEY (
 		`trapezi`,
@@ -381,8 +383,8 @@ CREATE TABLE `trparam` (
 )
 
 ENGINE = InnoDB
-ROW_FORMAT = COMPRESSED
-KEY_BLOCK_SIZE = 8
+-- ROW_FORMAT = COMPRESSED
+-- KEY_BLOCK_SIZE = 8
 COMMENT = 'Παράμετροι τραπεζιών'
 ;
 
@@ -485,7 +487,7 @@ CREATE TABLE `sizitisi` (
 
 	`trapezi`	INTEGER(10) UNSIGNED NULL COMMENT 'Κωδικός τραπεζιού',
 
-	`sxolio`	VARCHAR(32768) NOT NULL COMMENT 'Κείμενο σχολίου',
+	`sxolio`	TEXT(32768) NOT NULL COMMENT 'Κείμενο σχολίου',
 	`pote`		TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Πότε ειπώθηκε',
 
 	PRIMARY KEY (
@@ -589,8 +591,8 @@ CREATE TABLE `dianomi` (
 )
 
 ENGINE = InnoDB
-ROW_FORMAT = COMPRESSED
-KEY_BLOCK_SIZE = 8
+-- ROW_FORMAT = COMPRESSED
+-- KEY_BLOCK_SIZE = 8
 COMMENT = 'Πίνακας διανομών'
 ;
 
@@ -659,8 +661,8 @@ CREATE TABLE `energia` (
 )
 
 ENGINE = InnoDB
-ROW_FORMAT = COMPRESSED
-KEY_BLOCK_SIZE = 8
+-- ROW_FORMAT = COMPRESSED
+-- KEY_BLOCK_SIZE = 8
 COMMENT ='Πίνακας ενεργειών'
 ;
 
@@ -743,8 +745,8 @@ CREATE TABLE `istoriko` (
 )
 
 ENGINE = InnoDB
-ROW_FORMAT = COMPRESSED
-KEY_BLOCK_SIZE = 8
+-- ROW_FORMAT = COMPRESSED
+-- KEY_BLOCK_SIZE = 8
 COMMENT ='Πίνακας συνεδριών (αρχείο)'
 ;
 
@@ -1056,3 +1058,5 @@ ORDER BY `kodikos` DESC
 ;
 
 \! echo "views created!"
+
+SET FOREIGN_KEY_CHECKS = 1;
