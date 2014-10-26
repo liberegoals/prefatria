@@ -1159,11 +1159,16 @@ Arena.partida.filaClearDOM = function(thesi) {
 Arena.partida.filaRefreshDOM = function(thesi) {
 	var fila, iseht, dom;
 
-	if (thesi === undefined) return Arena.partida.thesiWalk(function(thesi) {
+	if (thesi === undefined) {
+		Arena.partida.thesiWalk(function(thesi) {
+			Arena.partida.filaRefreshDOM(thesi);
+		});
+
 		$('.tsoxaBazaFiloProxiro').remove();
 		delete Arena.partida.klikFilo;
-		Arena.partida.filaRefreshDOM(thesi);
-	});
+
+		return Arena.partida;
+	}
 
 	Arena.partida.filaClearDOM(thesi);
 	if (Arena.ego.oxiTrapezi()) return Arena.partida;
