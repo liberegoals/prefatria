@@ -14,6 +14,9 @@ DEFAULT COLLATE = utf8_general_ci
 
 USE `prefatria`;
 
+-- Ακυρώνουμε προσωρινά τα foreign key checks, όχι επειδή είναι απαραίτητο,
+-- αλλά επειδή σε κάποιες μηχανές προκαλείται κάποια εμπλοκή.
+
 SET FOREIGN_KEY_CHECKS = 0;
 
 \! echo "creating tables…"
@@ -1058,5 +1061,7 @@ ORDER BY `kodikos` DESC
 ;
 
 \! echo "views created!"
+
+-- Επαναφέρουμε την προσωρινή ακύρωση του foreign key check.
 
 SET FOREIGN_KEY_CHECKS = 1;
