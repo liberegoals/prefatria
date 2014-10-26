@@ -590,19 +590,10 @@ Trapezi.prototype.efoplismosΠΑΙΧΝΙΔΙ = function() {
 		var filoDom, delay = 100;
 
 		filoDom = $(this);
-
-		// Κανονικά τα "off" που ακολουθούν θα έπρεπε να εφαρμόζονται μόνο
-		// στα φύλλα που πρόκειται να επηρεαστούν, αλλά παρατηρήθηκε το
-		// φαινόμενο να τσακάνε οι παίκτες ενώ έχουν να πληρώσουν στο χρώμα
-		// που παίζεται και το αντίστροφο. Καλού κακού, λοιπόν, ακυρώνουμε
-		// πρώτα για όλα τα φύλλα.
-		// TODO Η διόρθωση έγινε Monday, September 1, 2014
-
-		filoDom.off('mouseenter mouseleave click');
 		if (!filoDom.data('ok')) return;
 
 		filoDom.
-		off('mouseenter').on('mouseenter', function(e) {
+		on('mouseenter', function(e) {
 			e.stopPropagation();
 			e.preventDefault();
 			if (Arena.partida.klikFilo) return;
@@ -611,7 +602,7 @@ Trapezi.prototype.efoplismosΠΑΙΧΝΙΔΙ = function() {
 			if (trapezi.partidaBazaCountGet() > 8) return;
 			filoDom.finish().animate({bottom: pano}, delay);
 		}).
-		off('mouseleave').on('mouseleave', function(e) {
+		on('mouseleave', function(e) {
 			e.stopPropagation();
 			e.preventDefault();
 			if (Arena.partida.klikFilo) return;
@@ -620,7 +611,7 @@ Trapezi.prototype.efoplismosΠΑΙΧΝΙΔΙ = function() {
 			if (trapezi.partidaBazaCountGet() > 8) return;
 			filoDom.finish().animate({bottom: filoDom.data('bottom')}, delay);
 		}).
-		off('click').on('click', function(e) {
+		on('click', function(e) {
 			var filo = $(this);
 
 			Arena.inputRefocus(e);
@@ -639,7 +630,7 @@ Trapezi.prototype.efoplismosΠΑΙΧΝΙΔΙ = function() {
 			if (Arena.partida.akirosiKiniseon())
 			return;
 
-			// Αν το φύλλο έχει ήδη κλικαριστεί, δεν προβαίνουμε σε πραιτέρω
+			// Αν το φύλλο έχει ήδη κλικαριστεί, δεν προβαίνουμε σε περαιτέρω
 			// ενέργειες.
 
 			if (Arena.partida.klikFilo)
@@ -700,36 +691,62 @@ Trapezi.prototype.efoplismosPexnidiFila = function(iseht, over) {
 
 	bottom = (iseht == 1 ? '30px' : '26px');
 	fila = Arena.partida['fila' + iseht + 'DOM'].find('.tsoxaXartosiaFilo').
+
+	// Ακυρώνουμε τυχόν mouse event listeners για όλα τα φύλλα τής
+	// συγκεκριμένης θέσης.
+
+	off('mousedown mouseenter mouseleave click').
+
 	// Ο επόμενος mouse event listener κρίθηκε απαραίτητος στην περίπτωση
 	// χειραφετημένης τσόχας όπου δεν θέλουμε να κινείται η τσόχα όταν
 	// σέρνουμε λάθος φύλλο.
-	off('mousedown').on('mousedown', function(e) {
+
+	on('mousedown', function(e) {
 		Arena.inputRefocus(e);
 	}).
+
 	removeData('ok').
 	data('bottom', bottom);
 
+	// Ανιχνεύουμε το χρώμα της τρέχουσας μπάζας. Αν δεν υφίσταται
+	// τρέχουσα μπάζα, τότε όλα τα φύλλα είναι υποψήφια.
+
 	xroma = this.partidaBazaXromaGet();
 	if (!xroma) return fila.data('ok', true);
+
+	// Υπάρχει μπάζα σε εξέλιξη, επομένως θα πρέπει να μαρκάρουμε για
+	// εφοπλισμό τα φύλλα στο χρώμα της τρέχουσσας μπάζας.
 
 	found = false;
 	fila.each(function() {
 		var filo, filoDom;
 
-		filoDom = $(this);
-
 		filo = $(this).data('filo');
 		if (!filo) return;
 		if (filo.filoXromaGet() != xroma) return;
 
+		filoDom = $(this);
 		filoDom.data('ok', true);
 		if (over) filoDom.data('bottom', over).finish().animate({bottom: over}, delay);
 		found = true;
 	});
+
+	// Αν βρέθηκαν φύλλα στο χρώμα της τρέχουσας μπάζας, τότε αυτά έχουν
+	// μαρκαριστεί για εφοπλισμό (flag "ok") και επιστρέφουμε όλα τα φύλλα
+	// προκειμένου να προχωρήσουμε στον εφοπλισμό των μαρκαρισμένων φύλλων.
+
 	if (found) return fila;
 
+	// Δεν βρέθηκαν φύλλα στο χρώμα της τρέχουσας μπάζας. Αν δεν υφίσταται
+	// αγορά, τότε παίζουμε το πάσο και όλα τα φύλλα μαρκάρονται ως υποψήφια.
+	// Το ίδιο ισχύει και στην περίπτωση που η αγορά είναι αχρωμάτιστη.
+
 	agora = this.partidaAgoraGet();
-	if (!agora) return fila.data('ok', true);
+	if ((!agora) || agora.dilosiIsAxroa())
+	return fila.data('ok', true);
+
+	// Ανιχνεύουμε το χρώμα της αγοράς και εντοπίζουμε τα φύλλα του συγκεκριμένου
+	// χρώματος (ατού).
 
 	xroma = agora.dilosiXromaGet();
 	found = false;
@@ -745,7 +762,15 @@ Trapezi.prototype.efoplismosPexnidiFila = function(iseht, over) {
 		if (over) filoDom.data('bottom', over).finish().animate({bottom: over}, delay);
 		found = true;
 	});
+
+	// Αν βρέθηκαν ατού, τότε αυτά έχουν μαρκαριστεί για εφοπλισμό (flag "ok")
+	// και επιστρέφουμε όλα τα φύλλα προκειμένου να προχωρήσουμε στον εφοπλισμό
+	// των μαρκαρισμένων φύλλων (ατού).
+
 	if (found) return fila;
+
+	// Δεν βρέθηκαν φύλλα που επιτρέπεται να παιχτούν στην παρούσα φάση, επομένως
+	// ο παίκτης μπορεί να πετάξει οποιοδήποτε φύλλο.
 
 	return fila.data('ok', true);
 };
