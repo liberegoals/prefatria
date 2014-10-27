@@ -685,7 +685,7 @@ Trapezi.prototype.efoplismosPexnidiClaim = function(pektis) {
 };
 
 Trapezi.prototype.efoplismosPexnidiFila = function(iseht, over) {
-	var fila, bottom, xroma, found, agora, delay = 100;
+	var fila, bottom, xroma, found, agora;
 
 	bottom = (iseht == 1 ? '30px' : '26px');
 	fila = Arena.partida['fila' + iseht + 'DOM'].find('.tsoxaXartosiaFilo').
@@ -715,18 +715,9 @@ Trapezi.prototype.efoplismosPexnidiFila = function(iseht, over) {
 	// Υπάρχει μπάζα σε εξέλιξη, επομένως θα πρέπει να μαρκάρουμε για
 	// εφοπλισμό τα φύλλα στο χρώμα της τρέχουσσας μπάζας.
 
-	found = false;
+	found = 0;
 	fila.each(function() {
-		var filo, filoDom;
-
-		filo = $(this).data('filo');
-		if (!filo) return;
-		if (filo.filoXromaGet() != xroma) return;
-
-		filoDom = $(this);
-		filoDom.data('ok', true);
-		if (over) filoDom.data('bottom', over).finish().animate({bottom: over}, delay);
-		found = true;
+		found += Trapezi.efoplismosFiloXroma($(this), xroma, over);
 	});
 
 	// Αν βρέθηκαν φύλλα στο χρώμα της τρέχουσας μπάζας, τότε αυτά έχουν
@@ -747,18 +738,8 @@ Trapezi.prototype.efoplismosPexnidiFila = function(iseht, over) {
 	// χρώματος (ατού).
 
 	xroma = agora.dilosiXromaGet();
-	found = false;
 	fila.each(function() {
-		var filo, filoDom;
-
-		filo = $(this).data('filo');
-		if (!filo) return;
-		if (filo.filoXromaGet() != xroma) return;
-
-		filoDom = $(this);
-		filoDom.data('ok', true);
-		if (over) filoDom.data('bottom', over).finish().animate({bottom: over}, delay);
-		found = true;
+		found += Trapezi.efoplismosFiloXroma($(this), xroma, over);
 	});
 
 	// Αν βρέθηκαν ατού, τότε αυτά έχουν μαρκαριστεί για εφοπλισμό (flag "ok")
@@ -771,6 +752,30 @@ Trapezi.prototype.efoplismosPexnidiFila = function(iseht, over) {
 	// ο παίκτης μπορεί να πετάξει οποιοδήποτε φύλλο.
 
 	return fila.data('ok', true);
+};
+
+// Η function "efoplismosFiloXroma" δέχεται το jQuery DOM element κάποιου φύλλου
+// και ένα χρώμα, και εφοπλίζει το φύλλο εφόσον το χρώμα του φύλλου συμφωνεί με
+// το χρώμα που δόθηκε. Εφοπλισμός σημαίνει ότι το φύλλο καθίσταται υποψήφιο για
+// να παιχτεί θέτοντας το data tag "ok" σε true. Μπορούμε να δώσουμε και τρίτη
+// παράμετρο με το ύψος (σε pixels) της ανύψωσης του φύλλου, εφόσον αυτό κριθεί
+// υποψήφιο.
+//
+// Η function επιστρέφει 1 εφόσον το φύλλο που ελέγχεται βρεθεί υποψήφιο, αλλιώς
+// επιστρέφει 0.
+
+Trapezi.efoplismosFiloXroma = function(filoDom, xroma, over) {
+	var filo;
+
+	filo = filoDom.data('filo');
+	if (!filo) return 0;
+	if (filo.filoXromaGet() != xroma) return 0;
+
+	filoDom.data('ok', true);
+	if (over) filoDom.data('bottom', over).finish().animate({
+		bottom: over
+	}, 100);
+	return 1;
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
