@@ -8,7 +8,7 @@ SELECT
 	`email`,
 	`kodikos`
 FROM `prefatria`.`pektis`
-INTO OUTFILE '__DIR__/pektis.data'
+INTO OUTFILE '/tmp/pektis.data'
 ;
 
 SELECT
@@ -16,7 +16,7 @@ SELECT
 	`param`,
 	`timi`
 FROM `prefatria`.`peparam`
-INTO OUTFILE '__DIR__/peparam.data'
+INTO OUTFILE '/tmp/peparam.data'
 ;
 
 SELECT
@@ -24,7 +24,7 @@ SELECT
 	`sxoliastis`,
 	`kimeno`
 FROM `prefatria`.`profinfo`
-INTO OUTFILE '__DIR__/profinfo.data'
+INTO OUTFILE '/tmp/profinfo.data'
 ;
 
 SELECT
@@ -32,7 +32,7 @@ SELECT
 	`sxetizomenos`,
 	`sxesi`
 FROM `prefatria`.`sxesi`
-INTO OUTFILE '__DIR__/sxesi.data'
+INTO OUTFILE '/tmp/sxesi.data'
 ;
 
 SELECT
@@ -40,5 +40,5 @@ SELECT
 	`imerominia`,
 	`poso`
 FROM `prefatria`.`isfora`
-INTO OUTFILE '__DIR__/isfora.data'
+INTO OUTFILE '/tmp/isfora.data'
 ;
