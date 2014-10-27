@@ -52,7 +52,7 @@ REPLACE INTO TABLE `prefatria`.`peparam` (
 DELETE FROM `prefatria`.`isfora`
 ;
 
-LOAD DATA LOCAL INFILE 'pliromi.data'
+LOAD DATA LOCAL INFILE 'isfora.data'
 REPLACE INTO TABLE `prefatria`.`isfora` (
 	`pektis`,
 	`imerominia`,
