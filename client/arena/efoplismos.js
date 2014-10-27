@@ -612,8 +612,6 @@ Trapezi.prototype.efoplismosΠΑΙΧΝΙΔΙ = function() {
 			filoDom.finish().animate({bottom: filoDom.data('bottom')}, delay);
 		}).
 		on('click', function(e) {
-			var filo = $(this);
-
 			Arena.inputRefocus(e);
 
 			// Από τη στιγμή που γίνεται κλικ στο φύλλο, απενεργοποιούμε
@@ -666,7 +664,7 @@ Trapezi.prototype.efoplismosΠΑΙΧΝΙΔΙ = function() {
 
 			Client.skiserService('peximo',
 				'pektis=' + pektis,
-				'filo=' + filo.data('filo').filo2string()).
+				'filo=' + filoDom.data('filo').filo2string()).
 			fail(function(err) {
 				Client.skiserFail(err);
 				delete Arena.partida.klikFilo;
