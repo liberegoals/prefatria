@@ -11,3 +11,4 @@ glob:client/photo/?/*
 glob:*.min.js
 syntax: glob
 client/site/welcome.php
+glob:log/*
