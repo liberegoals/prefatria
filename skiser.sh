@@ -11,6 +11,7 @@ else
 fi
 
 basedir="`pwd`"
+nodetag="`basename ${basedir}`"
 logdir="${basedir}/log"
 
 cd "${logdir}" 2>/dev/null || {
@@ -35,7 +36,7 @@ case $# in
 esac
 
 skiserPid() {
-	ps -fC ${node} | awk '$NF == "prefatria" { print $2 + 0 }'
+	ps -fC ${node} | awk '$NF == "'${nodetag}'" { print $2 + 0 }'
 }
 
 skiserStartup() {
@@ -43,7 +44,7 @@ skiserStartup() {
 	[ -s "${logdir}/skiser.out" ] && mv "${logdir}/skiser.out" "${logdir}/skiser.out.${ts}"
 	[ -s "${logdir}/skiser.err" ] && mv "${logdir}/skiser.err" "${logdir}/skiser.err.${ts}"
 
-	nohup ${node} main.js prefatria >"${logdir}/skiser.out" 2>"${logdir}/skiser.err" &
+	nohup ${node} main.js "${nodetag}" >"${logdir}/skiser.out" 2>"${logdir}/skiser.err" &
 	sleep 1
 	pid=`skiserPid`
 	if [ -z "${pid}" ]; then
@@ -60,7 +61,7 @@ skiserStop() {
 
 case "${1}" in
 status)
-	ps -fC ${node} | awk '$NF == "prefatria"'
+	ps -fC ${node} | awk '$NF == "'${nodetag}'"'
 	;;
 start)
 	pid=`skiserPid`
