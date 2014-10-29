@@ -1,0 +1,46 @@
+body {
+	margin: 4px;
+}
+
+#ofelimo {
+	min-height: 0;
+	line-height: 0;
+}
+
+.funchatItem {
+	display: inline-block;
+	position: relative;
+	margin: 0 4px 4px 0;
+	width: 100px;
+	height: 100px;
+	overflow: hidden;
+
+	border-style: solid;
+	border-width: 1px;
+	border-color: red;
+
+	cursor: pointer;
+
+background-color: rgba(0, 128, 128, 0.1);
+}
+
+.funchatIkona {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	max-width: 90px;
+	max-height: 90px;
+}
+
+.funchatIxosIcon {
+	position: absolute;
+	top: 2px;
+	right: 2px;
+	width: 30px;
+	opacity: 0.5;
+	cursor: crosshair;
+}
+
+.funchatIxosIcon:hover {
+	opacity: 1.0;
+}
