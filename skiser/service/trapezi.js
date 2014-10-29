@@ -8,6 +8,7 @@ Service.trapezi = {};
 
 Service.trapezi.miaPrefa = function(nodereq) {
 	if (nodereq.isvoli()) return;
+	if (Service.trapezi.ipervasi(nodereq)) return;
 
 	DB.connection().transaction(function(conn) {
 		Service.trapezi.miaPrefa1(nodereq, conn);
@@ -78,6 +79,8 @@ Service.trapezi.miaPrefa4 = function(nodereq, conn, trapezi, prosklisi) {
 	Server.skiniko.
 	processKinisi(kinisi).
 	kinisiAdd(kinisi);
+
+	Service.trapezi.katagrafi[nodereq.login] = Globals.tora();
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
@@ -765,4 +768,50 @@ Service.trapezi.arxiothetisiTelos = function(lista) {
 
 	if (kinisi)
 	Server.skiniko.kinisiAdd();
+};
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
+
+// Η λίστα "katagrafi" δεικτοδοτείται με το login name του παίκτη
+// και δείχνει το timestamp της τελευταίας δημιουργίας κάθε παίκτη.
+
+Service.trapezi.katagrafi = {};
+
+// Η σταθερά "katagrafiMin" δείχνει τον ελάχιστο χρόνο (σε seconds)
+// στον οποίο ο χρήστης επιτρέπεται να δημιουργήσει νέο τραπέζι.
+
+Service.trapezi.katagrafiMin = 300;
+
+// Η λίστα καταγραφής πρέπει να εκκαθαρίζεται από καιρού εις καιρόν.
+// Η εκκαθάριση περιλαμβάνει διαγραφή των εγγραφών που δεν παίζουν
+// ρόλο στον έλεγχο.
+//
+// Παράλληλα, εκτυπώνουμε μια λίστα όλων των καταγραφών προκειμένου
+// να έχουμε μια ιδέα της κίνησης όσον αφορά στη δημιουργία τραπεζιών.
+
+setInterval(function() {
+	var tora, login;
+
+	console.log('Εκκαθάριση μητρώου δημιουργίας τραπεζιών');
+	tora = Globals.tora();
+	for (login in Service.trapezi.katagrafi) {
+		console.log('\t' + login);
+		if (tora - Service.trapezi.katagrafi[login] >= Service.trapezi.katagrafiMin)
+		delete Service.trapezi.katagrafi[login];
+	}
+}, 3333000);
+
+Service.trapezi.ipervasi = function(nodereq) {
+	var login, ts;
+
+	login = nodereq.loginGet();
+	if (!login)
+	return nodereq.error('ακαθόριστος χρήστης κατά τον έλεγχο υπέρβασης');
+
+	ts = Service.trapezi.katagrafi[login];
+	if (!ts)
+	return false;
+
+	if (Globals.tora() - ts < Service.trapezi.katagrafiMin)
+	return nodereq.error('Δημιουργήσατε πρόσφατα κάποιο τραπέζι');
 };

@@ -83,6 +83,7 @@ Arena.cpanel.bpanelButtonPush(new PButton({
 		}).
 		fail(function(err) {
 			Client.skiserFail(err);
+			Client.sound.beep();
 			button.pbuttonRelease();
 		});
 	},
