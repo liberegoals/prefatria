@@ -12,6 +12,11 @@ define("OWNER_ONOMA", "Panos I. Papadopoulos");
 
 define("OWNER_EMAIL", "panos@prefadoros.net");
 
+// Η συμβολική σταθερά "SUPPORT_EMAIL" περιέχει το email της τεχνικής
+// υποστήριξης της εφαρμογής.
+
+define("SUPPORT_EMAIL", "support@prefadoros.net");
+
 mb_internal_encoding("UTF-8");
 mb_regex_encoding("UTF-8");
 
