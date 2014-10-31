@@ -42,7 +42,7 @@ Service.peximo.peximo = function(nodereq) {
 	data.dianomi = data.trapezi.trapeziTelefteaDianomi();
 	if (!data.dianomi) return Service.peximo.apotixia(data, 'ακαθόριστη διανομή');
 
-	validation = trapezi.validationPeximoFiloData();
+	validation = data.trapezi.validationPeximoFiloData();
 	if (nodereq.url.vld != validation) {
 		data.trapezi.trapeziXeklidoma();
 		console.error(data.login + ': παίχτηκε λάθος φύλλο');
