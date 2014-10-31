@@ -272,8 +272,8 @@ CREATE TABLE `trapezi` (
 )
 
 ENGINE = InnoDB
-ROW_FORMAT = COMPRESSED
-KEY_BLOCK_SIZE = 8
+-- ROW_FORMAT = COMPRESSED
+-- KEY_BLOCK_SIZE = 8
 COMMENT = 'Πίνακας τραπεζιών'
 ;
 
@@ -386,8 +386,8 @@ CREATE TABLE `trparam` (
 )
 
 ENGINE = InnoDB
-ROW_FORMAT = COMPRESSED
-KEY_BLOCK_SIZE = 8
+-- ROW_FORMAT = COMPRESSED
+-- KEY_BLOCK_SIZE = 8
 COMMENT = 'Παράμετροι τραπεζιών'
 ;
 
@@ -594,8 +594,8 @@ CREATE TABLE `dianomi` (
 )
 
 ENGINE = InnoDB
-ROW_FORMAT = COMPRESSED
-KEY_BLOCK_SIZE = 8
+-- ROW_FORMAT = COMPRESSED
+-- KEY_BLOCK_SIZE = 8
 COMMENT = 'Πίνακας διανομών'
 ;
 
@@ -664,8 +664,8 @@ CREATE TABLE `energia` (
 )
 
 ENGINE = InnoDB
-ROW_FORMAT = COMPRESSED
-KEY_BLOCK_SIZE = 8
+-- ROW_FORMAT = COMPRESSED
+-- KEY_BLOCK_SIZE = 8
 COMMENT ='Πίνακας ενεργειών'
 ;
 
@@ -748,8 +748,8 @@ CREATE TABLE `istoriko` (
 )
 
 ENGINE = InnoDB
-ROW_FORMAT = COMPRESSED
-KEY_BLOCK_SIZE = 8
+-- ROW_FORMAT = COMPRESSED
+-- KEY_BLOCK_SIZE = 8
 COMMENT ='Πίνακας συνεδριών (αρχείο)'
 ;
 

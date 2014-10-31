@@ -370,8 +370,21 @@ Trapezi.prototype.energiaFiloEpomenos = function(pektis) {
 	var epomenos;
 
 	epomenos = pektis.epomeniThesi();
-	if (epomenos == this.partidaTzogadorosGet()) return epomenos;
-	if (this.sdilosi[epomenos].simetoxiOxiPaso()) return epomenos;
+	if (epomenos == this.partidaTzogadorosGet())
+	return epomenos;
+
+	// Κάποια στιγμή παρουσιάστηκε σφάλμα undefined για το "simetoxiOxiPaso"
+	// που ακολουθεί παρακάτω, επομένως ελέγχω τα πάντα.
+
+	if (!this.sdilosi)
+	return epomenos;
+
+	if (!this.sdilosi[epomenos])
+	return epomenos;
+
+	if (this.sdilosi[epomenos].simetoxiOxiPaso())
+	return epomenos;
+
 	return epomenos.epomeniThesi();
 };
 
