@@ -848,3 +848,22 @@ Trapezi.prototype.partidaBazaXromaGet = function() {
 	if (this.bazaFila.length <= 0) return null;
 	return this.partidaBazaFiloGet(0).filoXromaGet();
 };
+
+Trapezi.prototype.validationPeximoFiloData = function() {
+	var data, xroma, agora;
+
+	data = '';
+	data += this.bazaCount + ':';
+	data += this.bazaFila.length + ':';
+
+	xroma = this.partidaBazaXromaGet();
+	if (!xroma) xroma = '';
+	data += xroma + ':';
+
+	agora = this.partidaAgoraGet();
+	if (!agora) xroma += '';
+	else xroma = agora.dilosiXromaGet();
+	data += xroma;
+
+	return data;
+};

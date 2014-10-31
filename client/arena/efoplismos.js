@@ -663,8 +663,19 @@ Trapezi.prototype.efoplismosΠΑΙΧΝΙΔΙ = function() {
 			});
 
 			Client.skiserService('peximo',
+				// TODO
+				'vld=' + trapezi.validationPeximoFiloData(),
 				'pektis=' + pektis,
 				'filo=' + filoDom.data('filo').filo2string()).
+			done(function(rsp) {
+				switch (rsp) {
+				case 'lathosFilo':
+					Client.sound.beep();
+					Client.fyi.ekato('Παίχτηκε λάθος φύλλο. Γίνεται ανανέωση…', 1000);
+					Arena.cpanel.freskarismaButton.pbuttonGetDOM().trigger('click');
+					break;
+				}
+			}).
 			fail(function(err) {
 				Client.skiserFail(err);
 				delete Arena.partida.klikFilo;

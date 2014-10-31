@@ -7,11 +7,12 @@ Service.peximo = {};
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
 
 Service.peximo.peximo = function(nodereq) {
-	var data;
+	var data, validation;
 
 	if (nodereq.isvoli()) return;
 	if (nodereq.denPerastike('pektis', true)) return;
 	if (nodereq.denPerastike('filo', true)) return;
+	if (nodereq.denPerastike('vld', true)) return;
 
 	// Ελέγχουμε και μετατρέπουμε σε ακέραιο τη θέση του παίκτη
 	// που παίζει το φύλλο.
@@ -22,6 +23,7 @@ Service.peximo.peximo = function(nodereq) {
 
 	data = {
 		nodereq: nodereq,
+		login: nodereq.loginGet(),
 	};
 
 	data.trapezi = nodereq.trapeziGet();
@@ -39,6 +41,14 @@ Service.peximo.peximo = function(nodereq) {
 
 	data.dianomi = data.trapezi.trapeziTelefteaDianomi();
 	if (!data.dianomi) return Service.peximo.apotixia(data, 'ακαθόριστη διανομή');
+
+	validation = trapezi.validationPeximoFiloData();
+	if (nodereq.url.vld != validation) {
+		data.trapezi.trapeziXeklidoma();
+		console.error(data.login + ': παίχτηκε λάθος φύλλο');
+		Service.feredata.freskaReset(nodereq.loginGet());
+		return nodereq.end('lathosFilo');
+	}
 
 	data.trapeziKodikos = data.trapezi.trapeziKodikosGet();
 	data.dianomiKodikos = data.dianomi.dianomiKodikosGet();

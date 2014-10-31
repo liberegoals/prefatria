@@ -76,6 +76,13 @@ Service.feredata.freskaIpervasi = function(nodereq) {
 	return true;
 };
 
+// Μερικές φορές δρομολογείται αυτόματο φρεσκάρισμα σκηνικού. Σ' αυτές τις
+// περιπτώσεις «μηδενίζουμε» το log φρεσκαρίσματος σκηνικού.
+
+Service.feredata.freskaReset = function(login) {
+	delete Service.feredata.freskaLog[login];
+};
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
 
 // Η function "feredata.alages" εξυπηρετεί αίτημα αποστολής δεδομένων μεταβολής
