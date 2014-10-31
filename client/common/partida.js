@@ -848,9 +848,3 @@ Trapezi.prototype.partidaBazaXromaGet = function() {
 	if (this.bazaFila.length <= 0) return null;
 	return this.partidaBazaFiloGet(0).filoXromaGet();
 };
-
-Trapezi.prototype.partidaBazaXromaCheck = function(filo) {
-	var bazaXroma = this.partidaBazaXromaGet();
-	if (!bazaXroma) return true;
-	return(filo.filoXromaGet() == bazaXroma);
-};
