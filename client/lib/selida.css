@@ -617,7 +617,7 @@ border-color: red !important;
 }
 
 .sinefo {
-	text-shadow: -1px 0px 10px #F1F1F1, 1px 0px 10px #F1F1F1, -2px 0px 8px #F1F1F1, 2px 0px 8px #F1F1F1;
+	text-shadow: 0px 0px 10px #F1F1F1, 0px 0px 8px #F1F1F1, 0px 0px 4px #F1F1F1;
 }
 
 .entona {
