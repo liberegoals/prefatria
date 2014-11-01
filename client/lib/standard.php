@@ -94,7 +94,7 @@ class Globals {
 		if (!isset($_SERVER)) self::klise_fige("_SERVER: not set");
 		if (!is_array($_SERVER)) self::klise_fige("_SERVER: not an array");
 
-		$server_name = array_key_exists("SERVER_NAME", $_SERVER) ? $_SERVER["SERVER_NAME"] : "localhost";
+		$server_name = array_key_exists("HTTP_HOST", $_SERVER) ? $_SERVER["HTTP_HOST"] : "localhost";
 		self::$skiser = "http://" . $server_name;
 
 		switch ($server_name) {
