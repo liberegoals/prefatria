@@ -271,8 +271,14 @@ class Selida {
 		?><a target="<?php print defined("COPYRIGHT_PAGE") ? "_self" : "_blank"; ?>"
 		href="<?php Globals::url("copyright/index.php"); ?>">Copyright</a><?php
 		self::tab_end();
+
 		self::tab_begin();
 		?><a target="_blank" href="https://prefablog.wordpress.com">Ιστολόγιο</a><?php
+		self::tab_end();
+
+		self::tab_begin();
+		?><a target="<?php print defined("DOREA_PAGE") ? "_self" : "_blank"; ?>"
+		href="<?php Globals::url("dorea/index.php"); ?>">Δωρεές</a><?php
 		self::tab_end();
 	}
 
