@@ -91,8 +91,8 @@ Service.sinedria.sxesi = function(nodereq, conn, pektis) {
 		photoSrc = pektis.pektisPhotoSrcGet();
 		if (photoSrc) kinisi.data.photoSrc = photoSrc;
 
-		console.log(login + ': ' + (Server.skiniko.skinikoPektisGet(login) ?
-			'ανανεώθηκαν τα σοιχεία του παίκτη' : 'ενετάχθη παίκτης') + ' στο σκηνικό');
+		Globals.consoleLog(login + ': ' + (Server.skiniko.skinikoPektisGet(login) ?
+			'ανανεώθηκαν τα στοιχεία του παίκτη' : 'ενετάχθη παίκτης') + ' στο σκηνικό');
 		Server.skiniko.
 		processKinisi(kinisi);
 
@@ -260,7 +260,7 @@ Service.sinedria.exodos4 = function(nodereq) {
 	skiniko.
 	processKinisi(kinisi).
 	kinisiAdd(kinisi);
-	console.log(kinisi.data.login + ': bye (' + Globals.meraOra() + ')');
+	Globals.consoleLog(kinisi.data.login + ': bye');
 };
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -369,7 +369,7 @@ Service.sinedria.pektisTheatisPektis = function(nodereq) {
 Service.sinedria.salute = function(nodereq) {
 	if (nodereq.isvoli()) return;
 
-	console.log(nodereq.sinedria.pektis + ': salute (' + Globals.meraOra() + ')');
+	Globals.consoleLog(nodereq.sinedria.pektis + ': salute');
 	nodereq.sinedria.feredataClose();
 	Server.skiniko.kinisiAdd(new Kinisi({
 		idos: 'SL',
@@ -400,7 +400,7 @@ Service.sinedria.tsoxaSalute = function(nodereq) {
 			sizitisi: {},
 		},
 	});
-	console.log(nodereq.sinedria.pektis + ': tsoxaSalute (' + kinisi.data.trapezi + ')');
+	Globals.consoleLog(nodereq.sinedria.pektis + ': tsoxaSalute (' + kinisi.data.trapezi + ')');
 
 	oxiNeotera = true;
 	sizitisiFloter = parseInt(nodereq.url.sizitisi);
@@ -465,7 +465,7 @@ Service.sinedria.check = function() {
 	var tora = Globals.tora(), arxio = {};
 
 	if (Debug.flagGet('sinedriaCheck'))
-	console.log('Περίπολος: sinedria.check: ', tora);
+	Globals.consoleLog('Περίπολος: sinedria.check');
 
 	Server.skiniko.skinikoSinedriaWalk(function() {
 		var pektis;
@@ -474,7 +474,7 @@ Service.sinedria.check = function() {
 		return;
 
 		pektis = this.sinedriaPektisGet();
-		console.log(pektis + ': ανενεργή συνεδρία');
+		Globals.consoleLog(pektis + ': ανενεργή συνεδρία');
 
 		this.feredataClose();
 
@@ -514,7 +514,8 @@ Sinedria.prototype.sinedriaSeXrisi = function(tora) {
 	// πρόγραμμα. Ελέγχουμε, λοιπόν, αν δεν υπάρχει πρόσφατο αίτημα feredata.
 
 	if (tora - this.feredataPollGet() > Peripolos.sinedriaTimeout) {
-		console.error(pektis + ': feredataPoll:', tora - this.feredataPollGet(), '>', Peripolos.sinedriaTimeout);
+		Globals.consoleError(pektis + ': feredataPoll:',
+			tora - this.feredataPollGet(), '>', Peripolos.sinedriaTimeout);
 		return false;
 	}
 
@@ -523,7 +524,8 @@ Sinedria.prototype.sinedriaSeXrisi = function(tora) {
 	// απλώς βρίσκεται σε επαφή με τον server.
 
 	if (tora - this.sinedriaPollGet() > Peripolos.inactiveTimeout) {
-		console.error(pektis + ': sinedriaPoll:', tora - this.sinedriaPollGet(), '>', Peripolos.inactiveTimeout);
+		Globals.consoleError(pektis + ': sinedriaPoll:',
+			tora - this.sinedriaPollGet(), '>', Peripolos.inactiveTimeout);
 		return false;
 	}
 
@@ -564,7 +566,7 @@ Service.sinedria.arxiothetisi2 = function(pektis, sinedria, lista, conn) {
 			Service.sinedria.arxiothetisi(lista);
 		});
 
-		console.error(pektis + ': απέτυχε η αρχειοθέτηση της συνεδρίας');
+		Globals.consoleError(pektis + ': απέτυχε η αρχειοθέτηση της συνεδρίας');
 	});
 };
 
@@ -580,7 +582,7 @@ Service.sinedria.arxiothetisi3 = function(pektis, lista, conn) {
 		else
 		conn.rollback(function(conn) {
 			conn.free();
-			console.error(pektis + ': απέτυχε η διαγραφή παλαιάς συνεδρίας');
+			Globals.consoleError(pektis + ': απέτυχε η διαγραφή παλαιάς συνεδρίας');
 			Service.sinedria.arxiothetisi(lista);
 		});
 	});

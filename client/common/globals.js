@@ -207,10 +207,18 @@ Globals.ora = function(d, seconds) {
 	return s;
 };
 
-Globals.meraOra = function() {
+Globals.meraOra = function(seconds) {
 	var tora = new Date;
 
-	return Globals.mera(tora) + ', ' + Globals.ora(tora);
+	return Globals.mera(tora) + ', ' + Globals.ora(tora, seconds);
+};
+
+Globals.consoleLog = function(msg) {
+	console.log(msg + ' (' + Globals.meraOra(true) + ')');
+};
+
+Globals.consoleError = function(msg) {
+	console.error(msg + ' (' + Globals.meraOra(true) + ')');
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
