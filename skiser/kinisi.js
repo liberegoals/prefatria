@@ -101,7 +101,7 @@ Skiniko.prototype.skinikoKinisiEnimerosiTora = function() {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
 
-Kinisi.maxLength = 1000;
+Kinisi.maxLength = 5000;
 
 Skiniko.prototype.kinisiKontema = function() {
 	var min, count;
