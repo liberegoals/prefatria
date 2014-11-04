@@ -117,7 +117,7 @@ Skiniko.prototype.kinisiKontema = function() {
 
 	if (min <= 0) throw new Error('transaction log overflow');
 
-	console.log('Κόντεμα πίνακα κινήσεων κατά ' + min);
+	Globals.consoleLog('Κόντεμα πίνακα κινήσεων κατά ' + min);
 	this.kinisi.splice(0, min);
 
 	count = 0;
@@ -129,7 +129,7 @@ Skiniko.prototype.kinisiKontema = function() {
 		count++;
 	});
 
-	console.log('Μειώθηκαν δείκτες κινήσεων σε ' + count + ' συνεδρίες');
+	Globals.consoleLog('Μειώθηκαν δείκτες κινήσεων σε ' + count + ' συνεδρίες');
 	return this;
 };
 
