@@ -79,7 +79,7 @@ Service.pektis.check = function() {
 		if (Server.skiniko.skinikoSinedriaGet(login))
 		return;
 
-		console.log(login + ': αποκαθήλωση παίκτη');
+		Globals.consoleLog(login + ': αποκαθήλωση παίκτη');
 		Server.skiniko.skinikoPektisDelete(login);
 	});
 };

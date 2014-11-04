@@ -214,11 +214,11 @@ Globals.meraOra = function(seconds) {
 };
 
 Globals.consoleLog = function(msg) {
-	console.log(msg + ' (' + Globals.meraOra(true) + ')');
+	console.log(msg, '(' + Globals.meraOra(true) + ')');
 };
 
 Globals.consoleError = function(msg) {
-	console.error(msg + ' (' + Globals.meraOra(true) + ')');
+	console.error(msg, '(' + Globals.meraOra(true) + ')');
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
