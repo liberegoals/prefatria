@@ -114,7 +114,7 @@ DB.check = function() {
 	ora = Globals.ora(null, true);
 
 	if (Debug.flagGet('database'))
-	console.log('Περίπολος: DB.check (' + ora + ')');
+	Globals.consoleLog('Περίπολος: DB.check');
 
 	Globals.walk(DB.pool, function(i, conn) {
 		// Επανενεργοποιούνται συνδέσεις που φαίνονται ανενεργές για αρκετά
@@ -122,7 +122,7 @@ DB.check = function() {
 
 		if (tora - conn.action > DB.timeout) {
 			if (Debug.flagGet('database'))
-			console.log('SQL connection timeout: ' + conn.index);
+			Globals.consoleLog('SQL connection timeout: ' + conn.index);
 
 			conn.action = tora;
 			conn.connection.query('SELECT 1', function(err, res) {
@@ -135,7 +135,7 @@ DB.check = function() {
 		// τα προγράμματα που τις έχουν δεσμεύσει (zombies).
 
 		if (conn.isActive() && (tora - conn.realAction > DB.zombie)) {
-			console.log('zombie SQL connection freed: ' + conn.index + ' (' + ora + ')');
+			Globals.consoleLog('zombie SQL connection freed: ' + conn.index);
 			conn.free();
 		}
 	});
@@ -223,7 +223,7 @@ DBSindesi = function() {
 	// "index".
 
 	this.indexSet(DB.pool.push(this) - 1);
-	console.log('new database connection: ' + this.indexGet() + ' (' + Globals.meraOra() + ')');
+	Globals.consoleLog('new database connection: ' + this.indexGet());
 }
 
 DBSindesi.prototype.indexSet = function(idx) {

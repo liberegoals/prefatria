@@ -536,7 +536,7 @@ Service.trapezi.klidomaCheck = function(nodereq, trapezi, thesi, apodoxi) {
 		if (tora - klidoma < 3000) return;
 
 		this.trapeziXeklidoma();
-		console.log(this.trapeziKodikosGet() + ': ξεκλείδωμα τραπεζιού');
+		Globals.consoleLog(this.trapeziKodikosGet() + ': ξεκλείδωμα τραπεζιού');
 	});
 };
 
@@ -551,7 +551,7 @@ Service.trapezi.check = function() {
 
 	tora = Globals.tora();
 	if (Debug.flagGet('trapeziCheck'))
-	console.log('Περίπολος: trapezi.check: ' + Globals.poteOra(tora, true) + ' (' + Service.trapezi.kenoTimeout +
+	Globals.consoleLog('Περίπολος: trapezi.check: (' + Service.trapezi.kenoTimeout +
 		', ' + Service.trapezi.oxiKenoTimeout + ')');
 
 	// Κρατάμε στη λίστα "arxio" τα τραπέζια που αρχειοθετούνται
@@ -566,7 +566,7 @@ Service.trapezi.check = function() {
 		return;
 
 		trapezi = this.trapeziKodikosGet();
-		console.log(trapezi + ': ανενεργό τραπέζι');
+		Globals.consoleLog(trapezi + ': ανενεργό τραπέζι');
 		arxio[trapezi] = true;
 	});
 
@@ -696,7 +696,7 @@ Service.trapezi.arxiothetisiTrapezi = function(trapeziKodikos, lista, lista2) {
 	conn.query(query, function(conn, res) {
 		if (res.affectedRows != 1) {
 			conn.free();
-			console.error(trapeziKodikos + ': απέτυχε η αρχειοθέτηση του τραπεζιού');
+			Globals.consoleError(trapeziKodikos + ': απέτυχε η αρχειοθέτηση του τραπεζιού');
 			Service.trapezi.arxiothetisi(lista, lista2);
 			return;
 		}
@@ -792,7 +792,7 @@ Service.trapezi.katagrafiMin = 300;
 setInterval(function() {
 	var tora, login;
 
-	console.log('Εκκαθάριση μητρώου δημιουργίας τραπεζιών');
+	Globals.consoleLog('Εκκαθάριση μητρώου δημιουργίας τραπεζιών');
 	tora = Globals.tora();
 	for (login in Service.trapezi.katagrafi) {
 		console.log('\t' + login);

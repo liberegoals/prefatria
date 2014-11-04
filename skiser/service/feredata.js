@@ -70,7 +70,7 @@ Service.feredata.freskaIpervasi = function(nodereq) {
 	if (i < 0)
 	return false;
 
-	console.error(login + ': υπέρβαση σκηνικών ανανεώσεων (' +
+	Globals.consoleError(login + ': υπέρβαση σκηνικών ανανεώσεων (' +
 		count + 'req/' + (diastima / 1000) + 'sec)');
 	nodereq.end('!');
 	return true;
@@ -171,7 +171,7 @@ Service.feredata.check = function() {
 	var tora;
 
 	tora = Globals.tora();
-	if (Debug.flagGet('feredataCheck')) console.log('περίπολος: feredata.check: ', tora);
+	if (Debug.flagGet('feredataCheck')) Globals.consoleLog('περίπολος: feredata.check');
 
 	Server.skiniko.skinikoSinedriaWalk(function() {
 		// Αν δεν βρούμε κανάλι feredata για την ανά χείρας συνεδρία, δεν
@@ -272,7 +272,7 @@ Sinedria.prototype.kinisiFloterGet = function() {
 
 	floter = parseInt(this.kinisiFloter);
 	if (isNaN(floter)) {
-		console.error(this.sinedriaPektisGet() + ': δεν βρέθηκε δείκτης κινήσεων');
+		Globals.consoleError(this.sinedriaPektisGet() + ': δεν βρέθηκε δείκτης κινήσεων');
 		return -1;
 	}
 
@@ -285,7 +285,7 @@ Sinedria.prototype.kinisiFloterGet = function() {
 
 Sinedria.prototype.feredataPollGet = function() {
 	if (!this.hasOwnProperty('feredataPoll')) {
-		console.error(this.sinedriaPektisGet() + ': δεν βρέθηκε feredata poll timestamp');
+		Globals.consoleError(this.sinedriaPektisGet() + ': δεν βρέθηκε feredata poll timestamp');
 		this.feredataPollSet();
 	}
 
@@ -309,7 +309,8 @@ Sinedria.prototype.feredataPollSet = function(ts) {
 
 Sinedria.prototype.feredataEnd = function(s) {
 	if (this.oxiFeredata()) {
-		console.error(this.sinedriaPektisGet() + ': επιχειρήθηκε κλείσιμο ήδη κλειστής feredata (' + s + ')');
+		Globals.consoleError(this.sinedriaPektisGet() +
+			': επιχειρήθηκε κλείσιμο ήδη κλειστής feredata (' + s + ')');
 		return this;
 	}
 
@@ -342,7 +343,7 @@ Sinedria.prototype.feredataClose = function(err) {
 	if (this.oxiFeredata())
 	return this;
 
-	if (err !== undefined) console.error(err);
+	if (err !== undefined) Globals.consoleError(err);
 	this.feredataEnd('-');
 	return this;
 };
@@ -511,10 +512,6 @@ Sinedria.prototype.feredataFreska = function() {
 		});
 		nodereq.write('},\n');
 	}
-
-	// Τα δεδομένα διανομών είναι πάρα πολλά, π.χ. 50 τραπέζια Χ 20 διανομές = 1000 διανομές.
-	// Για το λόγο αυτό προτιμούμε να αποστείλουμε «οικονομικά» δεδομένα.
-
 	else {
 		console.log(paraliptisLogin + ': feredata economy off');
 		nodereq.write('dianomi: [\n');
