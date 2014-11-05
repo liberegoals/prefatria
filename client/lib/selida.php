@@ -18,6 +18,7 @@ class Selida {
 		Globals::header_html();
 		?>
 		<!DOCTYPE html>
+		<html>
 		<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<meta name="description" content="Παίξτε πρέφα on-line!" />
@@ -58,7 +59,6 @@ class Selida {
 			<?php
 		}
 		self::javascript_end();
-
 	}
 
 	public static function stylesheet($css) {
