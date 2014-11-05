@@ -890,15 +890,24 @@ Sizitisi.kornaAppend = function(dom) {
 };
 
 Sizitisi.emoticonAppend = function(dom, s) {
-	var tmima, omada, ikona;
+	var tmima, omada, ikona, lefkoma, emoticon;
 
 	tmima = s.split(':');
-	if (tmima.length != 2) return;
+	if (tmima.length != 2)
+	return;
 
 	omada = parseInt(tmima[0].replace(/^E/, ''));
+	lefkoma = Arena.epanel.lefkoma[omada - 1];
+	if (!lefkoma)
+	return;
+
 	ikona = parseInt(tmima[1]);
+	emoticon = lefkoma[ikona - 1];
+	if (!emoticon)
+	return;
+
 	dom.append($('<img>').addClass('sizitisiEmoticon').
-	attr('src', 'ikona/emoticon/set' + omada + '/' + Arena.epanel.lefkoma[omada - 1][ikona - 1]));
+	attr('src', 'ikona/emoticon/set' + omada + '/' + emoticon));
 };
 
 Sizitisi.youtubeAppend = function(dom, s) {
