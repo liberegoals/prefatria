@@ -154,7 +154,11 @@ CREATE TABLE `profinfo` (
 	PRIMARY KEY (
 		`pektis`,
 		`sxoliastis`
-	) USING BTREE
+	) USING BTREE,
+
+	INDEX (
+		`sxoliastis`
+	) USING HASH
 )
 
 ENGINE = InnoDB
@@ -176,7 +180,11 @@ CREATE TABLE `sxesi` (
 	PRIMARY KEY (
 		`pektis`,
 		`sxetizomenos`
-	) USING BTREE
+	) USING BTREE,
+
+	INDEX (
+		`sxetizomenos`
+	) USING HASH
 )
 
 ENGINE = InnoDB
@@ -201,7 +209,15 @@ CREATE TABLE `minima` (
 
 	PRIMARY KEY (
 		`kodikos`
-	) USING BTREE
+	) USING BTREE,
+
+	INDEX (
+		`apostoleas`
+	) USING HASH,
+
+	INDEX (
+		`paraliptis`
+	) USING HASH
 )
 
 ENGINE = InnoDB
@@ -257,6 +273,18 @@ CREATE TABLE `trapezi` (
 	PRIMARY KEY (
 		`kodikos`
 	) USING BTREE,
+
+	INDEX (
+		`pektis1`
+	) USING HASH,
+
+	INDEX (
+		`pektis2`
+	) USING HASH,
+
+	INDEX (
+		`pektis3`
+	) USING HASH,
 
 	INDEX (
 		`arxio`
@@ -428,7 +456,11 @@ CREATE TABLE `telefteos` (
 	PRIMARY KEY (
 		`trapezi`,
 		`thesi`
-	) USING BTREE
+	) USING BTREE,
+
+	INDEX (
+		`pektis`
+	) USING HASH
 )
 
 ENGINE = InnoDB
@@ -459,7 +491,15 @@ CREATE TABLE `prosklisi` (
 		`trapezi`,
 		`apo`,
 		`pros`
-	) USING BTREE
+	) USING BTREE,
+
+	INDEX (
+		`apo`
+	) USING HASH,
+
+	INDEX (
+		`pros`
+	) USING HASH
 )
 
 ENGINE = InnoDB
@@ -483,7 +523,15 @@ CREATE TABLE `sizitisi` (
 
 	PRIMARY KEY (
 		`kodikos`
-	) USING BTREE
+	) USING BTREE,
+
+	INDEX (
+		`pektis`
+	) USING HASH,
+
+	INDEX (
+		`trapezi`
+	) USING HASH
 )
 
 ENGINE = InnoDB
@@ -578,7 +626,11 @@ CREATE TABLE `dianomi` (
 
 	PRIMARY KEY (
 		`kodikos`
-	) USING BTREE
+	) USING BTREE,
+
+	INDEX (
+		`trapezi`
+	) USING HASH
 )
 
 ENGINE = InnoDB
@@ -646,7 +698,11 @@ CREATE TABLE `energia` (
 
 	PRIMARY KEY (
 		`kodikos`
-	) USING BTREE
+	) USING BTREE,
+
+	INDEX (
+		`dianomi`
+	) USING HASH
 )
 
 ENGINE = InnoDB
@@ -703,7 +759,11 @@ CREATE TABLE `sinedria` (
 
 	PRIMARY KEY (
 		`pektis`
-	) USING BTREE
+	) USING BTREE,
+
+	INDEX (
+		`trapezi`
+	) USING HASH
 )
 
 ENGINE = InnoDB
@@ -727,7 +787,11 @@ CREATE TABLE `istoriko` (
 
 	PRIMARY KEY (
 		`kodikos`
-	) USING BTREE
+	) USING BTREE,
+
+	INDEX (
+		`pektis`
+	) USING HASH
 )
 
 ENGINE = InnoDB
@@ -745,6 +809,10 @@ CREATE TABLE `isfora` (
 	-- 40.50 ευρώ γράφεται 4050 κοκ.
 
 	`poso`		NUMERIC(6) NOT NULL COMMENT 'Ποσό',
+
+	INDEX (
+		`pektis`
+	) USING HASH,
 
 	INDEX (
 		`imerominia`
