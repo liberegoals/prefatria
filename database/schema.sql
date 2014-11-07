@@ -43,11 +43,11 @@ CREATE TABLE `pektis` (
 		`login`
 	) USING BTREE,
 
-	KEY (
+	INDEX (
 		`onoma`
 	) USING BTREE,
 
-	KEY (
+	INDEX (
 		`email`
 	) USING BTREE
 )
@@ -201,15 +201,7 @@ CREATE TABLE `minima` (
 
 	PRIMARY KEY (
 		`kodikos`
-	) USING BTREE,
-
-	INDEX USING BTREE (
-		`apostoleas`
-	),
-
-	INDEX USING BTREE (
-		`paraliptis`
-	)
+	) USING BTREE
 )
 
 ENGINE = InnoDB
@@ -266,9 +258,9 @@ CREATE TABLE `trapezi` (
 		`kodikos`
 	) USING BTREE,
 
-	INDEX USING BTREE (
+	INDEX (
 		`arxio`
-	)
+	) USING BTREE
 )
 
 ENGINE = InnoDB
@@ -463,7 +455,7 @@ CREATE TABLE `prosklisi` (
 		`kodikos`
 	) USING BTREE,
 
-	UNIQUE KEY (
+	UNIQUE INDEX (
 		`trapezi`,
 		`apo`,
 		`pros`
@@ -718,8 +710,7 @@ ENGINE = InnoDB
 COMMENT = 'Πίνακας συνεδριών'
 ;
 
--- Ο πίνακας "istoriko" αρχειοθετεί τις συνεδρίες που κλείνουν. Ως αρχείο,
--- ο πίνακας είναι συμπιεσμένος.
+-- Ο πίνακας "istoriko" αρχειοθετεί τις συνεδρίες που κλείνουν.
 
 CREATE TABLE `istoriko` (
 	`kodikos`	INTEGER(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Primary key',
@@ -755,13 +746,9 @@ CREATE TABLE `isfora` (
 
 	`poso`		NUMERIC(6) NOT NULL COMMENT 'Ποσό',
 
-	INDEX USING BTREE (
-		`pektis`
-	),
-
-	INDEX USING BTREE (
+	INDEX (
 		`imerominia`
-	)
+	) USING BTREE
 )
 
 ENGINE = InnoDB
