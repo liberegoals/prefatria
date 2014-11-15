@@ -66,7 +66,7 @@ class Account {
 						print self::$pektis->email; ?>" maxlength="128" size="50" />
 				</td>
 			</tr>
-			<tr>
+			<tr style="display: none;">
 				<td class="formaPrompt">
 					Φωτογραφία
 				</td>
@@ -122,7 +122,7 @@ class Account {
 			}
 			?>
 			</table>
-			<div id="fotoContainer"></div>
+			<div id="fotoContainer" style="display: none;"></div>
 			</div>
 			<div class="formaPanel">
 				<input class="formaButton" type="submit" value="<?php
