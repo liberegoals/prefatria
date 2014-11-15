@@ -4,8 +4,10 @@ class Pektis {
 	public $onoma;
 	public $email;
 	public $kodikos;
+	public $peparam;
 
-	function __construct($login, $kodikos = NULL) {
+	public function __construct($login, $kodikos = NULL) {
+		$peparam = array();
 		$query = "SELECT * FROM `pektis` WHERE (`login` LIKE " . Globals::asfales_sql($login) . ")";
 
 		if ($kodikos !== NULL)
@@ -19,6 +21,33 @@ class Pektis {
 		foreach($row as $col => $val) {
 			$this->$col = $val;
 		}
+	}
+
+	public function peparam_fetch() {
+		if (!isset($this->login))
+		return $this;
+
+		$this->peparam = array();
+		$query = "SELECT `param`, `timi` FROM `peparam` WHERE `pektis` LIKE " .
+			Globals::asfales_sql($_SESSION["pektis"]);
+		$res = Globals::query($query);
+		while ($row = $res->fetch_array(MYSQLI_NUM)) {
+			$this->peparam[$row[0]] = $row[1];
+		}
+
+		$res->free();
+		return $this;
+	}
+
+	public function is_developer() {
+		if (!isset($this->peparam))
+		return FALSE;
+
+		$idx = "DEVELOPER";
+		if (!array_key_exists($idx, $this->peparam))
+		return FALSE;
+
+		return($this->peparam[$idx] === "ΝΑΙ");
 	}
 }
 ?>
