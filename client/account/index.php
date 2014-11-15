@@ -23,10 +23,10 @@ Selida::ribbon();
 Selida::telos();
 
 class Account {
-	public static $pektis;
+	public static $pektis = NULL;
 
 	public static function init() {
-		self::$pektis = @new Pektis($_SESSION["pektis"]);
+		self::$pektis = @(new Pektis($_SESSION["pektis"]))->peparam_fetch();
 	}
 
 	public static function display_forma() {
@@ -64,6 +64,14 @@ class Account {
 				<td>
 					<input name="email" class="formaPedio" type="text" value="<?php
 						print self::$pektis->email; ?>" maxlength="128" size="50" />
+				</td>
+			</tr>
+			<tr>
+				<td class="formaPrompt">
+					Φωτογραφία
+				</td>
+				<td>
+					<input name="foto" type="file" />
 				</td>
 			</tr>
 			<tr class="account_sokidok">
@@ -114,6 +122,7 @@ class Account {
 			}
 			?>
 			</table>
+			<div id="fotoContainer"></div>
 			</div>
 			<div class="formaPanel">
 				<input class="formaButton" type="submit" value="<?php
@@ -136,7 +145,9 @@ class Account {
 
 	public static function action_frame() {
 		?>
-		<iframe name="action"></iframe>
+		<iframe name="action" style="display: <?php
+			print self::$pektis->is_developer() ? "block" : "none";
+		?>"></iframe>
 		<?php
 	}
 }

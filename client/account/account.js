@@ -36,6 +36,7 @@ Account.init = function() {
 	Account.kodikos = $('input[name="kodikos"]');
 	Account.kodikos1 = $('input[name="kodikos1"]');
 	Account.kodikos2 = $('input[name="kodikos2"]');
+	Account.actionFrame = $('iframe[name="action"]');
 }
 
 Account.kodikosAlagi = function(x) {
@@ -54,7 +55,7 @@ Account.akiro = function() {
 Account.checkAction = function() {
 	var res, slogin, sklidi, skodikos;
 
-	res = $('iframe[name="action"]').contents().text().split('@EOD@');
+	res = Account.actionFrame.contents().text().split('@EOD@');
 	if (res[0]) {
 		Client.fyi.epano(res[0]);
 		if (Client.isPektis()) Account.onoma.focus();

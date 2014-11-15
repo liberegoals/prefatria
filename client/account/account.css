@@ -1,3 +1,7 @@
+.formaSoma {
+	position: relative;
+}
+
 .account_kodikos {
 	opacity: 0.3;
 }
@@ -6,9 +10,27 @@
 	visibility: hidden;
 }
 
+#fotoContainer {
+	position: absolute;
+	bottom: 10px;
+	right: 10px;
+	width: 200px;
+	height: 78px;
+
+	border-style: solid;
+	border-width: 3px;
+	border-color: #B8B8A5;
+	border-radius: 5px;
+	box-shadow: 2px 2px 4px #333333;
+	background-color: #D3D3AD;
+
+	cursor: pointer;
+}
+
 iframe[name="action"] {
 	display: none;
-	width: 800px;
+	width: 80%;
 	height: 200px;
+	margin: 20px 0 0 20px;
 	background-color: #FFFFCC;
 }
