@@ -180,11 +180,6 @@ Pektis.prototype.pektisPlatiRBGet = function() {
 	return(this.pektisPlatiGet() == 'ΚΟΚΚΙΝΟ' ? 'R' : 'B');
 };
 
-Pektis.prototype.pektisAxiomaRankGet = function() {
-	var axioma = this.pektisAxiomaGet();
-	return(Peparam.axiomaRank.hasOwnProperty(axioma) ? Peparam.axiomaRank[axioma] : 0);
-};
-
 Pektis.prototype.pektisIsDeveloper = function() {
 	var developer = this.pektisPeparamGet('DEVELOPER');
 	if (!developer) return false;
