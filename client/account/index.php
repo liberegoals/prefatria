@@ -32,7 +32,8 @@ class Account {
 	public static function display_forma() {
 		?>
 		<form class="forma" target="action" action="<?php print Globals::is_pektis() ?
-			"enimerosi" : "egrafi"; ?>.php" method="post" onsubmit="return Account.submit(this);">
+			"enimerosi" : "egrafi"; ?>.php" onsubmit="return Account.submit(this);"
+			method="post" enctype="multipart/form-data">
 			<div class="formaSoma">
 				<div class="formaTitlos">
 					<?php print Globals::is_pektis() ?
@@ -66,12 +67,12 @@ class Account {
 						print self::$pektis->email; ?>" maxlength="128" size="50" />
 				</td>
 			</tr>
-			<tr style="display: none;">
+			<tr>
 				<td class="formaPrompt">
 					Φωτογραφία
 				</td>
 				<td>
-					<input name="foto" type="file" />
+					<input name="photo" type="file" />
 				</td>
 			</tr>
 			<tr class="account_sokidok">
@@ -122,7 +123,7 @@ class Account {
 			}
 			?>
 			</table>
-			<div id="fotoContainer" style="display: none;"></div>
+			<div id="photoContainer"><?php self::pektis_photo(); ?></div>
 			</div>
 			<div class="formaPanel">
 				<input class="formaButton" type="submit" value="<?php
@@ -131,6 +132,18 @@ class Account {
 				<input class="formaButton" type="button" value="Άκυρο" onclick="Account.akiro();" />
 			</div>
 		</form>
+		<?php
+	}
+
+	private function pektis_photo() {
+		if (Globals::oxi_pektis())
+		return;
+
+		$photo = self::$pektis->photo_src();
+		if (!$photo) $photo = Globals::$server . "ikona/pektis/offline.png";
+
+		?>
+		<img id="pektisPhoto" src="<?php print $photo; ?>" />
 		<?php
 	}
 

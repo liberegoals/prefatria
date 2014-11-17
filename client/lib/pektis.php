@@ -49,5 +49,28 @@ class Pektis {
 
 		return($this->peparam[$idx] === "ΝΑΙ");
 	}
+
+	// Η μέθοδος "photo_file" επιστρέφει το πλήρες pathname του αρχείου εικόνας
+	// που αφορά στον ανά χείρας παίκτη. Ως γνωστόν, το αρχείο βρίσκεται στο
+	// directory photo, σε subdirectory σχετικό με το πρώτο γράμμα του login
+	// name, και φέρει όνομα ίδιο με το login name του παίκτη.
+
+	public function photo_file() {
+		return Globals::$www . "client/photo/" . substr($this->login, 0, 1) . "/" . $this->login;
+	}
+
+	// Η μέθοδος "photo_src" επιστρέφει το URL του αρχείου εικόνας που αφορά
+	// στον ανά χείρας παίκτη, εμπλουτισμένο με αντιcache παράμετρο που αφορά
+	// στο modification time του αρχείου.
+
+	public function photo_src() {
+		$photo = "photo/" . substr($this->login, 0, 1) . "/" . $this->login;
+		$photo_file = Globals::$www . "client/" . $photo;
+
+		if (!file_exists($photo_file))
+		return NULL;
+
+		return Globals::$server . $photo . "?mt=" . filemtime($photo_file);
+	}
 }
 ?>

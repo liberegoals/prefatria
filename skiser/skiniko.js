@@ -523,34 +523,19 @@ Pektis.prototype.pektisSeekPhoto = function(callback) {
 		return this;
 	}
 
-	this.pektisSeekPhoto2(login.substr(0, 1).toLowerCase() + '/' + login + '.', callback, {
-		png: true,
-		jpg: true,
-		gif: true,
-	});
-
+	this.pektisSeekPhoto2(login.substr(0, 1).toLowerCase() + '/' + login, callback);
 	return this;
 }
 
-Pektis.prototype.pektisSeekPhoto2 = function(basi, callback, tlist) {
-	var pektis = this, tipos, photo;
+Pektis.prototype.pektisSeekPhoto2 = function(fname, callback) {
+	var pektis = this;
 
-	for (tipos in tlist) {
-		delete tlist[tipos];
-		photo = basi + tipos;
-		FS.stat('../client/photo/' + photo, function(err, stats) {
-			if (err)
-			return pektis.pektisSeekPhoto2(basi, callback, tlist);
+	FS.stat('../client/photo/' + fname, function(err, stats) {
+		if (err) pektis.pektisPhotoSet();
+		else pektis.pektisPhotoSet(fname, parseInt(stats.mtime.getTime() / 1000));
+		if (callback) callback();
+	});
 
-			pektis.pektisPhotoSet(photo, parseInt(stats.mtime.getTime() / 1000));
-			if (callback) callback();
-		});
-
-		return this;
-	}
-
-	this.pektisPhotoSet();
-	if (callback) callback();
 	return this;
 };
 

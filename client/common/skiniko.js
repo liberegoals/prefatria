@@ -68,9 +68,8 @@ Pektis.prototype.pektisOnomaGet = function() {
 // και το timestamp της τροποποίησης αυτού του αρχείου εικόνας, και δημιουργεί
 // τα poperties "photo" και "photoSrc". Το όνομα του αρχείου εικόνας πρέπει να
 // είναι της μορφής "l/file", όπου "l" είναι το πρώτο γράμμα από το login name
-// του παίκτη, και "file" είναι το όνομα του αρχείου αποτελούμενο από το login
-// name του παίκτη και παρέκταμα "png", ή ".jpg", ή ".gif". Το modification
-// timestamp είναι σε seconds.
+// του παίκτη, και "file" είναι το όνομα του αρχείου το οποίο συμπίπτει με το
+// το login name του παίκτη. Το modification timestamp είναι σε seconds.
 
 Pektis.prototype.pektisPhotoSet = function(photo, mtime) {
 	delete this.photo;
