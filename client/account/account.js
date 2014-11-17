@@ -33,10 +33,14 @@ Account.init = function() {
 	Account.login = $('input[name="login"]');
 	Account.onoma = $('input[name="onoma"]');
 	Account.email = $('input[name="email"]');
+	Account.photo = $('input[name="photo"]');
 	Account.kodikos = $('input[name="kodikos"]');
 	Account.kodikos1 = $('input[name="kodikos1"]');
 	Account.kodikos2 = $('input[name="kodikos2"]');
 	Account.actionFrame = $('iframe[name="action"]');
+	$('#photoContainer').on('click', function(e) {
+		Account.photo.trigger('click');
+	});
 }
 
 Account.kodikosAlagi = function(x) {
