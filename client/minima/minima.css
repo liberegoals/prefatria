@@ -220,10 +220,10 @@ body {
 
 .minimaApantisiLabel {
 	position: absolute;
-	top: 42px;
+	top: 56px;
 	left: 82px;
 	padding: 2px 8px;
-	font-size: 30px;
+	font-size: 24px;
 	font-family: Impact, Charcoal, sans-serif;
 	-ms-transform: rotate(-36deg);
 	-webkit-transform: rotate(-36deg);
