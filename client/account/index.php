@@ -135,7 +135,7 @@ class Account {
 		<?php
 	}
 
-	private function pektis_photo() {
+	private static function pektis_photo() {
 		if (Globals::oxi_pektis())
 		return;
 
