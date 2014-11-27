@@ -71,6 +71,7 @@ Arena.partida.setup = function() {
 
 	Arena.partida.tsoxaDOM = $('<div>').attr('id', 'tsoxa').appendTo(Arena.partidaDOM);
 
+
 	Arena.partida.thesiWalk(function(thesi) {
 		var pektisDOM, filaDOM;
 
@@ -120,6 +121,34 @@ Arena.partida.setup = function() {
 	Arena.partida.setupTzogos();
 	Arena.partida.setupAzab();
 	Arena.partida.setupPhoto();
+	Arena.partida.setupGiorti();
+
+	return Arena;
+};
+
+Arena.partida.setupGiorti = function() {
+	var tora, minas, mera, img;
+
+	tora = new Date();
+	minas = tora.getMonth() + 1;
+	mera = tora.getDate();
+
+	switch (minas) {
+	case 12:
+		img = 'ikona/giorti/xmas.png';
+		break;
+	case 1:
+		if (mera > 15) return;
+		img = 'ikona/giorti/neoEtos.png';
+		break;
+	default:
+		return;
+	}
+
+	Arena.partidaDOM.append($('<img>').attr({
+		id: 'tsoxaGiortiIcon',
+		src: img,
+	}));
 
 	return Arena;
 };
