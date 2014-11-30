@@ -184,6 +184,12 @@ Funchat.listaPush(new Funchat({
 Funchat.omada++;
 
 Funchat.listaPush(new Funchat({
+	img: 'kota.gif',
+	platos: 100,
+	txt: 'Κο κο κο…',
+}));
+
+Funchat.listaPush(new Funchat({
 	img: 'mesa.gif',
 	platos: 240,
 }));
@@ -214,6 +220,14 @@ Funchat.listaPush(new Funchat({
 }));
 
 Funchat.listaPush(new Funchat({
+	img: 'zervos.jpg',
+	platos: 100,
+	txt: 'Ου να χαθείς!',
+	ixos: 'ouNaXathis.mp3',
+	entasi: 10,
+}));
+
+Funchat.listaPush(new Funchat({
 	img: 'anteGamithiteRe.gif',
 	platos: 200,
 }));
@@ -229,6 +243,12 @@ Funchat.listaPush(new Funchat({
 }));
 
 Funchat.listaPush(new Funchat({
+	img: 'tiKanisRe.gif',
+	platos: 70,
+	txt: 'Τι έκανες ρε;',
+}));
+
+Funchat.listaPush(new Funchat({
 	img: 'sfiriEmoticon.gif',
 	platos: 70,
 }));
@@ -238,6 +258,13 @@ Funchat.listaPush(new Funchat({
 	platos: 70,
 	ixos: Client.server + 'sounds/tzamia.ogg',
 	isterisi: 1000,
+}));
+
+Funchat.listaPush(new Funchat({
+	img: 'aisxos.jpg',
+	platos: 100,
+	txt: 'Αίσχος!',
+	ixos: 'aisxos.mp3',
 }));
 
 Funchat.listaPush(new Funchat({
@@ -276,6 +303,11 @@ Funchat.listaPush(new Funchat({
 Funchat.listaPush(new Funchat({
 	img: 'lesEmoticon.gif',
 	txt: 'Λες;',
+}));
+
+Funchat.listaPush(new Funchat({
+	img: 'tinEstise.gif',
+	txt: 'Την έστησε!!!',
 }));
 
 Funchat.listaPush(new Funchat({
