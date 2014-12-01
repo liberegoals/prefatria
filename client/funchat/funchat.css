@@ -11,8 +11,8 @@ body {
 	display: inline-block;
 	position: relative;
 	margin: 0 4px 4px 0;
-	width: 100px;
-	height: 100px;
+	width: 90px;
+	height: 90px;
 	overflow: hidden;
 
 	border-style: solid;
@@ -28,8 +28,8 @@ background-color: rgba(0, 128, 128, 0.1);
 	position: absolute;
 	bottom: 0;
 	left: 0;
-	max-width: 90px;
-	max-height: 90px;
+	max-width: 80px;
+	max-height: 80px;
 }
 
 .funchatIxosIcon {
