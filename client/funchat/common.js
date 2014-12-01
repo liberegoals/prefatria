@@ -210,6 +210,11 @@ Funchat.listaPush(new Funchat({
 }));
 
 Funchat.listaPush(new Funchat({
+	img: 'oxiReSi.gif',
+	txt: 'Όχι ρε πούτιν μου…',
+}));
+
+Funchat.listaPush(new Funchat({
 	img: 'gunFail.gif',
 	platos: 240,
 }));
@@ -273,6 +278,12 @@ Funchat.listaPush(new Funchat({
 }));
 
 Funchat.listaPush(new Funchat({
+	img: 'pexeBala.gif',
+	platos: 100,
+	txt: 'Παίξε μπάλα ρε!',
+}));
+
+Funchat.listaPush(new Funchat({
 	img: 'notaraTaTheli.jpg',
 	platos: 120,
 	ixos: 'taTheli.mp3',
@@ -324,6 +335,10 @@ Funchat.listaPush(new Funchat({
 }));
 
 Funchat.listaPush(new Funchat({
+	img: 'ILoveUEmoticon.gif',
+}));
+
+Funchat.listaPush(new Funchat({
 	img: 'vgika.gif',
 }));
 
@@ -344,6 +359,31 @@ Funchat.listaPush(new Funchat({
 }));
 
 Funchat.listaPush(new Funchat({
+	img: 'imeMegalos.gif',
+}));
+
+Funchat.listaPush(new Funchat({
+	img: 'spiderman.gif',
+	ixos: 'jeannie.ogg',
+}));
+
+Funchat.listaPush(new Funchat({
+	img: 'michaelJackson.gif',
+	txt: 'Είμαι μεγάλος μάστορας!',
+}));
+
+Funchat.listaPush(new Funchat({
+	img: 'imeApisteftos.gif',
+	txt: 'Είμαι απίστευτος!',
+}));
+
+Funchat.listaPush(new Funchat({
+	img: 'xorosSpagato.gif',
+	platos: 32,
+	txt: 'Τρελάθηκα τώρα!',
+}));
+
+Funchat.listaPush(new Funchat({
 	img: 'gunPenis.gif',
 	platos: 300,
 }));
@@ -353,6 +393,11 @@ Funchat.omada++;
 Funchat.listaPush(new Funchat({
 	img: 'cheersEmoticon.gif',
 	platos: 120,
+}));
+
+Funchat.listaPush(new Funchat({
+	img: 'mikiMaous.gif',
+	platos: 100,
 }));
 
 Funchat.listaPush(new Funchat({
@@ -375,6 +420,12 @@ Funchat.listaPush(new Funchat({
 
 Funchat.listaPush(new Funchat({
 	img: 'bravoEmoticon.gif',
+}));
+
+Funchat.listaPush(new Funchat({
+	img: 'omorfantraMou.jpg',
+	platos: 100,
+	ixos: 'omorfantraMou.ogg',
 }));
 
 Funchat.listaPush(new Funchat({
