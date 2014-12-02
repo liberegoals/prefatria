@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+
 progname=`basename "${0}"`
 if [ -x /usr/bin/node ]; then
 	node="node"
