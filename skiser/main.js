@@ -143,8 +143,8 @@ require('./peripolos.js');
 // όπου κάνουμε ανάπτυξη των προγραμμάτων θέτουμε κάποιες flags για το
 // debugging.
 
-require('../client/common/rcLocal.js');
-require('./rcLocal.js');
+try { require('../client/common/rcLocal.js'); } catch(e) {}
+try { require('./rcLocal.js'); } catch(e) {}
 
 // Αναπροσαρμόζουμε διάφορες παραμέτρους, στήνουμε το σκηνικό και μπαίνουμε σε κατάσταση
 // ετοιμότητας. Όλα αυτά θα γίνουν αλυσιδωτά, εκκινώντας με την "Server.ekinisi"
