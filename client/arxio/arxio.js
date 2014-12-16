@@ -5,6 +5,14 @@ $(document).ready(function() {
 	Client.tabKlisimo($('#toolbarRight'));
 	Arxio.setup();
 
+	// Κατά την ανάπτυξη του προγράμματος βολεύει καλύτερα
+	// να έχουμε αυτόματα κάποιο select set.
+
+	if (Debug.flagGet('development')) {
+		$('input').val('');
+		Arxio.goButtonDOM.trigger('click');
+	}
+
 	Arena = null;
 	if (!window.opener) return;
 	Arena = window.opener.Arena;
