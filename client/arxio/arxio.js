@@ -46,10 +46,10 @@ Arxio.setup = function() {
 			break;
 		}
 	}).
-	on('mouseenter', '.trapeziTsoxa', function(e) {
+	on('mouseenter', '.trapezi', function(e) {
 		$(this).find('.arxioKapikia').addClass('arxioKapikiaTrexon');
 	}).
-	on('mouseleave', '.trapeziTsoxa', function(e) {
+	on('mouseleave', '.trapezi', function(e) {
 		$('.arxioKapikia').removeClass('arxioKapikiaTrexon');
 	});
 };
@@ -313,14 +313,15 @@ Trapezi.prototype.trapeziArxioDisplay = function() {
 	var trapezi = this, kodikos;
 
 	if (this.DOM) this.DOM.emtpy();
-	else Arxio.apotelesmataDOM.append(this.DOM = $('<div>').addClass('trapeziTsoxa'));
+	else Arxio.apotelesmataDOM.append(this.DOM = $('<div>').addClass('trapezi'));
 
 	kodikos = this.trapeziKodikosGet();
 
 	this.DOM.
 	append($('<div>').addClass('trapeziData').
+	append($('<div>').addClass('trapeziDataContent').
 	append($('<div>').addClass('trapeziDataKodikos').text(kodikos)).
-	append($('<div>').addClass('trapeziDataIpolipo').text(this.ipolipo)));
+	append($('<div>').addClass('trapeziDataIpolipo').text(this.ipolipo))));
 	Prefadoros.thesiWalk(function(thesi) {
 		var pektis, dom, kapikia, kapikiaKlasi;
 
