@@ -12,21 +12,31 @@ body {
 	padding: 20px 0 0 0;
 }
 
-.trapeziData {
-	width: 160px;
-}
-
-.trapeziTsoxa {
-	width: 910px;
-	margin: 0 0 16px 10px;
-	padding: 6px 2px 2px 8px;
+.trapezi {
+	margin: 0 0 0px 10px;
+	padding: 10px 2px 6px 8px;
 	opacity: 0.8;
 	overflow: visible;
+
+	border-style: none none solid none;
+	border-width: 2px;
+	border-color: rgb(157, 157, 153);
+background-color: rgb(203, 219, 197);
 }
 
-.trapeziTsoxa:hover {
+.trapezi:hover {
 	opacity: 1;
 	cursor: pointer;
+}
+
+.trapeziData {
+	width: 160px;
+	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+}
+
+.trapeziDataContent {
+	position: relative;
+	top: 2px;
 }
 
 .trapeziPektis {
@@ -43,14 +53,16 @@ body {
 	width: 150px;
 	text-align: left;
 	margin-left: 20px;
+	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
 }
 
 .trapeziOpts {
-	top: -20px;
+	top: -8px;
+	left: 6px;
 }
 
 .trapeziOption {
-	width: 28px;
+	width: 24px;
 }
 
 .arxioKapikia {

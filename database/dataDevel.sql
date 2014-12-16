@@ -71,7 +71,7 @@ INSERT INTO `peparam` (`pektis`, `param`, `timi`) VALUES
 
 INSERT INTO `trapezi` (`kodikos`, `stisimo`, `pektis1`, `apodoxi1`, `pektis2`,
 	`apodoxi2`, `pektis3`, `apodoxi3`, `poll`, `arxio`) VALUES
-(1, '2014-01-13 10:29:11', 'akis', 'ΝΑΙ', 'panos', 'ΝΑΙ', 'maria', 'ΝΑΙ', '2014-01-13 10:29:11', NULL),
+(1, '2014-01-13 10:29:11', 'akis', 'ΝΑΙ', 'panos', 'ΝΑΙ', 'maria', 'ΝΑΙ', '2014-01-13 10:29:11', '2014-01-13 11:30:18'),
 (2, '2014-01-13 10:29:11', 'lefas', 'ΟΧΙ', NULL, 'ΟΧΙ', 'tasos', 'ΟΧΙ', '2014-01-13 10:29:11', NULL),
 (3, '2014-01-13 10:29:11', 'babis', 'ΟΧΙ', NULL, 'ΟΧΙ', 'panos', 'ΝΑΙ', '2014-01-13 10:29:11', NULL);
 
