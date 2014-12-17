@@ -159,7 +159,7 @@ Arxio.kritiriaReset = function() {
 
 Arxio.skipReset = function() {
 	Arxio.skip = 0;
-	Arxio.moreButtonDOM.prop('disabled', false);
+	Arxio.moreButtonDOM.prop('disabled', true);
 	return Arxio;
 };
 
@@ -178,9 +178,7 @@ Arxio.paralavi = function(data) {
 		return;
 	}
 
-	if (tlist.length < Arxio.limit)
-	Arxio.moreButtonDOM.prop('disabled', true);
-
+	Arxio.moreButtonDOM.prop('disabled', tlist.length < Arxio.limit);
 	Globals.awalk(tlist, Arxio.trapeziProcess);
 };
 
