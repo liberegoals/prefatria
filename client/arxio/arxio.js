@@ -1,4 +1,7 @@
-Arxio = {};
+Arxio = {
+	limit: 1,
+	skip: 0,
+};
 
 $(document).ready(function() {
 	Client.tabPektis();
@@ -86,26 +89,12 @@ Arxio.kritiriaSetup = function() {
 	})).
 	append(Arxio.goButtonDOM = $('<button>').attr('type', 'submit').addClass('formaButton').text('Go!!!')).
 	append(Arxio.resetButtonDOM = $('<button>').attr('type', 'reset').addClass('formaButton').text('Reset')).
-	append(Arxio.prevButtonDOM = $('<button>').addClass('formaButton').text('<')).
-	append(Arxio.nextButtonDOM = $('<button>').addClass('formaButton').text('>')));
+	append(Arxio.moreButtonDOM = $('<button>').addClass('formaButton').text('Περισσότερα…')));
 
 	Arxio.goButtonDOM.on('click', function(e) {
 		Arxio.apotelesmataDOM.empty();
-
-		if (!Arxio.processKritiria())
-		return false;
-
-		Client.fyi.pano('Παρακαλώ περιμένετε…');
-		Client.ajaxService('arxio/epilogi.php', 'pektis=' + Arxio.pektisInputDOM.val().uri(),
-			'apo=' + Arxio.apoInputDOM.data('timestamp'), 'eos=' + Arxio.eosInputDOM.data('timestamp'),
-			'partida=' + Arxio.partidaInputDOM.val().uri()).
-		done(function(rsp) {
-			Client.fyi.pano();
-			Arxio.paralavi(rsp);
-		}).
-		fail(function(err) {
-			Client.ajaxFail(err);
-		});
+		Arxio.skipReset();
+		Arxio.zitaData();
 		return false;
 	});
 
@@ -114,7 +103,31 @@ Arxio.kritiriaSetup = function() {
 		return false;
 	});
 
+	Arxio.moreButtonDOM.on('click', function(e) {
+		Arxio.skip += Arxio.limit;
+		Arxio.zitaData();
+		return false;
+	});
+
 	Arxio.kritiriaReset();
+};
+
+Arxio.zitaData = function() {
+	if (!Arxio.processKritiria())
+	return;
+
+	Client.fyi.pano('Παρακαλώ περιμένετε…');
+	Client.ajaxService('arxio/epilogi.php', 'pektis=' + Arxio.pektisInputDOM.val().uri(),
+		'apo=' + Arxio.apoInputDOM.data('timestamp'), 'eos=' + Arxio.eosInputDOM.data('timestamp'),
+		'partida=' + Arxio.partidaInputDOM.val().uri(), 'limit=' + Arxio.limit,
+		'skip=' + Arxio.skip).
+	done(function(rsp) {
+		Client.fyi.pano();
+		Arxio.paralavi(rsp);
+	}).
+	fail(function(err) {
+		Client.ajaxFail(err);
+	});
 };
 
 Arxio.kritiriaReset = function() {
@@ -139,6 +152,15 @@ Arxio.kritiriaReset = function() {
 
 	Arxio.apotelesmataDOM.empty();
 	Arxio.pektisInputDOM.focus();
+
+	Arxio.skipReset();
+	return Arxio;
+};
+
+Arxio.skipReset = function() {
+	Arxio.skip = 0;
+	Arxio.moreButtonDOM.prop('disabled', false);
+	return Arxio;
 };
 
 // Η function "paralavi" καλείται κατά την επιστροφή των αποτελεσμάτων,
@@ -155,6 +177,9 @@ Arxio.paralavi = function(data) {
 		Client.sound.beep();
 		return;
 	}
+
+	if (tlist.length < Arxio.limit)
+	Arxio.moreButtonDOM.prop('disabled', true);
 
 	Globals.awalk(tlist, Arxio.trapeziProcess);
 };
@@ -285,6 +310,10 @@ Arxio.partidaCheck = function() {
 	return false;
 };
 
+Arxio.aplomaDianomi = function(trapezi) {
+	console.log(trapezi.data('trapezi'));
+};
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
 
 Trapezi.prototype.trapeziArxioKapikia = function() {
@@ -326,10 +355,15 @@ Trapezi.prototype.trapeziArxioDisplay = function() {
 	kodikos = this.trapeziKodikosGet();
 
 	this.DOM.
+	data('trapezi', kodikos).
 	append($('<div>').addClass('trapeziData').
 	append($('<div>').addClass('trapeziDataContent').
 	append($('<div>').addClass('trapeziDataKodikos').text(kodikos)).
-	append($('<div>').addClass('trapeziDataIpolipo').text(this.ipolipo))));
+	append($('<div>').addClass('trapeziDataIpolipo').text(this.ipolipo)))).
+	on('click', function(e) {
+		Arxio.aplomaDianomi($(this));
+	});
+
 	Prefadoros.thesiWalk(function(thesi) {
 		var pektis, dom, kapikia, kapikiaKlasi;
 
