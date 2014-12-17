@@ -147,8 +147,11 @@ class Epilogi {
 	}
 
 	public static function queryClose() {
-		self::$query .= " ORDER BY `kodikos` DESC LIMIT 20";
-		return;
+		self::$query .= " ORDER BY `kodikos` DESC LIMIT ";
+		self::$query .= (Globals::perastike("limit") ? $_REQUEST["limit"] : 20);
+
+		if (Globals::perastike("skip"))
+		self::$query .= " OFFSET " . $_REQUEST["skip"];
 	}
 
 	public static function queryRun() {
