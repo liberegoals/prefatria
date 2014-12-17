@@ -26,6 +26,7 @@ background-color: rgb(203, 219, 197);
 
 .trapezi:hover {
 	opacity: 1;
+	background-color: rgb(169, 192, 160);
 	cursor: pointer;
 }
 
