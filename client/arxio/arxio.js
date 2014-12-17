@@ -1,5 +1,40 @@
+// Το παρόν οδηγεί τη σελίδα επισκόπησης αρχειοθετημένων παρτίδων ΣΕΑΠ. Ο χρήστης
+// μπορεί να καθορίσει κριτήρια επιλογής σχετικά με τους συμμετέχοντες και το χρόνο
+// έναρξης της παρτίδας.
+//
+// Όσον αφορά στους συμμετέχοντες έχουμε τις εξής επιλογές:
+//
+//	[κενό]		Αν αφήσουμε το πεδίο κενό, τότε επιλέγονται παρτίδες ασχέτως
+//			των συμμετεχόντως σε αυτές.
+//
+//	panos		Επιλέγονται παρτίδες στις οποίες συμμετέχει ο παίκτης "panos"
+//
+//	panos,maria	Επιλέγονται παρτίδες στις οποίες συμμετέχει ο παίκτης "panos",
+//			ή ο παίκτης "kolios", ή και οι δύο.
+//
+//	panos+kolios	Επιλέγονται παρτίδες στις οποίες συμμετέχουν ΚΑΙ ο παίκτης
+//			"panos" ΚΑΙ ο παίκτης "kolios".
+//
+// Στο κριτήριο ονόματος παίκτη μπορούν να «παίξουν» και μεταχαρακτήρες (%_).
+//
+// Τα κριτήρια επιλογής χρόνου έναρξης είναι απλώς οι ημερομηνίες αρχής και τέλους του
+// διαστήματος επιλογής. Αν λείπει κάποιο, ή και τα δύο από αυτά τα κριτήρια το πρόγραμμα
+// συμπεριφέρεται λογικά.
+//
+// Τα αποτελέσματα εμφανίζονται ταξινομημένα κατά κωδικό παρτίδας και αποστέλλονται σε
+// σε ομάδες των 30 παρτίδων. Ο χρήστης μπορεί να ζητήσει την επόμενη ομάδα με το
+// πλήκτρο "Περισσότερα…".
+
 Arxio = {
+	// Η property "limit" δείχνει πόσες παρτίδες αποστέλλονται από τον server
+	// σε κάθε αποστολή.
+
 	limit: 30,
+
+	// Η property "skip" δείχνει πόσες ομάδες παρτίδων έχουμε ήδη παραλάβει
+	// κάθε φορά που ζητάμε την επόμενη ομάδα αποτελεσμάτων για την τρέχουσα
+	// αναζήτηση.
+
 	skip: 0,
 };
 
@@ -9,27 +44,33 @@ $(document).ready(function() {
 	Arxio.setup();
 
 	// Κατά την ανάπτυξη του προγράμματος βολεύει καλύτερα
-	// να έχουμε αυτόματα κάποιο select set.
+	// να έχουμε αυτόματα κάποιο selected set.
 
 	if (Debug.flagGet('development')) {
 		$('input').val('');
 		Arxio.goButtonDOM.trigger('click');
 	}
 
+	// Ελέγχουμε αν έχουμε ανοίξει την ΣΕΑΠ από τη βασική
+	// σελίδα της εφαρμογής, ή αυτόνομα.
+
 	Arena = null;
-	if (!window.opener) return;
+	if (!window.opener)
+	return;
+
+	// Εφόσον η σελίδα δεν έχει ανοίξει αυτόνομα, ελέγχουμε
+	// το global αντικείμενο "Arena" το οποίο υποδηλώνει τη
+	// βασική σελίδα της εφαρμογής ως σημείο εκκίνησης της
+	// ΣΕΑΠ.
+
 	Arena = window.opener.Arena;
-	if (!Arena) return;
+	if (!Arena)
+	return;
+
+	// Η ΣΕΑΠ εκκίνησε από τη βασική σελίδα της εφαρμογής.
+	// Προς το παρόν δεν χρειάζεται να κάνουμε κάποια ενέργεια
+	// στη βασική σελίδα.
 });
-
-Arxio.unload = function() {
-	if (!Arena) return;
-	if (!Arena.arxio) return;
-	if (!Arena.arxio.win) return;
-
-	Arena.arxio.win.close();
-	Arena.arxio.win = null;
-};
 
 $(window).
 on('beforeunload', function() {
@@ -39,7 +80,33 @@ on('unload', function() {
 	Arxio.unload();
 });
 
+// Αν κλείσουμε τη ΣΕΑΠ, θα πρέπει να κάνουμε κάποιες ενέργεις στη βασική
+// σελίδα της εφαρμογής, εφόσον η ΣΕΑΠ εκκίνησε από τη βασική σελίδα.
+
+Arxio.unload = function() {
+	if (!Arena)
+	return;
+
+	if (!Arena.arxio)
+	return;
+
+	if (!Arena.arxio.win)
+	return;
+
+	Arena.arxio.win.close();
+	Arena.arxio.win = null;
+};
+
 Arxio.setup = function() {
+	var h;
+
+	// Για τη διευκόλυνσή μας στην ανάπτυξη των προγραμμάτων, μπορούμε να
+	// μειώσουμε το μέγεθος των ομάδων αποτελεσμάτων που αποστέλλονται από
+	// τον server.
+
+	if (Debug.flagGet('arxioLimit'))
+	Arxio.limit = parseInt(Debug.flagGet('arxioLimit'));
+
 	Client.ofelimoDOM.
 	append(Arxio.kritiriaDOM = $('<div>').attr('id', 'kritiria')).
 	append(Arxio.apotelesmataDOM = $('<div>').attr('id', 'apotelesmata'));
@@ -66,18 +133,21 @@ Arxio.setup = function() {
 };
 
 Arxio.kritiriaSetup = function() {
-	var imerominia, mera, minas, etos;
-
 	Arxio.kritiriaDOM.
 	append($('<form>').
+
 	append($('<div>').addClass('formaPrompt').text('Παίκτης')).
 	append(Arxio.pektisInputDOM = $('<input>').addClass('formaPedio').css('width', '140px')).
+
 	append($('<div>').addClass('formaPrompt').text('Από')).
 	append(Arxio.apoInputDOM = Client.inputDate()).
+
 	append($('<div>').addClass('formaPrompt').text('Έως')).
 	append(Arxio.eosInputDOM = Client.inputDate()).
+
 	append($('<div>').addClass('formaPrompt').text('Παρτίδα')).
 	append(Arxio.partidaInputDOM = $('<input>').addClass('formaPedio').css('width', '70px').
+
 	on('keyup', function(e) {
 		switch (e.which) {
 		case 13:
@@ -258,7 +328,7 @@ Arxio.pektisCheck = function() {
 Arxio.imerominiaCheck = function(input) {
 	var val, dmy;
 
-	input.data('timestamp', 0);
+	input.removeClass('inputLathos').data('timestamp', 0);
 
 	val = input.val();
 	val = val ? val.trim() : '';
