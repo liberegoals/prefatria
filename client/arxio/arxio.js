@@ -1,5 +1,5 @@
 Arxio = {
-	limit: 1,
+	limit: 30,
 	skip: 0,
 };
 
