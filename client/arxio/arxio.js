@@ -117,6 +117,9 @@ Arxio.setup = function() {
 	Arxio.apotelesmataDOM.css('height', h + 'px');
 
 	$(document).
+
+	// Με το πάτημα του πλήκτρου Escape κάνουμε reset στη ΣΕΑΠ.
+
 	on('keyup', function(e) {
 		switch (e.which) {
 		case 27:
@@ -124,6 +127,12 @@ Arxio.setup = function() {
 			break;
 		}
 	}).
+
+	// Οι παρτίδες που εμφανίζονται στη ΣΕΑΠ είναι κάπως αχνές, αλλά γίνονται
+	// διαυγείς μόλις ο χρήστης περάσει από πάνω τους το ποντίκι. Αυτό γίνεται
+	// μέσω CSS, αλλά παρόμοια τακτική ακολουθούμε και για τα καπίκια του κάθε
+	// παίκτη· αυτό γίνεται προγραμματιστικά.
+
 	on('mouseenter', '.trapezi', function(e) {
 		$(this).find('.arxioKapikia').addClass('arxioKapikiaTrexon');
 	}).
@@ -147,7 +156,6 @@ Arxio.kritiriaSetup = function() {
 
 	append($('<div>').addClass('formaPrompt').text('Παρτίδα')).
 	append(Arxio.partidaInputDOM = $('<input>').addClass('formaPedio').css('width', '70px').
-
 	on('keyup', function(e) {
 		switch (e.which) {
 		case 13:
@@ -157,30 +165,52 @@ Arxio.kritiriaSetup = function() {
 			break;
 		}
 	})).
-	append(Arxio.goButtonDOM = $('<button>').attr('type', 'submit').addClass('formaButton').text('Go!!!')).
-	append(Arxio.resetButtonDOM = $('<button>').attr('type', 'reset').addClass('formaButton').text('Reset')).
-	append(Arxio.moreButtonDOM = $('<button>').addClass('formaButton').text('Περισσότερα…')));
 
-	Arxio.goButtonDOM.on('click', function(e) {
+	// Το πλήκτρο "Go!!!" εκκινεί την αναζήτηση στον server. Το καθιστούμε submit
+	// button προκειμένου να μπορεί ο χρήστης να εκκινήσει την αναζήτηση πατώντας
+	// Enter.
+
+	append(Arxio.goButtonDOM = $('<button>').
+	text('Go!!!').
+	attr('type', 'submit').
+	addClass('formaButton').
+	on('click', function(e) {
 		Arxio.apotelesmataDOM.empty();
 		Arxio.skipReset();
 		Arxio.zitaData();
 		return false;
-	});
+	})).
 
-	Arxio.resetButtonDOM.on('click', function(e) {
+	// Το πλήκτρο "Reset" καθαρίζει τα αποτελέσματα που υπάρχουν ήδη στη ΣΕΑΠ και
+	// επαναφέρει τα κριτήρια αναζήτησης στις αρχικές τους τιμές.
+
+	append(Arxio.resetButtonDOM = $('<button>').
+	text('Reset').
+	attr('type', 'reset').
+	addClass('formaButton').
+	on('click', function(e) {
 		Arxio.kritiriaReset();
 		return false;
-	});
+	})).
 
-	Arxio.moreButtonDOM.on('click', function(e) {
+	// Το πλήκτρο "Περισσότερα…" ζητά από τον server την επόμενη ομάδα αποτελεσμάτων
+	// για την τρέχουσα αναζήτηση.
+
+	append(Arxio.moreButtonDOM = $('<button>').
+	text('Περισσότερα…').
+	addClass('formaButton').
+	on('click', function(e) {
 		Arxio.skip += Arxio.limit;
 		Arxio.zitaData();
 		return false;
-	});
+	})));
 
 	Arxio.kritiriaReset();
+	return Arxio;
 };
+
+// Η function "zitaData" αποστέλλει query αναζήτησης στον server και διαχειρίζεται την
+// απάντηση.
 
 Arxio.zitaData = function() {
 	if (!Arxio.processKritiria())
@@ -196,7 +226,7 @@ Arxio.zitaData = function() {
 		Arxio.paralavi(rsp);
 	}).
 	fail(function(err) {
-		Client.ajaxFail(err);
+		Client.ajaxFail('Server error');
 	});
 };
 
