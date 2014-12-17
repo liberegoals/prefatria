@@ -216,17 +216,17 @@ Arxio.zitaData = function() {
 	if (!Arxio.processKritiria())
 	return;
 
-	Client.fyi.pano('Παρακαλώ περιμένετε…');
+	Client.fyi.pano('Αναζήτηση παρτίδων. Παρακαλώ περιμένετε…');
 	Client.ajaxService('arxio/epilogi.php', 'pektis=' + Arxio.pektisInputDOM.val().uri(),
 		'apo=' + Arxio.apoInputDOM.data('timestamp'), 'eos=' + Arxio.eosInputDOM.data('timestamp'),
 		'partida=' + Arxio.partidaInputDOM.val().uri(), 'limit=' + Arxio.limit,
 		'skip=' + Arxio.skip).
 	done(function(rsp) {
 		Client.fyi.pano();
-		Arxio.paralavi(rsp);
+		Arxio.paralaviPartida(rsp);
 	}).
 	fail(function(err) {
-		Client.ajaxFail('Server error');
+		Client.ajaxFail('Παρουσιάστηκε σφάλμα κατά την αναζήτηση παρτίδων');
 	});
 };
 
@@ -263,10 +263,12 @@ Arxio.skipReset = function() {
 	return Arxio;
 };
 
-// Η function "paralavi" καλείται κατά την επιστροφή των αποτελεσμάτων,
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
+
+// Η function "paralaviPartida" καλείται κατά την επιστροφή των αποτελεσμάτων,
 // και σκοπό έχει τη διαχείριση των αποτελεσμάτων αυτών.
 
-Arxio.paralavi = function(data) {
+Arxio.paralaviPartida = function(data) {
 	var tlist;
 
 	try {
@@ -327,6 +329,69 @@ Arxio.trapeziEcoMap = {
 	a: 'arxio',
 	t: 'trparam',
 	d: 'dianomi',
+};
+
+Trapezi.prototype.trapeziParalaviDianomi = function(data) {
+	var trapezi = this;
+
+	try {
+		this.dianomi = ('[' + data + ']').evalAsfales();
+	} catch (e) {
+		console.error(data);
+		Client.fyi.epano('Επεστράφησαν ακαθόριστα δεδομένα');
+		Client.sound.beep();
+		this.dianomi = [];
+		return;
+	}
+
+	Globals.awalk(this.dianomi, function(i, dianomi) {
+		trapezi.dianomi[i] = Arxio.dianomiProcess(trapezi, dianomi);
+	});
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
+
+// Η function "dianomiProcess" διαχειρίζεται κάθε ένα από τα στοιχεία της
+// λίστας διανομών που επεστράφησαν από τον server.
+
+Arxio.dianomiProcess = function(trapezi, dianomiEco) {
+	var dianomi, prop, ts;
+
+	// Δημιουργούμε αντίγραφο του προς επεξεργασία στοιχείου στο οποίο
+	// εμπεριέχονται τα πραγματικά properties της σχετικής διανομής
+	// έναντι των οικονομικών τοιαύτων.
+
+	dianomi = {};
+	for (prop in Arxio.dianomiEcoMap) {
+		dianomi[Arxio.dianomiEcoMap[prop]] = dianomiEco[prop];
+	}
+
+	ts = parseInt(dianomi.enarxi);
+	if (ts) dianomi.enarxi = ts + Client.timeDif;
+
+	ts = parseInt(dianomi.telos);
+	if (ts) dianomi.telos = ts + Client.timeDif;
+
+	return new Dianomi(dianomi).
+		dianomiArxioDisplay(trapezi);
+};
+
+// Τα αποτελέσματα παραλαμβάνονται σε «οικονομική» μορφή, δηλαδή
+// τα ονόματα των properties της διανομής είναι συντομογραφικά.
+// Η λίστα "dianomiEcoMap" αντιστοιχεί τα οικονομικά ονόματα τών
+// properties τής διανομής στα πραγαμτικά τους ονόματα.
+
+Arxio.dianomiEcoMap = {
+	k: 'kodikos',
+	e: 'enarxi',
+	d: 'dealer',
+	k1: 'kasa1',
+	m1: 'metrita1',
+	k2: 'kasa2',
+	m2: 'metrita2',
+	k3: 'kasa3',
+	m3: 'metrita3',
+	t: 'telos',
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
@@ -411,7 +476,29 @@ Arxio.partidaCheck = function() {
 };
 
 Arxio.aplomaDianomi = function(trapezi) {
-	console.log(trapezi.data('trapezi'));
+	var dianomi, trapeziKodikos;
+
+	dianomi = trapezi.dianomi;
+	if (dianomi && dianomi.length) {
+		console.log(dianomi);
+		return Arxio;
+	}
+
+	trapeziKodikos = trapezi.trapeziKodikosGet();
+	if (!trapeziKodikos) {
+		Client.fyi.epano('Ακαθόριστος κωδικός τραπεζιού');
+		return Arxio;
+	}
+
+	Client.fyi.pano('Ζητήθηκαν διανομές. Παρακαλώ περιμένετε…');
+	Client.ajaxService('arxio/dianomi.php', 'trapezi=' + trapeziKodikos).
+	done(function(rsp) {
+		Client.fyi.pano();
+		trapezi.trapeziParalaviDianomi(rsp);
+	}).
+	fail(function(err) {
+		Client.ajaxFail('Παρουσιάστηκε σφάλμα κατά την αναζήτηση διανομών');
+	});
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
@@ -449,8 +536,11 @@ Trapezi.prototype.trapeziArxioKapikia = function() {
 Trapezi.prototype.trapeziArxioDisplay = function() {
 	var trapezi = this, kodikos;
 
-	if (this.DOM) this.DOM.emtpy();
-	else Arxio.apotelesmataDOM.append(this.DOM = $('<div>').addClass('trapezi'));
+	if (this.DOM)
+	this.DOM.emtpy();
+
+	else
+	Arxio.apotelesmataDOM.append(this.DOM = $('<div>').addClass('trapezi'));
 
 	kodikos = this.trapeziKodikosGet();
 
@@ -461,7 +551,14 @@ Trapezi.prototype.trapeziArxioDisplay = function() {
 	append($('<div>').addClass('trapeziDataKodikos').text(kodikos)).
 	append($('<div>').addClass('trapeziDataIpolipo').text(this.ipolipo)))).
 	on('click', function(e) {
-		Arxio.aplomaDianomi($(this));
+		if ($(this).data('aplomeni')) {
+			$(this).find('.dianomi').css('display', 'none');
+			$(this).removeData('aplomeni');
+			return;
+		}
+
+		Arxio.aplomaDianomi(trapezi);
+		$(this).data('aplomeni', true);
 	});
 
 	Prefadoros.thesiWalk(function(thesi) {
@@ -482,8 +579,12 @@ Trapezi.prototype.trapeziArxioDisplay = function() {
 	});
 
 	arxio = trapezi.trapeziArxioGet();
-	if (arxio) this.DOM.append($('<div>').addClass('trapeziArxio').text(Globals.poteOra(arxio)));
-	else this.DOM.append($('<div>').addClass('trapeziArxio plagia').text('Σε εξέλιξη…'));
+
+	if (arxio)
+	this.DOM.append($('<div>').addClass('trapeziArxio').text(Globals.poteOra(arxio)));
+
+	else
+	this.DOM.append($('<div>').addClass('trapeziArxio plagia').text('Σε εξέλιξη…'));
 
 	this.trapeziArxioOptions();
 	return this;
@@ -512,5 +613,20 @@ Trapezi.prototype.trapeziOptionIcon = function(desc, img) {
 		title: desc,
 		src: '../ikona/panel/' + img,
 	}));
+	return this;
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
+
+Dianomi.prototype.dianomiArxioDisplay = function(trapezi) {
+console.log('XXX');
+	if (this.DOM)
+	return this;
+
+	this.DOM = $('<div>').addClass('dianomi').
+	append($('<div>').text(this.dianomiKodikosGet()));
+
+console.log('asdsad');
+trapezi.DOM.append(this.DOM);
 	return this;
 };
