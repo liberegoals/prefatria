@@ -280,6 +280,8 @@ Arxio.paralavi = function(data) {
 
 	Arxio.moreButtonDOM.prop('disabled', tlist.length < Arxio.limit);
 	Globals.awalk(tlist, Arxio.trapeziProcess);
+
+	return Arxio;
 };
 
 // Η function "trapeziProcess" διαχειρίζεται κάθε ένα από τα στοιχεία της
