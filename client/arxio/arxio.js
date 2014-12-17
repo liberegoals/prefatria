@@ -301,6 +301,18 @@ Arxio.trapeziProcess = function(i, trapeziEco) {
 		trapezi[Arxio.trapeziEcoMap[prop]] = trapeziEco[prop];
 	}
 
+	Globals.awalk(trapezi.dianomi, function(i, dianomiEco) {
+		var prop;
+
+		dianomi = {};
+		for (prop in Arxio.dianomiEcoMap) {
+			dianomi[Arxio.dianomiExoMap[prop]] = dianomiEco[prop];
+		}
+
+		trapezi.dianomi[i] = new Dianomi(dianomi);
+	});
+console.log(trapezi.dianomi);
+
 	ts = parseInt(trapezi.stisimo);
 	if (ts) trapezi.stisimo = ts + Client.timeDif;
 
@@ -313,6 +325,8 @@ Arxio.trapeziProcess = function(i, trapeziEco) {
 	new Trapezi(trapezi).
 	trapeziArxioKapikia().
 	trapeziArxioDisplay();
+
+	return Arxio;
 };
 
 // Τα αποτελέσματα παραλαμβάνονται σε «οικονομική» μορφή, δηλαδή
@@ -329,24 +343,6 @@ Arxio.trapeziEcoMap = {
 	a: 'arxio',
 	t: 'trparam',
 	d: 'dianomi',
-};
-
-Trapezi.prototype.trapeziParalaviDianomi = function(data) {
-	var trapezi = this;
-
-	try {
-		this.dianomi = ('[' + data + ']').evalAsfales();
-	} catch (e) {
-		console.error(data);
-		Client.fyi.epano('Επεστράφησαν ακαθόριστα δεδομένα');
-		Client.sound.beep();
-		this.dianomi = [];
-		return;
-	}
-
-	Globals.awalk(this.dianomi, function(i, dianomi) {
-		trapezi.dianomi[i] = Arxio.dianomiProcess(trapezi, dianomi);
-	});
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
@@ -475,32 +471,6 @@ Arxio.partidaCheck = function() {
 	return false;
 };
 
-Arxio.aplomaDianomi = function(trapezi) {
-	var dianomi, trapeziKodikos;
-
-	dianomi = trapezi.dianomi;
-	if (dianomi && dianomi.length) {
-		console.log(dianomi);
-		return Arxio;
-	}
-
-	trapeziKodikos = trapezi.trapeziKodikosGet();
-	if (!trapeziKodikos) {
-		Client.fyi.epano('Ακαθόριστος κωδικός τραπεζιού');
-		return Arxio;
-	}
-
-	Client.fyi.pano('Ζητήθηκαν διανομές. Παρακαλώ περιμένετε…');
-	Client.ajaxService('arxio/dianomi.php', 'trapezi=' + trapeziKodikos).
-	done(function(rsp) {
-		Client.fyi.pano();
-		trapezi.trapeziParalaviDianomi(rsp);
-	}).
-	fail(function(err) {
-		Client.ajaxFail('Παρουσιάστηκε σφάλμα κατά την αναζήτηση διανομών');
-	});
-};
-
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
 
 Trapezi.prototype.trapeziArxioKapikia = function() {
@@ -551,14 +521,11 @@ Trapezi.prototype.trapeziArxioDisplay = function() {
 	append($('<div>').addClass('trapeziDataKodikos').text(kodikos)).
 	append($('<div>').addClass('trapeziDataIpolipo').text(this.ipolipo)))).
 	on('click', function(e) {
-		if ($(this).data('aplomeni')) {
-			$(this).find('.dianomi').css('display', 'none');
-			$(this).removeData('aplomeni');
-			return;
-		}
+		if (trapezi.isAplomeno())
+		trapezi.mazema();
 
-		Arxio.aplomaDianomi(trapezi);
-		$(this).data('aplomeni', true);
+		else
+		trapezi.aploma();
 	});
 
 	Prefadoros.thesiWalk(function(thesi) {
@@ -616,17 +583,44 @@ Trapezi.prototype.trapeziOptionIcon = function(desc, img) {
 	return this;
 };
 
+Trapezi.prototype.aplomenoSet = function(aplomeno) {
+	if (aplomeno === undefined)
+	aplomeno = true;
+
+	this.aplomeno = aplomeno;
+	return this;
+};
+
+Trapezi.prototype.isAplomeno = function() {
+	return this.aplomeno;
+};
+
+Trapezi.prototype.isMazemeno = function() {
+	return !this.isAplomeno();
+};
+
+Trapezi.prototype.aploma = function() {
+	var trapezi = this;
+
+	Globals.awalk(this.dianomi, function(i, dianomi) {
+		dianomi.dianomiArxioDisplay(trapezi);
+	});
+
+	this.aplomenoSet(true);
+	return this;
+}
+
+Trapezi.prototype.mazema = function() {
+	this.DOM.find('.dianomi').remove();
+	this.aplomenoSet(false);
+	return this;
+}
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
 
 Dianomi.prototype.dianomiArxioDisplay = function(trapezi) {
-console.log('XXX');
-	if (this.DOM)
-	return this;
-
-	this.DOM = $('<div>').addClass('dianomi').
-	append($('<div>').text(this.dianomiKodikosGet()));
-
-console.log('asdsad');
-trapezi.DOM.append(this.DOM);
+	trapezi.DOM.
+	append($('<div>').addClass('dianomi').
+	append($('<div>').text(this.dianomiKodikosGet())));
 	return this;
 };
