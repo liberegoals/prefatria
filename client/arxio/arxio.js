@@ -1,3 +1,6 @@
+// ΣΕΑΠ -- Σελίδα Επισκόπησης Αρχειοθετημένων Παρτίδων
+// ===================================================
+//
 // Το παρόν οδηγεί τη σελίδα επισκόπησης αρχειοθετημένων παρτίδων ΣΕΑΠ. Ο χρήστης
 // μπορεί να καθορίσει κριτήρια επιλογής σχετικά με τους συμμετέχοντες και το χρόνο
 // έναρξης της παρτίδας.
@@ -24,19 +27,6 @@
 // Τα αποτελέσματα εμφανίζονται ταξινομημένα κατά κωδικό παρτίδας και αποστέλλονται σε
 // σε ομάδες των 30 παρτίδων. Ο χρήστης μπορεί να ζητήσει την επόμενη ομάδα με το
 // πλήκτρο "Περισσότερα…".
-
-Arxio = {
-	// Η property "limit" δείχνει πόσες παρτίδες αποστέλλονται από τον server
-	// σε κάθε αποστολή.
-
-	limit: 30,
-
-	// Η property "skip" δείχνει πόσες ομάδες παρτίδων έχουμε ήδη παραλάβει
-	// κάθε φορά που ζητάμε την επόμενη ομάδα αποτελεσμάτων για την τρέχουσα
-	// αναζήτηση.
-
-	skip: 0,
-};
 
 $(document).ready(function() {
 	Client.tabPektis();
@@ -80,21 +70,19 @@ on('unload', function() {
 	Arxio.unload();
 });
 
-// Αν κλείσουμε τη ΣΕΑΠ, θα πρέπει να κάνουμε κάποιες ενέργεις στη βασική
-// σελίδα της εφαρμογής, εφόσον η ΣΕΑΠ εκκίνησε από τη βασική σελίδα.
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
 
-Arxio.unload = function() {
-	if (!Arena)
-	return;
+Arxio = {
+	// Η property "limit" δείχνει πόσες παρτίδες αποστέλλονται από τον server
+	// σε κάθε αποστολή.
 
-	if (!Arena.arxio)
-	return;
+	limit: 30,
 
-	if (!Arena.arxio.win)
-	return;
+	// Η property "skip" δείχνει πόσες ομάδες παρτίδων έχουμε ήδη παραλάβει
+	// κάθε φορά που ζητάμε την επόμενη ομάδα αποτελεσμάτων για την τρέχουσα
+	// αναζήτηση.
 
-	Arena.arxio.win.close();
-	Arena.arxio.win = null;
+	skip: 0,
 };
 
 Arxio.setup = function() {
@@ -115,6 +103,9 @@ Arxio.setup = function() {
 	h = Client.ofelimoDOM.innerHeight();
 	h -= Arxio.kritiriaDOM.outerHeight(true) + 20;
 	Arxio.apotelesmataDOM.css('height', h + 'px');
+
+	// Στήνουμε κάποιους keyborad/mouse event listeners που αφορούν σε
+	// ολόκληρη τη σελίδα.
 
 	$(document).
 
@@ -140,6 +131,11 @@ Arxio.setup = function() {
 		$('.arxioKapikia').removeClass('arxioKapikiaTrexon');
 	});
 };
+
+// Η function "kritiriaSetup" στήνει το επάνω μέρος της ΣΕΑΠ όπου υπάρχουν τα κριτήρια
+// αναζήτησης και τα διάφορα πλήκτρα που αφορούν στους χειρισμούς αναζήτησης. Αν και
+// δεν είναι απαραίτητο, όλα τα παραπάνω τα εντάσσουμε σε HTML form προκειμένου να
+// καρπωθούμε τα οφέλη της φόρμας (submit, reset κλπ).
 
 Arxio.kritiriaSetup = function() {
 	Arxio.kritiriaDOM.
@@ -175,9 +171,10 @@ Arxio.kritiriaSetup = function() {
 	attr('type', 'submit').
 	addClass('formaButton').
 	on('click', function(e) {
-		Arxio.apotelesmataDOM.empty();
-		Arxio.skipReset();
-		Arxio.zitaData();
+		Arxio.
+		apotelesmataClear().
+		skipReset().
+		zitaData();
 		return false;
 	})).
 
@@ -189,7 +186,7 @@ Arxio.kritiriaSetup = function() {
 	attr('type', 'reset').
 	addClass('formaButton').
 	on('click', function(e) {
-		Arxio.kritiriaReset();
+		Arxio.resetAnazitisi();
 		return false;
 	})).
 
@@ -205,12 +202,12 @@ Arxio.kritiriaSetup = function() {
 		return false;
 	})));
 
-	Arxio.kritiriaReset();
+	Arxio.resetAnazitisi();
 	return Arxio;
 };
 
-// Η function "zitaData" αποστέλλει query αναζήτησης στον server και διαχειρίζεται την
-// απάντηση.
+// Η function "zitaData" αποστέλλει query αναζήτησης παρτίδων στον server και διαχειρίζεται
+// την απάντηση, η οποία περιέχει τα στοιχεία των επιλεγμένων παρτίδων.
 
 Arxio.zitaData = function() {
 	if (!Arxio.processKritiria())
@@ -228,6 +225,18 @@ Arxio.zitaData = function() {
 	fail(function(err) {
 		Client.ajaxFail('Παρουσιάστηκε σφάλμα κατά την αναζήτηση παρτίδων');
 	});
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
+
+Arxio.resetAnazitisi = function() {
+	Arxio.
+	kritiriaReset().
+	skipReset().
+	apotelesmataClear().
+	pektisFocus();
+
+	return Arxio;
 };
 
 Arxio.kritiriaReset = function() {
@@ -249,17 +258,22 @@ Arxio.kritiriaReset = function() {
 	Arxio.apoInputDOM.val(mera + '-' + minas + '-' + etos);
 
 	Arxio.partidaInputDOM.val('');
-
-	Arxio.apotelesmataDOM.empty();
-	Arxio.pektisInputDOM.focus();
-
-	Arxio.skipReset();
 	return Arxio;
 };
 
 Arxio.skipReset = function() {
 	Arxio.skip = 0;
 	Arxio.moreButtonDOM.prop('disabled', true);
+	return Arxio;
+};
+
+Arxio.apotelesmataClear = function() {
+	Arxio.apotelesmataDOM.empty();
+	return Arxio;
+};
+
+Arxio.pektisFocus = function() {
+	Arxio.pektisInputDOM.focus();
 	return Arxio;
 };
 
@@ -302,11 +316,12 @@ Arxio.trapeziProcess = function(i, trapeziEco) {
 	}
 
 	Globals.awalk(trapezi.dianomi, function(i, dianomiEco) {
+console.log(dianomiEco);
 		var prop;
 
 		dianomi = {};
 		for (prop in Arxio.dianomiEcoMap) {
-			dianomi[Arxio.dianomiExoMap[prop]] = dianomiEco[prop];
+			dianomi[Arxio.dianomiEcoMap[prop]] = dianomiEco[prop];
 		}
 
 		trapezi.dianomi[i] = new Dianomi(dianomi);
@@ -469,6 +484,30 @@ Arxio.partidaCheck = function() {
 	Client.fyi.epano('Λανθασμένο κριτήριο κωδικού παρτίδας');
 	Arxio.partidaInputDOM.addClass('inputLathos').focus();
 	return false;
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
+
+// Αν κλείσουμε τη ΣΕΑΠ, θα πρέπει να κάνουμε κάποιες ενέργεις στη βασική
+// σελίδα της εφαρμογής, εφόσον η ΣΕΑΠ εκκίνησε από τη βασική σελίδα.
+
+Arxio.unload = function() {
+	if (Arxio.unloaded)
+	return;
+
+	Arxio.unloaded = true;
+
+	if (!Arena)
+	return;
+
+	if (!Arena.arxio)
+	return;
+
+	if (!Arena.arxio.win)
+	return;
+
+	Arena.arxio.win.close();
+	Arena.arxio.win = null;
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
