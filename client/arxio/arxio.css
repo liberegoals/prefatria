@@ -14,14 +14,14 @@ body {
 
 .trapezi {
 	margin: 0 0 0px 10px;
-	padding: 10px 2px 6px 8px;
+	padding: 10px 0px 6px 0px;
 	opacity: 0.8;
 	overflow: visible;
 
 	border-style: none none solid none;
 	border-width: 2px;
 	border-color: rgb(157, 157, 153);
-background-color: rgb(203, 219, 197);
+	background-color: rgb(203, 219, 197);
 }
 
 .trapezi:hover {
@@ -31,6 +31,7 @@ background-color: rgb(203, 219, 197);
 }
 
 .trapeziData {
+	margin: 0 0 0 8px;
 	width: 160px;
 	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
 }
@@ -64,6 +65,23 @@ background-color: rgb(203, 219, 197);
 
 .trapeziOption {
 	width: 24px;
+}
+
+.dianomi {
+	position: relative;
+	bottom: -6px;
+	padding: 10px 0px 6px 0px;
+	opacity: 0.8;
+
+	border-style: solid none none none;
+	border-width: 2px;
+	border-color: rgb(157, 157, 153);
+	background-color: rgb(255, 200, 100);
+}
+
+.dianomi:hover {
+	opacity: 1.0;
+	cursor: pointer;
 }
 
 .arxioKapikia {

@@ -342,13 +342,13 @@ Arxio.trapeziProcess = function(i, trapeziEco) {
 	// εμπεριέχονται τα πραγματικά properties του σχετικού τραπεζιού
 	// έναντι των οικονομικών τοιαύτων.
 
-	trapezi = {};
+	trapezi = new Trapezi();
 	for (prop in Arxio.trapeziEcoMap) {
 		trapezi[Arxio.trapeziEcoMap[prop]] = trapeziEco[prop];
 	}
 
 	Globals.awalk(trapezi.dianomiArray, function(i, dianomi) {
-		trapezi.dianomiArray[i] = Arxio.dianomiProcess(dianomi)
+		trapezi.dianomiArray[i] = Arxio.dianomiProcess(dianomi);
 	});
 
 	ts = parseInt(trapezi.stisimo);
@@ -360,7 +360,7 @@ Arxio.trapeziProcess = function(i, trapeziEco) {
 	// Δημιουργούμε το τραπέζι ως αντικείμενο και προβαίνουμε στην
 	// επεξεργασία και στην παρουσίαση αυτού του τραπεζιού.
 
-	new Trapezi(trapezi).
+	trapezi.
 	trapeziArxioKapikia().
 	trapeziArxioDisplay();
 
@@ -543,7 +543,6 @@ Trapezi.prototype.trapeziArxioKapikia = function() {
 	kasa *= 30;
 	this.trapeziDianomiWalk(function() {
 		var dianomi = this;
-console.log(dianomi);
 
 		Prefadoros.thesiWalk(function(thesi) {
 			trapezi['kapikia' + thesi] += dianomi.dianomiKasaGet(thesi) + dianomi.dianomiMetritaGet(thesi);
