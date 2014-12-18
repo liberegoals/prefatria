@@ -24,6 +24,23 @@
 // διαστήματος επιλογής. Αν λείπει κάποιο, ή και τα δύο από αυτά τα κριτήρια το πρόγραμμα
 // συμπεριφέρεται λογικά.
 //
+// Όσον αφορά στον κωδικό παρτίδας έχουμε τις εξής επιλογές:
+//
+//	[κενό]		Αν αφήσουμε το πεδίο κενό, τότε επιλέγονται παρτίδες με βάση
+//			τα υπόλοιπα κριτήρια αναζήτησης.
+//
+//	NNNNNN		Επιλέγεται η παρτίδα με κωδικό NNNNNN.
+//
+//	NNNNNN-MMMMMM	Επιλέγονται οι παρτίδες με κωδικούς από NNNNNN έως και MMMMMM.
+//
+//	<NNNNNN		Επιλέγονται οι παρτίδες με κωδικούς μικρότερους από NNNNNN.
+//
+//	-NNNNNN		Επιλέγονται οι παρτίδες με κωδικούς από NNNNNN και κάτω.
+//
+//	>NNNNNN		Επιλέγονται οι παρτίδες με κωδικούς μεγαλύτερους από NNNNNN.
+//
+//	NNNNNN-		Επιλέγονται οι παρτίδες με κωδικούς από NNNNNN και άνω.
+//
 // Τα αποτελέσματα εμφανίζονται ταξινομημένα κατά κωδικό παρτίδας και αποστέλλονται σε
 // σε ομάδες των 30 παρτίδων. Ο χρήστης μπορεί να ζητήσει την επόμενη ομάδα με το
 // πλήκτρο "Περισσότερα…".
@@ -141,14 +158,28 @@ Arxio.kritiriaSetup = function() {
 	Arxio.kritiriaDOM.
 	append($('<form>').
 
+	// Το πρώτο κριτήριο αναζήτησης αφορά στο login name του παίκτη σύμφωνα με τους
+	// κανόνες που αναφέραμε παραπάνω.
+
 	append($('<div>').addClass('formaPrompt').text('Παίκτης')).
 	append(Arxio.pektisInputDOM = $('<input>').addClass('formaPedio').css('width', '140px')).
+
+	// Ακολουθεί η αρχή του χρονικού διαστήματος που μας ενδιαφέρει. Αν δεν καθοριστεί
+	// ημερομηνία αρχής, τότε δεν τίθεται κάτω χρονικό όριο. Η ημερομηνία αυτή αφορά
+	// στο τέλος της παρτίδας και όχι στο στήσιμο.
 
 	append($('<div>').addClass('formaPrompt').text('Από')).
 	append(Arxio.apoInputDOM = Client.inputDate()).
 
+	// Το επόμενο κριτήριο αναζήτησης αφορά στο τέλος του χρονικού διαστήματος που μας
+	// ενδιαφέρει. Αν δεν καθοριστεί ημερομηνία τέλους, τότε δεν τίθεται άνω χρονικό
+	// όριο.
+
 	append($('<div>').addClass('formaPrompt').text('Έως')).
 	append(Arxio.eosInputDOM = Client.inputDate()).
+
+	// Ακολουθεί κριτήριο αναζήτησης που αφορά στον κωδικό τραπεζιού, σύμφωνα με τους
+	// κανόνες που αναφέραμε παραπάνω.
 
 	append($('<div>').addClass('formaPrompt').text('Παρτίδα')).
 	append(Arxio.partidaInputDOM = $('<input>').addClass('formaPedio').css('width', '70px').
@@ -179,7 +210,8 @@ Arxio.kritiriaSetup = function() {
 	})).
 
 	// Το πλήκτρο "Reset" καθαρίζει τα αποτελέσματα που υπάρχουν ήδη στη ΣΕΑΠ και
-	// επαναφέρει τα κριτήρια αναζήτησης στις αρχικές τους τιμές.
+	// επαναφέρει τα κριτήρια αναζήτησης στις αρχικές τους τιμές. Ο χρήστης μπορεί
+	// να κάνει reset και με άλλον τρόπο, πατώντας το πλήκτρο Escape.
 
 	append(Arxio.resetButtonDOM = $('<button>').
 	text('Reset').
@@ -315,18 +347,9 @@ Arxio.trapeziProcess = function(i, trapeziEco) {
 		trapezi[Arxio.trapeziEcoMap[prop]] = trapeziEco[prop];
 	}
 
-	Globals.awalk(trapezi.dianomi, function(i, dianomiEco) {
-console.log(dianomiEco);
-		var prop;
-
-		dianomi = {};
-		for (prop in Arxio.dianomiEcoMap) {
-			dianomi[Arxio.dianomiEcoMap[prop]] = dianomiEco[prop];
-		}
-
-		trapezi.dianomi[i] = new Dianomi(dianomi);
+	Globals.awalk(trapezi.dianomiArray, function(i, dianomi) {
+		trapezi.dianomiArray[i] = Arxio.dianomiProcess(dianomi)
 	});
-console.log(trapezi.dianomi);
 
 	ts = parseInt(trapezi.stisimo);
 	if (ts) trapezi.stisimo = ts + Client.timeDif;
@@ -357,7 +380,7 @@ Arxio.trapeziEcoMap = {
 	p3: 'pektis3',
 	a: 'arxio',
 	t: 'trparam',
-	d: 'dianomi',
+	d: 'dianomiArray',
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
@@ -365,7 +388,7 @@ Arxio.trapeziEcoMap = {
 // Η function "dianomiProcess" διαχειρίζεται κάθε ένα από τα στοιχεία της
 // λίστας διανομών που επεστράφησαν από τον server.
 
-Arxio.dianomiProcess = function(trapezi, dianomiEco) {
+Arxio.dianomiProcess = function(dianomiEco) {
 	var dianomi, prop, ts;
 
 	// Δημιουργούμε αντίγραφο του προς επεξεργασία στοιχείου στο οποίο
@@ -377,14 +400,10 @@ Arxio.dianomiProcess = function(trapezi, dianomiEco) {
 		dianomi[Arxio.dianomiEcoMap[prop]] = dianomiEco[prop];
 	}
 
-	ts = parseInt(dianomi.enarxi);
-	if (ts) dianomi.enarxi = ts + Client.timeDif;
-
 	ts = parseInt(dianomi.telos);
 	if (ts) dianomi.telos = ts + Client.timeDif;
 
-	return new Dianomi(dianomi).
-		dianomiArxioDisplay(trapezi);
+	return new Dianomi(dianomi);
 };
 
 // Τα αποτελέσματα παραλαμβάνονται σε «οικονομική» μορφή, δηλαδή
@@ -394,15 +413,14 @@ Arxio.dianomiProcess = function(trapezi, dianomiEco) {
 
 Arxio.dianomiEcoMap = {
 	k: 'kodikos',
-	e: 'enarxi',
 	d: 'dealer',
+	t: 'telos',
 	k1: 'kasa1',
 	m1: 'metrita1',
 	k2: 'kasa2',
 	m2: 'metrita2',
 	k3: 'kasa3',
 	m3: 'metrita3',
-	t: 'telos',
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
@@ -525,9 +543,11 @@ Trapezi.prototype.trapeziArxioKapikia = function() {
 	kasa *= 30;
 	this.trapeziDianomiWalk(function() {
 		var dianomi = this;
+console.log(dianomi);
 
 		Prefadoros.thesiWalk(function(thesi) {
-			trapezi['kapikia' + thesi] += parseInt(dianomi['k' + thesi]) + parseInt(dianomi['m' + thesi]);
+			trapezi['kapikia' + thesi] += dianomi.dianomiKasaGet(thesi) + dianomi.dianomiMetritaGet(thesi);
+			//trapezi['kapikia' + thesi] += parseInt(dianomi['k' + thesi]) + parseInt(dianomi['m' + thesi]);
 			kasa -= parseInt(dianomi['k' + thesi]);
 		});
 	});
@@ -641,7 +661,7 @@ Trapezi.prototype.isMazemeno = function() {
 Trapezi.prototype.aploma = function() {
 	var trapezi = this;
 
-	Globals.awalk(this.dianomi, function(i, dianomi) {
+	Globals.awalk(this.dianomiArray, function(i, dianomi) {
 		dianomi.dianomiArxioDisplay(trapezi);
 	});
 
