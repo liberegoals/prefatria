@@ -108,6 +108,7 @@ class Epilogi {
 		$partida = trim($_REQUEST["partida"]);
 
 		if (preg_match("/^[0-9]+$/", $partida)) {
+			self::queryInit();
 			self::$query .= " AND (`kodikos` = " . $partida . ")";
 			return FALSE;
 		}
