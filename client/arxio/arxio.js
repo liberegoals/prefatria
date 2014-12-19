@@ -732,7 +732,7 @@ Dianomi.prototype.processEnergiaList = function(elist) {
 };
 
 Dianomi.prototype.dianomiArxioDisplay = function(trapezi) {
-	var dianomi = this, pektisDOM = {}, agora, tzogadoros, simetoxi = {}, bazes = {};
+	var dianomi = this, pektisDOM = {};
 
 	trapezi.DOM.
 	append(this.DOM = $('<div>').addClass('dianomi').
