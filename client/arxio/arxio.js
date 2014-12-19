@@ -348,7 +348,9 @@ Arxio.trapeziProcess = function(i, trapeziEco) {
 	}
 
 	Globals.awalk(trapezi.dianomiArray, function(i, dianomi) {
-		trapezi.dianomiArray[i] = Arxio.dianomiProcess(dianomi);
+		dianomi = Arxio.dianomiProcess(dianomi);
+		trapezi.dianomiArray[i] = dianomi;
+		trapezi.trapeziDianomiSet(dianomi);
 	});
 
 	ts = parseInt(trapezi.stisimo);
@@ -547,7 +549,7 @@ Trapezi.prototype.trapeziArxioKapikia = function() {
 		Prefadoros.thesiWalk(function(thesi) {
 			trapezi['kapikia' + thesi] += dianomi.dianomiKasaGet(thesi) + dianomi.dianomiMetritaGet(thesi);
 			//trapezi['kapikia' + thesi] += parseInt(dianomi['k' + thesi]) + parseInt(dianomi['m' + thesi]);
-			kasa -= parseInt(dianomi['k' + thesi]);
+			kasa -= dianomi.dianomiKasaGet(thesi);
 		});
 	});
 
@@ -677,8 +679,17 @@ Trapezi.prototype.mazema = function() {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
 
 Dianomi.prototype.dianomiArxioDisplay = function(trapezi) {
+	var dianomi = this;
+
 	trapezi.DOM.
-	append($('<div>').addClass('dianomi').
-	append($('<div>').text(this.dianomiKodikosGet())));
+	append(this.DOM = $('<div>').addClass('dianomi').
+	append($('<div>').addClass('dianomiData').
+	append($('<div>').addClass('dianomiDataContent').
+	append($('<div>').addClass('dianomiKodikos').text(this.dianomiKodikosGet())))));
+
+	Prefadoros.thesiWalk(function(thesi) {
+		dianomi.DOM.append($('<div>').addClass('pektis dianomiPektis').text(thesi));
+	});
+
 	return this;
 };
