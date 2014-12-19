@@ -41,6 +41,10 @@ body {
 	top: 2px;
 }
 
+.trapeziDataContent:hover {
+	z-index: 2;
+}
+
 .trapeziPektis {
 	width: 160px;
 	text-align: left;
@@ -61,9 +65,6 @@ body {
 .trapeziOpts {
 	top: 0px;
 	left: 6px;
-}
-
-.trapeziOpts:hover {
 	z-index: 1;
 }
 
