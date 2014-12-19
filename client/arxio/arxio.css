@@ -7,9 +7,9 @@ body {
 }
 
 #apotelesmata {
+	padding: 0 10px 10px 4px;
 	overflow-y: auto;
 	width: 966px;
-	padding: 20px 0 0 0;
 }
 
 .trapezi {
@@ -59,7 +59,7 @@ body {
 }
 
 .trapeziOpts {
-	top: -8px;
+	top: 0px;
 	left: 6px;
 }
 
