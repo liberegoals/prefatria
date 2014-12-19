@@ -561,8 +561,9 @@ Trapezi.prototype.trapeziArxioDisplay = function() {
 	else
 	Arxio.apotelesmataDOM.append(this.DOM = $('<div>').addClass('trapezi'));
 
-	kodikos = this.trapeziKodikosGet();
+	this.trapeziArxioOptions();
 
+	kodikos = this.trapeziKodikosGet();
 	this.DOM.
 	data('trapezi', kodikos).
 	append($('<div>').addClass('trapeziData').
@@ -601,8 +602,6 @@ Trapezi.prototype.trapeziArxioDisplay = function() {
 
 	else
 	this.DOM.append($('<div>').addClass('trapeziArxio plagia').text('Σε εξέλιξη…'));
-
-	this.trapeziArxioOptions();
 	return this;
 };
 
