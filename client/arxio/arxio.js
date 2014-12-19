@@ -745,7 +745,6 @@ Dianomi.prototype.dianomiArxioDisplay = function(trapezi) {
 	});
 
 	pektisDOM[dianomi.dianomiDealerGet()].append(Arxio.dealerEndixiDOM());
-	pektisDOM[2].append(Arxio.dealerEndixiDOM());
 
 	this.dianomiEnergiaWalk(function() {
 		var pektis, idos, data, dom;
