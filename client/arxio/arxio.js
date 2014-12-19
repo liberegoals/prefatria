@@ -272,24 +272,13 @@ Arxio.resetAnazitisi = function() {
 };
 
 Arxio.kritiriaReset = function() {
-	var imerominia, mera, minas, etos;
-
 	if (Client.isPektis())
 	Arxio.pektisInputDOM.val(Client.session.pektis);
 
-	imerominia = new Date();
-	mera = imerominia.getDate();
-	minas = imerominia.getMonth() + 1;
-	etos = imerominia.getFullYear();
-	Arxio.eosInputDOM.val(mera + '-' + minas + '-' + etos);
-
-	imerominia = new Date(imerominia.getTime() - (7 * 24 * 3600 * 1000));
-	mera = imerominia.getDate();
-	minas = imerominia.getMonth() + 1;
-	etos = imerominia.getFullYear();
-	Arxio.apoInputDOM.val(mera + '-' + minas + '-' + etos);
-
+	Arxio.eosInputDOM.val('');
+	Arxio.apoInputDOM.val('');
 	Arxio.partidaInputDOM.val('');
+
 	return Arxio;
 };
 
