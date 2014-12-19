@@ -374,6 +374,40 @@ Arxio.trapeziEcoMap = {
 	d: 'dianomiArray',
 };
 
+// Η function "energiaProcess" διαχειρίζεται κάθε ένα από τα στοιχεία της
+// λίστας ενεργειών που επεστράφησαν από τον server.
+
+Arxio.energiaProcess = function(energiaEco) {
+	var energia, prop, ts;
+
+	// Δημιουργούμε αντίγραφο του προς επεξεργασία στοιχείου στο οποίο
+	// εμπεριέχονται τα πραγματικά properties της σχετικής ενέργειας
+	// έναντι των οικονομικών τοιαύτων.
+
+	energia = new Energia();
+	for (prop in Arxio.energiaEcoMap) {
+		energia[Arxio.energiaEcoMap[prop]] = energiaEco[prop];
+	}
+
+	ts = parseInt(energia.pote);
+	if (ts) energia.pote = ts + Client.timeDif;
+
+	return energia;
+};
+
+// Τα αποτελέσματα παραλαμβάνονται σε «οικονομική» μορφή, δηλαδή
+// τα ονόματα των properties της ενέργειας είναι συντομογραφικά.
+// Η λίστα "energiaEcoMap" αντιστοιχεί τα οικονομικά ονόματα τών
+// properties τής ενέργειας στα πραγαμτικά τους ονόματα.
+
+Arxio.energiaEcoMap = {
+	k: 'kodikos',
+	p: 'pektis',
+	t: 'pote',
+	i: 'idos',
+	d: 'data',
+};
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
 
 // Η function "dianomiProcess" διαχειρίζεται κάθε ένα από τα στοιχεία της
@@ -394,7 +428,8 @@ Arxio.dianomiProcess = function(dianomiEco) {
 	ts = parseInt(dianomi.telos);
 	if (ts) dianomi.telos = ts + Client.timeDif;
 
-	return new Dianomi(dianomi);
+	return new Dianomi(dianomi).
+		processEnergiaList(dianomiEco['e']);
 };
 
 // Τα αποτελέσματα παραλαμβάνονται σε «οικονομική» μορφή, δηλαδή
@@ -648,26 +683,56 @@ Trapezi.prototype.isMazemeno = function() {
 };
 
 Trapezi.prototype.aploma = function() {
-	var trapezi = this;
+	var trapezi = this, partida, kodikos;
 
 	Globals.awalk(this.dianomiArray, function(i, dianomi) {
 		dianomi.dianomiArxioDisplay(trapezi);
 	});
+
+	partida = Arxio.partidaInputDOM;
+	if (!partida.val()) {
+		kodikos = this.trapeziKodikosGet();
+		partida.val(kodikos);
+		partida.data('partida', kodikos);
+	}
 
 	this.aplomenoSet(true);
 	return this;
 }
 
 Trapezi.prototype.mazema = function() {
+	var partida;
+
 	this.DOM.find('.dianomi').remove();
+
+	partida = Arxio.partidaInputDOM;
+	if (partida.data('partida')) {
+		partida.val('');
+		partida.removeData('partida');
+	}
+
 	this.aplomenoSet(false);
 	return this;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
 
-Dianomi.prototype.dianomiArxioDisplay = function(trapezi) {
+Dianomi.prototype.processEnergiaList = function(elist) {
 	var dianomi = this;
+
+	Globals.awalk(elist, function(i, energiaEco) {
+		var energia;
+
+		energia = Arxio.energiaProcess(energiaEco);
+		dianomi.dianomiEnergiaSet(energia);
+		dianomi.energiaArray[i] = energia;
+	});
+
+	return this;
+};
+
+Dianomi.prototype.dianomiArxioDisplay = function(trapezi) {
+	var dianomi = this, pektisDOM = {}, agora, tzogadoros, simetoxi = {}, bazes = {};
 
 	trapezi.DOM.
 	append(this.DOM = $('<div>').addClass('dianomi').
@@ -676,8 +741,54 @@ Dianomi.prototype.dianomiArxioDisplay = function(trapezi) {
 	append($('<div>').addClass('dianomiKodikos').text(this.dianomiKodikosGet())))));
 
 	Prefadoros.thesiWalk(function(thesi) {
-		dianomi.DOM.append($('<div>').addClass('pektis dianomiPektis').text(thesi));
+		dianomi.DOM.append(pektisDOM[thesi] = $('<div>').addClass('pektis dianomiPektis'));
 	});
 
+	pektisDOM[dianomi.dianomiDealerGet()].append(Arxio.dealerEndixiDOM());
+	pektisDOM[2].append(Arxio.dealerEndixiDOM());
+
+	this.dianomiEnergiaWalk(function() {
+		var pektis, idos, data, dom;
+
+		pektis = this.energiaPektisGet();
+		idos = this.energiaIdosGet();
+		data = this.energiaDataGet();
+		dom = pektisDOM[pektis];
+
+		switch (idos) {
+		case 'ΑΓΟΡΑ':
+			dom.append(new Dilosi(data.substr(0, 3)).agoraDOM());
+			break;
+		}
+	}, 1);
+
 	return this;
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
+
+Dilosi.prototype.agoraDOM = function() {
+	var dom;
+
+	dom = $('<div>').addClass('agora').attr('title', 'Αγορά');
+	dom.append($('<div>').addClass('agoraBazes').text(this.dilosiBazesGet()));
+	dom.append($('<img>').addClass('agoraXroma').
+	attr('src', '../ikona/trapoula/xroma' + this.dilosiXromaGet() + '.png'));
+
+	if (this.dilosiIsAsoi())
+	dom.
+	append($('<div>').addClass('tsoxaDilosiAsoi').
+	append($('<img>').addClass('tsoxaDilosiAsoiIcon').
+	attr('src', '../ikona/panel/asoiOn.png')));
+
+	return dom;
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
+
+Arxio.dealerEndixiDOM = function() {
+	return $('<img>').addClass('dealerIcon').attr({
+		src: '../ikona/endixi/dealer.png',
+		title: 'Dealer',
+	});
 };
