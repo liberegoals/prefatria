@@ -86,6 +86,7 @@ body {
 
 .dianomi:hover {
 	opacity: 1.0;
+	font-weight: bold;
 	cursor: pointer;
 }
 
@@ -118,6 +119,7 @@ body {
 	margin: 0 0 0 18px;
 	width: 170px;
 	height: 28px;
+	overflow: visible;
 	border-style: none;
 	background-color: transparent;
 }
@@ -151,4 +153,46 @@ body {
 
 .formaButton {
 	margin: 0 4px 0 16px;
+}
+
+.dealerIcon {
+	position: absolute;
+	bottom: 4px;
+	left: -10px;
+	width: 18px;
+}
+
+.agora {
+	position: absolute;
+	bottom: 3px;
+	left: 14px;
+}
+
+.agoraBazes {
+	display: inline-block;
+	position:relative;
+	bottom: 0px;
+	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+	font-size: 16px;
+	font-weight: bold;
+}
+
+.agoraXroma {
+	display: inline-block;
+	position:relative;
+	bottom: -1px;
+	height: 16px;
+}
+
+.tsoxaDilosiAsoi {
+	font-size: 16px;
+}
+
+.tsoxaDilosiAsoi:before {
+	left: -20px;
+}
+
+.tsoxaDilosiAsoiIcon {
+	left: 12px;
+	width: 20px;
 }

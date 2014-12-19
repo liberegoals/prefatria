@@ -206,7 +206,19 @@ class Epilogi {
 		$result = Globals::query($query);
 		$trapezi["d"] = array();
 		while ($dianomi = $result->fetch_assoc()) {
+			self::apotelesmata($dianomi);
 			$trapezi["d"][] = $dianomi;
+		}
+		$result->free();
+	}
+
+	private static function apotelesmata(&$dianomi) {
+		$query = "SELECT `kodikos` AS `k`, `pektis` AS `p`, UNIX_TIMESTAMP(`pote`) AS `t`, " .
+			"`idos` AS `i`, `data` AS `d` FROM `energia` WHERE `dianomi` = " . $dianomi["k"];
+		$result = Globals::query($query);
+		$dianomi["e"] = array();
+		while ($energia = $result->fetch_assoc()) {
+			$dianomi["e"][] = $energia;
 		}
 		$result->free();
 	}
