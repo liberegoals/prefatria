@@ -741,7 +741,7 @@ Trapezi.prototype.partidaResetFila = function() {
 // διανομή όπου κάνουμε replay όλες τις ενέργειες προκειμένου να φέρουμε την
 // παρτίδα στην τρέχουσα κατάσταση.
 
-Trapezi.prototype.partidaReplay = function() {
+Trapezi.prototype.partidaReplay = function(eoske) {
 	var trapezi = this, kasa, dianomi;
 
 	this.partidaReset();
@@ -765,7 +765,10 @@ Trapezi.prototype.partidaReplay = function() {
 
 	dianomi = null;	// δείχνει την τελευταία διανομή
 	this.trapeziDianomiWalk(function() {
-		if ((!dianomi) || (this.dianomiKodikosGet() > dianomi.dianomiKodikosGet())) dianomi = this;
+		if (eoske && (this.dianomiKodikosGet() > eoske))
+		return;
+
+		dianomi = this;
 		trapezi.trapeziThesiWalk(function(thesi) {
 			// Ελέγχουμε πρώτα τα καπίκια που πήρε ή κατέθεσε ο παίκτης
 			// στην κάσα, ενημερώνοντας ανάλογα και το ποσό της κάσας.
@@ -780,7 +783,7 @@ Trapezi.prototype.partidaReplay = function() {
 			k += dianomi.dianomiMetritaGet(thesi);
 			trapezi.partidaKapikiaAdd(thesi, k);
 		});
-	});
+	}, 1);
 
 	// Διατρέξαμε όλες τις διανομές και πρέπει να μοιράσουμε το υπόλοιπο
 	// της κάσας πίσω στους παίκτες. Για να κλείσουμε με μηδενικό ισοζύγιο
@@ -795,7 +798,8 @@ Trapezi.prototype.partidaReplay = function() {
 
 	// Αν δεν υπάρχουν διανομές στο τραπέζι, τότε έχουμε τελειώσει.
 
-	if (!dianomi) return this;
+	if (!dianomi)
+	return this;
 
 	// Έχουμε στα χέρια μας την τελευταία διανομή, οπότε κάνουμε replay όλες
 	// τις ενέργειες της διανομής ώστε να φέρουμε την παρτίδα στην τρέχουσα
@@ -811,7 +815,10 @@ Trapezi.prototype.partidaReplay = function() {
 
 Trapezi.prototype.trapeziProcessEnergia = function(energia) {
 	var proc = 'processEnergia' + energia.energiaIdosGet();
-	if (typeof this[proc] === 'function') this[proc](energia);
+
+	if (typeof this[proc] === 'function')
+	this[proc](energia);
+
 	return this;
 };
 

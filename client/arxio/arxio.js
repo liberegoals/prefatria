@@ -604,21 +604,21 @@ Trapezi.prototype.trapeziArxioDisplay = function() {
 	append($('<div>').addClass('trapeziData').
 	append($('<div>').addClass('trapeziDataContent').
 	append($('<div>').addClass('trapeziDataKodikos').text(kodikos)).
-	append($('<div>').addClass('trapeziDataIpolipo').text(this.ipolipo)))).
+	append($('<div>').addClass('trapeziDataIpolipo').text(this.ipolipo))).
 	on('click', function(e) {
 		if (trapezi.isAplomeno())
 		trapezi.mazema();
 
 		else
 		trapezi.aploma();
-	});
+	}));
 
 	Prefadoros.thesiWalk(function(thesi) {
 		var pektis, dom, kapikia, kapikiaKlasi;
 
 		pektis = trapezi.trapeziPektisGet(thesi);
 		if (!pektis) pektis = '&#8203;';
-		trapezi.DOM.append(dom = $('<div>').addClass('pektis trapeziPektis').html(pektis));
+		trapezi.DOM.append(dom = $('<div>').addClass('trapeziPektis').html(pektis));
 
 		kapikia = parseInt(trapezi['kapikia' + thesi]);
 		if (isNaN(kapikia)) kapikia = 0;
@@ -630,13 +630,18 @@ Trapezi.prototype.trapeziArxioDisplay = function() {
 		dom.append($('<div>').addClass(kapikiaKlasi).html(kapikia));
 	});
 
+	// Ακολουθούν τα της ημερομηνίας/ώρας αρχειοθέτησης της παρτίδας.
+
 	arxio = trapezi.trapeziArxioGet();
 
 	if (arxio)
-	this.DOM.append($('<div>').addClass('trapeziArxio').text(Globals.poteOra(arxio)));
+	this.DOM.append($('<div>').addClass('trapeziArxio').
+	text(Globals.poteOra(trapezi.trapeziStisimoGet())));
 
 	else
-	this.DOM.append($('<div>').addClass('trapeziArxio plagia').text('Σε εξέλιξη…'));
+	this.DOM.append($('<div>').addClass('trapeziArxio plagia').
+	text('Σε εξέλιξη…'));
+
 	return this;
 };
 
@@ -683,34 +688,18 @@ Trapezi.prototype.isMazemeno = function() {
 };
 
 Trapezi.prototype.aploma = function() {
-	var trapezi = this, partida, kodikos;
+	var trapezi = this;
 
 	Globals.awalk(this.dianomiArray, function(i, dianomi) {
 		dianomi.dianomiArxioDisplay(trapezi);
 	});
-
-	partida = Arxio.partidaInputDOM;
-	if (!partida.val()) {
-		kodikos = this.trapeziKodikosGet();
-		partida.val(kodikos);
-		partida.data('partida', kodikos);
-	}
 
 	this.aplomenoSet(true);
 	return this;
 }
 
 Trapezi.prototype.mazema = function() {
-	var partida;
-
 	this.DOM.find('.dianomi').remove();
-
-	partida = Arxio.partidaInputDOM;
-	if (partida.data('partida')) {
-		partida.val('');
-		partida.removeData('partida');
-	}
-
 	this.aplomenoSet(false);
 	return this;
 }
@@ -732,19 +721,25 @@ Dianomi.prototype.processEnergiaList = function(elist) {
 };
 
 Dianomi.prototype.dianomiArxioDisplay = function(trapezi) {
-	var dianomi = this, pektisDOM = {};
+	var dianomi = this, kodikos, pektisDOM = {}, telos;
+
+	kodikos = this.dianomiKodikosGet();
 
 	trapezi.DOM.
 	append(this.DOM = $('<div>').addClass('dianomi').
 	append($('<div>').addClass('dianomiData').
 	append($('<div>').addClass('dianomiDataContent').
-	append($('<div>').addClass('dianomiKodikos').text(this.dianomiKodikosGet())))));
+	append($('<div>').addClass('dianomiKodikos').text(kodikos)))));
 
 	Prefadoros.thesiWalk(function(thesi) {
 		dianomi.DOM.append(pektisDOM[thesi] = $('<div>').addClass('pektis dianomiPektis'));
 	});
 
-	pektisDOM[dianomi.dianomiDealerGet()].append(Arxio.dealerEndixiDOM());
+	pektisDOM[dianomi.dianomiDealerGet()].
+	append(Arxio.dealerEndixiDOM());
+
+	trapezi.partidaReplay(kodikos);
+console.log(trapezi);
 
 	this.dianomiEnergiaWalk(function() {
 		var pektis, idos, data, dom;
@@ -758,8 +753,19 @@ Dianomi.prototype.dianomiArxioDisplay = function(trapezi) {
 		case 'ΑΓΟΡΑ':
 			dom.append(new Dilosi(data.substr(0, 3)).agoraDOM());
 			break;
+		case 'ΜΠΑΖΑ':
 		}
 	}, 1);
+
+	// Ακολουθούν τα του χρόνου τέλους της διανομής.
+
+	telos = dianomi.dianomiTelosGet();
+
+	if (telos)
+	this.DOM.append($('<div>').addClass('trapeziArxio').text(Globals.poteOra(telos)));
+
+	else
+	this.DOM.append($('<div>').addClass('trapeziArxio plagia').text('Σε εξέλιξη…'));
 
 	return this;
 };
