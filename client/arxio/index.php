@@ -9,6 +9,7 @@ Selida::stylesheet("arxio/arxio");
 Selida::javascript("common/prefadoros");
 Selida::javascript("common/skiniko");
 Selida::javascript("common/partida");
+Selida::javascript("common/energia");
 Selida::javascript("arxio/arxio");
 
 Selida::body();
