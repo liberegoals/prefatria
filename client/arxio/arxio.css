@@ -127,9 +127,11 @@ body {
 	position: relative;
 	bottom: -2px;
 	margin: 0 0 0 18px;
+
 	width: 170px;
 	height: 28px;
 	overflow: visible;
+
 	border-style: none;
 	background-color: transparent;
 }
@@ -172,10 +174,17 @@ body {
 	width: 18px;
 }
 
+.simetoxiIcon {
+	position: absolute;
+	bottom: 0px;
+	left: 8px;
+	width: 28px;
+}
+
 .agora {
 	position: absolute;
 	bottom: 3px;
-	left: 14px;
+	left: 70px;
 }
 
 .agoraBazes {
@@ -205,4 +214,15 @@ body {
 .tsoxaDilosiAsoiIcon {
 	left: 12px;
 	width: 20px;
+}
+
+.bazes {
+	position: absolute;
+	bottom: 2px;
+	right: 66px;
+}
+
+.bazaIcon {
+	width: 12px;
+	margin: 0 0 0 2px;
 }

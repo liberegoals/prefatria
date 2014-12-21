@@ -721,9 +721,10 @@ Dianomi.prototype.processEnergiaList = function(elist) {
 };
 
 Dianomi.prototype.dianomiArxioDisplay = function(trapezi) {
-	var dianomi = this, kodikos, pektisDOM = {}, telos;
+	var dianomi = this, kodikos, pektisDOM = {}, tzogadoros, telos;
 
 	kodikos = this.dianomiKodikosGet();
+	trapezi.partidaReplay(kodikos);
 
 	trapezi.DOM.
 	append(this.DOM = $('<div>').addClass('dianomi').
@@ -731,31 +732,34 @@ Dianomi.prototype.dianomiArxioDisplay = function(trapezi) {
 	append($('<div>').addClass('dianomiDataContent').
 	append($('<div>').addClass('dianomiKodikos').text(kodikos)))));
 
+	tzogadoros = trapezi.partidaTzogadorosGet();
 	Prefadoros.thesiWalk(function(thesi) {
-		dianomi.DOM.append(pektisDOM[thesi] = $('<div>').addClass('pektis dianomiPektis'));
+		var dom;
+
+		dom = $('<div>').addClass('pektis dianomiPektis');
+		pektisDOM[thesi] = dom;
+
+		// Αν πρόκειται για τον τζογαδόρο, εμφανίζουμε την αγορά
+		// περίπου στη μέση της περιοχής του.
+
+		if (thesi === tzogadoros)
+		dom.append(trapezi.partidaAgoraGet().agoraDOM());
+
+		// Στους παίκτες που δεν είναι τζογαδόροι εμφανίζουμε τις
+		// μπάζες τους.
+
+		else
+		trapezi.arxioDisplayBazes(thesi, dom);
+
+		if (trapezi.sdilosi[thesi] && trapezi.sdilosi[thesi].simetoxiIsMazi())
+		dom.append($('<img>').addClass('simetoxiIcon').
+		attr('src', '../ikona/endixi/mazi.png'));
+
+		dianomi.DOM.append(dom);
 	});
 
 	pektisDOM[dianomi.dianomiDealerGet()].
 	append(Arxio.dealerEndixiDOM());
-
-	trapezi.partidaReplay(kodikos);
-console.log(trapezi);
-
-	this.dianomiEnergiaWalk(function() {
-		var pektis, idos, data, dom;
-
-		pektis = this.energiaPektisGet();
-		idos = this.energiaIdosGet();
-		data = this.energiaDataGet();
-		dom = pektisDOM[pektis];
-
-		switch (idos) {
-		case 'ΑΓΟΡΑ':
-			dom.append(new Dilosi(data.substr(0, 3)).agoraDOM());
-			break;
-		case 'ΜΠΑΖΑ':
-		}
-	}, 1);
 
 	// Ακολουθούν τα του χρόνου τέλους της διανομής.
 
@@ -766,6 +770,25 @@ console.log(trapezi);
 
 	else
 	this.DOM.append($('<div>').addClass('trapeziArxio plagia').text('Σε εξέλιξη…'));
+
+	return this;
+};
+
+Arxio.bazaPlati = [
+	'R', 'R', 'R',
+	'B', 'B', 'B',
+	'R', 'R', 'R',
+	'B',
+];
+
+Trapezi.prototype.arxioDisplayBazes = function(thesi, dom) {
+	var bazesDOM, n;
+
+	bazesDOM = $('<div>').addClass('bazes').appendTo(dom);
+	for (n = 0; n < this.bazes[thesi]; n++) {
+		bazesDOM.prepend($('<img>').addClass('bazaIcon').
+		attr('src', '../ikona/trapoula/' + Arxio.bazaPlati[n] + 'L.png'));
+	}
 
 	return this;
 };
