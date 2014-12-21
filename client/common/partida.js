@@ -219,7 +219,7 @@ Trapezi.prototype.partidaEpomenosGet = function() {
 };
 
 Trapezi.prototype.partidaTzogadorosSet = function(thesi) {
-	if (thesi) this.tzogadoros = thesi;
+	if (thesi) this.tzogadoros = parseInt(thesi);
 	else delete this.tzogadoros;
 
 	return this;
