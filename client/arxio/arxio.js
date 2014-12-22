@@ -790,11 +790,23 @@ Dianomi.prototype.processEnergiaList = function(elist) {
 	return this;
 };
 
+// Η μέθοδος "dianomiArxioDisplay" εμφανίζει τα στοιχεία της διανομής, ήτοι
+// την αγορά, τις συμμετοχές, τις μπάζες των αμυνομένων και τα καπίκια που
+// κέρδισε ή ζημιώθηκε ο κάθε παίκτης στη συγκεκριμένη διανομή. Ως παράμετρο
+// περνάμε το τραπέζι.
+
 Dianomi.prototype.dianomiArxioDisplay = function(trapezi) {
 	var dianomi = this, kodikos, pektisDOM = {}, tzogadoros, enarxi;
 
+	// Αποσπούμε τον κωδικό διανομής και κάνουμε replay την παρτίδα μέχρι
+	// ΚΑΙ την ανά χείρας διανομή.
+
 	kodikos = this.dianomiKodikosGet();
 	trapezi.partidaReplay(kodikos);
+
+	// Προσαρτούμε στο DOM element του τραπεζιού το DOM element της ανά
+	// χείρας διανομής. Ξεκινάμε το «γέμισμα» του συγκεκριμένου DOM
+	// element με την ταυτότητα της διανομής.
 
 	trapezi.DOM.
 	append(this.DOM = $('<div>').addClass('dianomi').
@@ -802,12 +814,21 @@ Dianomi.prototype.dianomiArxioDisplay = function(trapezi) {
 	append($('<div>').addClass('dianomiDataContent').
 	append($('<div>').addClass('dianomiKodikos').text(kodikos)))));
 
+	// Εντοπίζουμε τυχόν τζογαδόρο και προχωρούμε στη δημιουργία και στο
+	// «γέμισμα» των DOM elements για κάθε παίκτη.
+
 	tzogadoros = trapezi.partidaTzogadorosGet();
 	Prefadoros.thesiWalk(function(thesi) {
 		var dom;
 
 		dom = $('<div>').addClass('pektis dianomiPektis');
 		pektisDOM[thesi] = dom;
+		dianomi.DOM.append(dom);
+
+		// Εμφανίζουμε τα καπίκια που κέρδισε ή ζημιώθηκε ο κάθε
+		// παίκτης.
+
+		dianomi.arxioDisplayKapikia(thesi, dom);
 
 		// Αν πρόκειται για τον τζογαδόρο, εμφανίζουμε την αγορά
 		// περίπου στη μέση της περιοχής του.
@@ -822,25 +843,30 @@ Dianomi.prototype.dianomiArxioDisplay = function(trapezi) {
 		else
 		trapezi.arxioDisplayBazes(thesi, dom);
 
-		if (trapezi.sdilosi[thesi]) {
-			if (trapezi.sdilosi[thesi].simetoxiIsMazi())
-			dom.append($('<img>').addClass('simetoxiIcon').
-			attr('src', '../ikona/endixi/mazi.png')).
-			attr('title', 'Πάμε μαζί!');
+		// Μένει να δείξουμε στοιχεία που αφορούν στη συμμετοχή των
+		// αμυνομένων.
 
-			else if (trapezi.sdilosi[thesi].simetoxiIsPaso())
-			dom.addClass('apoxi').attr('title', 'Αποχή');
+		if (!trapezi.sdilosi[thesi])
+		return;
 
-			else if (trapezi.sdilosi[thesi].simetoxiIsVoithao())
-			dom.append($('<img>').addClass('simetoxiIcon')).
-			attr('title', 'Βοηθητικός');
+		if (trapezi.sdilosi[thesi].simetoxiIsMazi())
+		dom.append($('<img>').addClass('simetoxiIcon').
+		attr('src', '../ikona/endixi/mazi.png')).
+		attr('title', 'Πάμε μαζί!');
 
-		}
+		else if (trapezi.sdilosi[thesi].simetoxiIsPaso())
+		dom.addClass('apoxi').attr('title', 'Αποχή');
 
-		dianomi.arxioDisplayKapikia(thesi, dom);
+		else if (trapezi.sdilosi[thesi].simetoxiIsVoithao())
+		dom.append($('<img>').addClass('simetoxiIcon')).
+		attr('title', 'Βοηθητικός');
 
-		dianomi.DOM.append(dom);
+		// Ακολουθούν ενδεικτικά χρώματα σε τζογαδόρο ή αμυνομένους
+		// σχετικά με τις μέσα αγορές.
+		// TODO
 	});
+
+	// Εμφανίζουμε ενδεικτικό εικονίδιο στον dealer της διανομής.
 
 	pektisDOM[dianomi.dianomiDealerGet()].
 	append(Arxio.dealerEndixiDOM());
