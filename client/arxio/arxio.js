@@ -425,8 +425,8 @@ Arxio.dianomiProcess = function(dianomiEco) {
 		dianomi[Arxio.dianomiEcoMap[prop]] = dianomiEco[prop];
 	}
 
-	ts = parseInt(dianomi.telos);
-	if (ts) dianomi.telos = ts + Client.timeDif;
+	ts = parseInt(dianomi.enarxi);
+	if (ts) dianomi.enarxi = ts + Client.timeDif;
 
 	return new Dianomi(dianomi).
 		processEnergiaList(dianomiEco['e']);
@@ -440,7 +440,7 @@ Arxio.dianomiProcess = function(dianomiEco) {
 Arxio.dianomiEcoMap = {
 	k: 'kodikos',
 	d: 'dealer',
-	t: 'telos',
+	s: 'enarxi',
 	k1: 'kasa1',
 	m1: 'metrita1',
 	k2: 'kasa2',
@@ -572,7 +572,6 @@ Trapezi.prototype.trapeziArxioKapikia = function() {
 
 		Prefadoros.thesiWalk(function(thesi) {
 			trapezi['kapikia' + thesi] += dianomi.dianomiKasaGet(thesi) + dianomi.dianomiMetritaGet(thesi);
-			//trapezi['kapikia' + thesi] += parseInt(dianomi['k' + thesi]) + parseInt(dianomi['m' + thesi]);
 			kasa -= dianomi.dianomiKasaGet(thesi);
 		});
 	});
@@ -721,7 +720,7 @@ Dianomi.prototype.processEnergiaList = function(elist) {
 };
 
 Dianomi.prototype.dianomiArxioDisplay = function(trapezi) {
-	var dianomi = this, kodikos, pektisDOM = {}, tzogadoros, telos;
+	var dianomi = this, kodikos, pektisDOM = {}, tzogadoros, enarxi;
 
 	kodikos = this.dianomiKodikosGet();
 	trapezi.partidaReplay(kodikos);
@@ -763,22 +762,19 @@ Dianomi.prototype.dianomiArxioDisplay = function(trapezi) {
 
 	// Ακολουθούν τα του χρόνου τέλους της διανομής.
 
-	telos = dianomi.dianomiTelosGet();
+	enarxi = dianomi.dianomiEnarxiGet();
 
-	if (telos)
-	this.DOM.append($('<div>').addClass('trapeziArxio').text(Globals.poteOra(telos)));
-
-	else
-	this.DOM.append($('<div>').addClass('trapeziArxio plagia').text('Σε εξέλιξη…'));
+	if (enarxi)
+	this.DOM.append($('<div>').addClass('trapeziArxio').text(Globals.poteOra(enarxi)));
 
 	return this;
 };
 
 Arxio.bazaPlati = [
-	'R', 'R', 'R',
 	'B', 'B', 'B',
 	'R', 'R', 'R',
-	'B',
+	'B', 'B', 'B',
+	'R',
 ];
 
 Trapezi.prototype.arxioDisplayBazes = function(thesi, dom) {

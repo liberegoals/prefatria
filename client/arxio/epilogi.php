@@ -200,7 +200,7 @@ class Epilogi {
 	}
 
 	public static function dianomi(&$trapezi) {
-		$query = "SELECT `kodikos` AS `k`, `dealer` AS `d`, UNIX_TIMESTAMP(`telos`) AS `t`, " .
+		$query = "SELECT `kodikos` AS `k`, `dealer` AS `d`, UNIX_TIMESTAMP(`enarxi`) AS `s`, " .
 			"`kasa1` AS `k1`, `metrita1` AS `m1`, `kasa2` AS `k2`, `metrita2` AS `m2`, " .
 			"`kasa3` AS `k3`, `metrita3` AS `m3` FROM `dianomi` WHERE `trapezi` = " . $trapezi["k"];
 		$result = Globals::query($query);
