@@ -138,8 +138,16 @@ body {
 }
 
 .dianomiKlisimo {
-	padding: 12px;
+	position: relative;
+	top: 6px;
+
+	padding: 6px 0 4px 0;
 	text-align: center;
+
+	border-style: solid none none none;
+	border-width: 2px;
+	border-color: rgb(157, 157, 153);
+	background-color: rgb(216, 216, 216);
 }
 
 .dianomiKlisimoIcon {
