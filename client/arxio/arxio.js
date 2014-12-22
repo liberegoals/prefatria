@@ -142,6 +142,7 @@ Arxio.setup = function() {
 	// παίκτη· αυτό γίνεται προγραμματιστικά.
 
 	on('mouseenter', '.trapezi', function(e) {
+		Client.fyi.pano('');
 		$(this).find('.arxioKapikia').addClass('arxioKapikiaTrexon');
 	}).
 	on('mouseleave', '.trapezi', function(e) {
@@ -656,11 +657,11 @@ Trapezi.prototype.trapeziArxioDisplay = function() {
 	append($('<div>').addClass('trapeziDataKodikos').text(kodikos)).
 	append($('<div>').addClass('trapeziDataIpolipo').text(this.ipolipo))).
 	on('click', function(e) {
-		if (trapezi.isAplomeno())
-		trapezi.mazema();
+		if (trapezi.isAplomenesDianomes())
+		trapezi.mazemaDianomon();
 
 		else
-		trapezi.aploma();
+		trapezi.aplomaDianomon();
 	}));
 
 	Prefadoros.thesiWalk(function(thesi) {
@@ -721,48 +722,57 @@ Trapezi.prototype.trapeziOptionIcon = function(desc, img) {
 	return this;
 };
 
-Trapezi.prototype.aplomenoSet = function(aplomeno) {
-	if (aplomeno === undefined)
-	aplomeno = true;
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
 
-	this.aplomeno = aplomeno;
-	return this;
-};
+// Όταν κάνουμε κλικ στον κωδικό τραπεζιού, εμφανίζονται οι διανομές της παρτίδας.
+// Αυτό γίνεται μέσω της μεθόδου "aplomaDianomon" του τραπεζιού.
 
-Trapezi.prototype.isAplomeno = function() {
-	return this.aplomeno;
-};
+Trapezi.prototype.aplomaDianomon = function() {
+	var trapezi = this;
 
-Trapezi.prototype.isMazemeno = function() {
-	return !this.isAplomeno();
-};
+	if (!this.dianomiArray.length) {
+		Client.fyi.epano('Δεν έχουν παιχτεί διανομές στη συγκεκριμένη παρτίδα!');
+		return this;
+	}
 
-Trapezi.prototype.aploma = function() {
-	var trapezi = this, count = 0;
-
+	Client.fyi.pano();
 	Globals.awalk(this.dianomiArray, function(i, dianomi) {
 		dianomi.dianomiArxioDisplay(trapezi);
-		count++;
 	});
 
-	if (count)
 	this.DOM.append($('<div>').addClass('dianomiKlisimo').
 	append($('<img>').addClass('dianomiKlisimoIcon').
 	attr('src', '../ikona/misc/mazemaPano.png')).
 	attr('title', 'Μάζεμα διανομών').
 	on('click', function(e) {
-		trapezi.mazema();
+		trapezi.mazemaDianomon();
 	}));
 
-	this.aplomenoSet(true);
+	this.dianomesAplomenesSet(true);
 	return this;
 }
 
-Trapezi.prototype.mazema = function() {
+// Με την μέθοδο "mazemaDianomon" κάνουμε το αντίθετο, δηλαδή αποκρύπτουμε τις διανομές
+// της παρτίδας. Για την ακρίβεια, δεν αποκρύπτουμε απλώς τα σχετικά DOM elements, αλλά
+// τα διαγράφουμε από το DOM.
+
+Trapezi.prototype.mazemaDianomon = function() {
 	this.DOM.find('.dianomi,.dianomiKlisimo').remove();
-	this.aplomenoSet(false);
+	this.dianomesAplomenesSet(false);
 	return this;
 }
+
+Trapezi.prototype.dianomesAplomenesSet = function(aplomenes) {
+	if (aplomenes === undefined)
+	aplomenes = true;
+
+	this.dianomesAplomenes = aplomenes;
+	return this;
+};
+
+Trapezi.prototype.isAplomenesDianomes = function() {
+	return this.dianomesAplomenes;
+};
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
 
