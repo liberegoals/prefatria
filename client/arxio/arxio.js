@@ -738,18 +738,28 @@ Trapezi.prototype.isMazemeno = function() {
 };
 
 Trapezi.prototype.aploma = function() {
-	var trapezi = this;
+	var trapezi = this, count = 0;
 
 	Globals.awalk(this.dianomiArray, function(i, dianomi) {
 		dianomi.dianomiArxioDisplay(trapezi);
+		count++;
 	});
+
+	if (count)
+	this.DOM.append($('<div>').addClass('dianomiKlisimo').
+	append($('<img>').addClass('dianomiKlisimoIcon').
+	attr('src', '../ikona/misc/mazemaPano.png')).
+	attr('title', 'Μάζεμα διανομών').
+	on('click', function(e) {
+		trapezi.mazema();
+	}));
 
 	this.aplomenoSet(true);
 	return this;
 }
 
 Trapezi.prototype.mazema = function() {
-	this.DOM.find('.dianomi').remove();
+	this.DOM.find('.dianomi,.dianomiKlisimo').remove();
 	this.aplomenoSet(false);
 	return this;
 }
@@ -793,7 +803,8 @@ Dianomi.prototype.dianomiArxioDisplay = function(trapezi) {
 		// περίπου στη μέση της περιοχής του.
 
 		if (thesi === tzogadoros)
-		dom.append(trapezi.partidaAgoraGet().agoraDOM());
+		dom.append(trapezi.partidaAgoraGet().agoraDOM()).
+		attr('title', 'Αγοραστής');
 
 		// Στους παίκτες που δεν είναι τζογαδόροι εμφανίζουμε τις
 		// μπάζες τους.
@@ -804,10 +815,16 @@ Dianomi.prototype.dianomiArxioDisplay = function(trapezi) {
 		if (trapezi.sdilosi[thesi]) {
 			if (trapezi.sdilosi[thesi].simetoxiIsMazi())
 			dom.append($('<img>').addClass('simetoxiIcon').
-			attr('src', '../ikona/endixi/mazi.png'));
+			attr('src', '../ikona/endixi/mazi.png')).
+			attr('title', 'Πάμε μαζί!');
 
 			else if (trapezi.sdilosi[thesi].simetoxiIsPaso())
-			dom.addClass('apoxi');
+			dom.addClass('apoxi').attr('title', 'Αποχή');
+
+			else if (trapezi.sdilosi[thesi].simetoxiIsVoithao())
+			dom.append($('<img>').addClass('simetoxiIcon')).
+			attr('title', 'Βοηθητικός');
+
 		}
 
 		dianomi.arxioDisplayKapikia(thesi, dom);
@@ -838,7 +855,7 @@ Arxio.bazaPlati = [
 Trapezi.prototype.arxioDisplayBazes = function(thesi, dom) {
 	var bazesDOM, n;
 
-	bazesDOM = $('<div>').addClass('bazes').appendTo(dom);
+	bazesDOM = $('<div>').addClass('bazes').attr('title', 'Μπάζες').appendTo(dom);
 	for (n = 0; n < this.bazes[thesi]; n++) {
 		bazesDOM.prepend($('<img>').addClass('bazaIcon').
 		attr('src', '../ikona/trapoula/' + Arxio.bazaPlati[n] + 'L.png'));
@@ -867,7 +884,8 @@ Dianomi.prototype.arxioDisplayKapikia = function(thesi, dom) {
 Dilosi.prototype.agoraDOM = function() {
 	var dom;
 
-	dom = $('<div>').addClass('agora').attr('title', 'Αγορά');
+	dom = $('<div>').addClass('agora').
+	attr('title', 'Αγορά: ' + this.dilosiLektiko());
 	dom.append($('<div>').addClass('agoraBazes').text(this.dilosiBazesGet()));
 	dom.append($('<img>').addClass('agoraXroma').
 	attr('src', '../ikona/trapoula/xroma' + this.dilosiXromaGet() + '.png'));
