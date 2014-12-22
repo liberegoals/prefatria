@@ -130,7 +130,7 @@ body {
 
 	width: 170px;
 	height: 28px;
-	overflow: visible;
+	overflow: hidden;
 
 	border-style: none;
 	background-color: transparent;
@@ -169,15 +169,15 @@ body {
 
 .dealerIcon {
 	position: absolute;
-	bottom: 4px;
-	left: -10px;
-	width: 18px;
+	top: 1px;
+	left: 1px;
+	width: 14px;
 }
 
 .simetoxiIcon {
 	position: absolute;
 	bottom: 0px;
-	left: 8px;
+	left: 12px;
 	width: 28px;
 }
 
@@ -225,4 +225,9 @@ body {
 .bazaIcon {
 	width: 12px;
 	margin: 0 0 0 2px;
+}
+
+.apoxi {
+	background-image: url('../ikona/endixi/ektosSmall.png');
+	background-repeat: repeat;
 }

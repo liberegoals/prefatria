@@ -570,10 +570,57 @@ Trapezi.prototype.trapeziArxioKapikia = function() {
 	this.trapeziDianomiWalk(function() {
 		var dianomi = this;
 
+		// Παράλληλα με το συνολικό ισοζύγιο, υπολογίζω και καταχωρώ
+		// το ισοζύγιο σε κάθε διανομή. Τα στοιχεία του ισοζυγίου
+		// καταχωρούνται σε λίστα δεικτοδοτημένη με τη θέση του παίκτη.
+
+		this.isozigio = {};
 		Prefadoros.thesiWalk(function(thesi) {
-			trapezi['kapikia' + thesi] += dianomi.dianomiKasaGet(thesi) + dianomi.dianomiMetritaGet(thesi);
-			kasa -= dianomi.dianomiKasaGet(thesi);
+			dianomi.isozigio[thesi] = 0;
 		});
+
+		Prefadoros.thesiWalk(function(thesi) {
+			var k, m, k3;
+
+			k = dianomi.dianomiKasaGet(thesi);
+			m = dianomi.dianomiMetritaGet(thesi);
+			trapezi['kapikia' + thesi] += k + m;
+
+			// Προχωρούμε στον υπολογισμό του ισοζυγίου διανομής
+			// προσθέτοντας αρχικά τα μετρητά στην αντίστοιχη θέση.
+
+			dianomi.isozigio[thesi] += m;
+
+			// Αν η συναλλαγή κάσας στην ανά χείρας θέση είναι μηδενική,
+			// δεν προχωρουμε σε περαιτέρω ενέργειες.
+
+			if (!k)
+			return;
+
+			// Αφαιρούμε τα καπίκια συναλλαγής με την κάσα στη
+			// συνολική κάσα του τραπεζιού.
+
+			kasa -= k;
+
+			// Αφαιρούμε από όλους τους παίκτες το ένα τρίτο της συναλλαγής
+			// με την κάσα.
+
+			k3 = parseInt(k / 3);
+			Prefadoros.thesiWalk(function(thesi) {
+				dianomi.isozigio[thesi] -= k3;
+			});
+
+			// Προσθέτουμε τα καπίκια της συναλλαγής με την κάσα στην
+			// ανά χείρας θέση, οπότε έχουμε συνολική μεταβολή στο
+			// ισοζύγιο της θέσης αυτής κατά τα δύο τρίτα.
+
+			dianomi.isozigio[thesi] += k;
+		});
+
+		// Επανυπολογίζουμε το ισοζύγιο διανομής για τον τρίτο παίκτη με
+		// βάση το ισοζύγιο των άλλων δύο παικτών.
+
+		this.isozigio[3] = 0 - this.isozigio[1] - this.isozigio[2];
 	});
 
 	this.ipolipo = kasa;
@@ -581,7 +628,11 @@ Trapezi.prototype.trapeziArxioKapikia = function() {
 
 	this['kapikia1'] += kasa;
 	this['kapikia2'] += kasa;
-	this['kapikia3'] = -this['kapikia1'] - this['kapikia2'];
+
+	// Επανυπολογίζουμε το ισοζύγιο τραπεζιού για τον τρίτο παίκτη με βάση το
+	// ισοζύγιο των άλλων δύο παικτών.
+
+	this['kapikia3'] = 0 - this['kapikia1'] - this['kapikia2'];
 
 	return this;
 };
@@ -750,9 +801,16 @@ Dianomi.prototype.dianomiArxioDisplay = function(trapezi) {
 		else
 		trapezi.arxioDisplayBazes(thesi, dom);
 
-		if (trapezi.sdilosi[thesi] && trapezi.sdilosi[thesi].simetoxiIsMazi())
-		dom.append($('<img>').addClass('simetoxiIcon').
-		attr('src', '../ikona/endixi/mazi.png'));
+		if (trapezi.sdilosi[thesi]) {
+			if (trapezi.sdilosi[thesi].simetoxiIsMazi())
+			dom.append($('<img>').addClass('simetoxiIcon').
+			attr('src', '../ikona/endixi/mazi.png'));
+
+			else if (trapezi.sdilosi[thesi].simetoxiIsPaso())
+			dom.addClass('apoxi');
+		}
+
+		dianomi.arxioDisplayKapikia(thesi, dom);
 
 		dianomi.DOM.append(dom);
 	});
@@ -786,6 +844,21 @@ Trapezi.prototype.arxioDisplayBazes = function(thesi, dom) {
 		attr('src', '../ikona/trapoula/' + Arxio.bazaPlati[n] + 'L.png'));
 	}
 
+	return this;
+};
+
+Dianomi.prototype.arxioDisplayKapikia = function(thesi, dom) {
+	var kapikia, klasi;
+
+	kapikia = this.isozigio[thesi];
+	if (!kapikia)
+	return this;
+
+	klasi = 'arxioKapikia';
+	if (kapikia < 0)
+	klasi += ' arxioKapikiaMion';
+
+	dom.append($('<div>').addClass(klasi).html(kapikia));
 	return this;
 };
 
