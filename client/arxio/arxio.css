@@ -98,6 +98,7 @@ body {
 	opacity: 1.0;
 	font-weight: bold;
 	cursor: pointer;
+	background-color: rgb(194, 219, 131);
 }
 
 .dianomiData {
@@ -134,6 +135,15 @@ body {
 
 	border-style: none;
 	background-color: transparent;
+}
+
+.dianomiKlisimo {
+	padding: 12px;
+	text-align: center;
+}
+
+.dianomiKlisimoIcon {
+	width: 70px;
 }
 
 .arxioKapikia {
