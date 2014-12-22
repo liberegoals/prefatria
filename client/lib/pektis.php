@@ -56,7 +56,7 @@ class Pektis {
 	// name, και φέρει όνομα ίδιο με το login name του παίκτη.
 
 	public function photo_file() {
-		return Globals::$www . "client/photo/" . substr($this->login, 0, 1) . "/" . $this->login;
+		return Globals::$www . "client/photo/" . strtolower(substr($this->login, 0, 1)) . "/" . $this->login;
 	}
 
 	// Η μέθοδος "photo_src" επιστρέφει το URL του αρχείου εικόνας που αφορά
@@ -64,7 +64,7 @@ class Pektis {
 	// στο modification time του αρχείου.
 
 	public function photo_src() {
-		$photo = "photo/" . substr($this->login, 0, 1) . "/" . $this->login;
+		$photo = "photo/" . strtolower(substr($this->login, 0, 1)) . "/" . $this->login;
 		$photo_file = Globals::$www . "client/" . $photo;
 
 		if (!file_exists($photo_file))
