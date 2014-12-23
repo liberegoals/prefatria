@@ -215,13 +215,18 @@ Client.tabKlisimo = function(x) {
 	}).append(Client.sinefo('Κλείσιμο')), x === undefined ? $('#toolbarLeft') : x);
 };
 
-Client.tabEpistrofi = function(lektiko, url, x) {
-	return Client.tab($('<a>').attr({href: '#'}).on('click', function(e) {
-		self.location = url ? url : Client.server;
+Client.tabEpistrofi = function(lektiko, x) {
+	Client.tab($('<a>').attr({href: '#'}).on('click', function(e) {
+		var opener;
+
+		opener = self.parent;
+		if (!opener)
+		return false;
+
+		opener.self.focus();
 		return false;
 	}).append(Client.sinefo(lektiko === undefined ? 'Επιστροφή' : lektiko)),
 	x === undefined ? $('#toolbarLeft') : x);
-
 };
 
 Client.tabArxiki = function(x) {

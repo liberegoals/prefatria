@@ -47,6 +47,7 @@
 
 $(document).ready(function() {
 	Client.tabPektis();
+	//Client.tabEpistrofi();
 	Client.tabKlisimo($('#toolbarRight'));
 	Arxio.setup();
 
