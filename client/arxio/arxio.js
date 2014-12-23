@@ -79,14 +79,6 @@ $(document).ready(function() {
 	// στη βασική σελίδα.
 });
 
-$(window).
-on('beforeunload', function() {
-	Arxio.unload();
-}).
-on('unload', function() {
-	Arxio.unload();
-});
-
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
 
 Arxio = {
@@ -100,6 +92,10 @@ Arxio = {
 	// αναζήτηση.
 
 	skip: 0,
+};
+
+Arxio.checkOpen = function() {
+	return self;
 };
 
 Arxio.setup = function() {
@@ -253,7 +249,7 @@ Arxio.zitaData = function() {
 		'skip=' + Arxio.skip).
 	done(function(rsp) {
 		Client.fyi.pano();
-		Arxio.paralaviPartida(rsp);
+		Arxio.paralaviData(rsp);
 	}).
 	fail(function(err) {
 		Client.ajaxFail('Παρουσιάστηκε σφάλμα κατά την αναζήτηση παρτίδων');
@@ -301,10 +297,10 @@ Arxio.pektisFocus = function() {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
 
-// Η function "paralaviPartida" καλείται κατά την επιστροφή των αποτελεσμάτων,
+// Η function "paralaviData" καλείται κατά την επιστροφή των αποτελεσμάτων,
 // και σκοπό έχει τη διαχείριση των αποτελεσμάτων αυτών.
 
-Arxio.paralaviPartida = function(data) {
+Arxio.paralaviData = function(data) {
 	var tlist;
 
 	try {
@@ -529,30 +525,6 @@ Arxio.partidaCheck = function() {
 	Client.fyi.epano('Λανθασμένο κριτήριο κωδικού παρτίδας');
 	Arxio.partidaInputDOM.addClass('inputLathos').focus();
 	return false;
-};
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
-
-// Αν κλείσουμε τη ΣΕΑΠ, θα πρέπει να κάνουμε κάποιες ενέργεις στη βασική
-// σελίδα της εφαρμογής, εφόσον η ΣΕΑΠ εκκίνησε από τη βασική σελίδα.
-
-Arxio.unload = function() {
-	if (Arxio.unloaded)
-	return;
-
-	Arxio.unloaded = true;
-
-	if (!Arena)
-	return;
-
-	if (!Arena.arxio)
-	return;
-
-	if (!Arena.arxio.win)
-	return;
-
-	Arena.arxio.win.close();
-	Arena.arxio.win = null;
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@

@@ -687,7 +687,7 @@ Arena.arxio = {
 };
 
 Arena.arxio.setup = function() {
-	var tbr, dom;
+	var tbr;
 
 	tbr = $('#toolbarLeft');
 	if (!tbr.length) return Arena;
@@ -703,16 +703,13 @@ Arena.arxio.setup = function() {
 		Arena.arxio.anigma();
 
 		return false;
-	}).append(dom = Client.sinefo('Αρχείο')), tbr);
+	}).
+	append(Client.sinefo('Αρχείο')), tbr);
 
 	return Arena;
 };
 
 Arena.arxio.anigma = function() {
-	var x, y;
-
-	x = window.screenX;
-	y = window.screenY;
 	Arena.arxio.win = window.open('arxio', '_blank');
 	return Arena.arxio;
 };
@@ -728,7 +725,11 @@ Arena.arxio.klisimo = function() {
 };
 
 Arena.arxio.isAnikto = function() {
-	return Arena.arxio.win;
+	try {
+		return Arena.arxio.win.Arxio.checkOpen();
+	} catch (e) {
+		return false;
+	}
 };
 
 Arena.arxio.isKlisto = function() {
@@ -737,7 +738,6 @@ Arena.arxio.isKlisto = function() {
 
 Arena.arxio.focus = function() {
 	Arena.arxio.win.focus();
-
 	return Arena;
 };
 
