@@ -682,37 +682,41 @@ Arena.minima.endixiClear = function() {
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+// Ακολουθούν δομές και functions σχετικές με το αρχείο. Η σελίδα του αρχείου
+// μπορεί να ανοίξει είτε αυτόνομα, είτε από το σχετικό tab της βασικής σελίδας.
+// Εδώ έχουμε τα σχετικά με τη σελίδα του αρχείου εφόσον αυτή ανοίξει από τη
+// βασική σελίδα.
+
 Arena.arxio = {
+	// Η property "win" «κρατά» το παράθυρο της σελίδας του αρχείου που θα
+	// ανοίξει από τη βασική σελίδα.
+
 	win: null,
 };
 
+// Η function "setup" δημιουργεί το tab του αρχείου στο επάνω αριστερό μέρος της
+// σελίδας.
+
 Arena.arxio.setup = function() {
-	var tbr;
-
-	tbr = $('#toolbarLeft');
-	if (!tbr.length) return Arena;
-
 	Client.tab($('<a>').attr('href', 'arxio').
 	on('click', function(e) {
 		Arena.inputRefocus();
 
 		if (Arena.arxio.isAnikto())
-		Arena.arxio.focus();
+		Arena.arxio.win.focus();
 
 		else
-		Arena.arxio.anigma();
+		Arena.arxio.win = window.open('arxio', '_blank');
 
 		return false;
 	}).
-	append(Client.sinefo('Αρχείο')), tbr);
+	append(Client.sinefo('Αρχείο')), $('#toolbarLeft'));
 
 	return Arena;
 };
 
-Arena.arxio.anigma = function() {
-	Arena.arxio.win = window.open('arxio', '_blank');
-	return Arena.arxio;
-};
+// Η function "klisimo" κλείνει τη σελίδα του αρχείου που ανοίξαμε από τη βασική
+// σελίδα και απελευθερώνει τον σχετικό σύνδεσμο.
 
 Arena.arxio.klisimo = function() {
 	if (Arena.arxio.isKlisto())
@@ -724,6 +728,9 @@ Arena.arxio.klisimo = function() {
 	return Arena;
 };
 
+// Η function "isAnikto" επιστρέφει true εφόσον υπάρχει σελίδα αρχείου που έχει
+// ανοίξει από τη βασική σελίδα, αλλιώς επιστρέφει false.
+
 Arena.arxio.isAnikto = function() {
 	try {
 		return Arena.arxio.win.Arxio.checkOpen();
@@ -734,11 +741,6 @@ Arena.arxio.isAnikto = function() {
 
 Arena.arxio.isKlisto = function() {
 	return !Arena.arxio.isAnikto();
-};
-
-Arena.arxio.focus = function() {
-	Arena.arxio.win.focus();
-	return Arena;
 };
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
