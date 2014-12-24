@@ -811,9 +811,12 @@ Dianomi.prototype.dianomiArxioDisplay = function(trapezi) {
 	Prefadoros.thesiWalk(function(thesi) {
 		var dom;
 
-		dom = $('<div>').addClass('pektis dianomiPektis');
+		dom = $('<div>').addClass('trapeziPektis dianomiPektis');
 		pektisDOM[thesi] = dom;
 		dianomi.DOM.append(dom);
+
+		dom.append($('<div>').addClass('dianomiPektisOnoma').
+		text(trapezi.trapeziPektisGet(thesi)));
 
 		// Εμφανίζουμε τα καπίκια που κέρδισε ή ζημιώθηκε ο κάθε
 		// παίκτης.

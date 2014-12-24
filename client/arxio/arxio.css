@@ -129,12 +129,19 @@ body {
 	bottom: -2px;
 	margin: 0 0 0 18px;
 
-	width: 170px;
-	height: 28px;
+	text-align: center;
 	overflow: hidden;
 
 	border-style: none;
 	background-color: transparent;
+}
+
+.dianomiPektisOnoma {
+	position: absolute;
+	left: 4px;
+	bottom: 3px;
+	opacity: 0.3;
+	font-weight: normal;
 }
 
 .dianomiKlisimo {
@@ -201,7 +208,7 @@ body {
 
 .agora {
 	position: relative;
-	bottom: 2px;
+	bottom: 5px;
 }
 
 .agoraBazes {
@@ -239,7 +246,7 @@ body {
 
 .bazes {
 	position: relative;
-	bottom: -5px;
+	bottom: -2px;
 }
 
 .bazaIcon {
