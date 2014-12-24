@@ -36,6 +36,13 @@ class Arxio {
 			var kritiria = false;
 
 			<?php
+			if (Globals::perastike("pektis")) {
+				?>
+				Arxio.pektisInputDOM.val('<?php print $_REQUEST["pektis"]; ?>');
+				kritiria = true;
+				<?php
+			}
+
 			if (Globals::perastike("apo")) {
 				?>
 				Arxio.apoInputDOM.val('<?php print $_REQUEST["apo"]; ?>');
