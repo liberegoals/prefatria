@@ -186,7 +186,7 @@ Trapezi.prototype.partidaOxiFasiInteractive = function() {
 };
 
 Trapezi.prototype.partidaDealerSet = function(thesi) {
-	if (thesi) this.dealer = thesi;
+	if (thesi) this.dealer = parseInt(thesi);
 	else delete this.dealer;
 
 	return this;
