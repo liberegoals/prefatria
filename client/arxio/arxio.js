@@ -143,8 +143,22 @@ Arxio.setup = function() {
 		$(this).find('.arxioKapikia').addClass('arxioKapikiaTrexon');
 	}).
 	on('mouseleave', '.trapezi', function(e) {
-		$('.arxioKapikia').removeClass('arxioKapikiaTrexon');
+		$('.arxioKapikiaTrexon').removeClass('arxioKapikiaTrexon');
+	}).
+
+	// Οι διανομές που εμφανίζονται στη ΣΕΑΠ είναι κάπως αχνές, αλλά γίνονται
+	// διαυγείς μόλις ο χρήστης περάσει από πάνω τους το ποντίκι. Αυτό γίνεται
+	// μέσω CSS, αλλά παρόμοια τακτική ακολουθούμε και για τις αγορές που
+	// έγιναν ενδεχομένως στη διανομή· αυτό γίνεται προγραμματιστικά.
+
+	on('mouseenter', '.dianomi', function(e) {
+		$(this).find('.agoraBazes').addClass('agoraBazesTrexon');
+	}).
+	on('mouseleave', '.dianomi', function(e) {
+		$('.agoraBazesTrexon').removeClass('agoraBazesTrexon');
 	});
+
+	Arxio.setupPost();
 };
 
 // Η function "kritiriaSetup" στήνει το επάνω μέρος της ΣΕΑΠ όπου υπάρχουν τα κριτήρια
@@ -315,6 +329,9 @@ Arxio.paralaviData = function(data) {
 
 	Arxio.moreButtonDOM.prop('disabled', tlist.length < Arxio.limit);
 	Globals.awalk(tlist, Arxio.trapeziProcess);
+
+	if ((Arxio.skip === 0) && (tlist.length === 1))
+	$('.trapeziData').trigger('click');
 
 	return Arxio;
 };

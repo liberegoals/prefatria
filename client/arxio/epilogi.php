@@ -86,7 +86,12 @@ class Epilogi {
 		if ($apo <= 0)
 		return;
 
-		self::$query .= " AND (`arxio` >= FROM_UNIXTIME(" . $apo . "))";
+		self::$query .= " AND ((`arxio` >= FROM_UNIXTIME(" . $apo . "))";
+
+		if (Globals::den_perastike("eos") || ((int)$_REQUEST["eos"] <= 0))
+		self::$query .= " OR (`arxio` IS NULL)";
+
+		self::$query .= ")";
 	}
 
 	public static function queryEos() {

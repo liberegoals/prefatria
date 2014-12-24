@@ -200,24 +200,27 @@ body {
 }
 
 .agora {
-	position: absolute;
-	bottom: 0px;
-	left: 66px;
+	position: relative;
+	bottom: 2px;
 }
 
 .agoraBazes {
 	display: inline-block;
 	position:relative;
 	bottom: 0px;
-	font-size: 24px;
-	text-shadow: 0 0 1px #888;
-	font-weight: normal;
+	font-size: 22px;
+	font-family: "Comic Sans MS", cursive, sans-serif;
+	font-weight: bold;
+}
+
+.agoraBazesTrexon {
+	text-shadow: 0 0 2px rgb(40, 60, 90);
 }
 
 .agoraXroma {
 	display: inline-block;
 	position:relative;
-	bottom: 0px;
+	bottom: -2px;
 	height: 20px;
 }
 
@@ -231,13 +234,12 @@ body {
 
 .tsoxaDilosiAsoiIcon {
 	left: 12px;
-	width: 20px;
+	width: 22px;
 }
 
 .bazes {
-	position: absolute;
-	bottom: 2px;
-	right: 66px;
+	position: relative;
+	bottom: -5px;
 }
 
 .bazaIcon {
