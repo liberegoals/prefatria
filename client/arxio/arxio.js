@@ -141,9 +141,11 @@ Arxio.setup = function() {
 	on('mouseenter', '.trapezi', function(e) {
 		Client.fyi.pano('');
 		$(this).find('.arxioKapikia').addClass('arxioKapikiaTrexon');
+		$(this).find('.trapeziPektis').addClass('pektisOnomaTrexon');
 	}).
 	on('mouseleave', '.trapezi', function(e) {
 		$('.arxioKapikiaTrexon').removeClass('arxioKapikiaTrexon');
+		$('.pektisOnomaTrexon').removeClass('pektisOnomaTrexon');
 	}).
 
 	// Οι διανομές που εμφανίζονται στη ΣΕΑΠ είναι κάπως αχνές, αλλά γίνονται
@@ -153,18 +155,18 @@ Arxio.setup = function() {
 
 	on('mouseenter', '.dianomi', function(e) {
 		$(this).find('.agoraBazes').addClass('agoraBazesTrexon');
-		$(this).find('.dianomiPektisOnoma').css('opacity', 0.3);
+		$(this).find('.dianomiPektisOnoma').addClass('dianomiPektisOnomaTrapezi');
 	}).
 	on('mouseleave', '.dianomi', function(e) {
 		$('.agoraBazesTrexon').removeClass('agoraBazesTrexon');
-		$(this).find('.dianomiPektisOnoma').css('opacity', 0);
+		$(this).find('.dianomiPektisOnoma').removeClass('dianomiPektisOnomaTrapezi');
 	}).
 
 	on('mouseenter', '.dianomiPektis', function(e) {
-		$(this).find('.dianomiPektisOnoma').css('opacity', 1);
+		$(this).find('.dianomiPektisOnoma').addClass('pektisOnomaTrexon');
 	}).
 	on('mouseleave', '.dianomiPektis', function(e) {
-		$(this).find('.dianomiPektisOnoma').css('opacity', 0.3);
+		$(this).find('.dianomiPektisOnoma').removeClass('pektisOnomaTrexon');
 	});
 
 	Arxio.setupPost();

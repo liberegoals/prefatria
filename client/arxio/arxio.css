@@ -142,6 +142,16 @@ body {
 	bottom: 3px;
 	opacity: 0;
 	font-weight: normal;
+	color: rgb(33, 33, 75);
+}
+
+.dianomiPektisOnomaTrapezi {
+	opacity: 0.3;
+}
+
+.pektisOnomaTrexon {
+	opacity: 1;
+	text-shadow: 0 0 1px #222;
 }
 
 .dianomiKlisimo {
