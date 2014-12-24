@@ -153,9 +153,18 @@ Arxio.setup = function() {
 
 	on('mouseenter', '.dianomi', function(e) {
 		$(this).find('.agoraBazes').addClass('agoraBazesTrexon');
+		$(this).find('.dianomiPektisOnoma').css('opacity', 0.3);
 	}).
 	on('mouseleave', '.dianomi', function(e) {
 		$('.agoraBazesTrexon').removeClass('agoraBazesTrexon');
+		$(this).find('.dianomiPektisOnoma').css('opacity', 0);
+	}).
+
+	on('mouseenter', '.dianomiPektis', function(e) {
+		$(this).find('.dianomiPektisOnoma').css('opacity', 1);
+	}).
+	on('mouseleave', '.dianomiPektis', function(e) {
+		$(this).find('.dianomiPektisOnoma').css('opacity', 0.3);
 	});
 
 	Arxio.setupPost();
@@ -786,7 +795,7 @@ Dianomi.prototype.processEnergiaList = function(elist) {
 // περνάμε το τραπέζι.
 
 Dianomi.prototype.dianomiArxioDisplay = function(trapezi) {
-	var dianomi = this, kodikos, pektisDOM = {}, tzogadoros, enarxi;
+	var dianomi = this, kodikos, tzogadoros, enarxi;
 
 	// Αποσπούμε τον κωδικό διανομής και κάνουμε replay την παρτίδα μέχρι
 	// ΚΑΙ την ανά χείρας διανομή.
@@ -812,11 +821,12 @@ Dianomi.prototype.dianomiArxioDisplay = function(trapezi) {
 		var dom;
 
 		dom = $('<div>').addClass('trapeziPektis dianomiPektis');
-		pektisDOM[thesi] = dom;
 		dianomi.DOM.append(dom);
 
-		dom.append($('<div>').addClass('dianomiPektisOnoma').
-		text(trapezi.trapeziPektisGet(thesi)));
+		// Εμφανίζουμε ενδεικτικό εικονίδιο στον dealer της διανομής.
+
+		if (thesi == dianomi.dianomiDealerGet())
+		dom.append(Arxio.dealerEndixiDOM());
 
 		// Εμφανίζουμε τα καπίκια που κέρδισε ή ζημιώθηκε ο κάθε
 		// παίκτης.
@@ -836,33 +846,31 @@ Dianomi.prototype.dianomiArxioDisplay = function(trapezi) {
 		else
 		trapezi.arxioDisplayBazes(thesi, dom);
 
-		// Μένει να δείξουμε στοιχεία που αφορούν στη συμμετοχή των
-		// αμυνομένων.
+		// Ακολουθούν τα σχετικά με τη συμμετοχή των αμυνομένων.
 
-		if (!trapezi.sdilosi[thesi])
-		return;
+		if (trapezi.sdilosi[thesi]) {
+			if (trapezi.sdilosi[thesi].simetoxiIsMazi())
+			dom.append($('<img>').addClass('simetoxiIcon').
+			attr('src', '../ikona/endixi/mazi.png')).
+			attr('title', 'Πάμε μαζί!');
 
-		if (trapezi.sdilosi[thesi].simetoxiIsMazi())
-		dom.append($('<img>').addClass('simetoxiIcon').
-		attr('src', '../ikona/endixi/mazi.png')).
-		attr('title', 'Πάμε μαζί!');
+			else if (trapezi.sdilosi[thesi].simetoxiIsPaso())
+			dom.addClass('apoxi').attr('title', 'Αποχή');
 
-		else if (trapezi.sdilosi[thesi].simetoxiIsPaso())
-		dom.addClass('apoxi').attr('title', 'Αποχή');
+			else if (trapezi.sdilosi[thesi].simetoxiIsVoithao())
+			dom.append($('<img>').addClass('simetoxiIcon')).
+			attr('title', 'Βοηθητικός');
+		}
 
-		else if (trapezi.sdilosi[thesi].simetoxiIsVoithao())
-		dom.append($('<img>').addClass('simetoxiIcon')).
-		attr('title', 'Βοηθητικός');
+		// Εμφανίζουμε το login name του παίκτη με πολύ χαμηλή opacity.
+
+		dom.append($('<div>').addClass('dianomiPektisOnoma').
+		text(trapezi.trapeziPektisGet(thesi)));
 
 		// Ακολουθούν ενδεικτικά χρώματα σε τζογαδόρο ή αμυνομένους
 		// σχετικά με τις μέσα αγορές.
 		// TODO
 	});
-
-	// Εμφανίζουμε ενδεικτικό εικονίδιο στον dealer της διανομής.
-
-	pektisDOM[dianomi.dianomiDealerGet()].
-	append(Arxio.dealerEndixiDOM());
 
 	// Ακολουθούν τα του χρόνου τέλους της διανομής.
 
