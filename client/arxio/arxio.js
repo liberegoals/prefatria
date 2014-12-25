@@ -826,10 +826,12 @@ Dianomi.prototype.dianomiArxioDisplay = function(trapezi) {
 	// «γέμισμα» των DOM elements για κάθε παίκτη.
 
 	tzogadoros = trapezi.partidaTzogadorosGet();
+	this.pektisDOM = {};
 	Prefadoros.thesiWalk(function(thesi) {
 		var dom, pektis;
 
 		dom = $('<div>').addClass('trapeziPektis dianomiPektis');
+		dianomi.pektisDOM[thesi] = dom;
 		dianomi.DOM.append(dom);
 
 		// Εμφανίζουμε ενδεικτικό εικονίδιο στον dealer της διανομής.
@@ -855,22 +857,6 @@ Dianomi.prototype.dianomiArxioDisplay = function(trapezi) {
 		else
 		trapezi.arxioDisplayBazes(thesi, dom);
 
-		// Ακολουθούν τα σχετικά με τη συμμετοχή των αμυνομένων.
-
-		if (trapezi.sdilosi[thesi]) {
-			if (trapezi.sdilosi[thesi].simetoxiIsMazi())
-			dom.append($('<img>').addClass('simetoxiIcon').
-			attr('src', '../ikona/endixi/mazi.png')).
-			attr('title', 'Πάμε μαζί!');
-
-			else if (trapezi.sdilosi[thesi].simetoxiIsPaso())
-			dom.addClass('apoxi').attr('title', 'Αποχή');
-
-			else if (trapezi.sdilosi[thesi].simetoxiIsVoithao())
-			dom.append($('<img>').addClass('simetoxiIcon')).
-			attr('title', 'Βοηθητικός');
-		}
-
 		// Εμφανίζουμε το login name του παίκτη με πολύ χαμηλή opacity.
 
 		pektis = trapezi.trapeziPektisGet(thesi);
@@ -882,12 +868,149 @@ Dianomi.prototype.dianomiArxioDisplay = function(trapezi) {
 		// TODO
 	});
 
+	// Ακολουθούν τα σχετικά με τη συμμετοχή των αμυνομένων.
+
+	this.simetoxiDisplay(trapezi);
+
+	// Ακολουθούν τα σχετικά με το «μέσα» τζογαδόρου ή αμυνομένων.
+
+	this.mesaDisplay(trapezi);
+
 	// Ακολουθούν τα του χρόνου τέλους της διανομής.
 
 	enarxi = dianomi.dianomiEnarxiGet();
 
 	if (enarxi)
 	this.DOM.append($('<div>').addClass('trapeziArxio').text(Globals.poteOra(enarxi)));
+
+	return this;
+};
+
+Dianomi.prototype.simetoxiDisplay = function(trapezi) {
+	var dianomi = this;
+
+	if (!trapezi.sdilosi)
+	return this;
+
+	Prefadoros.thesiWalk(function(thesi) {
+		if (!trapezi.sdilosi[thesi])
+		return;
+
+		if (trapezi.sdilosi[thesi].simetoxiIsMazi())
+		dianomi.pektisDOM[thesi].append($('<img>').addClass('simetoxiIcon').
+		attr('src', '../ikona/endixi/mazi.png')).
+		attr('title', 'Πάμε μαζί!');
+
+		else if (trapezi.sdilosi[thesi].simetoxiIsPaso())
+		dianomi.pektisDOM[thesi].addClass('apoxi').attr('title', 'Αποχή');
+
+		else if (trapezi.sdilosi[thesi].simetoxiIsVoithao())
+		dianomi.pektisDOM[thesi].append($('<img>').addClass('simetoxiIcon')).
+		attr('title', 'Βοηθητικός');
+	});
+
+	return this;
+};
+
+Dianomi.prototype.mesaDisplay = function(trapezi) {
+	var dianomi = this, agora, agoraBazes, tzogadoros, dif,
+		protos, bazesProtos, defteros, bazesDefteros;
+
+	agora = trapezi.partidaAgoraGet();
+	if (!agora)
+	return this;
+
+	tzogadoros = trapezi.partidaTzogadorosGet();
+	if (!tzogadoros)
+	return this;
+
+	agoraBazes = agora.dilosiBazesGet();
+	dif = agoraBazes - trapezi.partidaBazesGet(tzogadoros);
+
+	if (dif === 0)
+	return this;
+
+	if (dif === 1) {
+		this.pektisDOM[tzogadoros].addClass('mesaMia');
+		return this;
+	}
+
+	if (dif > 1) {
+		this.pektisDOM[tzogadoros].addClass('mesaSolo');
+		return this;
+	}
+
+	if (!trapezi.sdilosi)
+	return this;
+
+	protos = tzogadoros.epomeniThesi();
+	defteros = protos.epomeniThesi();
+
+	switch (agoraBazes) {
+	case 6:
+		protosBazes = 2;
+		defterosBazes = 2;
+		break;
+	case 7:
+		protosBazes = 2;
+		defterosBazes = 1;
+		break;
+	case 8:
+		protosBazes = 1;
+		defterosBazes = 1;
+		break;
+	case 9:
+		protosBazes = 1;
+		defterosBazes = 0;
+		break;
+	default:
+		return this;
+	}
+
+	if (trapezi.sdilosi[protos].simetoxiIsPaso()) {
+		defterosBazes = protosBazes;
+		protosBazes = 0;
+	}
+
+	if (trapezi.sdilosi[protos].simetoxiIsMazi()) {
+		trapezi.displayAminomenosMesa(protos, protosBazes + defterosBazes,
+			trapezi.bazes[protos] + trapezi.bazes[defteros], this.pektisDOM[protos]);
+		return this;
+	}
+
+	if (trapezi.sdilosi[defteros].simetoxiIsMazi()) {
+		trapezi.displayAminomenosMesa(protos, protosBazes + defterosBazes,
+			trapezi.bazes[protos] + trapezi.bazes[defteros], this.pektisDOM[defteros]);
+		return this;
+	}
+
+	trapezi.displayAminomenosMesa(protos, protosBazes, trapezi.bazes[protos], this.pektisDOM[protos]);
+	trapezi.displayAminomenosMesa(defteros, defterosBazes, trapezi.bazes[defteros], this.pektisDOM[defteros]);
+
+	return this;
+};
+
+Trapezi.prototype.displayAminomenosMesa = function(thesi, prepi, bazes, dom) {
+	var dif;
+
+	if (!this.sdilosi[thesi])
+	return this;
+
+	if (this.sdilosi[thesi].simetoxiIsPaso())
+	return this;
+
+	if (this.sdilosi[thesi].simetoxiIsVoithao())
+	return this;
+
+	dif = prepi - bazes;
+	if (dif === 0)
+	return this;
+
+	if (dif === 1)
+	dom.addClass('mesaMia');
+
+	else if (dif > 1)
+	dom.addClass('mesaSolo');
 
 	return this;
 };
