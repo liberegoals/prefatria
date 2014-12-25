@@ -275,3 +275,11 @@ body {
 	background-image: url('../ikona/endixi/ektosSmall.png');
 	background-repeat: repeat;
 }
+
+.mesaMia {
+	background-color: rgb(244, 148, 148);
+}
+
+.mesaSolo {
+	background-color: rgb(250, 70, 70);
+}
