@@ -654,9 +654,12 @@ Trapezi.prototype.trapeziArxioDisplay = function() {
 	this.DOM.
 	data('trapezi', kodikos).
 	append($('<div>').addClass('trapeziData').
+	attr('title', 'Άνοιγμα διανομών').
 	append($('<div>').addClass('trapeziDataContent').
-	append($('<div>').addClass('trapeziDataKodikos').text(kodikos)).
-	append($('<div>').addClass('trapeziDataIpolipo').text(this.ipolipo))).
+	append($('<div>').addClass('trapeziDataKodikos').
+	attr('title', 'Κωδικός τραπεζιού').text(kodikos)).
+	append($('<div>').addClass('trapeziDataIpolipo').
+	attr('title', 'Υπόλοιπο κάσας').text(this.ipolipo))).
 	on('click', function(e) {
 		if (trapezi.isAplomenesDianomes())
 		trapezi.mazemaDianomon();
@@ -741,13 +744,15 @@ Trapezi.prototype.aplomaDianomon = function() {
 		dianomi.dianomiArxioDisplay(trapezi);
 	});
 
-	this.DOM.append($('<div>').addClass('dianomiKlisimo').
+	this.DOM.
+	append($('<div>').addClass('dianomiKlisimo').
 	append($('<img>').addClass('dianomiKlisimoIcon').
 	attr('src', '../ikona/misc/mazemaPano.png')).
 	attr('title', 'Μάζεμα διανομών').
 	on('click', function(e) {
 		trapezi.mazemaDianomon();
-	}));
+	})).
+	find('.trapeziData').attr('title', 'Μάζεμα διανομών');
 
 	this.dianomesAplomenesSet(true);
 	return this;
@@ -759,6 +764,7 @@ Trapezi.prototype.aplomaDianomon = function() {
 
 Trapezi.prototype.mazemaDianomon = function() {
 	this.DOM.find('.dianomi,.dianomiKlisimo').remove();
+	this.DOM.find('.trapeziData').attr('title', 'Άνοιγμα διανομών');
 	this.dianomesAplomenesSet(false);
 	return this;
 }
