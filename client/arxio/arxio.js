@@ -672,8 +672,9 @@ Trapezi.prototype.trapeziArxioDisplay = function() {
 		var pektis, dom, kapikia, kapikiaKlasi;
 
 		pektis = trapezi.trapeziPektisGet(thesi);
-		if (!pektis) pektis = '&#8203;';
-		trapezi.DOM.append(dom = $('<div>').addClass('trapeziPektis').html(pektis));
+		if (!pektis) pektis = '';
+		trapezi.DOM.append(dom = $('<div>').addClass('trapeziPektis').
+		append($('<div>').addClass('pektisOnoma').text(pektis)));
 
 		kapikia = parseInt(trapezi['kapikia' + thesi]);
 		if (isNaN(kapikia)) kapikia = 0;
@@ -826,7 +827,7 @@ Dianomi.prototype.dianomiArxioDisplay = function(trapezi) {
 
 	tzogadoros = trapezi.partidaTzogadorosGet();
 	Prefadoros.thesiWalk(function(thesi) {
-		var dom;
+		var dom, pektis;
 
 		dom = $('<div>').addClass('trapeziPektis dianomiPektis');
 		dianomi.DOM.append(dom);
@@ -872,8 +873,9 @@ Dianomi.prototype.dianomiArxioDisplay = function(trapezi) {
 
 		// Εμφανίζουμε το login name του παίκτη με πολύ χαμηλή opacity.
 
-		dom.append($('<div>').addClass('dianomiPektisOnoma').
-		text(trapezi.trapeziPektisGet(thesi)));
+		pektis = trapezi.trapeziPektisGet(thesi);
+		if (!pektis) pektis = '';
+		dom.append($('<div>').addClass('pektisOnoma dianomiPektisOnoma').text(pektis));
 
 		// Ακολουθούν ενδεικτικά χρώματα σε τζογαδόρο ή αμυνομένους
 		// σχετικά με τις μέσα αγορές.
