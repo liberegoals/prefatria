@@ -931,6 +931,7 @@ Dianomi.prototype.mesaDisplay = function(trapezi) {
 
 	if (dif === 0)
 	return this;
+console.log(this.dianomiKodikosGet(), dif);
 
 	// Αν ο τζογαδόρος μπήκε μια μέσα εφαρμόζουμε τον κατάλληλο χρωματισμό
 	// και επιστρέφουμε καθώς οι αμυνόμενοι δεν μπορούν να είναι μέσα.
@@ -953,7 +954,6 @@ Dianomi.prototype.mesaDisplay = function(trapezi) {
 
 	if (!trapezi.sdilosi)
 	return this;
-console.log(this.dianomiKodikosGet(), dif);
 
 	// Εντοπίζουμε τις θέσεις των αμυνομένων παικτών. Ονομάζουμε «πρώτο»
 	// τον αμυνόμενο που παίζει μετά τον τζογαδόρο και «δεύτερο» τον έτερο
