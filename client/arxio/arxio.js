@@ -913,8 +913,8 @@ Dianomi.prototype.simetoxiDisplay = function(trapezi) {
 };
 
 Dianomi.prototype.mesaDisplay = function(trapezi) {
-	var dianomi = this, agora, agoraBazes, tzogadoros, dif,
-		protos, bazesProtos, defteros, bazesDefteros;
+	var dianomi = this, agora, tzogadoros, agoraBazes, dif,
+		protos, defteros, bazesProtos, bazesDefteros;
 
 	agora = trapezi.partidaAgoraGet();
 	if (!agora)
@@ -927,24 +927,51 @@ Dianomi.prototype.mesaDisplay = function(trapezi) {
 	agoraBazes = agora.dilosiBazesGet();
 	dif = agoraBazes - trapezi.partidaBazesGet(tzogadoros);
 
+	// Αν ο τζογαδόρος πήρε ακριβώς τις μπάζες του, τότε δεν μπαίνει θέμα
+	// μέσα αγοράς ούτε για τον τζογαδόρο, ούτε για τους αμυνομένους.
+
 	if (dif === 0)
 	return this;
+
+	// Αν ο τζογαδόρος μπήκε μια μέσα εφαρμόζουμε τον κατάλληλο χρωματισμό
+	// και επιστρέφουμε καθώς οι αμυνόμενοι δεν μπορούν να είναι μέσα.
 
 	if (dif === 1) {
 		this.pektisDOM[tzogadoros].addClass('mesaMia');
 		return this;
 	}
 
+	// Αν ο τζογαδόρος μπήκε σόλο μέσα εφαρμόζουμε τον κατάλληλο χρωματισμό
+	// και επιστρέφουμε καθώς οι αμυνόμενοι δεν μπορούν να είναι μέσα.
+
 	if (dif > 1) {
 		this.pektisDOM[tzogadoros].addClass('mesaSolo');
 		return this;
 	}
 
+	// Ο τζογαδόρος δεν φαίνεται να έχει μπει μέσα, επομένως είνα ώρα να
+	// ελέγξουμε τις μπάζες των αμυνομένων.
+
 	if (!trapezi.sdilosi)
 	return this;
 
+	// Εντοπίζουμε τις θέσεις των αμυνομένων παικτών. Ονομάζουμε «πρώτο»
+	// τον αμυνόμενο που παίζει μετά τον τζογαδόρο και «δεύτερο» τον έτερο
+	// αμυνόμενο. Ο πρώτος έχει λίγο περισσότερες υποχρεώσεις από τον δεύτερο,
+	// αν όμως πει πάσο, ο επόμενος αμυνόμενος καθίσταται πρώτος.
+
 	protos = tzogadoros.epomeniThesi();
 	defteros = protos.epomeniThesi();
+
+	// Αν και οι δύο αμυνόμενοι απείχαν, τότε δεν μπαίνει θέμα
+	// μέσα για κανέναν.
+
+	if (trapezi.sdilosi[protos].simetoxiIsPaso() &&
+	trapezi.sdilosi[defteros].simetoxiIsPaso())
+	return this;
+
+	// Τουλάχιστον ένας αμυνόμενος έχει παίξει και υπολογίζουμε τις μπάζες
+	// που πρέπει να κάνει καθένας από αυτούς.
 
 	switch (agoraBazes) {
 	case 6:
@@ -968,39 +995,35 @@ Dianomi.prototype.mesaDisplay = function(trapezi) {
 	}
 
 	if (trapezi.sdilosi[protos].simetoxiIsPaso()) {
-		defterosBazes = protosBazes;
-		protosBazes = 0;
+		trapezi.displayAminomenosMesa(protosBazes, trapezi.partidaBazesGet(defteros), this.pektisDOM[defteros]);
+		return this;
+	}
+
+	if (trapezi.sdilosi[defteros].simetoxiIsPaso()) {
+		trapezi.displayAminomenosMesa(protosBazes, trapezi.partidaBazesGet(protos), this.pektisDOM[protos]);
+		return this;
 	}
 
 	if (trapezi.sdilosi[protos].simetoxiIsMazi()) {
-		trapezi.displayAminomenosMesa(protos, protosBazes + defterosBazes,
-			trapezi.bazes[protos] + trapezi.bazes[defteros], this.pektisDOM[protos]);
+		trapezi.displayAminomenosMesa(protosBazes + defterosBazes,
+			trapezi.partidaBazesGet(protos) + trapezi.partidaBazesGet(defteros), this.pektisDOM[protos]);
 		return this;
 	}
 
 	if (trapezi.sdilosi[defteros].simetoxiIsMazi()) {
-		trapezi.displayAminomenosMesa(protos, protosBazes + defterosBazes,
-			trapezi.bazes[protos] + trapezi.bazes[defteros], this.pektisDOM[defteros]);
+		trapezi.displayAminomenosMesa(protosBazes + defterosBazes,
+			trapezi.partidaBazesGet(protos) + trapezi.partidaBazesGet(defteros), this.pektisDOM[defteros]);
 		return this;
 	}
 
-	trapezi.displayAminomenosMesa(protos, protosBazes, trapezi.bazes[protos], this.pektisDOM[protos]);
-	trapezi.displayAminomenosMesa(defteros, defterosBazes, trapezi.bazes[defteros], this.pektisDOM[defteros]);
+	trapezi.displayAminomenosMesa(protosBazes, trapezi.partidaBazesGet(protos), this.pektisDOM[protos]);
+	trapezi.displayAminomenosMesa(defterosBazes, trapezi.partidaBazesGet(defteros), this.pektisDOM[defteros]);
 
 	return this;
 };
 
-Trapezi.prototype.displayAminomenosMesa = function(thesi, prepi, bazes, dom) {
+Trapezi.prototype.displayAminomenosMesa = function(prepi, bazes, dom) {
 	var dif;
-
-	if (!this.sdilosi[thesi])
-	return this;
-
-	if (this.sdilosi[thesi].simetoxiIsPaso())
-	return this;
-
-	if (this.sdilosi[thesi].simetoxiIsVoithao())
-	return this;
 
 	dif = prepi - bazes;
 	if (dif === 0)
