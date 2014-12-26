@@ -913,7 +913,8 @@ Dianomi.prototype.simetoxiDisplay = function(trapezi) {
 };
 
 Dianomi.prototype.mesaDisplay = function(trapezi) {
-	var agora, tzogadoros, agoraBazes, dif, protos, defteros, protosBazes, defterosBazes;
+	var agora, tzogadoros, agoraBazes, dif, protos, defteros,
+		protosPrepi, defterosPrepi, protosBazes, defterosBazes;
 
 	agora = trapezi.partidaAgoraGet();
 	if (!agora)
@@ -975,49 +976,68 @@ Dianomi.prototype.mesaDisplay = function(trapezi) {
 
 	switch (agoraBazes) {
 	case 6:
-		protosBazes = 2;
-		defterosBazes = 2;
+		protosPrepi = 2;
+		defterosPrepi = 2;
 		break;
 	case 7:
-		protosBazes = 2;
-		defterosBazes = 1;
+		protosPrepi = 2;
+		defterosPrepi = 1;
 		break;
 	case 8:
-		protosBazes = 1;
-		defterosBazes = 1;
+		protosPrepi = 1;
+		defterosPrepi = 1;
 		break;
 	case 9:
-		protosBazes = 1;
-		defterosBazes = 0;
+		protosPrepi = 1;
+		defterosPrepi = 0;
 		break;
 	default:
 		return this;
 	}
 
 	if (trapezi.sdilosi[protos].simetoxiIsPaso()) {
-		trapezi.displayAminomenosMesa(protosBazes, trapezi.partidaBazesGet(defteros), this.pektisDOM[defteros]);
+		trapezi.displayAminomenosMesa(protosPrepi, trapezi.partidaBazesGet(defteros), this.pektisDOM[defteros]);
 		return this;
 	}
 
 	if (trapezi.sdilosi[defteros].simetoxiIsPaso()) {
-		trapezi.displayAminomenosMesa(protosBazes, trapezi.partidaBazesGet(protos), this.pektisDOM[protos]);
+		trapezi.displayAminomenosMesa(protosPrepi, trapezi.partidaBazesGet(protos), this.pektisDOM[protos]);
 		return this;
 	}
 
 	if (trapezi.sdilosi[protos].simetoxiIsMazi()) {
-		trapezi.displayAminomenosMesa(protosBazes + defterosBazes,
+		trapezi.displayAminomenosMesa(protosPrepi + defterosPrepi,
 			trapezi.partidaBazesGet(protos) + trapezi.partidaBazesGet(defteros), this.pektisDOM[protos]);
 		return this;
 	}
 
 	if (trapezi.sdilosi[defteros].simetoxiIsMazi()) {
-		trapezi.displayAminomenosMesa(protosBazes + defterosBazes,
+		trapezi.displayAminomenosMesa(protosPrepi + defterosPrepi,
 			trapezi.partidaBazesGet(protos) + trapezi.partidaBazesGet(defteros), this.pektisDOM[defteros]);
 		return this;
 	}
 
-	trapezi.displayAminomenosMesa(protosBazes, trapezi.partidaBazesGet(protos), this.pektisDOM[protos]);
-	trapezi.displayAminomenosMesa(defterosBazes, trapezi.partidaBazesGet(defteros), this.pektisDOM[defteros]);
+	// Φτάσαμε στην περίπτωση όπου έχουν παίξει και οι δύο αμυνόμενοι.
+	// Ελέγχουμε τυχόν πλεόνασμα στις μπάζες καθενός αμυνομένου και
+	// εφόσον υπάρχει το μεταφέρουμε στον έτερο αμυνόμενο, προκειμένου
+	// να απλοποιήσουμε τους ελέγχους.
+
+	protosBazes = trapezi.partidaBazesGet(protos);
+	dif = protosBazes - protosPrepi;
+	if (dif > 0) {
+		protosBazes -= dif;
+		defterosBazes += dif;
+	}
+
+	defterosBazes = trapezi.partidaBazesGet(defteros);
+	dif = defterosBazes - defterosPrepi;
+	if (dif > 0) {
+		defterosBazes -= dif;
+		protosBazes += dif;
+	}
+
+	trapezi.displayAminomenosMesa(protosPrepi, protosBazes, this.pektisDOM[protos]);
+	trapezi.displayAminomenosMesa(defterosPrepi, defterosBazes, this.pektisDOM[defteros]);
 
 	return this;
 };
