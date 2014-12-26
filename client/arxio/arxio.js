@@ -948,11 +948,12 @@ Dianomi.prototype.mesaDisplay = function(trapezi) {
 		return this;
 	}
 
-	// Ο τζογαδόρος δεν φαίνεται να έχει μπει μέσα, επομένως είνα ώρα να
+	// Ο τζογαδόρος δεν φαίνεται να έχει μπει μέσα, επομένως είναι ώρα να
 	// ελέγξουμε τις μπάζες των αμυνομένων.
 
 	if (!trapezi.sdilosi)
 	return this;
+console.log(this.dianomiKodikosGet(), dif);
 
 	// Εντοπίζουμε τις θέσεις των αμυνομένων παικτών. Ονομάζουμε «πρώτο»
 	// τον αμυνόμενο που παίζει μετά τον τζογαδόρο και «δεύτερο» τον έτερο
@@ -968,6 +969,7 @@ Dianomi.prototype.mesaDisplay = function(trapezi) {
 	if (trapezi.sdilosi[protos].simetoxiIsPaso() &&
 	trapezi.sdilosi[defteros].simetoxiIsPaso())
 	return this;
+console.log('XXX');
 
 	// Τουλάχιστον ένας αμυνόμενος έχει παίξει και υπολογίζουμε τις μπάζες
 	// που πρέπει να κάνει καθένας από αυτούς.
