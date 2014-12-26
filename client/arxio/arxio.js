@@ -923,34 +923,7 @@ Dianomi.prototype.mesaDisplay = function(trapezi) {
 	if (!tzogadoros)
 	return this;
 
-	agoraBazes = agora.dilosiBazesGet();
-	dif = agoraBazes - trapezi.partidaBazesGet(tzogadoros);
-
-	// Αν ο τζογαδόρος πήρε ακριβώς τις μπάζες του, τότε δεν μπαίνει θέμα
-	// μέσα αγοράς ούτε για τον τζογαδόρο, ούτε για τους αμυνομένους.
-
-	if (dif === 0)
-	return this;
-console.log(this.dianomiKodikosGet(), dif);
-
-	// Αν ο τζογαδόρος μπήκε μια μέσα εφαρμόζουμε τον κατάλληλο χρωματισμό
-	// και επιστρέφουμε καθώς οι αμυνόμενοι δεν μπορούν να είναι μέσα.
-
-	if (dif === 1) {
-		this.pektisDOM[tzogadoros].addClass('mesaMia');
-		return this;
-	}
-
-	// Αν ο τζογαδόρος μπήκε σόλο μέσα εφαρμόζουμε τον κατάλληλο χρωματισμό
-	// και επιστρέφουμε καθώς οι αμυνόμενοι δεν μπορούν να είναι μέσα.
-
-	if (dif > 1) {
-		this.pektisDOM[tzogadoros].addClass('mesaSolo');
-		return this;
-	}
-
-	// Ο τζογαδόρος δεν φαίνεται να έχει μπει μέσα, επομένως είναι ώρα να
-	// ελέγξουμε τις μπάζες των αμυνομένων.
+	// θα ελέγξουμε πρώτα τις δηλώσεις συμμετοχής των αμυνομένων.
 
 	if (!trapezi.sdilosi)
 	return this;
@@ -969,10 +942,36 @@ console.log(this.dianomiKodikosGet(), dif);
 	if (trapezi.sdilosi[protos].simetoxiIsPaso() &&
 	trapezi.sdilosi[defteros].simetoxiIsPaso())
 	return this;
-console.log('XXX');
 
-	// Τουλάχιστον ένας αμυνόμενος έχει παίξει και υπολογίζουμε τις μπάζες
-	// που πρέπει να κάνει καθένας από αυτούς.
+	// Ένας τουλάχιστον αμυνόμενος συμμετείχε στην εκτέλεση του συμβολαίου,
+	// επομένως προχωρούμε στην καταμέτρηση των μπαζών.
+
+	agoraBazes = agora.dilosiBazesGet();
+	dif = agoraBazes - trapezi.partidaBazesGet(tzogadoros);
+
+	// Αν ο τζογαδόρος πήρε ακριβώς τις μπάζες του, τότε δεν μπαίνει θέμα
+	// μέσα αγοράς ούτε για τον τζογαδόρο, ούτε για τους αμυνομένους.
+
+	if (dif === 0)
+	return this;
+
+	// Αν ο τζογαδόρος μπήκε μια μέσα εφαρμόζουμε τον κατάλληλο χρωματισμό
+	// και επιστρέφουμε καθώς οι αμυνόμενοι δεν μπορούν να είναι μέσα.
+
+	if (dif === 1) {
+		this.pektisDOM[tzogadoros].addClass('mesaMia');
+		return this;
+	}
+
+	// Αν ο τζογαδόρος μπήκε σόλο μέσα εφαρμόζουμε τον κατάλληλο χρωματισμό
+	// και επιστρέφουμε καθώς οι αμυνόμενοι δεν μπορούν να είναι μέσα.
+
+	if (dif > 1) {
+		this.pektisDOM[tzogadoros].addClass('mesaSolo');
+		return this;
+	}
+
+	// Υπολογίζουμε τις μπάζες που αναλογούν στους δύο αμυνομένους.
 
 	switch (agoraBazes) {
 	case 6:
