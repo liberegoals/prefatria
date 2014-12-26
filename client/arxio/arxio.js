@@ -1023,13 +1023,14 @@ Dianomi.prototype.mesaDisplay = function(trapezi) {
 	// να απλοποιήσουμε τους ελέγχους.
 
 	protosBazes = trapezi.partidaBazesGet(protos);
+	defterosBazes = trapezi.partidaBazesGet(defteros);
+
 	dif = protosBazes - protosPrepi;
 	if (dif > 0) {
 		protosBazes -= dif;
 		defterosBazes += dif;
 	}
 
-	defterosBazes = trapezi.partidaBazesGet(defteros);
 	dif = defterosBazes - defterosPrepi;
 	if (dif > 0) {
 		defterosBazes -= dif;
