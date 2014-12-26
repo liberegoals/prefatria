@@ -913,8 +913,7 @@ Dianomi.prototype.simetoxiDisplay = function(trapezi) {
 };
 
 Dianomi.prototype.mesaDisplay = function(trapezi) {
-	var dianomi = this, agora, tzogadoros, agoraBazes, dif,
-		protos, defteros, bazesProtos, bazesDefteros;
+	var agora, tzogadoros, agoraBazes, dif, protos, defteros, protosBazes, defterosBazes;
 
 	agora = trapezi.partidaAgoraGet();
 	if (!agora)
