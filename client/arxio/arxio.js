@@ -742,7 +742,7 @@ Trapezi.prototype.aplomaDianomon = function() {
 
 	Client.fyi.pano();
 	Globals.awalk(this.dianomiArray, function(i, dianomi) {
-		dianomi.dianomiArxioDisplay(trapezi);
+		dianomi.arxioDianomiDisplay(trapezi);
 	});
 
 	this.DOM.
@@ -798,13 +798,13 @@ Dianomi.prototype.processEnergiaList = function(elist) {
 	return this;
 };
 
-// Η μέθοδος "dianomiArxioDisplay" εμφανίζει τα στοιχεία της διανομής, ήτοι
+// Η μέθοδος "arxioDianomiDisplay" εμφανίζει τα στοιχεία της διανομής, ήτοι
 // την αγορά, τις συμμετοχές, τις μπάζες των αμυνομένων και τα καπίκια που
 // κέρδισε ή ζημιώθηκε ο κάθε παίκτης στη συγκεκριμένη διανομή. Ως παράμετρο
 // περνάμε το τραπέζι.
 
-Dianomi.prototype.dianomiArxioDisplay = function(trapezi) {
-	var dianomi = this, kodikos, tzogadoros, enarxi;
+Dianomi.prototype.arxioDianomiDisplay = function(trapezi) {
+	var dianomi = this, kodikos, tzogadoros;
 
 	// Αποσπούμε τον κωδικό διανομής και κάνουμε replay την παρτίδα μέχρι
 	// ΚΑΙ την ανά χείρας διανομή.
@@ -822,97 +822,170 @@ Dianomi.prototype.dianomiArxioDisplay = function(trapezi) {
 	append($('<div>').addClass('dianomiDataContent').
 	append($('<div>').addClass('dianomiKodikos').text(kodikos)))));
 
-	// Εντοπίζουμε τυχόν τζογαδόρο και προχωρούμε στη δημιουργία και στο
-	// «γέμισμα» των DOM elements για κάθε παίκτη.
+	// Δημιουργούμε τα DOM elements για κάθε παίκτη.
 
-	tzogadoros = trapezi.partidaTzogadorosGet();
 	this.pektisDOM = {};
 	Prefadoros.thesiWalk(function(thesi) {
-		var dom, pektis;
+		dianomi.DOM.
+		append(dianomi.pektisDOM[thesi] = $('<div>').addClass('trapeziPektis dianomiPektis'));
+	});
 
-		dom = $('<div>').addClass('trapeziPektis dianomiPektis');
-		dianomi.pektisDOM[thesi] = dom;
-		dianomi.DOM.append(dom);
+	// Εμφανίζουμε ενδεικτικό εικονίδιο στον dealer της διανομής.
 
-		// Εμφανίζουμε ενδεικτικό εικονίδιο στον dealer της διανομής.
+	this.pektisDOM[dianomi.dianomiDealerGet()].
+	append($('<img>').addClass('dealerIcon').attr({
+		src: '../ikona/endixi/dealer.png',
+		title: 'Dealer',
+	}));
 
-		if (thesi == dianomi.dianomiDealerGet())
-		dom.append(Arxio.dealerEndixiDOM());
+	// Ακολουθούν τα υπόλοιπα στοιχεία της διανομής που αφορούν στην αγορά,
+	// στις συμμετοχές, στις μπάζες κλπ.
+
+	tzogadoros = trapezi.partidaTzogadorosGet();
+	Prefadoros.thesiWalk(function(thesi) {
+		// Ακολουθούν τα σχετικά με τυχόν αγορά που έγινε στη συγκεκριμένη
+		// διανομή· υπάρχει περίπτωση η αγορά να βρίσκεται σε εξέλιξη, ή να
+		// παίζεται το πάσο. Αν υπάρχει αγορά, εμφανίζουμε την αγορά στην
+		// περιοχή του τζογαδόρου και τις μπάζες των αμυνομένων. Αν δεν
+		// υπάρχει αγορά, εμφανίζουμε τις μπάζες όλων των παικτών.
+
+		if (thesi === tzogadoros)
+		dianomi.
+		arxioDisplayAgora(thesi, trapezi);
+
+		else
+		dianomi.
+		arxioDisplaySimetoxi(thesi, trapezi).
+		arxioDisplayBazes(thesi, trapezi);
+
+		dianomi.
 
 		// Εμφανίζουμε τα καπίκια που κέρδισε ή ζημιώθηκε ο κάθε
 		// παίκτης.
 
-		dianomi.arxioDisplayKapikia(thesi, dom);
-
-		// Αν πρόκειται για τον τζογαδόρο, εμφανίζουμε την αγορά
-		// περίπου στη μέση της περιοχής του.
-
-		if (thesi === tzogadoros)
-		dom.append(trapezi.partidaAgoraGet().agoraDOM()).
-		attr('title', 'Αγοραστής');
-
-		// Στους παίκτες που δεν είναι τζογαδόροι εμφανίζουμε τις
-		// μπάζες τους.
-
-		else
-		trapezi.arxioDisplayBazes(thesi, dom);
+		arxioDisplayKapikia(thesi).
 
 		// Εμφανίζουμε το login name του παίκτη με πολύ χαμηλή opacity.
 
-		pektis = trapezi.trapeziPektisGet(thesi);
-		if (!pektis) pektis = '';
-		dom.append($('<div>').addClass('pektisOnoma dianomiPektisOnoma').text(pektis));
-
-		// Ακολουθούν ενδεικτικά χρώματα σε τζογαδόρο ή αμυνομένους
-		// σχετικά με τις μέσα αγορές.
-		// TODO
+		arxioDisplayOnoma(thesi, trapezi);
 	});
-
-	// Ακολουθούν τα σχετικά με τη συμμετοχή των αμυνομένων.
-
-	this.simetoxiDisplay(trapezi);
 
 	// Ακολουθούν τα σχετικά με το «μέσα» τζογαδόρου ή αμυνομένων.
 
-	this.mesaDisplay(trapezi);
+	this.arxioMesaDisplay(trapezi);
 
 	// Ακολουθούν τα του χρόνου τέλους της διανομής.
 
-	enarxi = dianomi.dianomiEnarxiGet();
-
-	if (enarxi)
-	this.DOM.append($('<div>').addClass('trapeziArxio').text(Globals.poteOra(enarxi)));
+	this.arxioEnarxiDisplay();
 
 	return this;
 };
 
-Dianomi.prototype.simetoxiDisplay = function(trapezi) {
-	var dianomi = this;
+Dianomi.prototype.arxioDisplayAgora = function(thesi, trapezi) {
+	var agora, dom;
 
+	agora = trapezi.partidaAgoraGet();
+	if (!agora)
+	return this;
+
+	dom = $('<div>').addClass('agora').
+	attr('title', 'Αγορά: ' + agora.dilosiLektiko());
+	dom.append($('<div>').addClass('agoraBazes').text(agora.dilosiBazesGet()));
+	dom.append($('<img>').addClass('agoraXroma').
+	attr('src', '../ikona/trapoula/xroma' + agora.dilosiXromaGet() + '.png'));
+
+	if (agora.dilosiIsAsoi())
+	dom.
+	append($('<div>').addClass('tsoxaDilosiAsoi').
+	append($('<img>').addClass('tsoxaDilosiAsoiIcon').
+	attr('src', '../ikona/panel/asoiOn.png')));
+
+	this.pektisDOM[thesi].
+	attr('title', 'Αγοραστής').
+	append(dom);
+
+	return this;
+};
+
+Dianomi.prototype.arxioDisplaySimetoxi = function(thesi, trapezi) {
 	if (!trapezi.sdilosi)
 	return this;
 
-	Prefadoros.thesiWalk(function(thesi) {
-		if (!trapezi.sdilosi[thesi])
-		return;
+	if (!trapezi.sdilosi[thesi])
+	return this;
 
-		if (trapezi.sdilosi[thesi].simetoxiIsMazi())
-		dianomi.pektisDOM[thesi].append($('<img>').addClass('simetoxiIcon').
-		attr('src', '../ikona/endixi/mazi.png')).
-		attr('title', 'Πάμε μαζί!');
+	if (trapezi.sdilosi[thesi].simetoxiIsMazi())
+	this.pektisDOM[thesi].append($('<img>').addClass('simetoxiIcon').
+	attr('src', '../ikona/endixi/mazi.png')).
+	attr('title', 'Πάμε μαζί!');
 
-		else if (trapezi.sdilosi[thesi].simetoxiIsPaso())
-		dianomi.pektisDOM[thesi].addClass('apoxi').attr('title', 'Αποχή');
+	else if (trapezi.sdilosi[thesi].simetoxiIsPaso())
+	this.pektisDOM[thesi].addClass('apoxi').attr('title', 'Αποχή');
 
-		else if (trapezi.sdilosi[thesi].simetoxiIsVoithao())
-		dianomi.pektisDOM[thesi].append($('<img>').addClass('simetoxiIcon')).
-		attr('title', 'Βοηθητικός');
-	});
+	else if (trapezi.sdilosi[thesi].simetoxiIsVoithao())
+	this.pektisDOM[thesi].append($('<img>').addClass('simetoxiIcon')).
+	attr('title', 'Βοηθητικός');
 
 	return this;
 };
 
-Dianomi.prototype.mesaDisplay = function(trapezi) {
+Arxio.bazaPlati = [
+	'B', 'B', 'B',
+	'R', 'R', 'R',
+	'B', 'B', 'B',
+	'R',
+];
+
+Dianomi.prototype.arxioDisplayBazes = function(thesi, trapezi) {
+	var bazes, dom;
+
+	bazes = trapezi.partidaBazesGet(thesi);
+	if (!bazes)
+	return this;
+
+	dom = $('<div>').addClass('bazes').attr('title', 'Μπάζες');
+	while (bazes-- > 0) {
+		dom.prepend($('<img>').addClass('bazaIcon').
+		attr('src', '../ikona/trapoula/' + Arxio.bazaPlati[bazes] + 'L.png'));
+	}
+
+	this.pektisDOM[thesi].
+	append(dom);
+
+	return this;
+};
+
+Dianomi.prototype.arxioDisplayKapikia = function(thesi) {
+	var kapikia, klasi;
+
+	kapikia = this.isozigio[thesi];
+	if (!kapikia)
+	return this;
+
+	klasi = 'arxioKapikia';
+	if (kapikia < 0)
+	klasi += ' arxioKapikiaMion';
+
+	this.pektisDOM[thesi].
+	append($('<div>').addClass(klasi).html(kapikia));
+
+	return this;
+};
+
+Dianomi.prototype.arxioDisplayOnoma = function(thesi, trapezi) {
+	var pektis;
+
+	pektis = trapezi.trapeziPektisGet(thesi);
+	if (!pektis)
+	return this;
+
+	this.pektisDOM[thesi].
+	append($('<div>').addClass('pektisOnoma dianomiPektisOnoma').text(pektis));
+
+	return this;
+};
+
+Dianomi.prototype.arxioMesaDisplay = function(trapezi) {
 	var agora, tzogadoros, agoraBazes, dif, protos, defteros,
 		protosPrepi, defterosPrepi, protosBazes, defterosBazes;
 
@@ -924,7 +997,8 @@ Dianomi.prototype.mesaDisplay = function(trapezi) {
 	if (!tzogadoros)
 	return this;
 
-	// θα ελέγξουμε πρώτα τις δηλώσεις συμμετοχής των αμυνομένων.
+	// θα ελέγξουμε πρώτα τις δηλώσεις συμμετοχής των αμυνομένων. Αν δεν
+	// υπάρχουν δηλώσεις, δεν προχωρούμε σε περαιτέρω ενέργειες.
 
 	if (!trapezi.sdilosi)
 	return this;
@@ -935,7 +1009,12 @@ Dianomi.prototype.mesaDisplay = function(trapezi) {
 	// αν όμως πει πάσο, ο επόμενος αμυνόμενος καθίσταται πρώτος.
 
 	protos = tzogadoros.epomeniThesi();
+	if (!trapezi.sdilosi[protos])
+	return this;
+
 	defteros = protos.epomeniThesi();
+	if (!trapezi.sdilosi[defteros])
+	return this;
 
 	// Αν και οι δύο αμυνόμενοι απείχαν, τότε δεν μπαίνει θέμα
 	// μέσα για κανέναν.
@@ -996,24 +1075,24 @@ Dianomi.prototype.mesaDisplay = function(trapezi) {
 	}
 
 	if (trapezi.sdilosi[protos].simetoxiIsPaso()) {
-		trapezi.displayAminomenosMesa(protosPrepi, trapezi.partidaBazesGet(defteros), this.pektisDOM[defteros]);
+		this.arxioAminomenosMesaDisplay(defteros, protosPrepi, trapezi.partidaBazesGet(defteros));
 		return this;
 	}
 
 	if (trapezi.sdilosi[defteros].simetoxiIsPaso()) {
-		trapezi.displayAminomenosMesa(protosPrepi, trapezi.partidaBazesGet(protos), this.pektisDOM[protos]);
+		this.arxioAminomenosMesaDisplay(protos, protosPrepi, trapezi.partidaBazesGet(protos));
 		return this;
 	}
 
 	if (trapezi.sdilosi[protos].simetoxiIsMazi()) {
-		trapezi.displayAminomenosMesa(protosPrepi + defterosPrepi,
-			trapezi.partidaBazesGet(protos) + trapezi.partidaBazesGet(defteros), this.pektisDOM[protos]);
+		this.arxioAminomenosMesaDisplay(protos, protosPrepi + defterosPrepi,
+			trapezi.partidaBazesGet(protos) + trapezi.partidaBazesGet(defteros));
 		return this;
 	}
 
 	if (trapezi.sdilosi[defteros].simetoxiIsMazi()) {
-		trapezi.displayAminomenosMesa(protosPrepi + defterosPrepi,
-			trapezi.partidaBazesGet(protos) + trapezi.partidaBazesGet(defteros), this.pektisDOM[defteros]);
+		this.arxioAminomenosMesaDisplay(defteros, protosPrepi + defterosPrepi,
+			trapezi.partidaBazesGet(protos) + trapezi.partidaBazesGet(defteros));
 		return this;
 	}
 
@@ -1037,13 +1116,13 @@ Dianomi.prototype.mesaDisplay = function(trapezi) {
 		protosBazes += dif;
 	}
 
-	trapezi.displayAminomenosMesa(protosPrepi, protosBazes, this.pektisDOM[protos]);
-	trapezi.displayAminomenosMesa(defterosPrepi, defterosBazes, this.pektisDOM[defteros]);
+	this.arxioAminomenosMesaDisplay(protos, protosPrepi, protosBazes);
+	this.arxioAminomenosMesaDisplay(defteros, defterosPrepi, defterosBazes);
 
 	return this;
 };
 
-Trapezi.prototype.displayAminomenosMesa = function(prepi, bazes, dom) {
+Dianomi.prototype.arxioAminomenosMesaDisplay = function(thesi, prepi, bazes) {
 	var dif;
 
 	dif = prepi - bazes;
@@ -1051,73 +1130,22 @@ Trapezi.prototype.displayAminomenosMesa = function(prepi, bazes, dom) {
 	return this;
 
 	if (dif === 1)
-	dom.addClass('mesaMia');
+	this.pektisDOM[thesi].addClass('mesaMia');
 
 	else if (dif > 1)
-	dom.addClass('mesaSolo');
+	this.pektisDOM[thesi].addClass('mesaSolo');
 
 	return this;
 };
 
-Arxio.bazaPlati = [
-	'B', 'B', 'B',
-	'R', 'R', 'R',
-	'B', 'B', 'B',
-	'R',
-];
+Dianomi.prototype.arxioEnarxiDisplay = function() {
+	var enarxi;
 
-Trapezi.prototype.arxioDisplayBazes = function(thesi, dom) {
-	var bazesDOM, n;
-
-	bazesDOM = $('<div>').addClass('bazes').attr('title', 'Μπάζες').appendTo(dom);
-	for (n = 0; n < this.bazes[thesi]; n++) {
-		bazesDOM.prepend($('<img>').addClass('bazaIcon').
-		attr('src', '../ikona/trapoula/' + Arxio.bazaPlati[n] + 'L.png'));
-	}
+	enarxi = this.dianomiEnarxiGet();
+	if (enarxi)
+	this.DOM.
+	append($('<div>').addClass('trapeziArxio').
+	text(Globals.poteOra(enarxi)));
 
 	return this;
-};
-
-Dianomi.prototype.arxioDisplayKapikia = function(thesi, dom) {
-	var kapikia, klasi;
-
-	kapikia = this.isozigio[thesi];
-	if (!kapikia)
-	return this;
-
-	klasi = 'arxioKapikia';
-	if (kapikia < 0)
-	klasi += ' arxioKapikiaMion';
-
-	dom.append($('<div>').addClass(klasi).html(kapikia));
-	return this;
-};
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
-
-Dilosi.prototype.agoraDOM = function() {
-	var dom;
-
-	dom = $('<div>').addClass('agora').
-	attr('title', 'Αγορά: ' + this.dilosiLektiko());
-	dom.append($('<div>').addClass('agoraBazes').text(this.dilosiBazesGet()));
-	dom.append($('<img>').addClass('agoraXroma').
-	attr('src', '../ikona/trapoula/xroma' + this.dilosiXromaGet() + '.png'));
-
-	if (this.dilosiIsAsoi())
-	dom.
-	append($('<div>').addClass('tsoxaDilosiAsoi').
-	append($('<img>').addClass('tsoxaDilosiAsoiIcon').
-	attr('src', '../ikona/panel/asoiOn.png')));
-
-	return dom;
-};
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
-
-Arxio.dealerEndixiDOM = function() {
-	return $('<img>').addClass('dealerIcon').attr({
-		src: '../ikona/endixi/dealer.png',
-		title: 'Dealer',
-	});
 };
