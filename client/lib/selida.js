@@ -197,22 +197,27 @@ Client.sinefo = function(s, x) {
 
 Client.tab = function(p, x) {
 	var t = $('<div>').addClass('tab');
+
 	t.append(p);
-	if (x) x.append(t);
+	if (x)
+	x.append(t);
+
 	return t;
 };
 
 Client.tabKlisimo = function(x) {
 	if (!window.opener)
-	return;
+	return Client;
 
 	if (window.opener === window.self)
-	return;
+	return Client;
 
 	Client.tab($('<a>').attr({href: '#'}).on('click', function(e) {
 		self.close();
 		return false;
 	}).append(Client.sinefo('Κλείσιμο')), x === undefined ? $('#toolbarLeft') : x);
+
+	return Client;
 };
 
 Client.tabEpistrofi = function(lektiko, x) {
@@ -227,48 +232,63 @@ Client.tabEpistrofi = function(lektiko, x) {
 		return false;
 	}).append(Client.sinefo(lektiko === undefined ? 'Επιστροφή' : lektiko)),
 	x === undefined ? $('#toolbarLeft') : x);
+
+	return Client;
 };
 
 Client.tabArxiki = function(x) {
-	return Client.tab($('<a>').attr({href: '#'}).on('click', function(e) {
+	Client.tab($('<a>').attr({href: '#'}).on('click', function(e) {
 		self.location = Client.server;
 		return false;
 	}).append(Client.sinefo('Αρχική')),
 	x === undefined ? $('#toolbarLeft') : x);
 
+	return Client;
 };
 
 Client.tabEgrafi = function(x) {
-	return Client.tab($('<a>').attr({href: Client.server + 'account'}).append(Client.sinefo('Εγγραφή')),
+	Client.tab($('<a>').attr({href: Client.server + 'account'}).append(Client.sinefo('Εγγραφή')),
 		x === undefined ? $('#toolbarRight') : x);
+
+	return Client;
 
 };
 
 Client.tabIsodos = function(x) {
-	return Client.tab($('<a>').attr({href: Client.server + 'isodos'}).append(Client.sinefo('Είσοδος')),
+	Client.tab($('<a>').attr({href: Client.server + 'isodos'}).append(Client.sinefo('Είσοδος')),
 		x === undefined ? $('#toolbarRight') : x);
+
+	return Client;
 };
 
 Client.tabExodos = function(x) {
-	return Client.tab($('<a>').attr({href: Client.server + 'exodos?url=' + Client.server}).
+	Client.tab($('<a>').attr({href: Client.server + 'exodos?url=' + Client.server}).
 	append(Client.sinefo('Έξοδος').
 	on('click', function(e) {
 		e.stopPropagation();
 		Client.skiserService('exodos', {async:false});
 		return true;
 	})), x === undefined ? $('#toolbarRight') : x);
+
+	return Client;
 };
 
 Client.tabPektis = function(x) {
-	if (Client.oxiPektis()) return;
-	if (x === undefined) x = $('#toolbarRight');
+	if (Client.oxiPektis())
+	return Client;
+
+	if (x === undefined)
+	x = $('#toolbarRight');
+
 	Client.tab($('<a target="_blank" href="' + Client.server + 'account">' +
 		'<span class="sinefo entona">' + Client.session.pektis + '</span>'), x);
+
+	return Client;
 };
 
 Client.tabPrive = function(x) {
 	if (Client.oxiPrive())
-	return;
+	return Client;
 
 	$('<div>').attr('id', 'tabPrive').addClass('prive').
 	append($('<a>').attr({
@@ -276,6 +296,8 @@ Client.tabPrive = function(x) {
 		href: Client.server + 'prive'
 	}).text('Πριβέ')).
 	appendTo(x === undefined ? $('#toolbarRight') : x);
+
+	return Client;
 };
 
 Client.tabGoogleSearch = function(x) {
@@ -328,6 +350,8 @@ Client.tabGoogleSearch = function(x) {
 		value: 'Αναζήτηση',
 	}))).
 	appendTo(x === undefined ? $('#toolbarRight') : x);
+
+	return Client;
 };
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

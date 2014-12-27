@@ -46,9 +46,10 @@
 // πλήκτρο "Περισσότερα…".
 
 $(document).ready(function() {
-	Client.tabPektis();
-	//Client.tabEpistrofi();
-	Client.tabKlisimo($('#toolbarRight'));
+	Client.
+	//tabEpistrofi().
+	tabPektis().
+	tabKlisimo($('#toolbarRight'));
 	Arxio.setup();
 
 	// Κατά την ανάπτυξη του προγράμματος βολεύει καλύτερα
@@ -169,7 +170,13 @@ Arxio.setup = function() {
 		$(this).find('.dianomiPektisOnoma').removeClass('pektisOnomaTrexon');
 	});
 
+	// Η function "setupPost" έχει δημιουργηθεί από το "index.php" της ΣΕΑΠ
+	// και αφορά στην επώνυμη χρήση, στα κριτήρια που δόθηκαν στο URL και σε
+	// σε ενδεχόμενη αυτόματη αναζήτηση.
+
 	Arxio.setupPost();
+
+	return Arxio;
 };
 
 // Η function "kritiriaSetup" στήνει το επάνω μέρος της ΣΕΑΠ όπου υπάρχουν τα κριτήρια
@@ -252,7 +259,7 @@ Arxio.kritiriaSetup = function() {
 	text('Clear').
 	addClass('formaButton').
 	on('click', function(e) {
-		Arxio.anazitisiClear();
+		Arxio.anazitisiReset(true);
 		return false;
 	})).
 
@@ -268,7 +275,6 @@ Arxio.kritiriaSetup = function() {
 		return false;
 	})));
 
-	Arxio.anazitisiReset();
 	return Arxio;
 };
 
@@ -295,9 +301,19 @@ Arxio.zitaData = function() {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
 
-Arxio.anazitisiReset = function() {
+// Η function "anaziisiReset" προετοιμάζει την ΣΕΑΠ για αναζήτηση παρτίδων.
+// Αρχικά θέτει κριτήρια αναζήτησης στα διάφορα input πεδία είτε από τυχόν
+// επώνυμη χρήση, είτε από τα κριτήρια που δόθηκαν στο URL. Κατόπιν μηδενίζει
+// το skip, καθαρίζει το χώρο των αποτελεσμάτων και εστιάζει στο πεδίο του
+// παίκτη.
+//
+// Αν δοθεί true παράμετρος "clear", τότε τα input πεδία καθαρίζουν τελείως,
+// αλλιώς τίθενται στις τιμές που προκύπτουν είτε από τυχόν επώνυμη χρήση,
+// είτε από τυχόν κριτήρια που δόθηκαν στο URL.
+
+Arxio.anazitisiReset = function(clear) {
 	Arxio.
-	kritiriaReset().
+	kritiriaReset(clear).
 	skipReset().
 	apotelesmataClear().
 	pektisFocus();
@@ -305,33 +321,27 @@ Arxio.anazitisiReset = function() {
 	return Arxio;
 };
 
-Arxio.kritiriaReset = function() {
-	Arxio.pektisInputDOM.val(Arxio.pektisInputDOM.data('url'));
-	Arxio.apoInputDOM.val(Arxio.apoInputDOM.data('url'));
-	Arxio.eosInputDOM.val(Arxio.eosInputDOM.data('url'));
-	Arxio.partidaInputDOM.val(Arxio.partidaInputDOM.data('url'));
+// Η function "kritiriaReset" θέτει τιμές στα πεδία της αναζήτησης με βάση
+// είτε την επώνυμη χρήση, είτε τα κριτήρια που δόθηκαν στο URL. Αν δοθεί
+// παράμετρος "clear", τότε έχουμε πλήρη καθαρισμό των πεδίων.
+
+Arxio.kritiriaReset = function(clear) {
+	if (clear)
+	$('input').each(function() {
+		$(this).val('');
+	});
+
+	else
+	$('input').each(function() {
+		$(this).val($(this).data('url'));
+	});
 
 	return Arxio;
 };
 
-Arxio.anazitisiClear = function() {
-	Arxio.
-	kritiriaClear().
-	skipReset().
-	apotelesmataClear().
-	pektisFocus();
-
-	return Arxio;
-};
-
-Arxio.kritiriaClear = function() {
-	Arxio.pektisInputDOM.val('');
-	Arxio.apoInputDOM.val('');
-	Arxio.eosInputDOM.val('');
-	Arxio.partidaInputDOM.val('');
-
-	return Arxio;
-};
+// Η property "skip" δείχνει το πλήθος των αποτελεσμάτων που πρέπει να αγνοηθούν
+// από τον server και χρησιμοποιείται για την αναζήτηση και παραλαβή των παρτίδων
+// σε ομάδες.
 
 Arxio.skipReset = function() {
 	Arxio.skip = 0;
