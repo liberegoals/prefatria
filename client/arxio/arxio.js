@@ -94,6 +94,8 @@ Arxio = {
 	// αναζήτηση.
 
 	skip: 0,
+
+	movieWin: null,
 };
 
 Arxio.checkOpen = function() {
@@ -858,7 +860,10 @@ Dianomi.prototype.arxioDianomiDisplay = function(trapezi) {
 	append(this.DOM = $('<div>').addClass('dianomi').
 	append($('<div>').addClass('dianomiData').
 	append($('<div>').addClass('dianomiDataContent').
-	append($('<div>').addClass('dianomiKodikos').text(kodikos)))));
+	append($('<div>').addClass('dianomiKodikos').text(kodikos))).
+	on('click', function(e) {
+		dianomi.arxioMovie(e);
+	})));
 
 	// Δημιουργούμε τα DOM elements για κάθε παίκτη.
 
@@ -893,8 +898,8 @@ Dianomi.prototype.arxioDianomiDisplay = function(trapezi) {
 
 		else
 		dianomi.
-		arxioDisplaySimetoxi(thesi, trapezi).
-		arxioDisplayBazes(thesi, trapezi);
+		arxioSimetoxiDisplay(thesi, trapezi).
+		arxioBazesDisplay(thesi, trapezi);
 
 		dianomi.
 
@@ -945,7 +950,7 @@ Dianomi.prototype.arxioAgoraDisplay = function(thesi, trapezi) {
 	return this;
 };
 
-Dianomi.prototype.arxioDisplaySimetoxi = function(thesi, trapezi) {
+Dianomi.prototype.arxioSimetoxiDisplay = function(thesi, trapezi) {
 	if (!trapezi.sdilosi)
 	return this;
 
@@ -974,7 +979,7 @@ Arxio.bazaPlati = [
 	'R',
 ];
 
-Dianomi.prototype.arxioDisplayBazes = function(thesi, trapezi) {
+Dianomi.prototype.arxioBazesDisplay = function(thesi, trapezi) {
 	var bazes, dom;
 
 	bazes = trapezi.partidaBazesGet(thesi);
@@ -1184,6 +1189,25 @@ Dianomi.prototype.arxioEnarxiDisplay = function() {
 	this.DOM.
 	append($('<div>').addClass('trapeziArxio').
 	text(Globals.poteOra(enarxi)));
+
+	return this;
+};
+
+Dianomi.prototype.arxioMovie = function(e) {
+	var url, top, left;
+
+	url = 'movie?dianomi=' + this.dianomiKodikosGet();
+
+	top = window.screenY + 100;
+	left = window.screenX + 100;
+
+	if (Arxio.movieWin)
+	Arxio.movieWin.location = url;
+
+	else
+	Arxio.movieWin = window.open(url, 'movie', 'height=700,width=1000,top=' + top + ',left=' + left);
+
+	Arxio.movieWin.focus();
 
 	return this;
 };
