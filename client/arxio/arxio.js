@@ -185,7 +185,7 @@ Arxio.kritiriaSetup = function() {
 	// κανόνες που αναφέραμε παραπάνω.
 
 	append($('<div>').addClass('formaPrompt').text('Παίκτης')).
-	append(Arxio.pektisInputDOM = $('<input>').addClass('formaPedio').css('width', '140px')).
+	append(Arxio.pektisInputDOM = $('<input>').addClass('formaPedio').css('width', '60px')).
 
 	// Ακολουθεί η αρχή του χρονικού διαστήματος που μας ενδιαφέρει. Αν δεν καθοριστεί
 	// ημερομηνία αρχής, τότε δεν τίθεται κάτω χρονικό όριο. Η ημερομηνία αυτή αφορά
@@ -245,6 +245,17 @@ Arxio.kritiriaSetup = function() {
 		return false;
 	})).
 
+	// Το πλήκτρο "Clear" καθαρίζει τα αποτελέσματα που υπάρχουν ήδη στη ΣΕΑΠ και
+	// διαγράφει τα κριτήρια αναζήτησης.
+
+	append(Arxio.resetButtonDOM = $('<button>').
+	text('Clear').
+	addClass('formaButton').
+	on('click', function(e) {
+		Arxio.clearAnazitisi();
+		return false;
+	})).
+
 	// Το πλήκτρο "Περισσότερα…" ζητά από τον server την επόμενη ομάδα αποτελεσμάτων
 	// για την τρέχουσα αναζήτηση.
 
@@ -294,12 +305,29 @@ Arxio.resetAnazitisi = function() {
 	return Arxio;
 };
 
-Arxio.kritiriaReset = function() {
-	if (Client.isPektis())
-	Arxio.pektisInputDOM.val(Client.session.pektis);
+Arxio.clearAnazitisi = function() {
+	Arxio.
+	kritiriaClear().
+	skipReset().
+	apotelesmataClear().
+	pektisFocus();
 
-	Arxio.eosInputDOM.val('');
+	return Arxio;
+};
+
+Arxio.kritiriaReset = function() {
+	Arxio.pektisInputDOM.val(Arxio.pektisInputDOM.data('url'));
+	Arxio.apoInputDOM.val(Arxio.apoInputDOM.data('url'));
+	Arxio.eosInputDOM.val(Arxio.eosInputDOM.data('url'));
+	Arxio.partidaInputDOM.val(Arxio.partidaInputDOM.data('url'));
+
+	return Arxio;
+};
+
+Arxio.kritiriaClear = function() {
+	Arxio.pektisInputDOM.val('');
 	Arxio.apoInputDOM.val('');
+	Arxio.eosInputDOM.val('');
 	Arxio.partidaInputDOM.val('');
 
 	return Arxio;
@@ -843,15 +871,15 @@ Dianomi.prototype.arxioDianomiDisplay = function(trapezi) {
 
 	tzogadoros = trapezi.partidaTzogadorosGet();
 	Prefadoros.thesiWalk(function(thesi) {
-		// Ακολουθούν τα σχετικά με τυχόν αγορά που έγινε στη συγκεκριμένη
-		// διανομή· υπάρχει περίπτωση η αγορά να βρίσκεται σε εξέλιξη, ή να
-		// παίζεται το πάσο. Αν υπάρχει αγορά, εμφανίζουμε την αγορά στην
-		// περιοχή του τζογαδόρου και τις μπάζες των αμυνομένων. Αν δεν
-		// υπάρχει αγορά, εμφανίζουμε τις μπάζες όλων των παικτών.
+		// Εφόσον υπάρχει τζογαδόρος, εμφανίζουμε στην περιοχή του
+		// την αγορά.
 
 		if (thesi === tzogadoros)
 		dianomi.
-		arxioDisplayAgora(thesi, trapezi);
+		arxioAgoraDisplay(thesi, trapezi);
+
+		// Στους υπόλοιπους παίκτες εμφανίζουμε τα σχετικά με τη
+		// συμμετοχή τους στην άμυνα και τις μπάζες που έκαναν.
 
 		else
 		dianomi.
@@ -863,11 +891,11 @@ Dianomi.prototype.arxioDianomiDisplay = function(trapezi) {
 		// Εμφανίζουμε τα καπίκια που κέρδισε ή ζημιώθηκε ο κάθε
 		// παίκτης.
 
-		arxioDisplayKapikia(thesi).
+		arxioKapikiaDisplay(thesi).
 
 		// Εμφανίζουμε το login name του παίκτη με πολύ χαμηλή opacity.
 
-		arxioDisplayOnoma(thesi, trapezi);
+		arxioOnomaDisplay(thesi, trapezi);
 	});
 
 	// Ακολουθούν τα σχετικά με το «μέσα» τζογαδόρου ή αμυνομένων.
@@ -881,7 +909,7 @@ Dianomi.prototype.arxioDianomiDisplay = function(trapezi) {
 	return this;
 };
 
-Dianomi.prototype.arxioDisplayAgora = function(thesi, trapezi) {
+Dianomi.prototype.arxioAgoraDisplay = function(thesi, trapezi) {
 	var agora, dom;
 
 	agora = trapezi.partidaAgoraGet();
@@ -955,7 +983,7 @@ Dianomi.prototype.arxioDisplayBazes = function(thesi, trapezi) {
 	return this;
 };
 
-Dianomi.prototype.arxioDisplayKapikia = function(thesi) {
+Dianomi.prototype.arxioKapikiaDisplay = function(thesi) {
 	var kapikia, klasi;
 
 	kapikia = this.isozigio[thesi];
@@ -972,7 +1000,7 @@ Dianomi.prototype.arxioDisplayKapikia = function(thesi) {
 	return this;
 };
 
-Dianomi.prototype.arxioDisplayOnoma = function(thesi, trapezi) {
+Dianomi.prototype.arxioOnomaDisplay = function(thesi, trapezi) {
 	var pektis;
 
 	pektis = trapezi.trapeziPektisGet(thesi);
