@@ -144,8 +144,8 @@ body {
 .dianomiPektisOnoma {
 	position: absolute;
 	left: 4px;
-	bottom: 3px;
-	opacity: 0.1;
+	top: 4px;
+	opacity: 0.15;
 	font-weight: normal;
 }
 
