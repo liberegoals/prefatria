@@ -38,29 +38,59 @@ class Arxio {
 			<?php
 			if (Globals::perastike("pektis")) {
 				?>
+				Arxio.pektisInputDOM.data('url', '<?php print $_REQUEST["pektis"]; ?>');
 				Arxio.pektisInputDOM.val('<?php print $_REQUEST["pektis"]; ?>');
 				kritiria = true;
+				<?php
+			}
+			else if (Globals::is_pektis()) {
+				?>
+				Arxio.pektisInputDOM.data('url', '<?php print $_SESSION["pektis"]; ?>');
+				Arxio.pektisInputDOM.val('<?php print $_SESSION["pektis"]; ?>');
+				<?php
+			}
+			else {
+				?>
+				Arxio.pektisInputDOM.data('url', '');
 				<?php
 			}
 
 			if (Globals::perastike("apo")) {
 				?>
+				Arxio.apoInputDOM.data('url', '<?php print $_REQUEST["apo"]; ?>');
 				Arxio.apoInputDOM.val('<?php print $_REQUEST["apo"]; ?>');
 				kritiria = true;
+				<?php
+			}
+			else {
+				?>
+				Arxio.apoInputDOM.data('url', '');
 				<?php
 			}
 
 			if (Globals::perastike("eos")) {
 				?>
+				Arxio.eosInputDOM.data('url', '<?php print $_REQUEST["eos"]; ?>');
 				Arxio.eosInputDOM.val('<?php print $_REQUEST["eos"]; ?>');
 				kritiria = true;
+				<?php
+			}
+			else {
+				?>
+				Arxio.eosInputDOM.data('url', '');
 				<?php
 			}
 
 			if (Globals::perastike("partida")) {
 				?>
+				Arxio.partidaInputDOM.data('url', '<?php print $_REQUEST["partida"]; ?>');
 				Arxio.partidaInputDOM.val('<?php print $_REQUEST["partida"]; ?>');
 				kritiria = true;
+				<?php
+			}
+			else {
+				?>
+				Arxio.partidaInputDOM.data('url', '');
 				<?php
 			}
 			?>
