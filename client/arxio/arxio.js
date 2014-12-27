@@ -241,7 +241,7 @@ Arxio.kritiriaSetup = function() {
 	attr('type', 'reset').
 	addClass('formaButton').
 	on('click', function(e) {
-		Arxio.resetAnazitisi();
+		Arxio.anazitisiReset();
 		return false;
 	})).
 
@@ -252,7 +252,7 @@ Arxio.kritiriaSetup = function() {
 	text('Clear').
 	addClass('formaButton').
 	on('click', function(e) {
-		Arxio.clearAnazitisi();
+		Arxio.anazitisiClear();
 		return false;
 	})).
 
@@ -268,7 +268,7 @@ Arxio.kritiriaSetup = function() {
 		return false;
 	})));
 
-	Arxio.resetAnazitisi();
+	Arxio.anazitisiReset();
 	return Arxio;
 };
 
@@ -295,19 +295,9 @@ Arxio.zitaData = function() {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
 
-Arxio.resetAnazitisi = function() {
+Arxio.anazitisiReset = function() {
 	Arxio.
 	kritiriaReset().
-	skipReset().
-	apotelesmataClear().
-	pektisFocus();
-
-	return Arxio;
-};
-
-Arxio.clearAnazitisi = function() {
-	Arxio.
-	kritiriaClear().
 	skipReset().
 	apotelesmataClear().
 	pektisFocus();
@@ -320,6 +310,16 @@ Arxio.kritiriaReset = function() {
 	Arxio.apoInputDOM.val(Arxio.apoInputDOM.data('url'));
 	Arxio.eosInputDOM.val(Arxio.eosInputDOM.data('url'));
 	Arxio.partidaInputDOM.val(Arxio.partidaInputDOM.data('url'));
+
+	return Arxio;
+};
+
+Arxio.anazitisiClear = function() {
+	Arxio.
+	kritiriaClear().
+	skipReset().
+	apotelesmataClear().
+	pektisFocus();
 
 	return Arxio;
 };
