@@ -94,8 +94,6 @@ Arxio = {
 	// αναζήτηση.
 
 	skip: 0,
-
-	movieWin: null,
 };
 
 Arxio.checkOpen = function() {
@@ -775,6 +773,9 @@ Trapezi.prototype.trapeziOptionIcon = function(desc, img) {
 Trapezi.prototype.aplomaDianomon = function() {
 	var trapezi = this;
 
+	if (Arxio.movie.isAnikto())
+	Arxio.movie.trapezi(this);
+
 	if (!this.dianomiArray.length) {
 		Client.fyi.epano('Δεν έχουν παιχτεί διανομές στη συγκεκριμένη παρτίδα!');
 		return this;
@@ -862,7 +863,7 @@ Dianomi.prototype.arxioDianomiDisplay = function(trapezi) {
 	append($('<div>').addClass('dianomiDataContent').
 	append($('<div>').addClass('dianomiKodikos').text(kodikos))).
 	on('click', function(e) {
-		dianomi.arxioMovie(e);
+		Arxio.movie.dianomi(dianomi);
 	})));
 
 	// Δημιουργούμε τα DOM elements για κάθε παίκτη.
@@ -1193,21 +1194,67 @@ Dianomi.prototype.arxioEnarxiDisplay = function() {
 	return this;
 };
 
-Dianomi.prototype.arxioMovie = function(e) {
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+Arxio.unload = function() {
+	if (Arxio.unloaded) return;
+	Arxio.unloaded = true;
+
+	Arxio.
+	movie.klisimo();
+};
+
+$(window).
+on('beforeunload', function() {
+	Arxio.unload();
+}).
+on('unload', function() {
+	Arxio.unload();
+});
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
+
+Arxio.movie = {
+	win: null,
+};
+
+Arxio.movie.dianomi = function(dianomi) {
 	var url, top, left;
 
-	url = 'movie?dianomi=' + this.dianomiKodikosGet();
+	url = '../movie?dianomi=' + dianomi.dianomiKodikosGet();
 
-	top = window.screenY + 100;
-	left = window.screenX + 100;
+	try {
+		Arxio.movie.win.Movie.checkOpen().location = url;
+	} catch (e) {
+		top = window.screenY + 100;
+		left = window.screenX + 200;
+		Arxio.movie.win = window.open(url, 'movie', 'height=800,width=1200,top=' + top + ',left=' + left);
+	}
 
-	if (Arxio.movieWin)
-	Arxio.movieWin.location = url;
+	Arxio.movie.win.focus();
+};
 
-	else
-	Arxio.movieWin = window.open(url, 'movie', 'height=700,width=1000,top=' + top + ',left=' + left);
+Arxio.movie.trapezi = function(trapezi) {
+	var url, top, left;
 
-	Arxio.movieWin.focus();
+	url = '../movie?trapezi=' + trapezi.trapeziKodikosGet();
+	Arxio.movie.win.Movie.checkOpen().location = url;
+	Arxio.movie.win.focus();
+};
 
-	return this;
+Arxio.movie.klisimo = function() {
+	if (!Arxio.movie.win)
+	return Arxio;
+
+	Arxio.movie.win.close();
+	Arxio.movie.win = null;
+
+	return Arxio;
+};
+
+Arxio.movie.isAnikto = function() {
+	if (Arxio.movie.win)
+	return Arxio.movie.win.Movie.checkOpen();
+
+	return false;
 };
