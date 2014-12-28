@@ -704,6 +704,9 @@ Trapezi.prototype.trapeziArxioDisplay = function() {
 
 		else
 		trapezi.aplomaDianomon();
+
+		if (Arxio.movie.isAnikto())
+		Arxio.movie.trapezi(trapezi);
 	}));
 
 	Prefadoros.thesiWalk(function(thesi) {
@@ -772,9 +775,6 @@ Trapezi.prototype.trapeziOptionIcon = function(desc, img) {
 
 Trapezi.prototype.aplomaDianomon = function() {
 	var trapezi = this;
-
-	if (Arxio.movie.isAnikto())
-	Arxio.movie.trapezi(this);
 
 	if (!this.dianomiArray.length) {
 		Client.fyi.epano('Δεν έχουν παιχτεί διανομές στη συγκεκριμένη παρτίδα!');
@@ -1237,8 +1237,11 @@ Arxio.movie.dianomi = function(dianomi) {
 Arxio.movie.trapezi = function(trapezi) {
 	var url;
 
+	if (Arxio.movie.isKlisto())
+	return;
+
 	url = '../movie?trapezi=' + trapezi.trapeziKodikosGet();
-	Arxio.movie.win.Movie.checkOpen().location = url;
+	Arxio.movie.win.location = url;
 	Arxio.movie.win.focus();
 };
 
@@ -1257,4 +1260,8 @@ Arxio.movie.isAnikto = function() {
 	return Arxio.movie.win.Movie.checkOpen();
 
 	return false;
+};
+
+Arxio.movie.isKlisto = function() {
+	return !Arxio.movie.isAnikto();
 };
