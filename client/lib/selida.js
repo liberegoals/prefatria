@@ -280,7 +280,7 @@ Client.tabPektis = function(x) {
 	if (x === undefined)
 	x = $('#toolbarRight');
 
-	Client.tab($('<a target="_blank" href="' + Client.server + 'account">' +
+	Client.tab($('<a target="account" href="' + Client.server + 'account">' +
 		'<span class="sinefo entona">' + Client.session.pektis + '</span>'), x);
 
 	return Client;
