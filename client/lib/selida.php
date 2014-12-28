@@ -209,16 +209,32 @@ class Selida {
 
 	private static function toolbar_center($options) {
 		Selida::sinefo_span_begin();
-		if (array_key_exists("titlos", $options)) {
-			if (array_key_exists("link", $options)) {
-				?><a target="_blank" href="<?php print $options["link"]; ?>"><?php
-					print $options["titlos"]; ?></a><?php
-			}
-			else print $options["titlos"];
+
+		if (gettype($options) === "string")
+		$options = array("titlos" => $options);
+
+		if (array_key_exists("titlos", $options))
+		$titlos = $options["titlos"];
+
+		else
+		$titlos = "Πρεφαδόρος";
+
+		if (array_key_exists("link", $options))
+		$link = $options["link"];
+
+		else
+		$link = KENTRO_IPOSTIRIXIS;
+
+		if ($link) {
+			?><a target="kip" href="<?php print $link; ?>"><?php
 		}
-		else {
-			?><a target="_blank" href="http://www.prefadoros.net">Πρεφαδόρος</a><?php
+
+		print $titlos;
+
+		if ($link) {
+			?></a><?php
 		}
+
 		Selida::sinefo_span_end();
 	}
 
