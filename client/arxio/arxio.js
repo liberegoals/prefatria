@@ -1235,7 +1235,7 @@ Arxio.movie.dianomi = function(dianomi) {
 };
 
 Arxio.movie.trapezi = function(trapezi) {
-	var url, top, left;
+	var url;
 
 	url = '../movie?trapezi=' + trapezi.trapeziKodikosGet();
 	Arxio.movie.win.Movie.checkOpen().location = url;
