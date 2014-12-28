@@ -135,7 +135,7 @@ Arena.partida.setupGiorti = function() {
 
 	switch (minas) {
 	case 12:
-		img = 'ikona/giorti/xmas.png';
+		img = 'ikona/giorti/xmas.gif';
 		break;
 	case 1:
 		if (mera > 15) return;
