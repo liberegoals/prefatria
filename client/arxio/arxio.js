@@ -862,6 +862,7 @@ Dianomi.prototype.arxioDianomiDisplay = function(trapezi) {
 	append($('<div>').addClass('dianomiDataContent').
 	append($('<div>').addClass('dianomiKodikos').text(kodikos))).
 	on('click', function(e) {
+		Arxio.movie.trapezi = trapezi;
 		Arxio.movie.dianomi(dianomi);
 	})));
 
