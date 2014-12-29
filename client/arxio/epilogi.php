@@ -16,17 +16,21 @@ if (!$result)
 Globals::fatal("Λανθασμένα κριτήρια");
 
 Globals::header_data();
+$sep = "";
 while ($row = $result->fetch_assoc()) {
 	Epilogi::checkPektis($row);
 	Epilogi::trparam($row);
 	Epilogi::dianomi($row);
 
+	print $sep;
+
 	if (defined(JSON_UNESCAPED_UNICODE))
-	print json_encode($row, JSON_UNESCAPED_UNICODE) . ",";
+	print json_encode($row, JSON_UNESCAPED_UNICODE);
 
 	else
-	print json_encode($row) . ",";
+	print json_encode($row);
 
+	$sep = ",";
 	//Globals::asfales_sql($_REQUEST["login"]) . " AND `klidi` = BINARY " .
 }
 $result->free();

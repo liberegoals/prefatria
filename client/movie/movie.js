@@ -38,10 +38,10 @@ Movie.checkOpen = function() {
 // και σκοπό έχει τη διαχείριση των αποτελεσμάτων αυτών.
 
 Movie.paralaviData = function(data) {
-	var tlist;
+	var trapezi;
 
 	try {
-		tlist = ('[' + data + ']').evalAsfales();
+		trapezi = data.evalAsfales();
 	} catch (e) {
 		console.error(data);
 		Client.fyi.epano('Επεστράφησαν ακαθόριστα δεδομένα');
@@ -49,7 +49,7 @@ Movie.paralaviData = function(data) {
 		return Movie;
 	}
 
-	Movie.trapezi = Movie.trapeziProcess(tlist[0]);
+	Movie.trapezi = Movie.trapeziProcess(trapezi);
 	return Movie;
 };
 
