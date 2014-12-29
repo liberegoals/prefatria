@@ -10,7 +10,17 @@ $(document).ready(function() {
 Movie = {};
 
 Movie.setup = function() {
-	Movie.zitaData();
+	try {
+		Movie.arxioData();
+	} catch (e) {
+		Movie.zitaData();
+	}
+};
+
+Movie.arxioData = function() {
+	Movie.trapezi = self.opener.Arxio.movie.trapezi;
+	Movie.displayTrapezi();
+	return Movie;
 };
 
 // Η function "zitaData" αποστέλλει query αναζήτησης παρτίδων στον server και διαχειρίζεται
@@ -22,10 +32,18 @@ Movie.zitaData = function() {
 	done(function(rsp) {
 		Client.fyi.pano();
 		Movie.paralaviData(rsp);
+		Movie.displayTrapezi();
 	}).
 	fail(function(err) {
 		Client.ajaxFail('Παρουσιάστηκε σφάλμα κατά την αναζήτηση παρτίδων');
 	});
+
+	return Movie;
+};
+
+Movie.displayTrapezi = function() {
+	console.log(Movie.trapezi.dianomi);
+	return Movie;
 };
 
 Movie.checkOpen = function() {
