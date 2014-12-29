@@ -47,9 +47,8 @@
 
 $(document).ready(function() {
 	Client.
-	//tabEpistrofi().
 	tabPektis().
-	tabKlisimo($('#toolbarRight'));
+	tabKlisimo();
 	Arxio.setup();
 
 	// Κατά την ανάπτυξη του προγράμματος βολεύει καλύτερα
@@ -373,7 +372,7 @@ Arxio.paralaviData = function(data) {
 		console.error(data);
 		Client.fyi.epano('Επεστράφησαν ακαθόριστα δεδομένα');
 		Client.sound.beep();
-		return;
+		return Arxio;
 	}
 
 	Arxio.moreButtonDOM.prop('disabled', tlist.length < Arxio.limit);
