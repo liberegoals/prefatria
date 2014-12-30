@@ -22,7 +22,9 @@ Selida::javascript("common/prefadoros");
 Selida::javascript("common/skiniko");
 Selida::javascript("common/partida");
 Selida::javascript("common/energia");
+Selida::javascript("lib/panel");
 Selida::javascript("movie/movie");
+Selida::javascript("movie/panel");
 Movie::init();
 
 Selida::body();
@@ -93,6 +95,7 @@ class Movie {
 		<script type="text/javascript">
 		//<![CDATA[
 		Movie.trapezi.kodikos = <?php print self::$trapezi; ?>;
+		Movie.dianomiKodikos = <?php print self::is_dianomi() ? self::$dianomi : "null"; ?>;
 		//]]>
 		</script>
 		<?php
@@ -137,6 +140,8 @@ class Movie {
 	public function selida() {
 		?>
 		<div id="tsoxa">
+		</div>
+		<div id="panel">
 		</div>
 		<div id="dianomes">
 		</div>
