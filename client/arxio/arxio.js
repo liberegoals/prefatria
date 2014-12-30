@@ -704,8 +704,11 @@ Trapezi.prototype.trapeziArxioDisplay = function() {
 		else
 		trapezi.aplomaDianomon();
 
+		// Αν υπάρχει ανοικτή σελίδα αναψηλάφησης παρτίδας, αλλάζουμε το
+		// τραπέζι και εκεί.
+
 		if (Arxio.movie.isAnikto())
-		Arxio.movie.trapezi(trapezi);
+		Arxio.movie.trapeziSet(trapezi);
 	}));
 
 	Prefadoros.thesiWalk(function(thesi) {
@@ -862,8 +865,11 @@ Dianomi.prototype.arxioDianomiDisplay = function(trapezi) {
 	append($('<div>').addClass('dianomiDataContent').
 	append($('<div>').addClass('dianomiKodikos').text(kodikos))).
 	on('click', function(e) {
+		// Αν κάνουμε κλικ στον κωδικό διανομής, ενεργοποιούμε
+		// τη σελίδα αναψηλάφησης με την ανά χείρας διανομή.
+
 		Arxio.movie.trapezi = trapezi;
-		Arxio.movie.dianomi(dianomi);
+		Arxio.movie.dianomiSet(dianomi);
 	})));
 
 	// Δημιουργούμε τα DOM elements για κάθε παίκτη.
@@ -1218,14 +1224,20 @@ Arxio.movie = {
 	win: null,
 };
 
-Arxio.movie.dianomi = function(dianomi) {
+Arxio.movie.dianomiSet = function(dianomi) {
 	var url, top, left;
 
 	url = '../movie?dianomi=' + dianomi.dianomiKodikosGet();
 
 	try {
+		// Αν η σελίδα αναψηλάφησης παρτίδας είναι ανοικτή κάνουμε
+		// refresh με το url που αφορά στη συγκεκριμένη διανομή.
+
 		Arxio.movie.win.Movie.checkOpen().location = url;
 	} catch (e) {
+		// Η σελίδα αναψηλάφησης δεν φαίνεται να είναι ανοικτή, επομένως
+		// την ανοίγουμε τώρα.
+
 		top = window.screenY + 100;
 		left = window.screenX + 200;
 		Arxio.movie.win = window.open(url, 'movie', 'height=800,width=1200,top=' + top + ',left=' + left);
@@ -1234,12 +1246,13 @@ Arxio.movie.dianomi = function(dianomi) {
 	Arxio.movie.win.focus();
 };
 
-Arxio.movie.trapezi = function(trapezi) {
+Arxio.movie.trapeziSet = function(trapezi) {
 	var url;
 
 	if (Arxio.movie.isKlisto())
 	return;
 
+	Arxio.movie.trapezi = trapezi;
 	url = '../movie?trapezi=' + trapezi.trapeziKodikosGet();
 	Arxio.movie.win.location = url;
 	Arxio.movie.win.focus();

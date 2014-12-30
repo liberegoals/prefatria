@@ -1,0 +1,16 @@
+#tsoxa {
+	display: inline-block;
+	width: 600px;
+	height: 600px;
+	margin: 8px 6px 0 0;
+background-color: teal;
+}
+
+#dianomes {
+	display: inline-block;
+	position: relative;
+	width: 300px;
+	height: 606px;
+	overflow-y: auto;
+background-color: olive;
+}
