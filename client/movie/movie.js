@@ -1,3 +1,5 @@
+// ΣΑΠ -- Σελίδα Αναψηλάφησης Παρτίδας
+
 $(document).ready(function() {
 	Client.
 	tabPektis().
@@ -7,12 +9,28 @@ $(document).ready(function() {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
 
-Movie = {};
+Movie = {
+	// Η ΣΑΠ κάνει αναψηλάφηση της «τρέχουσας» παρτίδας. Η τρέχουσα
+	// παρτίδα κρατείται στο property "trapezi" και τίθεται είτε από
+	// το URL, είτε στην τρέχουσα παρτίδα του τρέχοντος παίκτη, εφόσον
+	// έχουμε επώνυμη χρήση.
+
+	trapezi: {},
+};
 
 Movie.setup = function() {
+	Movie.dianomesDOM = $('#dianomes');
 	try {
+		// Αρχικά επιχειρούμε να πάρουμε τα στοιχεία της τρέχουσας
+		// παρτίδας από τη ΣΕΑΠ, προκειμένου να μην απασχολούμε τον
+		// server.
+
 		Movie.arxioData();
 	} catch (e) {
+		// Αν δεν ήταν επιτυχής η προσάρτηση των στοιχείων παρτίδας από
+		// την ΣΕΑΠ, προχωρούμε στην αναζήτηση των στοιχεών παρτίδας από
+		// τον server.
+
 		Movie.zitaData();
 	}
 };
@@ -27,6 +45,9 @@ Movie.arxioData = function() {
 // την απάντηση, η οποία περιέχει τα στοιχεία των επιλεγμένων παρτίδων.
 
 Movie.zitaData = function() {
+	if (!Movie.trapezi.kodikos)
+	return Movie;
+
 	Client.fyi.pano('Αναζήτηση διανομών. Παρακαλώ περιμένετε…');
 	Client.ajaxService('arxio/epilogi.php', 'partida=' + Movie.trapezi.kodikos).
 	done(function(rsp) {
@@ -42,7 +63,9 @@ Movie.zitaData = function() {
 };
 
 Movie.displayTrapezi = function() {
-	console.log(Movie.trapezi.dianomi);
+	Movie.trapezi.movieDisplayDianomes();
+Client.fyi.pano('XXX', 0);
+Client.fyi.kato('XXX', 0);
 	return Movie;
 };
 
@@ -202,3 +225,21 @@ Dianomi.prototype.processEnergiaList = function(elist) {
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
+
+Trapezi.prototype.movieDisplayDianomes = function() {
+	Movie.dianomesDOM.empty();
+	this.trapeziDianomiWalk(function() {
+		this.movieDisplayDianomi();
+	});
+};
+
+Dianomi.prototype.movieDisplayDianomi = function() {
+console.log(this);
+	this.DOM = $('<div>').addClass('dianomi');
+	this.DOM.text(this.dianomiKodikosGet());
+
+	Movie.dianomesDOM.
+	append(this.DOM);
+
+	return this;
+};

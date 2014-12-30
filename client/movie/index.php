@@ -1,10 +1,21 @@
 <?php
+// ΣΑΠ -- Σελίδα Αναψηλάφησης Παρτίδας
+// -----------------------------------
+//
+// Η παρούσα σελίδα χρησιμοποιείται για την αναψηλάφηση παρτίδας. Στο δεξί
+// μέρος υπάρχει στήλη με όλες τις διανομές τής παρτίδας, ενώ στο αριστερό
+// μέρος υπάρχει τσόχα στην οποία μπορούμε να δούμε τις κινήσεις που έγιναν
+// σε κάθε διανομή.
+//
+// Η παρτίδα καθορίζεται στο URL είτε άμεσα μέσω των παραμέτρων "trapezi" ή
+// "partida", είτε έμμεσα μέσα της διανομής που καθορίζεται με την παράμετρο
+// "dianomi".
+
 require_once "../lib/standard.php";
 Globals::diavase("lib/selida.php");
 Globals::database("lib/selida.php");
 
 Selida::head("Αναψηλάφηση");
-
 Selida::stylesheet("arena/arena");
 Selida::stylesheet("movie/movie");
 Selida::javascript("common/prefadoros");
@@ -19,6 +30,7 @@ Selida::toolbar("Αναψηλάφηση παρτίδας");
 Selida::fyi_pano();
 
 Selida::ofelimo_begin();
+Movie::selida();
 Selida::ofelimo_end();
 
 Selida::fyi_kato();
@@ -26,73 +38,13 @@ Selida::ribbon();
 Selida::telos();
 
 class Movie {
-	public static $trapezi = NULL;
-	public static $dianomi = NULL;
+	// Το τραπέζι που αφορά στη ΣΑΠ κρατείται στην property
+	// "trapezi".
 
-	public static function init() {
-		if (Globals::perastike("trapezi"))
-		self::$trapezi = $_REQUEST["trapezi"];
+	private static $trapezi = NULL;
 
-		elseif (Globals::perastike("partida"))
-		self::$trapezi = $_REQUEST["partida"];
-
-		if (Globals::perastike("dianomi"))
-		self::$dianomi = $_REQUEST["dianomi"];
-
-		self::trapezi_check();
-	}
-
-	private static function trapezi_check() {
-		if (self::$dianomi)
-		self::trapezi_set_dianomi();
-
-		elseif (self::oxi_trapezi())
-		self::trapezi_set_trexon();
-
-		?>
-		<script type="text/javascript">
-		//<![CDATA[
-		Movie.trapezi = {};
-		Movie.trapezi.kodikos = <?php print self::$trapezi; ?>;
-		//]]>
-		</script>
-		<?php
-	}
-
-	private static function trapezi_set_dianomi() {
-		$dianomi = intval(self::$dianomi);
-		if (!$dianomi)
-		Globals::klise_fige(self::$dianomi . ": απαράδεκτος κωδικός διανομής");
-
-		$query = "SELECT `trapezi` FROM `dianomi` WHERE `kodikos` = " . $dianomi;
-		$trapezi = Globals::first_row($query);
-		if (!$trapezi)
-		Globals::klise_fige("Δεν βρέθηκε τραπέζι για τη διανομή " . self::$dianomi);
-
-		self::$trapezi = intval($trapezi["trapezi"]);
-	}
-
-	private static function trapezi_set_trexon() {
-		if (Globals::oxi_pektis())
-		Globals::klise_fige("Ακαθόριστος παίκτης/παρτίδα");
-
-		$pektis = $_SESSION["pektis"];
-		$query = "SELECT `kodikos`, `pektis1`, `pektis2`, `pektis3` FROM `partida` ORDER BY `kodikos` DESC";
-		$result = Globals::query($query);
-		while ($trapezi = $result->fetch_array(MYSQLI_NUM)) {
-			for ($thesi = 1; $thesi <= 3; $thesi++) {
-				if ($trapezi[$thesi] == $pektis)
-				goto SCAN_PARTIDA_END;
-			}
-		}
-
-		SCAN_PARTIDA_END:
-		$result->free();
-
-		if (!$trapezi)
-		Globals::klise_fige("Δεν βρέθηκε τραπέζι για τον παίκτη " . $pektis);
-
-		self::$trapezi = intval($trapezi[0]);
+	private static function trapezi_set($trapezi) {
+		self::$trapezi = intval($trapezi);
 	}
 
 	private static function is_trapezi() {
@@ -101,6 +53,94 @@ class Movie {
 
 	private static function oxi_trapezi() {
 		return !self::is_trapezi();
+	}
+
+	// Η τρέχουσα διανομή της ΣΑΠ κρατείται στην property
+	// "dianomi".
+
+	private static $dianomi = NULL;
+
+	private static function dianomi_set($dianomi) {
+		self::$dianomi = intval($dianomi);
+	}
+
+	private static function is_dianomi() {
+		return self::$dianomi;
+	}
+
+	public static function init() {
+		if (Globals::perastike("dianomi"))
+		self::dianomi_set($_REQUEST["dianomi"]);
+
+		if (self::is_dianomi())
+		self::trapezi_set_dianomi();
+
+		if (self::oxi_trapezi())
+		self::trapezi_set_trexon();
+
+		if (self::oxi_trapezi())
+		self::trapezi_set_url();
+
+		if (self::oxi_trapezi())
+		Globals::klise_fige("Ακαθόριστη παρτίδα");
+
+		$query = "SELECT `kodikos` FROM `trapezi` WHERE `kodikos` = " . self::$trapezi;
+		$trapezi = Globals::first_row($query);
+		if (!$trapezi)
+		Globals::klise_fige("Δεν βρέθηκε τραπέζι με κωδικό " . self::$trapezi);
+
+		?>
+		<script type="text/javascript">
+		//<![CDATA[
+		Movie.trapezi.kodikos = <?php print self::$trapezi; ?>;
+		//]]>
+		</script>
+		<?php
+	}
+
+	private static function trapezi_set_dianomi() {
+		$query = "SELECT `trapezi` FROM `dianomi` WHERE `kodikos` = " . self::$dianomi;
+		$dianomi = Globals::first_row($query);
+		if (!$dianomi)
+		Globals::klise_fige("Δεν βρέθηκε τραπέζι για τη διανομή " . self::$dianomi);
+
+		self::trapezi_set($dianomi["trapezi"]);
+	}
+
+	private static function trapezi_set_url() {
+		if (Globals::perastike("trapezi"))
+		self::trapezi_set($_REQUEST["trapezi"]);
+
+		elseif (Globals::perastike("partida"))
+		self::trapezi_set($_REQUEST["partida"]);
+	}
+
+	private static function trapezi_set_trexon() {
+		if (Globals::oxi_pektis())
+		return;
+
+		$pektis = $_SESSION["pektis"];
+		$query = "SELECT `kodikos`, `pektis1`, `pektis2`, `pektis3` FROM `trapezi` " .
+			"WHERE `arxio` IS NULL ORDER BY `kodikos` DESC";
+		$result = Globals::query($query);
+		while ($trapezi = $result->fetch_array(MYSQLI_NUM)) {
+			for ($thesi = 1; $thesi <= 3; $thesi++) {
+				if ($trapezi[$thesi] === $pektis) {
+					$result->free();
+					self::trapezi_set($trapezi[0]);
+					return;
+				}
+			}
+		}
+	}
+
+	public function selida() {
+		?>
+		<div id="tsoxa">
+		</div>
+		<div id="dianomes">
+		</div>
+		<?php
 	}
 }
 ?>
