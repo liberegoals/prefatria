@@ -1,10 +1,16 @@
 // ΣΑΠ -- Σελίδα Αναψηλάφησης Παρτίδας
+// -----------------------------------
+// Η παρούσα σελίδα επιτρέπει την αναψηλάφηση παρτίδων, δηλαδή το replay
+// των διανομών της παρτίδας, είτε σε πραγματικό χρόνο, είτε βήμα βήμα.
 
 $(document).ready(function() {
 	Client.
 	tabPektis().
 	tabKlisimo();
-	Movie.setup();
+
+	Movie.
+	setup().
+	setupPanel();
 });
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
@@ -16,10 +22,25 @@ Movie = {
 	// έχουμε επώνυμη χρήση.
 
 	trapezi: {},
+
+	// Η property "dianomiKodikos" περιέχει τον κωδικό της τρέχουσας
+	// διανομής.
+
+	dianomiKodikos: null,
+
+	// Η property "dianomiIndex" περιέχει το index της τρέχουσας διανομής
+	// στο array διανομών της παρτίδας.
+
+	dianomiIndex: -1,
+
+	dianomiZebra: 0,
 };
 
 Movie.setup = function() {
 	Movie.dianomesDOM = $('#dianomes');
+	Movie.panelDOM = $('#panel');
+	Movie.tsoxaDOM = $('#tsoxa');
+
 	try {
 		// Αρχικά επιχειρούμε να πάρουμε τα στοιχεία της τρέχουσας
 		// παρτίδας από τη ΣΕΑΠ, προκειμένου να μην απασχολούμε τον
@@ -33,6 +54,8 @@ Movie.setup = function() {
 
 		Movie.zitaData();
 	}
+
+	return Movie;
 };
 
 Movie.arxioData = function() {
@@ -63,14 +86,46 @@ Movie.zitaData = function() {
 };
 
 Movie.displayTrapezi = function() {
+	var i, dianomi;
+
 	Movie.trapezi.movieDisplayDianomes();
-Client.fyi.pano('XXX', 0);
-Client.fyi.kato('XXX', 0);
+	Movie.dianomiTrexousaSet();
+
+	return Movie;
+};
+
+Movie.dianomiTrexousaSet = function() {
+	var i, dianomi;
+
+	Movie.dianomiIndex = -1;
+
+	if (!Movie.dianomiKodikos)
+	return Movie;
+
+	for (i = 0; i < Movie.trapezi.dianomiArray.length; i++) {
+		dianomi = Movie.trapezi.dianomiArray[i];
+		if (dianomi.dianomiKodikosGet() === Movie.dianomiKodikos) {
+			Movie.dianomiIndex = i;
+			break;
+		}
+	}
+
+	Movie.trapezi.movieDisplayDianomi(dianomi);
 	return Movie;
 };
 
 Movie.checkOpen = function() {
 	return self;
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
+
+Movie.setupPanel = function() {
+	Movie.panel.bpanelRefresh();
+	Movie.panelDOM.empty().
+	append(Movie.panel.bpanelVertical().bpanelGetDOM());
+
+	return Movie;
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
@@ -86,7 +141,6 @@ Movie.paralaviData = function(data) {
 	} catch (e) {
 		console.error(data);
 		Client.fyi.epano('Επεστράφησαν ακαθόριστα δεδομένα');
-		Client.sound.beep();
 		return Movie;
 	}
 
@@ -231,15 +285,37 @@ Trapezi.prototype.movieDisplayDianomes = function() {
 	this.trapeziDianomiWalk(function() {
 		this.movieDisplayDianomi();
 	});
+
+	return this;
+};
+
+Trapezi.prototype.movieDisplayDianomi = function(dianomi) {
+	dianomi.movieDianomiTrexousa();
+	return this;
 };
 
 Dianomi.prototype.movieDisplayDianomi = function() {
-console.log(this);
-	this.DOM = $('<div>').addClass('dianomi');
-	this.DOM.text(this.dianomiKodikosGet());
+	var kodikos;
+
+	kodikos = this.dianomiKodikosGet();
+	this.DOM = $('<div>').addClass('dianomi dianomi' + (Movie.dianomiZebra++ % 2)).
+	data('kodikos', kodikos).
+	text(kodikos).
+	on('click', function(e) {
+		var kodikos;
+
+		Movie.dianomiKodikos = $(this).data('kodikos');
+		Movie.dianomiTrexousaSet();
+	});
 
 	Movie.dianomesDOM.
 	append(this.DOM);
 
+	return this;
+};
+
+Dianomi.prototype.movieDianomiTrexousa = function() {
+	$('.dianomiTrexousa').removeClass('dianomiTrexousa');
+	this.DOM.addClass('dianomiTrexousa');
 	return this;
 };
