@@ -17,6 +17,7 @@ Globals::database("lib/selida.php");
 
 Selida::head("Αναψηλάφηση");
 Selida::stylesheet("arena/arena");
+Selida::stylesheet("arxio/arxio");
 Selida::stylesheet("movie/movie");
 Selida::javascript("common/prefadoros");
 Selida::javascript("common/skiniko");

@@ -295,18 +295,22 @@ Trapezi.prototype.movieDisplayDianomi = function(dianomi) {
 };
 
 Dianomi.prototype.movieDisplayDianomi = function() {
-	var kodikos;
+	var kodikos, agoraDOM;
 
 	kodikos = this.dianomiKodikosGet();
+	Movie.trapezi.partidaReplay(kodikos);
+	agoraDOM = Movie.trapezi.movieAgoraDisplay();
+
 	this.DOM = $('<div>').addClass('dianomi dianomi' + (Movie.dianomiZebra++ % 2)).
 	data('kodikos', kodikos).
-	text(kodikos).
 	on('click', function(e) {
 		var kodikos;
 
 		Movie.dianomiKodikos = $(this).data('kodikos');
 		Movie.dianomiTrexousaSet();
-	});
+	}).
+	append(agoraDOM).
+	append($('<div>').addClass('dianomiKodikos').text(kodikos));
 
 	Movie.dianomesDOM.
 	append(this.DOM);
@@ -318,4 +322,28 @@ Dianomi.prototype.movieDianomiTrexousa = function() {
 	$('.dianomiTrexousa').removeClass('dianomiTrexousa');
 	this.DOM.addClass('dianomiTrexousa');
 	return this;
+};
+
+Trapezi.prototype.movieAgoraDisplay = function() {
+	var agora, dom;
+
+	dom = $('<div>').addClass('agora');
+
+	agora = this.partidaAgoraGet();
+	if (!agora)
+	return dom.addClass('agoraPaso').html('&mdash;');
+
+	dom = $('<div>').addClass('agora').
+	attr('title', 'Αγορά: ' + agora.dilosiLektiko());
+	dom.append($('<div>').addClass('agoraBazes').text(agora.dilosiBazesGet()));
+	dom.append($('<img>').addClass('agoraXroma').
+	attr('src', '../ikona/trapoula/xroma' + agora.dilosiXromaGet() + '.png'));
+
+	if (agora.dilosiIsAsoi())
+	dom.
+	append($('<div>').addClass('tsoxaDilosiAsoi').
+	append($('<img>').addClass('tsoxaDilosiAsoiIcon').
+	attr('src', '../ikona/panel/asoiOn.png')));
+
+	return dom;
 };

@@ -1,5 +1,6 @@
 #ofelimo {
 	padding: 8px 0 0 0;
+	white-space: nowrap;
 }
 
 #tsoxa {
@@ -7,12 +8,12 @@
 	width: 600px;
 	height: 600px;
 	margin: 0 6px 0 0;
-background-color: teal;
 }
 
 #panel {
 	display: inline-block;
 	vertical-align: top;
+	white-space: normal;
 	width: 44px;
 	padding: 0 0 0 4px;
 	margin: 0 8px 0 0;
@@ -21,14 +22,15 @@ background-color: teal;
 #dianomes {
 	display: inline-block;
 	position: relative;
+	top: -10px;
 	vertical-align: top;
-	width: 300px;
 	height: 606px;
 	overflow-y: auto;
 }
 
 .dianomi {
 	height: 26px;
+	padding: 4px 0 0 6px;
 	border-style: none none solid none;
 	border-width: 2px;
 	border-color: #888;
@@ -45,4 +47,25 @@ background-color: teal;
 
 .dianomiTrexousa {
 	background-color: red;
+}
+
+.dianomiKodikos {
+	display: inline-block;
+	bottom: 4px;
+	padding: 0 4px;
+
+	float: right;
+	font-family: "Lucida Console", "Monaco", monospace;
+}
+
+.agora {
+	display: inline-block;
+	position: relative;
+	bottom: 4px;
+	width: 86px;
+	text-align: center;
+}
+
+.agoraPaso {
+	bottom: -2px;
 }
