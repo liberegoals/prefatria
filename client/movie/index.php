@@ -79,19 +79,15 @@ class Movie {
 		self::trapezi_set_dianomi();
 
 		if (self::oxi_trapezi())
-		self::trapezi_set_trexon();
+		self::trapezi_set_url();
 
 		if (self::oxi_trapezi())
-		self::trapezi_set_url();
+		self::trapezi_set_trexon();
 
 		if (self::oxi_trapezi())
 		Globals::klise_fige("Ακαθόριστη παρτίδα");
 
-		$query = "SELECT `kodikos` FROM `trapezi` WHERE `kodikos` = " . self::$trapezi;
-		$trapezi = Globals::first_row($query);
-		if (!$trapezi)
-		Globals::klise_fige("Δεν βρέθηκε τραπέζι με κωδικό " . self::$trapezi);
-
+		self::trapezi_check();
 		?>
 		<script type="text/javascript">
 		//<![CDATA[
@@ -112,11 +108,24 @@ class Movie {
 	}
 
 	private static function trapezi_set_url() {
-		if (Globals::perastike("trapezi"))
-		self::trapezi_set($_REQUEST["trapezi"]);
+		if (Globals::perastike("trapezi")) {
+			self::trapezi_set($_REQUEST["trapezi"]);
+			self::trapezi_check();
+			return;
+		}
 
-		elseif (Globals::perastike("partida"))
-		self::trapezi_set($_REQUEST["partida"]);
+		if (Globals::perastike("partida")) {
+			self::trapezi_set($_REQUEST["partida"]);
+			self::trapezi_check();
+			return;
+		}
+	}
+
+	private static function trapezi_check() {
+		$query = "SELECT `kodikos` FROM `trapezi` WHERE `kodikos` = " . self::$trapezi;
+		$trapezi = Globals::first_row($query);
+		if (!$trapezi)
+		Globals::klise_fige("Δεν βρέθηκε τραπέζι με κωδικό " . self::$trapezi);
 	}
 
 	private static function trapezi_set_trexon() {

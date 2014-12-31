@@ -26,11 +26,13 @@
 	vertical-align: top;
 	height: 606px;
 	overflow-y: auto;
+	overflow-x: visible;
 }
 
 .dianomi {
+	bottom: auto;
 	height: 26px;
-	padding: 4px 0 0 6px;
+	padding: 4px 24px 0 0;
 	border-style: none none solid none;
 	border-width: 2px;
 	border-color: #888;
@@ -46,16 +48,16 @@
 }
 
 .dianomiTrexousa {
-	background-color: red;
+	background-color: red !important;
 }
 
 .dianomiKodikos {
 	display: inline-block;
-	bottom: 4px;
-	padding: 0 4px;
+	position: relative;
+	bottom: 5px;
 
-	float: right;
 	font-family: "Lucida Console", "Monaco", monospace;
+	font-size: 20px;
 }
 
 .agora {
@@ -66,6 +68,10 @@
 	text-align: center;
 }
 
-.agoraPaso {
-	bottom: -2px;
+.tsoxaDilosiAsoi {
+	width: 34px;
+}
+
+.tsoxaDilosiAsoi:before {
+	left: -13px;
 }

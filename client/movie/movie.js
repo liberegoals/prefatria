@@ -122,7 +122,7 @@ Movie.checkOpen = function() {
 
 Movie.setupPanel = function() {
 	Movie.panel.bpanelRefresh();
-	Movie.panelDOM.empty().
+	Movie.panelDOM.empty().disableSelection().
 	append(Movie.panel.bpanelVertical().bpanelGetDOM());
 
 	return Movie;
@@ -282,6 +282,7 @@ Dianomi.prototype.processEnergiaList = function(elist) {
 
 Trapezi.prototype.movieDisplayDianomes = function() {
 	Movie.dianomesDOM.empty();
+//for (var i = 0; i < 3; i++)
 	this.trapeziDianomiWalk(function() {
 		this.movieDisplayDianomi();
 	});
@@ -324,6 +325,7 @@ Dianomi.prototype.movieDianomiTrexousa = function() {
 	return this;
 };
 
+var aa = 0;
 Trapezi.prototype.movieAgoraDisplay = function() {
 	var agora, dom;
 
@@ -331,8 +333,10 @@ Trapezi.prototype.movieAgoraDisplay = function() {
 
 	agora = this.partidaAgoraGet();
 	if (!agora)
-	return dom.addClass('agoraPaso').html('&mdash;');
+	return dom.html('&mdash;');
 
+if (aa++ % 2)
+agora.asoi = true;
 	dom = $('<div>').addClass('agora').
 	attr('title', 'Αγορά: ' + agora.dilosiLektiko());
 	dom.append($('<div>').addClass('agoraBazes').text(agora.dilosiBazesGet()));
