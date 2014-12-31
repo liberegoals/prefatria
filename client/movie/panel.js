@@ -38,7 +38,8 @@ Movie.panel.bpanelButtonPush(new PButton({
 
 		Movie.dianomiIndex--;
 		if (Movie.dianomiIndex < 0) {
-			Movie.dianomiIndex = 0;
+			Movie.dianomiIndex = -1;
+			$('.dianomiTrexousa').removeClass('dianomiTrexousa');
 			return;
 		}
 

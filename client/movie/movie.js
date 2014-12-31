@@ -333,7 +333,7 @@ Trapezi.prototype.movieAgoraDisplay = function() {
 
 	agora = this.partidaAgoraGet();
 	if (!agora)
-	return dom.html('&mdash;');
+	return dom.addClass('agoraBazes').html('&ndash;');
 
 if (aa++ % 2)
 agora.asoi = true;
