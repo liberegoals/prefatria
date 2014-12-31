@@ -137,9 +137,9 @@ class Movie {
 		}
 	}
 
-	public function selida() {
+	public static function selida() {
 		?>
-		<div id="tsoxa">
+		<div id="tsoxa" class="tsoxaPeximo">
 		</div>
 		<div id="panel">
 		</div>
