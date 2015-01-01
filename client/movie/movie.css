@@ -1,3 +1,7 @@
+body {
+	overflow: auto;
+}
+
 #ofelimo {
 	padding: 8px 0 0 0;
 	white-space: nowrap;
@@ -15,6 +19,7 @@
 	vertical-align: top;
 	white-space: normal;
 	width: 44px;
+	height: 606px;
 	padding: 0 0 0 4px;
 	margin: 0 8px 0 0;
 }
@@ -30,7 +35,7 @@
 .dianomi {
 	bottom: auto;
 	height: 26px;
-	padding: 4px 24px 0 0;
+	padding: 0px 24px 0 0;
 	border-style: none none solid none;
 	border-width: 2px;
 	border-color: #888;
