@@ -31,7 +31,7 @@ Movie = {
 	// Η property "dianomiIndex" περιέχει το index της τρέχουσας διανομής
 	// στο array διανομών της παρτίδας.
 
-	dianomiIndex: -1,
+	dianomiIndex: 0,
 
 	dianomiZebra: 0,
 };
@@ -49,7 +49,7 @@ Movie.setup = function() {
 		Movie.arxioData();
 	} catch (e) {
 		// Αν δεν ήταν επιτυχής η προσάρτηση των στοιχείων παρτίδας από
-		// την ΣΕΑΠ, προχωρούμε στην αναζήτηση των στοιχεών παρτίδας από
+		// τη ΣΕΑΠ, προχωρούμε στην αναζήτηση των στοιχεών παρτίδας από
 		// τον server.
 
 		Movie.zitaData();
@@ -58,14 +58,18 @@ Movie.setup = function() {
 	return Movie;
 };
 
+// Η function "arxioData" επιχειρεί να προσαρτήσει τα στοιχεία της παρτίδας από τη
+// ΣΕΑΠ και κατόπιν εμφανίζει την παρτίδα στην παρούσα σελίδα.
+
 Movie.arxioData = function() {
 	Movie.trapezi = self.opener.Arxio.movie.trapezi;
 	Movie.displayTrapezi();
 	return Movie;
 };
 
-// Η function "zitaData" αποστέλλει query αναζήτησης παρτίδων στον server και διαχειρίζεται
-// την απάντηση, η οποία περιέχει τα στοιχεία των επιλεγμένων παρτίδων.
+// Η function "zitaData" αποστέλλει query αναζήτησης των διανομών της τρέχουσας
+// παρτίδας στον server και ανασκευάζει την παρτίδα με βάση τα στοιχεία που θα
+// παραλάβει.
 
 Movie.zitaData = function() {
 	if (!Movie.trapezi.kodikos)
@@ -86,31 +90,44 @@ Movie.zitaData = function() {
 };
 
 Movie.displayTrapezi = function() {
-	var i, dianomi;
-
 	Movie.trapezi.movieDisplayDianomes();
 	Movie.dianomiTrexousaSet();
-
 	return Movie;
 };
 
 Movie.dianomiTrexousaSet = function() {
-	var i, dianomi;
+	var dianomi, i;
 
-	Movie.dianomiIndex = -1;
+	// Αρχικά θεωρούμε ότι η τρέχουσα διανομή είναι η πρώτη διανομή
+	// τηας παρτίδας.
+
+	Movie.dianomiIndex = 0;
+
+	// Αν δεν έχει καθοριστεί με οποιονδήποτε τρόπο κωδικός τρέχουσας
+	// διανομής, δεν προβαίνουμε σε περαιτέρω ενέργειες.
 
 	if (!Movie.dianomiKodikos)
 	return Movie;
 
+	// Έχει καθοριστεί κωδικός τρέχουσας διανομής και θα επιχειρήσουμε
+	// τώρα να εντοπίσουμε το index της συγκεκριμένης διανομής στο
+	// array διανομών της παρτίδας.
+
 	for (i = 0; i < Movie.trapezi.dianomiArray.length; i++) {
 		dianomi = Movie.trapezi.dianomiArray[i];
-		if (dianomi.dianomiKodikosGet() === Movie.dianomiKodikos) {
-			Movie.dianomiIndex = i;
-			break;
-		}
+		if (dianomi.dianomiKodikosGet() !== Movie.dianomiKodikos)
+		continue;
+
+		// Εντοπίσαμε την τρέχουσα διανομή οπότε αναπροσαρμόζουμε
+		// το index τρέχουσας διανομής και παρουσιάζουμε την
+		// παρτίδα όπως έχει στην αρχή της συγκεκριμένης
+		// διανομής.
+
+		Movie.dianomiIndex = i;
+		Movie.trapezi.movieDisplayDianomi(dianomi);
+		break;
 	}
 
-	Movie.trapezi.movieDisplayDianomi(dianomi);
 	return Movie;
 };
 
@@ -291,6 +308,7 @@ Trapezi.prototype.movieDisplayDianomes = function() {
 };
 
 Trapezi.prototype.movieDisplayDianomi = function(dianomi) {
+	this.partidaReplay({eosxoris: dianomi.dianomiKodikosGet()});
 	dianomi.movieDianomiTrexousa();
 	return this;
 };
@@ -299,7 +317,7 @@ Dianomi.prototype.movieDisplayDianomi = function() {
 	var kodikos, agoraDOM;
 
 	kodikos = this.dianomiKodikosGet();
-	Movie.trapezi.partidaReplay(kodikos);
+	Movie.trapezi.partidaReplay({eoske: kodikos});
 	agoraDOM = Movie.trapezi.movieAgoraDisplay();
 
 	this.DOM = $('<div>').addClass('dianomi dianomi' + (Movie.dianomiZebra++ % 2)).
