@@ -741,8 +741,11 @@ Trapezi.prototype.partidaResetFila = function() {
 // διανομή όπου κάνουμε replay όλες τις ενέργειες προκειμένου να φέρουμε την
 // παρτίδα στην τρέχουσα κατάσταση.
 
-Trapezi.prototype.partidaReplay = function(eoske) {
+Trapezi.prototype.partidaReplay = function(opts) {
 	var trapezi = this, kasa, dianomi;
+
+	if (opts === undefined)
+	opts = {};
 
 	this.partidaReset();
 
@@ -765,7 +768,10 @@ Trapezi.prototype.partidaReplay = function(eoske) {
 
 	dianomi = null;	// δείχνει την τελευταία διανομή
 	this.trapeziDianomiWalk(function() {
-		if (eoske && (this.dianomiKodikosGet() > eoske))
+		if (opts.hasOwnProperty('eoske') && (this.dianomiKodikosGet() > opts.eoske))
+		return;
+
+		if (opts.hasOwnProperty('eosxoris') && (this.dianomiKodikosGet() >= opts.eosxoris))
 		return;
 
 		dianomi = this;

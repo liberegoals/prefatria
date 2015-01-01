@@ -853,7 +853,7 @@ Dianomi.prototype.arxioDianomiDisplay = function(trapezi) {
 	// ΚΑΙ την ανά χείρας διανομή.
 
 	kodikos = this.dianomiKodikosGet();
-	trapezi.partidaReplay(kodikos);
+	trapezi.partidaReplay({eoske: kodikos});
 
 	// Προσαρτούμε στο DOM element του τραπεζιού το DOM element της ανά
 	// χείρας διανομής. Ξεκινάμε το «γέμισμα» του συγκεκριμένου DOM
@@ -1225,21 +1225,24 @@ Arxio.movie = {
 };
 
 Arxio.movie.dianomiSet = function(dianomi) {
-	var url, top, left;
+	var dianomiKodikos, url, top, left;
 
-	url = '../movie?dianomi=' + dianomi.dianomiKodikosGet();
+	dianomiKodikos = dianomi.dianomiKodikosGet();
 
 	try {
 		// Αν η σελίδα αναψηλάφησης παρτίδας είναι ανοικτή κάνουμε
 		// refresh με το url που αφορά στη συγκεκριμένη διανομή.
 
-		Arxio.movie.win.Movie.checkOpen().location = url;
+		Arxio.movie.win = Arxio.movie.win.Movie.checkOpen();
+		Arxio.movie.win.Movie.dianomiKodikos = dianomiKodikos;
+		Arxio.movie.win.Movie.dianomiTrexousaSet();
 	} catch (e) {
 		// Η σελίδα αναψηλάφησης δεν φαίνεται να είναι ανοικτή, επομένως
 		// την ανοίγουμε τώρα.
 
 		top = window.screenY + 100;
 		left = window.screenX + 200;
+		url = '../movie?dianomi=' + dianomiKodikos;
 		Arxio.movie.win = window.open(url, 'movie', 'height=800,width=1200,top=' + top + ',left=' + left);
 	}
 
@@ -1255,7 +1258,6 @@ Arxio.movie.trapeziSet = function(trapezi) {
 	Arxio.movie.trapezi = trapezi;
 	url = '../movie?trapezi=' + trapezi.trapeziKodikosGet();
 	Arxio.movie.win.location = url;
-	Arxio.movie.win.focus();
 };
 
 Arxio.movie.klisimo = function() {
