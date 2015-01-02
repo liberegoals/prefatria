@@ -16,16 +16,13 @@ Movie.panel.bpanelButtonPush(new PButton({
 	img: '../ikona/movie/fwd.png',
 	title: 'Επόμενη διανομή',
 	click: function(e) {
-		var dianomi;
-
 		Movie.dianomiIndex++;
-		if (Movie.dianomiIndex >= Movie.trapezi.dianomiArray.length) {
-			Movie.dianomiIndex--;
-			return;
-		}
 
-		dianomi = Movie.trapezi.dianomiArray[Movie.dianomiIndex];
-		Movie.trapezi.movieDisplayDianomi(dianomi);
+		if (Movie.dianomiIndex >= Movie.trapezi.dianomiArray.length)
+		Movie.dianomiIndex--;
+
+		else
+		Movie.displayDianomi();
 	},
 }));
 
@@ -34,19 +31,12 @@ Movie.panel.bpanelButtonPush(new PButton({
 	img: '../ikona/movie/rew.png',
 	title: 'Προηγούμενη διανομή',
 	click: function(e) {
-		var dianomi;
-
 		Movie.dianomiIndex--;
-		if (Movie.dianomiIndex < 0) {
-			Movie.dianomiIndex = -1;
-			$('.dianomiTrexousa').removeClass('dianomiTrexousa');
-			return;
-		}
 
-		if (Movie.trapezi.dianomiArray.length <= 0)
-		return;
+		if (Movie.dianomiIndex < -1)
+		Movie.dianomiIndex = -1;
 
-		dianomi = Movie.trapezi.dianomiArray[Movie.dianomiIndex];
-		Movie.trapezi.movieDisplayDianomi(dianomi);
+		else
+		Movie.displayDianomi();
 	},
 }));
