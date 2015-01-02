@@ -9,7 +9,7 @@ body {
 
 #tsoxa {
 	display: inline-block;
-	width: 600px;
+	width: 700px;
 	height: 600px;
 	margin: 0 6px 0 0;
 	overflow: visible;
@@ -125,23 +125,23 @@ body {
 
 .pektis {
 	position: absolute;
-	width: 270px;
+	width: 300px;
 	height: 140px;
 }
 
 #pektis1 {
 	bottom: 36px;
-	left: 166px;
+	left: 198px;
 }
 
 #pektis2 {
 	top: 36px;
-	right: 6px;
+	right: 16px;
 }
 
 #pektis3 {
 	top: 36px;
-	left: 6px;
+	left: 16px;
 }
 
 .pektisLogin {

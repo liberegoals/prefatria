@@ -34,10 +34,16 @@ Movie = {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
 
+// Η function "setup" ανιχνεύει τις βασικές περιοχές της ΣΑΠ. Πρόκειται για την
+// τσόχα στην οποία εξελίσσεται η παρτίδα (αριστερά), το control panel (κέντρο)
+// και τη λίστα διανομών της παρτίδας (δεξιά), παραλαμβάνει τα δεδομένα παρτίδας
+// από τη σελίδα επισκόπησης αρχειοθετημένων παρτίδων (ΣΕΑΠ), ή απευθείας από την
+// database, και παρουσιάζει την παρτίδα όπως έχει στην αρχή της τρέχουσας διανομής.
+
 Movie.setup = function() {
+	Movie.tsoxaDOM = $('#tsoxa');
 	Movie.dianomesDOM = $('#dianomes');
 	Movie.panelDOM = $('#panel');
-	Movie.tsoxaDOM = $('#tsoxa');
 
 	try {
 		// Αρχικά επιχειρούμε να πάρουμε τα στοιχεία της τρέχουσας
@@ -56,6 +62,11 @@ Movie.setup = function() {
 	return Movie;
 };
 
+// Η function "setupPanel" «στήνει» το control panel της ΣΑΠ, δηλαδή την κεντρική
+// στήλη εργαλείων. Πρόκειται για πλήκτρα με τα οποία ο χρήστης μπορεί να αλλάξει
+// διανομή, να «περπατήσει» βήμα βήμα την τρέχουσα διανομή είτε προς τα εμπρός,
+// είτε προς τα πίσω.
+
 Movie.setupPanel = function() {
 	Movie.panel.bpanelRefresh();
 	Movie.panelDOM.empty().disableSelection().
@@ -63,6 +74,9 @@ Movie.setupPanel = function() {
 
 	return Movie;
 };
+
+// Η function "checkOpen" χρησιμοποιείται από άλλες σελίδες προκειμένου να ελεγχθεί
+// εάν η ΣΑΠ είναι ανοικτή επιστρέφοντας pointer στο window object της ΣΑΠ.
 
 Movie.checkOpen = function() {
 	return self;
@@ -121,6 +135,12 @@ Movie.displayTrapezi = function() {
 	return Movie;
 };
 
+// Η function "entopismosTrexousasDianomis" επιχειρεί να εντοπίσει την τρέχουσα
+// διανομή στο array διανομών της παρτίδας. Ως τρέχουσα διανομή θεωρείται αυτή
+// της οποίας ο κωδικός δίνεται στην property "dianomiKodikos". Εάν η τρέχουσα
+// διανομή δεν εντοπιστεί, το index της τρέχουσας διανομής τίθεται -1, αλλιώς
+// τίθεταο στο index της επίμαχης διανομής στο array διανομών της παρτίδας.
+
 Movie.entopismosTrexousasDianomis = function() {
 	var i, dianomi;
 
@@ -139,6 +159,9 @@ Movie.entopismosTrexousasDianomis = function() {
 
 	return Movie;
 };
+
+// Η function "displayDianomi" παρουσιάζει την κατάσταση στην παρτίδα όπως έχει
+// στην αρχή της τρέχουσας διανομής, δηλαδή μετά το μοίρασμα των φύλλων.
 
 Movie.displayDianomi = function() {
 	var dianomi;

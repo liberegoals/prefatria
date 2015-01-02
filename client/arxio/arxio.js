@@ -1225,20 +1225,21 @@ Arxio.movie = {
 };
 
 Arxio.movie.dianomiSet = function(dianomi) {
-	var dianomiKodikos, url, top, left;
+	var movie, dianomiKodikos, url, top, left;
 
 	dianomiKodikos = dianomi.dianomiKodikosGet();
 
 	try {
-		// Αν η σελίδα αναψηλάφησης παρτίδας είναι ανοικτή κάνουμε
-		// refresh με το url που αφορά στη συγκεκριμένη διανομή.
+		// Αν η σελίδα αναψηλάφησης παρτίδας (ΣΑΠ) είναι ανοικτή, επειχειρούμε
+		// να αλλάξουμε την τρέχουσα διανομή στη ΣΑΠ.
 
 		Arxio.movie.win = Arxio.movie.win.Movie.checkOpen();
-		Arxio.movie.win.Movie.dianomiKodikos = dianomiKodikos;
-		Arxio.movie.win.Movie.entopismosTrexousasDianomis();
-		Arxio.movie.win.Movie.displayDianomi();
+		movie = Arxio.movie.win.Movie;
+		movie.dianomiKodikos = dianomiKodikos;
+		movie.entopismosTrexousasDianomis();
+		movie.displayDianomi();
 	} catch (e) {
-		// Η σελίδα αναψηλάφησης δεν φαίνεται να είναι ανοικτή, επομένως
+		// Η σελίδα αναψηλάφησης παρτίδας δεν φαίνεται να είναι ανοικτή, επομένως
 		// την ανοίγουμε τώρα.
 
 		top = window.screenY + 100;
