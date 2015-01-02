@@ -1235,7 +1235,8 @@ Arxio.movie.dianomiSet = function(dianomi) {
 
 		Arxio.movie.win = Arxio.movie.win.Movie.checkOpen();
 		Arxio.movie.win.Movie.dianomiKodikos = dianomiKodikos;
-		Arxio.movie.win.Movie.dianomiTrexousaSet();
+		Arxio.movie.win.Movie.entopismosTrexousasDianomis();
+		Arxio.movie.win.Movie.displayDianomi();
 	} catch (e) {
 		// Η σελίδα αναψηλάφησης δεν φαίνεται να είναι ανοικτή, επομένως
 		// την ανοίγουμε τώρα.
