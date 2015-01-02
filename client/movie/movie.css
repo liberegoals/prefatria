@@ -12,6 +12,7 @@ body {
 	width: 600px;
 	height: 600px;
 	margin: 0 6px 0 0;
+	overflow: visible;
 }
 
 #panel {
@@ -34,20 +35,17 @@ body {
 
 .dianomi {
 	bottom: auto;
-	height: 26px;
+	height: 32px;
 	padding: 0px 24px 0 0;
 	border-style: none none solid none;
 	border-width: 2px;
 	border-color: #888;
 	cursor: pointer;
+	background-color: #89A785;
 }
 
-.dianomi0 {
-	background-color: rgb(160, 200, 177);
-}
-
-.dianomi1 {
-	background-color: rgb(170, 213, 192);
+.dianomiOdd {
+	background-color: #92B58E;
 }
 
 .dianomiTrexousa {
@@ -57,7 +55,7 @@ body {
 .dianomiKodikos {
 	display: inline-block;
 	position: relative;
-	bottom: 5px;
+	bottom: 1px;
 
 	font-family: "Lucida Console", "Monaco", monospace;
 	font-size: 20px;
@@ -66,15 +64,77 @@ body {
 .agora {
 	display: inline-block;
 	position: relative;
-	bottom: 4px;
+	bottom: 0px;
 	width: 86px;
 	text-align: center;
 }
 
 .tsoxaDilosiAsoi {
+	bottom: 1px;
 	width: 34px;
 }
 
 .tsoxaDilosiAsoi:before {
-	left: -13px;
+	bottom: 2px;
+	left: -12px;
+}
+
+/**********************************************************************************************************************/
+
+#trapeziData {
+	position: absolute;
+	left: 6px;
+	padding: 4px;
+	font-size: 20px;
+	font-weight: bold;
+	background-color: #89A785;
+}
+
+#dataTrapeziKodikos {
+	display: inline-block;
+}
+
+#dataDianomiKodikos {
+	display: inline-block;
+}
+
+#dataDianomiKodikos:before {
+	content: '#';
+	font-weight: normal;
+	padding: 4px;
+}
+
+#options {
+	position: absolute;
+	top: -16px;
+	right: 10px;
+}
+
+.option {
+	display: inline-block;
+	width: 40px;
+	padding: 0 2px;
+}
+
+/**********************************************************************************************************************/
+
+.pektis {
+	position: absolute;
+	width: 270px;
+	height: 140px;
+}
+
+#pektis1 {
+	bottom: 6px;
+	left: 6px;
+}
+
+#pektis2 {
+	top: 36px;
+	right: 6px;
+}
+
+#pektis3 {
+	top: 36px;
+	left: 6px;
 }
