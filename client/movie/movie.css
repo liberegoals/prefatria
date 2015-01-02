@@ -125,8 +125,8 @@ body {
 }
 
 #pektis1 {
-	bottom: 6px;
-	left: 6px;
+	bottom: 36px;
+	left: 166px;
 }
 
 #pektis2 {
@@ -137,4 +137,14 @@ body {
 #pektis3 {
 	top: 36px;
 	left: 6px;
+}
+
+.pektisLogin {
+	max-width: none;
+	width: 100%;
+	position: absolute;
+}
+
+#pektisLogin1 {
+	bottom: 0;
 }

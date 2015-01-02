@@ -177,7 +177,7 @@ Trapezi.prototype.movieDisplayTrapeziData = function() {
 
 	optsDOM = $('<div>').attr('id', 'options');
 
-	if (Movie.trapezi.trapeziIsAsoi())
+	if (Movie.trapezi.trapeziOxiAsoi())
 	Movie.optionDOM(optsDOM, 'asoiOn.png', 'Δεν παίζονται οι άσοι');
 
 	if (Movie.trapezi.trapeziIsPaso())
@@ -192,6 +192,8 @@ Trapezi.prototype.movieDisplayTrapeziData = function() {
 		var dom;
 
 		dom = $('<div>').addClass('pektis').attr('id', 'pektis' + thesi);
+		dom.append($('<div>').addClass('pektisLogin tsoxaPektisOnoma').attr('id', 'pektisLogin' + thesi).
+		text(this.trapeziPektisGet(thesi)));
 		Movie.tsoxaDOM.append(dom);
 		Movie.pektisDOM[thesi] = dom;
 	});
