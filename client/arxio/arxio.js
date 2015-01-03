@@ -1249,7 +1249,7 @@ Arxio.movie.dianomiSet = function(dianomi) {
 };
 
 Arxio.movie.trapeziSet = function(trapezi) {
-	var movie, dianomiKodikos, url, top, left;
+	var movie;
 
 	try {
 		// Αν η σελίδα αναψηλάφησης παρτίδας (ΣΑΠ) είναι ανοικτή, επιχειρούμε
