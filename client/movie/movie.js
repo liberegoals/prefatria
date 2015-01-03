@@ -124,6 +124,7 @@ console.log('ZITA');
 // υπάρχει τσόχα στην οποία παρουσιάζονται τα τεκταινόμενα στην παρτίδα.
 
 Movie.displayTrapezi = function() {
+	Movie.dianomesDOM.empty();
 //for (var i = 0; i < 3; i++)
 	Movie.trapezi.trapeziDianomiWalk(function() {
 		Movie.dianomiListaAdd(this);
