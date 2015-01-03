@@ -139,7 +139,7 @@ Arena.partida.setupGiorti = function() {
 		break;
 	case 1:
 		if (mera > 15) return;
-		img = 'ikona/giorti/neoEtos.png';
+		img = 'ikona/giorti/neoEtos.gif';
 		break;
 	default:
 		return;
