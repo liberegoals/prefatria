@@ -698,17 +698,14 @@ Trapezi.prototype.trapeziArxioDisplay = function() {
 	append($('<div>').addClass('trapeziDataIpolipo').
 	attr('title', 'Υπόλοιπο κάσας').text(this.ipolipo))).
 	on('click', function(e) {
+		if (Arxio.movie.isAnikto())
+		Arxio.movie.klisimo();
+
 		if (trapezi.isAplomenesDianomes())
 		trapezi.mazemaDianomon();
 
 		else
 		trapezi.aplomaDianomon();
-
-		// Αν υπάρχει ανοικτή σελίδα αναψηλάφησης παρτίδας, αλλάζουμε το
-		// τραπέζι και εκεί.
-
-		if (Arxio.movie.isAnikto())
-		Arxio.movie.trapeziSet(trapezi);
 	}));
 
 	Prefadoros.thesiWalk(function(thesi) {
@@ -1230,7 +1227,7 @@ Arxio.movie.dianomiSet = function(dianomi) {
 	dianomiKodikos = dianomi.dianomiKodikosGet();
 
 	try {
-		// Αν η σελίδα αναψηλάφησης παρτίδας (ΣΑΠ) είναι ανοικτή, επειχειρούμε
+		// Αν η σελίδα αναψηλάφησης παρτίδας (ΣΑΠ) είναι ανοικτή, επιχειρούμε
 		// να αλλάξουμε την τρέχουσα διανομή στη ΣΑΠ.
 
 		Arxio.movie.win = Arxio.movie.win.Movie.checkOpen();
@@ -1249,17 +1246,6 @@ Arxio.movie.dianomiSet = function(dianomi) {
 	}
 
 	Arxio.movie.win.focus();
-};
-
-Arxio.movie.trapeziSet = function(trapezi) {
-	var url;
-
-	if (Arxio.movie.isKlisto())
-	return;
-
-	Arxio.movie.trapezi = trapezi;
-	url = '../movie?trapezi=' + trapezi.trapeziKodikosGet();
-	Arxio.movie.win.location = url;
 };
 
 Arxio.movie.klisimo = function() {
