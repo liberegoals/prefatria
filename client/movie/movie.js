@@ -46,9 +46,8 @@ Movie.setup = function() {
 	Movie.panelDOM = $('#panel');
 
 	try {
-		// Αρχικά επιχειρούμε να πάρουμε τα στοιχεία της τρέχουσας
-		// παρτίδας από τη ΣΕΑΠ, προκειμένου να μην απασχολούμε τον
-		// server.
+		// Αρχικά επιχειρούμε να προσαρτήσουμε τα στοιχεία της παρτίδας
+		// από τη ΣΕΑΠ, προκειμένου να μην απασχολούμε τον server.
 
 		Movie.arxioData();
 	} catch (e) {
@@ -85,7 +84,9 @@ Movie.checkOpen = function() {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
 
 // Η function "arxioData" επιχειρεί να προσαρτήσει τα στοιχεία της παρτίδας από τη
-// ΣΕΑΠ και κατόπιν εμφανίζει την παρτίδα στην παρούσα σελίδα.
+// ΣΕΑΠ και κατόπιν εμφανίζει την παρτίδα στην παρούσα σελίδα. Αν η ΣΑΠ δεν εκκίνησε
+// μέσω της ΣΕΑΠ, τότε τα δεδομένα θα ζητηθούν από τον server μέσω της "zitaData" που
+// ακολουθεί.
 
 Movie.arxioData = function() {
 	Movie.trapezi = self.opener.Arxio.movie.trapezi;
@@ -98,6 +99,7 @@ Movie.arxioData = function() {
 // παραλάβει.
 
 Movie.zitaData = function() {
+console.log('ZITA');
 	if (!Movie.trapezi.kodikos)
 	return Movie;
 
@@ -122,15 +124,15 @@ Movie.zitaData = function() {
 // υπάρχει τσόχα στην οποία παρουσιάζονται τα τεκταινόμενα στην παρτίδα.
 
 Movie.displayTrapezi = function() {
-	Movie.dianomesDOM.empty();
 //for (var i = 0; i < 3; i++)
 	Movie.trapezi.trapeziDianomiWalk(function() {
-		this.movieDisplayDianomi();
+		Movie.dianomiListaAdd(this);
 	});
 	$('.dianomi:odd').addClass('dianomiOdd');
 
-	Movie.entopismosTrexousasDianomis();
-	Movie.displayDianomi();
+	Movie.
+	entopismosTrexousasDianomis().
+	displayDianomi();
 
 	return Movie;
 };
@@ -169,13 +171,13 @@ Movie.displayDianomi = function() {
 	Movie.tsoxaDOM.empty();
 	$('.dianomiTrexousa').removeClass('dianomiTrexousa');
 
-	Movie.trapezi.movieDisplayTrapeziData();
+	Movie.displayTrapeziData();
 
 	if (Movie.dianomiIndex < 0)
 	return Movie;
 
 	dianomi = Movie.trapezi.dianomiArray[Movie.dianomiIndex];
-	dianomi.DOM.addClass('dianomiTrexousa');
+	dianomi.movieDOM.addClass('dianomiTrexousa');
 
 	Movie.trapezi.partidaReplay({eosxoris: dianomi.dianomiKodikosGet()});
 
@@ -184,16 +186,16 @@ Movie.displayDianomi = function() {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
 
-Trapezi.prototype.movieDisplayTrapeziData = function() {
+Movie.displayTrapeziData = function() {
 	var dataDOM, optsDOM, dianomi;
 
 	dataDOM = $('<div>').attr('id', 'trapeziData');
 	dataDOM.append($('<div>').attr({
 		id: 'dataTrapeziKodikos',
 		title: 'Κωδικός τραπεζιού',
-	}).text(this.trapeziKodikosGet()));
+	}).text(Movie.trapezi.trapeziKodikosGet()));
 	if (Movie.dianomiIndex >= 0) {
-		dianomi = this.dianomiArray[Movie.dianomiIndex];
+		dianomi = Movie.trapezi.dianomiArray[Movie.dianomiIndex];
 		dataDOM.append($('<div>').attr({
 			id: 'dataDianomiKodikos',
 			title: 'Κωδικός διανομής',
@@ -213,7 +215,7 @@ Trapezi.prototype.movieDisplayTrapeziData = function() {
 	append(optsDOM);
 
 	Movie.pektisDOM = {};
-	this.trapeziThesiWalk(function(thesi) {
+	Movie.trapezi.trapeziThesiWalk(function(thesi) {
 		var dom;
 
 		dom = $('<div>').addClass('pektis').attr('id', 'pektis' + thesi);
@@ -222,8 +224,6 @@ Trapezi.prototype.movieDisplayTrapeziData = function() {
 		Movie.tsoxaDOM.append(dom);
 		Movie.pektisDOM[thesi] = dom;
 	});
-
-	return this;
 };
 
 Movie.optionDOM = function(dom, icon, desc) {
@@ -233,12 +233,12 @@ Movie.optionDOM = function(dom, icon, desc) {
 	}));
 };
 
-Trapezi.prototype.movieAgoraDisplay = function() {
+Movie.agoraDisplay = function() {
 	var agora, dom;
 
 	dom = $('<div>').addClass('agora');
 
-	agora = this.partidaAgoraGet();
+	agora = Movie.trapezi.partidaAgoraGet();
 	if (!agora)
 	return dom.addClass('agoraBazes').html('&ndash;');
 
@@ -257,27 +257,26 @@ Trapezi.prototype.movieAgoraDisplay = function() {
 	return dom;
 };
 
-Dianomi.prototype.movieDisplayDianomi = function() {
+Movie.dianomiListaAdd = function(dianomi) {
 	var kodikos, agoraDOM;
 
-	kodikos = this.dianomiKodikosGet();
+	kodikos = dianomi.dianomiKodikosGet();
 	Movie.trapezi.partidaReplay({eoske: kodikos});
-	agoraDOM = Movie.trapezi.movieAgoraDisplay();
+	agoraDOM = Movie.agoraDisplay();
 
-	this.DOM = $('<div>').addClass('dianomi').
+	dianomi.movieDOM = $('<div>').addClass('dianomi').
 	data('kodikos', kodikos).
 	on('click', function(e) {
 		Movie.dianomiKodikos = $(this).data('kodikos');
-		Movie.entopismosTrexousasDianomis();
-		Movie.displayDianomi();
+		Movie.
+		entopismosTrexousasDianomis().
+		displayDianomi();
 	}).
 	append(agoraDOM).
 	append($('<div>').addClass('dianomiKodikos').text(kodikos));
 
 	Movie.dianomesDOM.
-	append(this.DOM);
-
-	return this;
+	append(dianomi.movieDOM);
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
