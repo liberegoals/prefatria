@@ -1253,13 +1253,12 @@ Arxio.movie.trapeziSet = function(trapezi) {
 
 	try {
 		// Αν η σελίδα αναψηλάφησης παρτίδας (ΣΑΠ) είναι ανοικτή, επιχειρούμε
-		// να αλλάξουμε την τρέχουσα διανομή στη ΣΑΠ.
+		// να αλλάξουμε το εκεί τρέχον τραπέζι.
 
 		Arxio.movie.win = Arxio.movie.win.Movie.checkOpen();
 		movie = Arxio.movie.win.Movie;
 		movie.trapezi = trapezi;
 		movie.displayTrapezi();
-		Arxio.movie.win.focus();
 	} catch (e) { }
 };
 
