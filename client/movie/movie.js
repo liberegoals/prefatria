@@ -106,6 +106,7 @@ Movie.zitaData = function() {
 	done(function(rsp) {
 		Client.fyi.pano();
 		Movie.paralaviData(rsp);
+console.log('ZITA_DATA: OK!');
 		Movie.displayTrapezi();
 	}).
 	fail(function(err) {
@@ -125,6 +126,7 @@ Movie.displayTrapezi = function() {
 	Movie.dianomesDOM.empty();
 //for (var i = 0; i < 3; i++)
 	Movie.trapezi.trapeziDianomiWalk(function() {
+console.log(this);
 		this.movieDisplayDianomi();
 	});
 	$('.dianomi:odd').addClass('dianomiOdd');
@@ -238,6 +240,7 @@ Dianomi.prototype.movieDisplayDianomi = function() {
 
 	kodikos = this.dianomiKodikosGet();
 	Movie.trapezi.partidaReplay({eoske: kodikos});
+console.log(Movie.trapezi);
 	agoraDOM = Movie.trapezi.movieAgoraDisplay();
 
 	this.DOM = $('<div>').addClass('dianomi').
@@ -288,45 +291,41 @@ Trapezi.prototype.movieAgoraDisplay = function() {
 // και σκοπό έχει τη διαχείριση των αποτελεσμάτων αυτών.
 
 Movie.paralaviData = function(data) {
-	var trapezi;
-
 	try {
-		trapezi = data.evalAsfales();
+		Movie.trapeziProcess(data.evalAsfales());
+console.log(Movie.trapezi);
 	} catch (e) {
 		console.error(data);
-		Client.fyi.epano('Επεστράφησαν ακαθόριστα δεδομένα');
-		return Movie;
+		Client.fyi.epano('Επεστράφησαν ακαθόριστα δεδομένα.', 0);
+		Client.fyi.ekato('Δοκιμάστε πάλι και αν το πρόβλημα επιμένει ειδοποιήστε τον προγραμματιστή.', 0);
 	}
 
-	Movie.trapezi = Movie.trapeziProcess(trapezi);
 	return Movie;
 };
 
 Movie.trapeziProcess = function(trapeziEco) {
-	var trapezi, prop, ts;
+	var prop, ts;
 
 	// Δημιουργούμε αντίγραφο του προς επεξεργασία στοιχείου στο οποίο
 	// εμπεριέχονται τα πραγματικά properties του σχετικού τραπεζιού
 	// έναντι των οικονομικών τοιαύτων.
 
-	trapezi = new Trapezi();
+	Movie.trapezi = new Trapezi();
 	for (prop in Movie.trapeziEcoMap) {
-		trapezi[Movie.trapeziEcoMap[prop]] = trapeziEco[prop];
+		Movie.trapezi[Movie.trapeziEcoMap[prop]] = trapeziEco[prop];
 	}
 
-	Globals.awalk(trapezi.dianomiArray, function(i, dianomi) {
+	Globals.awalk(Movie.trapezi.dianomiArray, function(i, dianomi) {
 		dianomi = Movie.dianomiProcess(dianomi);
-		trapezi.dianomiArray[i] = dianomi;
-		trapezi.trapeziDianomiSet(dianomi);
+		Movie.trapezi.trapeziDianomiSet(dianomi);
+		Movie.trapezi.dianomiArray[i] = dianomi;
 	});
 
-	ts = parseInt(trapezi.stisimo);
-	if (ts) trapezi.stisimo = ts + Client.timeDif;
+	ts = parseInt(Movie.trapezi.stisimo);
+	if (ts) Movie.trapezi.stisimo = ts + Client.timeDif;
 
-	ts = parseInt(trapezi.arxio);
-	if (ts) trapezi.arxio = ts + Client.timeDif;
-
-	return trapezi;
+	ts = parseInt(Movie.trapezi.arxio);
+	if (ts) Movie.trapezi.arxio = ts + Client.timeDif;
 };
 
 // Τα αποτελέσματα παραλαμβάνονται σε «οικονομική» μορφή, δηλαδή
@@ -343,6 +342,58 @@ Movie.trapeziEcoMap = {
 	a: 'arxio',
 	t: 'trparam',
 	d: 'dianomiArray',
+};
+
+// Η function "dianomiProcess" διαχειρίζεται κάθε ένα από τα στοιχεία της
+// λίστας διανομών που επεστράφησαν από τον server.
+
+Movie.dianomiProcess = function(dianomiEco) {
+	var dianomi, prop, ts;
+
+	// Δημιουργούμε αντίγραφο του προς επεξεργασία στοιχείου στο οποίο
+	// εμπεριέχονται τα πραγματικά properties της σχετικής διανομής
+	// έναντι των οικονομικών τοιαύτων.
+
+	dianomi = new Dianomi();
+	for (prop in Movie.dianomiEcoMap) {
+		dianomi[Movie.dianomiEcoMap[prop]] = dianomiEco[prop];
+	}
+
+	ts = parseInt(dianomi.enarxi);
+	if (ts) dianomi.enarxi = ts + Client.timeDif;
+
+	return dianomi.processEnergiaList(dianomiEco['e']);
+};
+
+// Τα αποτελέσματα παραλαμβάνονται σε «οικονομική» μορφή, δηλαδή
+// τα ονόματα των properties της διανομής είναι συντομογραφικά.
+// Η λίστα "dianomiEcoMap" αντιστοιχεί τα οικονομικά ονόματα τών
+// properties τής διανομής στα πραγαμτικά τους ονόματα.
+
+Movie.dianomiEcoMap = {
+	k: 'kodikos',
+	d: 'dealer',
+	s: 'enarxi',
+	k1: 'kasa1',
+	m1: 'metrita1',
+	k2: 'kasa2',
+	m2: 'metrita2',
+	k3: 'kasa3',
+	m3: 'metrita3',
+};
+
+Dianomi.prototype.processEnergiaList = function(elist) {
+	var dianomi = this;
+
+	Globals.awalk(elist, function(i, energiaEco) {
+		var energia;
+
+		energia = Movie.energiaProcess(energiaEco);
+		dianomi.dianomiEnergiaSet(energia);
+		dianomi.energiaArray[i] = energia;
+	});
+
+	return this;
 };
 
 // Η function "energiaProcess" διαχειρίζεται κάθε ένα από τα στοιχεία της
@@ -377,57 +428,4 @@ Movie.energiaEcoMap = {
 	t: 'pote',
 	i: 'idos',
 	d: 'data',
-};
-
-// Η function "dianomiProcess" διαχειρίζεται κάθε ένα από τα στοιχεία της
-// λίστας διανομών που επεστράφησαν από τον server.
-
-Movie.dianomiProcess = function(dianomiEco) {
-	var dianomi, prop, ts;
-
-	// Δημιουργούμε αντίγραφο του προς επεξεργασία στοιχείου στο οποίο
-	// εμπεριέχονται τα πραγματικά properties της σχετικής διανομής
-	// έναντι των οικονομικών τοιαύτων.
-
-	dianomi = {};
-	for (prop in Movie.dianomiEcoMap) {
-		dianomi[Movie.dianomiEcoMap[prop]] = dianomiEco[prop];
-	}
-
-	ts = parseInt(dianomi.enarxi);
-	if (ts) dianomi.enarxi = ts + Client.timeDif;
-
-	return new Dianomi(dianomi).
-		processEnergiaList(dianomiEco['e']);
-};
-
-// Τα αποτελέσματα παραλαμβάνονται σε «οικονομική» μορφή, δηλαδή
-// τα ονόματα των properties της διανομής είναι συντομογραφικά.
-// Η λίστα "dianomiEcoMap" αντιστοιχεί τα οικονομικά ονόματα τών
-// properties τής διανομής στα πραγαμτικά τους ονόματα.
-
-Movie.dianomiEcoMap = {
-	k: 'kodikos',
-	d: 'dealer',
-	s: 'enarxi',
-	k1: 'kasa1',
-	m1: 'metrita1',
-	k2: 'kasa2',
-	m2: 'metrita2',
-	k3: 'kasa3',
-	m3: 'metrita3',
-};
-
-Dianomi.prototype.processEnergiaList = function(elist) {
-	var dianomi = this;
-
-	Globals.awalk(elist, function(i, energiaEco) {
-		var energia;
-
-		energia = Movie.energiaProcess(energiaEco);
-		dianomi.dianomiEnergiaSet(energia);
-		dianomi.energiaArray[i] = energia;
-	});
-
-	return this;
 };
