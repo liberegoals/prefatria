@@ -106,7 +106,6 @@ Movie.zitaData = function() {
 	done(function(rsp) {
 		Client.fyi.pano();
 		Movie.paralaviData(rsp);
-console.log('ZITA_DATA: OK!');
 		Movie.displayTrapezi();
 	}).
 	fail(function(err) {
@@ -126,7 +125,6 @@ Movie.displayTrapezi = function() {
 	Movie.dianomesDOM.empty();
 //for (var i = 0; i < 3; i++)
 	Movie.trapezi.trapeziDianomiWalk(function() {
-console.log(this);
 		this.movieDisplayDianomi();
 	});
 	$('.dianomi:odd').addClass('dianomiOdd');
@@ -184,6 +182,8 @@ Movie.displayDianomi = function() {
 	return Movie;
 };
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
+
 Trapezi.prototype.movieDisplayTrapeziData = function() {
 	var dataDOM, optsDOM, dianomi;
 
@@ -233,34 +233,6 @@ Movie.optionDOM = function(dom, icon, desc) {
 	}));
 };
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
-
-Dianomi.prototype.movieDisplayDianomi = function() {
-	var kodikos, agoraDOM;
-
-	kodikos = this.dianomiKodikosGet();
-	Movie.trapezi.partidaReplay({eoske: kodikos});
-console.log(Movie.trapezi);
-	agoraDOM = Movie.trapezi.movieAgoraDisplay();
-
-	this.DOM = $('<div>').addClass('dianomi').
-	data('kodikos', kodikos).
-	on('click', function(e) {
-		var kodikos;
-
-		Movie.dianomiKodikos = $(this).data('kodikos');
-		Movie.entopismosTrexousasDianomis();
-		Movie.displayDianomi();
-	}).
-	append(agoraDOM).
-	append($('<div>').addClass('dianomiKodikos').text(kodikos));
-
-	Movie.dianomesDOM.
-	append(this.DOM);
-
-	return this;
-};
-
 Trapezi.prototype.movieAgoraDisplay = function() {
 	var agora, dom;
 
@@ -285,6 +257,29 @@ Trapezi.prototype.movieAgoraDisplay = function() {
 	return dom;
 };
 
+Dianomi.prototype.movieDisplayDianomi = function() {
+	var kodikos, agoraDOM;
+
+	kodikos = this.dianomiKodikosGet();
+	Movie.trapezi.partidaReplay({eoske: kodikos});
+	agoraDOM = Movie.trapezi.movieAgoraDisplay();
+
+	this.DOM = $('<div>').addClass('dianomi').
+	data('kodikos', kodikos).
+	on('click', function(e) {
+		Movie.dianomiKodikos = $(this).data('kodikos');
+		Movie.entopismosTrexousasDianomis();
+		Movie.displayDianomi();
+	}).
+	append(agoraDOM).
+	append($('<div>').addClass('dianomiKodikos').text(kodikos));
+
+	Movie.dianomesDOM.
+	append(this.DOM);
+
+	return this;
+};
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
 
 // Η function "paralaviData" καλείται κατά την επιστροφή των αποτελεσμάτων,
@@ -293,7 +288,6 @@ Trapezi.prototype.movieAgoraDisplay = function() {
 Movie.paralaviData = function(data) {
 	try {
 		Movie.trapeziProcess(data.evalAsfales());
-console.log(Movie.trapezi);
 	} catch (e) {
 		console.error(data);
 		Client.fyi.epano('Επεστράφησαν ακαθόριστα δεδομένα.', 0);
