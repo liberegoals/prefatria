@@ -698,14 +698,14 @@ Trapezi.prototype.trapeziArxioDisplay = function() {
 	append($('<div>').addClass('trapeziDataIpolipo').
 	attr('title', 'Υπόλοιπο κάσας').text(this.ipolipo))).
 	on('click', function(e) {
-		if (Arxio.movie.isAnikto())
-		Arxio.movie.klisimo();
-
 		if (trapezi.isAplomenesDianomes())
 		trapezi.mazemaDianomon();
 
 		else
 		trapezi.aplomaDianomon();
+
+		if (Arxio.movie.isAnikto())
+		Arxio.movie.trapeziSet(trapezi);
 	}));
 
 	Prefadoros.thesiWalk(function(thesi) {
@@ -1232,9 +1232,9 @@ Arxio.movie.dianomiSet = function(dianomi) {
 
 		Arxio.movie.win = Arxio.movie.win.Movie.checkOpen();
 		movie = Arxio.movie.win.Movie;
+		movie.trapezi = Arxio.movie.trapezi;
 		movie.dianomiKodikos = dianomiKodikos;
-		movie.entopismosTrexousasDianomis();
-		movie.displayDianomi();
+		movie.displayTrapezi();
 	} catch (e) {
 		// Η σελίδα αναψηλάφησης παρτίδας δεν φαίνεται να είναι ανοικτή, επομένως
 		// την ανοίγουμε τώρα.
@@ -1246,6 +1246,21 @@ Arxio.movie.dianomiSet = function(dianomi) {
 	}
 
 	Arxio.movie.win.focus();
+};
+
+Arxio.movie.trapeziSet = function(trapezi) {
+	var movie, dianomiKodikos, url, top, left;
+
+	try {
+		// Αν η σελίδα αναψηλάφησης παρτίδας (ΣΑΠ) είναι ανοικτή, επιχειρούμε
+		// να αλλάξουμε την τρέχουσα διανομή στη ΣΑΠ.
+
+		Arxio.movie.win = Arxio.movie.win.Movie.checkOpen();
+		movie = Arxio.movie.win.Movie;
+		movie.trapezi = trapezi;
+		movie.displayTrapezi();
+		Arxio.movie.win.focus();
+	} catch (e) { }
 };
 
 Arxio.movie.klisimo = function() {
