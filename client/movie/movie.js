@@ -194,7 +194,7 @@ Movie.displayDianomi = function() {
 };
 
 Movie.displayDealer = function(dianomi) {
-	dom = Movie.pektisDOM[dianomi.dianomiDealerGet()].
+	Movie.pektisDOM[dianomi.dianomiDealerGet()].
 	append($('<img>').addClass('moviePektisEndixi').attr({
 		id: 'moviePektisDealer',
 		src: '../ikona/endixi/protos.png',
