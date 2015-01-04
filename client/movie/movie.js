@@ -30,6 +30,11 @@ Movie = {
 	// στο array διανομών της παρτίδας.
 
 	dianomiIndex: 0,
+
+	// Η property "egoThesi" δείχνει τη θέση θέασης και by default είναι
+	// η πρώτη θέση του τραπεζιού.
+
+	egoThesi: 1,
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
@@ -181,7 +186,20 @@ Movie.displayDianomi = function() {
 	dianomi.movieDOM.addClass('dianomiTrexousa');
 
 	Movie.trapezi.partidaReplay({eosxoris: dianomi.dianomiKodikosGet()});
-	Movie.displayFilaDianomis(dianomi);
+	Movie.
+	displayDealer(dianomi).
+	displayFilaDianomis(dianomi);
+
+	return Movie;
+};
+
+Movie.displayDealer = function(dianomi) {
+	dom = Movie.pektisDOM[dianomi.dianomiDealerGet()].
+	append($('<img>').addClass('moviePektisEndixi').attr({
+		id: 'moviePektisDealer',
+		src: '../ikona/endixi/protos.png',
+		title: 'Dealer',
+	}));
 
 	return Movie;
 };
@@ -202,7 +220,7 @@ Movie.displayFilaDianomis = function(dianomi) {
 
 	Movie.trapezi.trapeziThesiWalk(function(thesi) {
 		Movie.pektisDOM[thesi].append(Movie.trapezi.fila[thesi].
-			xartosiaTaxinomisi().xartosiaDOM(thesi));
+			xartosiaTaxinomisi().xartosiaDOM(Movie.thesiMap(thesi)));
 	});
 
 	return Movie;
@@ -261,7 +279,7 @@ Xartosia.prototype.xartosiaDOM = function(iseht, klista) {
 Filo.prototype.filoDOM = function(klisto) {
 	var img;
 
-	img = klisto ? Arena.ego.plati + 'V' : this.filoXromaGet() + this.filoAxiaGet();
+	img = klisto ? 'BV' : this.filoXromaGet() + this.filoAxiaGet();
 	return $('<img>').data('filo', this).attr('src', '../ikona/trapoula/' + img + '.png');
 };
 
@@ -297,10 +315,16 @@ Movie.displayTrapeziData = function() {
 
 	Movie.pektisDOM = {};
 	Movie.trapezi.trapeziThesiWalk(function(thesi) {
-		var dom;
+		var iseht, dom;
 
-		dom = $('<div>').addClass('pektis').attr('id', 'pektis' + thesi);
-		dom.append($('<div>').addClass('pektisLogin tsoxaPektisOnoma').attr('id', 'pektisLogin' + thesi).
+		iseht = Movie.thesiMap(thesi);
+		dom = $('<div>').addClass('pektis').attr('id', 'pektis' + iseht).
+		data('thesi', thesi).
+		on('click', function(e) {
+			Movie.egoThesi = $(this).data('thesi');
+			Movie.displayTrapezi();
+		});
+		dom.append($('<div>').addClass('pektisLogin tsoxaPektisOnoma').attr('id', 'pektisLogin' + iseht).
 		text(this.trapeziPektisGet(thesi)));
 		Movie.tsoxaDOM.append(dom);
 		Movie.pektisDOM[thesi] = dom;
@@ -358,6 +382,19 @@ Movie.agoraDisplay = function() {
 	attr('src', '../ikona/panel/asoiOn.png')));
 
 	return dom;
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
+
+Movie.thesiMap = function(thesi) {
+	switch (Movie.egoThesi) {
+	case 2:
+	case 3:
+		thesi += (4 - Movie.egoThesi);
+		if (thesi > 3) thesi -= 3;
+	}
+
+	return thesi;
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
@@ -437,6 +474,7 @@ Movie.dianomiProcess = function(dianomiEco) {
 	// string.
  
 	dianomi.kodikos = parseInt(dianomi.kodikos);
+	dianomi.dealer = parseInt(dianomi.dealer);
 
 	ts = parseInt(dianomi.enarxi);
 	if (ts) dianomi.enarxi = ts + Client.timeDif;

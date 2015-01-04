@@ -127,7 +127,8 @@ body {
 	position: absolute;
 	width: 300px;
 	height: 150px;
-	border-style: none;
+	overflow: visible;
+	border-color: transparent;
 }
 
 #pektis1 {
@@ -153,6 +154,16 @@ body {
 
 #pektisLogin1 {
 	bottom: 0;
+}
+
+.moviePektisEndixi {
+	position: absolute;
+	width: 40px;
+}
+
+#moviePektisDealer {
+	left: -24px;
+	top: 10px;
 }
 
 /**********************************************************************************************************************/
