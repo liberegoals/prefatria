@@ -157,7 +157,7 @@ body {
 
 /**********************************************************************************************************************/
 
-.movieXartosiaContainer {
+.tsoxaXartosiaContainer {
 	position: relative;
 	display: inline-block;
 	bottom: -32px;
@@ -167,17 +167,11 @@ body {
 	bottom: -8px;
 }
 
-.movieXartosiaFilo {
+.tsoxaXartosiaFilo {
 	width: 80px;
 	margin-left: -58px;
-	box-shadow: -2px 1px 4px rgba(23, 31, 21, 0.45);
 }
 
-.movieXartosiaFiloSteno {
+.tsoxaXartosiaFiloSteno {
 	margin-left: -50px;
-}
-
-.movieXartosiaFiloOmioxromo {
-	box-shadow: -5px 0px 1px rgba(105, 213, 153, 0.73);
-	box-shadow: -5px 0px 1px rgba(105, 105, 213, 0.76);
 }

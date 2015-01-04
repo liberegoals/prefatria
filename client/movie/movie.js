@@ -211,11 +211,11 @@ Movie.displayFilaDianomis = function(dianomi) {
 Xartosia.prototype.xartosiaDOM = function(iseht, klista) {
 	var dom, xromaPrev = null, rbPrev = null, cnt = this.xartosiaMikos();
 
-	dom = $('<div>').addClass('movieXartosiaContainer movieXartosiaContainer' + iseht);
+	dom = $('<div>').addClass('tsoxaXartosiaContainer movieXartosiaContainer' + iseht);
 	Globals.awalk(this.xartosiaFilaGet(), function(i, filo) {
 		var filoDOM, xroma, rb;
 
-		filoDOM = filo.filoDOM(klista).addClass('movieXartosiaFilo');
+		filoDOM = filo.filoDOM(klista).addClass('tsoxaXartosiaFilo');
 
 		// Το πρώτο φύλλο εμφανίζεται κανονικά στη σειρά του, τα υπόλοιπα
 		// απανωτίζουν το προηγούμενο φύλλο.
@@ -227,7 +227,7 @@ Xartosia.prototype.xartosiaDOM = function(iseht, klista) {
 		// επομένως απανωτίζουμε λίγο παραπάνω.
 
 		else if (cnt > 10)
-		filoDOM.addClass('movieXartosiaFiloSteno' + iseht);
+		filoDOM.addClass('tsoxaXartosiaFiloSteno' + iseht);
 
 		dom.append(filoDOM);
 
@@ -249,7 +249,7 @@ Xartosia.prototype.xartosiaDOM = function(iseht, klista) {
 		rb = Prefadoros.xromaXroma[xroma];
 
 		if (rb === rbPrev)
-		filoDOM.addClass('movieXartosiaFiloOmioxromo');
+		filoDOM.addClass('tsoxaXartosiaFiloOmioxromo');
 
 		else
 		rbPrev = rb;
