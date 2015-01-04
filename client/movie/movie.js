@@ -181,8 +181,88 @@ Movie.displayDianomi = function() {
 	dianomi.movieDOM.addClass('dianomiTrexousa');
 
 	Movie.trapezi.partidaReplay({eosxoris: dianomi.dianomiKodikosGet()});
+	Movie.displayFilaDianomis(dianomi);
 
 	return Movie;
+};
+
+Movie.displayFilaDianomis = function(dianomi) {
+	var elist, i, energia;
+
+	elist = dianomi.energiaArray;
+	for (i = 0; i < elist.length; i++) {
+		energia = elist[i];
+		Movie.trapezi.trapeziProcessEnergia(energia);
+		if (energia.energiaIdosGet() === 'ΔΙΑΝΟΜΗ')
+		break;
+	}
+
+	if (i >= elist.length)
+	return Movie;
+
+	Movie.trapezi.trapeziThesiWalk(function(thesi) {
+		Movie.pektisDOM[thesi].append(Movie.trapezi.fila[thesi].
+			xartosiaTaxinomisi().xartosiaDOM(thesi));
+	});
+
+	return Movie;
+};
+
+Xartosia.prototype.xartosiaDOM = function(iseht, klista) {
+	var dom, xromaPrev = null, rbPrev = null, cnt = this.xartosiaMikos();
+
+	dom = $('<div>').addClass('movieXartosiaContainer movieXartosiaContainer' + iseht);
+	Globals.awalk(this.xartosiaFilaGet(), function(i, filo) {
+		var filoDOM, xroma, rb;
+
+		filoDOM = filo.filoDOM(klista).addClass('movieXartosiaFilo');
+
+		// Το πρώτο φύλλο εμφανίζεται κανονικά στη σειρά του, τα υπόλοιπα
+		// απανωτίζουν το προηγούμενο φύλλο.
+
+		if (i === 0)
+		filoDOM.css('marginLeft', 0);
+
+		// Κατά τη διάρκεια της αλλαγής τα φύλλα του τζογαδόρου είναι 12,
+		// επομένως απανωτίζουμε λίγο παραπάνω.
+
+		else if (cnt > 10)
+		filoDOM.addClass('movieXartosiaFiloSteno' + iseht);
+
+		dom.append(filoDOM);
+
+		// Μένει να ελέγξουμε αν υπάρχουν διαδοχικές ομοιόχρωμες φυλές, π.χ.
+		// μετά τα μπαστούνια να ακολουθούν σπαθιά, ή μετά τα καρά να ακολουθούν
+		// κούπες.
+
+		if (klista)
+		return;
+
+		xroma = filo.filoXromaGet();
+		if (xroma === xromaPrev)
+		return;
+
+		// Μόλις αλλάξαμε φυλή και πρέπει να ελέγξουμε αν η νέα φυλή είναι
+		// ομοιόχρωμη με την προηγούμενη (κόκκινα/μαύρα).
+
+		xromaPrev = xroma;
+		rb = Prefadoros.xromaXroma[xroma];
+
+		if (rb === rbPrev)
+		filoDOM.addClass('movieXartosiaFiloOmioxromo');
+
+		else
+		rbPrev = rb;
+	});
+
+	return dom;
+};
+
+Filo.prototype.filoDOM = function(klisto) {
+	var img;
+
+	img = klisto ? Arena.ego.plati + 'V' : this.filoXromaGet() + this.filoAxiaGet();
+	return $('<img>').data('filo', this).attr('src', '../ikona/trapoula/' + img + '.png');
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
@@ -234,6 +314,28 @@ Movie.optionDOM = function(dom, icon, desc) {
 	}));
 };
 
+Movie.dianomiListaAdd = function(dianomi) {
+	var kodikos, agoraDOM;
+
+	kodikos = dianomi.dianomiKodikosGet();
+	Movie.trapezi.partidaReplay({eoske: kodikos});
+	agoraDOM = Movie.agoraDisplay();
+
+	dianomi.movieDOM = $('<div>').addClass('dianomi').
+	data('kodikos', kodikos).
+	on('click', function(e) {
+		Movie.dianomiKodikos = $(this).data('kodikos');
+		Movie.
+		entopismosTrexousasDianomis().
+		displayDianomi();
+	}).
+	append(agoraDOM).
+	append($('<div>').addClass('dianomiKodikos').text(kodikos));
+
+	Movie.dianomesDOM.
+	append(dianomi.movieDOM);
+};
+
 Movie.agoraDisplay = function() {
 	var agora, dom;
 
@@ -256,28 +358,6 @@ Movie.agoraDisplay = function() {
 	attr('src', '../ikona/panel/asoiOn.png')));
 
 	return dom;
-};
-
-Movie.dianomiListaAdd = function(dianomi) {
-	var kodikos, agoraDOM;
-
-	kodikos = dianomi.dianomiKodikosGet();
-	Movie.trapezi.partidaReplay({eoske: kodikos});
-	agoraDOM = Movie.agoraDisplay();
-
-	dianomi.movieDOM = $('<div>').addClass('dianomi').
-	data('kodikos', kodikos).
-	on('click', function(e) {
-		Movie.dianomiKodikos = $(this).data('kodikos');
-		Movie.
-		entopismosTrexousasDianomis().
-		displayDianomi();
-	}).
-	append(agoraDOM).
-	append($('<div>').addClass('dianomiKodikos').text(kodikos));
-
-	Movie.dianomesDOM.
-	append(dianomi.movieDOM);
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
@@ -352,6 +432,11 @@ Movie.dianomiProcess = function(dianomiEco) {
 	for (prop in Movie.dianomiEcoMap) {
 		dianomi[Movie.dianomiEcoMap[prop]] = dianomiEco[prop];
 	}
+
+	// Χρειάζεται φιξάρισμα του κωδικού, καθώς αλλιώς εκλαμβάνεται ως
+	// string.
+ 
+	dianomi.kodikos = parseInt(dianomi.kodikos);
 
 	ts = parseInt(dianomi.enarxi);
 	if (ts) dianomi.enarxi = ts + Client.timeDif;
