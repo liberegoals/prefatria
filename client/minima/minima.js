@@ -382,8 +382,8 @@ Minima.setupMinimata = function() {
 			});
 		})));
 
-		paraliptis = minima.minimaParaliptisGet();
-		if (paraliptis.oxiEgo()) return;
+		if (minima.minimaParaliptisGet().toLowerCase() !== Client.session.pektis.toLowerCase())
+		return;
 
 		katastasi = minima.minimaStatusGet();
 
@@ -641,11 +641,11 @@ Minima.prototype.minimaEndixiNeo = function() {
 Minima.prototype.minimaIsIserxomeno = function() {
 	var apostoleas;
 
-	apostoleas = this.minimaApostoleasGet();
-	if (apostoleas === this.minimaParaliptisGet())
+	apostoleas = this.minimaApostoleasGet().toLowerCase();
+	if (apostoleas === this.minimaParaliptisGet().toLowerCase())
 	return false;
 
-	return(apostoleas !== Client.session.pektis);
+	return(apostoleas !== Client.session.pektis.toLowerCase());
 };
 
 Minima.prototype.minimaOxiIserxomeno = function() {
@@ -653,7 +653,7 @@ Minima.prototype.minimaOxiIserxomeno = function() {
 };
 
 Minima.prototype.minimaIsExerxomeno = function() {
-	return(this.minimaParaliptisGet() !== Client.session.pektis);
+	return(this.minimaParaliptisGet().toLowerCase() !== Client.session.pektis.toLowerCase());
 };
 
 Minima.prototype.minimaOxiExerxomeno = function() {

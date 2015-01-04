@@ -54,7 +54,7 @@ Service.minima.diagrafi = function(nodereq) {
 	if (nodereq.isvoli()) return;
 	if (nodereq.denPerastike('minima', true)) return;
 
-	login = nodereq.loginGet();
+	login = nodereq.loginGet().toLowerCase();
 
 	query = 'SELECT `apostoleas`, `paraliptis`, `status` ' +
 		'FROM `minima` WHERE `kodikos` = ' + nodereq.url.minima;
@@ -65,14 +65,14 @@ Service.minima.diagrafi = function(nodereq) {
 
 		// Ο παραλήπτης του μηνύματος έχει πάντοτε δικαίωμα διαγραφής.
 
-		if (rows[0].paraliptis == login)
+		if (rows[0].paraliptis.toLowerCase() == login)
 		return Service.minima.diagrafi2(nodereq);
 
 		// Ο μόνος που έχει δικαίωμα διαγραφής πέραν του αποστολέως
 		// είναι ο συντάκτης του μηνύματος, και αυτός μόνον υπό
 		// προϋποθέσεις.
 
-		if (rows[0].apostoleas != login)
+		if (rows[0].apostoleas.toLowerCase() != login)
 		return nodereq.error('Δεν έχετε πρόσβαση');
 
 		// Ο αποστολέας επιχειρεί να διαγράψει το μήνυμα, επομένως
