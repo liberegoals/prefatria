@@ -31,7 +31,7 @@ class Selida {
 		<link rel="icon" type="image/vnd.microsoft.icon" href="<?php print Globals::url("favicon.ico"); ?>" />
 		<link rel="icon" type="image/x-icon" href="<?php print Globals::url("favicon.ico"); ?>" />
 
-		<link rel="canonical" href="http://www.prefadoros.gr" />
+		<link rel="canonical" href="http://www.prefadoros.gr/" />
 		<title><?php print $titlos; ?></title>
 
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
