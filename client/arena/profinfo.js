@@ -564,7 +564,7 @@ Arena.dikeomaProsklisis = function() {
 
 Arena.alagiSxesis = function(e, login, sxesi) {
 	Arena.inputRefocus(e);
-	Client.skiserService('sxesi', 'pektis=' + login, 'sxesi=' + sxesi).
+	Client.skiserService('sxesi', 'pektis=' + login, 'sxesi=' + (sxesi ? sxesi : '')).
 	done(function(rsp) {
 		var sinedria;
 
