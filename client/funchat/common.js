@@ -215,6 +215,13 @@ Funchat.listaPush(new Funchat({
 }));
 
 Funchat.listaPush(new Funchat({
+	img: 'aomatos.jpg',
+	platos: 120,
+	ixos: 'aomatos.mp3',
+	entasi: 2,
+}));
+
+Funchat.listaPush(new Funchat({
 	img: 'gunFail.gif',
 	platos: 240,
 }));
@@ -295,6 +302,11 @@ Funchat.listaPush(new Funchat({
 	platos: 120,
 }));
 
+Funchat.listaPush(new Funchat({
+	img: 'bartAss.gif',
+	txt: 'Kiss my ass!',
+}));
+
 Funchat.omada++;
 
 Funchat.listaPush(new Funchat({
@@ -314,6 +326,10 @@ Funchat.listaPush(new Funchat({
 Funchat.listaPush(new Funchat({
 	img: 'lesEmoticon.gif',
 	txt: 'Λες;',
+}));
+
+Funchat.listaPush(new Funchat({
+	img: 'nailbiter.gif',
 }));
 
 Funchat.listaPush(new Funchat({
