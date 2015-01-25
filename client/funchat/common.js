@@ -218,7 +218,6 @@ Funchat.listaPush(new Funchat({
 	img: 'aomatos.jpg',
 	platos: 120,
 	ixos: 'aomatos.mp3',
-	entasi: 2,
 }));
 
 Funchat.listaPush(new Funchat({
