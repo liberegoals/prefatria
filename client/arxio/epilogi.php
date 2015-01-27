@@ -43,7 +43,7 @@ class Epilogi {
 	public static function queryInit() {
 		self::$query = "SELECT `kodikos` AS `k`, UNIX_TIMESTAMP(`stisimo`) AS `s`, " .
 			"`pektis1` AS `p1`, `pektis2` AS `p2`, `pektis3` AS `p3`, " .
-			"UNIX_TIMESTAMP(`arxio`) AS `a` FROM `trapezi` WHERE (1 = 1)";
+			"UNIX_TIMESTAMP(`arxio`) AS `a` FROM `trapezi` WHERE (`arxio` IS NOT NULL)";
 	}
 
 	public static function queryPektis() {
