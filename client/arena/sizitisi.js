@@ -835,6 +835,11 @@ Sizitisi.funchatAppend = function(dom, id, online) {
 		platos = item.funchatPlatosGet();
 		if (platos) ikona.css('width', platos + 'px');
 		dom.append(ikona);
+
+		if (item.hasOwnProperty('img2'))
+		setTimeout(function() {
+			ikona.attr('src', Funchat.server + item.funchatIkona2Get());
+		}, item.funchatDurationGet());
 	}
 
 	kimeno = item.funchatKimenoGet();

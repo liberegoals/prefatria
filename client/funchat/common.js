@@ -37,6 +37,14 @@ Funchat.prototype.funchatIkonaGet = function() {
 	return this.img;
 };
 
+Funchat.prototype.funchatIkona2Get = function() {
+	return this.img2;
+};
+
+Funchat.prototype.funchatDurationGet = function() {
+	return this.dur;
+};
+
 Funchat.prototype.funchatPlatosGet = function() {
 	return this.platos;
 };
@@ -241,6 +249,22 @@ Funchat.listaPush(new Funchat({
 Funchat.listaPush(new Funchat({
 	img: 'anteGamithiteRe.gif',
 	platos: 200,
+}));
+
+Funchat.listaPush(new Funchat({
+	img: 'diskoliStigmi.gif',
+	platos: 240,
+	ixos: 'diskoliStigmi.mp3',
+	img2: 'diskoliStigmi.jpg',
+	dur: 7000,
+}));
+
+Funchat.listaPush(new Funchat({
+	img: 'popothatrelatho.gif',
+	platos: 180,
+	ixos: 'popothatrelatho.mp3',
+	img2: 'popothatrelatho.jpg',
+	dur: 14000,
 }));
 
 Funchat.listaPush(new Funchat({
