@@ -256,7 +256,7 @@ Funchat.listaPush(new Funchat({
 	platos: 240,
 	ixos: 'diskoliStigmi.mp3',
 	img2: 'diskoliStigmi.jpg',
-	dur: 7000,
+	dur: 45000,
 }));
 
 Funchat.listaPush(new Funchat({

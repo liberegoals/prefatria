@@ -823,7 +823,7 @@ Sizitisi.prototype.sizitisiSxolioCreateDOM = function(dom, online) {
 };
 
 Sizitisi.funchatAppend = function(dom, id, online) {
-	var item, ikona, platos, kimeno, ixos;
+	var item, ikona, ikona2, img, platos, kimeno, ixos;
 
 	item = Funchat.listaGet(id);
 	if (!item)
@@ -831,14 +831,20 @@ Sizitisi.funchatAppend = function(dom, id, online) {
 
 	ikona = item.funchatIkonaGet();
 	if (ikona) {
-		ikona = $('<img>').addClass('sizitisiFunchatIkona').attr('src', Funchat.server + ikona);
-		platos = item.funchatPlatosGet();
-		if (platos) ikona.css('width', platos + 'px');
-		dom.append(ikona);
+		ikona2 = item.funchatIkona2Get();
+		if (ikona2 && (!online)) {
+			ikona = ikona2;
+			ikona2 = null;
+		}
 
-		if (item.hasOwnProperty('img2'))
+		img = $('<img>').addClass('sizitisiFunchatIkona').attr('src', Funchat.server + ikona);
+		platos = item.funchatPlatosGet();
+		if (platos) img.css('width', platos + 'px');
+		dom.append(img);
+
+		if (ikona2)
 		setTimeout(function() {
-			ikona.attr('src', Funchat.server + item.funchatIkona2Get());
+			img.attr('src', Funchat.server + item.funchatIkona2Get());
 		}, item.funchatDurationGet());
 	}
 
