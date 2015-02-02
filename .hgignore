@@ -12,3 +12,4 @@ glob:*.min.js
 syntax: glob
 client/site/welcome.php
 glob:log/*
+client/arxio/rcArxio.php
