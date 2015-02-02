@@ -1,5 +1,6 @@
 <?php
 require_once "../lib/standard.php";
+require_once "rcArxio.php";
 Globals::session_init();
 Globals::database();
 
@@ -39,11 +40,14 @@ Globals::klise_fige(0);
 
 class Epilogi {
 	public static $query;
+	public static $arxioOnly = TRUE;
 
 	public static function queryInit() {
 		self::$query = "SELECT `kodikos` AS `k`, UNIX_TIMESTAMP(`stisimo`) AS `s`, " .
 			"`pektis1` AS `p1`, `pektis2` AS `p2`, `pektis3` AS `p3`, " .
-			"UNIX_TIMESTAMP(`arxio`) AS `a` FROM `trapezi` WHERE (`arxio` IS NOT NULL)";
+			"UNIX_TIMESTAMP(`arxio`) AS `a` FROM `trapezi` WHERE " .
+			(self::$arxioOnly ? "(`arxio` IS NOT NULL)" : "(1 = 1)");
+	
 	}
 
 	public static function queryPektis() {
