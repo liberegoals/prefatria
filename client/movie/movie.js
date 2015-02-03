@@ -9,8 +9,22 @@ $(document).ready(function() {
 	tabKlisimo();
 
 	Movie.
-	setup().
+	setupFilajs().
+	setupTsoxa().
 	setupPanel();
+
+	try {
+		// Αρχικά επιχειρούμε να προσαρτήσουμε τα στοιχεία της παρτίδας
+		// από τη ΣΕΑΠ, προκειμένου να μην απασχολούμε τον server.
+
+		Movie.arxioData();
+	} catch (e) {
+		// Αν δεν ήταν επιτυχής η προσάρτηση των στοιχείων παρτίδας από
+		// τη ΣΕΑΠ, προχωρούμε στην αναζήτηση των στοιχεών παρτίδας από
+		// τον server.
+
+		Movie.zitaData();
+	}
 });
 
 Movie = {
@@ -39,29 +53,22 @@ Movie = {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
 
-// Η function "setup" ανιχνεύει τις βασικές περιοχές της ΣΑΠ. Πρόκειται για την
+Movie.setupFilajs = function() {
+	filajs.cardWidth = 66;
+
+	return Movie;
+};
+
+// Η function "setupTsoxa" ανιχνεύει τις βασικές περιοχές της ΣΑΠ. Πρόκειται για την
 // τσόχα στην οποία εξελίσσεται η παρτίδα (αριστερά), το control panel (κέντρο)
 // και τη λίστα διανομών της παρτίδας (δεξιά), παραλαμβάνει τα δεδομένα παρτίδας
 // από τη σελίδα επισκόπησης αρχειοθετημένων παρτίδων (ΣΕΑΠ), ή απευθείας από την
 // database, και παρουσιάζει την παρτίδα όπως έχει στην αρχή της τρέχουσας διανομής.
 
-Movie.setup = function() {
+Movie.setupTsoxa = function() {
 	Movie.tsoxaDOM = $('#tsoxa');
 	Movie.dianomesDOM = $('#dianomes');
 	Movie.panelDOM = $('#panel');
-
-	try {
-		// Αρχικά επιχειρούμε να προσαρτήσουμε τα στοιχεία της παρτίδας
-		// από τη ΣΕΑΠ, προκειμένου να μην απασχολούμε τον server.
-
-		Movie.arxioData();
-	} catch (e) {
-		// Αν δεν ήταν επιτυχής η προσάρτηση των στοιχείων παρτίδας από
-		// τη ΣΕΑΠ, προχωρούμε στην αναζήτηση των στοιχεών παρτίδας από
-		// τον server.
-
-		Movie.zitaData();
-	}
 
 	return Movie;
 };
@@ -219,8 +226,24 @@ Movie.displayFilaDianomis = function(dianomi) {
 	return Movie;
 
 	Movie.trapezi.trapeziThesiWalk(function(thesi) {
-		Movie.pektisDOM[thesi].append(Movie.trapezi.fila[thesi].
-			xartosiaTaxinomisi().xartosiaDOM(Movie.thesiMap(thesi)));
+		var fila;
+
+		fila = new filajsHand(Movie.trapezi.fila[thesi].xartosia2string());
+		fila.
+		cardWalk(function() {
+			this.
+			domCreate().
+			domRefresh();
+		}).
+		sort().
+		horizontalSet(1).
+		baselineSet(thesi === 1 ? 'T' : 'B', 30).
+		alignmentSet('C').
+		domCreate();
+
+		Movie.pektisDOM[thesi].
+		append(fila.domGet());
+		fila.domRefresh();
 	});
 
 	return Movie;

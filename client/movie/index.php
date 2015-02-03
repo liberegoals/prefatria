@@ -16,6 +16,16 @@ Globals::diavase("lib/selida.php");
 Globals::database("lib/selida.php");
 
 Selida::head("Αναψηλάφηση");
+?>
+<script src="http://www.filajs.net/lib/filajs.js"></script>
+<script src="http://www.filajs.net/lib/filajsDOM.js"></script>
+<link rel="stylesheet" href="http://www.filajs.net/lib/filajs.css" />
+<?php
+if (file_exists("Boss!")) {
+	?>
+	<link rel="stylesheet" href="http://www.filajs.net/lib/filajsBoss.css" />
+	<?php
+}
 Selida::stylesheet("arena/arena");
 Selida::stylesheet("arxio/arxio");
 Selida::stylesheet("movie/movie");
