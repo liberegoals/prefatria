@@ -40,3 +40,27 @@ Movie.panel.bpanelButtonPush(new PButton({
 		Movie.displayDianomi();
 	},
 }));
+
+Movie.panel.bpanelButtonPush(new PButton({
+	omada: 1,
+	img: '../ikona/movie/trapoula.png',
+	title: 'Αλλαγή τράπουλας',
+	click: function(e) {
+		switch (filajs.cardFamily) {
+		case 'aguilar':
+			filajs.cardFamilySet('classic');
+			break;
+		case 'classic':
+			filajs.cardFamilySet('nicubunu');
+			break;
+		case 'jfitz':
+			filajs.cardFamilySet('aguilar');
+			break;
+		default:
+			filajs.cardFamilySet('jfitz');
+			break;
+		}
+
+		Movie.displayDianomi();
+	},
+}));

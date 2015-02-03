@@ -54,7 +54,9 @@ Movie = {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
 
 Movie.setupFilajs = function() {
-	filajs.cardWidth = 66;
+	filajs.
+	cardWidthSet(80).
+	cardFamilySet('jfitz');
 
 	return Movie;
 };
@@ -194,16 +196,18 @@ Movie.displayDianomi = function() {
 
 	Movie.trapezi.partidaReplay({eosxoris: dianomi.dianomiKodikosGet()});
 	Movie.
-	displayDealer(dianomi).
-	displayFilaDianomis(dianomi);
+	displayFilaDianomis(dianomi).
+	displayDealer(dianomi);
 
 	return Movie;
 };
 
 Movie.displayDealer = function(dianomi) {
-	Movie.pektisDOM[dianomi.dianomiDealerGet()].
-	append($('<img>').addClass('moviePektisEndixi').attr({
-		id: 'moviePektisDealer',
+	var dealer;
+
+	dealer = dianomi.dianomiDealerGet();
+	Movie.pektisDOM[dealer].
+	append($('<img>').addClass('moviePektisEndixi moviePektisDealer').attr({
 		src: '../ikona/endixi/protos.png',
 		title: 'Dealer',
 	}));
@@ -226,8 +230,9 @@ Movie.displayFilaDianomis = function(dianomi) {
 	return Movie;
 
 	Movie.trapezi.trapeziThesiWalk(function(thesi) {
-		var fila;
+		var fila, iseht;
 
+		iseht = Movie.thesiMap(thesi);
 		fila = new filajsHand(Movie.trapezi.fila[thesi].xartosia2string());
 		fila.
 		cardWalk(function() {
@@ -236,9 +241,9 @@ Movie.displayFilaDianomis = function(dianomi) {
 			domRefresh();
 		}).
 		sort().
-		horizontalSet(1).
-		baselineSet(thesi === 1 ? 'T' : 'B', 30).
+		baselineSet(iseht === 1 ? 'T' : 'B', 4).
 		alignmentSet('C').
+		shiftxSet(0.28).
 		domCreate();
 
 		Movie.pektisDOM[thesi].
