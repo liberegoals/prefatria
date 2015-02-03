@@ -13,3 +13,4 @@ syntax: glob
 client/site/welcome.php
 glob:log/*
 client/arxio/rcArxio.php
+client/movie/Boss!
