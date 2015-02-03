@@ -1,5 +1,6 @@
 <?php
 require_once "../lib/standard.php";
+if (file_exists("rcArxio.php"))
 require_once "rcArxio.php";
 Globals::session_init();
 Globals::database();
