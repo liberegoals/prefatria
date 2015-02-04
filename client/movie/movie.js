@@ -249,8 +249,9 @@ Movie.displayFilaDianomis = function(dianomi) {
 	Movie.trapezi.trapeziThesiWalk(function(thesi) {
 		var fila, iseht;
 
-		iseht = Movie.thesiMap(thesi);
 		fila = new filajsHand(Movie.trapezi.fila[thesi].xartosia2string());
+		iseht = Movie.thesiMap(thesi);
+
 		fila.
 		cardWalk(function() {
 			this.
