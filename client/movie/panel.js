@@ -46,7 +46,9 @@ Movie.panel.bpanelButtonPush(new PButton({
 	img: '../ikona/movie/trapoula.png',
 	title: 'Αλλαγή τράπουλας',
 	click: function(e) {
-		switch (filajs.cardFamily) {
+		var family;
+
+		switch (filajs.cardFamilyGet()) {
 		case 'aguilar':
 			filajs.cardFamilySet('classic');
 			break;
@@ -62,5 +64,11 @@ Movie.panel.bpanelButtonPush(new PButton({
 		}
 
 		Movie.displayDianomi();
+
+		family = filajs.cardFamilyGet();
+		$.ajax('../lib/session.php', {data:{trapoula:family}});
+
+		if (Client.isPektis())
+		Selida.skiserService('peparamSet', 'ΤΡΑΠΟΥΛΑ=' + family);
 	},
 }));

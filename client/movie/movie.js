@@ -53,10 +53,27 @@ Movie = {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
 
+// Η function "setupFilajs" καθορίζει το μέγεθος και την οικογένεια των παιγνιοχάρτων.
+// Το μέγεθος προσαρμόζεται στην τσόχα της ΣΑΠ, ενώ η οικογένεια των παιγνιοχάρτων
+// καθορίζεται από το session cookie "trapoula", το οποίο με τη σειρά του έχει ήδη
+// καθοριστεί από τυχόν παράμετρο χρήστη "ΤΡΑΠΟΥΛΑ".
+
 Movie.setupFilajs = function() {
+	var family;
+
+	switch (family = Client.session.trapoula) {
+	case 'jfitz':
+	case 'classic':
+	case 'aguilar':
+	case 'nicubunu':
+		break;
+	default:
+		family = 'jfitz';
+	}
+
 	filajs.
 	cardWidthSet(80).
-	cardFamilySet('jfitz');
+	cardFamilySet(family);
 
 	return Movie;
 };
