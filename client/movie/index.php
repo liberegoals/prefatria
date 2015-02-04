@@ -8,12 +8,14 @@
 // σε κάθε διανομή.
 //
 // Η παρτίδα καθορίζεται στο URL είτε άμεσα μέσω των παραμέτρων "trapezi" ή
-// "partida", είτε έμμεσα μέσα της διανομής που καθορίζεται με την παράμετρο
+// "partida", είτε έμμεσα μέσω της διανομής που καθορίζεται με την παράμετρο
 // "dianomi".
 
 require_once "../lib/standard.php";
 Globals::diavase("lib/selida.php");
-Globals::database("lib/selida.php");
+Globals::database();
+
+Movie::trapoula_set();
 
 Selida::head("Αναψηλάφηση");
 ?>
@@ -21,11 +23,7 @@ Selida::head("Αναψηλάφηση");
 <script src="http://www.filajs.net/lib/filajsDOM.js"></script>
 <link rel="stylesheet" href="http://www.filajs.net/lib/filajs.css" />
 <?php
-if (file_exists("Boss!")) {
-	?>
-	<link rel="stylesheet" href="http://www.filajs.net/lib/filajsBoss.css" />
-	<?php
-}
+Movie::boss_check();
 Selida::stylesheet("arena/arena");
 Selida::stylesheet("arxio/arxio");
 Selida::stylesheet("movie/movie");
@@ -166,6 +164,46 @@ class Movie {
 		<div id="dianomes">
 		</div>
 		<?php
+	}
+
+	public static function boss_check() {
+		if (!file_exists("Boss!"))
+		return;
+		?>
+		<link rel="stylesheet" href="http://www.filajs.net/lib/filajsBoss.css" />
+		<?php
+	}
+
+	// Η μέθοδος "trapoula_set" καθορίζει την τράπουλα που θα χρησιμοποιηθεί στην
+	// αναψηλάφηση της παρτίδας. Η τελική επιλογή θα γίνει με βάση το session cookie
+	// "trapoula", αλλά ξεκινάμε την έρευνά μας από τυχόν παράμετρο χρήστη "ΤΡΑΠΟΥΛΑ".
+
+	public static function trapoula_set() {
+		// Αν έχουμε ανώνυμη χρήση θα βασιστούμε στο session cookie "trapoula",
+		// είτε αυτό είναι ορισμένο είτε όχι.
+
+		if (Globals::oxi_pektis())
+		return;
+
+		// Διαπιστώθηκε επώνυμη χρήση, επομένως θα ελέγξουμε για τυχόν παράμετρο
+		// χρήστη "ΤΡΑΠΟΥΛΑ".
+
+		$query = "SELECT `timi` FROM `peparam` WHERE (`pektis` LIKE " .
+			Globals::asfales_sql(Globals::session("pektis")) .
+			") AND (`param` LIKE 'ΤΡΑΠΟΥΛΑ')";
+		$param = Globals::first_row($query, MYSQLI_NUM);
+
+		// Αν δεν υπάρχει παράμετρος χρήστη "ΤΡΑΠΟΥΛΑ" βασιζόμαστε πάλι στο session
+		// cookie "trapoula", είτε αυτό είναι ορισμένο είτε όχι.
+
+		if (!$param)
+		return;
+
+		// Βρέθηκε παράμετρος χρήστη με την οποία καθορίζεται τράπουλα, οπότε θέτουμε
+		// το σχετικό session cookie.
+
+		if ($param[0])
+		Globals::session_set("trapoula", $param[0]);
 	}
 }
 ?>
