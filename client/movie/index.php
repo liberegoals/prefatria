@@ -19,9 +19,9 @@ Movie::trapoula_set();
 
 Selida::head("Αναψηλάφηση");
 ?>
-<script src="http://www.filajs.net/lib/filajs.js"></script>
-<script src="http://www.filajs.net/lib/filajsDOM.js"></script>
-<link rel="stylesheet" href="http://www.filajs.net/lib/filajs.css" />
+<script src="<?php print Globals::$filajs; ?>lib/filajs.js"></script>
+<script src="<?php print Globals::$filajs; ?>lib/filajsDOM.js"></script>
+<link rel="stylesheet" href="<?php print Globals::$filajs; ?>lib/filajs.css" />
 <?php
 Movie::boss_check();
 Selida::stylesheet("arena/arena");
@@ -170,7 +170,7 @@ class Movie {
 		if (!file_exists("Boss!"))
 		return;
 		?>
-		<link rel="stylesheet" href="http://www.filajs.net/lib/filajsBoss.css" />
+		<link rel="stylesheet" href="<?php print Globals::$filajs; ?>lib/filajsBoss.css" />
 		<?php
 	}
 
