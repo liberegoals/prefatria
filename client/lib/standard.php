@@ -62,6 +62,10 @@ class Globals {
 
 	public static $skiser;
 
+	// Η property "filajs" περιέχει το URL του "filajs" API.
+
+	public static $filajs;
+
 	// Η property "ip" περιέχει την IP του client που αιτείται
 	// τις υπηρεσίες της PHP.
 
@@ -102,11 +106,13 @@ class Globals {
 
 		$server_name = array_key_exists("HTTP_HOST", $_SERVER) ? $_SERVER["HTTP_HOST"] : "localhost";
 		self::$skiser = "http://" . $server_name;
+		self::$filajs = "http://www.filajs.net/";
 
 		switch ($server_name) {
 		case "127.0.0.1":
 		case "localhost":
 			self::$server = "http://" . $server_name . "/prefatria/";
+			self::$filajs = "http://" . $server_name . "/filajs/";
 			break;
 		case "www.opasopa.net":
 			self::$server = "http://" . $server_name . "/prefatria/";
