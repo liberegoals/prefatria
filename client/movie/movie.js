@@ -75,6 +75,10 @@ Movie.setupFilajs = function() {
 	cardWidthSet(80).
 	cardFamilySet(family);
 
+	$(document.body).prepend($('<div>').attr('id', 'movieTzogos').
+	append(Movie.tzogosL = $('<div>').addClass('movieTzogosFilo').attr('id', 'movieTzogosFiloLeft')).
+	append(Movie.tzogosR = $('<div>').addClass('movieTzogosFilo').attr('id', 'movieTzogosFiloRight')));
+
 	return Movie;
 };
 
@@ -233,7 +237,7 @@ Movie.displayDealer = function(dianomi) {
 };
 
 Movie.displayFilaDianomis = function(dianomi) {
-	var elist, i, energia;
+	var elist, i, energia, tzogos;
 
 	elist = dianomi.energiaArray;
 	for (i = 0; i < elist.length; i++) {
@@ -268,6 +272,26 @@ Movie.displayFilaDianomis = function(dianomi) {
 		append(fila.domGet());
 		fila.domRefresh();
 	});
+
+	tzogos = new filajsHand(Movie.trapezi.tzogos.xartosia2string());
+	tzogos.
+	cardWalk(function() {
+		this.
+		faceDown().
+		domCreate().
+		domRefresh();
+	}).
+	sort().
+	baselineSet('M').
+	alignmentSet('C').
+	circlePush(Movie.tzogosL).
+	rotationPush(-10).
+	circlePush(Movie.tzogosR).
+	rotationPush(10).
+	domCreate();
+
+	Movie.tsoxaDOM.append(tzogos.domGet());
+	tzogos.domRefresh();
 
 	return Movie;
 };
