@@ -55,11 +55,14 @@ Movie.panel.bpanelButtonPush(new PButton({
 		case 'classic':
 			filajs.cardFamilySet('nicubunu');
 			break;
-		case 'jfitz':
-			filajs.cardFamilySet('aguilar');
+		case 'nicubunu':
+			filajs.cardFamilySet('ilias');
+			break;
+		case 'ilias':
+			filajs.cardFamilySet('jfitz');
 			break;
 		default:
-			filajs.cardFamilySet('jfitz');
+			filajs.cardFamilySet('aguilar');
 			break;
 		}
 
