@@ -72,3 +72,43 @@ Movie.panel.bpanelButtonPush(new PButton({
 		Selida.skiserService('peparamSet', 'ΤΡΑΠΟΥΛΑ=' + family);
 	},
 }));
+
+Movie.panel.bpanelButtonPush(new PButton({
+	omada: 1,
+	img: '../ikona/movie/tzogosAniktos.png',
+	title: 'Τζόγος φανερός',
+	check: function() {
+		return !Movie.tzogosFaneros;
+	},
+	click: function(e) {
+		Movie.tzogosFaneros = true;
+		Movie.tzogos.
+		cardWalk(function() {
+			this.
+			faceUp().
+			domRefresh();
+		});
+
+		this.pbuttonPanelGet().bpanelRefresh();
+	},
+}));
+
+Movie.panel.bpanelButtonPush(new PButton({
+	omada: 1,
+	img: '../ikona/movie/tzogosKlistos.png',
+	title: 'Τζόγος κρυφός',
+	check: function() {
+		return Movie.tzogosFaneros;
+	},
+	click: function(e) {
+		Movie.tzogosFaneros = false;
+		Movie.tzogos.
+		cardWalk(function() {
+			this.
+			faceDown().
+			domRefresh();
+		});
+
+		this.pbuttonPanelGet().bpanelRefresh();
+	},
+}));
