@@ -49,6 +49,8 @@ Movie = {
 	// η πρώτη θέση του τραπεζιού.
 
 	egoThesi: 1,
+
+	tzogos: new filajsHand(),
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
@@ -237,7 +239,7 @@ Movie.displayDealer = function(dianomi) {
 };
 
 Movie.displayFilaDianomis = function(dianomi) {
-	var elist, i, energia, tzogos;
+	var elist, i, energia;
 
 	elist = dianomi.energiaArray;
 	for (i = 0; i < elist.length; i++) {
@@ -273,11 +275,11 @@ Movie.displayFilaDianomis = function(dianomi) {
 		fila.domRefresh();
 	});
 
-	tzogos = new filajsHand(Movie.trapezi.tzogos.xartosia2string());
-	tzogos.
+	Movie.tzogos = new filajsHand(Movie.trapezi.tzogos.xartosia2string());
+	Movie.tzogos.
 	cardWalk(function() {
 		this.
-		faceDown().
+		faceSet(Movie.tzogosFaneros).
 		domCreate().
 		domRefresh();
 	}).
@@ -290,8 +292,8 @@ Movie.displayFilaDianomis = function(dianomi) {
 	rotationPush(10).
 	domCreate();
 
-	Movie.tsoxaDOM.append(tzogos.domGet());
-	tzogos.domRefresh();
+	Movie.tsoxaDOM.append(Movie.tzogos.domGet());
+	Movie.tzogos.domRefresh();
 
 	return Movie;
 };
