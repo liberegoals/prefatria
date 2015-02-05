@@ -186,3 +186,34 @@ body {
 .tsoxaXartosiaFiloSteno {
 	margin-left: -50px;
 }
+
+/**********************************************************************************************************************/
+
+#movieTzogos {
+	position: absolute;
+	top: 60px;
+	right: 0;
+	width: 140px;
+	height: 134px;
+	background-color: rgba(106, 0, 128, 0.31);
+	visibility: hidden;
+}
+
+.movieTzogosFilo {
+	display: inline-block;
+	position: absolute;
+	top: 7px;
+	width: 88px;
+	height: 120px;
+	background-color: rgba(0, 128, 128, 0.11);
+}
+
+#movieTzogosFiloLeft {
+	left: 10px;
+	-webkit-transform: rotate(-10deg);
+}
+
+#movieTzogosFiloRight {
+	right: 10px;
+	-webkit-transform: rotate(10deg);
+}
