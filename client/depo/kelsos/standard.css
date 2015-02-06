@@ -4,6 +4,7 @@ body {
 	overflow: hidden;
 	margin: 0;
 	font-family: "Arial", sans-serif;
+	text-shadow: 0px 0px 10px #000, 0px 0px 8px #9C84FC, 0px 0px 4px #A7F573;
 }
 
 #plesio {
