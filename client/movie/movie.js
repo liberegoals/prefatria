@@ -179,17 +179,22 @@ Movie.displayTrapezi = function() {
 // διανομή στο array διανομών της παρτίδας. Ως τρέχουσα διανομή θεωρείται αυτή
 // της οποίας ο κωδικός δίνεται στην property "dianomiKodikos". Εάν η τρέχουσα
 // διανομή δεν εντοπιστεί, το index της τρέχουσας διανομής τίθεται -1, αλλιώς
-// τίθεταο στο index της επίμαχης διανομής στο array διανομών της παρτίδας.
+// τίθεται στο index της επίμαχης διανομής στο array διανομών της παρτίδας.
 
 Movie.entopismosTrexousasDianomis = function() {
-	var i, dianomi;
+	var dcount, i, dianomi;
 
+	dcount = Movie.trapezi.dianomiArray.length;
 	Movie.dianomiIndex = -1;
 
-	if (!Movie.dianomiKodikos)
-	return Movie;
+	if (!Movie.dianomiKodikos) {
+		if (dcount)
+		Movie.dianomiIndex = 0;
 
-	for (i = 0; i < Movie.trapezi.dianomiArray.length; i++) {
+		return Movie;
+	}
+
+	for (i = 0; i < dcount; i++) {
 		dianomi = Movie.trapezi.dianomiArray[i];
 		if (dianomi.dianomiKodikosGet() === Movie.dianomiKodikos) {
 			Movie.dianomiIndex = i;
@@ -475,6 +480,11 @@ Movie.thesiMap = function(thesi) {
 // και σκοπό έχει τη διαχείριση των αποτελεσμάτων αυτών.
 
 Movie.paralaviData = function(data) {
+	if (!data) {
+		Client.fyi.epano('<div class="aristera">Δεν βρέθηκαν δεδομένα</div>');
+		return Movie;
+	}
+
 	try {
 		Movie.trapeziProcess(data.evalAsfales());
 	} catch (e) {

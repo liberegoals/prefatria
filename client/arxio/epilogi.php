@@ -48,7 +48,6 @@ class Epilogi {
 			"`pektis1` AS `p1`, `pektis2` AS `p2`, `pektis3` AS `p3`, " .
 			"UNIX_TIMESTAMP(`arxio`) AS `a` FROM `trapezi` WHERE " .
 			(self::$arxioOnly ? "(`arxio` IS NOT NULL)" : "(1 = 1)");
-	
 	}
 
 	public static function queryPektis() {
