@@ -5,13 +5,55 @@ Movie.panel.omadaMax = 1;
 
 Movie.panel.bpanelButtonPush(new PButton({
 	omada: 1,
-	img: '../ikona/movie/play.png',
-	title: 'Play',
+	img: '../ikona/movie/end.png',
+	title: 'Επόμενη κίνηση',
 	click: function(e) {
+		var dianomi, elist, energia;
+
+		dianomi = Movie.trapezi.dianomiArray[Movie.dianomiIndex];
+		elist = dianomi.energiaArray;
+
+		Movie.energiaIndex++;
+		if (Movie.energiaIndex >= elist.length) {
+			Movie.energiaIndex--;
+			Client.sound.beep();
+			return;
+		}
+
+		energia = elist[Movie.energiaIndex];
+		Movie.trapezi.trapeziProcessEnergia(energia);
+console.log('STEP FORWARD', energia.energiaIdosGet());
 	},
 }));
 
 Movie.panel.bpanelButtonPush(new PButton({
+	omada: 1,
+	img: '../ikona/movie/start.png',
+	title: 'Προηγούμενη κίνηση',
+	click: function(e) {
+		var dianomi, elist, i;
+
+		dianomi = Movie.trapezi.dianomiArray[Movie.dianomiIndex];
+		elist = dianomi.energiaArray;
+
+		Movie.energiaIndex--;
+		if (Movie.energiaIndex < 0) {
+			Movie.energiaIndex++;
+			Client.sound.beep();
+			return;
+		}
+
+		for (i = 0; i <= Movie.energiaIndex; i++) {
+			energia = elist[i];
+			Movie.trapezi.trapeziProcessEnergia(energia);
+		}
+
+console.log('STEP BACK', energia.energiaIdosGet());
+	},
+}));
+
+Movie.panel.bpanelButtonPush(new PButton({
+	id: 'dianomiNext',
 	omada: 1,
 	img: '../ikona/movie/fwd.png',
 	title: 'Επόμενη διανομή',
@@ -27,6 +69,7 @@ Movie.panel.bpanelButtonPush(new PButton({
 }));
 
 Movie.panel.bpanelButtonPush(new PButton({
+	id: 'dianomiPrev',
 	omada: 1,
 	img: '../ikona/movie/rew.png',
 	title: 'Προηγούμενη διανομή',
@@ -75,6 +118,7 @@ Movie.panel.bpanelButtonPush(new PButton({
 }));
 
 Movie.panel.bpanelButtonPush(new PButton({
+	id: 'tzogosAniktos',
 	omada: 1,
 	img: '../ikona/movie/tzogosAniktos.png',
 	title: 'Τζόγος φανερός',
@@ -95,6 +139,7 @@ Movie.panel.bpanelButtonPush(new PButton({
 }));
 
 Movie.panel.bpanelButtonPush(new PButton({
+	id: 'tzogosKlistos',
 	omada: 1,
 	img: '../ikona/movie/tzogosKlistos.png',
 	title: 'Τζόγος κρυφός',
