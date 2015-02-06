@@ -137,7 +137,6 @@ Movie.arxioData = function() {
 // παραλάβει.
 
 Movie.zitaData = function() {
-console.log('ZITA');
 	if (!Movie.trapezi.kodikos)
 	return Movie;
 
