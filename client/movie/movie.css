@@ -189,7 +189,7 @@ body {
 
 /**********************************************************************************************************************/
 
-#movieTzogos {
+#movieTzogosThesi {
 	position: absolute;
 	top: 60px;
 	right: 0;
@@ -199,7 +199,7 @@ body {
 	visibility: hidden;
 }
 
-.movieTzogosFilo {
+.movieTzogosThesiFilo {
 	display: inline-block;
 	position: absolute;
 	top: 7px;
@@ -208,12 +208,16 @@ body {
 	background-color: rgba(0, 128, 128, 0.11);
 }
 
-#movieTzogosFiloLeft {
+#movieTzogosThesiFiloLeft {
 	left: 10px;
 	-webkit-transform: rotate(-10deg);
 }
 
-#movieTzogosFiloRight {
+#movieTzogosThesiFiloRight {
 	right: 10px;
 	-webkit-transform: rotate(10deg);
+}
+
+#movieTzogos {
+	cursor: pointer;
 }

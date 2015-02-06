@@ -78,9 +78,9 @@ Movie.setupFilajs = function() {
 	cardWidthSet(80).
 	cardFamilySet(family);
 
-	$(document.body).prepend($('<div>').attr('id', 'movieTzogos').
-	append(Movie.tzogosL = $('<div>').addClass('movieTzogosFilo').attr('id', 'movieTzogosFiloLeft')).
-	append(Movie.tzogosR = $('<div>').addClass('movieTzogosFilo').attr('id', 'movieTzogosFiloRight')));
+	$(document.body).prepend($('<div>').attr('id', 'movieTzogosThesi').
+	append(Movie.tzogosL = $('<div>').addClass('movieTzogosThesiFilo').attr('id', 'movieTzogosThesiFiloLeft')).
+	append(Movie.tzogosR = $('<div>').addClass('movieTzogosThesiFilo').attr('id', 'movieTzogosThesiFiloRight')));
 
 	return Movie;
 };
@@ -244,17 +244,17 @@ Movie.displayDealer = function(dianomi) {
 };
 
 Movie.displayFilaDianomis = function(dianomi) {
-	var elist, i, energia;
+	var elist, energia;
 
 	elist = dianomi.energiaArray;
-	for (i = 0; i < elist.length; i++) {
-		energia = elist[i];
+	for (Movie.energiaIndex = 0; Movie.energiaIndex < elist.length; Movie.energiaIndex++) {
+		energia = elist[Movie.energiaIndex];
 		Movie.trapezi.trapeziProcessEnergia(energia);
 		if (energia.energiaIdosGet() === 'ΔΙΑΝΟΜΗ')
 		break;
 	}
 
-	if (i >= elist.length)
+	if (Movie.energiaIndex >= elist.length)
 	return Movie;
 
 	Movie.trapezi.trapeziThesiWalk(function(thesi) {
@@ -297,7 +297,19 @@ Movie.displayFilaDianomis = function(dianomi) {
 	rotationPush(10).
 	domCreate();
 
-	Movie.tsoxaDOM.append(Movie.tzogos.domGet());
+	Movie.tsoxaDOM.append(Movie.tzogos.domGet().
+	attr('id', 'movieTzogos').
+	on('click', function(e) {
+		Movie.tzogosFaneros = !Movie.tzogosFaneros;
+		Movie.tzogos.
+		cardWalk(function() {
+			this.
+			faceSet(Movie.tzogosFaneros).
+			domRefresh();
+		});
+		Movie.panel.bpanelButtonGet('tzogosAniktos').pbuttonDisplay();
+		Movie.panel.bpanelButtonGet('tzogosKlistos').pbuttonDisplay();
+	}));
 	Movie.tzogos.domRefresh();
 
 	return Movie;
