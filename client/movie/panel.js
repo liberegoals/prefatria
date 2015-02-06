@@ -31,12 +31,10 @@ Movie.panel.bpanelButtonPush(new PButton({
 	img: '../ikona/movie/rew.png',
 	title: 'Προηγούμενη διανομή',
 	click: function(e) {
+		if (Movie.dianomiIndex <= 0)
+		return;
+
 		Movie.dianomiIndex--;
-
-		if (Movie.dianomiIndex < -1)
-		Movie.dianomiIndex = -1;
-
-		else
 		Movie.displayDianomi();
 	},
 }));
