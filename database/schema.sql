@@ -99,6 +99,8 @@ COMMENT = 'Πίνακας παικτών'
 --			ΑΝΙΣΟΡΡΟΠΟ
 --			ΔΙΚΑΙΟ
 --
+--	ΤΡΑΠΟΥΛΑ	Σετ παιγνιοχάρτων
+--
 --	SOUNDFILOS	deskbell.ogg
 --			any sound file in "sounds" directory
 --

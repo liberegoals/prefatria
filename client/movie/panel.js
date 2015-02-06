@@ -70,7 +70,7 @@ Movie.panel.bpanelButtonPush(new PButton({
 		$.ajax('../lib/session.php', {data:{trapoula:family}});
 
 		if (Client.isPektis())
-		Selida.skiserService('peparamSet', 'ΤΡΑΠΟΥΛΑ=' + family);
+		Client.skiserService('peparamSet', 'param=ΤΡΑΠΟΥΛΑ', 'timi=' + family);
 	},
 }));
 
