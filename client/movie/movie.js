@@ -68,6 +68,7 @@ Movie.setupFilajs = function() {
 	case 'classic':
 	case 'aguilar':
 	case 'nicubunu':
+	case 'ilias':
 		break;
 	default:
 		family = 'jfitz';
