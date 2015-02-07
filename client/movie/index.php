@@ -33,6 +33,7 @@ Selida::javascript("common/partida");
 Selida::javascript("common/energia");
 Selida::javascript("lib/panel");
 Selida::javascript("movie/movie");
+Selida::javascript("movie/partida");
 Selida::javascript("movie/panel");
 Movie::init();
 
