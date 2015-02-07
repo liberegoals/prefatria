@@ -50,7 +50,9 @@ Movie = {
 
 	egoThesi: 1,
 
-	tzogos: new filajsHand(),
+	pektisDOM: {},
+
+	filaDOM: {},
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
@@ -76,6 +78,7 @@ Movie.setupFilajs = function() {
 
 	filajs.
 	cardWidthSet(80).
+	shiftxSet(0.28).
 	cardFamilySet(family);
 
 	$(document.body).prepend($('<div>').attr('id', 'movieTzogosThesi').
@@ -257,60 +260,9 @@ Movie.displayFilaDianomis = function(dianomi) {
 	if (Movie.energiaIndex >= elist.length)
 	return Movie;
 
-	Movie.trapezi.trapeziThesiWalk(function(thesi) {
-		var fila, iseht;
-
-		fila = new filajsHand(Movie.trapezi.fila[thesi].xartosia2string());
-		iseht = Movie.thesiMap(thesi);
-
-		fila.
-		cardWalk(function() {
-			this.
-			domCreate().
-			domRefresh();
-		}).
-		sort().
-		baselineSet(iseht === 1 ? 'T' : 'B', 4).
-		alignmentSet('C').
-		shiftxSet(0.28).
-		domCreate();
-
-		Movie.pektisDOM[thesi].
-		append(fila.domGet());
-		fila.domRefresh();
-	});
-
-	Movie.tzogos = new filajsHand(Movie.trapezi.tzogos.xartosia2string());
-	Movie.tzogos.
-	cardWalk(function() {
-		this.
-		faceSet(Movie.tzogosFaneros).
-		domCreate().
-		domRefresh();
-	}).
-	sort().
-	baselineSet('M').
-	alignmentSet('C').
-	circlePush(Movie.tzogosL).
-	rotationPush(-10).
-	circlePush(Movie.tzogosR).
-	rotationPush(10).
-	domCreate();
-
-	Movie.tsoxaDOM.append(Movie.tzogos.domGet().
-	attr('id', 'movieTzogos').
-	on('click', function(e) {
-		Movie.tzogosFaneros = !Movie.tzogosFaneros;
-		Movie.tzogos.
-		cardWalk(function() {
-			this.
-			faceSet(Movie.tzogosFaneros).
-			domRefresh();
-		});
-		Movie.panel.bpanelButtonGet('tzogosAniktos').pbuttonDisplay();
-		Movie.panel.bpanelButtonGet('tzogosKlistos').pbuttonDisplay();
-	}));
-	Movie.tzogos.domRefresh();
+	Movie.
+	filaDisplay().
+	tzogosDisplay();
 
 	return Movie;
 };
@@ -402,7 +354,6 @@ Movie.displayTrapeziData = function() {
 	append(dataDOM).
 	append(optsDOM);
 
-	Movie.pektisDOM = {};
 	Movie.trapezi.trapeziThesiWalk(function(thesi) {
 		var iseht, dom;
 
@@ -416,6 +367,10 @@ Movie.displayTrapeziData = function() {
 		dom.append($('<div>').addClass('pektisLogin tsoxaPektisOnoma').attr('id', 'pektisLogin' + iseht).
 		text(this.trapeziPektisGet(thesi)));
 		Movie.tsoxaDOM.append(dom);
+
+		if (Movie.pektisDOM[thesi])
+		Movie.pektisDOM[thesi].remove();
+
 		Movie.pektisDOM[thesi] = dom;
 	});
 };

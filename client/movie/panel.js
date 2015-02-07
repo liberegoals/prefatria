@@ -22,6 +22,7 @@ Movie.panel.bpanelButtonPush(new PButton({
 
 		energia = elist[Movie.energiaIndex];
 		Movie.trapezi.trapeziProcessEnergia(energia);
+		Movie.partidaDisplay();
 console.log('STEP FORWARD', energia.energiaIdosGet());
 	},
 }));
