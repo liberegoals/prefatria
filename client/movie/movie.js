@@ -99,10 +99,25 @@ Movie.setupFilajs = function() {
 
 Movie.setupTsoxa = function() {
 	Movie.tsoxaDOM = $('#tsoxa');
+	Movie.setupTrapeziData();
 	Prefadoros.thesiWalk(Movie.setupThesi);
 
 	Movie.dianomesDOM = $('#dianomes');
 	Movie.panelDOM = $('#panel');
+
+	return Movie;
+};
+
+Movie.setupTrapeziData = function() {
+	var dom;
+
+	dom = $('<div>').attr('id', 'trapeziData').
+	append(Movie.trapeziKodikosDOM = $('<div>').attr('id', 'trapeziKodikos').addClass('dataItem')).
+	append(Movie.dianomiKodikosDOM = $('<div>').attr('id', 'dianomiKodikos').addClass('dataItem')).
+	append(Movie.energiaKodikosDOM = $('<div>').attr('id', 'energiaKodikos').addClass('dataItem')).
+	append(Movie.kasaDOM = $('<div>').attr('id', 'kasa').addClass('dataItem')).
+	append(Movie.ipolipoDOM = $('<div>').attr('id', 'ipolipo').addClass('dataItem')).
+	appendTo(Movie.tsoxaDOM);
 
 	return Movie;
 };
@@ -120,7 +135,7 @@ Movie.setupThesi = function(thesi) {
 	addClass('pektisLogin tsoxaPektisOnoma'));
 
 	dom.
-	append(Movie.onomaDOM[thesi] = $('<div>').
+	append(Movie.filaDOM[thesi] = $('<div>').
 	attr('id', 'fila' + thesi).
 	addClass('fila'));
 
@@ -205,13 +220,17 @@ Movie.zitaData = function() {
 // υπάρχει τσόχα στην οποία παρουσιάζονται τα τεκταινόμενα στην παρτίδα.
 
 Movie.displayTrapezi = function() {
+	Movie.trapeziKodikosDOM.text(Movie.trapezi.trapeziKodikosGet());
+	Prefadoros.thesiWalk(function(thesi) {
+		Movie.onomaDOM[thesi].text(Movie.trapezi.trapeziPektisGet(thesi));
+	});
+	Movie.kasaDOM.text(Movie.trapezi.trapeziKasaGet() * 30);
 	Movie.dianomesDOM.empty();
 //for (var i = 0; i < 3; i++)
 	Movie.trapezi.trapeziDianomiWalk(function() {
 		Movie.dianomiListaAdd(this);
 	});
 	$('.dianomi:odd').addClass('dianomiOdd');
-throw 'ok';
 
 	Movie.
 	entopismosTrexousasDianomis().
@@ -254,20 +273,30 @@ Movie.entopismosTrexousasDianomis = function() {
 // στην αρχή της τρέχουσας διανομής, δηλαδή μετά το μοίρασμα των φύλλων.
 
 Movie.displayDianomi = function() {
-	var dianomi;
+	var dianomi, kodikos, ipolipo;
 
-	Movie.tsoxaDOM.empty();
 	$('.dianomiTrexousa').removeClass('dianomiTrexousa');
-
-	Movie.displayTrapeziData();
-
 	if (Movie.dianomiIndex < 0)
 	return Movie;
 
 	dianomi = Movie.trapezi.dianomiArray[Movie.dianomiIndex];
 	dianomi.movieDOM.addClass('dianomiTrexousa');
 
-	Movie.trapezi.partidaReplay({eosxoris: dianomi.dianomiKodikosGet()});
+	kodikos = dianomi.dianomiKodikosGet();
+	Movie.dianomiKodikosDOM.text(kodikos);
+
+	ipolipo = Movie.trapezi.trapeziKasaGet() * 30;
+	for (i = 0; i < Movie.dianomiIndex; i++) {
+		dianomi = Movie.trapezi.dianomiArray[i];
+		ipolipo -= dianomi.dianomiKasaGet(1);
+		ipolipo -= dianomi.dianomiKasaGet(2);
+		ipolipo -= dianomi.dianomiKasaGet(3);
+	}
+
+	Movie.ipolipoDOM.text(ipolipo);
+	Movie.trapezi.partidaReplay({eosxoris:kodikos});
+	return Movie;
+
 	Movie.
 	displayFilaDianomis(dianomi).
 	displayDealer(dianomi);
