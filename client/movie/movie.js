@@ -51,7 +51,7 @@ Movie = {
 	egoThesi: 1,
 
 	pektisDOM: {},
-
+	onomaDOM: {},
 	filaDOM: {},
 };
 
@@ -96,9 +96,33 @@ Movie.setupFilajs = function() {
 
 Movie.setupTsoxa = function() {
 	Movie.tsoxaDOM = $('#tsoxa');
+	Prefadoros.thesiWalk(Movie.setupThesi);
+
 	Movie.dianomesDOM = $('#dianomes');
 	Movie.panelDOM = $('#panel');
 
+throw 'ok';
+	return Movie;
+};
+
+Movie.setupThesi = function(thesi) {
+	var dom;
+
+	dom = $('<div>').
+	attr('id', 'pektis' + thesi).
+	addClass('pektis');
+
+	dom.
+	append(Movie.onomaDOM[thesi] = $('<div>').
+	attr('id', 'pektisLogin' + thesi).
+	addClass('pektisLogin tsoxaPektisOnoma'));
+
+	dom.
+	append(Movie.onomaDOM[thesi] = $('<div>').
+	attr('id', 'fila' + thesi).
+	addClass('fila'));
+
+	Movie.pektisDOM[thesi] = dom.appendTo(Movie.tsoxaDOM);
 	return Movie;
 };
 

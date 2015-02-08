@@ -221,3 +221,11 @@ body {
 #movieTzogos {
 	cursor: pointer;
 }
+
+.fila {
+	position: absolute;
+	top: 30px;
+	width: 100%;
+	height: 120px;
+background-color: rgba(0, 128, 128, 0.20);
+}
