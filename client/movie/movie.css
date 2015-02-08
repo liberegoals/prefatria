@@ -125,6 +125,7 @@ body {
 
 .pektis {
 	position: absolute;
+	top: 16px;
 	width: 300px;
 	height: 150px;
 	overflow: visible;
@@ -132,17 +133,16 @@ body {
 }
 
 #pektis1 {
-	bottom: 36px;
+	top: auto;
+	bottom: 16px;
 	left: 198px;
 }
 
 #pektis2 {
-	top: 36px;
 	right: 16px;
 }
 
 #pektis3 {
-	top: 36px;
 	left: 16px;
 }
 
@@ -228,4 +228,46 @@ body {
 	width: 100%;
 	height: 120px;
 background-color: rgba(0, 128, 128, 0.20);
+}
+
+.dilosi {
+	position: absolute;
+	bottom: -40px;
+	width: 80px;
+	height: 30px;
+background-color: rgba(255, 0, 0, 0.20);
+}
+
+#dilosi1 {
+	bottom: auto;
+	top: -40px;
+}
+
+.kapikia {
+	position: absolute;
+	left: 85px;
+	bottom: -40px;
+	width: 60px;
+	height: 30px;
+background-color: rgb(255, 255, 178);
+}
+
+#kapikia1 {
+	bottom: auto;
+	top: -40px;
+}
+
+.bazes {
+	position: absolute;
+	left: auto;
+	right: 0px;
+	bottom: -40px;
+	width: 150px;
+	height: 30px;
+background-color: rgba(237, 164, 61, 0.30);
+}
+
+#bazes1 {
+	bottom: auto;
+	top: -40px;
 }

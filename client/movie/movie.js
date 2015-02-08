@@ -53,6 +53,9 @@ Movie = {
 	pektisDOM: {},
 	onomaDOM: {},
 	filaDOM: {},
+	dilosiDOM: {},
+	kapikiaDOM: {},
+	bazesDOM: {},
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
@@ -101,7 +104,6 @@ Movie.setupTsoxa = function() {
 	Movie.dianomesDOM = $('#dianomes');
 	Movie.panelDOM = $('#panel');
 
-throw 'ok';
 	return Movie;
 };
 
@@ -121,6 +123,21 @@ Movie.setupThesi = function(thesi) {
 	append(Movie.onomaDOM[thesi] = $('<div>').
 	attr('id', 'fila' + thesi).
 	addClass('fila'));
+
+	dom.
+	append(Movie.dilosiDOM[thesi] = $('<div>').
+	attr('id', 'dilosi' + thesi).
+	addClass('dilosi'));
+
+	dom.
+	append(Movie.kapikiaDOM[thesi] = $('<div>').
+	attr('id', 'kapikia' + thesi).
+	addClass('kapikia'));
+
+	dom.
+	append(Movie.bazesDOM[thesi] = $('<div>').
+	attr('id', 'bazes' + thesi).
+	addClass('bazes'));
 
 	Movie.pektisDOM[thesi] = dom.appendTo(Movie.tsoxaDOM);
 	return Movie;
@@ -194,6 +211,7 @@ Movie.displayTrapezi = function() {
 		Movie.dianomiListaAdd(this);
 	});
 	$('.dianomi:odd').addClass('dianomiOdd');
+throw 'ok';
 
 	Movie.
 	entopismosTrexousasDianomis().
