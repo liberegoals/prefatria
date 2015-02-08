@@ -158,12 +158,9 @@ class Movie {
 
 	public static function selida() {
 		?>
-		<div id="tsoxa" class="tsoxaPeximo">
-		</div>
-		<div id="panel">
-		</div>
-		<div id="dianomes">
-		</div>
+		<div id="tsoxa" class="tsoxaPeximo"></div>
+		<div id="panel"></div>
+		<div id="dianomes"></div>
 		<?php
 	}
 
