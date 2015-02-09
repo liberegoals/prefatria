@@ -291,7 +291,7 @@ Movie.displayOption = function(icon, desc) {
 };
 
 Movie.displayPektis = function(thesi) {
-	var iseht, dianomi;
+	var iseht;
 
 	if (thesi === undefined)
 	return Movie.thesiWalk(function(thesi) {
