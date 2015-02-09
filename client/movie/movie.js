@@ -81,7 +81,7 @@ Movie.setupFilajs = function() {
 	}
 
 	filajs.
-	cardWidthSet(80).
+	cardWidthSet(84).
 	shiftxSet(0.28).
 	cardFamilySet(family);
 
@@ -173,11 +173,15 @@ Movie.setupThesi = function(thesi) {
 	attr('id', 'dilosi' + thesi).
 	addClass('dilosi'));
 
+	dom.disableSelection();
+
+	if (thesi !== 1)
 	dom.
 	on('click', function(e) {
 		Movie.egoThesi = $(this).data('thesi');
 		Movie.
 		displayPektis().
+		displayFila().
 		displayGipedo();
 	});
 
@@ -295,6 +299,8 @@ Movie.displayPektis = function(thesi) {
 	});
 
 	iseht = Movie.thesiMap(thesi);
+	Movie.pektisDOM[iseht].
+	data('thesi', thesi);
 
 	Movie.onomaDOM[iseht].
 	text(Movie.trapezi.trapeziPektisGet(thesi));
@@ -401,7 +407,7 @@ Movie.displayFilaDianomis = function(dianomi) {
 	return Movie;
 
 	Movie.
-	filaDisplay().
+	displayFila().
 	tzogosDisplay();
 
 	return Movie;
