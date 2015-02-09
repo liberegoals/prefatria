@@ -62,7 +62,10 @@ Movie.tzogosDisplay = function() {
 	rotationPush(10).
 	domCreate();
 
-	Movie.tsoxaDOM.append(Movie.tzogos.domGet().
+	$('#movieTzogos').remove();
+
+	Movie.tsoxaDOM.
+	append(Movie.tzogos.domGet().
 	attr('id', 'movieTzogos').
 	on('click', function(e) {
 		Movie.tzogosFaneros = !Movie.tzogosFaneros;

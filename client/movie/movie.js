@@ -53,9 +53,10 @@ Movie = {
 	pektisDOM: {},
 	onomaDOM: {},
 	filaDOM: {},
-	dilosiDOM: {},
+	agoraDOM: {},
 	kapikiaDOM: {},
 	bazesDOM: {},
+	dilosiDOM: {},
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
@@ -99,8 +100,10 @@ Movie.setupFilajs = function() {
 
 Movie.setupTsoxa = function() {
 	Movie.tsoxaDOM = $('#tsoxa');
-	Movie.setupTrapeziData();
-	Prefadoros.thesiWalk(Movie.setupThesi);
+	Movie.
+	setupData().
+	setupOptions().
+	setupThesi();
 
 	Movie.dianomesDOM = $('#dianomes');
 	Movie.panelDOM = $('#panel');
@@ -108,10 +111,10 @@ Movie.setupTsoxa = function() {
 	return Movie;
 };
 
-Movie.setupTrapeziData = function() {
+Movie.setupData = function() {
 	var dom;
 
-	dom = $('<div>').attr('id', 'trapeziData').
+	dom = $('<div>').attr('id', 'data').
 	append(Movie.trapeziKodikosDOM = $('<div>').attr('id', 'trapeziKodikos').addClass('dataItem')).
 	append(Movie.dianomiKodikosDOM = $('<div>').attr('id', 'dianomiKodikos').addClass('dataItem')).
 	append(Movie.energiaKodikosDOM = $('<div>').attr('id', 'energiaKodikos').addClass('dataItem')).
@@ -122,8 +125,19 @@ Movie.setupTrapeziData = function() {
 	return Movie;
 };
 
+Movie.setupOptions = function() {
+	Movie.optionsDOM = $('<div>').
+	attr('id', 'options').
+	appendTo(Movie.tsoxaDOM);
+
+	return Movie;
+};
+
 Movie.setupThesi = function(thesi) {
 	var dom;
+
+	if (thesi === undefined)
+	return Movie.thesiWalk(Movie.setupThesi);
 
 	dom = $('<div>').
 	attr('id', 'pektis' + thesi).
@@ -140,9 +154,9 @@ Movie.setupThesi = function(thesi) {
 	addClass('fila'));
 
 	dom.
-	append(Movie.dilosiDOM[thesi] = $('<div>').
-	attr('id', 'dilosi' + thesi).
-	addClass('dilosi'));
+	append(Movie.agoraDOM[thesi] = $('<div>').
+	attr('id', 'agora' + thesi).
+	addClass('agora'));
 
 	dom.
 	append(Movie.kapikiaDOM[thesi] = $('<div>').
@@ -154,7 +168,21 @@ Movie.setupThesi = function(thesi) {
 	attr('id', 'bazes' + thesi).
 	addClass('bazes'));
 
+	dom.
+	append(Movie.dilosiDOM[thesi] = $('<div>').
+	attr('id', 'dilosi' + thesi).
+	addClass('dilosi'));
+
+	dom.
+	on('click', function(e) {
+		Movie.egoThesi = $(this).data('thesi');
+		Movie.
+		displayPektis().
+		displayGipedo();
+	});
+
 	Movie.pektisDOM[thesi] = dom.appendTo(Movie.tsoxaDOM);
+
 	return Movie;
 };
 
@@ -220,22 +248,61 @@ Movie.zitaData = function() {
 // υπάρχει τσόχα στην οποία παρουσιάζονται τα τεκταινόμενα στην παρτίδα.
 
 Movie.displayTrapezi = function() {
-	Movie.trapeziKodikosDOM.text(Movie.trapezi.trapeziKodikosGet());
-	Prefadoros.thesiWalk(function(thesi) {
-		Movie.onomaDOM[thesi].text(Movie.trapezi.trapeziPektisGet(thesi));
-	});
-	Movie.kasaDOM.text(Movie.trapezi.trapeziKasaGet() * 30);
+	Movie.trapeziKodikosDOM.
+	text(Movie.trapezi.trapeziKodikosGet());
+
+	Movie.kasaDOM.
+	text(Movie.trapezi.trapeziKasaGet() * 30);
+
+	Movie.displayOptions();
+
 	Movie.dianomesDOM.empty();
-//for (var i = 0; i < 3; i++)
 	Movie.trapezi.trapeziDianomiWalk(function() {
 		Movie.dianomiListaAdd(this);
 	});
 	$('.dianomi:odd').addClass('dianomiOdd');
 
 	Movie.
+	displayPektis().
 	entopismosTrexousasDianomis().
 	displayDianomi();
 
+	return Movie;
+};
+
+Movie.displayOptions = function() {
+	if (Movie.trapezi.trapeziOxiAsoi())
+	Movie.displayOption('asoiOn.png', 'Δεν παίζονται οι άσοι');
+
+	if (Movie.trapezi.trapeziIsPaso())
+	Movie.displayOption('pasoOn.png', 'Παίζεται το πάσο');
+};
+
+Movie.displayOption = function(icon, desc) {
+	Movie.optionsDOM.
+	append($('<img>').addClass('option').attr({
+		src: '../ikona/panel/' + icon,
+		title: desc,
+	}));
+};
+
+Movie.displayPektis = function(thesi) {
+	var iseht, dianomi;
+
+	if (thesi === undefined)
+	return Movie.thesiWalk(function(thesi) {
+		Movie.displayPektis(thesi);
+	});
+
+	iseht = Movie.thesiMap(thesi);
+
+	Movie.onomaDOM[iseht].
+	text(Movie.trapezi.trapeziPektisGet(thesi));
+
+	return Movie;
+};
+
+Movie.displayGipedo = function() {
 	return Movie;
 };
 
@@ -273,17 +340,11 @@ Movie.entopismosTrexousasDianomis = function() {
 // στην αρχή της τρέχουσας διανομής, δηλαδή μετά το μοίρασμα των φύλλων.
 
 Movie.displayDianomi = function() {
-	var dianomi, kodikos, ipolipo;
+	var ipolipo, i, dianomi, kodikos;
 
 	$('.dianomiTrexousa').removeClass('dianomiTrexousa');
 	if (Movie.dianomiIndex < 0)
 	return Movie;
-
-	dianomi = Movie.trapezi.dianomiArray[Movie.dianomiIndex];
-	dianomi.movieDOM.addClass('dianomiTrexousa');
-
-	kodikos = dianomi.dianomiKodikosGet();
-	Movie.dianomiKodikosDOM.text(kodikos);
 
 	ipolipo = Movie.trapezi.trapeziKasaGet() * 30;
 	for (i = 0; i < Movie.dianomiIndex; i++) {
@@ -293,9 +354,14 @@ Movie.displayDianomi = function() {
 		ipolipo -= dianomi.dianomiKasaGet(3);
 	}
 
+	dianomi = Movie.trapezi.dianomiArray[Movie.dianomiIndex];
+	dianomi.movieDOM.addClass('dianomiTrexousa');
+
+	kodikos = dianomi.dianomiKodikosGet();
+	Movie.dianomiKodikosDOM.text(kodikos);
+
 	Movie.ipolipoDOM.text(ipolipo);
 	Movie.trapezi.partidaReplay({eosxoris:kodikos});
-	return Movie;
 
 	Movie.
 	displayFilaDianomis(dianomi).
@@ -305,10 +371,13 @@ Movie.displayDianomi = function() {
 };
 
 Movie.displayDealer = function(dianomi) {
-	var dealer;
+	var dealer, iseht;
 
+	$('.moviePektisDealer').remove();
 	dealer = dianomi.dianomiDealerGet();
-	Movie.pektisDOM[dealer].
+	iseht = Movie.thesiMap(dealer);
+
+	Movie.pektisDOM[iseht].
 	append($('<img>').addClass('moviePektisEndixi moviePektisDealer').attr({
 		src: '../ikona/endixi/protos.png',
 		title: 'Dealer',
@@ -397,62 +466,6 @@ Filo.prototype.filoDOM = function(klisto) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
 
-Movie.displayTrapeziData = function() {
-	var dataDOM, optsDOM, dianomi;
-
-	dataDOM = $('<div>').attr('id', 'trapeziData');
-	dataDOM.append($('<div>').attr({
-		id: 'dataTrapeziKodikos',
-		title: 'Κωδικός τραπεζιού',
-	}).text(Movie.trapezi.trapeziKodikosGet()));
-	if (Movie.dianomiIndex >= 0) {
-		dianomi = Movie.trapezi.dianomiArray[Movie.dianomiIndex];
-		dataDOM.append($('<div>').attr({
-			id: 'dataDianomiKodikos',
-			title: 'Κωδικός διανομής',
-		}).text(dianomi.dianomiKodikosGet()));
-	}
-
-	optsDOM = $('<div>').attr('id', 'options');
-
-	if (Movie.trapezi.trapeziOxiAsoi())
-	Movie.optionDOM(optsDOM, 'asoiOn.png', 'Δεν παίζονται οι άσοι');
-
-	if (Movie.trapezi.trapeziIsPaso())
-	Movie.optionDOM(optsDOM, 'pasoOn.png', 'Παίζεται το πάσο');
-
-	Movie.tsoxaDOM.
-	append(dataDOM).
-	append(optsDOM);
-
-	Movie.trapezi.trapeziThesiWalk(function(thesi) {
-		var iseht, dom;
-
-		iseht = Movie.thesiMap(thesi);
-		dom = $('<div>').addClass('pektis').attr('id', 'pektis' + iseht).
-		data('thesi', thesi).
-		on('click', function(e) {
-			Movie.egoThesi = $(this).data('thesi');
-			Movie.displayTrapezi();
-		});
-		dom.append($('<div>').addClass('pektisLogin tsoxaPektisOnoma').attr('id', 'pektisLogin' + iseht).
-		text(this.trapeziPektisGet(thesi)));
-		Movie.tsoxaDOM.append(dom);
-
-		if (Movie.pektisDOM[thesi])
-		Movie.pektisDOM[thesi].remove();
-
-		Movie.pektisDOM[thesi] = dom;
-	});
-};
-
-Movie.optionDOM = function(dom, icon, desc) {
-	dom.append($('<img>').addClass('option').attr({
-		src: '../ikona/panel/' + icon,
-		title: desc,
-	}));
-};
-
 Movie.dianomiListaAdd = function(dianomi) {
 	var kodikos, agoraDOM;
 
@@ -478,13 +491,13 @@ Movie.dianomiListaAdd = function(dianomi) {
 Movie.agoraDisplay = function() {
 	var agora, dom;
 
-	dom = $('<div>').addClass('agora');
+	dom = $('<div>').addClass('dianomiAgora');
 
 	agora = Movie.trapezi.partidaAgoraGet();
 	if (!agora)
 	return dom.addClass('agoraBazes').html('&ndash;');
 
-	dom = $('<div>').addClass('agora').
+	dom.
 	attr('title', 'Αγορά: ' + agora.dilosiLektiko());
 	dom.append($('<div>').addClass('agoraBazes').text(agora.dilosiBazesGet()));
 	dom.append($('<img>').addClass('agoraXroma').
@@ -500,6 +513,14 @@ Movie.agoraDisplay = function() {
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
+
+Movie.thesiWalk = function(callback) {
+	Prefadoros.thesiWalk(function(thesi) {
+		callback(thesi);
+	});
+
+	return Movie;
+};
 
 Movie.thesiMap = function(thesi) {
 	switch (Movie.egoThesi) {

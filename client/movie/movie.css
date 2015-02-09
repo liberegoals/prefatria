@@ -62,7 +62,7 @@ body {
 	font-size: 20px;
 }
 
-.agora {
+.dianomiAgora {
 	display: inline-block;
 	position: relative;
 	bottom: 0px;
@@ -84,7 +84,7 @@ body {
 
 #options {
 	position: absolute;
-	top: -16px;
+	top: -24px;
 	right: 10px;
 }
 
@@ -208,7 +208,7 @@ background-color: rgba(0, 128, 128, 0.20);
 	top: 0px;
 }
 
-.dilosi {
+.agora {
 	position: absolute;
 	bottom: -40px;
 	width: 80px;
@@ -216,7 +216,7 @@ background-color: rgba(0, 128, 128, 0.20);
 background-color: rgba(255, 0, 0, 0.20);
 }
 
-#dilosi1 {
+#agora1 {
 	bottom: auto;
 	top: -40px;
 }
@@ -250,11 +250,26 @@ background-color: rgba(237, 164, 61, 0.30);
 	top: -40px;
 }
 
+.dilosi {
+	position: absolute;
+	left: auto;
+	right: 0px;
+	bottom: -80px;
+	width: 150px;
+	height: 30px;
+background-color: rgba(61, 169, 237, 0.3);
+}
+
+#dilosi1 {
+	bottom: auto;
+	top: -80px;
+}
+
 .dataItem {
 	background-color: rgba(156, 0, 255, 0.20);
 }
 
-#trapeziData {
+#data {
 	position: absolute;
 	top: 250px;
 	width: 250px;
