@@ -1,38 +1,29 @@
-Movie.partidaDisplay = function() {
-	Prefadoros.thesiWalk(function(thesi) {
-		Movie.filaDisplay(thesi);
+Movie.displayFila = function(thesi) {
+	var iseht, fila;
+
+	if (thesi === undefined)
+	return Movie.thesiWalk(function(thesi) {
+		Movie.displayFila(thesi);
 	});
-};
-
-Movie.filaDisplay = function(thesi) {
-	var iseht, fila, dom;
-
-	if (thesi === undefined) {
-		Prefadoros.thesiWalk(function(thesi) {
-			Movie.filaDisplay(thesi);
-		});
-
-		return Movie;
-	}
 
 	iseht = Movie.thesiMap(thesi);
 
 	if (Movie.filaDOM[thesi])
-	Movie.filaDOM[thesi].remove();
+	Movie.filaDOM[iseht].empty();
 
 	fila = new filajsHand(Movie.trapezi.fila[thesi].xartosia2string());
 	fila.
 	sort().
-	baselineSet(iseht === 1 ? 'T' : 'B', 4).
+	baselineSet('T').
 	alignmentSet('C').
 	domCreate();
 
 	if (fila.cardsCount() > 10)
 	fila.shiftxSet(0.24);
 
-	dom = fila.domGet();
-	Movie.pektisDOM[thesi].append(dom);
-	Movie.filaDOM[thesi] = dom;
+	Movie.filaDOM[iseht].
+	append(fila.domGet());
+
 	fila.
 	cardWalk(function() {
 		this.

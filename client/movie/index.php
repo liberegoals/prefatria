@@ -50,10 +50,9 @@ Selida::ribbon();
 Selida::telos();
 
 class Movie {
-	// Το τραπέζι που αφορά στη ΣΑΠ κρατείται στην property
-	// "trapezi".
-
 	private static $trapezi = NULL;
+	private static $dianomi = NULL;
+	private static $thesi = 1;
 
 	private static function trapezi_set($trapezi) {
 		self::$trapezi = intval($trapezi);
@@ -67,17 +66,25 @@ class Movie {
 		return !self::is_trapezi();
 	}
 
-	// Η τρέχουσα διανομή της ΣΑΠ κρατείται στην property
-	// "dianomi".
-
-	private static $dianomi = NULL;
-
 	private static function dianomi_set($dianomi) {
 		self::$dianomi = intval($dianomi);
 	}
 
 	private static function is_dianomi() {
 		return self::$dianomi;
+	}
+
+	private static function thesi_set($thesi) {
+		self::$thesi = intval($thesi) % 3;
+		if (self::$thesi <= 0) self::$thesi += 3;
+	}
+
+	private static function is_thesi() {
+		return self::$thesi;
+	}
+
+	private static function oxi_thesi() {
+		return !self::is_thesi();
 	}
 
 	public static function init() {
@@ -96,12 +103,16 @@ class Movie {
 		if (self::oxi_trapezi())
 		Globals::klise_fige("Ακαθόριστη παρτίδα");
 
+		if (Globals::perastike("thesi"))
+		self::thesi_set($_REQUEST["thesi"]);
+
 		self::trapezi_check();
 		?>
 		<script type="text/javascript">
 		//<![CDATA[
 		Movie.trapezi.kodikos = <?php print self::$trapezi; ?>;
 		Movie.dianomiKodikos = <?php print self::is_dianomi() ? self::$dianomi : "null"; ?>;
+		Movie.egoThesi = <?php print self::$thesi; ?>;
 		//]]>
 		</script>
 		<?php
