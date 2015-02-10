@@ -544,7 +544,7 @@ Movie.dianomiListaAdd = function(dianomi) {
 		displayDianomi();
 	}).
 	append(agoraDOM).
-	append($('<div>').addClass('dianomiKodikos').text(kodikos));
+	append($('<div>').addClass('dianomiKodikos').html('&hellip;' + (kodikos % 100000)));
 
 	Movie.dianomesDOM.
 	append(dianomi.movieDOM);
