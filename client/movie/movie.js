@@ -262,7 +262,6 @@ Movie.displayTrapezi = function() {
 	Movie.trapeziKodikosDOM.
 	text(Movie.trapezi.trapeziKodikosGet());
 
-console.log(Movie.trapezi.trapeziKasaGet());
 	Movie.kasaDOM.
 	text(Movie.trapezi.trapeziKasaGet() * 30);
 
