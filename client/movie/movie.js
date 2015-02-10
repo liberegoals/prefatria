@@ -382,6 +382,11 @@ Movie.displayDianomi = function() {
 	var ipolipo, i, kodikos;
 
 	$('.dianomiTrexousa').removeClass('dianomiTrexousa');
+	$('.fila').empty();
+	$('#movieTzogos').empty();
+	$('.moviePektisEndixi').remove();
+	if (Movie.dianomiKodikosDOM) Movie.dianomiKodikosDOM.text('');
+	if (Movie.ipolipoDOM) Movie.ipolipoDOM.text('');
 
 	Movie.dianomi = null;
 	if (Movie.dianomiIndex < 0)
