@@ -579,6 +579,9 @@ Movie.thesiWalk = function(callback) {
 };
 
 Movie.thesiMap = function(thesi) {
+	thesi = parseInt(thesi);
+	Movie.egoThesi = parseInt(Movie.egoThesi);
+
 	switch (Movie.egoThesi) {
 	case 2:
 	case 3:
