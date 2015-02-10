@@ -275,7 +275,9 @@ Movie.displayTrapezi = function() {
 };
 
 Movie.displayOptions = function() {
-	if (Movie.trapezi.trapeziOxiAsoi())
+	Movie.optionsDOM.empty();
+
+	if (!Movie.trapezi.trapeziOxiAsoi())
 	Movie.displayOption('asoiOn.png', 'Δεν παίζονται οι άσοι');
 
 	if (Movie.trapezi.trapeziIsPaso())
