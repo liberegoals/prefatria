@@ -132,11 +132,16 @@ body {
 .moviePektisEndixi {
 	position: absolute;
 	width: 40px;
+	top: -4px;
+}
+
+.moviePektisEndixi1 {
+	top: auto;
+	bottom: -4px;
 }
 
 .moviePektisDealer {
-	left: -24px;
-	top: 10px;
+	left: -26px;
 }
 
 /**********************************************************************************************************************/

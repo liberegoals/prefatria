@@ -111,7 +111,7 @@ class Movie {
 		<script type="text/javascript">
 		//<![CDATA[
 		Movie.trapezi.kodikos = <?php print self::$trapezi; ?>;
-		Movie.dianomiKodikos = <?php print self::is_dianomi() ? self::$dianomi : "null"; ?>;
+		Movie.dianomiURL = <?php print self::is_dianomi() ? self::$dianomi : "null"; ?>;
 		Movie.egoThesi = <?php print self::$thesi; ?>;
 		//]]>
 		</script>
