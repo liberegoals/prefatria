@@ -1,5 +1,5 @@
 Movie.displayFila = function(thesi) {
-	var iseht, fila;
+	var iseht, fila, anikta;
 
 	if (thesi === undefined)
 	return Movie.thesiWalk(function(thesi) {
@@ -7,6 +7,7 @@ Movie.displayFila = function(thesi) {
 	});
 
 	iseht = Movie.thesiMap(thesi);
+	anikta = (iseht === 1) || Movie.oxiKlista23();
 
 	if (Movie.filaDOM[iseht])
 	Movie.filaDOM[iseht].empty();
@@ -27,6 +28,7 @@ Movie.displayFila = function(thesi) {
 	fila.
 	cardWalk(function() {
 		this.
+		faceSet(anikta).
 		domCreate().
 		domRefresh();
 	}).
