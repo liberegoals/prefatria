@@ -8,7 +8,7 @@ Movie.displayFila = function(thesi) {
 
 	iseht = Movie.thesiMap(thesi);
 
-	if (Movie.filaDOM[thesi])
+	if (Movie.filaDOM[iseht])
 	Movie.filaDOM[iseht].empty();
 
 	fila = new filajsHand(Movie.trapezi.fila[thesi].xartosia2string());
