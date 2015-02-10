@@ -1233,7 +1233,7 @@ Arxio.movie.dianomiSet = function(dianomi) {
 		Arxio.movie.win = Arxio.movie.win.Movie.checkOpen();
 		movie = Arxio.movie.win.Movie;
 		movie.trapezi = Arxio.movie.trapezi;
-		movie.dianomiKodikos = dianomiKodikos;
+		movie.dianomiURL = dianomiKodikos;
 		movie.displayTrapezi();
 	} catch (e) {
 		// Η σελίδα αναψηλάφησης παρτίδας δεν φαίνεται να είναι ανοικτή, επομένως
