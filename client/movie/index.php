@@ -114,7 +114,7 @@ class Movie {
 		Movie.dianomiURL = <?php print self::is_dianomi() ? self::$dianomi : "null"; ?>;
 		Movie.egoThesi = <?php print self::$thesi; ?>;
 		Movie.klistaWE = <?php print Globals::perastike("klista") ? "true" : "false"; ?>;
-		Movie.tzogosFaneros = <?php print Globals::perastike("tzogos") ? "false" : "true"; ?>;
+		Movie.tzogosFaneros = <?php print Globals::perastike("tzogos") ? "true" : "false"; ?>;
 		//]]>
 		</script>
 		<?php
