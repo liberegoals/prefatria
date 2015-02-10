@@ -598,6 +598,14 @@ Movie.thesiMap = function(thesi) {
 	return thesi;
 };
 
+Movie.isKlista23 = function() {
+	return Movie.klista23;
+};
+
+Movie.oxiKlista23 = function() {
+	return !Movie.isKlista23();
+};
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
 
 // Η function "paralaviData" καλείται κατά την επιστροφή των αποτελεσμάτων,

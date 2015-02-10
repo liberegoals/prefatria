@@ -162,3 +162,26 @@ Movie.panel.bpanelButtonPush(new PButton({
 		this.pbuttonPanelGet().bpanelRefresh();
 	},
 }));
+
+Movie.panel.bpanelButtonPush(new PButton({
+	id: 'klista23',
+	omada: 1,
+	img: '../ikona/movie/tzogosKlistos.png',
+	refresh: function() {
+		if (Movie.isKlista23()) {
+			this.pbuttonIconGetDOM().attr('src', '../ikona/trapoula/CQ.png');
+			this.pbuttonGetDOM().attr('title', 'Άνοιγμα φύλλων Ανατολής και Δύσης');
+		}
+		else {
+			this.pbuttonIconGetDOM().attr('src', '../ikona/trapoula/BV.png');
+			this.pbuttonGetDOM().attr('title', 'Απόκρυψη φύλλων Ανατολής και Δύσης');
+		}
+
+		return this;
+	},
+	click: function(e) {
+		Movie.klista23 = !Movie.klista23;
+		Movie.displayFila();
+		this.refresh();
+	},
+}));
