@@ -8,10 +8,12 @@ Movie.panel.bpanelButtonPush(new PButton({
 	img: '../ikona/movie/end.png',
 	title: 'Επόμενη κίνηση',
 	click: function(e) {
-		var dianomi, elist, energia;
+		var elist, energia;
 
-		dianomi = Movie.trapezi.dianomiArray[Movie.dianomiIndex];
-		elist = dianomi.energiaArray;
+		if (!Movie.dianomi)
+		return;
+
+		elist = Movie.dianomi.energiaArray;
 
 		Movie.energiaIndex++;
 		if (Movie.energiaIndex >= elist.length) {
@@ -32,10 +34,12 @@ Movie.panel.bpanelButtonPush(new PButton({
 	img: '../ikona/movie/start.png',
 	title: 'Προηγούμενη κίνηση',
 	click: function(e) {
-		var dianomi, elist, i;
+		var elist, i;
 
-		dianomi = Movie.trapezi.dianomiArray[Movie.dianomiIndex];
-		elist = dianomi.energiaArray;
+		if (!Movie.dianomi)
+		return;
+
+		elist = Movie.dianomi.energiaArray;
 
 		Movie.energiaIndex--;
 		if (Movie.energiaIndex < 0) {
@@ -48,7 +52,6 @@ Movie.panel.bpanelButtonPush(new PButton({
 			energia = elist[i];
 			Movie.trapezi.trapeziProcessEnergia(energia);
 		}
-
 console.log('STEP BACK', energia.energiaIdosGet());
 	},
 }));

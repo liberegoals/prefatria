@@ -35,15 +35,15 @@ Movie = {
 
 	trapezi: {},
 
-	// Η property "dianomiKodikos" περιέχει τον κωδικό της τρέχουσας
-	// διανομής.
-
-	dianomiKodikos: null,
-
 	// Η property "dianomiIndex" περιέχει το index της τρέχουσας διανομής
 	// στο array διανομών της παρτίδας.
 
 	dianomiIndex: 0,
+
+	// Στην ΣΑΠ υπάρχει η έννοια της τρέχουσας διανομής. Πρόκειται για
+	// τη διανομή που εμφανίζεται στη σελίδα την τρέχουσα χρονική στιγμή.
+
+	dianomi: null,
 
 	// Η property "egoThesi" δείχνει τη θέση θέασης και by default είναι
 	// η πρώτη θέση του τραπεζιού.
@@ -181,6 +181,7 @@ Movie.setupThesi = function(thesi) {
 		Movie.egoThesi = $(this).data('thesi');
 		Movie.
 		displayPektis().
+		displayDealer().
 		displayFila().
 		displayGipedo();
 	});
@@ -268,7 +269,7 @@ Movie.displayTrapezi = function() {
 
 	Movie.
 	displayPektis().
-	entopismosTrexousasDianomis().
+	entopismosDianomis(Movie.dianomiURL).
 	displayDianomi();
 
 	return Movie;
@@ -333,28 +334,28 @@ Movie.displayGipedo = function() {
 	return Movie;
 };
 
-// Η function "entopismosTrexousasDianomis" επιχειρεί να εντοπίσει την τρέχουσα
-// διανομή στο array διανομών της παρτίδας. Ως τρέχουσα διανομή θεωρείται αυτή
-// της οποίας ο κωδικός δίνεται στην property "dianomiKodikos". Εάν η τρέχουσα
-// διανομή δεν εντοπιστεί, το index της τρέχουσας διανομής τίθεται -1, αλλιώς
-// τίθεται στο index της επίμαχης διανομής στο array διανομών της παρτίδας.
+// Η function "entopismosDianomis" επιχειρεί να εντοπίσει τον δείκτη της
+// διανομής τής οποίας ο κωδικός δίνεται ως παράμετρος, στο array διανομών
+// της παρτίδας.
 
-Movie.entopismosTrexousasDianomis = function() {
+Movie.entopismosDianomis = function(kodikos) {
 	var dcount, i, dianomi;
 
-	dcount = Movie.trapezi.dianomiArray.length;
 	Movie.dianomiIndex = -1;
+	Movie.dianomi = null;
 
-	if (!Movie.dianomiKodikos) {
-		if (dcount)
+	dcount = Movie.trapezi.dianomiArray.length;
+	if (!dcount)
+	return Movie;
+
+	if (!kodikos) {
 		Movie.dianomiIndex = 0;
-
 		return Movie;
 	}
 
-	for (i = 0; i < dcount; i++) {
+	for (i = 0; i < Movie.trapezi.dianomiArray.length; i++) {
 		dianomi = Movie.trapezi.dianomiArray[i];
-		if (dianomi.dianomiKodikosGet() === Movie.dianomiKodikos) {
+		if (dianomi.dianomiKodikosGet() === kodikos) {
 			Movie.dianomiIndex = i;
 			break;
 		}
@@ -367,56 +368,69 @@ Movie.entopismosTrexousasDianomis = function() {
 // στην αρχή της τρέχουσας διανομής, δηλαδή μετά το μοίρασμα των φύλλων.
 
 Movie.displayDianomi = function() {
-	var ipolipo, i, dianomi, kodikos;
+	var ipolipo, i, kodikos;
 
 	$('.dianomiTrexousa').removeClass('dianomiTrexousa');
+
+	Movie.dianomi = null;
 	if (Movie.dianomiIndex < 0)
 	return Movie;
 
 	ipolipo = Movie.trapezi.trapeziKasaGet() * 30;
 	for (i = 0; i < Movie.dianomiIndex; i++) {
-		dianomi = Movie.trapezi.dianomiArray[i];
-		ipolipo -= dianomi.dianomiKasaGet(1);
-		ipolipo -= dianomi.dianomiKasaGet(2);
-		ipolipo -= dianomi.dianomiKasaGet(3);
+		Movie.dianomi = Movie.trapezi.dianomiArray[i];
+		ipolipo -= Movie.dianomi.dianomiKasaGet(1);
+		ipolipo -= Movie.dianomi.dianomiKasaGet(2);
+		ipolipo -= Movie.dianomi.dianomiKasaGet(3);
 	}
 
-	dianomi = Movie.trapezi.dianomiArray[Movie.dianomiIndex];
-	dianomi.movieDOM.addClass('dianomiTrexousa');
+	Movie.dianomi = Movie.trapezi.dianomiArray[Movie.dianomiIndex];
+	Movie.dianomi.movieDOM.addClass('dianomiTrexousa');
 
-	kodikos = dianomi.dianomiKodikosGet();
+	kodikos = Movie.dianomi.dianomiKodikosGet();
 	Movie.dianomiKodikosDOM.text(kodikos);
 
 	Movie.ipolipoDOM.text(ipolipo);
 	Movie.trapezi.partidaReplay({eosxoris:kodikos});
 
 	Movie.
-	displayFilaDianomis(dianomi).
-	displayDealer(dianomi);
+	displayFilaDianomis().
+	displayDealer();
 
 	return Movie;
 };
 
-Movie.displayDealer = function(dianomi) {
+Movie.displayDealer = function() {
 	var dealer, iseht;
 
 	$('.moviePektisDealer').remove();
-	dealer = dianomi.dianomiDealerGet();
+	if (!Movie.dianomi)
+	return Movie;
+
+	dealer = Movie.dianomi.dianomiDealerGet();
 	iseht = Movie.thesiMap(dealer);
 
 	Movie.pektisDOM[iseht].
-	append($('<img>').addClass('moviePektisEndixi moviePektisDealer').attr({
-		src: '../ikona/endixi/protos.png',
+	append($('<img>').addClass('moviePektisEndixi moviePektisEndixi' + iseht + ' moviePektisDealer').attr({
+		src: '../ikona/endixi/dealer.png',
 		title: 'Dealer',
+	}));
+
+	iseht = iseht.epomeniThesi();
+
+	Movie.pektisDOM[iseht].
+	append($('<img>').addClass('moviePektisEndixi moviePektisEndixi' + iseht + ' moviePektisDealer').attr({
+		src: '../ikona/endixi/protos.png',
+		title: 'Πρώτος',
 	}));
 
 	return Movie;
 };
 
-Movie.displayFilaDianomis = function(dianomi) {
+Movie.displayFilaDianomis = function() {
 	var elist, energia;
 
-	elist = dianomi.energiaArray;
+	elist = Movie.dianomi.energiaArray;
 	for (Movie.energiaIndex = 0; Movie.energiaIndex < elist.length; Movie.energiaIndex++) {
 		energia = elist[Movie.energiaIndex];
 		Movie.trapezi.trapeziProcessEnergia(energia);
@@ -503,9 +517,8 @@ Movie.dianomiListaAdd = function(dianomi) {
 	dianomi.movieDOM = $('<div>').addClass('dianomi').
 	data('kodikos', kodikos).
 	on('click', function(e) {
-		Movie.dianomiKodikos = $(this).data('kodikos');
 		Movie.
-		entopismosTrexousasDianomis().
+		entopismosDianomis($(this).data('kodikos')).
 		displayDianomi();
 	}).
 	append(agoraDOM).
