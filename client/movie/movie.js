@@ -277,11 +277,30 @@ Movie.displayTrapezi = function() {
 Movie.displayOptions = function() {
 	Movie.optionsDOM.empty();
 
-	if (!Movie.trapezi.trapeziOxiAsoi())
+	if (Movie.trapezi.trapeziOxiAsoi())
 	Movie.displayOption('asoiOn.png', 'Δεν παίζονται οι άσοι');
 
 	if (Movie.trapezi.trapeziIsPaso())
 	Movie.displayOption('pasoOn.png', 'Παίζεται το πάσο');
+
+	if (Movie.trapezi.trapeziTeliomaAnisoropo())
+	Movie.displayOption('postel/ansirosopo.png', 'Ανισόρροπη πληρωμή τελευταίας αγοράς');
+
+	else if (Movie.trapezi.trapeziTeliomaDikeo())
+	Movie.displayOption('postel/dikeo.png', 'Δίκαιη πληρωμή τελευταίας αγοράς');
+
+	if (Movie.trapezi.trapeziIsFiliki())
+	Movie.displayOption('filiki.png', 'Εκπαιδευτική/Φιλική παρτίδα');
+
+	if (Movie.trapezi.trapeziIsKlisto())
+	Movie.displayOption('klisto.png', 'Κλειστό τραπέζι');
+
+	if (Movie.trapezi.trapeziIsPrive())
+	Movie.displayOption('prive.png', 'Πριβέ τραπέζι');
+
+	if (Movie.trapezi.trapeziIsIdioktito())
+	Movie.displayOption(Movie.trapezi.trapeziThesiPekti(Movie.egoThesi) === 1 ?
+		'elefthero.png' : 'idioktito.png', 'Ιδιόκτητο τραπέζι');
 };
 
 Movie.displayOption = function(icon, desc) {
