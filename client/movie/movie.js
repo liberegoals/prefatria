@@ -269,7 +269,7 @@ Movie.displayTrapezi = function() {
 
 	Movie.
 	displayPektis().
-	entopismosDianomis(Movie.dianomiURL).
+	entopismosDianomis().
 	displayDianomi();
 
 	return Movie;
@@ -343,6 +343,17 @@ Movie.entopismosDianomis = function(kodikos) {
 
 	Movie.dianomiIndex = -1;
 	Movie.dianomi = null;
+
+	// Αν δεν έχει καθοριστεί κωδικός διανομής, τότε υποτίθεται η διανομή
+	// που καθορίστηκε στο URL.
+
+	if (!kodikos)
+	kodikos = Movie.dianomiURL;
+
+	// Όπως και να έχει, καθαρίζουμε τον κωδικό διανομής που ενδεχομένως
+	// καθορίστηκε στο URL.
+
+	Movie.dianomiURL = null;
 
 	dcount = Movie.trapezi.dianomiArray.length;
 	if (!dcount)
