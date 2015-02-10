@@ -599,7 +599,7 @@ Movie.thesiMap = function(thesi) {
 };
 
 Movie.isKlista23 = function() {
-	return Movie.klista23;
+	return Movie.klistaWE;
 };
 
 Movie.oxiKlista23 = function() {

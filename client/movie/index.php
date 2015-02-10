@@ -113,7 +113,8 @@ class Movie {
 		Movie.trapezi.kodikos = <?php print self::$trapezi; ?>;
 		Movie.dianomiURL = <?php print self::is_dianomi() ? self::$dianomi : "null"; ?>;
 		Movie.egoThesi = <?php print self::$thesi; ?>;
-		Movie.klista23 = <?php print Globals::perastike("klista23") ? "true" : "false"; ?>;
+		Movie.klistaWE = <?php print Globals::perastike("klista") ? "true" : "false"; ?>;
+		Movie.tzogosFaneros = <?php print Globals::perastike("tzogos") ? "false" : "true"; ?>;
 		//]]>
 		</script>
 		<?php

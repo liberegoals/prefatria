@@ -164,7 +164,7 @@ Movie.panel.bpanelButtonPush(new PButton({
 }));
 
 Movie.panel.bpanelButtonPush(new PButton({
-	id: 'klista23',
+	id: 'klistaWE',
 	omada: 1,
 	img: '../ikona/movie/tzogosKlistos.png',
 	refresh: function() {
@@ -180,7 +180,7 @@ Movie.panel.bpanelButtonPush(new PButton({
 		return this;
 	},
 	click: function(e) {
-		Movie.klista23 = !Movie.klista23;
+		Movie.klistaWE = !Movie.klistaWE;
 		Movie.displayFila();
 		this.refresh();
 	},
