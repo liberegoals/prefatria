@@ -284,7 +284,7 @@ Movie.displayOptions = function() {
 	Movie.displayOption('pasoOn.png', 'Παίζεται το πάσο');
 
 	if (Movie.trapezi.trapeziTeliomaAnisoropo())
-	Movie.displayOption('postel/ansisoropo.png', 'Ανισόρροπη πληρωμή τελευταίας αγοράς');
+	Movie.displayOption('postel/anisoropo.png', 'Ανισόρροπη πληρωμή τελευταίας αγοράς');
 
 	else if (Movie.trapezi.trapeziTeliomaDikeo())
 	Movie.displayOption('postel/dikeo.png', 'Δίκαιη πληρωμή τελευταίας αγοράς');
