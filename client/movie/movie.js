@@ -20,12 +20,15 @@ $(document).ready(function() {
 		Movie.arxioData();
 	} catch (e) {
 		// Αν δεν ήταν επιτυχής η προσάρτηση των στοιχείων παρτίδας από
-		// τη ΣΕΑΠ, προχωρούμε στην αναζήτηση των στοιχεών παρτίδας από
+		// τη ΣΕΑΠ, προχωρούμε στην αναζήτηση των στοιχείων παρτίδας από
 		// τον server.
 
 		Movie.zitaData();
 	}
 });
+
+// Το singleton "Movie" χρησιμοποιείται ως namespace για δομές και λειτουργίες
+// που αφορούν στην ΣΑΠ.
 
 Movie = {
 	// Η ΣΑΠ κάνει αναψηλάφηση της «τρέχουσας» παρτίδας. Η τρέχουσα
@@ -49,6 +52,9 @@ Movie = {
 	// η πρώτη θέση του τραπεζιού.
 
 	egoThesi: 1,
+
+	// Ακολουθούν global δομές οι οποίες είναι βολικό να είναι εύκολα
+	// προσβάσιμες.
 
 	pektisDOM: {},
 	onomaDOM: {},
@@ -256,6 +262,7 @@ Movie.displayTrapezi = function() {
 	Movie.trapeziKodikosDOM.
 	text(Movie.trapezi.trapeziKodikosGet());
 
+console.log(Movie.trapezi.trapeziKasaGet());
 	Movie.kasaDOM.
 	text(Movie.trapezi.trapeziKasaGet() * 30);
 
