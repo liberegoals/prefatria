@@ -171,28 +171,30 @@ body {
 	position: absolute;
 	top: 60px;
 	right: 0;
-	width: 140px;
-	height: 134px;
+	width: 280px;
+	height: 268px;
 	background-color: rgba(106, 0, 128, 0.31);
+/*
 	visibility: hidden;
+*/
 }
 
 .movieTzogosThesiFilo {
 	display: inline-block;
 	position: absolute;
-	top: 7px;
-	width: 88px;
-	height: 120px;
+	top: 14px;
+	width: 176px;
+	height: 240px;
 	background-color: rgba(0, 128, 128, 0.11);
 }
 
 #movieTzogosThesiFiloLeft {
-	left: 10px;
+	left: 20px;
 	-webkit-transform: rotate(-10deg);
 }
 
 #movieTzogosThesiFiloRight {
-	right: 10px;
+	right: 20px;
 	-webkit-transform: rotate(10deg);
 }
 
@@ -226,6 +228,11 @@ background-color: rgba(255, 0, 0, 0.20);
 	top: -40px;
 }
 
+#agora2 {
+	left: auto;
+	right: 0px;
+}
+
 .kapikia {
 	position: absolute;
 	left: 85px;
@@ -238,6 +245,11 @@ background-color: rgb(255, 255, 178);
 #kapikia1 {
 	bottom: auto;
 	top: -40px;
+}
+
+#kapikia2 {
+	left: auto;
+	right: 85px;
 }
 
 .bazes {
@@ -255,6 +267,11 @@ background-color: rgba(237, 164, 61, 0.30);
 	top: -40px;
 }
 
+#bazes2 {
+	right: auto;
+	left: 0px;
+}
+
 .dilosi {
 	position: absolute;
 	left: auto;
@@ -270,30 +287,34 @@ background-color: rgba(61, 169, 237, 0.3);
 	top: -80px;
 }
 
+#dilosi2 {
+	right: auto;
+	left: 0px;
+}
+
 .dataItem {
 	background-color: rgba(156, 0, 255, 0.20);
 }
 
 #data {
 	position: absolute;
-	top: 250px;
-	width: 250px;
-	height: 120px;
+	top: 252px;
+	width: 200px;
 
 	font-weight: bold;
 	font-style: normal;
 	font-size: 18px;
 
 	text-shadow: 0px 0px 2px rgb(184, 243, 95);
-
 	background-color: rgba(227, 255, 0, 0.2);
 }
 
 #trapeziKodikos:before {
 	display: inline-block;
 	text-align: right;
-	width: 100px;
+	width: 80px;
 	margin: 0 4px 0 0;
+font-size:16px;
 
 	content: 'Τραπέζι';
 	font-weight: normal;
@@ -303,8 +324,9 @@ background-color: rgba(61, 169, 237, 0.3);
 #dianomiKodikos:before {
 	display: inline-block;
 	text-align: right;
-	width: 100px;
+	width: 80px;
 	margin: 0 4px 0 0;
+font-size:16px;
 
 	content: 'Διανομή';
 	font-weight: normal;
@@ -314,8 +336,9 @@ background-color: rgba(61, 169, 237, 0.3);
 #kasa:before {
 	display: inline-block;
 	text-align: right;
-	width: 100px;
+	width: 80px;
 	margin: 0 4px 0 0;
+font-size:16px;
 
 	content: 'Κάσα';
 	font-weight: normal;
@@ -325,8 +348,9 @@ background-color: rgba(61, 169, 237, 0.3);
 #ipolipo:before {
 	display: inline-block;
 	text-align: right;
-	width: 100px;
+	width: 80px;
 	margin: 0 4px 0 0;
+font-size:16px;
 
 	content: 'Υπόλοιπο';
 	font-weight: normal;
