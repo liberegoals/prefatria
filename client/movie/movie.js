@@ -91,10 +91,6 @@ Movie.setupFilajs = function() {
 	shiftxSet(0.28).
 	cardFamilySet(family);
 
-	$(document.body).prepend($('<div>').attr('id', 'movieTzogosThesi').
-	append(Movie.tzogosL = $('<div>').addClass('movieTzogosThesiFilo').attr('id', 'movieTzogosThesiFiloLeft')).
-	append(Movie.tzogosR = $('<div>').addClass('movieTzogosThesiFilo').attr('id', 'movieTzogosThesiFiloRight')));
-
 	return Movie;
 };
 
@@ -389,7 +385,6 @@ Movie.displayDianomi = function() {
 
 	$('.dianomiTrexousa').removeClass('dianomiTrexousa');
 	$('.fila').empty();
-	$('#movieTzogos').empty();
 	$('.moviePektisEndixi').remove();
 	if (Movie.dianomiKodikosDOM) Movie.dianomiKodikosDOM.text('');
 	if (Movie.ipolipoDOM) Movie.ipolipoDOM.text('');

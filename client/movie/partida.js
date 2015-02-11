@@ -38,7 +38,11 @@ Movie.displayFila = function(thesi) {
 };
 
 Movie.tzogosDisplay = function() {
+	$('#movieTzogos').
+	remove();
+
 	Movie.tzogos = new filajsHand(Movie.trapezi.tzogos.xartosia2string());
+
 	Movie.tzogos.
 	cardWalk(function() {
 		this.
@@ -49,13 +53,8 @@ Movie.tzogosDisplay = function() {
 	sort().
 	baselineSet('M').
 	alignmentSet('C').
-	circlePush(Movie.tzogosL).
-	rotationPush(-10).
-	circlePush(Movie.tzogosR).
-	rotationPush(10).
+	archSet(2).
 	domCreate();
-
-	$('#movieTzogos').remove();
 
 	Movie.tsoxaDOM.
 	append(Movie.tzogos.domGet().
