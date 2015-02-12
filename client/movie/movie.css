@@ -1,0 +1,364 @@
+body {
+	overflow: auto;
+	color: #323232;
+}
+
+#ofelimo {
+	padding: 8px 0 0 0;
+	white-space: nowrap;
+}
+
+#tsoxa {
+	display: inline-block;
+	width: 700px;
+	height: 600px;
+	margin: 0 6px 0 0;
+	overflow: visible;
+}
+
+#panel {
+	display: inline-block;
+	vertical-align: top;
+	white-space: normal;
+	width: 44px;
+	height: 606px;
+	padding: 0 0 0 4px;
+	margin: 0 8px 0 0;
+}
+
+#dianomes {
+	display: inline-block;
+	vertical-align: top;
+	height: 606px;
+	overflow-y: auto;
+	overflow-x: visible;
+}
+
+.dianomi {
+	bottom: auto;
+	height: 32px;
+	padding: 0px 24px 0 0;
+	border-style: none none solid none;
+	border-width: 2px;
+	border-color: #888;
+	cursor: pointer;
+	background-color: #89A785;
+}
+
+.dianomiOdd {
+	background-color: #92B58E;
+}
+
+.dianomiTrexousa {
+	background-color: rgb(255, 214, 0) !important;
+}
+
+.dianomiKodikos {
+	display: inline-block;
+	position: relative;
+	bottom: 1px;
+
+	font-family: "Lucida Console", "Monaco", monospace;
+	font-size: 20px;
+}
+
+.dianomiAgora {
+	display: inline-block;
+	position: relative;
+	bottom: 0px;
+	width: 86px;
+	text-align: center;
+}
+
+.tsoxaDilosiAsoi {
+	bottom: 1px;
+	width: 34px;
+}
+
+.tsoxaDilosiAsoi:before {
+	bottom: 2px;
+	left: -12px;
+}
+
+/**********************************************************************************************************************/
+
+#options {
+	position: absolute;
+	top: -24px;
+	right: 10px;
+}
+
+.option {
+	display: inline-block;
+	width: 40px;
+	padding: 0 2px;
+}
+
+/**********************************************************************************************************************/
+
+.pektis {
+	position: absolute;
+	top: 16px;
+	width: 300px;
+	height: 150px;
+	overflow: visible;
+	border-color: transparent;
+}
+
+#pektis1 {
+	top: auto;
+	bottom: 16px;
+	left: 198px;
+}
+
+#pektis2 {
+	right: 16px;
+}
+
+#pektis3 {
+	left: 16px;
+}
+
+.pektisLogin {
+	max-width: none;
+	width: 100%;
+	position: absolute;
+}
+
+#pektisLogin1 {
+	bottom: 0;
+}
+
+.moviePektisEndixi {
+	position: absolute;
+	width: 40px;
+	top: -4px;
+}
+
+.moviePektisEndixi1 {
+	top: auto;
+	bottom: -4px;
+}
+
+.moviePektisDealer {
+	left: -18px;
+}
+
+/**********************************************************************************************************************/
+
+.tsoxaXartosiaContainer {
+	position: relative;
+	display: inline-block;
+	bottom: -32px;
+}
+
+.movieXartosiaContainer1 {
+	bottom: -8px;
+}
+
+.tsoxaXartosiaFilo {
+	width: 80px;
+	margin-left: -58px;
+}
+
+.tsoxaXartosiaFiloSteno {
+	margin-left: -50px;
+}
+
+/**********************************************************************************************************************/
+
+#movieTzogosThesi {
+	position: absolute;
+	top: 60px;
+	right: 10px;
+	width: 140px;
+	height: 134px;
+
+	background-color: rgba(106, 0, 128, 0.30);
+	visibility: hidden;
+/*
+*/
+}
+
+#movieTzogosThesi:before {
+	content: 'Πρότυπο χαρτωσιάς τζόγου';
+}
+
+.movieTzogosThesiFilo {
+	display: inline-block;
+	position: absolute;
+	top: 7px;
+	width: 88px;
+	height: 120px;
+	background-color: rgba(0, 128, 128, 0.10);
+}
+
+#movieTzogosThesiFiloLeft {
+	left: 10px;
+	-webkit-transform: rotate(-10deg);
+}
+
+#movieTzogosThesiFiloRight {
+	right: 10px;
+	-webkit-transform: rotate(10deg);
+}
+
+#movieTzogos {
+	cursor: pointer;
+	background-color: rgba(255, 0, 0, 0.10);
+}
+
+.fila {
+	position: absolute;
+	bottom: 2px;
+	width: 100%;
+	height: 116px;
+background-color: rgba(0, 128, 128, 0.20);
+}
+
+#fila1 {
+	bottom: auto;
+	top: 2px;
+}
+
+.agora {
+	position: absolute;
+	bottom: -40px;
+	width: 80px;
+	height: 30px;
+background-color: rgba(255, 0, 0, 0.20);
+}
+
+#agora1 {
+	bottom: auto;
+	top: -40px;
+}
+
+#agora2 {
+	left: auto;
+	right: 0px;
+}
+
+.kapikia {
+	position: absolute;
+	left: 85px;
+	bottom: -40px;
+	width: 60px;
+	height: 30px;
+background-color: rgb(255, 255, 178);
+}
+
+#kapikia1 {
+	bottom: auto;
+	top: -40px;
+}
+
+#kapikia2 {
+	left: auto;
+	right: 85px;
+}
+
+.bazes {
+	position: absolute;
+	left: auto;
+	right: 0px;
+	bottom: -40px;
+	width: 150px;
+	height: 30px;
+background-color: rgba(237, 164, 61, 0.30);
+}
+
+#bazes1 {
+	bottom: auto;
+	top: -40px;
+}
+
+#bazes2 {
+	right: auto;
+	left: 0px;
+}
+
+.dilosi {
+	position: absolute;
+	left: auto;
+	right: 0px;
+	bottom: -80px;
+	width: 150px;
+	height: 30px;
+background-color: rgba(61, 169, 237, 0.30);
+}
+
+#dilosi1 {
+	bottom: auto;
+	top: -80px;
+}
+
+#dilosi2 {
+	right: auto;
+	left: 0px;
+}
+
+.dataItem {
+	background-color: rgba(156, 0, 255, 0.20);
+}
+
+#data {
+	position: absolute;
+	top: 252px;
+	width: 200px;
+
+	font-weight: bold;
+	font-style: normal;
+	font-size: 18px;
+
+	text-shadow: 0px 0px 2px rgb(184, 243, 95);
+	background-color: rgba(227, 255, 0, 0.20);
+}
+
+#trapeziKodikos:before {
+	display: inline-block;
+	text-align: right;
+	width: 80px;
+	margin: 0 4px 0 0;
+font-size:16px;
+
+	content: 'Τραπέζι';
+	font-weight: normal;
+	font-style: italic;
+}
+
+#dianomiKodikos:before {
+	display: inline-block;
+	text-align: right;
+	width: 80px;
+	margin: 0 4px 0 0;
+font-size:16px;
+
+	content: 'Διανομή';
+	font-weight: normal;
+	font-style: italic;
+}
+
+#kasa:before {
+	display: inline-block;
+	text-align: right;
+	width: 80px;
+	margin: 0 4px 0 0;
+font-size:16px;
+
+	content: 'Κάσα';
+	font-weight: normal;
+	font-style: italic;
+}
+
+#ipolipo:before {
+	display: inline-block;
+	text-align: right;
+	width: 80px;
+	margin: 0 4px 0 0;
+font-size:16px;
+
+	content: 'Υπόλοιπο';
+	font-weight: normal;
+	font-style: italic;
+}
