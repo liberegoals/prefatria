@@ -184,6 +184,7 @@ Movie.setupThesi = function(thesi) {
 		Movie.
 		displayPektis().
 		displayDealer().
+		displayEpomenos().
 		displayFila().
 		displayGipedo();
 	});
@@ -412,7 +413,8 @@ Movie.displayDianomi = function() {
 
 	Movie.
 	displayFilaDianomis().
-	displayDealer();
+	displayDealer().
+	displayEpomenos();
 
 	return Movie;
 };
@@ -440,6 +442,21 @@ Movie.displayDealer = function() {
 		src: '../ikona/endixi/protos.png',
 		title: 'Πρώτος',
 	}));
+
+	return Movie;
+};
+
+Movie.displayEpomenos = function() {
+	var epomenos, iseht;
+
+	$('.tsoxaPektisEpomenos').removeClass('tsoxaPektisEpomenos');
+	if (!Movie.dianomi)
+	return Movie;
+
+	epomenos = Movie.trapezi.partidaEpomenosGet();
+	iseht = Movie.thesiMap(epomenos);
+
+	Movie.pektisDOM[iseht].addClass('tsoxaPektisEpomenos');
 
 	return Movie;
 };
