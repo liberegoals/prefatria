@@ -22,7 +22,7 @@ Movie.displayFila = function(thesi) {
 	fila = new filajsHand(Movie.trapezi.fila[thesi].xartosia2string());
 	fila.
 	sort().
-	baselineSet('T').
+	baselineSet(iseht === 1 ? 'T' : 'B').
 	alignmentSet('C').
 	domCreate();
 
