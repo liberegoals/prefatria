@@ -19,8 +19,8 @@ Movie::trapoula_set();
 
 Selida::head("Αναψηλάφηση");
 ?>
-<script src="<?php print Globals::$filajs; ?>lib/filajs.js"></script>
-<script src="<?php print Globals::$filajs; ?>lib/filajsDOM.js"></script>
+<script src="<?php print Globals::$filajs; ?>lib/filajs.min.js"></script>
+<script src="<?php print Globals::$filajs; ?>lib/filajsDOM.min.js"></script>
 <link rel="stylesheet" href="<?php print Globals::$filajs; ?>lib/filajs.css" />
 <?php
 Movie::boss_check();
