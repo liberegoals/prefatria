@@ -3,12 +3,12 @@ Movie.panel.omadaMax = 1;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
 
-Movie.panel.bpanelButtonPush(new PButton({
+Movie.panel.bpanelButtonPush(Movie.panel.energiaNextButton = new PButton({
 	omada: 1,
 	img: '../ikona/movie/end.png',
 	title: 'Επόμενη κίνηση',
 	click: function(e) {
-		var elist, energia;
+		var elist, energia, fasi, idos;
 
 		if (!Movie.dianomi)
 		return;
@@ -24,17 +24,27 @@ Movie.panel.bpanelButtonPush(new PButton({
 
 		energia = elist[Movie.energiaIndex];
 		Movie.trapezi.trapeziProcessEnergia(energia);
-		Movie.partidaDisplay();
-console.log('STEP FORWARD', energia.energiaIdosGet());
+
+		fasi = Movie.trapezi.partidaFasiGet();
+		idos = energia.energiaIdosGet();
+console.log('STEP FORWARD: φάση', fasi, 'είδος', idos);
+
+		switch (fasi) {
+		case 'ΑΛΛΑΓΗ':
+			if (idos === 'ΔΗΛΩΣΗ')
+			return Movie.pareTzogo();
+		}
+
+		Movie.displayPartida();
 	},
 }));
 
-Movie.panel.bpanelButtonPush(new PButton({
+Movie.panel.bpanelButtonPush(Movie.panel.energiaPrevButton = new PButton({
 	omada: 1,
 	img: '../ikona/movie/start.png',
 	title: 'Προηγούμενη κίνηση',
 	click: function(e) {
-		var elist, i;
+		var elist, i, fasi, idos;
 
 		if (!Movie.dianomi)
 		return;
@@ -52,7 +62,18 @@ Movie.panel.bpanelButtonPush(new PButton({
 			energia = elist[i];
 			Movie.trapezi.trapeziProcessEnergia(energia);
 		}
-console.log('STEP BACK', energia.energiaIdosGet());
+
+		fasi = Movie.trapezi.partidaFasiGet();
+		idos = energia.energiaIdosGet();
+console.log('STEP BACKWARDS: φάση', fasi, 'είδος', idos);
+
+		switch (fasi) {
+		case 'ΑΛΛΑΓΗ':
+			if (idos === 'ΔΗΛΩΣΗ')
+			return Movie.panel.energiaPrevButton.pbuttonGetDOM().trigger('click');
+		}
+
+		Movie.displayPartida();
 	},
 }));
 

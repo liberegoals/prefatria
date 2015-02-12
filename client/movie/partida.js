@@ -1,3 +1,10 @@
+Movie.displayPartida = function() {
+	Movie.
+	displayEpomenos().
+	displayFila().
+	displayGipedo();
+};
+
 Movie.displayFila = function(thesi) {
 	var iseht, fila, anikta;
 
@@ -20,7 +27,7 @@ Movie.displayFila = function(thesi) {
 	domCreate();
 
 	if (fila.cardsCount() > 10)
-	fila.shiftxSet(0.24);
+	fila.shiftxSet(0.23);
 
 	Movie.filaDOM[iseht].
 	append(fila.domGet());
@@ -34,12 +41,27 @@ Movie.displayFila = function(thesi) {
 	}).
 	domRefresh();
 
+	Movie.fila[thesi] = fila;
 	return Movie;
 };
 
-Movie.tzogosDisplay = function() {
+Movie.displayGipedo = function() {
+	Movie.
+	displayTzogos();
+	return Movie;
+};
+
+Movie.displayTzogos = function() {
 	$('#movieTzogos').
 	remove();
+
+	switch (Movie.trapezi.partidaFasiGet()) {
+	case 'ΔΙΑΝΟΜΗ':
+	case 'ΔΗΛΩΣΗ':
+		break;
+	default:
+		return;
+	}
 
 	Movie.tzogos = new filajsHand(Movie.trapezi.tzogos.xartosia2string());
 
@@ -61,6 +83,7 @@ Movie.tzogosDisplay = function() {
 	attr('id', 'movieTzogos').
 	on('click', function(e) {
 		Movie.tzogosFaneros = !Movie.tzogosFaneros;
+
 		Movie.tzogos.
 		cardWalk(function() {
 			this.
