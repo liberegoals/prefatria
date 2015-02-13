@@ -47,7 +47,9 @@ Movie.displayFila = function(thesi) {
 
 Movie.displayGipedo = function() {
 	Movie.
-	displayTzogos();
+	displayTzogos().
+	displayBaza();
+
 	return Movie;
 };
 
@@ -60,7 +62,7 @@ Movie.displayTzogos = function() {
 	case 'ΔΗΛΩΣΗ':
 		break;
 	default:
-		return;
+		return Movie;
 	}
 
 	Movie.tzogos = new filajsHand(Movie.trapezi.tzogos.xartosia2string());
@@ -95,5 +97,9 @@ Movie.displayTzogos = function() {
 	}));
 	Movie.tzogos.domRefresh();
 
+	return Movie;
+};
+
+Movie.displayBaza = function() {
 	return Movie;
 };
