@@ -29,15 +29,15 @@ Movie.panel.bpanelButtonPush(Movie.panel.energiaNextButton = new PButton({
 		idos = energia.energiaIdosGet();
 console.log('STEP FORWARD: φάση', fasi, 'είδος', idos);
 
+		switch (idos) {
+		case 'ΦΥΛΛΟ':
+			return Movie.pexeFilo(energia);
+		}
+
 		switch (fasi) {
 		case 'ΑΛΛΑΓΗ':
 			if (idos === 'ΔΗΛΩΣΗ')
 			return Movie.pareTzogo();
-		case 'ΠΑΙΧΝΙΔΙ':
-			switch (idos) {
-			case 'ΦΥΛΛΟ':
-				//return Movie.pexeFilo();
-			}
 		}
 
 		Movie.displayPartida();
