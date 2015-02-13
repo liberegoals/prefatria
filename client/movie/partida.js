@@ -2,7 +2,8 @@ Movie.displayPartida = function() {
 	Movie.
 	displayEpomenos().
 	displayFila().
-	displayGipedo();
+	displayTzogos().
+	displayBaza();
 };
 
 Movie.displayFila = function(thesi) {
@@ -42,14 +43,6 @@ Movie.displayFila = function(thesi) {
 	domRefresh();
 
 	Movie.fila[thesi] = fila;
-	return Movie;
-};
-
-Movie.displayGipedo = function() {
-	Movie.
-	displayTzogos().
-	displayBaza();
-
 	return Movie;
 };
 
@@ -101,5 +94,9 @@ Movie.displayTzogos = function() {
 };
 
 Movie.displayBaza = function() {
+	if (!Movie.baza)
+	return Movie;
+
+	Movie.baza.domRefresh();
 	return Movie;
 };

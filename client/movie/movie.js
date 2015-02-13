@@ -187,7 +187,8 @@ Movie.setupThesi = function(thesi) {
 		displayDealer().
 		displayEpomenos().
 		displayFila().
-		displayGipedo();
+		displayTzogos().
+		displayBaza();
 	});
 
 	Movie.pektisDOM[thesi] = dom.appendTo(Movie.tsoxaDOM);
