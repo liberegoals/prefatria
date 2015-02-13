@@ -33,6 +33,11 @@ console.log('STEP FORWARD: φάση', fasi, 'είδος', idos);
 		case 'ΑΛΛΑΓΗ':
 			if (idos === 'ΔΗΛΩΣΗ')
 			return Movie.pareTzogo();
+		case 'ΠΑΙΧΝΙΔΙ':
+			switch (idos) {
+			case 'ΦΥΛΛΟ':
+				//return Movie.pexeFilo();
+			}
 		}
 
 		Movie.displayPartida();

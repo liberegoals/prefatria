@@ -22,3 +22,6 @@ Movie.pareTzogo = function() {
 		});
 	});
 };
+
+Movie.pexeFilo = function() {
+};
