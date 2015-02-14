@@ -30,7 +30,7 @@ Movie.pareTzogo = function() {
 	});
 };
 
-Movie.pexeFilo = function(energia) {
+Movie.pexeFilo = function(energia, fasi) {
 	var pektis, filo, fila, iseht;
 
 	pektis = energia.energiaPektisGet();
@@ -49,7 +49,7 @@ Movie.pexeFilo = function(energia) {
 		Movie.pareBaza(pektis);
 		Movie.baza = new filajsHand();
 		Movie.baza.domCreate().baselineSet('M').alignmentSet('C');
-		Movie.baza.domGet().attr('id', 'movieBaza').appendTo(Movie.tsoxaDOM);
+		Movie.baza.domGet().appendTo(Movie.tsoxaDOM);
 	}
 
 	iseht = Movie.thesiMap(pektis);
@@ -59,6 +59,10 @@ Movie.pexeFilo = function(energia) {
 	fila.cardAnimate(i, Movie.baza, {
 		duration: Movie.duration.filo,
 		callback: function() {
+			if (fasi === 'ΠΛΗΡΩΜΗ')
+			Movie.pareBaza(Movie.trapezi.partidaBazaPios(true));
+
+			else
 			Movie.
 			displayFila().
 			displayTzogos().
@@ -85,6 +89,7 @@ Movie.pareBaza = function(pektis) {
 	domGet().
 	appendTo(bazesDOM);
 
+	dom = Movie.baza.domGet();
 	count = Movie.baza.cardsCount();
 	Movie.baza.
 	cardWalk(function(i) {
@@ -92,8 +97,11 @@ Movie.pareBaza = function(pektis) {
 			width: '14px',
 			height: '20px',
 		}, Movie.duration.baza, function() {
-		count--;
-			if (count <= 0)
+			count--;
+			if (count > 0)
+			return;
+
+			dom.remove();
 			Movie.displayPartida();
 		});
 		Movie.baza.
