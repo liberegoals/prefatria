@@ -46,7 +46,7 @@ Movie.pexeFilo = function(energia) {
 	return;
 
 	if (Movie.trapezi.bazaFila.length === 1) {
-		Movie.pareBaza();
+		Movie.pareBaza(pektis);
 		Movie.baza = new filajsHand();
 		Movie.baza.domCreate().baselineSet('M').alignmentSet('C');
 		Movie.baza.domGet().attr('id', 'movieBaza').appendTo(Movie.tsoxaDOM);
@@ -59,22 +59,47 @@ Movie.pexeFilo = function(energia) {
 	fila.cardAnimate(i, Movie.baza, {
 		duration: Movie.duration.filo,
 		callback: function() {
-			Movie.displayPartida();
+			Movie.
+			displayFila().
+			displayTzogos().
+			displayBaza();
 		},
 	});
 };
 
-Movie.pareBaza = function() {
-	$('#movieBaza').each(function() {
-		$(this).
-		removeAttr('id').
-		animate({
-			left: '+=200px',
-		}, Movie.duration.baza).
-		find('.filajsCard').
-		animate({
-			width: '8px',
-			height: '12px',
-		}, Movie.duration.filo);
+Movie.pareBaza = function(pektis) {
+	var iseht, bazesDOM, dom, baza, count;
+
+	if (Movie.trapezi.bazaCount < 1)
+	return;
+
+	iseht = Movie.thesiMap(pektis);
+	bazesDOM = Movie.bazesDOM[iseht];
+
+	baza = new filajsHand().
+	circleSet($('#filajsCircle11')).
+	alignmentSet(iseht === 2 ? 'L' : 'R').
+	domCreate();
+
+	baza.
+	domGet().
+	appendTo(bazesDOM);
+
+	count = Movie.baza.cardsCount();
+	Movie.baza.
+	cardWalk(function(i) {
+		this.domGet().animate({
+			width: '14px',
+			height: '20px',
+		}, Movie.duration.baza, function() {
+		count--;
+			if (count <= 0)
+			Movie.displayPartida();
+		});
+		Movie.baza.
+		cardAnimate(i, baza, {
+			duration: Movie.duration.baza,
+			width: 14,
+		});
 	});
 };

@@ -265,6 +265,7 @@ background-color: rgb(255, 255, 178);
 	bottom: -40px;
 	width: 150px;
 	height: 30px;
+	text-align: right;
 background-color: rgba(237, 164, 61, 0.30);
 }
 
@@ -276,6 +277,22 @@ background-color: rgba(237, 164, 61, 0.30);
 #bazes2 {
 	right: auto;
 	left: 0px;
+	text-align: left;
+}
+
+.bazaPektis {
+	display: inline-block;
+	width: 14px;
+	height: 20px;
+	margin: 1px;
+}
+
+.bazaPektis0 {
+	background-color: rgb(245, 70, 70);
+}
+
+.bazaPektis1 {
+	background-color: rgb(70, 70, 245);
 }
 
 .dilosi {

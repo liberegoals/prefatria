@@ -2,6 +2,7 @@ Movie.displayPartida = function() {
 	Movie.
 	displayEpomenos().
 	displayFila().
+	displayBazes().
 	displayTzogos().
 	displayBaza();
 };
@@ -43,6 +44,28 @@ Movie.displayFila = function(thesi) {
 	domRefresh();
 
 	Movie.fila[thesi] = fila;
+	return Movie;
+};
+
+Movie.displayBazes = function(thesi) {
+	var iseht, count, i;
+
+	if (thesi === undefined)
+	return Movie.thesiWalk(function(thesi) {
+		Movie.displayBazes(thesi);
+	});
+
+	iseht = Movie.thesiMap(thesi);
+	Movie.bazesDOM[iseht].empty();
+
+	count = Movie.trapezi.bazes[thesi];
+	if (!count)
+	return Movie;
+
+	while (count-- > 0)
+	Movie.bazesDOM[iseht].
+	append($('<div>').addClass('bazaPektis bazaPektis' + (parseInt(count / 3) % 2)));
+
 	return Movie;
 };
 
