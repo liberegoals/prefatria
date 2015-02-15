@@ -1,7 +1,8 @@
 Movie.duration = {
 	tzogos: 400,
 	filo: 400,
-	baza: 350,
+	baza: 400,
+	bazaDelay: 1000,
 };
 
 Movie.pareTzogo = function() {
@@ -46,7 +47,6 @@ Movie.pexeFilo = function(energia, fasi) {
 	return;
 
 	if (Movie.trapezi.bazaFila.length === 1) {
-		Movie.pareBaza(pektis);
 		Movie.baza = new filajsHand();
 		Movie.baza.domCreate().baselineSet('M').alignmentSet('C');
 		Movie.baza.domGet().appendTo(Movie.tsoxaDOM);
@@ -59,55 +59,60 @@ Movie.pexeFilo = function(energia, fasi) {
 	fila.cardAnimate(i, Movie.baza, {
 		duration: Movie.duration.filo,
 		callback: function() {
-			if (fasi === 'ΠΛΗΡΩΜΗ')
-			Movie.pareBaza(Movie.trapezi.partidaBazaPios(true));
+			var baza;
 
-			else
 			Movie.
 			displayFila().
-			displayTzogos().
 			displayBaza();
+
+			if (Movie.trapezi.bazaPios.length)
+			return;
+
+			baza = Movie.baza;
+			setTimeout(function() {
+				Movie.pareBaza(baza, Movie.trapezi.partidaBazaPios(true));
+			}, Movie.duration.bazaDelay);
 		},
 	});
 };
 
-Movie.pareBaza = function(pektis) {
-	var iseht, bazesDOM, dom, baza, count;
-
-	if (Movie.trapezi.bazaCount < 1)
-	return;
+Movie.pareBaza = function(baza, pektis) {
+	var iseht, bazesDOM, dom, bazaPektis, count;
 
 	iseht = Movie.thesiMap(pektis);
 	bazesDOM = Movie.bazesDOM[iseht];
 
-	baza = new filajsHand().
+	bazaPektis = new filajsHand().
 	circleSet($('#filajsCircle11')).
 	alignmentSet(iseht === 2 ? 'L' : 'R').
 	domCreate();
 
-	baza.
+	bazaPektis.
 	domGet().
 	appendTo(bazesDOM);
 
-	dom = Movie.baza.domGet();
-	count = Movie.baza.cardsCount();
-	Movie.baza.
+	dom = baza.domGet();
+	count = baza.cardsCount();
+	baza.
 	cardWalk(function(i) {
-		this.domGet().animate({
-			width: '14px',
-			height: '20px',
-		}, Movie.duration.baza, function() {
-			count--;
-			if (count > 0)
-			return;
+		this.
+		domGet().
+		css('backgroundColor', 'rgb(245, 70, 70)').
+		children().
+		remove();
 
-			dom.remove();
-			Movie.displayPartida();
-		});
-		Movie.baza.
-		cardAnimate(i, baza, {
+		baza.
+		cardAnimate(i, bazaPektis, {
 			duration: Movie.duration.baza,
 			width: 14,
+			callback: function() {
+				count--;
+				if (count > 0)
+				return;
+
+				dom.remove();
+				Movie.displayPartida();
+			},
 		});
 	});
 };
