@@ -22,8 +22,14 @@ Movie.displayFila = function(thesi) {
 	Movie.filaDOM[iseht].empty();
 
 	fila = new filajsHand(Movie.trapezi.fila[thesi].xartosia2string());
+
+	if (anikta)
+	fila.sort();
+
+	else
+	fila.shuffle();
+
 	fila.
-	sort().
 	baselineSet(iseht === 1 ? 'T' : 'B').
 	alignmentSet('C').
 	domCreate();
@@ -64,7 +70,7 @@ Movie.displayBazes = function(thesi) {
 
 	while (count-- > 0)
 	Movie.bazesDOM[iseht].
-	append($('<div>').addClass('bazaPektis bazaPektis' + (parseInt(count / 3) % 2)));
+	append($('<div>').addClass('bazaPektis bazaXroma' + (parseInt(count / 3) % 2)));
 
 	return Movie;
 };
@@ -117,9 +123,34 @@ Movie.displayTzogos = function() {
 };
 
 Movie.displayBaza = function() {
-	if (!Movie.baza)
-	return Movie;
+	var i, iseht, pios, fila;
+
+	if (Movie.baza)
+	Movie.baza.
+	domGet().
+	remove();
+
+	Movie.baza = new filajsHand();
+	Movie.baza.domCreate().baselineSet('M').alignmentSet('C');
+	Movie.baza.domGet().appendTo(Movie.tsoxaDOM);
+
+	if (Movie.bazaEkremis) {
+		pios = Movie.trapezi.azabPios;
+		fila = Movie.trapezi.azabFila;
+	}
+	else {
+		pios = Movie.trapezi.bazaPios;
+		fila = Movie.trapezi.bazaFila;
+	}
+
+	for (i = 0; i < pios.length; i++) {
+		iseht = Movie.thesiMap(pios[i]);
+		Movie.baza.
+		cardPush(new filajsCard(fila[i].filo2string()).domCreate().domRefresh()).
+		circlePush($('#filajsCircle3' + iseht));
+	}
 
 	Movie.baza.domRefresh();
+
 	return Movie;
 };

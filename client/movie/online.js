@@ -46,6 +46,10 @@ Movie.pexeFilo = function(energia, fasi) {
 	if (i >= fila.cardArray.length)
 	return;
 
+	fila.cardArray[i].
+	faceUp().
+	domRefresh();
+
 	if (Movie.trapezi.bazaFila.length === 1) {
 		Movie.baza = new filajsHand();
 		Movie.baza.domCreate().baselineSet('M').alignmentSet('C');
@@ -59,25 +63,21 @@ Movie.pexeFilo = function(energia, fasi) {
 	fila.cardAnimate(i, Movie.baza, {
 		duration: Movie.duration.filo,
 		callback: function() {
-			var baza;
-
 			Movie.
-			displayFila().
-			displayBaza();
+			displayFila();
+
+			Movie.baza.domRefresh();
 
 			if (Movie.trapezi.bazaPios.length)
 			return;
 
-			baza = Movie.baza;
-			setTimeout(function() {
-				Movie.pareBaza(baza, Movie.trapezi.partidaBazaPios(true));
-			}, Movie.duration.bazaDelay);
+			Movie.bazaEkremis = true;
 		},
 	});
 };
 
-Movie.pareBaza = function(baza, pektis) {
-	var iseht, bazesDOM, dom, bazaPektis, count;
+Movie.pareBaza = function(pektis) {
+	var baza, iseht, bazesDOM, dom, bazaPektis, count;
 
 	iseht = Movie.thesiMap(pektis);
 	bazesDOM = Movie.bazesDOM[iseht];
@@ -91,13 +91,14 @@ Movie.pareBaza = function(baza, pektis) {
 	domGet().
 	appendTo(bazesDOM);
 
+	baza = Movie.baza;
 	dom = baza.domGet();
 	count = baza.cardsCount();
 	baza.
 	cardWalk(function(i) {
 		this.
 		domGet().
-		css('backgroundColor', 'rgb(245, 70, 70)').
+		addClass('bazaKlisti bazaXroma0').
 		children().
 		remove();
 
@@ -110,6 +111,7 @@ Movie.pareBaza = function(baza, pektis) {
 				if (count > 0)
 				return;
 
+				delete Movie.bazaEkremis;
 				dom.remove();
 				Movie.displayPartida();
 			},
