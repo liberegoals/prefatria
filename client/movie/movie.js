@@ -383,6 +383,7 @@ Movie.entopismosDianomis = function(kodikos) {
 Movie.displayDianomi = function() {
 	var ipolipo, i, kodikos;
 
+	delete Movie.bazaEkremis;
 	$('.dianomiTrexousa').removeClass('dianomiTrexousa');
 	$('.fila').empty();
 	$('.moviePektisEndixi').remove();

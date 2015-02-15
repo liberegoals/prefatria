@@ -13,6 +13,9 @@ Movie.panel.bpanelButtonPush(Movie.panel.energiaNextButton = new PButton({
 		if (!Movie.dianomi)
 		return;
 
+		if (Movie.bazaEkremis)
+		return Movie.pareBaza(Movie.trapezi.partidaBazaPios(true));
+
 		elist = Movie.dianomi.energiaArray;
 
 		Movie.energiaIndex++;
@@ -54,6 +57,7 @@ Movie.panel.bpanelButtonPush(Movie.panel.energiaPrevButton = new PButton({
 		if (!Movie.dianomi)
 		return;
 
+		delete Movie.bazaEkremis;
 		elist = Movie.dianomi.energiaArray;
 
 		Movie.energiaIndex--;
