@@ -188,7 +188,6 @@ Movie.setupThesi = function(thesi) {
 		displayEpomenos().
 		displayFila().
 		displayBazes().
-		displayTzogos().
 		displayBaza();
 	});
 
