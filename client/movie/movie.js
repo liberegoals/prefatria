@@ -258,11 +258,16 @@ Movie.zitaData = function() {
 // υπάρχει τσόχα στην οποία παρουσιάζονται τα τεκταινόμενα στην παρτίδα.
 
 Movie.displayTrapezi = function() {
+	var kasa;
+
 	Movie.trapeziKodikosDOM.
 	text(Movie.trapezi.trapeziKodikosGet());
 
-	Movie.kasaDOM.
-	text(Movie.trapezi.trapeziKasaGet() * 30);
+	kasa = Movie.trapezi.trapeziKasaGet() * 30;
+	if (isNaN(kasa))
+	Movie.kasaDOM.empty();
+	else
+	Movie.kasaDOM.text(kasa);
 
 	Movie.displayOptions();
 
@@ -335,15 +340,14 @@ Movie.displayPektis = function(thesi) {
 	return Movie;
 };
 
-// Η function "entopismosDianomis" επιχειρεί να εντοπίσει τον δείκτη της
-// διανομής τής οποίας ο κωδικός δίνεται ως παράμετρος, στο array διανομών
+// Η function "entopismosDianomis" επιχειρεί να εντοπίσει τον δείκτη (index)
+// της διανομής τής οποίας ο κωδικός δίνεται ως παράμετρος, στο array διανομών
 // της παρτίδας.
 
 Movie.entopismosDianomis = function(kodikos) {
-	var dcount, i, dianomi;
+	var dcount, i;
 
 	Movie.dianomiIndex = -1;
-	Movie.dianomi = null;
 
 	// Αν δεν έχει καθοριστεί κωδικός διανομής, τότε υποτίθεται η διανομή
 	// που καθορίστηκε στο URL.
@@ -360,14 +364,16 @@ Movie.entopismosDianomis = function(kodikos) {
 	if (!dcount)
 	return Movie;
 
+	// Έχουμε διανομές, επομένως θα πρέπει να εντοπίσουμε με κάποιον τρόπο
+	// μια τρέχουσα διανομή.
+
 	if (!kodikos) {
 		Movie.dianomiIndex = 0;
 		return Movie;
 	}
 
 	for (i = 0; i < Movie.trapezi.dianomiArray.length; i++) {
-		dianomi = Movie.trapezi.dianomiArray[i];
-		if (dianomi.dianomiKodikosGet() === kodikos) {
+		if (Movie.trapezi.dianomiArray[i].dianomiKodikosGet() === kodikos) {
 			Movie.dianomiIndex = i;
 			break;
 		}
@@ -386,8 +392,8 @@ Movie.displayDianomi = function() {
 	$('.dianomiTrexousa').removeClass('dianomiTrexousa');
 	$('.fila').empty();
 	$('.moviePektisEndixi').remove();
-	if (Movie.dianomiKodikosDOM) Movie.dianomiKodikosDOM.text('');
-	if (Movie.ipolipoDOM) Movie.ipolipoDOM.text('');
+	if (Movie.dianomiKodikosDOM) Movie.dianomiKodikosDOM.empty();
+	if (Movie.ipolipoDOM) Movie.ipolipoDOM.empty();
 
 	Movie.dianomi = null;
 	if (Movie.dianomiIndex < 0)
