@@ -1,10 +1,78 @@
 Movie.displayPartida = function() {
 	Movie.
 	displayEpomenos().
+	displayAgora().
 	displayFila().
 	displayBazes().
 	displayTzogos().
 	displayBaza();
+};
+
+Movie.displayAgora = function(thesi) {
+	var iseht, dilosi, paso, simetoxi;
+
+	if (thesi === undefined)
+	return Movie.thesiWalk(function(thesi) {
+		Movie.displayAgora(thesi);
+	});
+
+	iseht = Movie.thesiMap(thesi);
+
+	Movie.agoraDOM[iseht].
+	removeClass().
+	addClass('agora').
+	empty();
+
+	Movie.dilosiDOM[iseht].
+	removeClass().
+	addClass('dilosi').
+	empty();
+
+	dilosi = Movie.trapezi.adilosi[thesi];
+	if (dilosi)
+	Movie.agoraDOM[iseht].
+	addClass('movieDilosiOxiPaso').
+	append(dilosi.dilosiDOM());
+
+	if (thesi == Movie.trapezi.partidaTzogadorosGet())
+	Movie.agoraDOM[iseht].
+	addClass('movieDilosiTzogadoros');
+
+	paso = Movie.trapezi.apaso[thesi];
+	if (paso) {
+		if (Movie.agoraDOM[iseht].text())
+		Movie.agoraDOM[iseht].
+		addClass('movieDilosiPaso');
+
+		Movie.dilosiDOM[iseht].
+		addClass('movieDilosiPaso').
+		text('ΠΑΣΟ');
+	}
+
+	simetoxi = Movie.trapezi.sdilosi[thesi];
+	if (simetoxi) {
+		Movie.dilosiDOM[iseht].removeClass('movieDilosiPaso');
+		if (simetoxi.simetoxiIsPaso())
+		Movie.dilosiDOM[iseht].addClass('tsoxaPektisSimetoxiPaso').text('ΠΑΣΟ');
+		else if (simetoxi.simetoxiIsPezo())
+		Movie.dilosiDOM[iseht].addClass('tsoxaPektisSimetoxiPezo').text('ΠΑΙΖΩ');
+		else if (simetoxi.simetoxiIsMazi())
+		Movie.dilosiDOM[iseht].addClass('tsoxaPektisSimetoxiMazi').text('ΜΑΖΙ');
+		else if (simetoxi.simetoxiIsVoithao())
+		Movie.dilosiDOM[iseht].addClass('tsoxaPektisSimetoxiPezo').text('ΒΟΗΘΑΩ');
+		else if (simetoxi.simetoxiIsMonos())
+		Movie.dilosiDOM[iseht].addClass('tsoxaPektisSimetoxiMonos').text('ΜΟΝΟΣ');
+	}
+
+	switch (Movie.trapezi.partidaFasiGet()) {
+	case 'ΠΑΙΧΝΙΔΙ':
+		if (Movie.trapezi.bazaCount > 0)
+		Movie.dilosiDOM[iseht].
+		addClass('movieDilosiAorati');
+		break;
+	}
+
+	return Movie;
 };
 
 Movie.displayFila = function(thesi) {
@@ -16,10 +84,8 @@ Movie.displayFila = function(thesi) {
 	});
 
 	iseht = Movie.thesiMap(thesi);
-	anikta = (iseht === 1) || Movie.oxiKlista23();
-
-	if (Movie.filaDOM[iseht])
 	Movie.filaDOM[iseht].empty();
+	anikta = (iseht === 1) || Movie.oxiKlista23();
 
 	fila = new filajsHand(Movie.trapezi.fila[thesi].xartosia2string());
 
@@ -70,7 +136,7 @@ Movie.displayBazes = function(thesi) {
 
 	while (count-- > 0)
 	Movie.bazesDOM[iseht].
-	append($('<div>').addClass('bazaPektis bazaXroma' + (parseInt(count / 3) % 2)));
+	append($('<div>').addClass('bazaPektis bazaKlisti bazaXroma' + (parseInt(count / 3) % 2)));
 
 	return Movie;
 };

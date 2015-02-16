@@ -213,7 +213,9 @@ body {
 	bottom: 2px;
 	width: 100%;
 	height: 1px;
+/*
 background-color: red;
+*/
 }
 
 #fila1 {
@@ -226,7 +228,11 @@ background-color: red;
 	bottom: -40px;
 	width: 80px;
 	height: 30px;
-background-color: rgba(255, 0, 0, 0.20);
+	font-family: "Comic Sans MS", cursive, sans-serif;
+/*
+background-color: rgba(255, 234, 157, 1);
+*/
+border-radius: 8px;
 }
 
 #agora1 {
@@ -245,6 +251,7 @@ background-color: rgba(255, 0, 0, 0.20);
 	bottom: -40px;
 	width: 60px;
 	height: 30px;
+	border-radius: 8px;
 background-color: rgb(255, 255, 178);
 }
 
@@ -266,7 +273,9 @@ background-color: rgb(255, 255, 178);
 	width: 150px;
 	height: 30px;
 	text-align: right;
+/*
 background-color: rgba(237, 164, 61, 0.30);
+*/
 }
 
 #bazes1 {
@@ -290,30 +299,36 @@ background-color: rgba(237, 164, 61, 0.30);
 .bazaKlisti {
 	border-style: solid;
 	border-width: 1px;
-	border-color: #F69F9F;
+	border-color: #807EAF;
+	border-radius: 0;
 }
 
 .bazaXroma0 {
-	background-color: rgb(245, 70, 70);
+	background-color: rgb(155, 129, 129);
 }
 
 .bazaXroma1 {
-	background-color: rgb(70, 70, 245);
+	background-color: rgb(119, 119, 126);
 }
 
 .dilosi {
 	position: absolute;
 	left: auto;
 	right: 0px;
-	bottom: -80px;
+	bottom: -40px;
 	width: 150px;
 	height: 30px;
+	font-family: "Comic Sans MS", cursive, sans-serif;
+	font-size: 22px;
+	border-radius: 8px;
+/*
 background-color: rgba(61, 169, 237, 0.30);
+*/
 }
 
 #dilosi1 {
 	bottom: auto;
-	top: -80px;
+	top: -40px;
 }
 
 #dilosi2 {
@@ -322,7 +337,9 @@ background-color: rgba(61, 169, 237, 0.30);
 }
 
 .dataItem {
+/*
 	background-color: rgba(156, 0, 255, 0.20);
+*/
 }
 
 #data {
@@ -335,7 +352,6 @@ background-color: rgba(61, 169, 237, 0.30);
 	font-size: 18px;
 
 	text-shadow: 0px 0px 2px rgb(184, 243, 95);
-	background-color: rgba(227, 255, 0, 0.20);
 }
 
 #trapeziKodikos:before {
@@ -384,4 +400,33 @@ font-size:16px;
 	content: 'Υπόλοιπο';
 	font-weight: normal;
 	font-style: italic;
+}
+
+.tsoxaDilosiExo {
+	position: relative;
+	bottom: 3px;
+}
+
+.tsoxaDilosiBazes {
+	font-size: 24px;
+}
+
+.tsoxaDilosiXroma {
+	height: 22px;
+}
+
+.movieDilosiPaso {
+	background-color: rgba(100, 146, 145, 0.8);
+}
+
+.movieDilosiOxiPaso {
+	background-color: rgba(255, 234, 157, 0.4);
+}
+
+.movieDilosiTzogadoros {
+	background-color: rgba(255, 234, 157, 1);
+}
+
+.movieDilosiAorati {
+	display: none;
 }

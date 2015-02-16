@@ -12,6 +12,7 @@ Selida::javascript("common/skiniko");
 Selida::javascript("common/partida");
 Selida::javascript("common/energia");
 Selida::javascript("common/kinisi");
+Selida::javascript("lib/skiniko");
 Selida::javascript("arena/arena");
 Selida::javascript("arena/partida");
 Selida::javascript("arena/enimerosi");

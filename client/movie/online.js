@@ -9,6 +9,7 @@ Movie.pareTzogo = function() {
 	var tzogadoros, count;
 
 	tzogadoros = Movie.trapezi.partidaTzogadorosGet();
+	Movie.displayAgora();
 
 	count = 0;
 	Movie.tzogos.

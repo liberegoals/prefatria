@@ -31,6 +31,7 @@ Selida::javascript("common/prefadoros");
 Selida::javascript("common/skiniko");
 Selida::javascript("common/partida");
 Selida::javascript("common/energia");
+Selida::javascript("lib/skiniko");
 Selida::javascript("lib/panel");
 Selida::javascript("movie/movie");
 Selida::javascript("movie/data");
