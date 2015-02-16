@@ -168,7 +168,10 @@ Movie.setupThesi = function(thesi) {
 
 	dom.
 	append(Movie.bazesDOM[thesi] = $('<div>').
-	attr('id', 'bazes' + thesi).
+	attr({
+		id: 'bazes' + thesi,
+		title: 'Μπάζες παίκτη',
+	}).
 	addClass('bazes'));
 
 	dom.
@@ -186,6 +189,7 @@ Movie.setupThesi = function(thesi) {
 		displayPektis().
 		displayDealer().
 		displayEpomenos().
+		displayAgora().
 		displayFila().
 		displayBazes().
 		displayBaza();
