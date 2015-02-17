@@ -464,7 +464,6 @@ Movie.displayEpomenos = function() {
 	return Movie;
 
 	epomenos = Movie.trapezi.partidaEpomenosGet();
-console.log(epomenos);
 	iseht = Movie.thesiMap(epomenos);
 
 	Movie.pektisDOM[iseht].addClass('tsoxaPektisEpomenos');
