@@ -1,4 +1,5 @@
 Movie.displayPartida = function() {
+	$('.filajsHand').remove();
 	Movie.
 	displayEpomenos().
 	displayAgora().
