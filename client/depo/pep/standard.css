@@ -1,0 +1,62 @@
+body {
+	position: relative;
+	width: 728px;
+	overflow: hidden;
+	margin: 0;
+	font-family: "Arial", sans-serif;
+	text-shadow: -1px 0px 10px #F1F1F1, 1px 0px 10px #F1F1F1, -2px 0px 8px #F1F1F1, 2px 0px 8px #F1F1F1;
+}
+
+a {
+	text-shadow: none;
+}
+
+#plesio {
+	position: absolute;
+	display: inline-block;
+	width: 726px;
+	height: 88px;
+	border-style: solid;
+	border-width: 1px;
+	border-color: rgb(235, 181, 181);
+}
+.kimeno {
+	display: none;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	text-align: center;
+}
+
+#kimeno1 {
+	top: 24px;
+	font-size: 30px;
+	font-weight: bold;
+	color: rgb(22, 77, 66);
+}
+
+#kimeno2 {
+	top: 20px;
+	font-size: 30px;
+	font-weight: bold;
+	color: rgb(31, 58, 35);
+}
+
+#kimeno3 {
+	top: 46px;
+	font-size: 20px;
+	font-weight: bold;
+	color: rgb(94, 68, 0);
+}
+
+#kimeno4 {
+	top: 13px;
+	line-height: 156%;
+	font-size: 20px;
+	font-weight: bold;
+	color: rgb(86, 84, 2);
+}
+
+.sigrafeas {
+}
