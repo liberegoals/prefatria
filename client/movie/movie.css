@@ -252,7 +252,15 @@ border-radius: 8px;
 	width: 60px;
 	height: 30px;
 	border-radius: 8px;
+
+	font-weight: bold;
+	font-size: 22px;
+	color: rgb(37, 59, 146);
 background-color: rgb(255, 255, 178);
+}
+
+.kapikiaMion {
+	color: #B60B03;
 }
 
 #kapikia1 {
