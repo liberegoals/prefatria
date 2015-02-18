@@ -35,6 +35,8 @@ console.log('STEP FORWARD: φάση', fasi, 'είδος', idos);
 		switch (idos) {
 		case 'ΦΥΛΛΟ':
 			return Movie.pexeFilo(energia, fasi);
+		case 'FLOP':
+			return Movie.anixeTzogo();
 		}
 
 		switch (fasi) {

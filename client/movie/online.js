@@ -32,6 +32,15 @@ Movie.pareTzogo = function() {
 	});
 };
 
+Movie.anixeTzogo = function() {
+	Movie.tzogos.
+	cardWalk(function(i) {
+		this.
+		faceUp().
+		domRefresh();
+	});
+};
+
 Movie.pexeFilo = function(energia, fasi) {
 	var pektis, filo, fila, iseht;
 
@@ -97,11 +106,16 @@ Movie.pareBaza = function(pektis) {
 	count = baza.cardsCount();
 	baza.
 	cardWalk(function(i) {
-		this.
-		domGet().
-		addClass('bazaKlisti bazaXroma0').
-		children().
-		remove();
+		try {
+			this.
+			domGet().
+			addClass('bazaKlisti bazaXroma0').
+			children().
+			remove();
+		} catch (e) {
+			count--;
+			return;
+		}
 
 		baza.
 		cardAnimate(i, bazaPektis, {
