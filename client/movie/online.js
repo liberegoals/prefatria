@@ -87,7 +87,7 @@ Movie.pexeFilo = function(energia, fasi) {
 };
 
 Movie.pareBaza = function(pektis) {
-	var baza, iseht, bazesDOM, dom, bazaPektis, count;
+	var baza, iseht, bazesDOM, bazaPektis, count;
 
 	iseht = Movie.thesiMap(pektis);
 	bazesDOM = Movie.bazesDOM[iseht];
@@ -128,6 +128,8 @@ Movie.pareBaza = function(pektis) {
 
 				delete Movie.bazaEkremis;
 				dom.remove();
+				if (Movie.trapezi.partidaFasiGet() === 'ΠΛΗΡΩΜΗ')
+				Movie.trapezi.partidaReplay({eoske:Movie.dianomi.dianomiKodikosGet()});
 				Movie.displayPartida();
 			},
 		});

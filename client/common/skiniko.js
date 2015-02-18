@@ -968,7 +968,7 @@ Dianomi.prototype.dianomiKasaAdd = function(thesi, kapikia) {
 };
 
 Dianomi.prototype.dianomiKasaGet = function(thesi) {
-	return this['kasa' + thesi];
+	return parseInt(this['kasa' + thesi]);
 };
 
 Dianomi.prototype.dianomiMetritaSet = function(thesi, kapikia) {
@@ -987,7 +987,7 @@ Dianomi.prototype.dianomiMetritaSub = function(thesi, kapikia) {
 };
 
 Dianomi.prototype.dianomiMetritaGet = function(thesi) {
-	return this['metrita' + thesi];
+	return parseInt(this['metrita' + thesi]);
 };
 
 Dianomi.prototype.dianomiTelosGet = function() {

@@ -2,11 +2,41 @@ Movie.displayPartida = function() {
 	$('.filajsHand').remove();
 	Movie.
 	displayEpomenos().
+	displayKapikia().
 	displayAgora().
 	displayFila().
 	displayBazes().
 	displayTzogos().
 	displayBaza();
+};
+
+Movie.displayKapikia = function(thesi) {
+	var iseht, dilosi, paso, simetoxi;
+
+	if (thesi === undefined)
+	return Movie.thesiWalk(function(thesi) {
+		Movie.displayKapikia(thesi);
+	});
+
+	iseht = Movie.thesiMap(thesi);
+
+	Movie.kapikiaDOM[iseht].
+	removeClass().
+	empty();
+
+	kapikia = Movie.trapezi.partidaKapikiaGet(thesi);
+	if (!kapikia)
+	return Movie;
+
+	Movie.kapikiaDOM[iseht].
+	addClass('kapikia').
+	text(kapikia);
+
+	if (kapikia < 0)
+	Movie.kapikiaDOM[iseht].
+	addClass('kapikiaMion');
+
+	return Movie;
 };
 
 Movie.displayAgora = function(thesi) {
@@ -68,7 +98,7 @@ Movie.displayAgora = function(thesi) {
 
 	simetoxi = Movie.trapezi.sdilosi[thesi];
 	if (simetoxi) {
-		Movie.dilosiDOM[iseht].removeClass('movieDilosiPaso');
+		Movie.dilosiDOM[iseht].  removeClass().  addClass('dilosi').  empty();
 		if (simetoxi.simetoxiIsPaso())
 		Movie.dilosiDOM[iseht].addClass('tsoxaPektisSimetoxiPaso').text('ΠΑΣΟ');
 		else if (simetoxi.simetoxiIsPezo())
@@ -209,14 +239,8 @@ Movie.displayTzogos = function() {
 Movie.displayBaza = function() {
 	var i, iseht, pios, fila;
 
-	if (Movie.baza)
-	Movie.baza.
-	domGet().
-	remove();
-
-	Movie.baza = new filajsHand();
-	Movie.baza.domCreate().baselineSet('M').alignmentSet('C');
-	Movie.baza.domGet().appendTo(Movie.tsoxaDOM);
+	if (!Movie.baza)
+	return Movie;
 
 	if (Movie.bazaEkremis) {
 		pios = Movie.trapezi.azabPios;
