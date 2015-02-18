@@ -29,7 +29,7 @@ Movie.displayAgora = function(thesi) {
 	addClass('dilosi').
 	empty();
 
-	if (thesi === Movie.trapezi.partidaTzogadorosGet()) {
+	if (thesi == Movie.trapezi.partidaTzogadorosGet()) {
 		if (Movie.trapezi.partidaIsAgora()) {
 			dilosi = Movie.trapezi.partidaAgoraGet();
 			Movie.agoraDOM[iseht].
