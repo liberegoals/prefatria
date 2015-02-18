@@ -240,6 +240,10 @@ Trapezi.prototype.partidaAgoraGet = function() {
 	return this.agora;
 };
 
+Trapezi.prototype.partidaIsAgora = function() {
+	return this.agora;
+};
+
 Trapezi.prototype.partidaOxiAgora = function() {
 	return !this.partidaAgoraGet();
 };

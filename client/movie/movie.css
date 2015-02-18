@@ -431,6 +431,10 @@ font-size:16px;
 	letter-spacing: -2px;
 }
 
+.movieDilosiAgora {
+	background-color: rgb(252, 252, 143);
+}
+
 .movieDilosiAorati {
 	display: none;
 }
