@@ -459,12 +459,16 @@ Movie.displayDealer = function() {
 Movie.displayEpomenos = function() {
 	var epomenos, iseht;
 
-	$('.tsoxaPektisEpomenos').removeClass('tsoxaPektisEpomenos');
+	$('.tsoxaPektisEpomenos').
+	removeClass('tsoxaPektisEpomenos');
+
 	if (!Movie.dianomi)
 	return Movie;
 
 	epomenos = Movie.trapezi.partidaEpomenosGet();
-console.log(epomenos);
+	if (!epomenos)
+	return Movie;
+
 	iseht = Movie.thesiMap(epomenos);
 
 	Movie.pektisDOM[iseht].addClass('tsoxaPektisEpomenos');

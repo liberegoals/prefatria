@@ -67,6 +67,7 @@ Movie.displayAgora = function(thesi) {
 
 	switch (Movie.trapezi.partidaFasiGet()) {
 	case 'ΠΑΙΧΝΙΔΙ':
+	case 'ΠΛΗΡΩΜΗ':
 		if (Movie.trapezi.bazaCount > 0)
 		Movie.dilosiDOM[iseht].
 		addClass('movieDilosiAorati');
