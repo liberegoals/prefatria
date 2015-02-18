@@ -144,16 +144,25 @@ body {
 .moviePektisEndixi {
 	position: absolute;
 	width: 40px;
-	top: -4px;
-}
-
-.moviePektisEndixi1 {
-	top: auto;
-	bottom: -4px;
-}
-
-.moviePektisDealer {
 	left: -18px;
+}
+
+.movieDealer {
+	top: 4px;
+}
+
+.movieDealer1 {
+	top: auto;
+	bottom: 4px;
+}
+
+.movieMazi {
+	bottom: 4px;
+}
+
+.movieMazi1 {
+	bottom: auto;
+	top: 4px;
 }
 
 /**********************************************************************************************************************/

@@ -434,7 +434,7 @@ Movie.displayDianomi = function() {
 Movie.displayDealer = function() {
 	var dealer, iseht;
 
-	$('.moviePektisDealer').remove();
+	$('.movieDealer').remove();
 	if (!Movie.dianomi)
 	return Movie;
 
@@ -442,7 +442,7 @@ Movie.displayDealer = function() {
 	iseht = Movie.thesiMap(dealer);
 
 	Movie.pektisDOM[iseht].
-	append($('<img>').addClass('moviePektisEndixi moviePektisEndixi' + iseht + ' moviePektisDealer').attr({
+	append($('<img>').addClass('moviePektisEndixi movieDealer movieDealer' + iseht).attr({
 		src: '../ikona/endixi/dealer.png',
 		title: 'Dealer',
 	}));
@@ -450,7 +450,7 @@ Movie.displayDealer = function() {
 	iseht = iseht.epomeniThesi();
 
 	Movie.pektisDOM[iseht].
-	append($('<img>').addClass('moviePektisEndixi moviePektisEndixi' + iseht + ' moviePektisDealer').attr({
+	append($('<img>').addClass('moviePektisEndixi movieDealer movieDealer' + iseht).attr({
 		src: '../ikona/endixi/protos.png',
 		title: 'Πρώτος',
 	}));
