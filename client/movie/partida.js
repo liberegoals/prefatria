@@ -119,7 +119,7 @@ Movie.displayAgora = function(thesi) {
 };
 
 Movie.displayFila = function(thesi) {
-	var iseht, fila, anikta;
+	var iseht, fila, anikta, pos = {};
 
 	if (thesi === undefined)
 	return Movie.thesiWalk(function(thesi) {
@@ -127,8 +127,43 @@ Movie.displayFila = function(thesi) {
 	});
 
 	iseht = Movie.thesiMap(thesi);
-	Movie.filaDOM[iseht].empty();
-	anikta = (iseht === 1) || Movie.oxiKlista23();
+
+	if ((Movie.trapezi.partidaFasiGet() === 'CLAIM') && (thesi == Movie.trapezi.partidaTzogadorosGet())) {
+		if (iseht === 1)
+		pos.top = '-187px';
+
+		else
+		pos.bottom = '-190px';
+
+		switch (iseht) {
+		case 2:
+			pos.left = '-178px';
+			break;
+		case 3:
+			pos.left = '184px';
+			break;
+		}
+	}
+	else {
+		pos = {
+			left: '2px',
+		};
+		switch (iseht) {
+		case 2:
+		case 3:
+			pos['bottom'] = '0px';
+			break;
+		default:
+			pos['top'] = '0px';
+			break;
+		}
+	}
+
+	Movie.filaDOM[iseht].
+	css(pos).
+	empty();
+
+	anikta = ((iseht === 1) || Movie.oxiKlista23());
 
 	fila = new filajsHand(Movie.trapezi.fila[thesi].xartosia2string());
 

@@ -3,6 +3,7 @@ Movie.duration = {
 	filo: 400,
 	baza: 400,
 	bazaDelay: 1000,
+	claim: 400,
 };
 
 Movie.pareTzogo = function() {
@@ -134,4 +135,29 @@ Movie.pareBaza = function(pektis) {
 			},
 		});
 	});
+};
+
+Movie.requestClaim = function(energia) {
+	var pektis, iseht, baza, x, animate = {};
+
+	pektis = energia.energiaPektisGet();
+	iseht = Movie.thesiMap(pektis);
+	baza = Movie.filaDOM[iseht];
+
+	if (iseht === 1)
+	animate.top = '-=187px';
+
+	else
+	animate.bottom = '-=190px';
+
+	switch (iseht) {
+	case 2:
+		animate.left = '-=180px';
+		break;
+	case 3:
+		animate.left = '+=182px';
+		break;
+	}
+
+	baza.animate(animate, Movie.duration.claim);
 };
