@@ -30,10 +30,14 @@ Movie.displayAgora = function(thesi) {
 	empty();
 
 	dilosi = Movie.trapezi.adilosi[thesi];
-	if (dilosi)
-	Movie.agoraDOM[iseht].
-	addClass('movieDilosiOxiPaso').
-	append(dilosi.dilosiDOM());
+	if (dilosi) {
+		Movie.agoraDOM[iseht].
+		addClass('movieDilosiOxiPaso').
+		append(dilosi.dilosiDOM());
+		if (dilosi.dilosiIsTagrafo())
+		Movie.agoraDOM[iseht].
+		addClass('movieDilosiTaGrafo');
+	}
 
 	if (thesi == Movie.trapezi.partidaTzogadorosGet())
 	Movie.agoraDOM[iseht].
