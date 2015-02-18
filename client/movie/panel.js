@@ -3,6 +3,22 @@ Movie.panel.omadaMax = 1;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
 
+Movie.panel.bpanelButtonPush(new PButton({
+	id: 'dianomiNext',
+	omada: 1,
+	img: '../ikona/movie/fwd.png',
+	title: 'Επόμενη διανομή',
+	click: function(e) {
+		Movie.dianomiIndex++;
+
+		if (Movie.dianomiIndex >= Movie.trapezi.dianomiArray.length)
+		Movie.dianomiIndex--;
+
+		else
+		Movie.displayDianomi();
+	},
+}));
+
 Movie.panel.bpanelButtonPush(Movie.panel.energiaNextButton = new PButton({
 	omada: 1,
 	img: '../ikona/movie/end.png',
@@ -92,22 +108,6 @@ console.log('STEP BACKWARDS: φάση', fasi, 'είδος', idos);
 		}
 
 		Movie.displayPartida();
-	},
-}));
-
-Movie.panel.bpanelButtonPush(new PButton({
-	id: 'dianomiNext',
-	omada: 1,
-	img: '../ikona/movie/fwd.png',
-	title: 'Επόμενη διανομή',
-	click: function(e) {
-		Movie.dianomiIndex++;
-
-		if (Movie.dianomiIndex >= Movie.trapezi.dianomiArray.length)
-		Movie.dianomiIndex--;
-
-		else
-		Movie.displayDianomi();
 	},
 }));
 
