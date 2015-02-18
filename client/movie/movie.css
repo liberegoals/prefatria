@@ -70,6 +70,13 @@ body {
 	text-align: center;
 }
 
+.dianomiAgoraAsoiIcon {
+	position: absolute;
+	bottom: 0px;
+	left: 12px;
+	width: 24px;
+}
+
 .tsoxaDilosiAsoi {
 	bottom: 1px;
 	width: 34px;

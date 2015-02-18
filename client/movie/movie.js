@@ -589,7 +589,7 @@ Movie.agoraDisplay = function() {
 	if (agora.dilosiIsAsoi())
 	dom.
 	append($('<div>').addClass('tsoxaDilosiAsoi').
-	append($('<img>').addClass('tsoxaDilosiAsoiIcon').
+	append($('<img>').addClass('dianomiAgoraAsoiIcon').
 	attr('src', '../ikona/panel/asoiOn.png')));
 
 	return dom;
