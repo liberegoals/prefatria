@@ -49,9 +49,10 @@ Movie.displayAgora = function(thesi) {
 		Movie.agoraDOM[iseht].
 		addClass('movieDilosiOxiPaso').
 		append(dilosi.dilosiDOM());
-		if (dilosi.dilosiIsTagrafo())
+
+		if (dilosi.dilosiIsTagrafo() ||dilosi.dilosiIsExo())
 		Movie.agoraDOM[iseht].
-		addClass('movieDilosiTaGrafo');
+		addClass('movieDilosiPikni');
 	}
 
 	paso = Movie.trapezi.apaso[thesi];
