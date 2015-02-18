@@ -394,7 +394,6 @@ Movie.displayDianomi = function() {
 	var ipolipo, i, kodikos;
 
 	delete Movie.bazaEkremis;
-	//if (Movie.baza) Movie.baza.domGet().remove();
 	$('.dianomiTrexousa').removeClass('dianomiTrexousa');
 	$('.fila').empty();
 	$('.moviePektisEndixi').remove();

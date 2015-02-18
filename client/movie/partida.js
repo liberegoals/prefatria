@@ -59,7 +59,7 @@ Movie.displayAgora = function(thesi) {
 	addClass('dilosi').
 	empty();
 
-	$('.movieMazi').remove();
+	Movie.pektisDOM[iseht].children('.movieMazi').remove();
 
 	if (thesi == Movie.trapezi.partidaTzogadorosGet()) {
 		if (Movie.trapezi.partidaIsAgora()) {
@@ -95,7 +95,7 @@ Movie.displayAgora = function(thesi) {
 
 	simetoxi = Movie.trapezi.sdilosi[thesi];
 	if (simetoxi) {
-		Movie.dilosiDOM[iseht].  removeClass().  addClass('dilosi').  empty();
+		Movie.dilosiDOM[iseht].removeClass().addClass('dilosi').empty();
 		if (simetoxi.simetoxiIsPaso())
 		Movie.dilosiDOM[iseht].addClass('tsoxaPektisSimetoxiPaso').text('ΠΑΣΟ');
 		else if (simetoxi.simetoxiIsPezo())
