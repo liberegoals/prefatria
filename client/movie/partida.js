@@ -29,7 +29,22 @@ Movie.displayAgora = function(thesi) {
 	addClass('dilosi').
 	empty();
 
-	dilosi = Movie.trapezi.adilosi[thesi];
+	if (thesi === Movie.trapezi.partidaTzogadorosGet()) {
+		if (Movie.trapezi.partidaIsAgora()) {
+			dilosi = Movie.trapezi.partidaAgoraGet();
+			Movie.agoraDOM[iseht].
+			addClass('movieDilosiAgora');
+		}
+		else {
+			dilosi = Movie.trapezi.adilosi[thesi];
+			Movie.agoraDOM[iseht].
+			addClass('movieDilosiTzogadoros');
+		}
+	}
+	else {
+		dilosi = Movie.trapezi.adilosi[thesi];
+	}
+
 	if (dilosi) {
 		Movie.agoraDOM[iseht].
 		addClass('movieDilosiOxiPaso').
@@ -38,10 +53,6 @@ Movie.displayAgora = function(thesi) {
 		Movie.agoraDOM[iseht].
 		addClass('movieDilosiTaGrafo');
 	}
-
-	if (thesi == Movie.trapezi.partidaTzogadorosGet())
-	Movie.agoraDOM[iseht].
-	addClass('movieDilosiTzogadoros');
 
 	paso = Movie.trapezi.apaso[thesi];
 	if (paso) {
