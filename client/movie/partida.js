@@ -59,6 +59,8 @@ Movie.displayAgora = function(thesi) {
 	addClass('dilosi').
 	empty();
 
+	$('.movieMazi').remove();
+
 	if (thesi == Movie.trapezi.partidaTzogadorosGet()) {
 		if (Movie.trapezi.partidaIsAgora()) {
 			dilosi = Movie.trapezi.partidaAgoraGet();
@@ -98,8 +100,18 @@ Movie.displayAgora = function(thesi) {
 		Movie.dilosiDOM[iseht].addClass('tsoxaPektisSimetoxiPaso').text('ΠΑΣΟ');
 		else if (simetoxi.simetoxiIsPezo())
 		Movie.dilosiDOM[iseht].addClass('tsoxaPektisSimetoxiPezo').text('ΠΑΙΖΩ');
-		else if (simetoxi.simetoxiIsMazi())
-		Movie.dilosiDOM[iseht].addClass('tsoxaPektisSimetoxiMazi').text('ΜΑΖΙ');
+		else if (simetoxi.simetoxiIsMazi()) {
+			Movie.dilosiDOM[iseht].
+			addClass('tsoxaPektisSimetoxiMazi').text('ΜΑΖΙ');
+
+			Movie.pektisDOM[iseht].
+			append($('<img>').
+			addClass('moviePektisEndixi movieMazi movieMazi' + iseht).
+			attr({
+				src: '../ikona/endixi/mazi.png',
+				title: 'Πήρε τον συμπαίκτη μαζί',
+			}));
+		}
 		else if (simetoxi.simetoxiIsVoithao())
 		Movie.dilosiDOM[iseht].addClass('tsoxaPektisSimetoxiPezo').text('ΒΟΗΘΑΩ');
 		else if (simetoxi.simetoxiIsMonos())
