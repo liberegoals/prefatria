@@ -427,6 +427,10 @@ font-size:16px;
 	background-color: rgba(255, 234, 157, 1);
 }
 
+.movieDilosiTaGrafo {
+	letter-spacing: -2px;
+}
+
 .movieDilosiAorati {
 	display: none;
 }

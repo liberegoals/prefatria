@@ -10,6 +10,7 @@ Selida::javascript("common/prefadoros");
 Selida::javascript("common/skiniko");
 Selida::javascript("common/partida");
 Selida::javascript("common/energia");
+Selida::javascript("lib/skiniko");
 Selida::javascript("arxio/arxio");
 Arxio::kritiria();
 
