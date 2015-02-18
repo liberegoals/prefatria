@@ -50,7 +50,7 @@ Movie.displayAgora = function(thesi) {
 		addClass('movieDilosiOxiPaso').
 		append(dilosi.dilosiDOM());
 
-		if (dilosi.dilosiIsTagrafo() ||dilosi.dilosiIsExo())
+		if (dilosi.dilosiIsTagrafo() || dilosi.dilosiIsExo())
 		Movie.agoraDOM[iseht].
 		addClass('movieDilosiPikni');
 	}
