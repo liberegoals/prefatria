@@ -189,6 +189,7 @@ Movie.setupThesi = function(thesi) {
 		displayPektis().
 		displayDealer().
 		displayEpomenos().
+		displayKapikia().
 		displayAgora().
 		displayFila().
 		displayBazes().
@@ -393,6 +394,7 @@ Movie.displayDianomi = function() {
 	var ipolipo, i, kodikos;
 
 	delete Movie.bazaEkremis;
+	//if (Movie.baza) Movie.baza.domGet().remove();
 	$('.dianomiTrexousa').removeClass('dianomiTrexousa');
 	$('.fila').empty();
 	$('.moviePektisEndixi').remove();
@@ -470,7 +472,6 @@ Movie.displayEpomenos = function() {
 	return Movie;
 
 	iseht = Movie.thesiMap(epomenos);
-
 	Movie.pektisDOM[iseht].addClass('tsoxaPektisEpomenos');
 
 	return Movie;

@@ -43,6 +43,10 @@ console.log('STEP FORWARD: φάση', fasi, 'είδος', idos);
 		case 'ΑΛΛΑΓΗ':
 			if (idos === 'ΔΗΛΩΣΗ')
 			return Movie.pareTzogo();
+			break;
+		case 'ΠΛΗΡΩΜΗ':
+			Movie.trapezi.partidaReplay({eoske:Movie.dianomi.dianomiKodikosGet()});
+			break;
 		}
 
 		Movie.displayPartida();
@@ -69,6 +73,7 @@ Movie.panel.bpanelButtonPush(Movie.panel.energiaPrevButton = new PButton({
 			return;
 		}
 
+		Movie.trapezi.partidaReplay({eosxoris:Movie.dianomi.dianomiKodikosGet()});
 		for (i = 0; i <= Movie.energiaIndex; i++) {
 			energia = elist[i];
 			Movie.trapezi.trapeziProcessEnergia(energia);
