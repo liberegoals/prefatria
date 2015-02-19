@@ -62,9 +62,10 @@ Movie.pexeFilo = function(energia, fasi) {
 	domRefresh();
 
 	if (Movie.trapezi.bazaFila.length === 1) {
+		$('#movieBaza').remove();
 		Movie.baza = new filajsHand();
 		Movie.baza.domCreate().baselineSet('M').alignmentSet('C');
-		Movie.baza.domGet().appendTo(Movie.tsoxaDOM);
+		Movie.baza.domGet().attr('id', 'movieBaza').appendTo(Movie.tsoxaDOM);
 	}
 
 	iseht = Movie.thesiMap(pektis);
