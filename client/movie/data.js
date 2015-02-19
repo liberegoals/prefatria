@@ -26,9 +26,12 @@ Movie.trapeziProcess = function(trapeziEco) {
 	// έναντι των οικονομικών τοιαύτων.
 
 	Movie.trapezi = new Trapezi();
-	for (prop in Movie.trapeziEcoMap) {
-		Movie.trapezi[Movie.trapeziEcoMap[prop]] = trapeziEco[prop];
-	}
+
+	for (prop in Movie.trapeziEcoMap)
+	Movie.trapezi[Movie.trapeziEcoMap[prop]] = trapeziEco[prop];
+
+	for (prop in trapeziEco.t)
+	Movie.trapezi.trparam[prop] = trapeziEco.t[prop];
 
 	Globals.awalk(Movie.trapezi.dianomiArray, function(i, dianomi) {
 		dianomi = Movie.dianomiProcess(dianomi);
@@ -55,7 +58,6 @@ Movie.trapeziEcoMap = {
 	p2: 'pektis2',
 	p3: 'pektis3',
 	a: 'arxio',
-	t: 'trparam',
 	d: 'dianomiArray',
 };
 
