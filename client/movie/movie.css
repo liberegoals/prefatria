@@ -246,6 +246,10 @@ background-color: red;
 	top: 2px;
 }
 
+.filaPaso {
+	opacity: 0.5;
+}
+
 .agora {
 	position: absolute;
 	bottom: -40px;
