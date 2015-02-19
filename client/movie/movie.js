@@ -560,6 +560,7 @@ Movie.dianomiListaAdd = function(dianomi) {
 	data('kodikos', kodikos).
 	on('click', function(e) {
 		Movie.
+		bazaClearDOM().
 		entopismosDianomis($(this).data('kodikos')).
 		displayDianomi();
 	}).
@@ -593,6 +594,11 @@ Movie.agoraDisplay = function() {
 
 	return dom;
 };
+
+Movie.bazaClearDOM = function() {
+	$('#movieBaza').remove();
+	return Movie;
+}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
 
