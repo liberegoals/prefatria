@@ -560,6 +560,7 @@ Movie.dianomiListaAdd = function(dianomi) {
 	data('kodikos', kodikos).
 	on('click', function(e) {
 		Movie.
+		playTimerClear().
 		bazaClearDOM().
 		entopismosDianomis($(this).data('kodikos')).
 		displayDianomi();

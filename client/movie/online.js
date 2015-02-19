@@ -4,7 +4,9 @@ Movie.duration = {
 	baza: 400,
 	bazaDelay: 1000,
 	claim: 400,
+	replayDefault: 1000,
 };
+Movie.duration.replay = Movie.duration.replayDefault;
 
 Movie.pareTzogo = function() {
 	var tzogadoros, count;
@@ -26,8 +28,7 @@ Movie.pareTzogo = function() {
 			sort: true,
 			callback: function() {
 				if (++count === 2)
-				Movie.panel.
-				energiaNextButton.pbuttonGetDOM().trigger('click');
+				Movie.panelEnergiaNextButton.click();
 			},
 		});
 	});
