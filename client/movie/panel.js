@@ -13,6 +13,34 @@ Movie.playTimerClear = function() {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
 
+Movie.panel.bpanelButtonPush(Movie.panelPlayButton = new PButton({
+	omada: 1,
+	refresh: function() {
+		if (Movie.playTimer) {
+			this.pbuttonIconGetDOM().attr('src', '../ikona/movie/pause.png');
+			this.pbuttonGetDOM().attr('title', 'Pause');
+		}
+		else {
+			this.pbuttonIconGetDOM().attr('src', '../ikona/movie/play.png');
+			this.pbuttonGetDOM().attr('title', 'Replay');
+		}
+	},
+	click: function(e) {
+		var button = this;
+
+		if (Movie.playTimer) {
+			Movie.playTimerClear();
+		}
+		else {
+			if (Movie.panelEnergiaNextButton.click())
+			Movie.playTimer = setInterval(function() {
+				Movie.panelEnergiaNextButton.click();
+			}, Movie.duration.replay);
+		}
+		this.pbuttonRefresh();
+	},
+}));
+
 Movie.panel.bpanelButtonPush(new PButton({
 	id: 'dianomiNext',
 	omada: 1,
@@ -135,34 +163,6 @@ console.log('STEP BACKWARDS: φάση', fasi, 'είδος', idos);
 		}
 
 		Movie.displayPartida();
-	},
-}));
-
-Movie.panel.bpanelButtonPush(Movie.panelPlayButton = new PButton({
-	omada: 1,
-	refresh: function() {
-		if (Movie.playTimer) {
-			this.pbuttonIconGetDOM().attr('src', '../ikona/movie/pause.png');
-			this.pbuttonGetDOM().attr('title', 'Pause');
-		}
-		else {
-			this.pbuttonIconGetDOM().attr('src', '../ikona/movie/play.png');
-			this.pbuttonGetDOM().attr('title', 'Replay');
-		}
-	},
-	click: function(e) {
-		var button = this;
-
-		if (Movie.playTimer) {
-			Movie.playTimerClear();
-		}
-		else {
-			if (Movie.panelEnergiaNextButton.click())
-			Movie.playTimer = setInterval(function() {
-				Movie.panelEnergiaNextButton.click();
-			}, Movie.duration.replay);
-		}
-		this.pbuttonRefresh();
 	},
 }));
 
