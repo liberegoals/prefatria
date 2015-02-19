@@ -11,11 +11,14 @@ Movie.panel.bpanelButtonPush(new PButton({
 	click: function(e) {
 		Movie.dianomiIndex++;
 
-		if (Movie.dianomiIndex >= Movie.trapezi.dianomiArray.length)
-		Movie.dianomiIndex--;
+		if (Movie.dianomiIndex >= Movie.trapezi.dianomiArray.length) {
+			Movie.dianomiIndex--;
+			return;
+		}
 
-		else
-		Movie.displayDianomi();
+		Movie.
+		bazaClearDOM().
+		displayDianomi();
 	},
 }));
 
@@ -121,7 +124,9 @@ Movie.panel.bpanelButtonPush(new PButton({
 		return;
 
 		Movie.dianomiIndex--;
-		Movie.displayDianomi();
+		Movie.
+		bazaClearDOM().
+		displayDianomi();
 	},
 }));
 

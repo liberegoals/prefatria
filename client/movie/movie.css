@@ -195,9 +195,9 @@ body {
 	width: 140px;
 	height: 134px;
 
-	background-color: rgba(106, 0, 128, 0.30);
 	visibility: hidden;
 /*
+	background-color: rgba(106, 0, 128, 0.30);
 */
 }
 
@@ -226,7 +226,9 @@ body {
 
 #movieTzogos {
 	cursor: pointer;
+/*
 	background-color: rgba(255, 0, 0, 0.10);
+*/
 }
 
 .fila {
