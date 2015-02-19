@@ -48,6 +48,10 @@ Movie.displayAgora = function(thesi) {
 
 	iseht = Movie.thesiMap(thesi);
 
+	Movie.filaDOM[iseht].
+	removeClass().
+	addClass('fila');
+
 	Movie.agoraDOM[iseht].
 	removeClass().
 	addClass('agora').
@@ -95,8 +99,10 @@ Movie.displayAgora = function(thesi) {
 	simetoxi = Movie.trapezi.sdilosi[thesi];
 	if (simetoxi) {
 		Movie.dilosiDOM[iseht].removeClass().addClass('dilosi').empty();
-		if (simetoxi.simetoxiIsPaso())
-		Movie.dilosiDOM[iseht].addClass('tsoxaPektisSimetoxiPaso').text('ΠΑΣΟ');
+		if (simetoxi.simetoxiIsPaso()) {
+			Movie.dilosiDOM[iseht].addClass('tsoxaPektisSimetoxiPaso').text('ΠΑΣΟ');
+			Movie.filaDOM[iseht].addClass('filaPaso');
+		}
 		else if (simetoxi.simetoxiIsPezo())
 		Movie.dilosiDOM[iseht].addClass('tsoxaPektisSimetoxiPezo').text('ΠΑΙΖΩ');
 		else if (simetoxi.simetoxiIsMazi()) {
