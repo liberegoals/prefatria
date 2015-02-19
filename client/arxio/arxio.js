@@ -395,9 +395,13 @@ Arxio.trapeziProcess = function(i, trapeziEco) {
 	// έναντι των οικονομικών τοιαύτων.
 
 	trapezi = new Trapezi();
-	for (prop in Arxio.trapeziEcoMap) {
-		trapezi[Arxio.trapeziEcoMap[prop]] = trapeziEco[prop];
-	}
+	for (prop in Arxio.trapeziEcoMap)
+	trapezi[Arxio.trapeziEcoMap[prop]] = trapeziEco[prop];
+
+	// Μεταφέρουμε με το χέρι τις παραμέτρους του τραπεζιού.
+
+	for (prop in trapeziEco.t)
+	trapezi.trparam[prop] = trapeziEco.t[prop];
 
 	Globals.awalk(trapezi.dianomiArray, function(i, dianomi) {
 		dianomi = Arxio.dianomiProcess(dianomi);
@@ -433,7 +437,6 @@ Arxio.trapeziEcoMap = {
 	p2: 'pektis2',
 	p3: 'pektis3',
 	a: 'arxio',
-	t: 'trparam',
 	d: 'dianomiArray',
 };
 
@@ -598,9 +601,7 @@ Arxio.partidaCheck = function() {
 Trapezi.prototype.trapeziArxioKapikia = function() {
 	var trapezi = this, kasa;
 
-	kasa = parseInt(this.trparam['ΚΑΣΑ']);
-	if (isNaN(kasa)) kasa = (this.trparam['ΚΑΣΑ'] = 50);
-
+	kasa = this.trapeziKasaGet();
 	this.trapeziThesiWalk(function(thesi) {
 		this['kapikia' + thesi] = -kasa * 10;
 	});
