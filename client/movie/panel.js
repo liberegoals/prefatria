@@ -1,6 +1,16 @@
 Movie.panel = new BPanel();
 Movie.panel.omadaMax = 1;
 
+Movie.playTimerClear = function() {
+	if (!Movie.playTimer)
+	return Movie;
+
+	clearInterval(Movie.playTimer);
+	delete Movie.playTimer;
+	Movie.panelPlayButton.pbuttonRefresh();
+	return Movie;
+};
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////@
 
 Movie.panel.bpanelButtonPush(new PButton({
@@ -9,6 +19,7 @@ Movie.panel.bpanelButtonPush(new PButton({
 	img: '../ikona/movie/fwd.png',
 	title: 'Επόμενη διανομή',
 	click: function(e) {
+		Movie.playTimerClear();
 		Movie.dianomiIndex++;
 
 		if (Movie.dianomiIndex >= Movie.trapezi.dianomiArray.length) {
@@ -22,18 +33,23 @@ Movie.panel.bpanelButtonPush(new PButton({
 	},
 }));
 
-Movie.panel.bpanelButtonPush(Movie.panel.energiaNextButton = new PButton({
+Movie.panel.bpanelButtonPush(Movie.panelEnergiaNextButton = new PButton({
 	omada: 1,
 	img: '../ikona/movie/end.png',
 	title: 'Επόμενη κίνηση',
 	click: function(e) {
 		var elist, energia, fasi, idos;
 
-		if (!Movie.dianomi)
-		return;
+		if (e && Movie.playTimer)
+		return Movie.playTimerClear();
 
-		if (Movie.bazaEkremis)
-		return Movie.pareBaza(Movie.trapezi.partidaBazaPios(true));
+		if (!Movie.dianomi)
+		return false;
+
+		if (Movie.bazaEkremis) {
+			Movie.pareBaza(Movie.trapezi.partidaBazaPios(true));
+			return true;
+		}
 
 		elist = Movie.dianomi.energiaArray;
 
@@ -41,7 +57,8 @@ Movie.panel.bpanelButtonPush(Movie.panel.energiaNextButton = new PButton({
 		if (Movie.energiaIndex >= elist.length) {
 			Movie.energiaIndex--;
 			Client.sound.beep();
-			return;
+			Movie.playTimerClear();
+			return false;
 		}
 
 		energia = elist[Movie.energiaIndex];
@@ -53,17 +70,22 @@ console.log('STEP FORWARD: φάση', fasi, 'είδος', idos);
 
 		switch (idos) {
 		case 'ΦΥΛΛΟ':
-			return Movie.pexeFilo(energia, fasi);
+			Movie.pexeFilo(energia, fasi);
+			return true;
 		case 'FLOP':
-			return Movie.anixeTzogo();
+			Movie.anixeTzogo();
+			return true;
 		case 'CLAIM':
-			return Movie.requestClaim(energia);
+			Movie.requestClaim(energia);
+			return true;
 		}
 
 		switch (fasi) {
 		case 'ΑΛΛΑΓΗ':
-			if (idos === 'ΔΗΛΩΣΗ')
-			return Movie.pareTzogo();
+			if (idos === 'ΔΗΛΩΣΗ') {
+				Movie.pareTzogo();
+				return true;
+			}
 			break;
 		case 'ΠΛΗΡΩΜΗ':
 			Movie.trapezi.partidaReplay({eoske:Movie.dianomi.dianomiKodikosGet()});
@@ -71,16 +93,18 @@ console.log('STEP FORWARD: φάση', fasi, 'είδος', idos);
 		}
 
 		Movie.displayPartida();
+		return true;
 	},
 }));
 
-Movie.panel.bpanelButtonPush(Movie.panel.energiaPrevButton = new PButton({
+Movie.panel.bpanelButtonPush(Movie.panelEnergiaPrevButton = new PButton({
 	omada: 1,
 	img: '../ikona/movie/start.png',
 	title: 'Προηγούμενη κίνηση',
 	click: function(e) {
 		var elist, i, fasi, idos;
 
+		Movie.playTimerClear();
 		if (!Movie.dianomi)
 		return;
 
@@ -107,10 +131,38 @@ console.log('STEP BACKWARDS: φάση', fasi, 'είδος', idos);
 		switch (fasi) {
 		case 'ΑΛΛΑΓΗ':
 			if (idos === 'ΔΗΛΩΣΗ')
-			return Movie.panel.energiaPrevButton.pbuttonGetDOM().trigger('click');
+			return Movie.panelEnergiaPrevButton.click();
 		}
 
 		Movie.displayPartida();
+	},
+}));
+
+Movie.panel.bpanelButtonPush(Movie.panelPlayButton = new PButton({
+	omada: 1,
+	refresh: function() {
+		if (Movie.playTimer) {
+			this.pbuttonIconGetDOM().attr('src', '../ikona/movie/pause.png');
+			this.pbuttonGetDOM().attr('title', 'Pause');
+		}
+		else {
+			this.pbuttonIconGetDOM().attr('src', '../ikona/movie/play.png');
+			this.pbuttonGetDOM().attr('title', 'Replay');
+		}
+	},
+	click: function(e) {
+		var button = this;
+
+		if (Movie.playTimer) {
+			Movie.playTimerClear();
+		}
+		else {
+			if (Movie.panelEnergiaNextButton.click())
+			Movie.playTimer = setInterval(function() {
+				Movie.panelEnergiaNextButton.click();
+			}, Movie.duration.replay);
+		}
+		this.pbuttonRefresh();
 	},
 }));
 
@@ -120,6 +172,7 @@ Movie.panel.bpanelButtonPush(new PButton({
 	img: '../ikona/movie/rew.png',
 	title: 'Προηγούμενη διανομή',
 	click: function(e) {
+		Movie.playTimerClear();
 		if (Movie.dianomiIndex <= 0)
 		return;
 
@@ -229,3 +282,81 @@ Movie.panel.bpanelButtonPush(new PButton({
 		this.refresh();
 	},
 }));
+
+Movie.replayPiravlosMap = {
+	3000: 2500,
+	2500: 2100,
+	2100: 1800,
+	1800: 1500,
+	1500: 1200,
+	1200: 1000,
+	1000: 800,
+	800: 600,
+	600: 300,
+	300: 300,
+};
+
+Movie.replayXelonakiMap = {};
+(function() {
+	var i, val, max = 0;
+
+	for (i in Movie.replayPiravlosMap) {
+		i = parseInt(i);
+		val = Movie.replayPiravlosMap[i];
+		if (i === val)
+		continue;
+
+		Movie.replayXelonakiMap[val] = i;
+		if (i > max)
+		max = i;
+	}
+
+	Movie.replayXelonakiMap[max] = max;
+})();
+
+Movie.panel.bpanelButtonPush(Movie.panelPiravlosButton = new PButton({
+	omada: 1,
+	img: '../ikona/movie/piravlos.png',
+	title: 'Επιτάχυνση',
+	refresh: function() {
+		if (Movie.duration.replay > Movie.duration.replayDefault)
+		this.pbuttonGetDOM().addClass('panelButtonEkremes');
+
+		else
+		this.pbuttonGetDOM().removeClass('panelButtonEkremes');
+	},
+	click: function(e) {
+		Movie.duration.replay = Movie.replayPiravlosMap[Movie.duration.replay];
+		Movie.panelTaxititaSet();
+	},
+}));
+
+Movie.panel.bpanelButtonPush(Movie.panelXelonakiButton = new PButton({
+	omada: 1,
+	img: '../ikona/movie/xelonaki.png',
+	title: 'Επιβράδυνση',
+	refresh: function() {
+		if (Movie.duration.replay < Movie.duration.replayDefault)
+		this.pbuttonGetDOM().addClass('panelButtonEkremes');
+
+		else
+		this.pbuttonGetDOM().removeClass('panelButtonEkremes');
+	},
+	click: function(e) {
+		Movie.duration.replay = Movie.replayXelonakiMap[Movie.duration.replay];
+		Movie.panelTaxititaSet();
+	},
+}));
+
+Movie.panelTaxititaSet = function() {
+	Movie.panelXelonakiButton.pbuttonRefresh();
+	Movie.panelPiravlosButton.pbuttonRefresh();
+
+	if (!Movie.playTimer)
+	return;
+
+	clearInterval(Movie.playTimer);
+	Movie.playTimer = setInterval(function() {
+		Movie.panelEnergiaNextButton.click();
+	}, Movie.duration.replay);
+};
