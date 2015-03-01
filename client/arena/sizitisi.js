@@ -838,13 +838,18 @@ Sizitisi.funchatAppend = function(dom, id, online) {
 		}
 
 		img = $('<img>').addClass('sizitisiFunchatIkona').attr('src', Funchat.server + ikona);
+
 		platos = item.funchatPlatosGet();
+		platos2 = item.funchatPlatos2Get();
+		if (platos2 && (!online))
+		platos = platos2;
 		if (platos) img.css('width', platos + 'px');
 		dom.append(img);
 
 		if (ikona2)
 		setTimeout(function() {
 			img.attr('src', Funchat.server + item.funchatIkona2Get());
+			if (platos2) img.css('width', platos2 + 'px');
 		}, item.funchatDurationGet());
 	}
 
