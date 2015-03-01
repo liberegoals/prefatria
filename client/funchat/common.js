@@ -150,6 +150,8 @@ Funchat.listaPush(new Funchat({
 	img: 'elaStoThio.gif',
 	platos: 100,
 	txt: 'Έλα στο θείο!',
+	ixos: 'elaMouTo.mp3',
+	entasi: 6,
 }));
 
 Funchat.listaPush(new Funchat({
@@ -208,6 +210,14 @@ Funchat.listaPush(new Funchat({
 	txt: 'I have a dream!',
 	ixos: 'haveDream.ogg',
 	entasi: 2,
+}));
+
+Funchat.listaPush(new Funchat({
+	img: 'maziCats.gif',
+	platos: 80,
+	ixos: 'thaSeParo.mp3',
+	img2: 'ipopto.gif',
+	dur: 6000,
 }));
 
 Funchat.listaPush(new Funchat({
@@ -317,6 +327,13 @@ Funchat.listaPush(new Funchat({
 	img: 'notaraTaTheli.jpg',
 	platos: 120,
 	ixos: 'taTheli.mp3',
+}));
+
+Funchat.listaPush(new Funchat({
+	img: 'notaraSodoma.jpg',
+	platos: 120,
+	ixos: 'sodomaGomora.mp3',
+	entasi: 7,
 }));
 
 Funchat.listaPush(new Funchat({
