@@ -823,7 +823,7 @@ Sizitisi.prototype.sizitisiSxolioCreateDOM = function(dom, online) {
 };
 
 Sizitisi.funchatAppend = function(dom, id, online) {
-	var item, ikona, ikona2, img, platos, kimeno, ixos;
+	var item, ikona, ikona2, img, platos, platos2, kimeno, ixos;
 
 	item = Funchat.listaGet(id);
 	if (!item)
@@ -839,10 +839,13 @@ Sizitisi.funchatAppend = function(dom, id, online) {
 
 		img = $('<img>').addClass('sizitisiFunchatIkona').attr('src', Funchat.server + ikona);
 
-		platos = item.funchatPlatosGet();
 		platos2 = item.funchatPlatos2Get();
 		if (platos2 && (!online))
 		platos = platos2;
+
+		else
+		platos = item.funchatPlatosGet();
+
 		if (platos) img.css('width', platos + 'px');
 		dom.append(img);
 
