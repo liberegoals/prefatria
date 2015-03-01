@@ -49,6 +49,10 @@ Funchat.prototype.funchatPlatosGet = function() {
 	return this.platos;
 };
 
+Funchat.prototype.funchatPlatos2Get = function() {
+	return this.platos2;
+};
+
 Funchat.prototype.funchatKimenoGet = function() {
 	return this.txt;
 };
@@ -151,7 +155,6 @@ Funchat.listaPush(new Funchat({
 	platos: 100,
 	txt: 'Έλα στο θείο!',
 	ixos: 'elaMouTo.mp3',
-	entasi: 6,
 }));
 
 Funchat.listaPush(new Funchat({
@@ -214,9 +217,9 @@ Funchat.listaPush(new Funchat({
 
 Funchat.listaPush(new Funchat({
 	img: 'maziCats.gif',
-	platos: 80,
 	ixos: 'thaSeParo.mp3',
 	img2: 'ipopto.gif',
+	platos2: 60,
 	dur: 6000,
 }));
 
