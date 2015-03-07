@@ -23,7 +23,7 @@ Diafimisi.display2 = function() {
 		opacity: 1,
 	}).fadeIn(600).
 	animate({
-		top: '6px',
+		top: '30px',
 	}, 1600);
 	setTimeout(Diafimisi.display3, 1600);
 };
