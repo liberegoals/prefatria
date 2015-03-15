@@ -4,11 +4,7 @@ body {
 	overflow: hidden;
 	margin: 0;
 	font-family: "Arial", sans-serif;
-	text-shadow: -1px 0px 10px #F1F1F1, 1px 0px 10px #F1F1F1, -2px 0px 8px #F1F1F1, 2px 0px 8px #F1F1F1;
-}
-
-a {
-	text-shadow: none;
+	cursor: pointer;
 }
 
 #plesio {
